@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import tron.common.utils.Step;
 import tron.common.utils.WebBrowser;
 
-public class SendTrxTest {
+public class TransactionsTest {
     private static String URL = "https://tronscan.org/#/";
     WebBrowser webBrowser = new WebBrowser();
     public static WebDriver driver;
@@ -26,24 +26,20 @@ public class SendTrxTest {
     }
 
     @Test(enabled = true)
-    public void test() throws Exception{
+    public void transactionTest() throws Exception{
         Step.login(driver);
         {
             WebElement element = driver.findElement(By.cssSelector(".dropdown-toggle > span"));
             Actions builder = new Actions(driver);
             builder.moveToElement(element).perform();
         }
-        driver.findElement(By.cssSelector(".dropdown-item:nth-child(10)")).click();
-        driver.findElement(By.cssSelector(".form-group:nth-child(1) .form-control")).click();
-        driver.findElement(By.cssSelector(".form-group:nth-child(1) .form-control")).sendKeys("TYvBUrZp7QboQzKhFVMYYkD4jDYsU33aQh");
-        driver.findElement(By.cssSelector(".is-invalid")).click();
-        driver.findElement(By.cssSelector(".form-group:nth-child(3) .form-control")).sendKeys("0.1");
-        driver.findElement(By.cssSelector(".form-group:nth-child(4) .form-control")).click();
-        Thread.sleep(200);
-        driver.findElement(By.xpath("//form/button")).click();
-        driver.findElement(By.cssSelector(".btn-primary:nth-child(2)")).click();
-        Thread.sleep(200);
-        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "Successful Transaction");
+        //点击交易
+        driver.findElement(By.cssSelector(".dropdown-item:nth-child(7) > span:nth-child(3)")).click();
+        //点击第一条交易记录
+        driver.findElement(By.cssSelector(".ant-table-row:nth-child(1) .ellipsis_box_start")).click();
+        Assert.assertTrue(!driver.findElement(By.cssSelector(".block-status-tag > span")).getText().isEmpty());
+        Assert.assertTrue(!driver.findElement(By.cssSelector(".badge > span")).getText().isEmpty());
+        Assert.assertTrue(!driver.findElement(By.cssSelector(".block-status-tag > span")).getText().isEmpty());
     }
 
     @AfterSuite(enabled = true)

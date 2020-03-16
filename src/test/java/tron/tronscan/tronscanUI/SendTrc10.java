@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import tron.common.utils.Step;
 import tron.common.utils.WebBrowser;
 
-public class SendCoin {
+public class SendTrc10 {
     private static String URL = "https://tronscan.org/#/";
     WebBrowser webBrowser = new WebBrowser();
     public static WebDriver driver;
@@ -26,7 +26,7 @@ public class SendCoin {
     }
 
     @Test(enabled = true)
-    public void test() throws Exception{
+    public void testTrc10() throws Exception{
         Step.login(driver);
         {
             WebElement element = driver.findElement(By.cssSelector(".dropdown-toggle > span"));
@@ -36,8 +36,11 @@ public class SendCoin {
         driver.findElement(By.cssSelector(".dropdown-item:nth-child(10)")).click();
         driver.findElement(By.cssSelector(".form-group:nth-child(1) .form-control")).click();
         driver.findElement(By.cssSelector(".form-group:nth-child(1) .form-control")).sendKeys("TYvBUrZp7QboQzKhFVMYYkD4jDYsU33aQh");
-        driver.findElement(By.cssSelector(".is-invalid")).click();
-        driver.findElement(By.cssSelector(".form-group:nth-child(3) .form-control")).sendKeys("0.1");
+        //选择TRC10
+        driver.findElement(By.cssSelector(".ant-select-open svg")).click();
+        Thread.sleep(200);
+        driver.findElement(By.xpath("//form/div[2]/div/div/div/div")).click();
+        driver.findElement(By.cssSelector(".form-group:nth-child(3) .form-control")).sendKeys("0.01");
         driver.findElement(By.cssSelector(".form-group:nth-child(4) .form-control")).click();
         Thread.sleep(200);
         driver.findElement(By.xpath("//form/button")).click();
