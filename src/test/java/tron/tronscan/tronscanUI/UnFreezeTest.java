@@ -24,7 +24,7 @@ public class UnFreezeTest {
         }
     }
 
-    @Test(enabled = true)
+    @Test(enabled = true,description = "解冻")
     public void test() throws Exception{
         Step.login(driver);
         {

@@ -25,7 +25,7 @@ public class FreezeTest {
         }
     }
 
-    @Test(enabled = true)
+    @Test(enabled = true,description = "冻结带宽")
     public void test() throws Exception{
         Step.login(driver);
         {
@@ -49,7 +49,7 @@ public class FreezeTest {
         driver.close();
     }
 
-    @Test(enabled = true)
+    @Test(enabled = true,description = "冻结能量")
     public void testEnery() throws Exception{
         Step.login(driver);
         {

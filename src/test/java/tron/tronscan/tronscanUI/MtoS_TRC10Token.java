@@ -25,7 +25,7 @@ public class MtoS_TRC10Token {
         }
     }
 
-    @Test(enabled = true)
+    @Test(enabled = true,description = "从主链往侧链转入TRC10")
     public void test() throws Exception{
         Step.login(driver);
         {
