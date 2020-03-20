@@ -42,6 +42,7 @@ public class SendTrxTest {
         Thread.sleep(200);
         driver.findElement(By.xpath("//form/button")).click();
         driver.findElement(By.cssSelector(".btn-primary:nth-child(2)")).click();
+        Thread.sleep(200);
         Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "Successful Transaction");
     }
 

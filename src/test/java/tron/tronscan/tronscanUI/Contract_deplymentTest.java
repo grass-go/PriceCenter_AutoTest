@@ -43,7 +43,7 @@ public class Contract_deplymentTest {
         //点合约部署
         driver.findElement(By.xpath("//ul/li[2]/div/div[2]/a[3]/span")).click();
         //本地上传
-        driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[3]/div/div[2]/span/div/span/input")).sendKeys("/Users/tron/workSpace/Tronscan_AutoTest/src/test/resources/right.sol");
+        driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[3]/div/div[2]/span/div/span/input")).sendKeys("/Users/zhukai/Desktop/Tronscan_AutoTest/src/test/resources/right.sol");
         Thread.sleep(300);
         //点编译
         driver.findElement(By.cssSelector(".contract-compiler-button > button.compile-button:nth-child(1)")).click();
