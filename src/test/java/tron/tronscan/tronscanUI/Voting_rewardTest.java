@@ -9,7 +9,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import sun.jvm.hotspot.types.CIntegerField;
 import tron.common.utils.Step;
 import tron.common.utils.WebBrowser;
 
