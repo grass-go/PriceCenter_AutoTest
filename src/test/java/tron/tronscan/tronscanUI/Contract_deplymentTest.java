@@ -80,7 +80,7 @@ public class Contract_deplymentTest {
         driver.findElement(By.cssSelector(".ant-select-dropdown-menu> li:nth-child(5)")).click();
         Thread.sleep(300);
         //本地上传
-        driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[3]/div/div/form/div[2]/div[2]/span/div/span/input")).sendKeys("/Users/tron/workSpace/Tronscan_AutoTest/src/test/resources/long_text.sol");
+        driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[3]/div/div/form/div[2]/div[2]/span/div/span/input")).sendKeys("/Users/tron/.jenkins/workspace/Tronscan_AutoTest/src/test/resources/long_text.sol");
         Thread.sleep(600);
         //验证签名
         driver.findElement(By.cssSelector("#g-recaptcha")).click();
