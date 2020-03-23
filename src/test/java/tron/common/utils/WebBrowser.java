@@ -24,7 +24,7 @@ public class WebBrowser {
 
             System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver");
             ChromeOptions options = new ChromeOptions();
-            options.setHeadless(Boolean.TRUE);
+            options.setHeadless(Boolean.FALSE);
             driver = new ChromeDriver(options);
             driver.get(url);
 //            System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver");

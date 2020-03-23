@@ -26,7 +26,7 @@ public class Representatives {
     }
 
     @Test(enabled = true)
-    public void testSRText() throws Exception{
+    public void testRepresentatives() throws Exception{
         Assert.assertTrue(!driver.findElement(By.cssSelector(".text-primary > span")).getText().isEmpty());
         Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"root\"]/main/div[1]/div/div[1]/div[2]/div/div/h3/span")).getText().isEmpty());
         Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"root\"]/main/div[1]/div/div[1]/div[3]/div/div/h3/span")).getText().isEmpty());

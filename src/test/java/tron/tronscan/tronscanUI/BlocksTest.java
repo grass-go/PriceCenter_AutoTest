@@ -26,8 +26,8 @@ public class BlocksTest {
     public void testSRText() throws Exception{
 //        driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div/text()")).getText();
         driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[2]/div/div/div/div/div/div/div/table/tbody/tr[1]/td[1]/a")).click();
-        Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"root\"]/main/div[1]/div[1]/div/div/h3")).getText().isEmpty());
-        Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"root\"]/main/div[1]/div[2]/div/div/h3")).getText().isEmpty());
+        Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div[2]/table/tbody/tr[3]/td")).getText().isEmpty());
+        Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div[2]/table/tbody/tr[2]/td/div/span")).getText().isEmpty());
     }
 
     @AfterMethod(enabled = true)

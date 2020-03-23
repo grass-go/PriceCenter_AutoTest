@@ -37,7 +37,7 @@ public class MtoS_TRC10Token {
         driver.findElement(By.cssSelector(".account-token-tab > a.active:nth-child(1)")).click();
         driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(5) > button")).click();
         driver.findElement(By.xpath(".//form/div[3]/input")).click();
-        driver.findElement(By.xpath("//form/div[3]/input")).sendKeys("0.001");
+        driver.findElement(By.xpath("//form/div[3]/input")).sendKeys("1");
         Thread.sleep(200);
         driver.findElement(By.xpath("//form/button")).click();
         Thread.sleep(300);
