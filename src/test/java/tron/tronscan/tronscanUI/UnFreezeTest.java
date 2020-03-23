@@ -25,7 +25,7 @@ public class UnFreezeTest {
     }
 
     @Test(enabled = true,description = "解冻")
-    public void test() throws Exception{
+    public void testUnFreeze() throws Exception{
         Step.login(driver);
         {
             WebElement element = driver.findElement(By.cssSelector(".dropdown-toggle > span"));

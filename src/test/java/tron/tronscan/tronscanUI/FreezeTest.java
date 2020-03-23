@@ -26,7 +26,7 @@ public class FreezeTest {
     }
 
     @Test(enabled = true,description = "冻结带宽")
-    public void test() throws Exception{
+    public void testFreeze() throws Exception{
         Step.login(driver);
         {
             WebElement element = driver.findElement(By.cssSelector(".dropdown-toggle > span"));

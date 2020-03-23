@@ -26,7 +26,7 @@ public class FreezeByOthersTest {
     }
 
     @Test(enabled = true,description = "给他人冻结带宽")
-    public void test() throws Exception{
+    public void testFreezeByOthers() throws Exception{
         Step.login(driver);
         {
             WebElement element = driver.findElement(By.cssSelector(".dropdown-toggle > span"));

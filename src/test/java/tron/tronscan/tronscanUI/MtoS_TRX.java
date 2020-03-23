@@ -26,7 +26,7 @@ public class MtoS_TRX {
     }
 
     @Test(enabled = true,description = "从主链往侧链转入TRX")
-    public void test() throws Exception{
+    public void testMtoS_TRX() throws Exception{
         Step.login(driver);
         {
             WebElement element = driver.findElement(By.cssSelector(".dropdown-toggle > span"));

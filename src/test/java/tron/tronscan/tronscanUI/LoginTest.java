@@ -26,7 +26,7 @@ public class LoginTest {
     }
 
     @Test(enabled = true)
-    public void test() throws Exception{
+    public void testLogin() throws Exception{
         Step.login(driver);
     }
 

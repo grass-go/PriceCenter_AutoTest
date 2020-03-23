@@ -29,7 +29,7 @@ public class Contract_deplymentTest {
     }
 
     @Test(enabled = true,description = "合约部署与合约验证")
-    public void test() throws Exception{
+    public void testContract_deplyment() throws Exception{
         Step.login(driver);
         {
             WebElement element = driver.findElement(By.cssSelector(".dropdown-toggle > span"));
