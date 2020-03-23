@@ -3,8 +3,8 @@ package tron.tronscan.tronscanUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import tron.common.utils.WebBrowser;
@@ -13,7 +13,7 @@ public class SearchTest {
         private static String URL = "https://tronscan.org/#/";
         WebBrowser webBrowser = new WebBrowser();
         public static WebDriver driver;
-        @BeforeSuite(enabled = true)
+        @BeforeMethod(enabled = true)
         public void start() throws Exception {
             try {
                 driver = webBrowser.startChrome(URL);
@@ -62,7 +62,7 @@ public class SearchTest {
 
     }
 
-        @AfterSuite(enabled = true)
+        @AfterMethod(enabled = true)
         public void end() throws Exception {
             WebBrowser.tearDownBrowser();
         }

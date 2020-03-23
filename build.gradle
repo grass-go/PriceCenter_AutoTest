@@ -35,9 +35,9 @@ test {
 task tronscan(type: Test) {
 
     useTestNG {
-        suites(file('src/test/resources/testng.xml'))
+        suites(file('src/test/resources/testng_tronscanUI.xml'))
         parallel 'tests'
-        threadCount 4
+        threadCount 1
 
     }
     testLogging {

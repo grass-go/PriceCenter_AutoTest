@@ -5,8 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import tron.common.utils.Step;
@@ -16,7 +16,7 @@ public class SendTrc20 {
     private static String URL = "https://tronscan.org/#/";
     WebBrowser webBrowser = new WebBrowser();
     public static WebDriver driver;
-    @BeforeSuite(enabled = true)
+    @BeforeMethod(enabled = true)
     public void start() throws Exception {
         try {
             driver = webBrowser.startChrome(URL);
@@ -48,7 +48,7 @@ public class SendTrc20 {
         Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "Successful Transaction");
     }
 
-    @AfterSuite(enabled = true)
+    @AfterMethod(enabled = true)
     public void end() throws Exception {
         WebBrowser.tearDownBrowser();
     }

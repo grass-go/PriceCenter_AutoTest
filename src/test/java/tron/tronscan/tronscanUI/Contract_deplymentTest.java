@@ -5,8 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 
@@ -19,7 +19,7 @@ public class Contract_deplymentTest {
     private static String URL = "https://tronscan.org/#/";
     WebBrowser webBrowser = new WebBrowser();
     public static WebDriver driver;
-    @BeforeSuite(enabled = true)
+    @BeforeMethod(enabled = true)
     public void start() throws Exception {
         try {
             driver = webBrowser.startChrome(URL);
@@ -43,7 +43,7 @@ public class Contract_deplymentTest {
         //点合约部署
         driver.findElement(By.xpath("//ul/li[2]/div/div[2]/a[3]/span")).click();
         //本地上传
-        driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[3]/div/div[2]/span/div/span/input")).sendKeys("/Users/zhukai/Desktop/Tronscan_AutoTest/src/test/resources/right.sol");
+        driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[3]/div/div[2]/span/div/span/input")).sendKeys("/Users/tron/Documents/Tronscan_AutoTest/src/test/resources/right.sol");
         Thread.sleep(300);
         //点编译
         driver.findElement(By.cssSelector(".contract-compiler-button > button.compile-button:nth-child(1)")).click();
@@ -87,7 +87,7 @@ public class Contract_deplymentTest {
         driver.findElement(By.cssSelector(".text-center > div.contract-compiler-button > button")).click();
         driver.quit();
     }
-    @AfterSuite(enabled = true)
+    @AfterMethod(enabled = true)
     public void end() throws Exception {
         WebBrowser.tearDownBrowser();
     }
