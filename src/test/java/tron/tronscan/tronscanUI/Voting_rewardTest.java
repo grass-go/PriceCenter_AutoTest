@@ -9,13 +9,15 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
+import sun.jvm.hotspot.types.CIntegerField;
 import tron.common.utils.Step;
 import tron.common.utils.WebBrowser;
 
-public class MtoS_TRX {
+public class Voting_rewardTest {
     private static String URL = "https://tronscan.org/#/";
     WebBrowser webBrowser = new WebBrowser();
     public static WebDriver driver;
+
     @BeforeSuite(enabled = true)
     public void start() throws Exception {
         try {
@@ -25,26 +27,30 @@ public class MtoS_TRX {
         }
     }
 
-    @Test(enabled = true,description = "从主链往侧链转入TRX")
-    public void test() throws Exception{
+    @Test(enabled = true,description = "领取奖励")
+    public void test() throws Exception {
         Step.login(driver);
-        {
+         {
             WebElement element = driver.findElement(By.cssSelector(".dropdown-toggle > span"));
             Actions builder = new Actions(driver);
             builder.moveToElement(element).perform();
         }
+        //
+        WebElement vote= driver.findElement ( By.cssSelector(".font-weight-bold"));
+        String vote_string = vote.getText();
+        String[]  strs=vote_string.split(" ");
+        for(int i=0,len=strs.length;i<len;i++){
+            int voteint = Integer.parseInt(strs[0].toString());
+            if( voteint > 0){
+                Thread.sleep(300);
+                //点领取
+                driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div > table > tbody > tr:nth-child(4) > td > a")).click();
+                Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > div.text-muted.lead > span")).getText(),"稍后交易确认后可在账户页查看");
+                driver.findElement(By.cssSelector(".sweet-alert > p > span > button"));
+            }
+        }
 
-        driver.findElement(By.cssSelector(".account-token-tab> a.btn-default:nth-child(3)")).click();
-        driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(5) > button")).click();
-        driver.findElement(By.xpath(".//form/div[3]/input")).click();
-        driver.findElement(By.xpath("//form/div[3]/input")).sendKeys("10");
-        Thread.sleep(200);
-        driver.findElement(By.xpath("//form/button")).click();
-        Thread.sleep(300);
-        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2 > span")).getText(), "转入成功");
-        driver.close();
     }
-
     @AfterSuite(enabled = true)
     public void end() throws Exception {
         WebBrowser.tearDownBrowser();
