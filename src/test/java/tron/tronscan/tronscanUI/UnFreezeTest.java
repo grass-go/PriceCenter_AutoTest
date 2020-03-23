@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import tron.common.utils.Step;
@@ -15,7 +15,7 @@ public class UnFreezeTest {
     private static String URL = "https://tronscan.org/#/";
     WebBrowser webBrowser = new WebBrowser();
     public static WebDriver driver;
-    @BeforeSuite(enabled = true)
+    @BeforeMethod(enabled = true)
     public void start() throws Exception {
         try {
             driver = webBrowser.startChrome(URL);

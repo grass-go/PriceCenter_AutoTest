@@ -5,8 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import tron.common.utils.Step;
@@ -16,7 +16,7 @@ public class MtoS_TRC10Token {
     private static String URL = "https://tronscan.org/#/";
     WebBrowser webBrowser = new WebBrowser();
     public static WebDriver driver;
-    @BeforeSuite(enabled = true)
+    @BeforeMethod(enabled = true)
     public void start() throws Exception {
         try {
             driver = webBrowser.startChrome(URL);
@@ -37,15 +37,15 @@ public class MtoS_TRC10Token {
         driver.findElement(By.cssSelector(".account-token-tab > a.active:nth-child(1)")).click();
         driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(5) > button")).click();
         driver.findElement(By.xpath(".//form/div[3]/input")).click();
-        driver.findElement(By.xpath("//form/div[3]/input")).sendKeys("0.001");
+        driver.findElement(By.xpath("//form/div[3]/input")).sendKeys("1");
         Thread.sleep(200);
         driver.findElement(By.xpath("//form/button")).click();
         Thread.sleep(300);
-        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2 > span")).getText(), "转入成功");
+        Assert.assertTrue((driver.findElement(By.cssSelector(".sweet-alert > h2 > span")).getText()== "Deposit Success"));
         driver.close();
     }
 
-    @AfterSuite(enabled = true)
+    @AfterMethod(enabled = true)
     public void end() throws Exception {
         WebBrowser.tearDownBrowser();
     }
