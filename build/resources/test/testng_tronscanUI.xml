@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="tronscanUi" parallel="tests" thread-count="1">
+    <test name="tronscanUi">
+        <classes>
+            <class name="tron.tronscan.tronscanUI.BlocksTest"></class>
+            <class name="tron.tronscan.tronscanUI.Contract_deplymentTest"></class>
+            <class name="tron.tronscan.tronscanUI.FreezeByOthersTest"></class>
+            <class name="tron.tronscan.tronscanUI.FreezeTest"></class>
+            <class name="tron.tronscan.tronscanUI.UnFreezeTest"></class>
+            <class name="tron.tronscan.tronscanUI.LoginTest"></class>
+            <class name="tron.tronscan.tronscanUI.MtoS_TRC10Token"></class>
+            <class name="tron.tronscan.tronscanUI.MtoS_TRX"></class>
+            <class name="tron.tronscan.tronscanUI.NodesTest"></class>
+            <class name="tron.tronscan.tronscanUI.Representatives"></class>
+            <class name="tron.tronscan.tronscanUI.SearchTest"></class>
+            <class name="tron.tronscan.tronscanUI.SendTrc10"></class>
+            <class name="tron.tronscan.tronscanUI.SendTrc20"></class>
+            <class name="tron.tronscan.tronscanUI.SendTrxTest"></class>
+            <class name="tron.tronscan.tronscanUI.TransactionsTest"></class>
+            <class name="tron.tronscan.tronscanUI.Votes"></class>
+            <class name="tron.tronscan.tronscanUI.Voting_rewardTest"></class>
+        </classes>
+    </test>
+</suite>
