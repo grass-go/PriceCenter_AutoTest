@@ -43,9 +43,9 @@ public class SendTrc20 {
         driver.findElement(By.cssSelector(".form-group:nth-child(3) .form-control")).sendKeys("0.01");
         driver.findElement(By.cssSelector(".form-group:nth-child(4) .form-control")).click();
         Thread.sleep(200);
-        driver.findElement(By.xpath("//form/button")).click();
-        driver.findElement(By.cssSelector(".btn-primary:nth-child(2)")).click();
-        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "Successful Transaction");
+//        driver.findElement(By.xpath("//form/button")).click();
+//        driver.findElement(By.cssSelector(".btn-primary:nth-child(2)")).click();
+//        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "Successful Transaction");
     }
 
     @AfterMethod(enabled = true)
