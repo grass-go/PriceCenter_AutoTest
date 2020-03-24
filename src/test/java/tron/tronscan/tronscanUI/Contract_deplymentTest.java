@@ -85,7 +85,6 @@ public class Contract_deplymentTest {
         //验证签名
         driver.findElement(By.cssSelector("#g-recaptcha")).click();
         driver.findElement(By.cssSelector(".text-center > div.contract-compiler-button > button")).click();
-        driver.quit();
     }
     @AfterMethod(enabled = true)
     public void end() throws Exception {

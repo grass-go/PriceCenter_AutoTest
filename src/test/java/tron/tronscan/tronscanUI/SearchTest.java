@@ -28,6 +28,7 @@ public class SearchTest {
             Thread.sleep(300);
             Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a/div/span/strong")).getText(),"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
             driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a")).click();
+            Thread.sleep(300);
             Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div/div[1]/table/tbody/tr[1]/td/span/div/div/span/div/a/div")).getText(),"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
 
         }
@@ -38,6 +39,7 @@ public class SearchTest {
         Thread.sleep(300);
         Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a/div/span/strong")).getText(),"TVRqMwBZU13c4wx6Hi6jqroCnYv2nrqQU1");
         driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a")).click();
+        Thread.sleep(300);
         Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div/h6/span/div/div/span/div/a/div")).getText(),"TVRqMwBZU13c4wx6Hi6jqroCnYv2nrqQU1");
 
     }
@@ -48,6 +50,7 @@ public class SearchTest {
         Thread.sleep(300);
         Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a/div/span/strong")).getText(),"BitTorrent(BTT) 1002000");
         driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a")).click();
+        Thread.sleep(300);
         Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div[2]/div[2]/div[2]/div/span")).getText(),"1002000");
 
     }
@@ -58,7 +61,8 @@ public class SearchTest {
         Thread.sleep(300);
         Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a/div/span/strong")).getText(),"Tether USD(USDT) TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
         driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a")).click();
-//        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div[2]/div[2]/div[2]/div/span/div/div/span/div/a/div")).getText(),"TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
+        Thread.sleep(300);
+        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div[2]/div[2]/div[2]/div/span/div/div/span/div/a/div")).getText(),"TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
 
     }
 

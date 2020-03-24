@@ -69,7 +69,6 @@ public class FreezeTest {
         driver.findElement(By.cssSelector(".modal-body > p >button")).click();
         Thread.sleep(300);
 //        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > div.text-muted > span")).getText(), "成功冻结");
-        driver.close();
     }
     @AfterMethod(enabled = true)
     public void end() throws Exception {
