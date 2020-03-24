@@ -21,7 +21,6 @@ public class Top_statisticsTest {
             try {
                 driver = webBrowser.startChrome(URL);
             } catch (Exception e) {
-                System.out.println(e);
             }
         }
 
