@@ -27,7 +27,7 @@ public class Voting_rewardTest {
     }
 
     @Test(enabled = true,description = "领取奖励")
-    public void test() throws Exception {
+    public void testVoting_reward() throws Exception {
         Step.login(driver);
          {
             WebElement element = driver.findElement(By.cssSelector(".dropdown-toggle > span"));

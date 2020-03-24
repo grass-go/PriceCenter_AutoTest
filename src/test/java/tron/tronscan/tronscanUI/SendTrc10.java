@@ -50,6 +50,7 @@ public class SendTrc10 {
         driver.findElement(By.cssSelector(".form-group:nth-child(4) .form-control")).sendKeys("TRC 10");
         Thread.sleep(300);
         driver.findElement(By.xpath("//form/button")).click();
+        Thread.sleep(200);
         driver.findElement(By.cssSelector(".btn-primary:nth-child(2)")).click();
         Thread.sleep(300);
         Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "Successful Transaction");

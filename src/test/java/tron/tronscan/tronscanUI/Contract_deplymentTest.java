@@ -29,7 +29,7 @@ public class Contract_deplymentTest {
     }
 
     @Test(enabled = true,description = "合约部署与合约验证")
-    public void test() throws Exception{
+    public void testContract_deplyment() throws Exception{
         Step.login(driver);
         {
             WebElement element = driver.findElement(By.cssSelector(".dropdown-toggle > span"));
@@ -80,12 +80,11 @@ public class Contract_deplymentTest {
         driver.findElement(By.cssSelector(".ant-select-dropdown-menu> li:nth-child(5)")).click();
         Thread.sleep(300);
         //本地上传
-        driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[3]/div/div/form/div[2]/div[2]/span/div/span/input")).sendKeys("/Users/tron/workSpace/Tronscan_AutoTest/src/test/resources/long_text.sol");
+        driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[3]/div/div/form/div[2]/div[2]/span/div/span/input")).sendKeys("/Users/tron/.jenkins/workspace/Tronscan_AutoTest/src/test/resources/right.sol");
         Thread.sleep(600);
         //验证签名
         driver.findElement(By.cssSelector("#g-recaptcha")).click();
         driver.findElement(By.cssSelector(".text-center > div.contract-compiler-button > button")).click();
-        driver.quit();
     }
     @AfterMethod(enabled = true)
     public void end() throws Exception {

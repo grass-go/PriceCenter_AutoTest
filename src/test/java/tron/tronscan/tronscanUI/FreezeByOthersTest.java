@@ -26,7 +26,7 @@ public class FreezeByOthersTest {
     }
 
     @Test(enabled = true,description = "给他人冻结带宽")
-    public void test() throws Exception{
+    public void testFreezeByOthers() throws Exception{
         Step.login(driver);
         {
             WebElement element = driver.findElement(By.cssSelector(".dropdown-toggle > span"));
@@ -61,6 +61,7 @@ public class FreezeByOthersTest {
         }
         driver.findElement(By.cssSelector(".btn-primary:nth-child(1)")).click();
         driver.findElement(By.cssSelector(".form-group:nth-child(2) .form-control")).click();
+        Thread.sleep(200);
         driver.findElement(By.cssSelector(".form-group:nth-child(2) .form-control")).sendKeys("TZEZWXYQS44388xBoMhQdpL1HrBZFLfDpt");
         Thread.sleep(200);
         driver.findElement(By.cssSelector(".form-group:nth-child(3) .form-control")).click();
@@ -74,7 +75,6 @@ public class FreezeByOthersTest {
         driver.findElement(By.cssSelector(".modal-body > p >button")).click();
         Thread.sleep(300);
         Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > div.text-muted > span")).getText(), "成功冻结");
-        driver.close();
     }
     @AfterMethod(enabled = true)
     public void end() throws Exception {

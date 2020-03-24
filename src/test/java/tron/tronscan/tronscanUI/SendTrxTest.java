@@ -26,7 +26,7 @@ public class SendTrxTest {
     }
 
     @Test(enabled = true)
-    public void test() throws Exception{
+    public void testTrx() throws Exception{
         Step.login(driver);
         {
             WebElement element = driver.findElement(By.cssSelector(".dropdown-toggle > span"));
