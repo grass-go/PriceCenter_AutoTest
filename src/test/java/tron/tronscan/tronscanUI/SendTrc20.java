@@ -37,14 +37,19 @@ public class SendTrc20 {
         driver.findElement(By.cssSelector(".form-group:nth-child(1) .form-control")).click();
         driver.findElement(By.cssSelector(".form-group:nth-child(1) .form-control")).sendKeys("TYvBUrZp7QboQzKhFVMYYkD4jDYsU33aQh");
         //选择TRC20
-        driver.findElement(By.cssSelector(".ant-select-open svg")).click();
         Thread.sleep(200);
-        driver.findElement(By.xpath("//form/div[2]/div/div/div/div")).click();
+        driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/div/div/div[2]/form/div[2]/div/div/div/div")).click();
+        Thread.sleep(200);
+        driver.findElement(By.xpath("/html/body/div[3]/div/div"));
+        driver.findElement(By.xpath("/html/body/div[3]/div/div/div/ul/li[2]/ul/li[1]")).click();
+        Thread.sleep(200);
         driver.findElement(By.cssSelector(".form-group:nth-child(3) .form-control")).sendKeys("0.01");
         driver.findElement(By.cssSelector(".form-group:nth-child(4) .form-control")).click();
+        driver.findElement(By.cssSelector(".form-group:nth-child(4) .form-control")).sendKeys("TRC 20");
         Thread.sleep(200);
         driver.findElement(By.xpath("//form/button")).click();
         driver.findElement(By.cssSelector(".btn-primary:nth-child(2)")).click();
+        Thread.sleep(300);
         Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "Successful Transaction");
     }
 
