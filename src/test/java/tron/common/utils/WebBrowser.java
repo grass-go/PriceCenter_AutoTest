@@ -3,6 +3,7 @@ package tron.common.utils;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
@@ -10,22 +11,27 @@ public class WebBrowser {
 
     public static WebDriver driver;
 
-    public WebBrowser(){
-
-        System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver");
-        driver = new ChromeDriver();
-
-    }
+//    public WebBrowser(){
+//
+//        System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver");
+//        driver = new ChromeDriver();
+//
+//    }
 
     public WebDriver startChrome(String url) throws Exception {
 
         try {
 
             System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver");
-
-            driver = new ChromeDriver();
-
+            ChromeOptions options = new ChromeOptions();
+            options.setHeadless(Boolean.FALSE);
+            driver = new ChromeDriver(options);
             driver.get(url);
+//            System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver");
+//
+//            driver = new ChromeDriver();
+//
+//            driver.get(url);
 
             System.out.println("成功打开谷歌浏览器！");
 
