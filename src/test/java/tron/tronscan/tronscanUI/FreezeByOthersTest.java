@@ -61,6 +61,7 @@ public class FreezeByOthersTest {
         }
         driver.findElement(By.cssSelector(".btn-primary:nth-child(1)")).click();
         driver.findElement(By.cssSelector(".form-group:nth-child(2) .form-control")).click();
+        Thread.sleep(200);
         driver.findElement(By.cssSelector(".form-group:nth-child(2) .form-control")).sendKeys("TZEZWXYQS44388xBoMhQdpL1HrBZFLfDpt");
         Thread.sleep(200);
         driver.findElement(By.cssSelector(".form-group:nth-child(3) .form-control")).click();

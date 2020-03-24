@@ -41,7 +41,7 @@ public class MtoS_TRX {
         Thread.sleep(200);
         driver.findElement(By.xpath("//form/button")).click();
         Thread.sleep(300);
-        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2 > span")).getText(), "转入成功");
+        Assert.assertTrue((driver.findElement(By.cssSelector(".sweet-alert > h2 > span")).getText()=="转入成功")||(driver.findElement(By.cssSelector(".sweet-alert > h2 > span")).getText()=="Deposit Success"));
         driver.close();
     }
 
