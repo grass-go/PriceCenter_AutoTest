@@ -37,12 +37,12 @@ public class SendTrc20 {
         driver.findElement(By.cssSelector(".form-group:nth-child(1) .form-control")).click();
         driver.findElement(By.cssSelector(".form-group:nth-child(1) .form-control")).sendKeys("TYvBUrZp7QboQzKhFVMYYkD4jDYsU33aQh");
         //选择TRC20
-        driver.findElement(By.cssSelector(".ant-select-open svg")).click();
-        Thread.sleep(200);
-        driver.findElement(By.xpath("//form/div[2]/div/div/div/div")).click();
-        driver.findElement(By.cssSelector(".form-group:nth-child(3) .form-control")).sendKeys("0.01");
-        driver.findElement(By.cssSelector(".form-group:nth-child(4) .form-control")).click();
-        Thread.sleep(200);
+//        driver.findElement(By.cssSelector(".ant-select-open svg")).click();
+//        Thread.sleep(200);
+//        driver.findElement(By.xpath("//form/div[2]/div/div/div/div")).click();
+//        driver.findElement(By.cssSelector(".form-group:nth-child(3) .form-control")).sendKeys("0.01");
+//        driver.findElement(By.cssSelector(".form-group:nth-child(4) .form-control")).click();
+//        Thread.sleep(200);
 //        driver.findElement(By.xpath("//form/button")).click();
 //        driver.findElement(By.cssSelector(".btn-primary:nth-child(2)")).click();
 //        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "Successful Transaction");
