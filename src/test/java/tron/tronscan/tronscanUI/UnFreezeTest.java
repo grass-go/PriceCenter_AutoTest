@@ -36,7 +36,7 @@ public class UnFreezeTest {
         driver.findElement(By.cssSelector(".btn-danger.mr-2:nth-child(1)")).click();
         Thread.sleep(200);
         //点弹窗-解冻
-        driver.findElement(By.cssSelector(".btn-lg.btn-danger ")).click();
+//        driver.findElement(By.cssSelector(".btn-lg.btn-danger ")).click();
 //        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "TRX Unfrozen");
     }
     @AfterMethod(enabled = true)
