@@ -7,6 +7,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import tron.common.utils.MyIRetryAnalyzer;
 import tron.common.utils.WebBrowser;
 
 public class BlocksTest {
@@ -22,7 +23,7 @@ public class BlocksTest {
         }
     }
 
-    @Test(enabled = true)
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
     public void testSRText() throws Exception{
 //        driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div/text()")).getText();
         driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[2]/div/div/div/div/div/div/div/table/tbody/tr[1]/td[1]/a")).click();

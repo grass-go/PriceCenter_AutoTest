@@ -9,6 +9,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import tron.common.utils.MyIRetryAnalyzer;
 import tron.common.utils.Step;
 import tron.common.utils.WebBrowser;
 
@@ -48,7 +49,7 @@ public class FreezeTest {
         driver.close();
     }
 
-    @Test(enabled = true,description = "冻结能量")
+    @Test(enabled = true,description = "冻结能量",retryAnalyzer = MyIRetryAnalyzer.class)
     public void testEnery() throws Exception{
         Step.login(driver);
         {
