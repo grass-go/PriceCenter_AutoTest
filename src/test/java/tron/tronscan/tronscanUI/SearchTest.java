@@ -26,7 +26,7 @@ public class SearchTest {
         public void testSearchAddressText() throws Exception{
             driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div/div/div/div/div/input")).sendKeys("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
             Thread.sleep(300);
-            Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a/div/span/strong")).getText(),"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
+            Assert.assertEquals(driver.findElement(By.cssSelector("#_searchBox > a > div > span > strong")).getText(),"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
             Thread.sleep(300);
             driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a")).click();
             Thread.sleep(300);
