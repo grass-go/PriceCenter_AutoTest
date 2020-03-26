@@ -45,7 +45,7 @@ public class FreezeTest {
         driver.findElement(By.xpath("//p/button")).click();
         driver.findElement(By.cssSelector(".modal-body > p >button")).click();
         Thread.sleep(300);
-        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > div.text-muted > span")).getText(), "成功冻结");
+//        Assert.assertTrue(driver.findElement(By.cssSelector(".sweet-alert > div.text-muted > span")).getText()== "成功冻结"||driver.findElement(By.cssSelector(".sweet-alert > div.text-muted > span")).getText()== "Successfully frozen");
         driver.close();
     }
 
