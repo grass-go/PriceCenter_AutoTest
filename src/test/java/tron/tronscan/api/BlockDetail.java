@@ -33,14 +33,13 @@ public class BlockDetail {
   public void test01getBlockDetail() {
     //Get response
     Map<String, String> params = new HashMap<>();
-    String blockNumber = "111112";
+    String blockNumber = "458888";
     params.put("number", blockNumber);
     response = TronscanApiList.getBlockDetail(tronScanNode, params);
     log.info("code is " + response.getStatusLine().getStatusCode());
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
-    Assert.assertTrue(responseContent.containsKey("service_type"));
     responseArrayContent = responseContent.getJSONArray("data");
     JSONObject responseObject = responseArrayContent.getJSONObject(0);
     Assert.assertTrue(responseObject.containsKey("hash"));
@@ -76,12 +75,11 @@ public class BlockDetail {
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
     //Assert.assertTrue(responseContent.containsKey("total"));
-    Assert.assertTrue(responseContent.containsKey("service_type"));
 
     //data object
     responseArrayContent = responseContent.getJSONArray("data");
     JSONObject responseObject = responseArrayContent.getJSONObject(0);
-    Assert.assertEquals(limit, responseObject.size());
+    Assert.assertEquals(limit, responseArrayContent.size());
     Assert.assertTrue(responseObject.containsKey("hash"));
     Assert.assertTrue(responseObject.containsKey("size"));
     Assert.assertTrue(!responseObject.getString("timestamp").isEmpty());
@@ -114,7 +112,6 @@ public class BlockDetail {
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.size() == 3);
-    Assert.assertTrue(responseContent.containsKey("service_type"));
     Long total = Long.valueOf(responseContent.get("total").toString());
     Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
     Assert.assertTrue(rangeTotal >= total);
@@ -128,7 +125,7 @@ public class BlockDetail {
   public void getBlocksList() {
     //Get response
     int limit = 20;
-    String address = "TMuA6YqfCeX8EhbfYEg5y7S4DqzSJireY9";
+    String address = "TLyqzVGLV1srkB7dToTAEqgDSfPtXRJZYH";
     Map<String, String> params = new HashMap<>();
     params.put("sort", "-number");
     params.put("limit", String.valueOf(limit));
@@ -140,8 +137,6 @@ public class BlockDetail {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
-    Assert.assertTrue(responseContent.size() == 2);
-    Assert.assertTrue(responseContent.containsKey("service_type"));
     Assert.assertTrue(responseContent.containsKey("data"));
   }
 

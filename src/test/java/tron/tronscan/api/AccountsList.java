@@ -45,7 +45,7 @@ public class AccountsList {
     //data object
     responseArrayContent = responseContent.getJSONArray("data");
     JSONObject responseObject = responseArrayContent.getJSONObject(0);
-    Assert.assertEquals(limit, responseObject.size());
+    Assert.assertEquals(limit, responseArrayContent.size());
     Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
     Assert.assertTrue(patternAddress.matcher(responseObject.getString("address")).matches());
     Assert.assertTrue(responseObject.containsKey("balance"));
@@ -125,10 +125,6 @@ public class AccountsList {
     Assert.assertTrue(Long.valueOf(targetContent.get("balance").toString()) >= 0);
     Assert.assertTrue(targetContent.containsKey("name"));
 
-    //新增enabled
-    Assert.assertTrue(Boolean.valueOf(responseContent.getString("enabled")));
-    //新增url
-    Assert.assertTrue(responseContent.containsKey("url"));
 
     //balances json
     JSONArray balancesArray = responseContent.getJSONArray("balances");

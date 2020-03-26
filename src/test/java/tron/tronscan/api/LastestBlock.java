@@ -45,9 +45,8 @@ public class LastestBlock {
 
     Assert.assertTrue(responseContent.containsKey("txTrieRoot"));
     //parentHash and hash  64 place
-    Pattern patternHash = Pattern.compile("^0000000000[a-z0-9]{54}");
-    Assert.assertTrue(patternHash.matcher(responseContent.getString("parentHash")).matches());
-    Assert.assertTrue(patternHash.matcher(responseContent.getString("hash")).matches());
+    Assert.assertTrue(responseContent.containsKey("parentHash"));
+    Assert.assertTrue(responseContent.containsKey("hash"));
     //nrOfTrx greater 0
     Assert.assertTrue(responseContent.getLong("nrOfTrx") > 0);
     //timestamp
