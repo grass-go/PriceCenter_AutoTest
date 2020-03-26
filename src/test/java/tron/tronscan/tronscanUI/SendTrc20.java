@@ -25,7 +25,7 @@ public class SendTrc20 {
         }
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void testTrc20() throws Exception{
         Step.login(driver);
         {
