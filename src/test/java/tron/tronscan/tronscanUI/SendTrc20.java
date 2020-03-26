@@ -25,7 +25,7 @@ public class SendTrc20 {
         }
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testTrc20() throws Exception{
         Step.login(driver);
         {
@@ -41,7 +41,6 @@ public class SendTrc20 {
         driver.findElement(By.xpath("/html/body/div[2]/div/div[1]/div/div/div[2]/form/div[2]/div/div/div/div")).click();
         Thread.sleep(200);
         driver.findElement(By.xpath("/html/body/div[3]/div/div"));
-        Thread.sleep(200);
         driver.findElement(By.xpath("/html/body/div[3]/div/div/div/ul/li[2]/ul/li[1]")).click();
         Thread.sleep(200);
         driver.findElement(By.cssSelector(".form-group:nth-child(3) .form-control")).sendKeys("0.01");
