@@ -42,10 +42,9 @@ public class FreezeTest {
         driver.findElement(By.cssSelector(".form-group:nth-child(4) > select > option:nth-child(1)")).click();
         driver.findElement(By.cssSelector(".form-check-input")).click();
         Thread.sleep(200);
-        driver.findElement(By.xpath("//p/button")).click();
         driver.findElement(By.cssSelector(".modal-body > p >button")).click();
         Thread.sleep(300);
-//        Assert.assertTrue(driver.findElement(By.cssSelector(".sweet-alert > div.text-muted > span")).getText()== "成功冻结"||driver.findElement(By.cssSelector(".sweet-alert > div.text-muted > span")).getText()== "Successfully frozen");
+        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > div.text-muted > span")).getText() , "Successfully frozen");
         driver.close();
     }
 
@@ -65,10 +64,9 @@ public class FreezeTest {
         driver.findElement(By.cssSelector(".form-group:nth-child(4) > select > option:nth-child(2)")).click();
         driver.findElement(By.cssSelector(".form-check-input")).click();
         Thread.sleep(200);
-        driver.findElement(By.xpath("//p/button")).click();
         driver.findElement(By.cssSelector(".modal-body > p >button")).click();
         Thread.sleep(300);
-//        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > div.text-muted > span")).getText(), "成功冻结");
+        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > div.text-muted > span")).getText() , "Successfully frozen");
     }
     @AfterMethod(enabled = true)
     public void end() throws Exception {
