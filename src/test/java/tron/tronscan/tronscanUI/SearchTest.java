@@ -7,6 +7,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import tron.common.utils.MyIRetryAnalyzer;
 import tron.common.utils.WebBrowser;
 
 public class SearchTest {
@@ -22,7 +23,7 @@ public class SearchTest {
             }
         }
 
-        @Test(enabled = true)
+        @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
         public void testSearchAddressText() throws Exception{
             driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div/div/div/div/div/input")).sendKeys("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
             Thread.sleep(300);
@@ -34,7 +35,7 @@ public class SearchTest {
 
         }
 
-    @Test(enabled = true)
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
     public void testSearchContractText() throws Exception{
         driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div/div/div/div/div/input")).sendKeys("TVRqMwBZU13c4wx6Hi6jqroCnYv2nrqQU1");
         Thread.sleep(300);
@@ -45,7 +46,7 @@ public class SearchTest {
 
     }
 
-    @Test(enabled = true)
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
     public void testSearchTrc10Text() throws Exception{
         driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div/div/div/div/div/input")).sendKeys("BTT");
         Thread.sleep(300);
@@ -56,7 +57,7 @@ public class SearchTest {
 
     }
 
-    @Test(enabled = true)
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
     public void testSearchTrc20Text() throws Exception{
         driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div/div/div/div/div/input")).sendKeys("USDT");
         Thread.sleep(300);

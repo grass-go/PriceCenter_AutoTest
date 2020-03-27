@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
+import tron.common.utils.MyIRetryAnalyzer;
 import tron.common.utils.Step;
 import tron.common.utils.WebBrowser;
 
@@ -28,7 +29,7 @@ public class Contract_deplymentTest {
         }
     }
 
-    @Test(enabled = true,description = "合约部署与合约验证")
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
     public void testContract_deplyment() throws Exception{
         Step.login(driver);
         {

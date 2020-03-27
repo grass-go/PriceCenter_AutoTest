@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tron.tronscan.api.ContractsList" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-03-27T04:58:39" hostname="zhukaideiMac.local" time="0.513">
+  <properties/>
+  <testcase name="test01getContractsList" classname="tron.tronscan.api.ContractsList" time="0.513"/>
+  <system-out><![CDATA[http://apilist.tronscan.org/api/contracts
+12:58:39.809 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection request: [route: {}->http://apilist.tronscan.org:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+12:58:39.809 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection leased: [id: 58][route: {}->http://apilist.tronscan.org:80][total kept alive: 0; route allocated: 1 of 80; total allocated: 1 of 100]
+12:58:39.809 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnectionOperator - Connecting to apilist.tronscan.org:80
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAddCookies - CookieSpec selected: default
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAuthCache - Auth cache not set in the context
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestTargetAuthentication - Target auth state: UNCHALLENGED
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestProxyAuthentication - Proxy auth state: UNCHALLENGED
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultHttpClient - Attempt 1 to execute request
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Sending request: GET /api/contracts?count=true&limit=20&start=0 HTTP/1.1
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "GET /api/contracts?count=true&limit=20&start=0 HTTP/1.1[\r][\n]"
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Content-type: application/json; charset=utf-8[\r][\n]"
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Connection: Close[\r][\n]"
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Host: apilist.tronscan.org[\r][\n]"
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)[\r][\n]"
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "[\r][\n]"
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.headers - >> GET /api/contracts?count=true&limit=20&start=0 HTTP/1.1
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Content-type: application/json; charset=utf-8
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Connection: Close
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Host: apilist.tronscan.org
+12:58:40.043 [TestNG-tests-1] DEBUG org.apache.http.headers - >> User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "HTTP/1.1 200 OK[\r][\n]"
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Server: nginx[\r][\n]"
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Date: Fri, 27 Mar 2020 04:58:40 GMT[\r][\n]"
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Type: application/json;charset=utf-8[\r][\n]"
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Length: 4357[\r][\n]"
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Connection: close[\r][\n]"
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Vary: Accept-Encoding[\r][\n]"
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Access-Control-Allow-Origin: *[\r][\n]"
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Access-Control-Allow-Headers: DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization[\r][\n]"
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS[\r][\n]"
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "X-Proxy-Cache: MISS[\r][\n]"
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "[\r][\n]"
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Receiving response: HTTP/1.1 200 OK
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.headers - << HTTP/1.1 200 OK
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.headers - << Server: nginx
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.headers - << Date: Fri, 27 Mar 2020 04:58:40 GMT
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Type: application/json;charset=utf-8
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Length: 4357
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.headers - << Connection: close
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.headers - << Vary: Accept-Encoding
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.headers - << Access-Control-Allow-Origin: *
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.headers - << Access-Control-Allow-Headers: DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.headers - << Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS
+12:58:40.321 [TestNG-tests-1] DEBUG org.apache.http.headers - << X-Proxy-Cache: MISS
+http://apilist.tronscan.org/api/contracts?count=true&limit=20&start=0 请求总耗时：512 毫秒
+12:58:40.322 [TestNG-tests-1] INFO tron.tronscan.api.ContractsList - code is 200
+12:58:40.322 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "{"total":10000,"rangeTotal":31369,"status":{"code":0,"message":"SUCCESS"},"data":[{"address":"TK5qKN9xJoLfCzZPG6Mj642WQtvbiHCTMx","name":"","verify_status":0,"balance":1000000,"trxCount":104191372,"date_created":1562839428000},{"address":"TWmhXhXjgXTj87trBufmWFuXtQP8sCWZZV","name":"TronBetDice","verify_status":0,"balance":1963853796,"trxCount":101203233,"date_created":1562838744000},{"address":"TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3","name":"TronBet","verify_status":0,"balance":13278338812,"trxCount":97248596,"date_created":1540296579000},{"address":"TXSjGe7jtfHwiTFxxfER8PKVz9vc1N8u2x","name":"","verify_status":0,"balance":0,"trxCount":60572398,"date_created":1545413676000},{"address":"TVkNuE1BYxECWq85d8UR9zsv6WppBns9iH","name":"","verify_status":0,"balance":10000000,"trxCount":38166924,"date_created":1539423381000},{"address":"TSvin3om2vWuw5stbxTeDQrpqH2VSKTpKz","name":"TronBetLivePool","verify_status":0,"balance":0,"trxCount":14525454,"date_created":1556177523000},{"address":"TZ7y9zuk1LMfp4JLFPrs1EcqXuqZukmBYG","name":"TronWow","verify_status":0,"balance":1000514,"trxCount":13716376,"date_created":1554979431000},{"address":"TXijhBT8JcWV9ZNucbUmMzhDngEPtLu1a9","name":"","verify_status":0,"balance":3000000,"trxCount":13601759,"date_created":1545662277000},{"address":"TGtGhthzyLBYPUKDysXX1YSgRKPYVTQuMe","name":"888Tron","verify_status":4,"b"
+12:58:40.322 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "alance":7508334551515,"trxCount":13345150,"date_created":1546179258000,"license":"0","compile_version":"","compile_settings":"{\"optimizer\":0,\"constructor_params\":\"\"}","verify_time":0},{"address":"TRkXAjRA6rRsCZ31DofFsZYYPjtz8fvL1u","name":"TronBetRing","verify_status":0,"balance":0,"trxCount":12028046,"date_created":1545904050000},{"address":"TBTxi4miSX4SJL8rM38eTaRb8AA16py27x","name":"TronBetRing","verify_status":0,"balance":159332714,"trxCount":10756621,"date_created":1562838744000},{"address":"TVwXxvyYawS21PT1B7XZxBZCMbQZLUENoE","name":"ATT","verify_status":0,"balance":331202014190,"trxCount":10407525,"date_created":1546959006000,"trc20token":{"icon_url":"https://coin.top/production/logo/TVwXxvyYawS21PT1B7XZxBZCMbQZLUENoE.png","symbol":"ATT","total_supply":"990000000000000000","level":0,"contract_address":"TVwXxvyYawS21PT1B7XZxBZCMbQZLUENoE","issuer_addr":"TJmRPS6dLAYZb5zXVADVqwQ3f8xYkuGh6B","home_page":"http://www.attchain.com/#/","token_desc":"Africa Trading Chain can be used to improve the financial support level of China-Africa cooperation by blockchain technology. The project origin is from the [0xe2][0x80][0x9c]One Belt and One Road[0xe2][0x80][0x9d] initiative and is based in Africa . It is also receiving strong supports from many African governments.","holders_count":34804,"git_hub":"","decimals":6,"name":"ATT","issue_time":"2018-11-30 00:00:00","white_paper":"https://www.attchain.com/ATT%20Africa-Trading%20Token-?-Eng.pdf","social_media":"[{\"method\":\"Facebook\",\"link\":\"\"},{\"method\":\"Twitter\",\"link\":\"\"},{\"method\":\"Telegram\",\"link\":\"\"},{\"method\":\"Reddit\",\"link\":\"\"},{\"method\":\"Steem\",\"link\":\"\"},{\"method\":\"Medium\",\"link\":\"\"},{\"method\":\"Linkedin\",\"link\":\"\"},{\"method\":\"Wechat\",\"link\":\"\"},{\"method\":\"Weibo\",\"link\":\"\"}]","status":1}},{"address":"TGfbkJww3x5cb9u4ekLtZ9hXvJo48nUSi4","name":"","verify_status":0,"balance":0,"trxCount":9124050,"date_created":1546319916000},{"address":"TTcz2rtb8uDD7NZz5MVU8U9wLAcS72bgYf","name":"DiceGame","verify_status":0,"balance":57925804639,"trxCount":8857517,"date_created":1566557778000},{"address":"TVSkd22mRhjgTr2XSSuL6faTgo4jALmNuH","name":"TronBetMoon","verify_status":0,"balance":1691685987,"trxCount":7699631,"date_created":1543575345000},{"address":"TP7s2QG9tVESyTnvgTmpDbRzENw7cQnk68","name":"DiceCashier","verify_status":0,"balance":198593678368,"trxCount":7689905,"date_created":1559373084000},{"address":"TRYiHLtgTs7mBvE8JKWjGAZLq2nM1pR6j9","name":"","verify_status":0,"balance":724549,"trxCount":7351956,"date_created":1553574012000},{"address":"TW76veo5eQotWrtjP4fjDCDfBDM8fzhoC8","name":"TronDice","verify_status":0,"balance":3677200,"trxCount":5188297,"date_created":1548678708000},{"address":"TYVxHYG2fxJjoHD3UtdQmoXgdRyT8FSznS","name":"","verify_status":0,"balance":0,"trxCount":5107799,"date_created":1548042855000},{"address":"THrHnUGWzjGx61ftewCBPxSS6B9dHbwEBM","name":"","verify_status":0,"balance":1000000000,"trxCount":4592822,"date_created":1547880258000}]}[\n]"
+12:58:40.322 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Connection 0.0.0.0:61307<->18.216.178.128:80 closed
+12:58:40.322 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection released: [id: 58][route: {}->http://apilist.tronscan.org:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
