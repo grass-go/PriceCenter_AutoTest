@@ -45,7 +45,11 @@ public class TransactionList {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
-    Assert.assertTrue(responseContent.containsKey("service_type"));
+
+    Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 0);
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal >= total);
     responseArrayContent = responseContent.getJSONArray("data");
     JSONObject responseObject = responseArrayContent.getJSONObject(0);
     Assert.assertTrue(responseObject.containsKey("hash"));
@@ -84,7 +88,7 @@ public class TransactionList {
     Assert.assertTrue(responseContent.size() == 4);
     Assert.assertTrue(responseContent.containsKey("total"));
     Assert.assertTrue(responseContent.containsKey("rangeTotal"));
-    Assert.assertTrue(responseContent.containsKey("service_type"));
+    Assert.assertTrue(responseContent.containsKey("data"));
     Assert.assertTrue(responseContent.containsKey("wholeChainTxCount"));
   }
 
@@ -150,9 +154,11 @@ public class TransactionList {
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
     //three object, "total" and "Data","rangeTotal"
-    Assert.assertTrue(responseContent.size() == 2);
-    //service_type
-    Assert.assertTrue(responseContent.containsKey("service_type"));
+    Assert.assertTrue(responseContent.size() >= 0);
+    Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 0);
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal >= total);
     JSONArray exchangeArray = responseContent.getJSONArray("data");
 
     targetContent = exchangeArray.getJSONObject(0);
@@ -183,10 +189,9 @@ public class TransactionList {
     proposalContent = targetContent.getJSONObject("contractData");
     //contractData Contain owner_address，contract_address
     Assert.assertTrue(patternAddress.matcher(proposalContent.getString("owner_address")).matches());
-    Assert.assertTrue(
-        patternAddress.matcher(proposalContent.getString("to_address")).matches());
+    Assert.assertTrue(patternAddress.matcher(proposalContent.getString("contract_address")).matches());
     //call_value
-    Assert.assertTrue(Long.valueOf(proposalContent.get("amount").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(proposalContent.get("call_value").toString()) >= 0);
     //timestamp
     Assert.assertTrue(targetContent.containsKey("timestamp"));
 
@@ -211,7 +216,12 @@ public class TransactionList {
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
     //three object, "total" and "Data","rangeTotal"
-    Assert.assertTrue(responseContent.size() == 2);
+    Assert.assertTrue(responseContent.size() == 4);
+    Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 0);
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal >= total);
+
     JSONArray exchangeArray = responseContent.getJSONArray("data");
 
     targetContent = exchangeArray.getJSONObject(0);
@@ -300,8 +310,7 @@ public class TransactionList {
       Assert.assertTrue(
           !responseArrayContent.getJSONObject(i).get("contractType").toString().isEmpty());
       //confirmed
-      Assert.assertTrue(
-          Boolean.valueOf(responseArrayContent.getJSONObject(i).getString("confirmed")));
+      //Assert.assertTrue(Boolean.valueOf(responseArrayContent.getJSONObject(i).getString("confirmed")));
       //contractData
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("contractData"));
 

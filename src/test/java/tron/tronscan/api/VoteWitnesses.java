@@ -93,7 +93,9 @@ public class VoteWitnesses {
     //data object
     Assert.assertTrue(responseContent.size() == 2);
     //success
-    Assert.assertTrue(Boolean.valueOf(responseContent.getString("success")));
+    //Assert.assertTrue(Boolean.valueOf(responseContent.getString("success")));
+    Assert.assertTrue(responseContent.containsKey("success"));
+
     targetContent = responseContent.getJSONObject("data");
     //address
     Assert.assertTrue(targetContent.containsKey("address"));

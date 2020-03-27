@@ -52,10 +52,14 @@ public class TokenOverview {
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
     //data object
-    Assert.assertTrue(responseContent.size() == 4);
+    Assert.assertTrue(responseContent.size() >= 7);
     Long total = Long.valueOf(responseContent.get("total").toString());
     Long totalAll = Long.valueOf(responseContent.get("totalAll").toString());
     Assert.assertTrue(totalAll >= total);
+    Assert.assertTrue(Long.valueOf(responseContent.get("currentWeekAll").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(responseContent.get("valueAtLeast").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(responseContent.get("currentWeekTotalAll").toString()) >= 0);
+
     JSONArray exchangeArray = responseContent.getJSONArray("tokens");
     targetContent = exchangeArray.getJSONObject(0);
     //marketcap
@@ -73,7 +77,7 @@ public class TokenOverview {
     Assert.assertTrue(!targetContent.get("nrOfTokenHolders").toString().isEmpty());
     Assert.assertTrue(!targetContent.get("pairId").toString().isEmpty());
     //isTop
-    Assert.assertTrue(Boolean.valueOf(targetContent.getString("isTop")));
+    //Assert.assertTrue(Boolean.valueOf(targetContent.getString("isTop")));
     Assert.assertTrue(!targetContent.get("name").toString().isEmpty());
     Assert.assertTrue(!targetContent.get("projectSite").toString().isEmpty());
     Assert.assertTrue(!targetContent.get("abbr").toString().isEmpty());

@@ -114,39 +114,16 @@ public class SystemList {
     TronscanApiList.printJsonContent(responseContent);
 
     //System status has 5 key:value
-    Assert.assertTrue(responseContent.size() >= 5);
+    Assert.assertTrue(responseContent.size() >= 3);
     //node
     targetContent = responseContent.getJSONObject("node");
     //total
     Assert.assertTrue(targetContent.containsKey("total"));
     //code
     Assert.assertTrue(targetContent.containsKey("code"));
-    //data
-    JSONArray exchangeArray = responseContent.getJSONArray("priceEUR");
-    targetContent = exchangeArray.getJSONObject(0);
-    //name
-    Assert.assertTrue(!targetContent.get("name").toString().isEmpty());
-    //symbol
-    Assert.assertTrue(!targetContent.get("symbol").toString().isEmpty());
-    //price_usd
-    Assert.assertTrue(Double.valueOf(targetContent.get("price_usd").toString()) >= 0);
-    //price_eur
-    Assert.assertTrue(Double.valueOf(targetContent.get("price_eur").toString()) >= 0);
-
+    //yesterdayStat
     targetContent = responseContent.getJSONObject("yesterdayStat");
     Assert.assertTrue(!targetContent.get("data").toString().isEmpty());
-    //priceETH
-    JSONArray ethArray = responseContent.getJSONArray("priceETH");
-    targetContent = ethArray.getJSONObject(0);
-    //name
-    Assert.assertTrue(!targetContent.get("name").toString().isEmpty());
-    //symbol
-    Assert.assertTrue(!targetContent.get("symbol").toString().isEmpty());
-    //price_usd
-    Assert.assertTrue(Double.valueOf(targetContent.get("price_usd").toString()) >= 0);
-    //price_eth
-    Assert.assertTrue(Double.valueOf(targetContent.get("price_eth").toString()) >= 0);
-
     //tps
     targetContent = responseContent.getJSONObject("tps");
     //type

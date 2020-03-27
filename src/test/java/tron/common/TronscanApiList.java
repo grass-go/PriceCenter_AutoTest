@@ -1205,14 +1205,18 @@ public class TronscanApiList {
     /**
      * constructor.add CNY price
      */
-    public static HttpResponse getProxyList(String tronscanNode, Map<String, String> params) {
+    public static HttpResponse postProxyList(String tronscanNode, String params) {
         try {
             String requestUrl = "http://" + tronscanNode + "api/system/proxy";
             System.out.println(requestUrl);
-            response = createGetConnect(requestUrl, params);
+
+            JsonObject body = new JsonObject();
+            body.addProperty("url", params);
+            response = createConnect(requestUrl, body);
+            //response = createConnect(requestUrl, requestBody);
         } catch (Exception e) {
             e.printStackTrace();
-            httpget.releaseConnection();
+            httppost.releaseConnection();
             return null;
         }
         return response;
