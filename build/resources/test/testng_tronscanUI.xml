@@ -20,6 +20,7 @@
             <class name="tron.tronscan.tronscanUI.TransactionsTest"></class>
             <class name="tron.tronscan.tronscanUI.Votes"></class>
             <class name="tron.tronscan.tronscanUI.Voting_rewardTest"></class>
+            <class name="tron.tronscan.tronscanUI.Committee"></class>
         </classes>
     </test>
 </suite>
