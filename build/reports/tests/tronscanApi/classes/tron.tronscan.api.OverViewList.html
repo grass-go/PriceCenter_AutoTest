@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Class tron.tronscan.api.OverViewList</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Class tron.tronscan.api.OverViewList</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/tron.tronscan.api.html">tron.tronscan.api</a> &gt; OverViewList</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.638s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">getOverViewList</td>
+<td class="success">0.638s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>http://apilist.tronscan.org/api/stats/overview
+12:57:45.466 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection request: [route: {}-&gt;http://apilist.tronscan.org:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+12:57:45.466 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection leased: [id: 23][route: {}-&gt;http://apilist.tronscan.org:80][total kept alive: 0; route allocated: 1 of 80; total allocated: 1 of 100]
+12:57:45.466 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnectionOperator - Connecting to apilist.tronscan.org:80
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAddCookies - CookieSpec selected: default
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAuthCache - Auth cache not set in the context
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestTargetAuthentication - Target auth state: UNCHALLENGED
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestProxyAuthentication - Proxy auth state: UNCHALLENGED
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultHttpClient - Attempt 1 to execute request
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Sending request: GET /api/stats/overview HTTP/1.1
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.wire -  &gt;&gt; &quot;GET /api/stats/overview HTTP/1.1[\r][\n]&quot;
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.wire -  &gt;&gt; &quot;Content-type: application/json; charset=utf-8[\r][\n]&quot;
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.wire -  &gt;&gt; &quot;Connection: Close[\r][\n]&quot;
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.wire -  &gt;&gt; &quot;Host: apilist.tronscan.org[\r][\n]&quot;
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.wire -  &gt;&gt; &quot;User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)[\r][\n]&quot;
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.wire -  &gt;&gt; &quot;[\r][\n]&quot;
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.headers - &gt;&gt; GET /api/stats/overview HTTP/1.1
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.headers - &gt;&gt; Content-type: application/json; charset=utf-8
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.headers - &gt;&gt; Connection: Close
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.headers - &gt;&gt; Host: apilist.tronscan.org
+12:57:45.741 [TestNG-tests-1] DEBUG org.apache.http.headers - &gt;&gt; User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)
+12:57:46.102 [TestNG-tests-1] DEBUG org.apache.http.wire -  &lt;&lt; &quot;HTTP/1.1 200 OK[\r][\n]&quot;
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.wire -  &lt;&lt; &quot;Server: nginx[\r][\n]&quot;
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.wire -  &lt;&lt; &quot;Date: Fri, 27 Mar 2020 04:57:46 GMT[\r][\n]&quot;
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.wire -  &lt;&lt; &quot;Content-Type: application/json;charset=utf-8[\r][\n]&quot;
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.wire -  &lt;&lt; &quot;Content-Length: 7749[\r][\n]&quot;
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.wire -  &lt;&lt; &quot;Connection: close[\r][\n]&quot;
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.wire -  &lt;&lt; &quot;Vary: Accept-Encoding[\r][\n]&quot;
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.wire -  &lt;&lt; &quot;Access-Control-Allow-Origin: *[\r][\n]&quot;
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.wire -  &lt;&lt; &quot;Access-Control-Allow-Headers: DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization[\r][\n]&quot;
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.wire -  &lt;&lt; &quot;Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS[\r][\n]&quot;
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.wire -  &lt;&lt; &quot;X-Proxy-Cache: EXPIRED[\r][\n]&quot;
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.wire -  &lt;&lt; &quot;[\r][\n]&quot;
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Receiving response: HTTP/1.1 200 OK
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.headers - &lt;&lt; HTTP/1.1 200 OK
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.headers - &lt;&lt; Server: nginx
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.headers - &lt;&lt; Date: Fri, 27 Mar 2020 04:57:46 GMT
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.headers - &lt;&lt; Content-Type: application/json;charset=utf-8
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.headers - &lt;&lt; Content-Length: 7749
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.headers - &lt;&lt; Connection: close
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.headers - &lt;&lt; Vary: Accept-Encoding
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.headers - &lt;&lt; Access-Control-Allow-Origin: *
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.headers - &lt;&lt; Access-Control-Allow-Headers: DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.headers - &lt;&lt; Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.headers - &lt;&lt; X-Proxy-Cache: EXPIRED
+http://apilist.tronscan.org/api/stats/overview 请求总耗时：637 毫秒
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.wire -  &lt;&lt; &quot;{&quot;success&quot;:true,&quot;data&quot;:[{&quot;accountWithTrx&quot;:2954343,&quot;date&quot;:1584057600000,&quot;totalTransaction&quot;:917651309,&quot;avgBlockTime&quot;:3,&quot;avgBlockSize&quot;:14004,&quot;totalBlockCount&quot;:17961264,&quot;newAddressSeen&quot;:5968,&quot;blockchainSize&quot;:289500273925,&quot;totalAddress&quot;:4860202,&quot;newBlockSeen&quot;:28759,&quot;newTransactionSeen&quot;:1215046,&quot;newTrigger&quot;:1002025,&quot;newTrc10&quot;:2,&quot;newTrc20&quot;:0,&quot;totalTrc10&quot;:2913,&quot;totalTrc20&quot;:2643,&quot;triggers&quot;:789722020,&quot;trx_transfer&quot;:92039,&quot;trc10_transfer&quot;:111594,&quot;freeze_transaction&quot;:2398,&quot;vote_transaction&quot;:3143,&quot;shielded_transaction&quot;:0,&quot;other_transaction&quot;:2249},{&quot;accountWithTrx&quot;:2957060,&quot;date&quot;:1584144000000,&quot;totalTransaction&quot;:918866545,&quot;avgBlockTime&quot;:3,&quot;avgBlockSize&quot;:14740,&quot;totalBlockCount&quot;:17989887,&quot;newAddressSeen&quot;:5795,&quot;blockchainSize&quot;:289922203539,&quot;totalAddress&quot;:4865997,&quot;newBlockSeen&quot;:28623,&quot;newTransactionSeen&quot;:1215236,&quot;newTrigger&quot;:1044488,&quot;newTrc10&quot;:1,&quot;newTrc20&quot;:2,&quot;totalTrc10&quot;:2914,&quot;totalTrc20&quot;:2645,&quot;triggers&quot;:790766508,&quot;trx_transfer&quot;:88119,&quot;trc10_transfer&quot;:73350,&quot;freeze_transaction&quot;:2285,&quot;vote_transaction&quot;:3357,&quot;shielded_transaction&quot;:0,&quot;other_transaction&quot;:2376},{&quot;accountWithTrx&quot;:2961218,&quot;date&quot;:1584230400000,&quot;totalTransaction&quot;:920175348,&quot;avgBlockTime&quot;:3,&quot;avgBlockSize&quot;:16076,&quot;totalBlockCount&quot;:18018654,&quot;newAddressSeen&quot;:6049,&quot;blockchainSize&quot;:290384667492,&quot;totalAddress&quot;:4872046,&quot;newBlockSeen&quot;:28767,&quot;newTransactionSeen&quot;:1308803,&quot;newTrigger&quot;:1158486,&quot;newTrc10&quot;:1,&quot;n&quot;
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.wire -  &lt;&lt; &quot;ewTrc20&quot;:1,&quot;totalTrc10&quot;:2915,&quot;totalTrc20&quot;:2646,&quot;triggers&quot;:791924994,&quot;trx_transfer&quot;:86953,&quot;trc10_transfer&quot;:54067,&quot;freeze_transaction&quot;:2372,&quot;vote_transaction&quot;:3261,&quot;shielded_transaction&quot;:0,&quot;other_transaction&quot;:2155},{&quot;accountWithTrx&quot;:2966727,&quot;date&quot;:1584316800000,&quot;totalTransaction&quot;:921342603,&quot;avgBlockTime&quot;:3,&quot;avgBlockSize&quot;:18531,&quot;totalBlockCount&quot;:18043517,&quot;newAddressSeen&quot;:8002,&quot;blockchainSize&quot;:290845406626,&quot;totalAddress&quot;:4880048,&quot;newBlockSeen&quot;:24863,&quot;newTransactionSeen&quot;:1167255,&quot;newTrigger&quot;:1027392,&quot;newTrc10&quot;:1,&quot;newTrc20&quot;:17,&quot;totalTrc10&quot;:2916,&quot;totalTrc20&quot;:2663,&quot;triggers&quot;:792952386,&quot;trx_transfer&quot;:80177,&quot;trc10_transfer&quot;:49924,&quot;freeze_transaction&quot;:2160,&quot;vote_transaction&quot;:2833,&quot;shielded_transaction&quot;:0,&quot;other_transaction&quot;:2100},{&quot;accountWithTrx&quot;:2969785,&quot;date&quot;:1584403200000,&quot;totalTransaction&quot;:922601186,&quot;avgBlockTime&quot;:3,&quot;avgBlockSize&quot;:14123,&quot;totalBlockCount&quot;:18072295,&quot;newAddressSeen&quot;:6035,&quot;blockchainSize&quot;:291251842588,&quot;totalAddress&quot;:4886083,&quot;newBlockSeen&quot;:28778,&quot;newTransactionSeen&quot;:1258583,&quot;newTrigger&quot;:1095125,&quot;newTrc10&quot;:2,&quot;newTrc20&quot;:3,&quot;totalTrc10&quot;:2918,&quot;totalTrc20&quot;:2666,&quot;triggers&quot;:794047511,&quot;trx_transfer&quot;:78082,&quot;trc10_transfer&quot;:77462,&quot;freeze_transaction&quot;:2337,&quot;vote_transaction&quot;:3232,&quot;shielded_transaction&quot;:0,&quot;other_transaction&quot;:2386},{&quot;accountWithTrx&quot;:2972962,&quot;date&quot;:1584489600000,&quot;totalTransaction&quot;:923962866,&quot;avgBlockTime&quot;:3,&quot;avgBlockSize&quot;:15088,&quot;totalBlockCount&quot;:18101068,&quot;newAddressSeen&quot;:5696,&quot;blockchainSize&quot;:291685989511,&quot;totalAddress&quot;:4891779,&quot;newBlockSeen&quot;:28773,&quot;newTransactionSeen&quot;:1361680,&quot;newTrigger&quot;:1143422,&quot;newTrc10&quot;:1,&quot;newTrc20&quot;:0,&quot;totalTrc10&quot;:2919,&quot;totalTrc20&quot;:2666,&quot;triggers&quot;:795190933,&quot;trx_transfer&quot;:110007,&quot;trc10_transfer&quot;:100472,&quot;freeze_transaction&quot;:2263,&quot;vote_transaction&quot;:3220,&quot;shielded_transaction&quot;:0,&quot;other_transaction&quot;:2296},{&quot;accountWithTrx&quot;:2988803,&quot;date&quot;:1584576000000,&quot;totalTransaction&quot;:925389635,&quot;avgBlockTime&quot;:3,&quot;avgBlockSize&quot;:15937,&quot;totalBlockCount&quot;:18129849,&quot;newAddressSeen&quot;:18849,&quot;blockchainSize&quot;:292144692613,&quot;totalAddress&quot;:4910628,&quot;newBlockSeen&quot;:28781,&quot;newTransactionSeen&quot;:1426769,&quot;newTrigger&quot;:1084140,&quot;newTrc10&quot;:1,&quot;newTrc20&quot;:10,&quot;totalTrc10&quot;:2920,&quot;totalTrc20&quot;:2676,&quot;triggers&quot;:796275073,&quot;trx_transfer&quot;:113865,&quot;trc10_transfer&quot;:220762,&quot;freeze_transaction&quot;:2274,&quot;vote_transaction&quot;:3230,&quot;shielded_transaction&quot;:0,&quot;other_transaction&quot;:2498},{&quot;accountWithTrx&quot;:2992695,&quot;date&quot;:1584662400000,&quot;totalTransaction&quot;:926577352,&quot;avgBlockTime&quot;:3,&quot;avgBlockSize&quot;:13928,&quot;totalBlockCount&quot;:18158628,&quot;newAddressSeen&quot;:6616,&quot;blockchainSize&quot;:292545537820,&quot;totalAddress&quot;:4917244,&quot;newBlockSeen&quot;:28779,&quot;newTransactionSeen&quot;:1187717,&quot;newTrigger&quot;:1005370,&quot;newTrc10&quot;:0,&quot;newTrc20&quot;:9,&quot;totalTrc10&quot;:2920,&quot;totalTrc20&quot;:2685,&quot;triggers&quot;:797280443,&quot;trx_transfer&quot;:78599,&quot;trc10_transfer&quot;:93307,&quot;freeze_transaction&quot;:2285,&quot;vote_transaction&quot;:3162,&quot;shielded_transaction&quot;:0,&quot;other_transaction&quot;:2539},{&quot;accountWithTrx&quot;:2997601,&quot;date&quot;:1584748800000,&quot;totalTransaction&quot;:927913968,&quot;avgBlockTime&quot;:3,&quot;avgBlockSize&quot;:17514,&quot;totalBlockCount&quot;:18187403,&quot;newAddressSeen&quot;:7669,&quot;blockchainSize&quot;:293049521396,&quot;totalAddress&quot;:4924913,&quot;newBlockSeen&quot;:28775,&quot;newTransactionSeen&quot;:1336616,&quot;newTrigger&quot;:1112867,&quot;newTrc10&quot;:1,&quot;newTrc20&quot;:0,&quot;totalTrc10&quot;:2921,&quot;totalTrc20&quot;:2685,&quot;triggers&quot;:798393310,&quot;trx_transfer&quot;:86359,&quot;trc10_transfer&quot;:130100,&quot;freeze_transaction&quot;:1981,&quot;vote_transaction&quot;:2904,&quot;shielded_transaction&quot;:0,&quot;other_transaction&quot;:2405},{&quot;accountWithTrx&quot;:3002299,&quot;date&quot;:1584835200000,&quot;totalTransaction&quot;:929164977,&quot;avgBlockTime&quot;:3,&quot;avgBlockSize&quot;:14280,&quot;totalBlockCount&quot;:18216173,&quot;newAddressSeen&quot;:8705,&quot;blockchainSize&quot;:293460359020,&quot;totalAddress&quot;:4933618,&quot;newBlockSeen&quot;:28770,&quot;newTransactionSeen&quot;:1251009,&quot;newTrigger&quot;:1024733,&quot;newTrc10&quot;:1,&quot;newTrc20&quot;:0,&quot;totalTrc10&quot;:2922,&quot;totalTrc20&quot;:2685,&quot;triggers&quot;:799418043,&quot;trx_transfer&quot;:85541,&quot;trc10_transfer&quot;:123862,&quot;freeze_transaction&quot;:3322,&quot;vote_transaction&quot;:3052,&quot;shielded_transaction&quot;:0,&quot;other_transaction&quot;:3560},{&quot;accountWithTrx&quot;:3007272,&quot;date&quot;:1584921600000,&quot;totalTransaction&quot;:930354138,&quot;avgBlockTime&quot;:3,&quot;avgBlockSize&quot;:14322,&quot;totalBlockCount&quot;:18244963,&quot;newAddressSeen&quot;:8561,&quot;blockchainSize&quot;:293872707492,&quot;totalAddress&quot;:4942179,&quot;newBlockSeen&quot;:28790,&quot;newTra&quot;
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.wire -  &lt;&lt; &quot;nsactionSeen&quot;:1189161,&quot;newTrigger&quot;:961280,&quot;newTrc10&quot;:1,&quot;newTrc20&quot;:3,&quot;totalTrc10&quot;:2923,&quot;totalTrc20&quot;:2688,&quot;triggers&quot;:800379323,&quot;trx_transfer&quot;:93050,&quot;trc10_transfer&quot;:126450,&quot;freeze_transaction&quot;:2504,&quot;vote_transaction&quot;:2814,&quot;shielded_transaction&quot;:0,&quot;other_transaction&quot;:2648},{&quot;accountWithTrx&quot;:3010687,&quot;date&quot;:1585008000000,&quot;totalTransaction&quot;:931461987,&quot;avgBlockTime&quot;:3,&quot;avgBlockSize&quot;:12855,&quot;totalBlockCount&quot;:18273754,&quot;newAddressSeen&quot;:7562,&quot;blockchainSize&quot;:294242831015,&quot;totalAddress&quot;:4949741,&quot;newBlockSeen&quot;:28791,&quot;newTransactionSeen&quot;:1107849,&quot;newTrigger&quot;:0,&quot;newTrc10&quot;:0,&quot;newTrc20&quot;:3,&quot;totalTrc10&quot;:2923,&quot;totalTrc20&quot;:2691,&quot;triggers&quot;:800379323,&quot;trx_transfer&quot;:82483,&quot;trc10_transfer&quot;:71418,&quot;freeze_transaction&quot;:2240,&quot;vote_transaction&quot;:3041,&quot;shielded_transaction&quot;:0,&quot;other_transaction&quot;:2412},{&quot;accountWithTrx&quot;:3014360,&quot;date&quot;:1585094400000,&quot;totalTransaction&quot;:932646484,&quot;avgBlockTime&quot;:3,&quot;avgBlockSize&quot;:13582,&quot;totalBlockCount&quot;:18302520,&quot;newAddressSeen&quot;:6138,&quot;blockchainSize&quot;:294633545134,&quot;totalAddress&quot;:4955879,&quot;newBlockSeen&quot;:28766,&quot;newTransactionSeen&quot;:1184497,&quot;newTrigger&quot;:1009142,&quot;newTrc10&quot;:3,&quot;newTrc20&quot;:0,&quot;totalTrc10&quot;:2926,&quot;totalTrc20&quot;:2691,&quot;triggers&quot;:801388465,&quot;trx_transfer&quot;:80044,&quot;trc10_transfer&quot;:87311,&quot;freeze_transaction&quot;:2362,&quot;vote_transaction&quot;:3252,&quot;shielded_transaction&quot;:0,&quot;other_transaction&quot;:2454},{&quot;accountWithTrx&quot;:3018042,&quot;date&quot;:1585180800000,&quot;totalTransacti&quot;
+12:57:46.103 [TestNG-tests-1] DEBUG org.apache.http.wire -  &lt;&lt; &quot;on&quot;:933845157,&quot;avgBlockTime&quot;:3,&quot;avgBlockSize&quot;:15260,&quot;totalBlockCount&quot;:18331308,&quot;newAddressSeen&quot;:6802,&quot;blockchainSize&quot;:295072873825,&quot;totalAddress&quot;:4962681,&quot;newBlockSeen&quot;:28788,&quot;newTransactionSeen&quot;:1198673,&quot;newTrigger&quot;:1028467,&quot;newTrc10&quot;:2,&quot;newTrc20&quot;:1,&quot;totalTrc10&quot;:2928,&quot;totalTrc20&quot;:2692,&quot;triggers&quot;:802416932,&quot;trx_transfer&quot;:80132,&quot;trc10_transfer&quot;:82302,&quot;freeze_transaction&quot;:2145,&quot;vote_transaction&quot;:3111,&quot;shielded_transaction&quot;:0,&quot;other_transaction&quot;:2516},{&quot;accountWithTrx&quot;:3019321,&quot;date&quot;:1585267200000,&quot;totalTransaction&quot;:934107259,&quot;avgBlockTime&quot;:3,&quot;avgBlockSize&quot;:14433,&quot;totalBlockCount&quot;:18337198,&quot;newAddressSeen&quot;:1129,&quot;blockchainSize&quot;:295157886884,&quot;totalAddress&quot;:4963810,&quot;newBlockSeen&quot;:5890,&quot;newTransactionSeen&quot;:262102,&quot;newTrigger&quot;:222884,&quot;newTrc10&quot;:0,&quot;newTrc20&quot;:0,&quot;totalTrc10&quot;:2928,&quot;totalTrc20&quot;:2692,&quot;triggers&quot;:802639816,&quot;trx_transfer&quot;:25463,&quot;trc10_transfer&quot;:13808,&quot;freeze_transaction&quot;:484,&quot;vote_transaction&quot;:576,&quot;shielded_transaction&quot;:0,&quot;other_transaction&quot;:510}]}[\n]&quot;
+12:57:46.104 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Connection 0.0.0.0:61034&lt;-&gt;18.216.178.128:80 closed
+12:57:46.104 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection released: [id: 23][route: {}-&gt;http://apilist.tronscan.org:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+12:57:46.104 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON Start---------------------------
+12:57:46.104 [TestNG-tests-1] INFO tron.common.TronscanApiList - data:[{&quot;date&quot;:1584057600000,&quot;avgBlockSize&quot;:14004,&quot;newTransactionSeen&quot;:1215046,&quot;freeze_transaction&quot;:2398,&quot;totalTransaction&quot;:917651309,&quot;other_transaction&quot;:2249,&quot;totalTrc20&quot;:2643,&quot;shielded_transaction&quot;:0,&quot;newAddressSeen&quot;:5968,&quot;triggers&quot;:789722020,&quot;newBlockSeen&quot;:28759,&quot;avgBlockTime&quot;:3,&quot;trx_transfer&quot;:92039,&quot;totalBlockCount&quot;:17961264,&quot;blockchainSize&quot;:289500273925,&quot;trc10_transfer&quot;:111594,&quot;vote_transaction&quot;:3143,&quot;accountWithTrx&quot;:2954343,&quot;newTrc10&quot;:2,&quot;totalTrc10&quot;:2913,&quot;totalAddress&quot;:4860202,&quot;newTrigger&quot;:1002025,&quot;newTrc20&quot;:0},{&quot;date&quot;:1584144000000,&quot;avgBlockSize&quot;:14740,&quot;newTransactionSeen&quot;:1215236,&quot;freeze_transaction&quot;:2285,&quot;totalTransaction&quot;:918866545,&quot;other_transaction&quot;:2376,&quot;totalTrc20&quot;:2645,&quot;shielded_transaction&quot;:0,&quot;newAddressSeen&quot;:5795,&quot;triggers&quot;:790766508,&quot;newBlockSeen&quot;:28623,&quot;avgBlockTime&quot;:3,&quot;trx_transfer&quot;:88119,&quot;totalBlockCount&quot;:17989887,&quot;blockchainSize&quot;:289922203539,&quot;trc10_transfer&quot;:73350,&quot;vote_transaction&quot;:3357,&quot;accountWithTrx&quot;:2957060,&quot;newTrc10&quot;:1,&quot;totalTrc10&quot;:2914,&quot;totalAddress&quot;:4865997,&quot;newTrigger&quot;:1044488,&quot;newTrc20&quot;:2},{&quot;date&quot;:1584230400000,&quot;avgBlockSize&quot;:16076,&quot;newTransactionSeen&quot;:1308803,&quot;freeze_transaction&quot;:2372,&quot;totalTransaction&quot;:920175348,&quot;other_transaction&quot;:2155,&quot;totalTrc20&quot;:2646,&quot;shielded_transaction&quot;:0,&quot;newAddressSeen&quot;:6049,&quot;triggers&quot;:791924994,&quot;newBlockSeen&quot;:28767,&quot;avgBlockTime&quot;:3,&quot;trx_transfer&quot;:86953,&quot;totalBlockCount&quot;:18018654,&quot;blockchainSize&quot;:290384667492,&quot;trc10_transfer&quot;:54067,&quot;vote_transaction&quot;:3261,&quot;accountWithTrx&quot;:2961218,&quot;newTrc10&quot;:1,&quot;totalTrc10&quot;:2915,&quot;totalAddress&quot;:4872046,&quot;newTrigger&quot;:1158486,&quot;newTrc20&quot;:1},{&quot;date&quot;:1584316800000,&quot;avgBlockSize&quot;:18531,&quot;newTransactionSeen&quot;:1167255,&quot;freeze_transaction&quot;:2160,&quot;totalTransaction&quot;:921342603,&quot;other_transaction&quot;:2100,&quot;totalTrc20&quot;:2663,&quot;shielded_transaction&quot;:0,&quot;newAddressSeen&quot;:8002,&quot;triggers&quot;:792952386,&quot;newBlockSeen&quot;:24863,&quot;avgBlockTime&quot;:3,&quot;trx_transfer&quot;:80177,&quot;totalBlockCount&quot;:18043517,&quot;blockchainSize&quot;:290845406626,&quot;trc10_transfer&quot;:49924,&quot;vote_transaction&quot;:2833,&quot;accountWithTrx&quot;:2966727,&quot;newTrc10&quot;:1,&quot;totalTrc10&quot;:2916,&quot;totalAddress&quot;:4880048,&quot;newTrigger&quot;:1027392,&quot;newTrc20&quot;:17},{&quot;date&quot;:1584403200000,&quot;avgBlockSize&quot;:14123,&quot;newTransactionSeen&quot;:1258583,&quot;freeze_transaction&quot;:2337,&quot;totalTransaction&quot;:922601186,&quot;other_transaction&quot;:2386,&quot;totalTrc20&quot;:2666,&quot;shielded_transaction&quot;:0,&quot;newAddressSeen&quot;:6035,&quot;triggers&quot;:794047511,&quot;newBlockSeen&quot;:28778,&quot;avgBlockTime&quot;:3,&quot;trx_transfer&quot;:78082,&quot;totalBlockCount&quot;:18072295,&quot;blockchainSize&quot;:291251842588,&quot;trc10_transfer&quot;:77462,&quot;vote_transaction&quot;:3232,&quot;accountWithTrx&quot;:2969785,&quot;newTrc10&quot;:2,&quot;totalTrc10&quot;:2918,&quot;totalAddress&quot;:4886083,&quot;newTrigger&quot;:1095125,&quot;newTrc20&quot;:3},{&quot;date&quot;:1584489600000,&quot;avgBlockSize&quot;:15088,&quot;newTransactionSeen&quot;:1361680,&quot;freeze_transaction&quot;:2263,&quot;totalTransaction&quot;:923962866,&quot;other_transaction&quot;:2296,&quot;totalTrc20&quot;:2666,&quot;shielded_transaction&quot;:0,&quot;newAddressSeen&quot;:5696,&quot;triggers&quot;:795190933,&quot;newBlockSeen&quot;:28773,&quot;avgBlockTime&quot;:3,&quot;trx_transfer&quot;:110007,&quot;totalBlockCount&quot;:18101068,&quot;blockchainSize&quot;:291685989511,&quot;trc10_transfer&quot;:100472,&quot;vote_transaction&quot;:3220,&quot;accountWithTrx&quot;:2972962,&quot;newTrc10&quot;:1,&quot;totalTrc10&quot;:2919,&quot;totalAddress&quot;:4891779,&quot;newTrigger&quot;:1143422,&quot;newTrc20&quot;:0},{&quot;date&quot;:1584576000000,&quot;avgBlockSize&quot;:15937,&quot;newTransactionSeen&quot;:1426769,&quot;freeze_transaction&quot;:2274,&quot;totalTransaction&quot;:925389635,&quot;other_transaction&quot;:2498,&quot;totalTrc20&quot;:2676,&quot;shielded_transaction&quot;:0,&quot;newAddressSeen&quot;:18849,&quot;triggers&quot;:796275073,&quot;newBlockSeen&quot;:28781,&quot;avgBlockTime&quot;:3,&quot;trx_transfer&quot;:113865,&quot;totalBlockCount&quot;:18129849,&quot;blockchainSize&quot;:292144692613,&quot;trc10_transfer&quot;:220762,&quot;vote_transaction&quot;:3230,&quot;accountWithTrx&quot;:2988803,&quot;newTrc10&quot;:1,&quot;totalTrc10&quot;:2920,&quot;totalAddress&quot;:4910628,&quot;newTrigger&quot;:1084140,&quot;newTrc20&quot;:10},{&quot;date&quot;:1584662400000,&quot;avgBlockSize&quot;:13928,&quot;newTransactionSeen&quot;:1187717,&quot;freeze_transaction&quot;:2285,&quot;totalTransaction&quot;:926577352,&quot;other_transaction&quot;:2539,&quot;totalTrc20&quot;:2685,&quot;shielded_transaction&quot;:0,&quot;newAddressSeen&quot;:6616,&quot;triggers&quot;:797280443,&quot;newBlockSeen&quot;:28779,&quot;avgBlockTime&quot;:3,&quot;trx_transfer&quot;:78599,&quot;totalBlockCount&quot;:18158628,&quot;blockchainSize&quot;:292545537820,&quot;trc10_transfer&quot;:93307,&quot;vote_transaction&quot;:3162,&quot;accountWithTrx&quot;:2992695,&quot;newTrc10&quot;:0,&quot;totalTrc10&quot;:2920,&quot;totalAddress&quot;:4917244,&quot;newTrigger&quot;:1005370,&quot;newTrc20&quot;:9},{&quot;date&quot;:1584748800000,&quot;avgBlockSize&quot;:17514,&quot;newTransactionSeen&quot;:1336616,&quot;freeze_transaction&quot;:1981,&quot;totalTransaction&quot;:927913968,&quot;other_transaction&quot;:2405,&quot;totalTrc20&quot;:2685,&quot;shielded_transaction&quot;:0,&quot;newAddressSeen&quot;:7669,&quot;triggers&quot;:798393310,&quot;newBlockSeen&quot;:28775,&quot;avgBlockTime&quot;:3,&quot;trx_transfer&quot;:86359,&quot;totalBlockCount&quot;:18187403,&quot;blockchainSize&quot;:293049521396,&quot;trc10_transfer&quot;:130100,&quot;vote_transaction&quot;:2904,&quot;accountWithTrx&quot;:2997601,&quot;newTrc10&quot;:1,&quot;totalTrc10&quot;:2921,&quot;totalAddress&quot;:4924913,&quot;newTrigger&quot;:1112867,&quot;newTrc20&quot;:0},{&quot;date&quot;:1584835200000,&quot;avgBlockSize&quot;:14280,&quot;newTransactionSeen&quot;:1251009,&quot;freeze_transaction&quot;:3322,&quot;totalTransaction&quot;:929164977,&quot;other_transaction&quot;:3560,&quot;totalTrc20&quot;:2685,&quot;shielded_transaction&quot;:0,&quot;newAddressSeen&quot;:8705,&quot;triggers&quot;:799418043,&quot;newBlockSeen&quot;:28770,&quot;avgBlockTime&quot;:3,&quot;trx_transfer&quot;:85541,&quot;totalBlockCount&quot;:18216173,&quot;blockchainSize&quot;:293460359020,&quot;trc10_transfer&quot;:123862,&quot;vote_transaction&quot;:3052,&quot;accountWithTrx&quot;:3002299,&quot;newTrc10&quot;:1,&quot;totalTrc10&quot;:2922,&quot;totalAddress&quot;:4933618,&quot;newTrigger&quot;:1024733,&quot;newTrc20&quot;:0},{&quot;date&quot;:1584921600000,&quot;avgBlockSize&quot;:14322,&quot;newTransactionSeen&quot;:1189161,&quot;freeze_transaction&quot;:2504,&quot;totalTransaction&quot;:930354138,&quot;other_transaction&quot;:2648,&quot;totalTrc20&quot;:2688,&quot;shielded_transaction&quot;:0,&quot;newAddressSeen&quot;:8561,&quot;triggers&quot;:800379323,&quot;newBlockSeen&quot;:28790,&quot;avgBlockTime&quot;:3,&quot;trx_transfer&quot;:93050,&quot;totalBlockCount&quot;:18244963,&quot;blockchainSize&quot;:293872707492,&quot;trc10_transfer&quot;:126450,&quot;vote_transaction&quot;:2814,&quot;accountWithTrx&quot;:3007272,&quot;newTrc10&quot;:1,&quot;totalTrc10&quot;:2923,&quot;totalAddress&quot;:4942179,&quot;newTrigger&quot;:961280,&quot;newTrc20&quot;:3},{&quot;date&quot;:1585008000000,&quot;avgBlockSize&quot;:12855,&quot;newTransactionSeen&quot;:1107849,&quot;freeze_transaction&quot;:2240,&quot;totalTransaction&quot;:931461987,&quot;other_transaction&quot;:2412,&quot;totalTrc20&quot;:2691,&quot;shielded_transaction&quot;:0,&quot;newAddressSeen&quot;:7562,&quot;triggers&quot;:800379323,&quot;newBlockSeen&quot;:28791,&quot;avgBlockTime&quot;:3,&quot;trx_transfer&quot;:82483,&quot;totalBlockCount&quot;:18273754,&quot;blockchainSize&quot;:294242831015,&quot;trc10_transfer&quot;:71418,&quot;vote_transaction&quot;:3041,&quot;accountWithTrx&quot;:3010687,&quot;newTrc10&quot;:0,&quot;totalTrc10&quot;:2923,&quot;totalAddress&quot;:4949741,&quot;newTrigger&quot;:0,&quot;newTrc20&quot;:3},{&quot;date&quot;:1585094400000,&quot;avgBlockSize&quot;:13582,&quot;newTransactionSeen&quot;:1184497,&quot;freeze_transaction&quot;:2362,&quot;totalTransaction&quot;:932646484,&quot;other_transaction&quot;:2454,&quot;totalTrc20&quot;:2691,&quot;shielded_transaction&quot;:0,&quot;newAddressSeen&quot;:6138,&quot;triggers&quot;:801388465,&quot;newBlockSeen&quot;:28766,&quot;avgBlockTime&quot;:3,&quot;trx_transfer&quot;:80044,&quot;totalBlockCount&quot;:18302520,&quot;blockchainSize&quot;:294633545134,&quot;trc10_transfer&quot;:87311,&quot;vote_transaction&quot;:3252,&quot;accountWithTrx&quot;:3014360,&quot;newTrc10&quot;:3,&quot;totalTrc10&quot;:2926,&quot;totalAddress&quot;:4955879,&quot;newTrigger&quot;:1009142,&quot;newTrc20&quot;:0},{&quot;date&quot;:1585180800000,&quot;avgBlockSize&quot;:15260,&quot;newTransactionSeen&quot;:1198673,&quot;freeze_transaction&quot;:2145,&quot;totalTransaction&quot;:933845157,&quot;other_transaction&quot;:2516,&quot;totalTrc20&quot;:2692,&quot;shielded_transaction&quot;:0,&quot;newAddressSeen&quot;:6802,&quot;triggers&quot;:802416932,&quot;newBlockSeen&quot;:28788,&quot;avgBlockTime&quot;:3,&quot;trx_transfer&quot;:80132,&quot;totalBlockCount&quot;:18331308,&quot;blockchainSize&quot;:295072873825,&quot;trc10_transfer&quot;:82302,&quot;vote_transaction&quot;:3111,&quot;accountWithTrx&quot;:3018042,&quot;newTrc10&quot;:2,&quot;totalTrc10&quot;:2928,&quot;totalAddress&quot;:4962681,&quot;newTrigger&quot;:1028467,&quot;newTrc20&quot;:1},{&quot;date&quot;:1585267200000,&quot;avgBlockSize&quot;:14433,&quot;newTransactionSeen&quot;:262102,&quot;freeze_transaction&quot;:484,&quot;totalTransaction&quot;:934107259,&quot;other_transaction&quot;:510,&quot;totalTrc20&quot;:2692,&quot;shielded_transaction&quot;:0,&quot;newAddressSeen&quot;:1129,&quot;triggers&quot;:802639816,&quot;newBlockSeen&quot;:5890,&quot;avgBlockTime&quot;:3,&quot;trx_transfer&quot;:25463,&quot;totalBlockCount&quot;:18337198,&quot;blockchainSize&quot;:295157886884,&quot;trc10_transfer&quot;:13808,&quot;vote_transaction&quot;:576,&quot;accountWithTrx&quot;:3019321,&quot;newTrc10&quot;:0,&quot;totalTrc10&quot;:2928,&quot;totalAddress&quot;:4963810,&quot;newTrigger&quot;:222884,&quot;newTrc20&quot;:0}]
+12:57:46.104 [TestNG-tests-1] INFO tron.common.TronscanApiList - success:true
+12:57:46.104 [TestNG-tests-1] INFO tron.common.TronscanApiList - JSON content size are: 2
+12:57:46.104 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON End-----------------------------
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 4.10.3</a> at 2020-3-27 12:59:04</p>
+</div>
+</div>
+</body>
+</html>

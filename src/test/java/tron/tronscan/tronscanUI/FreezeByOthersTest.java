@@ -26,7 +26,7 @@ public class FreezeByOthersTest {
         }
     }
 
-    @Test(enabled = true,description = "给他人冻结带宽")
+    @Test(enabled = true,description = "给他人冻结带宽",retryAnalyzer = MyIRetryAnalyzer.class)
     public void testFreezeByOthers() throws Exception{
         Step.login(driver);
         {

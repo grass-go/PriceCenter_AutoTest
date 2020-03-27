@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tron.tronscan.api.InternalTranList" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-03-27T04:57:27" hostname="zhukaideiMac.local" time="3.859">
+  <properties/>
+  <testcase name="getInternalTransaction" classname="tron.tronscan.api.InternalTranList" time="3.859"/>
+  <system-out><![CDATA[http://apilist.tronscan.org/api/internal-transaction
+12:57:27.138 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection request: [route: {}->http://apilist.tronscan.org:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+12:57:27.138 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection leased: [id: 9][route: {}->http://apilist.tronscan.org:80][total kept alive: 0; route allocated: 1 of 80; total allocated: 1 of 100]
+12:57:27.138 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnectionOperator - Connecting to apilist.tronscan.org:80
+12:57:27.378 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAddCookies - CookieSpec selected: default
+12:57:27.378 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAuthCache - Auth cache not set in the context
+12:57:27.378 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestTargetAuthentication - Target auth state: UNCHALLENGED
+12:57:27.378 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestProxyAuthentication - Proxy auth state: UNCHALLENGED
+12:57:27.378 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultHttpClient - Attempt 1 to execute request
+12:57:27.378 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Sending request: GET /api/internal-transaction?end_timestamp=1567595388290&start_timestamp=1529856000000&contract=TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3&limit=20&start=0 HTTP/1.1
+12:57:27.379 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "GET /api/internal-transaction?end_timestamp=1567595388290&start_timestamp=1529856000000&contract=TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3&limit=20&start=0 HTTP/1.1[\r][\n]"
+12:57:27.379 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Content-type: application/json; charset=utf-8[\r][\n]"
+12:57:27.379 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Connection: Close[\r][\n]"
+12:57:27.379 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Host: apilist.tronscan.org[\r][\n]"
+12:57:27.379 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)[\r][\n]"
+12:57:27.379 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "[\r][\n]"
+12:57:27.379 [TestNG-tests-1] DEBUG org.apache.http.headers - >> GET /api/internal-transaction?end_timestamp=1567595388290&start_timestamp=1529856000000&contract=TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3&limit=20&start=0 HTTP/1.1
+12:57:27.379 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Content-type: application/json; charset=utf-8
+12:57:27.379 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Connection: Close
+12:57:27.379 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Host: apilist.tronscan.org
+12:57:27.379 [TestNG-tests-1] DEBUG org.apache.http.headers - >> User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "HTTP/1.1 200 OK[\r][\n]"
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Server: nginx[\r][\n]"
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Date: Fri, 27 Mar 2020 04:57:31 GMT[\r][\n]"
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Type: application/json;charset=utf-8[\r][\n]"
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Length: 43[\r][\n]"
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Connection: close[\r][\n]"
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Access-Control-Allow-Origin: *[\r][\n]"
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Access-Control-Allow-Headers: DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization[\r][\n]"
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS[\r][\n]"
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "X-Proxy-Cache: MISS[\r][\n]"
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "[\r][\n]"
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Receiving response: HTTP/1.1 200 OK
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.headers - << HTTP/1.1 200 OK
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.headers - << Server: nginx
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.headers - << Date: Fri, 27 Mar 2020 04:57:31 GMT
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Type: application/json;charset=utf-8
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Length: 43
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.headers - << Connection: close
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.headers - << Access-Control-Allow-Origin: *
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.headers - << Access-Control-Allow-Headers: DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.headers - << Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS
+12:57:30.996 [TestNG-tests-1] DEBUG org.apache.http.headers - << X-Proxy-Cache: MISS
+http://apilist.tronscan.org/api/internal-transaction?end_timestamp=1567595388290&start_timestamp=1529856000000&contract=TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3&limit=20&start=0 请求总耗时：3858 毫秒
+12:57:30.997 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "{"total":0,"data":[],"rangeTotal":3815059}[\n]"
+12:57:30.997 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Connection 0.0.0.0:60947<->18.216.178.128:80 closed
+12:57:30.997 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection released: [id: 9][route: {}->http://apilist.tronscan.org:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+12:57:30.997 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON Start---------------------------
+12:57:30.997 [TestNG-tests-1] INFO tron.common.TronscanApiList - total:0
+12:57:30.997 [TestNG-tests-1] INFO tron.common.TronscanApiList - data:[]
+12:57:30.997 [TestNG-tests-1] INFO tron.common.TronscanApiList - rangeTotal:3815059
+12:57:30.997 [TestNG-tests-1] INFO tron.common.TronscanApiList - JSON content size are: 3
+12:57:30.997 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON End-----------------------------
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

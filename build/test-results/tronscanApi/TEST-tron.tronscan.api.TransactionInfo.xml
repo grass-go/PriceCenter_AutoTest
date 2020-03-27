@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tron.tronscan.api.TransactionInfo" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-03-27T04:57:41" hostname="zhukaideiMac.local" time="1.024">
+  <properties/>
+  <testcase name="test01getTransactionInfo" classname="tron.tronscan.api.TransactionInfo" time="1.024"/>
+  <system-out><![CDATA[http://apilist.tronscan.org/api/transaction-info?hash=1c25bc75d0bebac2f3aa71c350d67c4eed56ec2501b72302ae6d0110dc40cf96
+12:57:41.953 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection request: [route: {}->http://apilist.tronscan.org:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+12:57:41.953 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection leased: [id: 19][route: {}->http://apilist.tronscan.org:80][total kept alive: 0; route allocated: 1 of 80; total allocated: 1 of 100]
+12:57:41.953 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnectionOperator - Connecting to apilist.tronscan.org:80
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAddCookies - CookieSpec selected: default
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAuthCache - Auth cache not set in the context
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestTargetAuthentication - Target auth state: UNCHALLENGED
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestProxyAuthentication - Proxy auth state: UNCHALLENGED
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultHttpClient - Attempt 1 to execute request
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Sending request: GET /api/transaction-info?hash=1c25bc75d0bebac2f3aa71c350d67c4eed56ec2501b72302ae6d0110dc40cf96 HTTP/1.1
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "GET /api/transaction-info?hash=1c25bc75d0bebac2f3aa71c350d67c4eed56ec2501b72302ae6d0110dc40cf96 HTTP/1.1[\r][\n]"
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Content-type: application/json; charset=utf-8[\r][\n]"
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Connection: Close[\r][\n]"
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Host: apilist.tronscan.org[\r][\n]"
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)[\r][\n]"
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "[\r][\n]"
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.headers - >> GET /api/transaction-info?hash=1c25bc75d0bebac2f3aa71c350d67c4eed56ec2501b72302ae6d0110dc40cf96 HTTP/1.1
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Content-type: application/json; charset=utf-8
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Connection: Close
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Host: apilist.tronscan.org
+12:57:42.212 [TestNG-tests-1] DEBUG org.apache.http.headers - >> User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "HTTP/1.1 200 OK[\r][\n]"
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Server: nginx[\r][\n]"
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Date: Fri, 27 Mar 2020 04:57:43 GMT[\r][\n]"
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Type: application/json;charset=utf-8[\r][\n]"
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Length: 1514[\r][\n]"
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Connection: close[\r][\n]"
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Vary: Accept-Encoding[\r][\n]"
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Access-Control-Allow-Origin: *[\r][\n]"
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Access-Control-Allow-Headers: DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization[\r][\n]"
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS[\r][\n]"
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "X-Proxy-Cache: MISS[\r][\n]"
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "[\r][\n]"
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Receiving response: HTTP/1.1 200 OK
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.headers - << HTTP/1.1 200 OK
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.headers - << Server: nginx
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.headers - << Date: Fri, 27 Mar 2020 04:57:43 GMT
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Type: application/json;charset=utf-8
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Length: 1514
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.headers - << Connection: close
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.headers - << Vary: Accept-Encoding
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.headers - << Access-Control-Allow-Origin: *
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.headers - << Access-Control-Allow-Headers: DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.headers - << Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS
+12:57:42.976 [TestNG-tests-1] DEBUG org.apache.http.headers - << X-Proxy-Cache: MISS
+http://apilist.tronscan.org/api/transaction-info?hash=1c25bc75d0bebac2f3aa71c350d67c4eed56ec2501b72302ae6d0110dc40cf96 请求总耗时：1024 毫秒
+12:57:42.977 [TestNG-tests-1] INFO tron.tronscan.api.TransactionInfo - code is 200
+12:57:42.977 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "{"block":5987598,"hash":"1c25bc75d0bebac2f3aa71c350d67c4eed56ec2501b72302ae6d0110dc40cf96","timestamp":1548056634000,"ownerAddress":"TWBe8V1hDDxzQzoK55EydqWY4nCBt3iKmh","signature_addresses":[],"contractType":31,"toAddress":"TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3","confirmations":12353259,"confirmed":true,"revert":false,"contractRet":"SUCCESS","contractData":{"data":"a3082be9000000000000000000000000000000000000000000000000000000000000005f0000000000000000000000000000000000000000000000000000000000000000","owner_address":"TWBe8V1hDDxzQzoK55EydqWY4nCBt3iKmh","contract_address":"TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3","call_value":10000000},"data":"","cost":{"net_usage":0,"net_fee":3500,"energy_usage":0,"energy_fee":0,"origin_energy_usage":14513,"energy_usage_total":14513},"trigger_info":{"method":"GoodLuck(uint256 _number,uint256 _direction)","parameter":{"_number":"95","_direction":"0"},"call_value":10000000},"internal_transactions":{"1":[{"transaction_id":"1c25bc75d0bebac2f3aa71c350d67c4eed56ec2501b72302ae6d0110dc40cf96","caller_address":"TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3","note":"call","rejected":false,"value_info_list":"[{\"token_id\":\"\",\"call_value\":10000000}]","date_created":1548056634000,"block":5987598,"hash":"96aa91691953c58f8ed8143745aa4f3d1722f1ac1131e469c6c920d93a61e4b1","transfer_to_address":"TD31SKej4iFWZ7NvWVC9DapJNZA3ofaKbB"}]},"info":{},"contract_map":{"TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3":true,"TWBe8V1hDDxzQzoK55EydqWY4nCBt3iKmh":false,"TD31SKej4iFWZ7NvWVC9DapJNZA3ofaKbB":true}}[\n]"
+12:57:42.977 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Connection 0.0.0.0:61017<->18.216.178.128:80 closed
+12:57:42.977 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection released: [id: 19][route: {}->http://apilist.tronscan.org:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON Start---------------------------
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - contract_map:{"TD31SKej4iFWZ7NvWVC9DapJNZA3ofaKbB":true,"TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3":true,"TWBe8V1hDDxzQzoK55EydqWY4nCBt3iKmh":false}
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - contractRet:SUCCESS
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - cost:{"net_fee":3500,"energy_usage":0,"energy_fee":0,"energy_usage_total":14513,"origin_energy_usage":14513,"net_usage":0}
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - data:
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - contractType:31
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - revert:false
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - confirmations:12353259
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - toAddress:TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - confirmed:true
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - trigger_info:{"method":"GoodLuck(uint256 _number,uint256 _direction)","parameter":{"_number":"95","_direction":"0"},"call_value":10000000}
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - block:5987598
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - signature_addresses:[]
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - ownerAddress:TWBe8V1hDDxzQzoK55EydqWY4nCBt3iKmh
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - hash:1c25bc75d0bebac2f3aa71c350d67c4eed56ec2501b72302ae6d0110dc40cf96
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - contractData:{"data":"a3082be9000000000000000000000000000000000000000000000000000000000000005f0000000000000000000000000000000000000000000000000000000000000000","owner_address":"TWBe8V1hDDxzQzoK55EydqWY4nCBt3iKmh","contract_address":"TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3","call_value":10000000}
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - timestamp:1548056634000
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - internal_transactions:{"1":[{"transaction_id":"1c25bc75d0bebac2f3aa71c350d67c4eed56ec2501b72302ae6d0110dc40cf96","caller_address":"TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3","note":"call","rejected":false,"value_info_list":"[{\"token_id\":\"\",\"call_value\":10000000}]","date_created":1548056634000,"block":5987598,"hash":"96aa91691953c58f8ed8143745aa4f3d1722f1ac1131e469c6c920d93a61e4b1","transfer_to_address":"TD31SKej4iFWZ7NvWVC9DapJNZA3ofaKbB"}]}
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - info:{}
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - JSON content size are: 18
+12:57:42.977 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON End-----------------------------
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
