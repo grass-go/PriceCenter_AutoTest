@@ -69,11 +69,9 @@ public class TokenOverview {
     Assert.assertTrue(targetContent.containsKey("description"));
     //supply
     Assert.assertTrue(Long.valueOf(targetContent.get("supply").toString()) >= 0);
-    Assert.assertTrue(!targetContent.get("gain").toString().isEmpty());
     Assert.assertTrue(!targetContent.get("imgUrl").toString().isEmpty());
     //nrOfTokenHolders
     Assert.assertTrue(!targetContent.get("nrOfTokenHolders").toString().isEmpty());
-    Assert.assertTrue(!targetContent.get("pairId").toString().isEmpty());
     //isTop
     //Assert.assertTrue(Boolean.valueOf(targetContent.getString("isTop")));
     Assert.assertTrue(!targetContent.get("name").toString().isEmpty());
@@ -81,12 +79,8 @@ public class TokenOverview {
     Assert.assertTrue(!targetContent.get("abbr").toString().isEmpty());
     Integer decimals = Integer.valueOf(targetContent.get("decimal").toString());
     Assert.assertTrue(decimals >= 0 && decimals <= 18);
-    //priceInTrx
-    Assert.assertTrue(Double.valueOf(targetContent.get("priceInTrx").toString()) >= 0);
     //tokenType
     Assert.assertTrue(!targetContent.get("tokenType").toString().isEmpty());
-    //volume24hInTrx
-    Assert.assertTrue(Double.valueOf(targetContent.get("volume24hInTrx").toString()) >= 0);
 
   }
 
