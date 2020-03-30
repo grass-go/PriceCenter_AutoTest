@@ -9,10 +9,13 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
+import tron.common.utils.Configuration;
 import tron.common.utils.WebBrowser;
 
 public class Top_statisticsTest {
-        private static String URL = "https://tronscan.org/#/data/bestdata";
+        private String tronScanNode = Configuration.getByPath("testng.conf")
+    .getString("tronscanIP");
+private  String URL = "https://"+tronScanNode+"/#/data/bestdata";
         WebBrowser webBrowser = new WebBrowser();
         public static WebDriver driver;
 

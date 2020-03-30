@@ -6,10 +6,13 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import tron.common.utils.Configuration;
 import tron.common.utils.WebBrowser;
 
 public class System {
-  private static String URL = "https://tronscan.org/#/tools/system";
+  private String tronScanNode = Configuration.getByPath("testng.conf")
+    .getString("tronscanIP");
+private  String URL = "https://"+tronScanNode+"/#/tools/system";
   WebBrowser webBrowser = new WebBrowser();
   public static WebDriver driver;
   @BeforeMethod(enabled = true)

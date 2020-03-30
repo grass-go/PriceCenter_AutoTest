@@ -9,8 +9,11 @@ import org.testng.annotations.Test;
 
 import tron.common.utils.MyIRetryAnalyzer;
 import tron.common.utils.WebBrowser;
+import tron.common.utils.Configuration;
 
-public class NodesTest {private static String URL = "https://tronscan.org/#/blockchain/nodes";
+public class NodesTest {private String tronScanNode = Configuration.getByPath("testng.conf")
+    .getString("tronscanIP");
+private  String URL = "https://"+tronScanNode+"/#/blockchain/nodes";
     WebBrowser webBrowser = new WebBrowser();
     public static WebDriver driver;
     @BeforeMethod(enabled = true)

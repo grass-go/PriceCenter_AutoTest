@@ -62,8 +62,6 @@ public class TokenOverview {
 
     JSONArray exchangeArray = responseContent.getJSONArray("tokens");
     targetContent = exchangeArray.getJSONObject(0);
-    //marketcap
-    Assert.assertTrue(Double.valueOf(targetContent.get("marketcap").toString()) >= 0);
     //address
     Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
     Assert.assertTrue(patternAddress.matcher(targetContent.getString("contractAddress")).matches());

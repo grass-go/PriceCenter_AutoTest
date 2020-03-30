@@ -6,11 +6,14 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import tron.common.utils.Configuration;
 import tron.common.utils.MyIRetryAnalyzer;
 import tron.common.utils.WebBrowser;
 
 public class Committee {
-  private static String URL = "https://tronscan.org/#/sr/committee";
+  private String tronScanNode = Configuration.getByPath("testng.conf")
+    .getString("tronscanIP");
+private  String URL = "https://"+tronScanNode+"/#/sr/committee";
   WebBrowser webBrowser = new WebBrowser();
   public static WebDriver driver;
   @BeforeMethod(enabled = true)

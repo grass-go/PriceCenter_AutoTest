@@ -12,9 +12,12 @@ import org.testng.annotations.Test;
 import tron.common.utils.MyIRetryAnalyzer;
 import tron.common.utils.Step;
 import tron.common.utils.WebBrowser;
+import tron.common.utils.Configuration;
 
 public class Representatives {
-    private static String URL = "https://tronscan.org/#/sr/representatives";
+    private String tronScanNode = Configuration.getByPath("testng.conf")
+    .getString("tronscanIP");
+private  String URL = "https://"+tronScanNode+"/#/sr/representatives";
     WebBrowser webBrowser = new WebBrowser();
     public static WebDriver driver;
     @BeforeMethod(enabled = true)

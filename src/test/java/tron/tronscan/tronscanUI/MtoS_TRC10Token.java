@@ -12,9 +12,12 @@ import org.testng.annotations.Test;
 import tron.common.utils.MyIRetryAnalyzer;
 import tron.common.utils.Step;
 import tron.common.utils.WebBrowser;
+import tron.common.utils.Configuration;
 
 public class MtoS_TRC10Token {
-    private static String URL = "https://tronscan.org/#/";
+    private String tronScanNode = Configuration.getByPath("testng.conf")
+    .getString("tronscanIP");
+private  String URL = "https://"+tronScanNode+"/#/";
     WebBrowser webBrowser = new WebBrowser();
     public static WebDriver driver;
     @BeforeMethod(enabled = true)
