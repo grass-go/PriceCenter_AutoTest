@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -32,7 +33,7 @@ public class OverViewList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Blockchain data overview in history")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Blockchain data overview in history")
   public void getOverViewList() {
     response = TronscanApiList.getOverViewList(tronScanNode);
     //log.info("code is " + response.getStatusLine().getStatusCode());

@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -29,7 +30,7 @@ public class TransferList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "List the transactions related to a specified account")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
   public void test01getBlockDetail() {
     //Get response
     Map<String, String> params = new HashMap<>();
@@ -65,7 +66,7 @@ public class TransferList {
   /**
    * constructor.获取simple-transfer方法
    */
-  @Test(enabled = true, description = "List the transfers under specified condition")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transfers under specified condition")
   public void getSimple_transfer() {
     //Get response
     Map<String, String> params = new HashMap<>();

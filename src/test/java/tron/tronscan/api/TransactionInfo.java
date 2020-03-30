@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -28,7 +29,7 @@ public class TransactionInfo {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Query transaction hash and get a transaction detail info;")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Query transaction hash and get a transaction detail info;")
   public void test01getTransactionInfo() {
     //Get response
     response = TronscanApiList.getTransactionInfo(tronScanNode,transactionHash);

@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -28,7 +29,7 @@ public class VotersList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = " List all the trc10 tokens in the blockchain")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = " List all the trc10 tokens in the blockchain")
   public void test01getTokensList() {
     //Get response
     Map<String, String> params = new HashMap<>();

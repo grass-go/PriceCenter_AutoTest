@@ -12,6 +12,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import tron.common.TronscanApiList;
 import tron.common.utils.Configuration;
+import tron.common.utils.MyIRetryAnalyzer;
 
 @Slf4j
 public class AccountsList {
@@ -28,7 +29,7 @@ public class AccountsList {
   /**
    * constructor.13
    */
-  @Test(enabled = true, description = "List account")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List account")
   public void test01getAccount() {
     System.out.println();
     //Get response
@@ -57,7 +58,7 @@ public class AccountsList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Get a single account's detail ")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get a single account's detail ")
   public void getAccountList() {
     //Get response
     String address = "TWd4WrZ9wn84f5x1hZhL4DHvk738ns5jwb";
@@ -158,7 +159,7 @@ public class AccountsList {
   /**
    * constructor.查询账户交易统计信息
    */
-  @Test(enabled = true, description = "查询账户交易统计信息")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "查询账户交易统计信息")
   public void getAccountStats() {
     //Get response
     String address = "TMuA6YqfCeX8EhbfYEg5y7S4DqzSJireY9";
@@ -182,7 +183,7 @@ public class AccountsList {
   /**
    * constructor.查询投票接口
    */
-  @Test(enabled = true, description = "Get specific account's vote list")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get specific account's vote list")
   public void getAccountVote() {
     //Get response
     String address = "TGzz8gjYiYRqpfmDwnLxfgPuLVNmpCswVp";
@@ -202,7 +203,7 @@ public class AccountsList {
   /**
    * constructor.查看SR信息
    */
-  @Test(enabled = true, description = "Get a super representative's github link")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get a super representative's github link")
   public void getAccountSr() {
     //Get response
     String address = "TGzz8gjYiYRqpfmDwnLxfgPuLVNmpCswVp";

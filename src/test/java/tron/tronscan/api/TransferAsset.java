@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -29,7 +30,7 @@ public class TransferAsset {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "List the transactions related to a specified account")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
   public void test01getBlockDetail() {
     //Get response
     String address = "TSbhZijH2t7Qn1UAHAu7PBHQdVAvRwSyYr";

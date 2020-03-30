@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -28,7 +29,7 @@ public class ContractsList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "List contract list")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List contract list")
   public void test01getContractsList() {
     //Get response
     int limit = 20;

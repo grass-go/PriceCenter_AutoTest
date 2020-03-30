@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -26,7 +27,7 @@ public class DonatorsList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "List all the donators")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List all the donators")
   public void test01getDonatorsList() {
     //Get response
     response = TronscanApiList.getDonatorsList(tronScanNode);

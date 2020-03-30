@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -31,7 +32,7 @@ public class AnnouncementList {
   /**
    * constructor.查询trc20通证持有者
    */
-  @Test(enabled = true, description = "查询trc20通证持有者")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "查询trc20通证持有者")
   public void getAnnouncement() {
     //
     String address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";

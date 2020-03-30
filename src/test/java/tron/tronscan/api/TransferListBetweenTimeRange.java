@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -28,7 +29,7 @@ public class TransferListBetweenTimeRange {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "List the transactions between time range")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions between time range")
   public void test01getTransferListBetweenTimeRange() {
     //Get response
     int limit = 20;

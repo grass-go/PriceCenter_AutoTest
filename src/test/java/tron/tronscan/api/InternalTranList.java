@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -31,7 +32,7 @@ public class InternalTranList {
   /**
    * constructor.查询合约内部合约内交易
    */
-  @Test(enabled = true, description = "List the internal transactions related to a specified account(only display the latest 10,000 data records in the query time range) ")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the internal transactions related to a specified account(only display the latest 10,000 data records in the query time range) ")
   public void getInternalTransaction() {
     //
     String address = "TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3";

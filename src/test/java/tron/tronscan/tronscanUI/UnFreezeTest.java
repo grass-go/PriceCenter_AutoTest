@@ -29,7 +29,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         }
     }
 
-    @Test(enabled = true,description = "解冻",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "解冻")
     public void testUnFreeze() throws Exception{
         Step.login(driver);
         {

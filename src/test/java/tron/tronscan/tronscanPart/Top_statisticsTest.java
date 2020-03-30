@@ -1,4 +1,5 @@
 package tron.tronscan.tronscanPart;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -27,7 +28,7 @@ private  String URL = "https://"+tronScanNode+"/#/data/bestdata";
             }
         }
 
-    @Test(enabled = true,description = "最佳数据-概览")
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "最佳数据-概览")
     public void testTop() throws Exception{
       //  driver.findElement(By.cssSelector("div.card-header.list-style-body__header > ul > li:nth-child(1) > a")).click();
         driver.findElement(By.cssSelector("div.card-header.list-style-body__header > ul > li:nth-child(1) > a > span > span")).getText();
@@ -53,7 +54,7 @@ private  String URL = "https://"+tronScanNode+"/#/data/bestdata";
 
     }
 
-    @Test(enabled = true,description = "最佳数据-账户")
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "最佳数据-账户")
     public void testTopAccount() throws Exception{
         driver.findElement(By.cssSelector("div.card-header.list-style-body__header > ul > li:nth-child(2) > a")).click();
         driver.findElement(By.cssSelector("div.card-header.list-style-body__header > ul > li:nth-child(2) > a > span > span")).getText();
@@ -83,7 +84,7 @@ private  String URL = "https://"+tronScanNode+"/#/data/bestdata";
         driver.findElement(By.cssSelector("div.card-body.list-style-body__body > div > div.top-data > div > div:nth-child(6) > div > h2 > span")).getText().isEmpty();
 
     }
-    @Test(enabled = true,description = "最佳数据-通证")
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "最佳数据-通证")
     public void testTopToken() throws Exception{
         driver.findElement(By.cssSelector("div.card-header.list-style-body__header > ul > li:nth-child(3) > a")).click();
         driver.findElement(By.cssSelector("div.card-header.list-style-body__header > ul > li:nth-child(3) > a > span > span")).getText();
@@ -110,7 +111,7 @@ private  String URL = "https://"+tronScanNode+"/#/data/bestdata";
 
     }
 
-    @Test(enabled = true,description = "最佳数据-合约")
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "最佳数据-合约")
     public void testTopContract() throws Exception{
         driver.findElement(By.cssSelector(" div.card-header.list-style-body__header > ul > li:nth-child(4) > a")).click();
         driver.findElement(By.cssSelector("div.card-header.list-style-body__header > ul > li:nth-child(4) > a > span > span")).getText();
@@ -132,7 +133,7 @@ private  String URL = "https://"+tronScanNode+"/#/data/bestdata";
 
     }
 
-    @Test(enabled = true,description = "最佳数据-资源")
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "最佳数据-资源")
     public void testTopResource() throws Exception{
         driver.findElement(By.cssSelector("div.card-header.list-style-body__header > ul > li:nth-child(5) > a")).click();
         driver.findElement(By.cssSelector("div.card-header.list-style-body__header > ul > li:nth-child(5) > a > span > span")).getText();

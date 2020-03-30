@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 
 import com.alibaba.fastjson.JSONObject;
@@ -31,7 +32,7 @@ public class ExchangeAphList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "List a single the exchange pair's trade chart data ")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List a single the exchange pair's trade chart data ")
   public void getExchangAphTest() {
     //
     Map<String, String> Params = new HashMap<>();

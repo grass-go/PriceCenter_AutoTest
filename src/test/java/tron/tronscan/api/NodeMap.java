@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -32,7 +33,7 @@ public class NodeMap {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "List all the nodes in the blockchain")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List all the nodes in the blockchain")
   public void getNodeMap() {
     response = TronscanApiList.getNodeMap(tronScanNode);
     log.info("code is " + response.getStatusLine().getStatusCode());
@@ -62,7 +63,7 @@ public class NodeMap {
   /**
    * constructor.上传节点信息,下载的信息为表格形式
    */
-  @Test(enabled = true, description = "download the transaction info of a address (recent 10,000 transactions)")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "download the transaction info of a address (recent 10,000 transactions)")
   public void getInfo_upload() {
     String address = "TMuA6YqfCeX8EhbfYEg5y7S4DqzSJireY9";
     Map<String, String> Params = new HashMap<>();
@@ -78,7 +79,7 @@ public class NodeMap {
   /**
    * constructor.查询节点概览信息,下载的信息为表格形式
    */
-  @Test(enabled = true, description = "download daily new address number and transaction number info")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "download daily new address number and transaction number info")
   public void getOverview_upload() {
     response = TronscanApiList.getOverview_upload(tronScanNode);
     log.info("code is " + response.getStatusLine().getStatusCode());

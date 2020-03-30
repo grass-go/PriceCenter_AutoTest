@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -28,7 +29,7 @@ public class Chainparameters {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Get chainparameters list")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get chainparameters list")
   public void getchainparameters() {
     //Get response
     response = TronscanApiList.getChainparameters(tronScanNode);

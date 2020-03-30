@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -28,7 +29,7 @@ public class ExchangeList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Get exchange list")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get exchange list")
   public void getExchangeList() {
     //Get response
     response = TronscanApiList.getExchangesList(tronScanNode);

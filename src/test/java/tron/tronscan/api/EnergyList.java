@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -32,7 +33,7 @@ public class EnergyList {
   /**
    * constructor.能量统计接口
    */
-  @Test(enabled = true, description = "List data synchronization energystatistic")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization energystatistic")
   public void getEnergyStatistic() {
     //Get response
     response = TronscanApiList.getEnergyStatistic(tronScanNode);
@@ -88,7 +89,7 @@ public class EnergyList {
   /**
    * constructor.获取能量每日统计信息
    */
-  @Test(enabled = true, description = "List data synchronization energydailystatistic")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization energydailystatistic")
   public void getEnergyDailyStatistic() {
     //Get response
     response = TronscanApiList.getEnergyDailyStatistic(tronScanNode);

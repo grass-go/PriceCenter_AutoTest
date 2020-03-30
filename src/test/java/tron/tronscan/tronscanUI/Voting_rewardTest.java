@@ -30,7 +30,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         }
     }
 
-    @Test(enabled = true,description = "领取奖励",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "领取奖励")
     public void testVoting_reward() throws Exception {
         Step.login(driver);
          {

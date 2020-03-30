@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -28,7 +29,7 @@ public class ContractsCode {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Get a single contract's abi & byteCode")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get a single contract's abi & byteCode")
   public void test01getContractsCode() {
     //Get response
     String address = "TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3";
@@ -58,7 +59,7 @@ public class ContractsCode {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Get a single contract's detail ")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get a single contract's detail ")
   public void getContractTest() {
     //Get response
     String address = "TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3";

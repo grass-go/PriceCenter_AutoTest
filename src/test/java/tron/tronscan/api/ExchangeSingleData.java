@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -29,7 +30,7 @@ public class ExchangeSingleData {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "List account")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List account")
   public void test01getAccount() {
     //Get response
     int exchange_id = 9;

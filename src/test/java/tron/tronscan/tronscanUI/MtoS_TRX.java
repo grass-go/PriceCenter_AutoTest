@@ -29,7 +29,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         }
     }
 
-    @Test(enabled = true,description = "从主链往侧链转入TRX",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "从主链往侧链转入TRX")
     public void testMtoS_TRX() throws Exception{
         Step.login(driver);
         {

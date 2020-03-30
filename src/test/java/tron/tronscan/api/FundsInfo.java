@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -31,7 +32,7 @@ public class FundsInfo {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "List the transactions related to a specified account")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
   public void test01FundsInfo() {
     //Get response
     response = TronscanApiList.getFundsInfo(tronScanNode);
@@ -54,7 +55,7 @@ public class FundsInfo {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "List all the foundation addresses ")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List all the foundation addresses ")
   public void getFundTest() {
     //Get response
     Map<String, String> Params = new HashMap<>();
@@ -86,7 +87,7 @@ public class FundsInfo {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "获取Bittorrent的流通量和市值")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "获取Bittorrent的流通量和市值")
   public void getBitt_fund() {
     response = TronscanApiList.getBitt_fund(tronScanNode);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -101,7 +102,7 @@ public class FundsInfo {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "获取bittorrent代笔解锁时间表图")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "获取bittorrent代笔解锁时间表图")
   public void getBitt_graphic() {
     response = TronscanApiList.getBitt_graphic(tronScanNode);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -118,7 +119,7 @@ public class FundsInfo {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "获取wink的流通量和市值")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "获取wink的流通量和市值")
   public void getWinkFund() {
     response = TronscanApiList.getWinkFund(tronScanNode);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -132,7 +133,7 @@ public class FundsInfo {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "获取wink代笔解锁时间表图")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "获取wink代笔解锁时间表图")
   public void getWink_graphic() {
     response = TronscanApiList.getWink_graphic(tronScanNode);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);

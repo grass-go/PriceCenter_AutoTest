@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -30,7 +31,7 @@ public class SearchList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "搜索框查询接口")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "搜索框查询接口")
   public void getSearch() {
     Map<String, String> Params = new HashMap<>();
     Params.put("term", "1");

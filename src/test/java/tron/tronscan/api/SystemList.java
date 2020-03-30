@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -29,7 +30,7 @@ public class SystemList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Get system status")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get system status")
   public void getSystemStatus() {
     //Get response
     response = TronscanApiList.getSystemStatus(tronScanNode);
@@ -77,7 +78,7 @@ public class SystemList {
   /**
    * constructor.获取系统tps信息
    */
-  @Test(enabled = true, description = "List data synchronization tps")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization tps")
   public void getSystemTps() {
     //Get response
     response = TronscanApiList.getSystemTps(tronScanNode);
@@ -104,7 +105,7 @@ public class SystemList {
   /**
    * constructor.获取homepage相关信息
    */
-  @Test(enabled = true, description = "List data synchronization homepage")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization homepage")
   public void getSystemHomepage() {
     //Get response
     response = TronscanApiList.getSystemHomepage(tronScanNode);

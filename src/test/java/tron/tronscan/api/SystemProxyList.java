@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -39,7 +40,7 @@ public class SystemProxyList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "提供CNY货币转换价格")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "提供CNY货币转换价格")
   public void getProxyList() {
     //Post response
     String params = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=TRX&convert=ETH";

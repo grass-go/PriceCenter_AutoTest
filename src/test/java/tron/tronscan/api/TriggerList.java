@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -32,7 +33,7 @@ public class TriggerList {
   /**
    * constructor.trigger统计
    */
-  @Test(enabled = true, description = "List data synchronization triggerstatistic")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization triggerstatistic")
   public void getTriggerStatistic() {
     //Get response
     response = TronscanApiList.getTriggerStatistic(tronScanNode);
@@ -78,7 +79,7 @@ public class TriggerList {
   /**
    * constructor.trigger总数统计
    */
-  @Test(enabled = true, description = "List data synchronization triggeramountstatistic")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization triggeramountstatistic")
   public void getTriggerAmountStatistic() {
     //Get response
     response = TronscanApiList.getTriggerAmountStatistic(tronScanNode);

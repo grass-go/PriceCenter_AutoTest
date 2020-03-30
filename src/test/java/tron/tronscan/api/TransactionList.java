@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -31,7 +32,7 @@ public class TransactionList {
   /**
    * constructor. limit不为零
    */
-  @Test(enabled = true, description = "List the transactions related to a specified account")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
   public void test01getBlockDetail() {
     //Get response
     Map<String, String> Params = new HashMap<>();
@@ -71,7 +72,7 @@ public class TransactionList {
   /**
    * constructor. limit为零
    */
-  @Test(enabled = true, description = "List the transactions related to a specified account")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
   public void test02getBlockDetail() {
     //Get response
     Map<String, String> Params = new HashMap<>();
@@ -95,7 +96,7 @@ public class TransactionList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "List a single the exchange pair's transaction records ")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List a single the exchange pair's transaction records ")
   public void getTransactionTest() {
     Map<String, String> Params = new HashMap<>();
     Params.put("sort", "-timestamp");
@@ -139,7 +140,7 @@ public class TransactionList {
   /**
    * constructor. limit不为零
    */
-  @Test(enabled = true, description = "List the transactions in the blockchain(only display the latest 10,000 data records in the query time range)")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions in the blockchain(only display the latest 10,000 data records in the query time range)")
   public void getTransactionTestRang() {
     Map<String, String> Params = new HashMap<>();
     Params.put("sort", "-timestamp");
@@ -201,7 +202,7 @@ public class TransactionList {
   /**
    * constructor.查询区块上交易列表 limit不为零
    */
-  @Test(enabled = true, description = "查询区块上交易列表")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "查询区块上交易列表")
   public void getTransactionTestBlock() {
     Map<String, String> Params = new HashMap<>();
     Params.put("sort", "-timestamp");
@@ -276,7 +277,7 @@ public class TransactionList {
   /**
    * constructor.simple-transaction接口
    */
-  @Test(enabled = true, description = "List the transactions under specified conditions;")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions under specified conditions;")
   public void getSimple_Transaction() {
     response = TronscanApiList.getSimple_Transaction(tronScanNode);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);

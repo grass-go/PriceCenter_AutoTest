@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -35,7 +36,7 @@ public class Token_Trx20 {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "List all the trc20 tokens in the blockchain")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List all the trc20 tokens in the blockchain")
   public void getTokentrc20() {
     //Get response
     Map<String, String> Params = new HashMap<>();
@@ -103,7 +104,7 @@ public class Token_Trx20 {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "地址下的转账查询")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "地址下的转账查询")
   public void getTokentrc20_transfer() {
     //Get response
     Map<String, String> Params = new HashMap<>();
@@ -168,7 +169,7 @@ public class Token_Trx20 {
   /**
    * constructor.查询trc20通证持有者
    */
-  @Test(enabled = true, description = "查询trc20通证持有者")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "查询trc20通证持有者")
   public void getInternal_transaction() {
     //
     String address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";

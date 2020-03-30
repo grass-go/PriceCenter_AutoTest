@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -32,7 +33,7 @@ public class CallerList {
   /**
    * constructor.合约调用者信息统计
    */
-  @Test(enabled = true, description = "List data synchronization calleraddressstatistic")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization calleraddressstatistic")
   public void getCallerAddressStatistic() {
     //Get response
     response = TronscanApiList.getCallerAddressStatistic(tronScanNode);
@@ -77,7 +78,7 @@ public class CallerList {
   /**
    * constructor.合约调用者数量统计信息
    */
-  @Test(enabled = true, description = "List data synchronization triggeramountstatistic")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization triggeramountstatistic")
   public void getCallerAddAmouStat() {
     //Get response
     response = TronscanApiList.getCallerAddAmouStat(tronScanNode);

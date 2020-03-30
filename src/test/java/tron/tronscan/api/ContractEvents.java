@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -28,7 +29,7 @@ public class ContractEvents {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Get contract events")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get contract events")
   public void getContractEvents() {
     //Get response
     response = TronscanApiList.getContractEvents(tronScanNode);

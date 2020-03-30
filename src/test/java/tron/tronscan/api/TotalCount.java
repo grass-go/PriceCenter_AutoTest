@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -34,7 +35,7 @@ public class TotalCount {
   /**
    * constructor.查询总数接口
    */
-  @Test(enabled = true, description = "Get a super totalCount's github link")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get a super totalCount's github link")
   public void getTotalCount() {
     //Get response
     String address = "TAahLbGTZk6YuCycii72datPQEtyC5x231";

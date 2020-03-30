@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -27,7 +28,7 @@ public class WitnessesList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "List all the witnesses in the blockchain")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List all the witnesses in the blockchain")
   public void test01getWitnesses() {
     //Get response
     response = TronscanApiList.getWitnesses(tronScanNode);
@@ -53,7 +54,7 @@ public class WitnessesList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "获取本轮出块算力分布图")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "获取本轮出块算力分布图")
   public void getMaintenance_Statistic() {
     response = TronscanApiList.getMaintenance_Statistic(tronScanNode);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);

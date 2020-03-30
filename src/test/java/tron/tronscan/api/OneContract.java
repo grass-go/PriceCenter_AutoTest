@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -33,7 +34,7 @@ public class OneContract {
   /**
    * constructor.合约能量统计信息
    */
-  @Test(enabled = true, description = "List data synchronization onecontractenergystatistic")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization onecontractenergystatistic")
   public void getOneContractEnergy() {
     String address = "TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3";
     Map<String, String> params = new HashMap<>();
@@ -74,7 +75,7 @@ public class OneContract {
   /**
    * constructor.单个合约调用统计信息
    */
-  @Test(enabled = true, description = "List data synchronization onecontracttriggerstatistic")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization onecontracttriggerstatistic")
   public void getOneContractTrigger() {
     //Get response
     String address = "TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3";
@@ -113,7 +114,7 @@ public class OneContract {
   /**
    * constructor.单个合约调用者统计信息
    */
-  @Test(enabled = true, description = "List data synchronization onecontractcallerstatistic")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization onecontractcallerstatistic")
   public void getOneContractCaller() {
     //Get response
     String address = "TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3";
@@ -153,7 +154,7 @@ public class OneContract {
   /**
    * constructor.一个合约的caller信息
    */
-  @Test(enabled = true, description = "List data synchronization onecontractcallers")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization onecontractcallers")
   public void getCallers() {
     //Get response
     String address = "TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3";
@@ -180,7 +181,7 @@ public class OneContract {
   /**
    * constructor.单个合约调用者统计信息
    */
-  @Test(enabled = true, description = "List data synchronization onecontract-callvalue")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization onecontract-callvalue")
   public void getCaller_value() {
     //Get response
     String address = "TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3";

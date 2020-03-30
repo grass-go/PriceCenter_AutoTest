@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -32,7 +33,7 @@ public class VoteList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "List all the votes info made by a specified voter  ")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List all the votes info made by a specified voter  ")
   public void getInternalTransaction() {
     //
     String voter = "TMuA6YqfCeX8EhbfYEg5y7S4DqzSJireY9";
@@ -56,7 +57,7 @@ public class VoteList {
   /**
    * constructor.获取本轮投票
    */
-  @Test(enabled = true, description = "Get current round vote time;")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get current round vote time;")
   public void getCurrent_Cycle() {
     response = TronscanApiList.getCurrent_Cycle(tronScanNode);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -87,7 +88,7 @@ public class VoteList {
   /**
    * constructor.获取下一轮投票情况
    */
-  @Test(enabled = true, description = "Get next round vote time;")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get next round vote time;")
   public void getNext_Cycle() {
     response = TronscanApiList.getNext_Cycle(tronScanNode);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);

@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -29,7 +30,7 @@ public class SingleProposalList {
   /**
    * constructor
    */
-  @Test(enabled = true, description = "List a single proposal detail")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List a single proposal detail")
   public void test01getSingleProposalList() {
     //Get response
     Map<String, String> params = new HashMap<>();

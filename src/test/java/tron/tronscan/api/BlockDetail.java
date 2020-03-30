@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -29,7 +30,7 @@ public class BlockDetail {
   /**
    * constructor
    */
-  @Test(enabled = true, description = "Get a single block's detail")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get a single block's detail")
   public void test01getBlockDetail() {
     //Get response
     Map<String, String> params = new HashMap<>();
@@ -58,7 +59,7 @@ public class BlockDetail {
   /**
    * constructor limit不为零
    */
-  @Test(enabled = true, description = "List the blocks in the blockchain")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the blocks in the blockchain")
   public void test02getBlocksList() {
     //Get response
     int limit = 11;
@@ -95,7 +96,7 @@ public class BlockDetail {
   /**
    * constructor limit为零
    */
-  @Test(enabled = true, description = "List the blocks in the blockchain")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the blocks in the blockchain")
   public void test03getBlocksList() {
     //Get response
     int limit = 0;
@@ -121,7 +122,7 @@ public class BlockDetail {
   /**
    * constructor. limit不为零
    */
-  @Test(enabled = true, description = "List all the blocks produced by the specified SR in the blockchain")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List all the blocks produced by the specified SR in the blockchain")
   public void getBlocksList() {
     //Get response
     int limit = 20;

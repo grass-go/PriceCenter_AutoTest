@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -29,7 +30,7 @@ public class ContractTriggerList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = " List all the triggers of the contracts in the blockchain")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = " List all the triggers of the contracts in the blockchain")
   public void test01getContractTrigger() {
     //Get response
     int limit = 20;

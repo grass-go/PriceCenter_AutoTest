@@ -56,7 +56,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         driver.close();
     }
 
-    @Test(enabled = true,description = "给他人冻结能量",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "给他人冻结能量")
     public void testEnery() throws Exception{
         Step.login(driver);
         {

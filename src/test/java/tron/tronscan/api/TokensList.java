@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -28,7 +29,7 @@ public class TokensList {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = " List all the trc10 tokens in the blockchain")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = " List all the trc10 tokens in the blockchain")
   public void test01getTokensList() {
     //Get response
     Map<String, String> params = new HashMap<>();
@@ -97,7 +98,7 @@ public class TokensList {
   /**
    * constructor.根据tokenName获取token的信息
    */
-  @Test(enabled = true, description = "Get token holders balance by token name (Deprecated)")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get token holders balance by token name (Deprecated)")
   public void getTokensAddress() {
     Map<String, String> params = new HashMap<>();
     params.put("tokenName", "USDT");
@@ -127,7 +128,7 @@ public class TokensList {
   /**
    * constructor.获取trc10 token持有者
    */
-  @Test(enabled = true, description = "Get token holders of a trc10 token;")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get token holders of a trc10 token;")
   public void getTokenholders() {
     String address = "TF5Bn4cJCT6GVeUgyCN4rBhDg42KBrpAjg";
     Map<String, String> params = new HashMap<>();

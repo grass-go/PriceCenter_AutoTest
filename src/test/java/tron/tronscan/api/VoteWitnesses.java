@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -28,7 +29,7 @@ public class VoteWitnesses {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "List all the votes info of the witnesses")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List all the votes info of the witnesses")
   public void test01getVoteWitnesses() {
     //Get response
     response = TronscanApiList.getVoteWitnesses(tronScanNode);
@@ -78,7 +79,7 @@ public class VoteWitnesses {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "地址的witness查询")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "地址的witness查询")
   public void getVoteWitness() {
     //Get response
     String address = "TMuA6YqfCeX8EhbfYEg5y7S4DqzSJireY9";

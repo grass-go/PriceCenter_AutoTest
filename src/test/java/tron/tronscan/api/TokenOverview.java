@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -35,7 +36,7 @@ public class TokenOverview {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "查询通证列表")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "查询通证列表")
   public void getTokenOverview() {
     //Get response
     int limit = 20;

@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONObject;
 import java.util.HashMap;
@@ -24,7 +25,7 @@ public class Broadcast {
   /**
    * constructor. 广播接口，得签名交易的，接口应该是要发起一笔交易的，所以先暂停自动化
    */
-//  @Test(enabled = true, description = "Broadcast transaction hex")
+//  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Broadcast transaction hex")
 //  public void test01BroadcastTransactionHex() {
 //    //Get response
 //    response = TronscanApiList.broadcast(tronScanNode, transactionHex);

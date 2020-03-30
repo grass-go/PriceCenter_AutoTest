@@ -1,4 +1,5 @@
 package tron.tronscan.api;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONObject;
 import java.util.HashMap;
@@ -30,7 +31,7 @@ public class LastestBlock {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Get the lastest block")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get the lastest block")
   public void getLastestBlockTest() {
     response = TronscanApiList.getLastestBlock(tronScanNode);
     //log.info("code is " + response.getStatusLine().getStatusCode());
