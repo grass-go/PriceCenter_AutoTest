@@ -63,8 +63,6 @@ public class TransactionList {
     Assert.assertTrue(patternAddress.matcher(responseObject.getString("toAddress")).matches());
 
     responseObject = responseObject.getJSONObject("contractData");
-    Assert.assertTrue(responseObject.containsKey("amount"));
-//    Assert.assertTrue(responseObject.containsKey("asset_name"));
     Assert.assertTrue(patternAddress.matcher(responseObject.getString("owner_address")).matches());
     Assert.assertTrue(patternAddress.matcher(responseObject.getString("to_address")).matches());
   }
