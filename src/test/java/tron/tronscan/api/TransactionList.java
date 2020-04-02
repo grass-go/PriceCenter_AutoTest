@@ -261,11 +261,10 @@ public class TransactionList {
     Assert.assertTrue(targetContent.containsKey("id"));
     //contractData json
     proposalContent = targetContent.getJSONObject("contractData");
-    Assert.assertTrue(proposalContent.containsKey("data"));
+//    Assert.assertTrue(proposalContent.containsKey("data"));
     //contractData Contain owner_address，contract_address
     Assert.assertTrue(patternAddress.matcher(proposalContent.getString("owner_address")).matches());
-    Assert.assertTrue(
-        patternAddress.matcher(proposalContent.getString("contract_address")).matches());
+
     //timestamp
     Assert.assertTrue(targetContent.containsKey("timestamp"));
 
