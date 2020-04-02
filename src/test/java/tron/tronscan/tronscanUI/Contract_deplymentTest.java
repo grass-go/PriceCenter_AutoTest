@@ -32,7 +32,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         }
     }
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = true,description = "合约部署和验证",retryAnalyzer = MyIRetryAnalyzer.class)
     public void testContract_deplyment() throws Exception{
         Step.login(driver);
         {
