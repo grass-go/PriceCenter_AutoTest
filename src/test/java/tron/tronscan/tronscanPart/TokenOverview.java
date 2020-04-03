@@ -40,7 +40,7 @@ public class TokenOverview {
         driver.findElement(By.cssSelector("div.token-num-wrap> div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span")).getText().isEmpty();
         //7days
         driver.findElement(By.cssSelector("div.token-num-wrap > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > span")).getText().isEmpty();
-        //文案
+        //10trc和20trc
         driver.findElement(By.cssSelector("div.d-flex> div.d-md-flex > div > div > label:nth-child(2) > span:nth-child(2)")).click();
         driver.findElement(By.cssSelector("div.d-md-flex > div > div > label:nth-child(3) > span:nth-child(2)")).click();
         driver.close();
