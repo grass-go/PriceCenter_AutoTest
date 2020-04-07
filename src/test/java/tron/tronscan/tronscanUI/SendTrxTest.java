@@ -29,7 +29,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         }
     }
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = true)
     public void testTrx() throws Exception{
         Step.login(driver);
         {
@@ -45,6 +45,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         driver.findElement(By.cssSelector(".form-group:nth-child(4) .form-control")).click();
         Thread.sleep(200);
         driver.findElement(By.xpath("//form/button")).click();
+        Thread.sleep(200);
         driver.findElement(By.cssSelector(".btn-primary:nth-child(2)")).click();
         Thread.sleep(200);
         Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "Successful Transaction");

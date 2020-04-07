@@ -9,6 +9,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.concurrent.TimeUnit;
+
 import tron.common.utils.MyIRetryAnalyzer;
 import tron.common.utils.Step;
 import tron.common.utils.WebBrowser;
@@ -27,6 +29,10 @@ private  String URL = "https://"+tronScanNode+"/#/";
         } catch (Exception e) {
             System.out.println(e);
         }
+        // 最大化浏览器
+//        driver.manage().window().maximize();
+        //设置操作超时时长，该设置是全局性的，即所有操作都最长等待30s
+//        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
     @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
@@ -48,7 +54,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         driver.findElement(By.xpath("/html/body/div[3]/div/div/div/ul/li[1]/ul/li[2]")).click();
 
         Thread.sleep(200);
-        driver.findElement(By.cssSelector(".form-group:nth-child(3) .form-control")).sendKeys("0.01");
+        driver.findElement(By.cssSelector(".form-group:nth-child(3) .form-control")).sendKeys("0.00001");
         driver.findElement(By.cssSelector(".form-group:nth-child(4) .form-control")).click();
         Thread.sleep(200);
         driver.findElement(By.cssSelector(".form-group:nth-child(4) .form-control")).sendKeys("TRC 10");

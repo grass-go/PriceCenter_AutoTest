@@ -29,7 +29,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         }
     }
 
-    @Test(enabled = true,description = "给他人冻结带宽",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = false,description = "给他人冻结带宽",retryAnalyzer = MyIRetryAnalyzer.class)
     public void testFreezeByOthers() throws Exception{
         Step.login(driver);
         {
@@ -52,11 +52,11 @@ private  String URL = "https://"+tronScanNode+"/#/";
         Thread.sleep(200);
         driver.findElement(By.cssSelector(".modal-body > p >button")).click();
         Thread.sleep(1000);
-//        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > div.text-muted > span")).getText() , "Successfully frozen");
+        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > div.text-muted > span")).getText() , "Successfully frozen");
         driver.close();
     }
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "给他人冻结能量")
+    @Test(enabled = false,retryAnalyzer = MyIRetryAnalyzer.class,description = "给他人冻结能量")
     public void testEnery() throws Exception{
         Step.login(driver);
         {
@@ -80,7 +80,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         Thread.sleep(1000);
         driver.findElement(By.cssSelector(".modal-body > p >button")).click();
         Thread.sleep(300);
-//        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > div.text-muted > span")).getText() , "Successfully frozen");
+        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > div.text-muted > span")).getText() , "Successfully frozen");
     }
     @AfterMethod(enabled = true)
     public void end() throws Exception {
