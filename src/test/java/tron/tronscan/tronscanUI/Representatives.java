@@ -25,7 +25,7 @@ private  String URL = "https://"+tronScanNode+"/#/sr/representatives";
         try {
             driver = webBrowser.startChrome(URL);
         } catch (Exception e) {
-            System.out.println(e);
+
         }
     }
 

@@ -27,7 +27,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         try {
             driver = webBrowser.startChrome(URL);
         } catch (Exception e) {
-            System.out.println(e);
+
         }
         // 最大化浏览器
 //        driver.manage().window().maximize();

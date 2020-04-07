@@ -26,13 +26,11 @@ private  String URL = "https://"+tronScanNode+"/#/sr/votes";
         try {
             driver = webBrowser.startChrome(URL);
         } catch (Exception e) {
-            System.out.println(e);
         }
     }
 
     @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
     public void testVoteText() throws Exception{
-        System.out.println("LOGIN");
         driver.manage().window().setSize(new Dimension(2560, 1440));
         Thread.sleep(200);
         {
