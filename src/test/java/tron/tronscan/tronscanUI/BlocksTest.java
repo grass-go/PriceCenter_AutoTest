@@ -22,7 +22,7 @@ private  String URL = "https://"+tronScanNode+"/#/blockchain/blocks";
         try {
             driver = webBrowser.startChrome(URL);
         } catch (Exception e) {
-            System.out.println(e);
+
         }
     }
 

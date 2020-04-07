@@ -20,7 +20,6 @@ private  String URL = "https://"+tronScanNode+"/#/tools/tron-convert-tool";
     try {
       driver = webBrowser.startChrome(URL);
     } catch (Exception e) {
-      java.lang.System.out.println(e);
     }
   }
 

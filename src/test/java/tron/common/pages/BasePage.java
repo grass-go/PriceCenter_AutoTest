@@ -20,7 +20,7 @@ public class BasePage {
             System.out.println("成功打开谷歌浏览器！");
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         }catch (Exception e){
-            System.out.println(e);
+
         }
 
     }

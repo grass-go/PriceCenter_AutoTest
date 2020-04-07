@@ -20,7 +20,7 @@ private  String URL = "https://"+tronScanNode+"/#/tools/system";
     try {
       driver = webBrowser.startChrome(URL);
     } catch (Exception e) {
-      java.lang.System.out.println(e);
+      java.lang.
     }
   }
 
