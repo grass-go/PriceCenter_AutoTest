@@ -9,6 +9,9 @@ import tron.common.DjedApiList;
 import tron.common.TronscanApiList;
 import tron.common.utils.Configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CdpInfo {
     private JSONObject responseContent;
     private JSONArray responseArrayContent;
@@ -63,5 +66,25 @@ public class CdpInfo {
         Assert.assertTrue(responseObject.containsKey("txId"));
         Assert.assertTrue(responseObject.containsKey("cRatio"));
         Assert.assertTrue(responseObject.containsKey("id"));
+    }
+
+    @Test(enabled = true)
+    public void cdpInfoId(){
+        Map<String, String> params = new HashMap<>();
+        params.put("cdpId","62");
+        response = DjedApiList.cdpInfoId(node,params);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TronscanApiList.parseResponseContent(response);
+        TronscanApiList.printJsonContent(responseContent);
+        //data object
+        JSONObject responseObject = responseContent.getJSONObject("data");
+        Assert.assertTrue(responseObject.containsKey("address"));
+        Assert.assertTrue(responseObject.containsKey("ptrxHold"));
+        Assert.assertTrue(responseObject.containsKey("cdpId"));
+        Assert.assertTrue(responseObject.containsKey("lasteventTime"));
+        Assert.assertTrue(responseObject.containsKey("liqPrice"));
+        Assert.assertTrue(responseObject.containsKey("cRatio"));
+        Assert.assertTrue(responseObject.containsKey("id"));
+        Assert.assertTrue(responseObject.containsKey("debt"));
     }
 }

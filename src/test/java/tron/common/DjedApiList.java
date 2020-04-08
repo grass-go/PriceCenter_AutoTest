@@ -150,6 +150,19 @@ public class DjedApiList {
         return response;
     }
 
+    public static HttpResponse cdpInfoId(String node, Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + node + "/scan/cdpInfo/getBrief/";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
 
 
     /**
