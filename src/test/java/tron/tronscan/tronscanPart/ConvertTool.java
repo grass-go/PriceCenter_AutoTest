@@ -23,30 +23,53 @@ private  String URL = "https://"+tronScanNode+"/#/tools/tron-convert-tool";
     }
   }
 
-  @Test(enabled = true)
+  @Test(enabled = true,description = "编译器工具-Base64")
   public void testBase64() throws Exception{
-    Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/table[1]/tbody/tr[1]/td")).getText().isEmpty());
-    Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/table[2]/tbody/tr[1]/td")).getText().isEmpty());
-    Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/table[3]/tbody/tr[1]/td")).getText().isEmpty());
+    driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[4]/h4/span/span")).getText().isEmpty();
+    driver.switchTo().frame("convertTool");
+    driver.findElement(By.cssSelector("body > div > div > div > h3")).getText().isEmpty();
+    driver.findElement(By.cssSelector(".tabbable > ul > li:nth-child(1) > a")).getText().isEmpty();
+    driver.findElement(By.cssSelector(".tabbable > ul > li:nth-child(1) > a")).click();
+    Thread.sleep(200);
+    driver.findElement(By.cssSelector(".tabbable > div > div:nth-child(1) > form > p")).getText().isEmpty();
+    driver.close();
   }
 
-  @Test(enabled = true)
+  @Test(enabled = true,description = "编译器工具-Base58")
   public void testBase58() throws Exception{
-    Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/table[2]/tbody/tr[2]/th/span")).getText().isEmpty());
-    Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/table[2]/tbody/tr[2]/td/a")).getText().isEmpty());
+    driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[4]/h4/span/span")).getText().isEmpty();
+    driver.switchTo().frame("convertTool");
+    driver.findElement(By.cssSelector("body > div > div > div > h3")).getText().isEmpty();
+    driver.findElement(By.cssSelector(".tabbable > ul > li:nth-child(2) > a")).getText().isEmpty();
+    driver.findElement(By.cssSelector(".tabbable > ul > li:nth-child(2) > a")).click();
+    Thread.sleep(200);
+    driver.findElement(By.cssSelector(".tabbable > div > div:nth-child(2) > form > p")).getText().isEmpty();
+    driver.close();
   }
 
 
-  @Test(enabled = true)
+  @Test(enabled = true,description = "编译器工具-PubKeyAddress")
   public void testPubKeyAddress() throws Exception{
-    Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/table[3]/tbody/tr[2]/th/span")).getText().isEmpty());
-    Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/table[3]/tbody/tr[2]/td/a")).getText().isEmpty());
+    driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[4]/h4/span/span")).getText().isEmpty();
+    driver.switchTo().frame("convertTool");
+    driver.findElement(By.cssSelector("body > div > div > div > h3")).getText().isEmpty();
+    driver.findElement(By.cssSelector(".tabbable > ul > li:nth-child(3) > a")).getText().isEmpty();
+    driver.findElement(By.cssSelector(".tabbable > ul > li:nth-child(3) > a")).click();
+    Thread.sleep(200);
+    driver.findElement(By.cssSelector(".tabbable > div > div:nth-child(3) > form > p:nth-child(3)")).getText().isEmpty();
+    driver.close();
   }
 
-  @Test(enabled = true)
+  @Test(enabled = true,description = "编译器工具-Mainnet")
   public void testMainnet() throws Exception{
-    Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/table[3]/tbody/tr[2]/th/span")).getText().isEmpty());
-    Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/table[3]/tbody/tr[2]/td/a")).getText().isEmpty());
+    driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[4]/h4/span/span")).getText().isEmpty();
+    driver.switchTo().frame("convertTool");
+    driver.findElement(By.cssSelector("body > div > div > div > h3")).getText().isEmpty();
+    driver.findElement(By.cssSelector(".tabbable > ul > li:nth-child(5) > a")).getText().isEmpty();
+    driver.findElement(By.cssSelector(".tabbable > ul > li:nth-child(5) > a")).click();
+    Thread.sleep(200);
+    driver.findElement(By.cssSelector(".tabbable > div > div:nth-child(5) > form > p")).getText().isEmpty();
+    driver.close();
   }
 
   @AfterMethod(enabled = true)
