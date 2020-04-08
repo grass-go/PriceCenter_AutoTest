@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import tron.common.utils.MyIRetryAnalyzer;
 import tron.common.utils.WebBrowser;
 
@@ -105,7 +106,7 @@ public class NoticeTest {
             driver.findElement(By.cssSelector("div:nth-child(2) > div > div> div > div >div >div >svg > g.highcharts-legend > g > g > g.highcharts-series-1 > text > tspan")).getText().isEmpty();
             driver.findElement(By.cssSelector("div:nth-child(2) > div > div> div > div >div >div >svg > g.highcharts-legend > g > g > g.highcharts-series-2 > text > tspan")).getText().isEmpty();
             Thread.sleep(200);
-            driver.findElement(By.cssSelector("div:nth-child(2) > div > div>div >div> div > div > svg > g.highcharts-exporting-group > g")).click();
+            //driver.findElement(By.cssSelector("div:nth-child(2) > div > div>div >div> div > div > svg > g.highcharts-exporting-group > g")).click();
             driver.close();
         }
     }
