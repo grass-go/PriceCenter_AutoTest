@@ -40,4 +40,26 @@ public class CdpHistory {
     }
 
 
+    @Test(enabled = true)
+    public void cdpHistoryWeek(){
+
+        response = DjedApiList.cdpHistoryWeek(node);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TronscanApiList.parseResponseContent(response);
+        TronscanApiList.printJsonContent(responseContent);
+        //data object
+        JSONObject responseObject = responseContent.getJSONObject("data");
+        Assert.assertTrue(responseObject.containsKey("wipe"));
+        Assert.assertTrue(responseObject.containsKey("wipeNum"));
+        Assert.assertTrue(responseObject.containsKey("lockNum"));
+        Assert.assertTrue(responseObject.containsKey("bite"));
+        Assert.assertTrue(responseObject.containsKey("drawNum"));
+        Assert.assertTrue(responseObject.containsKey("freeNum"));
+        Assert.assertTrue(responseObject.containsKey("lock"));
+        Assert.assertTrue(responseObject.containsKey("draw"));
+        Assert.assertTrue(responseObject.containsKey("free"));
+        Assert.assertTrue(responseObject.containsKey("open"));
+        Assert.assertTrue(responseObject.containsKey("biteNum"));
+    }
+
 }

@@ -112,6 +112,58 @@ public class DjedApiList {
         return response;
     }
 
+    public static HttpResponse feedInfoTimeLine(String node) {
+        try {
+            String requestUrl = "http://" + node + "/scan/feedInfo/timeLine";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse feeInfo(String node) {
+        try {
+            String requestUrl = "http://" + node + "/scan/feeInfo";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse executiveList(String node) {
+        try {
+            String requestUrl = "http://" + node + "/gov/executive/list";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse pollList(String node) {
+        try {
+            String requestUrl = "http://" + node + "/gov/poll/list";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
     public static HttpResponse cdpInfoAll(String node) {
         try {
             String requestUrl = "http://" + node + "/scan/cdpInfo/getAll";
@@ -137,6 +189,21 @@ public class DjedApiList {
         }
         return response;
     }
+
+
+    public static HttpResponse cdpHistoryWeek(String node) {
+        try {
+            String requestUrl = "http://" + node + "/scan/cdpHistory/week";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
     public static HttpResponse cdpHistoryLatest(String node) {
         try {
             String requestUrl = "http://" + node + "/scan/cdpHistory/latest";
