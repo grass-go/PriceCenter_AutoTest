@@ -60,7 +60,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
 
     }
 
-    @Test(enabled = true)
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
     public void testSearchTrc20Text() throws Exception{
         driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div/div/div/div/div/input")).sendKeys("USDT");
         Thread.sleep(300);
