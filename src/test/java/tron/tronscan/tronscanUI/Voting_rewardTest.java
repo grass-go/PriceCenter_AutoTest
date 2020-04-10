@@ -30,7 +30,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         }
     }
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "领取奖励")
+    @Test(enabled = true,description = "领取奖励",retryAnalyzer = MyIRetryAnalyzer.class)
     public void testVoting_reward() throws Exception {
         Step.login(driver);
          {
@@ -39,7 +39,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
             builder.moveToElement(element).perform();
         }
         //
-        WebElement vote= driver.findElement ( By.cssSelector(".font-weight-bold"));
+        WebElement vote= driver.findElement ( By.cssSelector("#root > main > div:nth-child(2) > div > div > div > table > tbody > tr:nth-child(4) > td > span"));
         String vote_string = vote.getText();
         String[]  strs=vote_string.split(" ");
         for(int i=0,len=strs.length;i<len;i++){

@@ -29,7 +29,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         }
     }
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "从主链往侧链转入TRX")
+    @Test(enabled = false,description = "从主链往侧链转入TRX")
     public void testMtoS_TRX() throws Exception{
         Step.login(driver);
         {
@@ -40,7 +40,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
 
         driver.findElement(By.cssSelector(".account-token-tab> a.btn-default:nth-child(3)")).click();
         driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(5) > button")).click();
-        driver.findElement(By.xpath(".//form/div[3]/input")).click();
+        driver.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[2]/form/div[3]/input")).click();
         driver.findElement(By.xpath("//form/div[3]/input")).sendKeys("10");
         Thread.sleep(200);
 //        driver.findElement(By.xpath("//form/button")).click();

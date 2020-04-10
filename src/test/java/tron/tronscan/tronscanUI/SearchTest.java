@@ -60,14 +60,14 @@ private  String URL = "https://"+tronScanNode+"/#/";
 
     }
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = true)
     public void testSearchTrc20Text() throws Exception{
         driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div/div/div/div/div/input")).sendKeys("USDT");
         Thread.sleep(300);
         Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a/div/span/strong")).getText(),"Tether USD(USDT) TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
         driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a")).click();
         Thread.sleep(300);
-        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div[2]/div[2]/div[2]/div/span/div/div/span/div/a/div")).getText(),"TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
+        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div[2]/div[2]/div[2]/div/span/span/div/div/span/div/a/div")).getText(),"TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
 
     }
 
