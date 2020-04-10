@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tron.djed.CdpHistory" tests="2" skipped="0" failures="0" errors="0" timestamp="2020-04-10T04:38:39" hostname="zhukaideiMac.local" time="1.014">
+  <properties/>
+  <testcase name="cdpHistoryDay" classname="tron.djed.CdpHistory" time="0.542"/>
+  <testcase name="cdpHistoryWeek" classname="tron.djed.CdpHistory" time="0.472"/>
+  <system-out><![CDATA[http://api.just.network/scan/cdpHistory/interactions
+12:38:39.291 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection request: [route: {}->http://api.just.network:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+12:38:39.291 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection leased: [id: 3][route: {}->http://api.just.network:80][total kept alive: 0; route allocated: 1 of 80; total allocated: 1 of 100]
+12:38:39.291 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnectionOperator - Connecting to api.just.network:80
+12:38:39.527 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAddCookies - CookieSpec selected: default
+12:38:39.527 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAuthCache - Auth cache not set in the context
+12:38:39.527 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestTargetAuthentication - Target auth state: UNCHALLENGED
+12:38:39.527 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestProxyAuthentication - Proxy auth state: UNCHALLENGED
+12:38:39.527 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultHttpClient - Attempt 1 to execute request
+12:38:39.527 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Sending request: GET /scan/cdpHistory/interactions HTTP/1.1
+12:38:39.528 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "GET /scan/cdpHistory/interactions HTTP/1.1[\r][\n]"
+12:38:39.528 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Content-type: application/json; charset=utf-8[\r][\n]"
+12:38:39.528 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Connection: Close[\r][\n]"
+12:38:39.528 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Host: api.just.network[\r][\n]"
+12:38:39.528 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)[\r][\n]"
+12:38:39.528 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "[\r][\n]"
+12:38:39.528 [TestNG-tests-1] DEBUG org.apache.http.headers - >> GET /scan/cdpHistory/interactions HTTP/1.1
+12:38:39.528 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Content-type: application/json; charset=utf-8
+12:38:39.528 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Connection: Close
+12:38:39.528 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Host: api.just.network
+12:38:39.528 [TestNG-tests-1] DEBUG org.apache.http.headers - >> User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)
+12:38:39.831 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "HTTP/1.1 200 [\r][\n]"
+12:38:39.831 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Server: nginx/1.16.1[\r][\n]"
+12:38:39.831 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Date: Fri, 10 Apr 2020 04:38:39 GMT[\r][\n]"
+12:38:39.831 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Type: application/json;charset=UTF-8[\r][\n]"
+12:38:39.831 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Length: 813[\r][\n]"
+12:38:39.831 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Connection: close[\r][\n]"
+12:38:39.831 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Cache-Control: no-cache, no-store, must-revalidate[\r][\n]"
+12:38:39.831 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "[\r][\n]"
+12:38:39.831 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Receiving response: HTTP/1.1 200 
+12:38:39.831 [TestNG-tests-1] DEBUG org.apache.http.headers - << HTTP/1.1 200 
+12:38:39.831 [TestNG-tests-1] DEBUG org.apache.http.headers - << Server: nginx/1.16.1
+12:38:39.831 [TestNG-tests-1] DEBUG org.apache.http.headers - << Date: Fri, 10 Apr 2020 04:38:39 GMT
+12:38:39.831 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Type: application/json;charset=UTF-8
+12:38:39.831 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Length: 813
+12:38:39.832 [TestNG-tests-1] DEBUG org.apache.http.headers - << Connection: close
+12:38:39.832 [TestNG-tests-1] DEBUG org.apache.http.headers - << Cache-Control: no-cache, no-store, must-revalidate
+http://api.just.network/scan/cdpHistory/interactions 请求总耗时：541 毫秒
+12:38:39.832 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "{"code":0,"data":[{"bite":0,"close":0,"draw":20,"free":15,"give":13,"lock":25,"open":14,"t":1585872000000,"wipe":0},{"bite":0,"close":0,"draw":22,"free":7,"give":13,"lock":18,"open":13,"t":1585958400000,"wipe":8},{"bite":0,"close":0,"draw":24,"free":5,"give":11,"lock":23,"open":11,"t":1586044800000,"wipe":13},{"bite":0,"close":1,"draw":20,"free":9,"give":11,"lock":18,"open":12,"t":1586131200000,"wipe":9},{"bite":0,"close":5,"draw":21,"free":11,"give":7,"lock":20,"open":11,"t":1586217600000,"wipe":11},{"bite":0,"close":0,"draw":11,"free":8,"give":7,"lock":10,"open":7,"t":1586304000000,"wipe":7},{"bite":0,"close":0,"draw":46,"free":6,"give":18,"lock":39,"open":18,"t":1586390400000,"wipe":16},{"bite":0,"close":0,"draw":4,"free":0,"give":2,"lock":5,"open":2,"t":1586476800000,"wipe":0}],"message":"SUCCESS"}"
+12:38:39.832 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Connection 0.0.0.0:53155<->3.12.242.83:80 closed
+12:38:39.832 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection released: [id: 3][route: {}->http://api.just.network:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+12:38:39.832 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON Start---------------------------
+12:38:39.832 [TestNG-tests-1] INFO tron.common.TronscanApiList - code:0
+12:38:39.832 [TestNG-tests-1] INFO tron.common.TronscanApiList - data:[{"wipe":0,"give":13,"t":1585872000000,"bite":0,"lock":25,"draw":20,"free":15,"close":0,"open":14},{"wipe":8,"give":13,"t":1585958400000,"bite":0,"lock":18,"draw":22,"free":7,"close":0,"open":13},{"wipe":13,"give":11,"t":1586044800000,"bite":0,"lock":23,"draw":24,"free":5,"close":0,"open":11},{"wipe":9,"give":11,"t":1586131200000,"bite":0,"lock":18,"draw":20,"free":9,"close":1,"open":12},{"wipe":11,"give":7,"t":1586217600000,"bite":0,"lock":20,"draw":21,"free":11,"close":5,"open":11},{"wipe":7,"give":7,"t":1586304000000,"bite":0,"lock":10,"draw":11,"free":8,"close":0,"open":7},{"wipe":16,"give":18,"t":1586390400000,"bite":0,"lock":39,"draw":46,"free":6,"close":0,"open":18},{"wipe":0,"give":2,"t":1586476800000,"bite":0,"lock":5,"draw":4,"free":0,"close":0,"open":2}]
+12:38:39.832 [TestNG-tests-1] INFO tron.common.TronscanApiList - message:SUCCESS
+12:38:39.832 [TestNG-tests-1] INFO tron.common.TronscanApiList - JSON content size are: 3
+12:38:39.833 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON End-----------------------------
+http://api.just.network/scan/cdpHistory/week
+12:38:39.833 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection request: [route: {}->http://api.just.network:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+12:38:39.833 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection leased: [id: 4][route: {}->http://api.just.network:80][total kept alive: 0; route allocated: 1 of 80; total allocated: 1 of 100]
+12:38:39.833 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnectionOperator - Connecting to api.just.network:80
+12:38:40.063 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAddCookies - CookieSpec selected: default
+12:38:40.063 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAuthCache - Auth cache not set in the context
+12:38:40.063 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestTargetAuthentication - Target auth state: UNCHALLENGED
+12:38:40.063 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestProxyAuthentication - Proxy auth state: UNCHALLENGED
+12:38:40.063 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultHttpClient - Attempt 1 to execute request
+12:38:40.063 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Sending request: GET /scan/cdpHistory/week HTTP/1.1
+12:38:40.064 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "GET /scan/cdpHistory/week HTTP/1.1[\r][\n]"
+12:38:40.064 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Content-type: application/json; charset=utf-8[\r][\n]"
+12:38:40.064 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Connection: Close[\r][\n]"
+12:38:40.064 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Host: api.just.network[\r][\n]"
+12:38:40.064 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)[\r][\n]"
+12:38:40.064 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "[\r][\n]"
+12:38:40.064 [TestNG-tests-1] DEBUG org.apache.http.headers - >> GET /scan/cdpHistory/week HTTP/1.1
+12:38:40.064 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Content-type: application/json; charset=utf-8
+12:38:40.064 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Connection: Close
+12:38:40.064 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Host: api.just.network
+12:38:40.064 [TestNG-tests-1] DEBUG org.apache.http.headers - >> User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)
+12:38:40.303 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "HTTP/1.1 200 [\r][\n]"
+12:38:40.303 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Server: nginx/1.16.1[\r][\n]"
+12:38:40.303 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Date: Fri, 10 Apr 2020 04:38:40 GMT[\r][\n]"
+12:38:40.303 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Type: application/json;charset=UTF-8[\r][\n]"
+12:38:40.303 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Length: 278[\r][\n]"
+12:38:40.303 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Connection: close[\r][\n]"
+12:38:40.303 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Cache-Control: no-cache, no-store, must-revalidate[\r][\n]"
+12:38:40.303 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "[\r][\n]"
+12:38:40.303 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Receiving response: HTTP/1.1 200 
+12:38:40.303 [TestNG-tests-1] DEBUG org.apache.http.headers - << HTTP/1.1 200 
+12:38:40.303 [TestNG-tests-1] DEBUG org.apache.http.headers - << Server: nginx/1.16.1
+12:38:40.303 [TestNG-tests-1] DEBUG org.apache.http.headers - << Date: Fri, 10 Apr 2020 04:38:40 GMT
+12:38:40.303 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Type: application/json;charset=UTF-8
+12:38:40.303 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Length: 278
+12:38:40.303 [TestNG-tests-1] DEBUG org.apache.http.headers - << Connection: close
+12:38:40.303 [TestNG-tests-1] DEBUG org.apache.http.headers - << Cache-Control: no-cache, no-store, must-revalidate
+http://api.just.network/scan/cdpHistory/week 请求总耗时：471 毫秒
+12:38:40.304 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "{"code":0,"data":{"wipe":"64","wipeNum":"200544381189899989900000","lockNum":"90494136498651573254206955","bite":"0","drawNum":"302310197120540244560484","freeNum":"60062873692212573254206955","lock":"158","draw":"168","free":"61","open":"88","biteNum":"0"},"message":"SUCCESS"}"
+12:38:40.304 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Connection 0.0.0.0:53156<->3.12.242.83:80 closed
+12:38:40.304 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection released: [id: 4][route: {}->http://api.just.network:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+12:38:40.304 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON Start---------------------------
+12:38:40.304 [TestNG-tests-1] INFO tron.common.TronscanApiList - code:0
+12:38:40.304 [TestNG-tests-1] INFO tron.common.TronscanApiList - data:{"wipe":"64","wipeNum":"200544381189899989900000","lockNum":"90494136498651573254206955","bite":"0","drawNum":"302310197120540244560484","freeNum":"60062873692212573254206955","lock":"158","draw":"168","free":"61","open":"88","biteNum":"0"}
+12:38:40.305 [TestNG-tests-1] INFO tron.common.TronscanApiList - message:SUCCESS
+12:38:40.305 [TestNG-tests-1] INFO tron.common.TronscanApiList - JSON content size are: 3
+12:38:40.305 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON End-----------------------------
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

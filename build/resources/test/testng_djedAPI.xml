@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="djedAPI" parallel="tests" thread-count="1">
+    <test name="djedAPI">
+        <classes>
+            <class name="tron.djed.TokenInfo"></class>
+            <class name="tron.djed.CdpHistory"></class>
+            <class name="tron.djed.CdpInfo"></class>
+            <class name="tron.djed.CollInfo"></class>
+            <class name="tron.djed.PollList"></class>
+            <class name="tron.djed.Executive"></class>
+            <class name="tron.djed.FeedInfo"></class>
+            <class name="tron.djed.FeeInfo"></class>
+        </classes>
+    </test>
+</suite>

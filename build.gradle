@@ -60,3 +60,18 @@ task tronscanApi(type: Test) {
     }
 
 }
+
+task djedAPI(type: Test) {
+
+    useTestNG {
+        suites(file('src/test/resources/testng_djedAPI.xml'))
+        parallel 'tests'
+        threadCount 1
+
+    }
+    testLogging {
+        exceptionFormat = 'full'
+        showStackTraces = "true"
+    }
+
+}
