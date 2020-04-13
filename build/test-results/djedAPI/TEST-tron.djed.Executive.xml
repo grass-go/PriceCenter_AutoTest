@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="tron.djed.Executive" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-10T04:38:45" hostname="zhukaideiMac.local" time="0.614">
+<testsuite name="tron.djed.Executive" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-13T05:32:28" hostname="zhukaideiMac" time="0.606">
   <properties/>
-  <testcase name="executiveList" classname="tron.djed.Executive" time="0.614"/>
+  <testcase name="executiveList" classname="tron.djed.Executive" time="0.606"/>
   <system-out><![CDATA[http://api.just.network/gov/executive/list
-12:38:45.055 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection request: [route: {}->http://api.just.network:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
-12:38:45.055 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection leased: [id: 10][route: {}->http://api.just.network:80][total kept alive: 0; route allocated: 1 of 80; total allocated: 1 of 100]
-12:38:45.055 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnectionOperator - Connecting to api.just.network:80
-12:38:45.358 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAddCookies - CookieSpec selected: default
-12:38:45.358 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAuthCache - Auth cache not set in the context
-12:38:45.358 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestTargetAuthentication - Target auth state: UNCHALLENGED
-12:38:45.358 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestProxyAuthentication - Proxy auth state: UNCHALLENGED
-12:38:45.358 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultHttpClient - Attempt 1 to execute request
-12:38:45.358 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Sending request: GET /gov/executive/list HTTP/1.1
-12:38:45.358 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "GET /gov/executive/list HTTP/1.1[\r][\n]"
-12:38:45.358 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Content-type: application/json; charset=utf-8[\r][\n]"
-12:38:45.358 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Connection: Close[\r][\n]"
-12:38:45.358 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Host: api.just.network[\r][\n]"
-12:38:45.358 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)[\r][\n]"
-12:38:45.358 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "[\r][\n]"
-12:38:45.359 [TestNG-tests-1] DEBUG org.apache.http.headers - >> GET /gov/executive/list HTTP/1.1
-12:38:45.359 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Content-type: application/json; charset=utf-8
-12:38:45.359 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Connection: Close
-12:38:45.359 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Host: api.just.network
-12:38:45.359 [TestNG-tests-1] DEBUG org.apache.http.headers - >> User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)
-12:38:45.668 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "HTTP/1.1 200 [\r][\n]"
-12:38:45.668 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Server: nginx/1.16.1[\r][\n]"
-12:38:45.668 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Date: Fri, 10 Apr 2020 04:38:45 GMT[\r][\n]"
-12:38:45.668 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Type: application/json;charset=UTF-8[\r][\n]"
-12:38:45.668 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Length: 732[\r][\n]"
-12:38:45.668 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Connection: close[\r][\n]"
-12:38:45.668 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Cache-Control: no-cache, no-store, must-revalidate[\r][\n]"
-12:38:45.668 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "[\r][\n]"
-12:38:45.668 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Receiving response: HTTP/1.1 200 
-12:38:45.668 [TestNG-tests-1] DEBUG org.apache.http.headers - << HTTP/1.1 200 
-12:38:45.668 [TestNG-tests-1] DEBUG org.apache.http.headers - << Server: nginx/1.16.1
-12:38:45.668 [TestNG-tests-1] DEBUG org.apache.http.headers - << Date: Fri, 10 Apr 2020 04:38:45 GMT
-12:38:45.668 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Type: application/json;charset=UTF-8
-12:38:45.668 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Length: 732
-12:38:45.668 [TestNG-tests-1] DEBUG org.apache.http.headers - << Connection: close
-12:38:45.668 [TestNG-tests-1] DEBUG org.apache.http.headers - << Cache-Control: no-cache, no-store, must-revalidate
-http://api.just.network/gov/executive/list 请求总耗时：613 毫秒
-12:38:45.669 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "{"code":0,"data":[{"summary":"The Just Foundation Interim Risk Team has placed an Executive Vote into the voting system, which will enable the community to enact a new USDJ Stability Fee of 0.5% and set the USDJ Debt Ceiling to 10 billion USDJ.","voteAddress":["TG6jUMfwpwR9QNFsSwCGtLaV2TR2gV8yru"],"voteSlate":"c6b628ed4f32bcd8a7ca6b55349429c8865e7ea7cc40d0892e5451cb83d5ddb3","executedTime":null,"executiveKey":"c6b628ed4f32bcd8a7ca6b55349429c8865e7ea7cc40d0892e5451cb83d5ddb3","startTime":1584751270000,"executedVotes":"","id":2,"state":1,"title":"Executive vote - March 21, 2020","content":"https://raw.githubusercontent.com/just-protocal/community/master/governance/votes/Executive-vote-March-21-2020.md"}],"message":"SUCCESS"}"
-12:38:45.669 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Connection 0.0.0.0:53162<->3.12.242.83:80 closed
-12:38:45.669 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection released: [id: 10][route: {}->http://api.just.network:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
-12:38:45.669 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON Start---------------------------
-12:38:45.669 [TestNG-tests-1] INFO tron.common.TronscanApiList - code:0
-12:38:45.669 [TestNG-tests-1] INFO tron.common.TronscanApiList - data:[{"summary":"The Just Foundation Interim Risk Team has placed an Executive Vote into the voting system, which will enable the community to enact a new USDJ Stability Fee of 0.5% and set the USDJ Debt Ceiling to 10 billion USDJ.","voteAddress":["TG6jUMfwpwR9QNFsSwCGtLaV2TR2gV8yru"],"voteSlate":"c6b628ed4f32bcd8a7ca6b55349429c8865e7ea7cc40d0892e5451cb83d5ddb3","executiveKey":"c6b628ed4f32bcd8a7ca6b55349429c8865e7ea7cc40d0892e5451cb83d5ddb3","startTime":1584751270000,"executedVotes":"","id":2,"state":1,"title":"Executive vote - March 21, 2020","content":"https://raw.githubusercontent.com/just-protocal/community/master/governance/votes/Executive-vote-March-21-2020.md"}]
-12:38:45.669 [TestNG-tests-1] INFO tron.common.TronscanApiList - message:SUCCESS
-12:38:45.669 [TestNG-tests-1] INFO tron.common.TronscanApiList - JSON content size are: 3
-12:38:45.669 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON End-----------------------------
+13:32:28.677 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection request: [route: {}->http://api.just.network:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+13:32:28.677 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection leased: [id: 10][route: {}->http://api.just.network:80][total kept alive: 0; route allocated: 1 of 80; total allocated: 1 of 100]
+13:32:28.677 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnectionOperator - Connecting to api.just.network:80
+13:32:28.984 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAddCookies - CookieSpec selected: default
+13:32:28.984 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAuthCache - Auth cache not set in the context
+13:32:28.984 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestTargetAuthentication - Target auth state: UNCHALLENGED
+13:32:28.984 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestProxyAuthentication - Proxy auth state: UNCHALLENGED
+13:32:28.984 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultHttpClient - Attempt 1 to execute request
+13:32:28.984 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Sending request: GET /gov/executive/list HTTP/1.1
+13:32:28.984 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "GET /gov/executive/list HTTP/1.1[\r][\n]"
+13:32:28.984 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Content-type: application/json; charset=utf-8[\r][\n]"
+13:32:28.984 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Connection: Close[\r][\n]"
+13:32:28.985 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Host: api.just.network[\r][\n]"
+13:32:28.985 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)[\r][\n]"
+13:32:28.985 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "[\r][\n]"
+13:32:28.985 [TestNG-tests-1] DEBUG org.apache.http.headers - >> GET /gov/executive/list HTTP/1.1
+13:32:28.985 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Content-type: application/json; charset=utf-8
+13:32:28.985 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Connection: Close
+13:32:28.985 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Host: api.just.network
+13:32:28.985 [TestNG-tests-1] DEBUG org.apache.http.headers - >> User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)
+13:32:29.282 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "HTTP/1.1 200 [\r][\n]"
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Server: nginx/1.16.1[\r][\n]"
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Date: Mon, 13 Apr 2020 05:32:29 GMT[\r][\n]"
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Type: application/json;charset=UTF-8[\r][\n]"
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Length: 1340[\r][\n]"
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Connection: close[\r][\n]"
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Cache-Control: no-cache, no-store, must-revalidate[\r][\n]"
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "[\r][\n]"
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Receiving response: HTTP/1.1 200 
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.headers - << HTTP/1.1 200 
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.headers - << Server: nginx/1.16.1
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.headers - << Date: Mon, 13 Apr 2020 05:32:29 GMT
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Type: application/json;charset=UTF-8
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Length: 1340
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.headers - << Connection: close
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.headers - << Cache-Control: no-cache, no-store, must-revalidate
+http://api.just.network/gov/executive/list 请求总耗时：606 毫秒
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "{"code":0,"data":[{"summary":"The Just Foundation Interim Risk Team has placed an Executive Vote into the voting system, which will enable the community to enact a new USDJ Stability Fee of 0.5% and set the USDJ Debt Ceiling to 10 billion USDJ.","voteAddress":["TG6jUMfwpwR9QNFsSwCGtLaV2TR2gV8yru"],"voteSlate":"c6b628ed4f32bcd8a7ca6b55349429c8865e7ea7cc40d0892e5451cb83d5ddb3","executedTime":null,"executiveKey":"c6b628ed4f32bcd8a7ca6b55349429c8865e7ea7cc40d0892e5451cb83d5ddb3","startTime":1584751270000,"executedVotes":"","id":2,"state":1,"title":"Executive vote - March 21, 2020","content":"https://raw.githubusercontent.com/just-protocal/community/master/governance/votes/Executive-vote-March-21-2020.md"},{"summary":"The JUST Governance committee has added a new proposal into the voting system to set the issuing price of JST.","voteAddress":["TRDNeZ66LQqda22iC4k2nPQNWg93FJ4JBK"],"voteSlate":"b0d400c4ea8178941fba5d9824ec218a3f71f8b3761b7fcc53d15884840ab59f","executedTime":null,"executiveKey":"b0d400c4ea8178941fba5d9824ec218a3f71f8b3761b7fcc53d15884840ab59f","startTime":1586736000000,"executedVotes":"","id":3,"state":1,"title":"Vote: Setting JST issuing Price - April 13th, 2020","content":"https://raw.githubusercontent.com/just-protocal/community/master/governance/votes/Executive-vote-April-13-2020.md"}],"message":"SUCCESS"}"
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Connection 0.0.0.0:52491<->3.12.242.83:80 closed
+13:32:29.283 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection released: [id: 10][route: {}->http://api.just.network:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+13:32:29.283 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON Start---------------------------
+13:32:29.283 [TestNG-tests-1] INFO tron.common.TronscanApiList - code:0
+13:32:29.283 [TestNG-tests-1] INFO tron.common.TronscanApiList - data:[{"summary":"The Just Foundation Interim Risk Team has placed an Executive Vote into the voting system, which will enable the community to enact a new USDJ Stability Fee of 0.5% and set the USDJ Debt Ceiling to 10 billion USDJ.","voteAddress":["TG6jUMfwpwR9QNFsSwCGtLaV2TR2gV8yru"],"voteSlate":"c6b628ed4f32bcd8a7ca6b55349429c8865e7ea7cc40d0892e5451cb83d5ddb3","executiveKey":"c6b628ed4f32bcd8a7ca6b55349429c8865e7ea7cc40d0892e5451cb83d5ddb3","startTime":1584751270000,"executedVotes":"","id":2,"state":1,"title":"Executive vote - March 21, 2020","content":"https://raw.githubusercontent.com/just-protocal/community/master/governance/votes/Executive-vote-March-21-2020.md"},{"summary":"The JUST Governance committee has added a new proposal into the voting system to set the issuing price of JST.","voteAddress":["TRDNeZ66LQqda22iC4k2nPQNWg93FJ4JBK"],"voteSlate":"b0d400c4ea8178941fba5d9824ec218a3f71f8b3761b7fcc53d15884840ab59f","executiveKey":"b0d400c4ea8178941fba5d9824ec218a3f71f8b3761b7fcc53d15884840ab59f","startTime":1586736000000,"executedVotes":"","id":3,"state":1,"title":"Vote: Setting JST issuing Price - April 13th, 2020","content":"https://raw.githubusercontent.com/just-protocal/community/master/governance/votes/Executive-vote-April-13-2020.md"}]
+13:32:29.283 [TestNG-tests-1] INFO tron.common.TronscanApiList - message:SUCCESS
+13:32:29.283 [TestNG-tests-1] INFO tron.common.TronscanApiList - JSON content size are: 3
+13:32:29.283 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON End-----------------------------
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
