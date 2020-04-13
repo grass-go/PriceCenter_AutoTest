@@ -30,6 +30,7 @@ public class SqlDjed implements IReporter{
     String sucessClass = "";
     String failClass = "";
 
+
     @Override
     public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
         List<ITestResult> list = new ArrayList<ITestResult>();
