@@ -11,13 +11,16 @@ import java.util.*;
 
 public class SqlTronscanUI implements IReporter{
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/AutoTestScan";
-    static final String USER = "root";
-    static final String PASS = "zK199595@";
+    static final String DB_URL = "jdbc:mysql://39.105.200.151:3306/AutoTestScan";
+    static final String USER = "AutoTestScan";
+    static final String PASS = "root";
     String time = "";
     int status = 0;
     String sucessClass = "";
+    int sucessnum = 0;
     String failClass = "";
+    int failnum = 0;
+    int sum =0;
 
     @Override
     public void generateReport(List<XmlSuite> xmlSuites, List<ISuite> suites, String outputDirectory) {
@@ -84,6 +87,9 @@ public class SqlTronscanUI implements IReporter{
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         time = formatter.format(date).toString();
+        sucessnum = success.size();
+        failnum = fail.size();
+        sum = failnum + sucessnum;
         sucessClass = success.toString().replaceAll("(?:\\[|null|\\]| +)", "");
         if (fail.isEmpty()) {
             status = 1;
@@ -106,7 +112,7 @@ public class SqlTronscanUI implements IReporter{
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
             stmt = conn.createStatement();
-            String sql = "INSERT INTO `AutoTestScan`.`tronscanUI`(`time`, `status`, `sucessClass`, `failClass`) VALUES ('"+time+"','"+status+"','"+sucessClass+"','"+failClass+"')";
+            String sql = "INSERT INTO `AutoTestScan`.`tronscanUI`(`time`, `status`, `sucessclass`, `sucessnum`,`failClass`,`failnum`,`sum`) VALUES ('"+time+"','"+status+"','"+sucessClass+"','"+sucessnum+"','"+failClass+"','"+failnum+"','"+sum+"')";
             stmt.executeUpdate(sql);
 //            result = rs.toString();
             System.out.println(result);
