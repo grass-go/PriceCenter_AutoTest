@@ -83,7 +83,7 @@ public class SqlDjed implements IReporter{
                 }
                 if (result.getStatus() == 1) {
                     success.add(result.getMethod().getMethodName());
-                } else  {
+                } else  if(result.getStatus() == 2){
                     fail.add(result.getMethod().getMethodName());
                 }
 //                sb.append(result.getTestClass().getRealClass().getName())
