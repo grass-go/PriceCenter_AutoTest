@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tron.djed.FeeInfo" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-13T05:32:33" hostname="zhukaideiMac" time="2.977">
+  <properties/>
+  <testcase name="feeinfo" classname="tron.djed.FeeInfo" time="2.977"/>
+  <system-out><![CDATA[http://api.just.network/scan/feeInfo
+13:32:33.053 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection request: [route: {}->http://api.just.network:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+13:32:33.053 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection leased: [id: 12][route: {}->http://api.just.network:80][total kept alive: 0; route allocated: 1 of 80; total allocated: 1 of 100]
+13:32:33.053 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnectionOperator - Connecting to api.just.network:80
+13:32:33.387 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAddCookies - CookieSpec selected: default
+13:32:33.387 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAuthCache - Auth cache not set in the context
+13:32:33.387 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestTargetAuthentication - Target auth state: UNCHALLENGED
+13:32:33.387 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestProxyAuthentication - Proxy auth state: UNCHALLENGED
+13:32:33.387 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultHttpClient - Attempt 1 to execute request
+13:32:33.388 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Sending request: GET /scan/feeInfo HTTP/1.1
+13:32:33.388 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "GET /scan/feeInfo HTTP/1.1[\r][\n]"
+13:32:33.388 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Content-type: application/json; charset=utf-8[\r][\n]"
+13:32:33.388 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Connection: Close[\r][\n]"
+13:32:33.388 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Host: api.just.network[\r][\n]"
+13:32:33.388 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)[\r][\n]"
+13:32:33.388 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "[\r][\n]"
+13:32:33.388 [TestNG-tests-1] DEBUG org.apache.http.headers - >> GET /scan/feeInfo HTTP/1.1
+13:32:33.388 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Content-type: application/json; charset=utf-8
+13:32:33.388 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Connection: Close
+13:32:33.388 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Host: api.just.network
+13:32:33.388 [TestNG-tests-1] DEBUG org.apache.http.headers - >> User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)
+13:32:36.028 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "HTTP/1.1 200 [\r][\n]"
+13:32:36.028 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Server: nginx/1.16.1[\r][\n]"
+13:32:36.028 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Date: Mon, 13 Apr 2020 05:32:33 GMT[\r][\n]"
+13:32:36.028 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Type: application/json;charset=UTF-8[\r][\n]"
+13:32:36.028 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Length: 263[\r][\n]"
+13:32:36.028 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Connection: close[\r][\n]"
+13:32:36.028 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Cache-Control: no-cache, no-store, must-revalidate[\r][\n]"
+13:32:36.029 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "[\r][\n]"
+13:32:36.029 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Receiving response: HTTP/1.1 200 
+13:32:36.029 [TestNG-tests-1] DEBUG org.apache.http.headers - << HTTP/1.1 200 
+13:32:36.029 [TestNG-tests-1] DEBUG org.apache.http.headers - << Server: nginx/1.16.1
+13:32:36.029 [TestNG-tests-1] DEBUG org.apache.http.headers - << Date: Mon, 13 Apr 2020 05:32:33 GMT
+13:32:36.029 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Type: application/json;charset=UTF-8
+13:32:36.029 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Length: 263
+13:32:36.029 [TestNG-tests-1] DEBUG org.apache.http.headers - << Connection: close
+13:32:36.029 [TestNG-tests-1] DEBUG org.apache.http.headers - << Cache-Control: no-cache, no-store, must-revalidate
+http://api.just.network/scan/feeInfo 请求总耗时：2977 毫秒
+13:32:36.029 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "{"code":0,"data":[{"fee":"0.00500310970192749827076188","spell":"setFee(uint256 ray 0000000000000000000000000000000000000000033b2e3ca201305ced19fb1e)","t":1585901313000,"tx":"4c3b61b24b1cbd83c0ff43cff74913c0e0336009c574f87e7a429d716e8b53cf"}],"message":"SUCCESS"}"
+13:32:36.029 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Connection 0.0.0.0:52493<->3.12.242.83:80 closed
+13:32:36.029 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection released: [id: 12][route: {}->http://api.just.network:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+13:32:36.029 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON Start---------------------------
+13:32:36.029 [TestNG-tests-1] INFO tron.common.TronscanApiList - code:0
+13:32:36.029 [TestNG-tests-1] INFO tron.common.TronscanApiList - data:[{"spell":"setFee(uint256 ray 0000000000000000000000000000000000000000033b2e3ca201305ced19fb1e)","t":1585901313000,"tx":"4c3b61b24b1cbd83c0ff43cff74913c0e0336009c574f87e7a429d716e8b53cf","fee":"0.00500310970192749827076188"}]
+13:32:36.029 [TestNG-tests-1] INFO tron.common.TronscanApiList - message:SUCCESS
+13:32:36.029 [TestNG-tests-1] INFO tron.common.TronscanApiList - JSON content size are: 3
+13:32:36.029 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON End-----------------------------
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

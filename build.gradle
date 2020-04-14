@@ -26,6 +26,8 @@ dependencies {
     compile group: 'org.slf4j', name: 'jcl-over-slf4j', version: '1.7.25'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     compile group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.44'
+
 }
 
 test {
@@ -50,6 +52,21 @@ task tronscanApi(type: Test) {
 
     useTestNG {
         suites(file('src/test/resources/testng_tronscanAPI.xml'))
+        parallel 'tests'
+        threadCount 1
+
+    }
+    testLogging {
+        exceptionFormat = 'full'
+        showStackTraces = "true"
+    }
+
+}
+
+task djedAPI(type: Test) {
+
+    useTestNG {
+        suites(file('src/test/resources/testng_djedAPI.xml'))
         parallel 'tests'
         threadCount 1
 
