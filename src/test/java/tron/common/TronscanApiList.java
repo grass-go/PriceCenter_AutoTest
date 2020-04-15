@@ -1166,7 +1166,7 @@ public class TronscanApiList {
     public static HttpResponse getExchangeTradeData(String tronscanNode,
                                                     Map<String, String> params) {
         try {
-            String requestUrl = "http://" + tronscanNode + "exchange/kgraph";
+            String requestUrl = "http://" + tronscanNode + "external/recaptcha";
             response = createGetConnect(requestUrl, params);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1237,7 +1237,51 @@ public class TronscanApiList {
         return response;
     }
 
+    /**
+     * constructor.谷歌验证码
+     */
+    public static HttpResponse getRecaptchaData(String tronscanNode,
+                                                    Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/recaptcha";
+            response = createGetConnect(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
 
+    /**
+     * constructor.侧链列表
+     */
+    public static HttpResponse getSideChainList(String tronscanNode) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/sidechain/getSideChainList";
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.主侧链币对应关系
+     */
+    public static HttpResponse getAllSidechainTokenMapping(String tronscanNode) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/sidechain/getAllSidechainTokenMapping";
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
     /**
      * constructor.
      */
