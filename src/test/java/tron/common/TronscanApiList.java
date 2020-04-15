@@ -1282,6 +1282,215 @@ public class TronscanApiList {
         }
         return response;
     }
+
+    /**
+     * constructor.根据主链地址获取侧链地址
+     */
+    public static HttpResponse getMappingByMainchainAddress(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/sidechain/getMappingByMainchainAddress";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.根据侧链地址获取主链地址
+     */
+    public static HttpResponse getBySidechain(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/sidechain/getMappingBySidechainAddress";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.获取映射手续费
+     */
+    public static HttpResponse getMappingFees(String tronscanNode) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/sidechain/getMappingFees";
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.获取用户打的标签
+     */
+    public static HttpResponse getTagTest(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/tag";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.更新标签
+     */
+    public static HttpResponse postTagUpdate(String tronscanNode, String user_address,
+                                            String target_address,String tag,String description) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/tag/update";
+            System.out.println("requestUrl"+requestUrl);
+
+            JsonObject body = new JsonObject();
+            body.addProperty("user_address", user_address);
+            body.addProperty("target_address",target_address);
+            body.addProperty("tag",tag);
+            body.addProperty("description",description);
+            response = createConnect(requestUrl, body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.增加标签
+     */
+    public static HttpResponse postTagInsert(String tronscanNode, String user_address,
+                                             String target_address,String tag,String description) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/tag/insert";
+            System.out.println("requestUrl"+requestUrl);
+
+            JsonObject body = new JsonObject();
+            body.addProperty("user_address", user_address);
+            body.addProperty("target_address",target_address);
+            body.addProperty("tag",tag);
+            body.addProperty("description",description);
+            response = createConnect(requestUrl, body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.删除标签
+     */
+    public static HttpResponse postTagDetele(String tronscanNode, String user_address,
+                                             String target_address) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/tag/delete";
+            System.out.println("requestUrl"+requestUrl);
+
+            JsonObject body = new JsonObject();
+            body.addProperty("user_address", user_address);
+            body.addProperty("target_address",target_address);
+            response = createConnect(requestUrl, body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.推荐标签
+     */
+    public static HttpResponse getTagRecommend(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/tag/recommend";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.更新trc10信息.post请求
+     */
+    public static HttpResponse postUpdata10Tokens(String tronscanNode,String user_address) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/trc10tokens/update";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("user_address", user_address);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.根据创建者获取trc20信息
+     */
+    public static HttpResponse getTrc20Tokens(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/trc20tokens";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+    /**
+     * constructor.新增trc20信息.post请求
+     */
+    public static HttpResponse postTrc20Tokens(String tronscanNode,String issuer_addr) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/trc20tokens";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("issuer_addr", issuer_addr);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+    /**
+     * constructor.更新trc20信息.post请求
+     */
+    public static HttpResponse postUpdata20Tokens(String tronscanNode,String issuer_addr) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/trc20tokens/update";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("issuer_addr", issuer_addr);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
     /**
      * constructor.
      */

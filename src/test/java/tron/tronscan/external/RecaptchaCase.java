@@ -26,7 +26,7 @@ public class RecaptchaCase {
             .get(0);
 
     /**
-     * constructor.
+     * constructor.谷歌验证码
      */
     @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "谷歌验证码")
     public void getRecaptcha() {

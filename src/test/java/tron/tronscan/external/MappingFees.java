@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,8 +18,7 @@ import tron.common.utils.Configuration;
 import tron.common.utils.MyIRetryAnalyzer;
 
 @Slf4j
-public class SideChainList {
-
+public class MappingFees {
     private JSONObject responseContent;
     private JSONArray responseArrayContent;
     private JSONObject targetContent;
@@ -27,11 +28,11 @@ public class SideChainList {
             .get(0);
 
     /**
-     * constructor.侧链列表
+     * constructor.获取映射手续费
      */
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "侧链列表")
-    public void getSideChainList() {
-        response = TronscanApiList.getSideChainList(tronScanNode);
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "获取映射手续费")
+    public void getMappingFees() {
+        response = TronscanApiList.getMappingFees(tronScanNode);
         log.info("code is " + response.getStatusLine().getStatusCode());
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronscanApiList.parseResponseContent(response);
@@ -43,17 +44,14 @@ public class SideChainList {
         Assert.assertTrue(Double.valueOf(responseContent.get("retCode").toString()) >= 0);
         //data
         targetContent = responseContent.getJSONObject("data");
-        responseArrayContent = targetContent.getJSONArray("chains");
-        JSONObject responseObject = responseArrayContent.getJSONObject(0);
-        Assert.assertTrue(responseObject.containsKey("chainid"));
-        Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-        Assert.assertTrue(patternAddress.matcher(responseObject.getString("mainchain_gateway")).matches());
-        Assert.assertTrue(patternAddress.matcher(responseObject.getString("sidechain_gateway")).matches());
-        Assert.assertTrue(responseObject.containsKey("name"));
-        Assert.assertTrue(responseObject.containsKey("rpc"));
+        Assert.assertTrue(Long.valueOf(targetContent.get("retryFee").toString()) >= 0);
+        Assert.assertTrue(Long.valueOf(targetContent.get("mappingFee").toString()) >= 0);
+        Assert.assertTrue(Long.valueOf(targetContent.get("trxDepositMinValue").toString()) >= 0);
+        Assert.assertTrue(Long.valueOf(targetContent.get("depositFee").toString()) >= 0);
+        Assert.assertTrue(Long.valueOf(targetContent.get("withdrawFee").toString()) >= 0);
+        Assert.assertTrue(Long.valueOf(targetContent.get("trxWithdrawMinValue").toString()) >= 0);
 
     }
-
     /**
      * constructor.
      */

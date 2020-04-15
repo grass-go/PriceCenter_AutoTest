@@ -26,7 +26,7 @@ public class AllSidechainTokenMapping {
             .get(0);
 
     /**
-     * constructor.
+     * constructor.主侧链币对应关系
      */
     @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "主侧链币对应关系")
     public void getAllSidechainTokenMapping() {
