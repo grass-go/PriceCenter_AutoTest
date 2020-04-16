@@ -29,7 +29,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         }
     }
 
-    @Test(enabled = true)
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "TRX转账")
     public void testTrx() throws Exception{
         Step.login(driver);
         {
@@ -46,7 +46,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         Thread.sleep(200);
         driver.findElement(By.xpath("//form/button")).click();
         Thread.sleep(200);
-        driver.findElement(By.cssSelector(".btn-primary:nth-child(2)")).click();
+        driver.findElement(By.cssSelector("div:nth-child(1) > div.sweet-alert > p > span:nth-child(2) > button")).click();
         Thread.sleep(200);
         Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "Successful Transaction");
     }

@@ -38,8 +38,10 @@ private  String URL = "https://"+tronScanNode+"/#/";
             Actions builder = new Actions(driver);
             builder.moveToElement(element).perform();
         }
-        //
-        WebElement vote= driver.findElement ( By.cssSelector("#root > main > div:nth-child(2) > div > div > div > table > tbody > tr:nth-child(4) > td > span"));
+        //点定位账户
+        driver.findElement(By.cssSelector("#root > main > nav > div > ul > li:nth-child(1) > a > span")).click();
+        //点领取奖励
+        WebElement vote= driver.findElement ( By.cssSelector("#account_title > div.row.mt-3 > div > div > div > table > tbody > tr:nth-child(4) > td >span"));
         String vote_string = vote.getText();
         String[]  strs=vote_string.split(" ");
         for(int i=0,len=strs.length;i<len;i++){
