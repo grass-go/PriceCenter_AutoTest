@@ -1,4 +1,4 @@
-package tron.tronscan.external;
+package tron.tronscan.api;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -16,8 +16,7 @@ import tron.common.utils.Configuration;
 import tron.common.utils.MyIRetryAnalyzer;
 
 @Slf4j
-public class SideChainList {
-
+public class AllSidechainTokenMapping {
     private JSONObject responseContent;
     private JSONArray responseArrayContent;
     private JSONObject targetContent;
@@ -27,11 +26,11 @@ public class SideChainList {
             .get(0);
 
     /**
-     * constructor.侧链列表
+     * constructor.主侧链币对应关系
      */
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "侧链列表")
-    public void getSideChainList() {
-        response = TronscanApiList.getSideChainList(tronScanNode);
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "主侧链币对应关系")
+    public void getAllSidechainTokenMapping() {
+        response = TronscanApiList.getAllSidechainTokenMapping(tronScanNode);
         log.info("code is " + response.getStatusLine().getStatusCode());
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronscanApiList.parseResponseContent(response);
@@ -43,15 +42,15 @@ public class SideChainList {
         Assert.assertTrue(Double.valueOf(responseContent.get("retCode").toString()) >= 0);
         //data
         targetContent = responseContent.getJSONObject("data");
-        responseArrayContent = targetContent.getJSONArray("chains");
-        JSONObject responseObject = responseArrayContent.getJSONObject(0);
-        Assert.assertTrue(responseObject.containsKey("chainid"));
-        Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-        Assert.assertTrue(patternAddress.matcher(responseObject.getString("mainchain_gateway")).matches());
-        Assert.assertTrue(patternAddress.matcher(responseObject.getString("sidechain_gateway")).matches());
-        Assert.assertTrue(responseObject.containsKey("name"));
-        Assert.assertTrue(responseObject.containsKey("rpc"));
-
+        responseArrayContent = targetContent.getJSONArray("sidechainTokens");
+        Assert.assertTrue(responseArrayContent.size() > 0);
+        for (int i = 0; i < responseArrayContent.size(); i++) {
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("chainid").toString().isEmpty());
+            Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+            Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("mainchain_address")).matches());
+            Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("sidechain_address")).matches());
+            Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("type"));
+        }
     }
 
     /**

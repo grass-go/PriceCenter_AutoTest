@@ -1,6 +1,5 @@
-package tron.tronscan.external;
+package tron.tronscan.api;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import org.apache.http.HttpResponse;
@@ -10,7 +9,6 @@ import org.testng.annotations.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import lombok.extern.slf4j.Slf4j;
 import tron.common.TronscanApiList;
@@ -18,9 +16,9 @@ import tron.common.utils.Configuration;
 import tron.common.utils.MyIRetryAnalyzer;
 
 @Slf4j
-public class MappingFees {
+public class RecaptchaCase {
+
     private JSONObject responseContent;
-    private JSONArray responseArrayContent;
     private JSONObject targetContent;
     private HttpResponse response;
     private String tronScanNode = Configuration.getByPath("testng.conf")
@@ -28,11 +26,14 @@ public class MappingFees {
             .get(0);
 
     /**
-     * constructor.获取映射手续费
+     * constructor.谷歌验证码
      */
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "获取映射手续费")
-    public void getMappingFees() {
-        response = TronscanApiList.getMappingFees(tronScanNode);
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "谷歌验证码")
+    public void getRecaptcha() {
+        String resp = "trx";
+        Map<String, String> params = new HashMap<>();
+        params.put("response", resp);
+        response = TronscanApiList.getRecaptchaData(tronScanNode,params);
         log.info("code is " + response.getStatusLine().getStatusCode());
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronscanApiList.parseResponseContent(response);
@@ -44,14 +45,10 @@ public class MappingFees {
         Assert.assertTrue(Double.valueOf(responseContent.get("retCode").toString()) >= 0);
         //data
         targetContent = responseContent.getJSONObject("data");
-        Assert.assertTrue(Long.valueOf(targetContent.get("retryFee").toString()) >= 0);
-        Assert.assertTrue(Long.valueOf(targetContent.get("mappingFee").toString()) >= 0);
-        Assert.assertTrue(Long.valueOf(targetContent.get("trxDepositMinValue").toString()) >= 0);
-        Assert.assertTrue(Long.valueOf(targetContent.get("depositFee").toString()) >= 0);
-        Assert.assertTrue(Long.valueOf(targetContent.get("withdrawFee").toString()) >= 0);
-        Assert.assertTrue(Long.valueOf(targetContent.get("trxWithdrawMinValue").toString()) >= 0);
+        Assert.assertTrue(targetContent.containsKey("result"));
 
     }
+
     /**
      * constructor.
      */

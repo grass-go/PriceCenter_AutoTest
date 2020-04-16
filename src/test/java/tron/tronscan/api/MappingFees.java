@@ -1,4 +1,4 @@
-package tron.tronscan.external;
+package tron.tronscan.api;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -8,15 +8,13 @@ import org.junit.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
-import java.util.regex.Pattern;
-
 import lombok.extern.slf4j.Slf4j;
 import tron.common.TronscanApiList;
 import tron.common.utils.Configuration;
 import tron.common.utils.MyIRetryAnalyzer;
 
 @Slf4j
-public class AllSidechainTokenMapping {
+public class MappingFees {
     private JSONObject responseContent;
     private JSONArray responseArrayContent;
     private JSONObject targetContent;
@@ -26,11 +24,11 @@ public class AllSidechainTokenMapping {
             .get(0);
 
     /**
-     * constructor.主侧链币对应关系
+     * constructor.获取映射手续费
      */
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "主侧链币对应关系")
-    public void getAllSidechainTokenMapping() {
-        response = TronscanApiList.getAllSidechainTokenMapping(tronScanNode);
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "获取映射手续费")
+    public void getMappingFees() {
+        response = TronscanApiList.getMappingFees(tronScanNode);
         log.info("code is " + response.getStatusLine().getStatusCode());
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronscanApiList.parseResponseContent(response);
@@ -42,17 +40,14 @@ public class AllSidechainTokenMapping {
         Assert.assertTrue(Double.valueOf(responseContent.get("retCode").toString()) >= 0);
         //data
         targetContent = responseContent.getJSONObject("data");
-        responseArrayContent = targetContent.getJSONArray("sidechainTokens");
-        Assert.assertTrue(responseArrayContent.size() > 0);
-        for (int i = 0; i < responseArrayContent.size(); i++) {
-            Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("chainid").toString().isEmpty());
-            Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-            Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("mainchain_address")).matches());
-            Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("sidechain_address")).matches());
-            Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("type"));
-        }
-    }
+        Assert.assertTrue(Long.valueOf(targetContent.get("retryFee").toString()) >= 0);
+        Assert.assertTrue(Long.valueOf(targetContent.get("mappingFee").toString()) >= 0);
+        Assert.assertTrue(Long.valueOf(targetContent.get("trxDepositMinValue").toString()) >= 0);
+        Assert.assertTrue(Long.valueOf(targetContent.get("depositFee").toString()) >= 0);
+        Assert.assertTrue(Long.valueOf(targetContent.get("withdrawFee").toString()) >= 0);
+        Assert.assertTrue(Long.valueOf(targetContent.get("trxWithdrawMinValue").toString()) >= 0);
 
+    }
     /**
      * constructor.
      */

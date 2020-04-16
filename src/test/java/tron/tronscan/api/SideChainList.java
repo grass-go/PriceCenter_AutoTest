@@ -1,5 +1,6 @@
-package tron.tronscan.external;
+package tron.tronscan.api;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import org.apache.http.HttpResponse;
@@ -7,8 +8,7 @@ import org.junit.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.regex.Pattern;
 
 import lombok.extern.slf4j.Slf4j;
 import tron.common.TronscanApiList;
@@ -16,9 +16,10 @@ import tron.common.utils.Configuration;
 import tron.common.utils.MyIRetryAnalyzer;
 
 @Slf4j
-public class Update10Tokens {
+public class SideChainList {
 
     private JSONObject responseContent;
+    private JSONArray responseArrayContent;
     private JSONObject targetContent;
     private HttpResponse response;
     private String tronScanNode = Configuration.getByPath("testng.conf")
@@ -26,12 +27,11 @@ public class Update10Tokens {
             .get(0);
 
     /**
-     * constructor.更新trc10信息.post请求
+     * constructor.侧链列表
      */
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "更新trc10信息")
-    public void postUpdata10Tokens() {
-        String issuer_addr = "TDaVYpgwV1cBuM2p4byRpgZrBmnoLUqE1n";
-        response = TronscanApiList.postUpdata10Tokens(tronScanNode,issuer_addr);
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "侧链列表")
+    public void getSideChainList() {
+        response = TronscanApiList.getSideChainList(tronScanNode);
         log.info("code is " + response.getStatusLine().getStatusCode());
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronscanApiList.parseResponseContent(response);
@@ -42,7 +42,15 @@ public class Update10Tokens {
         Assert.assertTrue(responseContent.containsKey("retMsg"));
         Assert.assertTrue(Double.valueOf(responseContent.get("retCode").toString()) >= 0);
         //data
-        Assert.assertTrue(responseContent.containsKey("data"));
+        targetContent = responseContent.getJSONObject("data");
+        responseArrayContent = targetContent.getJSONArray("chains");
+        JSONObject responseObject = responseArrayContent.getJSONObject(0);
+        Assert.assertTrue(responseObject.containsKey("chainid"));
+        Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+        Assert.assertTrue(patternAddress.matcher(responseObject.getString("mainchain_gateway")).matches());
+        Assert.assertTrue(patternAddress.matcher(responseObject.getString("sidechain_gateway")).matches());
+        Assert.assertTrue(responseObject.containsKey("name"));
+        Assert.assertTrue(responseObject.containsKey("rpc"));
 
     }
 
@@ -51,6 +59,6 @@ public class Update10Tokens {
      */
     @AfterClass
     public void shutdown() throws InterruptedException {
-        TronscanApiList.disConnect();
+        TronscanApiList.disGetConnect();
     }
 }

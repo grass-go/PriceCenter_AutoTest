@@ -1,4 +1,4 @@
-package tron.tronscan.external;
+package tron.tronscan.api;
 
 import com.alibaba.fastjson.JSONObject;
 
