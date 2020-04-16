@@ -104,7 +104,7 @@ public class Token_Trx20 {
   /**
    * constructor.
    */
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "地址下的转账查询")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "地址下的转账查询")
   public void getTokentrc20_transfer() {
     //Get response
     Map<String, String> Params = new HashMap<>();
@@ -123,9 +123,10 @@ public class Token_Trx20 {
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
     //three object, "total" and "Data"
-    Assert.assertTrue(responseContent.size() == 3);
+    Assert.assertTrue(responseContent.size() == 4);
     Long total = Long.valueOf(responseContent.get("total").toString());
     Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(responseContent.containsKey("contractMap"));
     JSONArray exchangeArray = responseContent.getJSONArray("transfers");
     Assert.assertTrue(total >= rangeTotal);
     //Assert.assertTrue(responseContent.containsKey("rangeTotal"));

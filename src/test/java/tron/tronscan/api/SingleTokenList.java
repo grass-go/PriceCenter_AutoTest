@@ -36,10 +36,10 @@ public class SingleTokenList {
     TronscanApiList.printJsonContent(responseContent);
 
     //Three key, "total","totalAll","data"
-    Assert.assertTrue(responseContent.size() == 3);
+    Assert.assertTrue(responseContent.size() == 4);
     Assert.assertTrue(responseContent.containsKey("total"));
     Assert.assertTrue(responseContent.containsKey("totalAll"));
-
+    Assert.assertTrue(responseContent.containsKey("contractMap"));
     //data
     responseArrayContent = responseContent.getJSONArray("data");
     targetContent = responseArrayContent.getJSONObject(0);

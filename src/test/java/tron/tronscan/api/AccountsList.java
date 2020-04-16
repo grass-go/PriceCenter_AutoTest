@@ -138,13 +138,7 @@ public class AccountsList {
     Assert.assertTrue(targetContent.containsKey("sentDelegatedBandwidth"));
     Assert.assertTrue(targetContent.containsKey("sentDelegatedResource"));
     Assert.assertTrue(targetContent.containsKey("receivedDelegatedBandwidth"));
-    //delegated contain receivedDelegatedResource
-    JSONArray receivedDelegateArray = targetContent.getJSONArray("receivedDelegatedResource");
-    targetContent = receivedDelegateArray.getJSONObject(0);
-    Assert.assertTrue(targetContent.containsKey("expire_time_for_energy"));
-    //from address
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("from")).matches());
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("to")).matches());
+    Assert.assertTrue(targetContent.containsKey("receivedDelegatedResource"));
 
     //representative json
     targetContent = responseContent.getJSONObject("representative");

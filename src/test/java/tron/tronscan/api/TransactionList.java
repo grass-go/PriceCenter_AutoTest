@@ -84,11 +84,12 @@ public class TransactionList {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
-    Assert.assertTrue(responseContent.size() == 4);
+    Assert.assertTrue(responseContent.size() == 5);
     Assert.assertTrue(responseContent.containsKey("total"));
     Assert.assertTrue(responseContent.containsKey("rangeTotal"));
     Assert.assertTrue(responseContent.containsKey("data"));
     Assert.assertTrue(responseContent.containsKey("wholeChainTxCount"));
+    Assert.assertTrue(responseContent.containsKey("contractMap"));
   }
 
   /**
@@ -215,8 +216,9 @@ public class TransactionList {
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
     //three object, "total" and "Data","rangeTotal"
-    Assert.assertTrue(responseContent.size() == 4);
+    Assert.assertTrue(responseContent.size() == 5);
     Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 0);
+    Assert.assertTrue(responseContent.containsKey("contractMap"));
     Long total = Long.valueOf(responseContent.get("total").toString());
     Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
     Assert.assertTrue(rangeTotal >= total);
