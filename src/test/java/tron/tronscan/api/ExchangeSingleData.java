@@ -57,9 +57,9 @@ public class ExchangeSingleData {
     Long firstTokenId = Long.valueOf(targetContent.get("first_token_id").toString());
     Assert.assertTrue(firstTokenId > 1000000);
 
-    //up_down_percent > -1 && up_down_percent < 1
+    //up_down_percent > =0
     Double upDownPercent = Double.valueOf(targetContent.get("up_down_percent").toString());
-    Assert.assertTrue(upDownPercent >= -1 && upDownPercent <= 1);
+    Assert.assertTrue(upDownPercent >= -1);
 
     //second_token_balance
     Long secondTokenBalance = Long.valueOf(targetContent.get("second_token_balance").toString());
