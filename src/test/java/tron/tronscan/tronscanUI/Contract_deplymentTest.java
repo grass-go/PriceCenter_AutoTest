@@ -42,7 +42,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         }
         Thread.sleep(200);
         //点区块链
-        driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(2) > span > a > span")).click();
+        driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(2) > span > span > span > span")).click();
         Thread.sleep(300);
         //点合约部署
         driver.findElement(By.xpath("//ul/li[2]/div/div[2]/a[3]/span")).click();
