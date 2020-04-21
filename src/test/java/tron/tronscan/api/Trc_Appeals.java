@@ -18,7 +18,7 @@ import tron.common.utils.Configuration;
 import tron.common.utils.MyIRetryAnalyzer;
 
 @Slf4j
-public class trc_appeals {
+public class Trc_Appeals {
     private JSONObject responseContent;
     private JSONArray responseArrayContent;
     private JSONObject targetContent;

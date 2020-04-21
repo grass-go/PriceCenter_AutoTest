@@ -13,7 +13,7 @@ import tron.common.utils.Configuration;
 import tron.common.utils.MyIRetryAnalyzer;
 
 @Slf4j
-public class postUpdataAppeal {
+public class PostUpdataAppeal {
     private JSONObject responseContent;
     private JSONObject targetContent;
     private HttpResponse response;
