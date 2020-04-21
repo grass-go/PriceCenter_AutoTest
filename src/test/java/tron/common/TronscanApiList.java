@@ -1491,6 +1491,88 @@ public class TronscanApiList {
         }
         return response;
     }
+
+    /**
+     * constructor.未知接口
+     */
+    public static HttpResponse getTrc_Appeals(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/trc_appeals";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.未知接口
+     */
+    public static HttpResponse getTrc_Appeals_1(String tronscanNode) {
+        try {
+            String appealId = "1";
+            String requestUrl = "http://" + tronscanNode + "external/trc_appeals/" + appealId;
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+    /**
+     * constructor.未知接口
+     */
+    public static HttpResponse getTrc_recent(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/trc_appeals/recent";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.更新appeal.post请求
+     */
+    public static HttpResponse postUpdataAppeal(String tronscanNode,String appealIdness) {
+        try {
+            String appealId = "1";
+            String requestUrl = "http://" + tronscanNode + "external/trc_appeals/" + appealId +"/update";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("appealIdness", appealIdness);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.交易所新增一个.post请求
+     */
+    public static HttpResponse postTrx_market(String tronscanNode,String market) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/trx_market";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("market", market);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
     /**
      * constructor.
      */
