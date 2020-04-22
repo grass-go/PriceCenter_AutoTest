@@ -85,9 +85,9 @@ public class TronlinkApiList {
     return response;
   }
 
-  public static HttpResponse cdpInfoId(String node, Map<String, String> params) {
+  public static HttpResponse dapp_list(String node, Map<String, String> params) {
     try {
-      String requestUrl = "http://" + node + "/scan/cdpInfo/getBrief/";
+      String requestUrl = "http://" + node + "api/dapp/v2/dapp";
       System.out.println(requestUrl);
       response = createGetConnect(requestUrl, params);
     } catch (Exception e) {
