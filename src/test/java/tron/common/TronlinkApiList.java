@@ -72,6 +72,19 @@ public class TronlinkApiList {
     }
     return response;
   }
+
+  public static HttpResponse head(String node) {
+    try {
+      String requestUrl = "http://" + node + "api/dapp/v2/head";
+      System.out.println(requestUrl);
+      response = createGetConnect(requestUrl);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpget.releaseConnection();
+      return null;
+    }
+    return response;
+  }
   public static HttpResponse hot_search(String node) {
     try {
       String requestUrl = "http://" + node + "api/dapp/v2/dapp/hot_search";
@@ -100,6 +113,19 @@ public class TronlinkApiList {
 public static HttpResponse search(String node, Map<String, String> params) {
     try {
       String requestUrl = "http://" + node + "api/dapp/v2/dapp/search";
+      System.out.println(requestUrl);
+      response = createGetConnect(requestUrl, params);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpget.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  public static HttpResponse history(String node, Map<String, String> params) {
+    try {
+      String requestUrl = "http://" + node + "api/dapp/v2/dapp/history";
       System.out.println(requestUrl);
       response = createGetConnect(requestUrl, params);
     } catch (Exception e) {
