@@ -76,4 +76,23 @@ task djedAPI(type: Test) {
         showStackTraces = "true"
     }
 
+
+
+}
+
+task tronlinkAPI(type: Test) {
+
+    useTestNG {
+        suites(file('src/test/resources/testng_tronlinkAPI.xml'))
+        parallel 'tests'
+        threadCount 1
+
+    }
+    testLogging {
+        exceptionFormat = 'full'
+        showStackTraces = "true"
+    }
+
+
+
 }

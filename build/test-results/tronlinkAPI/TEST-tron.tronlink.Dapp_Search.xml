@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tron.tronlink.Dapp_Search" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-24T04:39:01" hostname="zhukaideiMac.local" time="2.093">
+  <properties/>
+  <testcase name="dapp_search" classname="tron.tronlink.Dapp_Search" time="2.093"/>
+  <system-out><![CDATA[http://list.tronlink.org/api/dapp/v2/dapp/search
+12:39:01.743 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection request: [route: {}->http://list.tronlink.org:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+12:39:01.748 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection leased: [id: 0][route: {}->http://list.tronlink.org:80][total kept alive: 0; route allocated: 1 of 80; total allocated: 1 of 100]
+12:39:01.808 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnectionOperator - Connecting to list.tronlink.org:80
+12:39:02.057 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAddCookies - CookieSpec selected: default
+12:39:02.058 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAuthCache - Auth cache not set in the context
+12:39:02.058 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestTargetAuthentication - Target auth state: UNCHALLENGED
+12:39:02.058 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestProxyAuthentication - Proxy auth state: UNCHALLENGED
+12:39:02.058 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultHttpClient - Attempt 1 to execute request
+12:39:02.058 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Sending request: GET /api/dapp/v2/dapp/search?name=WINK HTTP/1.1
+12:39:02.059 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "GET /api/dapp/v2/dapp/search?name=WINK HTTP/1.1[\r][\n]"
+12:39:02.059 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Lang: 1[\r][\n]"
+12:39:02.059 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Content-type: application/json; charset=utf-8[\r][\n]"
+12:39:02.059 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Connection: Keep-Alive[\r][\n]"
+12:39:02.059 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Host: list.tronlink.org[\r][\n]"
+12:39:02.059 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)[\r][\n]"
+12:39:02.059 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "[\r][\n]"
+12:39:02.059 [TestNG-tests-1] DEBUG org.apache.http.headers - >> GET /api/dapp/v2/dapp/search?name=WINK HTTP/1.1
+12:39:02.059 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Lang: 1
+12:39:02.059 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Content-type: application/json; charset=utf-8
+12:39:02.059 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Connection: Keep-Alive
+12:39:02.059 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Host: list.tronlink.org
+12:39:02.060 [TestNG-tests-1] DEBUG org.apache.http.headers - >> User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)
+12:39:02.298 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "HTTP/1.1 301 Moved Permanently[\r][\n]"
+12:39:02.299 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Server: nginx/1.12.2[\r][\n]"
+12:39:02.299 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Date: Fri, 24 Apr 2020 04:39:02 GMT[\r][\n]"
+12:39:02.299 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Type: text/html[\r][\n]"
+12:39:02.299 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Length: 185[\r][\n]"
+12:39:02.299 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Connection: keep-alive[\r][\n]"
+12:39:02.300 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Location: https://list.tronlink.org/api/dapp/v2/dapp/search?name=WINK[\r][\n]"
+12:39:02.300 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "[\r][\n]"
+12:39:02.300 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Receiving response: HTTP/1.1 301 Moved Permanently
+12:39:02.300 [TestNG-tests-1] DEBUG org.apache.http.headers - << HTTP/1.1 301 Moved Permanently
+12:39:02.300 [TestNG-tests-1] DEBUG org.apache.http.headers - << Server: nginx/1.12.2
+12:39:02.300 [TestNG-tests-1] DEBUG org.apache.http.headers - << Date: Fri, 24 Apr 2020 04:39:02 GMT
+12:39:02.300 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Type: text/html
+12:39:02.300 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Length: 185
+12:39:02.300 [TestNG-tests-1] DEBUG org.apache.http.headers - << Connection: keep-alive
+12:39:02.300 [TestNG-tests-1] DEBUG org.apache.http.headers - << Location: https://list.tronlink.org/api/dapp/v2/dapp/search?name=WINK
+12:39:02.302 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultHttpClient - Connection can be kept alive indefinitely
+12:39:02.302 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultRedirectStrategy - Redirect requested to location 'https://list.tronlink.org/api/dapp/v2/dapp/search?name=WINK'
+12:39:02.303 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultHttpClient - Resetting target auth state
+12:39:02.303 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultHttpClient - Redirecting to 'https://list.tronlink.org/api/dapp/v2/dapp/search?name=WINK' via {s}->https://list.tronlink.org:443
+12:39:02.304 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "<html>[\r][\n]"
+12:39:02.304 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "<head><title>301 Moved Permanently</title></head>[\r][\n]"
+12:39:02.304 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "<body bgcolor="white">[\r][\n]"
+12:39:02.304 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "<center><h1>301 Moved Permanently</h1></center>[\r][\n]"
+12:39:02.304 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "<hr><center>nginx/1.12.2</center>[\r][\n]"
+12:39:02.304 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "</body>[\r][\n]"
+12:39:02.304 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "</html>[\r][\n]"
+12:39:02.304 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection [id: 0][route: {}->http://list.tronlink.org:80] can be kept alive indefinitely
+12:39:02.304 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection released: [id: 0][route: {}->http://list.tronlink.org:80][total kept alive: 1; route allocated: 1 of 80; total allocated: 1 of 100]
+12:39:02.304 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection request: [route: {s}->https://list.tronlink.org:443][total kept alive: 1; route allocated: 0 of 80; total allocated: 1 of 100]
+12:39:02.304 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection leased: [id: 1][route: {s}->https://list.tronlink.org:443][total kept alive: 1; route allocated: 1 of 80; total allocated: 2 of 100]
+12:39:02.305 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnectionOperator - Connecting to list.tronlink.org:443
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAddCookies - CookieSpec selected: default
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAuthCache - Auth cache not set in the context
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestTargetAuthentication - Target auth state: UNCHALLENGED
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestProxyAuthentication - Proxy auth state: UNCHALLENGED
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultHttpClient - Attempt 2 to execute request
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Sending request: GET /api/dapp/v2/dapp/search?name=WINK HTTP/1.1
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "GET /api/dapp/v2/dapp/search?name=WINK HTTP/1.1[\r][\n]"
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Lang: 1[\r][\n]"
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Content-type: application/json; charset=utf-8[\r][\n]"
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Connection: Keep-Alive[\r][\n]"
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Host: list.tronlink.org[\r][\n]"
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)[\r][\n]"
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "[\r][\n]"
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.headers - >> GET /api/dapp/v2/dapp/search?name=WINK HTTP/1.1
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Lang: 1
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Content-type: application/json; charset=utf-8
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Connection: Keep-Alive
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Host: list.tronlink.org
+12:39:03.370 [TestNG-tests-1] DEBUG org.apache.http.headers - >> User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)
+12:39:03.648 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "HTTP/1.1 200 OK[\r][\n]"
+12:39:03.648 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Server: nginx/1.12.2[\r][\n]"
+12:39:03.648 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Date: Fri, 24 Apr 2020 04:39:03 GMT[\r][\n]"
+12:39:03.648 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Type: application/json; charset=utf-8[\r][\n]"
+12:39:03.648 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Length: 591[\r][\n]"
+12:39:03.648 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Connection: keep-alive[\r][\n]"
+12:39:03.648 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Cache-Control: no-cache, no-store, max-age=0, must-revalidate, value[\r][\n]"
+12:39:03.648 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Expires: Thu, 01 Jan 1970 00:00:00 GMT[\r][\n]"
+12:39:03.648 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Last-Modified: Fri, 24 Apr 2020 04:39:03 GMT[\r][\n]"
+12:39:03.648 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "X-Content-Type-Options: nosniff[\r][\n]"
+12:39:03.648 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "X-Frame-Options: DENY[\r][\n]"
+12:39:03.648 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "X-Xss-Protection: 1; mode=block[\r][\n]"
+12:39:03.648 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Access-Control-Allow-Origin: *[\r][\n]"
+12:39:03.648 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Access-Control-Allow-Methods: GET,POST,OPTIONS,DELETE,PUT[\r][\n]"
+12:39:03.648 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Access-Control-Allow-Headers: DNT,Origin,Accept,X-Key,X-Real-IP,Key,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization[\r][\n]"
+12:39:03.649 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "[\r][\n]"
+12:39:03.649 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Receiving response: HTTP/1.1 200 OK
+12:39:03.649 [TestNG-tests-1] DEBUG org.apache.http.headers - << HTTP/1.1 200 OK
+12:39:03.649 [TestNG-tests-1] DEBUG org.apache.http.headers - << Server: nginx/1.12.2
+12:39:03.649 [TestNG-tests-1] DEBUG org.apache.http.headers - << Date: Fri, 24 Apr 2020 04:39:03 GMT
+12:39:03.649 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Type: application/json; charset=utf-8
+12:39:03.650 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Length: 591
+12:39:03.650 [TestNG-tests-1] DEBUG org.apache.http.headers - << Connection: keep-alive
+12:39:03.650 [TestNG-tests-1] DEBUG org.apache.http.headers - << Cache-Control: no-cache, no-store, max-age=0, must-revalidate, value
+12:39:03.650 [TestNG-tests-1] DEBUG org.apache.http.headers - << Expires: Thu, 01 Jan 1970 00:00:00 GMT
+12:39:03.650 [TestNG-tests-1] DEBUG org.apache.http.headers - << Last-Modified: Fri, 24 Apr 2020 04:39:03 GMT
+12:39:03.650 [TestNG-tests-1] DEBUG org.apache.http.headers - << X-Content-Type-Options: nosniff
+12:39:03.650 [TestNG-tests-1] DEBUG org.apache.http.headers - << X-Frame-Options: DENY
+12:39:03.650 [TestNG-tests-1] DEBUG org.apache.http.headers - << X-Xss-Protection: 1; mode=block
+12:39:03.650 [TestNG-tests-1] DEBUG org.apache.http.headers - << Access-Control-Allow-Origin: *
+12:39:03.650 [TestNG-tests-1] DEBUG org.apache.http.headers - << Access-Control-Allow-Methods: GET,POST,OPTIONS,DELETE,PUT
+12:39:03.650 [TestNG-tests-1] DEBUG org.apache.http.headers - << Access-Control-Allow-Headers: DNT,Origin,Accept,X-Key,X-Real-IP,Key,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization
+12:39:03.650 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultHttpClient - Connection can be kept alive indefinitely
+http://list.tronlink.org/api/dapp/v2/dapp/search?name=WINK 请求总耗时：1932 毫秒
+12:39:03.656 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "{"code":0,"message":"OK","data":[{"id":3,"classify_id":1,"name":"WINk","image_url":"https://tronlink-images.s3.us-east-2.amazonaws.com/image/a78FkFxpWhMkBbGi6XDMcZbPTSxsDWjk.jpg","home_url":"https://www.wink.org","slogan":"By combining our experience in providing users with thrilling games and our expertise in blockchain technology, we will remove all the nasty sign-ups, shady house edges, and poor player experience to create TRONBET: The world[0xe2][0x80][0x99]s first trustless, permission-less, and high-performance e-gaming platform on the TRON network.","is_white":1,"horiz_vert":3,"is_roll":1}]}[\n]"
+12:39:03.656 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection [id: 1][route: {s}->https://list.tronlink.org:443] can be kept alive indefinitely
+12:39:03.656 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection released: [id: 1][route: {s}->https://list.tronlink.org:443][total kept alive: 2; route allocated: 1 of 80; total allocated: 2 of 100]
+{"horiz_vert":3,"home_url":"https://www.wink.org","image_url":"https://tronlink-images.s3.us-east-2.amazonaws.com/image/a78FkFxpWhMkBbGi6XDMcZbPTSxsDWjk.jpg","is_white":1,"classify_id":1,"name":"WINk","is_roll":1,"id":3,"slogan":"By combining our experience in providing users with thrilling games and our expertise in blockchain technology, we will remove all the nasty sign-ups, shady house edges, and poor player experience to create TRONBET: The world’s first trustless, permission-less, and high-performance e-gaming platform on the TRON network."}
+1
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
