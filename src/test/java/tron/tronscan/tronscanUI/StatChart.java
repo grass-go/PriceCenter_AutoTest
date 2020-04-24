@@ -6,11 +6,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import tron.common.utils.Configuration;
 import tron.common.utils.MyIRetryAnalyzer;
 import tron.common.utils.WebBrowser;
 
 public class StatChart {
-    private static String URL = "https://tronscan.org/#/data/stats";
+    private String tronScanNode = Configuration.getByPath("testng.conf")
+            .getString("tronscanIP");
+    private  String URL = "https://"+tronScanNode+"/#/data/stats";
     WebBrowser webBrowser = new WebBrowser();
     public static WebDriver driver;
 
@@ -40,8 +43,8 @@ public class StatChart {
         driver.findElement(By.cssSelector("#currency > div> div:nth-child(1) > div > a > span > span")).getText().isEmpty();
         driver.findElement(By.cssSelector("#currency > div > div:nth-child(2) > div > a > span > span")).getText().isEmpty();
         driver.findElement(By.cssSelector("#currency > div> div:nth-child(3) > div > a > span > span")).getText().isEmpty();
-        driver.findElement(By.cssSelector("#currency > div > div:nth-child(4) > div > a > span > span")).getText().isEmpty();
-        driver.findElement(By.cssSelector("#currency > div > div:nth-child(4) > div > a > span > span")).click();
+//        driver.findElement(By.cssSelector("#currency > div > div:nth-child(4) > div > a > span > span")).getText().isEmpty();
+//        driver.findElement(By.cssSelector("#currency > div > div:nth-child(4) > div > a > span > span")).click();
         driver.close();
     }
 
