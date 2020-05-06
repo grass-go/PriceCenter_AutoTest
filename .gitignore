@@ -1,0 +1,26 @@
+# IDEA
+.idea
+*iml
+.DS_Store
+socketMessage.log
+# gradle
+.gradle
+build
+exceptionLogs
+# log
+logs
+consensus-logs
+tronlink-UI-test.iml
+
+# lombok
+out
+
+# levelDB
+tron-data
+database*
+
+# database
+database
+
+# doc
+doc
