@@ -119,7 +119,7 @@ public class SqlTronscanAPI implements IReporter{
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
             stmt = conn.createStatement();
-            String sql = "INSERT INTO `AutoTestScan`.`tronscanAPI`(`time`, `status`, `sucessclass`, `sucessnum`,`failClass`,`failnum`,`sum`) VALUES ('"+time+"','"+status+"','"+sucessClass+"','"+sucessnum+"','"+failClass+"','"+failnum+"','"+sum+"','"+buildid+"')";
+            String sql = "INSERT INTO `AutoTestScan`.`tronscanAPI`(`time`, `status`, `sucessclass`, `sucessnum`,`failClass`,`failnum`,`sum`,`buildid`) VALUES ('"+time+"','"+status+"','"+sucessClass+"','"+sucessnum+"','"+failClass+"','"+failnum+"','"+sum+"','"+buildid+"')";
             stmt.executeUpdate(sql);
 //            result = rs.toString();
             System.out.println(result);
