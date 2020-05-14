@@ -56,9 +56,10 @@ private  String URL = "https://"+tronScanNode+"/#/";
         Thread.sleep(300);
         driver.findElement(By.xpath("//form/button")).click();
         Thread.sleep(300);
-        driver.findElement(By.cssSelector("div:nth-child(1) > div.sweet-alert > p > span:nth-child(2) > button")).click();
-        Thread.sleep(300);
-        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "Successful Transaction");
+        Assert.assertEquals(driver.findElement(By.cssSelector("#root > div.header-top.nav-item-page > div:nth-child(1) > div.sweet-alert > h2 > span")).getText(), "Succesfully send!");
+        Thread.sleep(200);
+        driver.findElement(By.cssSelector("#root > div.header-top.nav-item-page > div:nth-child(1) > div.sweet-alert > p > span > button > span")).click();
+        driver.close();
     }
 
     @AfterMethod(enabled = true)

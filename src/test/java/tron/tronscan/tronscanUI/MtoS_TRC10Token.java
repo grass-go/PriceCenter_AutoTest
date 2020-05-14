@@ -42,7 +42,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         driver.findElement(By.cssSelector("tr:nth-child(1) > td:nth-child(5) > button")).click();
         Thread.sleep(200);
         driver.findElement(By.xpath(".//form/div[3]/input")).click();
-        driver.findElement(By.xpath("//form/div[3]/input")).sendKeys("1");
+        driver.findElement(By.xpath("//form/div[3]/input")).sendKeys("0.01");
         Thread.sleep(200);
         driver.findElement(By.xpath("//form/button")).click();
         Thread.sleep(3000);

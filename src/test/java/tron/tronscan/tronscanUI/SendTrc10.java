@@ -35,7 +35,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
 //        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "Trc10转账")
+    @Test(enabled = true,description = "Trc10转账")
     public void testTrc10() throws Exception{
         Step.login(driver);
         {
@@ -60,10 +60,11 @@ private  String URL = "https://"+tronScanNode+"/#/";
         driver.findElement(By.cssSelector(".form-group:nth-child(4) .form-control")).sendKeys("TRC 10");
         Thread.sleep(300);
         driver.findElement(By.xpath("//form/button")).click();
-        Thread.sleep(200);
-        driver.findElement(By.cssSelector("div:nth-child(1) > div.sweet-alert > p > span:nth-child(2) > button")).click();
         Thread.sleep(300);
-        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "Successful Transaction");
+//        Assert.assertEquals(driver.findElement(By.cssSelector("#root > div.header-top.nav-item-page > div:nth-child(1) > div.sweet-alert > h2 > span")).getText(), "Succesfully send!");
+//        Thread.sleep(200);
+//        driver.findElement(By.cssSelector("#root > div.header-top.nav-item-page > div:nth-child(1) > div.sweet-alert > p > span > button > span")).click();
+        driver.close();
     }
 
     @AfterMethod(enabled = true)
