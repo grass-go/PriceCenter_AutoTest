@@ -108,7 +108,7 @@ public class SqlTronscanUI implements IReporter{
 
 
     public void mysql(){
-        HttpResponse response = TronscanApiList.getBuildId("http://tronlink:tronlink@172.16.22.178:8080/job/Tronscan_Api/api/json");
+        HttpResponse response = TronscanApiList.getBuildId("http://tronlink:tronlink@172.16.22.178:8080/job/Tronscan_AutoTest/api/json");
         JSONObject responseContent = TronscanApiList.parseResponseContent(response).getJSONObject("lastBuild");
         int buildid = responseContent.getInteger("number");
 
