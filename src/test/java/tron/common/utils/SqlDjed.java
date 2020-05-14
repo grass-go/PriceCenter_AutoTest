@@ -11,6 +11,8 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import com.alibaba.fastjson.JSONObject;
+import org.apache.http.HttpResponse;
 import org.testng.IReporter;
 import org.testng.IResultMap;
 import org.testng.ISuite;
@@ -19,6 +21,7 @@ import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.Listeners;
 import org.testng.xml.XmlSuite;
+import tron.common.TronscanApiList;
 
 public class SqlDjed implements IReporter{
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -86,15 +89,6 @@ public class SqlDjed implements IReporter{
                 } else  if(result.getStatus() == 2){
                     fail.add(result.getMethod().getMethodName());
                 }
-//                sb.append(result.getTestClass().getRealClass().getName())
-//                        .append(".")
-//                        .append(result.getMethod().getMethodName())
-////                        .append(" ")
-////                        .append(this.formatDate(result.getStartMillis()))
-////                        .append(" ")
-////                        .append(result.getEndMillis()-result.getStartMillis())
-////                        .append("毫秒 ")
-//                        .append(this.getStatus(result.getStatus()));
             }
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date();
@@ -110,13 +104,15 @@ public class SqlDjed implements IReporter{
                 status = 2;
             }
             mysql();
-//            output.write(success.toString().replaceAll("(?:\\[|null|\\]| +)", ""));
-//            output.flush();
-//            output.close();
+
     }
 
 
     public void mysql(){
+        HttpResponse response = TronscanApiList.getBuildId("http://tronlink:tronlink@172.16.22.178:8080/job/Djed_Api/api/json");
+        JSONObject responseContent = TronscanApiList.parseResponseContent(response).getJSONObject("lastBuild");
+        int buildid = responseContent.getInteger("number");
+
         Connection conn = null;
         Statement stmt = null;
         String result = "";
@@ -124,11 +120,9 @@ public class SqlDjed implements IReporter{
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
             stmt = conn.createStatement();
-            String sql = "INSERT INTO `AutoTestScan`.`djedAPI`(`time`, `status`, `sucessclass`, `sucessnum`,`failClass`,`failnum`,`sum`) VALUES ('"+time+"','"+status+"','"+sucessClass+"','"+sucessnum+"','"+failClass+"','"+failnum+"','"+sum+"')";
+            String sql = "INSERT INTO `AutoTestScan`.`djedAPI`(`time`, `status`, `sucessclass`, `sucessnum`,`failClass`,`failnum`,`sum`,`buildid`) VALUES ('"+time+"','"+status+"','"+sucessClass+"','"+sucessnum+"','"+failClass+"','"+failnum+"','"+sum+"','"+buildid+"')";
             stmt.executeUpdate(sql);
-//            result = rs.toString();
             System.out.println(result);
-//            rs.close();
             stmt.close();
             conn.close();
 
