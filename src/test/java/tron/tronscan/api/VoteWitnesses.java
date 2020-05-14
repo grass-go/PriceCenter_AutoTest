@@ -39,7 +39,6 @@ public class VoteWitnesses {
     TronscanApiList.printJsonContent(responseContent);
 
     //Three key,total/totalVotes/fastestRise/data
-    Assert.assertEquals(responseContent.size(), 4);
     Integer total = responseContent.getInteger("total");
     Long totalVotes = responseContent.getLong("totalVotes");
     Integer dataSize = responseContent.getJSONArray("data").size();
