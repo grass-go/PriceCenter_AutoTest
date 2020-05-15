@@ -75,5 +75,22 @@ task djedAPI(type: Test) {
         exceptionFormat = 'full'
         showStackTraces = "true"
     }
+    
+
+}
+
+task trongridAPI(type: Test) {
+
+    useTestNG {
+        suites(file('src/test/resources/testng_trongridAPI.xml'))
+        parallel 'tests'
+        threadCount 1
+
+    }
+    testLogging {
+        exceptionFormat = 'full'
+        showStackTraces = "true"
+    }
+
 
 }
