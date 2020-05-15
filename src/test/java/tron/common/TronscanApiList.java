@@ -97,6 +97,16 @@ public class TronscanApiList {
         return response;
     }
 
+    public static HttpResponse getBuildId(String requestUrl) {
+        try {
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
     /**
      * constructor.
      */

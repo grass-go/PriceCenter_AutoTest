@@ -1,7 +1,10 @@
 package tron.common.utils;
 
+import com.alibaba.fastjson.JSONObject;
+import org.apache.http.HttpResponse;
 import org.testng.*;
 import org.testng.xml.XmlSuite;
+import tron.common.TronscanApiList;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -105,6 +108,10 @@ public class SqlTronscanAPI implements IReporter{
 
 
     public void mysql(){
+        HttpResponse response = TronscanApiList.getBuildId("http://tronlink:tronlink@172.16.22.178:8080/job/Tronscan_Api/api/json");
+        JSONObject responseContent = TronscanApiList.parseResponseContent(response).getJSONObject("lastBuild");
+        int buildid = responseContent.getInteger("number");
+
         Connection conn = null;
         Statement stmt = null;
         String result = "";
@@ -112,7 +119,7 @@ public class SqlTronscanAPI implements IReporter{
             Class.forName(JDBC_DRIVER);
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
             stmt = conn.createStatement();
-            String sql = "INSERT INTO `AutoTestScan`.`tronscanAPI`(`time`, `status`, `sucessclass`, `sucessnum`,`failClass`,`failnum`,`sum`) VALUES ('"+time+"','"+status+"','"+sucessClass+"','"+sucessnum+"','"+failClass+"','"+failnum+"','"+sum+"')";
+            String sql = "INSERT INTO `AutoTestScan`.`tronscanAPI`(`time`, `status`, `sucessclass`, `sucessnum`,`failClass`,`failnum`,`sum`,`buildid`) VALUES ('"+time+"','"+status+"','"+sucessClass+"','"+sucessnum+"','"+failClass+"','"+failnum+"','"+sum+"','"+buildid+"')";
             stmt.executeUpdate(sql);
 //            result = rs.toString();
             System.out.println(result);
