@@ -51,7 +51,7 @@ public class ExchangeList {
 
     //up_down_percent > -1 && up_down_percent < 1
     Double upDownPercent = Double.valueOf(targetContent.get("up_down_percent").toString());
-    Assert.assertTrue(upDownPercent >= -1 );
+    Assert.assertTrue(upDownPercent >= -10 );
 
     //second_token_balance
     Long secondTokenBalance = Long.valueOf(targetContent.get("second_token_balance").toString());
