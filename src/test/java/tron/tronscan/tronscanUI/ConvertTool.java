@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import tron.common.utils.Configuration;
+import tron.common.utils.MyIRetryAnalyzer;
 import tron.common.utils.WebBrowser;
 
 public class ConvertTool {
@@ -23,7 +24,7 @@ private  String URL = "https://"+tronScanNode+"/#/tools/tron-convert-tool";
     }
   }
 
-  @Test(enabled = true,description = "编译器工具-Base64")
+  @Test(enabled = true,description = "编译器工具-Base64",retryAnalyzer = MyIRetryAnalyzer.class)
   public void testBase64() throws Exception{
     driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[4]/h4/span/span")).getText().isEmpty();
     driver.switchTo().frame("convertTool");
@@ -35,7 +36,7 @@ private  String URL = "https://"+tronScanNode+"/#/tools/tron-convert-tool";
     driver.close();
   }
 
-  @Test(enabled = true,description = "编译器工具-Base58")
+  @Test(enabled = true,description = "编译器工具-Base58",retryAnalyzer = MyIRetryAnalyzer.class)
   public void testBase58() throws Exception{
     driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[4]/h4/span/span")).getText().isEmpty();
     driver.switchTo().frame("convertTool");
@@ -48,7 +49,7 @@ private  String URL = "https://"+tronScanNode+"/#/tools/tron-convert-tool";
   }
 
 
-  @Test(enabled = true,description = "编译器工具-PubKeyAddress")
+  @Test(enabled = true,description = "编译器工具-PubKeyAddress",retryAnalyzer = MyIRetryAnalyzer.class)
   public void testPubKeyAddress() throws Exception{
     driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[4]/h4/span/span")).getText().isEmpty();
     driver.switchTo().frame("convertTool");
@@ -60,7 +61,7 @@ private  String URL = "https://"+tronScanNode+"/#/tools/tron-convert-tool";
     driver.close();
   }
 
-  @Test(enabled = true,description = "编译器工具-Mainnet")
+  @Test(enabled = true,description = "编译器工具-Mainnet",retryAnalyzer = MyIRetryAnalyzer.class)
   public void testMainnet() throws Exception{
     driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[4]/h4/span/span")).getText().isEmpty();
     driver.switchTo().frame("convertTool");
