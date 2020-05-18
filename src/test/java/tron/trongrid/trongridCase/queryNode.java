@@ -1,5 +1,9 @@
 package tron.trongrid.trongridCase;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import org.junit.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import tron.trongrid.base.Base;
@@ -11,7 +15,13 @@ public class queryNode extends Base {
    */
   @Test(enabled = true, description = "List nodes from trongrid")
   public void test01ListNodesFromTrongrid() {
-
+    response = listNodes();
+    responseContent = parseResponseContent(response);
+    printJsonContent(responseContent);
+    JSONArray nodeArray = responseContent.getJSONArray("nodes");
+    Assert.assertTrue(nodeArray.size()  > 20);
+    Assert.assertTrue(nodeArray.getJSONObject(0).getJSONObject("address").containsKey("port")
+        && nodeArray.getJSONObject(0).getJSONObject("address").containsKey("host"));
   }
 
   /**
@@ -19,7 +29,11 @@ public class queryNode extends Base {
    */
   @Test(enabled = true, description = "Get node info from trongrid")
   public void test02GetNodeInfoFromTrongrid() {
-
+    response = getNodeInfo();
+    responseContent = parseResponseContent(response);
+    printJsonContent(responseContent);
+    Assert.assertTrue(responseContent.containsKey("totalFlow"));
+    Assert.assertTrue(responseContent.containsKey("solidityBlock"));
   }
 
   /**
@@ -27,6 +41,15 @@ public class queryNode extends Base {
    */
   @Test(enabled = true, description = "Get chain parameters from trongrid")
   public void test03GetChainParametersFromTrongrid() {
+    response = getChainParameters();
+    responseContent = parseResponseContent(response);
+    printJsonContent(responseContent);
+    JSONArray chainParametersArray = responseContent.getJSONArray("chainParameter");
+    Assert.assertTrue(chainParametersArray.size() > 28);
+    JSONObject mainTenanceTimeJsonObject = new JSONObject();
+    mainTenanceTimeJsonObject.put("value",21600000);
+    mainTenanceTimeJsonObject.put("key","getMaintenanceTimeInterval");
+    Assert.assertTrue(chainParametersArray.contains(mainTenanceTimeJsonObject));
 
   }
 

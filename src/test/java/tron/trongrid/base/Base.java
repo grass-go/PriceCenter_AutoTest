@@ -1,5 +1,6 @@
 package tron.trongrid.base;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
 import java.nio.charset.Charset;
@@ -22,7 +23,15 @@ public class Base {
   public static String bttTokenId = Configuration.getByPath("testng.conf").getString("tronGrid.bttTokenId");
   public static Long feeLimit = Configuration.getByPath("testng.conf").getLong("tronGrid.feeLimit");
   public static String zeroBase64 = Configuration.getByPath("testng.conf").getString("tronGrid.zeroBase64");
-
+  public static String usdjContract = Configuration.getByPath("testng.conf").getString("tronGrid.usdjContract");
+  public static String usdjOriginAddress = Configuration.getByPath("testng.conf").getString("tronGrid.usdjOriginAddress");
+  public static Integer bttVsTrxExchange = Configuration.getByPath("testng.conf").getInt("tronGrid.bttVsTrxExchange");
+  public static Integer proposalId = Configuration.getByPath("testng.conf").getInt("tronGrid.proposalId");
+  public static Integer maintenanceTimeInterval = Configuration.getByPath("testng.conf").getInt("tronGrid.maintenanceTimeInterval");
+  public static String srAddress = Configuration.getByPath("testng.conf").getString("tronGrid.srAddress");
+  public static String txid = Configuration.getByPath("testng.conf").getString("tronGrid.txid");
+  public static Long txidBlockNum = Configuration.getByPath("testng.conf").getLong("tronGrid.txidBlockNum");
+  public static String bttOwnerAddress = Configuration.getByPath("testng.conf").getString("tronGrid.bttOwnerAddress");
   public static JSONObject responseContent;
   public static HttpResponse response;
   public static  String tronGridUrl = Configuration.getByPath("testng.conf").getString("tronGrid.tronGridUrl");
@@ -159,6 +168,437 @@ public class Base {
   /**
    * constructor.
    */
+  public static HttpResponse getNowBlock() {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getnowblock";
+      JsonObject userBaseObj2 = new JsonObject();
+      //userBaseObj2.addProperty("visible", true);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getBlockByNum(Long num) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getblockbynum";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("num", num);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getBlockById(String id) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getblockbyid";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("value", id);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getBlockByLatestNum(Integer num) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getblockbylatestnum";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("num", num);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getBlockByLimitNext(Long startNum,Long endNum) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getblockbylimitnext";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("startNum", startNum);
+      userBaseObj2.addProperty("endNum", endNum);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getContract(String contracrt) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getcontract";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("value", contracrt);
+      userBaseObj2.addProperty("visible", true);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse listExchanges() {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/listexchanges";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getExchangeById(Integer exchangeId) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getexchangebyid";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("id", exchangeId);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse listNodes() {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/listnodes";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getNodeInfo() {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getnodeinfo";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse listProposals() {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/listproposals";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getProposalById(Integer proposalId) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getproposalbyid";
+      JsonObject userBaseObj2 = new JsonObject();
+      //userBaseObj2.addProperty("visible", true);
+      userBaseObj2.addProperty("id", proposalId);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getChainParameters() {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getchainparameters";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse listWitnesses() {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/listwitnesses";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getNextMaintenanceTime() {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getnextmaintenancetime";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getBrokerage(String srAddress) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getBrokerage";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      userBaseObj2.addProperty("address", srAddress);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getReward(String srAddress) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getReward";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      userBaseObj2.addProperty("address", srAddress);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getTransactionById(String txid) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/gettransactionbyid";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      userBaseObj2.addProperty("value", txid);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getTransactionInfoById(String txid) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/gettransactioninfobyid";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      userBaseObj2.addProperty("value", txid);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getTransactionInfoByBlockNum(Long blockNum) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/gettransactioninfobyblocknum";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      userBaseObj2.addProperty("num", blockNum);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getAssetIssueById(Integer assetId) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getassetissuebyid";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      userBaseObj2.addProperty("value", assetId);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getAssetIssueByAccount(String accountAddress) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getassetissuebyaccount";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      userBaseObj2.addProperty("address", accountAddress);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getAssetIssueList() {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getassetissuelist";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getPaginatedAssetIssueList(Integer offset, Integer limit) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getpaginatedassetissuelist";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      userBaseObj2.addProperty("offset", offset);
+      userBaseObj2.addProperty("limit", limit);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+
+
+
+
+  /**
+   * constructor.
+   */
   public static HttpResponse createConnect(String url, JsonObject requestBody) {
     try {
       httpClient.getParams()
@@ -210,6 +650,23 @@ public class Base {
       return null;
     }
   }
+
+  /**
+   * constructor.
+   */
+  public static JSONArray parseResponseContentToArray(HttpResponse response) {
+    try {
+      String result = EntityUtils.toString(response.getEntity());
+      StringEntity entity = new StringEntity(result, Charset.forName("UTF-8"));
+      response.setEntity(entity);
+      JSONArray obj = JSONObject.parseArray(result);
+      return obj;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
 
   /**
    * constructor.

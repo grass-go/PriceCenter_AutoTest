@@ -1,17 +1,38 @@
 package tron.trongrid.trongridCase;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import org.junit.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import tron.trongrid.base.Base;
 
 public class queryTrc10 extends Base {
 
+  JSONObject bttJsonBody;
+  JSONArray assetList;
+  JSONArray paginatedAssetList;
   /**
    * constructor.
    */
   @Test(enabled = true, description = "Get asset issue by account from trongrid")
   public void test01GetAssetIssueByAccountFromTrongrid() {
-
+    response = getAssetIssueByAccount(bttOwnerAddress);
+    responseContent = parseResponseContent(response);
+    bttJsonBody = responseContent.getJSONArray("assetIssue").getJSONObject(0);
+    printJsonContent(bttJsonBody);
+    Assert.assertTrue(bttJsonBody.getLong("start_time") == 1548000000000L);
+    Assert.assertTrue(bttJsonBody.getInteger("trx_num") == 1);
+    Assert.assertTrue(bttJsonBody.getLong("total_supply") == 990000000000000000L);
+    Assert.assertTrue(bttJsonBody.getInteger("precision") == 6);
+    Assert.assertTrue(bttJsonBody.getInteger("num") == 1);
+    Assert.assertEquals(bttJsonBody.getString("name"),"BitTorrent");
+    Assert.assertTrue(bttJsonBody.containsKey("end_time"));
+    Assert.assertTrue(bttJsonBody.containsKey("description"));
+    Assert.assertTrue(bttJsonBody.containsKey("url"));
+    Assert.assertTrue(bttJsonBody.getString("owner_address").equals(bttOwnerAddress));
+    Assert.assertEquals(bttJsonBody.getInteger("id"),Integer.valueOf(bttTokenId));
+    Assert.assertEquals(bttJsonBody.getString("abbr"),"BTT");
   }
 
   /**
@@ -19,7 +40,10 @@ public class queryTrc10 extends Base {
    */
   @Test(enabled = true, description = "Get asset issue by id from trongrid")
   public void test02GetAssetIssueByIdFromTrongrid() {
-
+    response = getAssetIssueById(Integer.valueOf(bttTokenId));
+    responseContent = parseResponseContent(response);
+    printJsonContent(responseContent);
+    Assert.assertEquals(responseContent,bttJsonBody);
   }
 
   /**
@@ -27,6 +51,12 @@ public class queryTrc10 extends Base {
    */
   @Test(enabled = true, description = "Get asset issue list from trongrid")
   public void test03GetAssetIssueListFromTrongrid() {
+    response = getAssetIssueList();
+    responseContent = parseResponseContent(response);
+    //printJsonContent(responseContent);
+    assetList = responseContent.getJSONArray("assetIssue");
+    Assert.assertTrue(assetList.size() >= 3006);
+    //Assert.assertTrue(assetList.contains(bttJsonBody));
 
   }
 
@@ -35,7 +65,12 @@ public class queryTrc10 extends Base {
    */
   @Test(enabled = true, description = "Get paginated assetissue list from trongrid")
   public void test04GetPaginatedAssetIssueListFromTrongrid() {
-
+    response = getPaginatedAssetIssueList(1970,50);
+    responseContent = parseResponseContent(response);
+    printJsonContent(responseContent);
+    paginatedAssetList = responseContent.getJSONArray("assetIssue");
+    Assert.assertTrue(paginatedAssetList.size() == 50);
+    System.out.println("bttJsonBody:" + bttJsonBody);
   }
 
   /**
