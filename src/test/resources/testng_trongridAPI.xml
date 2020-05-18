@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="trongridAPI" parallel="tests" thread-count="1">
+<!--    <listeners>
+        <listener class-name="tron.common.utils.SqlTronscanUI"/>
+    </listeners>-->
+    <test name="trongridAPI">
+        <classes>
+            <class name="tron.trongrid.trongridCase.getBalance"></class>
+        </classes>
+    </test>
+</suite>
