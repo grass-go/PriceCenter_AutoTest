@@ -5,8 +5,8 @@
         <listener class-name="tron.common.utils.SqlTronscanUI"/>
     </listeners>-->
     <test name="trongridAPI">
-        <classes>
-            <class name="tron.trongrid.trongridCase.getBalance"></class>
-        </classes>
+        <packages>
+            <package name="tron.trongrid.trongridCase"></package>
+        </packages>
     </test>
 </suite>

@@ -121,6 +121,40 @@ public class Base {
   }
 
 
+  /**
+   * constructor.
+   */
+  public static HttpResponse createAddress(String password) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/createaddress";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("value", password);
+      userBaseObj2.addProperty("visible", true);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse generateAddress(Boolean visible) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/generateaddress";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", visible);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
 
   /**
    * constructor.
@@ -187,6 +221,13 @@ public class Base {
     }
     System.out.println("JSON content size are: " + responseContent.size());
     System.out.println("----------------------------Print JSON End-----------------------------");
+  }
+
+  /**
+   * constructor.
+   */
+  public static void disConnect() {
+    httppost.releaseConnection();
   }
 
 }

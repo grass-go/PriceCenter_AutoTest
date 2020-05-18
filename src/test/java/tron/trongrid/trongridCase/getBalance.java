@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.google.gson.JsonObject;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import tron.trongrid.base.Base;
 
@@ -55,4 +56,15 @@ public class getBalance extends Base {
     Assert.assertNotEquals(base64Balance,zeroBase64);
   }
 
+  /**
+   * constructor.
+   */
+  @AfterClass
+  public void shutdown() throws InterruptedException {
+    try {
+      disConnect();
+    } catch (Exception e) {
+
+    }
+  }
 }

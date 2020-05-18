@@ -6,21 +6,20 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import tron.trongrid.base.Base;
 
-public class getAccount extends Base {
-  private static HttpResponse response1;
-
+public class createAddress extends Base {
 
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Get account from trongrid")
-  public void test01GetAccountFromTrongrid() {
-    response = getAccount(queryAddress);
+  @Test(enabled = true, description = "Create address from trongrid")
+  public void test01CreateAddressFromTrongrid() {
+    response = createAddress("Test0001");
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
-    Assert.assertTrue(responseContent.size() > 10);
-    Assert.assertTrue(responseContent.getLong("balance") >  0);
-    Assert.assertEquals(responseContent.getString("create_time"),"1588824369000");
+    String base58Address = responseContent.getString("base58checkAddress");
+    String base64Address = responseContent.getString("value");
+    Assert.assertTrue(base58Address.charAt(0) == 'T');
+    Assert.assertTrue(base64Address.substring(0,2).equals("41"));
   }
 
   /**
@@ -35,3 +34,4 @@ public class getAccount extends Base {
     }
   }
 }
+
