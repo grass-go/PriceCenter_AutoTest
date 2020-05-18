@@ -46,17 +46,13 @@ private  String URL = "https://"+tronScanNode+"/#/";
         String vote_string = vote.getText();
         String[]  strs=vote_string.split(" ");
         for(int i=0,len=strs.length;i<len;i++){
-//            String str11 = strs[0].toString();
-//            String voteint = str11.substring(str11.indexOf("\""),str11.lastIndexOf("\""));
-//            String voteint = strs[0].replace("\"","").replace("\"","");
-//            Double testqq = Integer.parseInt(voteint);
             double testqq = Double.valueOf(strs[0].toString()).doubleValue();
             if( testqq > 0.000000){
                 Thread.sleep(300);
                 //点领取
-                driver.findElement(By.cssSelector("div.row.mt-3 > div > div > div > table > tbody > tr:nth-child(4) > td > a")).click();
-                Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > div.text-muted.lead > span")).getText(),"Viewable on account page after transaction is confirmed");
-                driver.findElement(By.cssSelector(".sweet-alert > p > span > button"));
+//                driver.findElement(By.cssSelector("div.row.mt-3 > div > div > div > table > tbody > tr:nth-child(4) > td > a")).click();
+                Assert.assertEquals(driver.findElement(By.cssSelector("div.row.mt-3 > div > div > div > table > tbody > tr:nth-child(4) > td > a > span")).getText(),"COLLECT REWARD");
+//                driver.findElement(By.cssSelector(".sweet-alert > p > span > button"));
             }
         }
 
