@@ -32,6 +32,8 @@ public class Base {
   public static String txid = Configuration.getByPath("testng.conf").getString("tronGrid.txid");
   public static Long txidBlockNum = Configuration.getByPath("testng.conf").getLong("tronGrid.txidBlockNum");
   public static String bttOwnerAddress = Configuration.getByPath("testng.conf").getString("tronGrid.bttOwnerAddress");
+  public static String delegateResourceFromAddress = Configuration.getByPath("testng.conf").getString("tronGrid.delegateResourceFromAddress");
+  public static String delegateResourceToAddress = Configuration.getByPath("testng.conf").getString("tronGrid.delegateResourceToAddress");
   public static JSONObject responseContent;
   public static HttpResponse response;
   public static  String tronGridUrl = Configuration.getByPath("testng.conf").getString("tronGrid.tronGridUrl");
@@ -302,6 +304,46 @@ public class Base {
     }
     return response;
   }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getDelegateResource(String fromAddress,String toAddress) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getdelegatedresource";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("fromAddress", fromAddress);
+      userBaseObj2.addProperty("toAddress", toAddress);
+      userBaseObj2.addProperty("visible", true);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getDelegateResourceIndex(String address) {
+    try {
+      final String requestUrl = tronGridUrl  + "/wallet/getdelegatedresourceaccountindex";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("value", address);
+      userBaseObj2.addProperty("visible", true);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+
+
 
   /**
    * constructor.
