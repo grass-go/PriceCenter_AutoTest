@@ -73,6 +73,44 @@ public class queryTrc10 extends Base {
     System.out.println("bttJsonBody:" + bttJsonBody);
   }
 
+
+  /**
+   * constructor.
+   */
+  @Test(enabled = true, description = "Get asset issue list from trongrid solidity")
+  public void test05GetAssetIssueListFromTrongridSolidity() {
+    response = getAssetIssueList(true);
+    responseContent = parseResponseContent(response);
+    //printJsonContent(responseContent);
+    JSONArray assetListFromSolidity = responseContent.getJSONArray("assetIssue");
+    Assert.assertEquals(assetListFromSolidity,assetList);
+
+  }
+
+  /**
+   * constructor.
+   */
+  @Test(enabled = true, description = "Get paginated assetissue list from trongrid solidity")
+  public void test06GetPaginatedAssetIssueListFromTrongridSolidity() {
+    response = getPaginatedAssetIssueList(1970,50,true);
+    responseContent = parseResponseContent(response);
+    //printJsonContent(responseContent);
+    Assert.assertEquals(paginatedAssetList,responseContent.getJSONArray("assetIssue"));
+  }
+
+  /**
+   * constructor.
+   */
+  @Test(enabled = true, description = "Get asset issue by id from trongrid solidity")
+  public void test07GetAssetIssueByIdFromTrongridSolidity() {
+    response = getAssetIssueById(Integer.valueOf(bttTokenId),true);
+    responseContent = parseResponseContent(response);
+    printJsonContent(responseContent);
+    Assert.assertEquals(responseContent,bttJsonBody);
+  }
+
+
+
   /**
    * constructor.
    */

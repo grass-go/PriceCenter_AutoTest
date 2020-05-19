@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="trongridAPI" parallel="tests" thread-count="1">
-<!--    <listeners>
-        <listener class-name="tron.common.utils.SqlTronscanUI"/>
-    </listeners>-->
+    <listeners>
+       <!-- <listener class-name="tron.common.utils.SqlTronscanUI"/>-->
+            <listener class-name="tron.common.utils.RetryListener"/>
+    </listeners>
     <test name="trongridAPI">
         <packages>
             <package name="tron.trongrid.trongridCase"></package>

@@ -1,5 +1,6 @@
 package tron.trongrid.trongridCase;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Assert;
 import org.testng.annotations.AfterClass;
@@ -7,6 +8,8 @@ import org.testng.annotations.Test;
 import tron.trongrid.base.Base;
 
 public class querySr extends Base {
+  JSONArray witnessList;
+  JSONObject firstWitnessInfo;
 
   /**
    * constructor.
@@ -14,10 +17,10 @@ public class querySr extends Base {
   @Test(enabled = true, description = "List witnesses from trongrid")
   public void test01ListWitnessesFromTrongrid() {
     response = listWitnesses();
-    responseContent = parseResponseContent(response);
-    printJsonContent(responseContent);
-    Assert.assertTrue(responseContent.getJSONArray("witnesses").size() > 100);
-    JSONObject firstWitnessInfo = responseContent.getJSONArray("witnesses").getJSONObject(0);
+    witnessList = parseResponseContent(response).getJSONArray("witnesses");
+    //printJsonContent(responseContent);
+    Assert.assertTrue(witnessList.size() > 100);
+    firstWitnessInfo = witnessList.getJSONObject(0);
     printJsonContent(firstWitnessInfo);
     Assert.assertEquals(firstWitnessInfo.getString("address").substring(0,2), "41");
     Assert.assertTrue(firstWitnessInfo.containsKey("isJobs"));
@@ -31,7 +34,7 @@ public class querySr extends Base {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Get next maintenance time from trongrid")
+  @Test(enabled = false, description = "Get next maintenance time from trongrid")
   public void test02GetNextMaintenanceTimeFromTrongrid() {
     response = getNextMaintenanceTime();
     responseContent = parseResponseContent(response);
@@ -43,7 +46,7 @@ public class querySr extends Base {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Get brokerage from trongrid")
+  @Test(enabled = false, description = "Get brokerage from trongrid")
   public void test03GetBrokerageFromTrongrid() {
     response = getBrokerage(srAddress);
     responseContent = parseResponseContent(response);
@@ -54,13 +57,25 @@ public class querySr extends Base {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Get reward from trongrid")
+  @Test(enabled = false, description = "Get reward from trongrid")
   public void test04GetRewardFromTrongrid() {
     response = getReward(srAddress);
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getLong("reward") >= 0);
   }
+
+
+  /**
+   * constructor.
+   */
+  @Test(enabled = true, description = "List witnesses from trongrid solidity")
+  public void test05ListWitnessesFromTrongridSolidity() {
+    response = listWitnesses(true);
+    JSONArray witnessListSolidity  = parseResponseContent(response).getJSONArray("witnesses");
+    Assert.assertEquals(witnessListSolidity.size(),witnessList.size());
+  }
+
 
 
   /**

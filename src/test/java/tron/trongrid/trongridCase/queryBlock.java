@@ -10,9 +10,12 @@ import tron.trongrid.base.Base;
 
 public class queryBlock extends Base {
   String blockId;
+  String blockIdFromSolidity;
   Long curBlockNum;
+  Long curBlockNumFromSolidity;
   JSONObject getNowBlockJsonBody;
-  Integer latestNum = 5;
+  JSONObject getNowBlockFromSolidityJsonBody;
+  Integer latestNum = 88;
   Integer LimitNextRange = 10;
 
 
@@ -69,6 +72,7 @@ public class queryBlock extends Base {
     responseContent = parseResponseContent(response);
     JSONArray getBlockByLatestNumJsonBody = responseContent.getJSONArray("block");
     Assert.assertTrue(getBlockByLatestNumJsonBody.size() == latestNum);
+    System.out.println("-----------------------------------------------------------");
     Assert.assertTrue(getBlockByLatestNumJsonBody.contains(getNowBlockJsonBody));
 
   }
@@ -86,6 +90,42 @@ public class queryBlock extends Base {
     Assert.assertTrue(getBlockByLimitNextJsonBody.contains(getNowBlockJsonBody));
 
   }
+
+
+  /**
+   * constructor.
+   */
+  @Test(enabled = true, description = "Get now block from trongrid solidity")
+  public void test06GetNowBlockFromTrongridSolidity() throws Exception{
+    Integer transactionNumInBlock = 0;
+    Integer retryTimes = 0;
+    while (transactionNumInBlock < 1 && retryTimes++ < 15) {
+      response = getNowBlock(true);
+      responseContent = parseResponseContent(response);
+      transactionNumInBlock = responseContent.getJSONArray("transactions").size();
+      System.out.println("transactionNum: " + transactionNumInBlock);
+      TimeUnit.SECONDS.sleep(3);
+    }
+    getNowBlockFromSolidityJsonBody = responseContent;
+    printJsonContent(responseContent);
+    blockIdFromSolidity = getNowBlockFromSolidityJsonBody.getString("blockID");
+    JSONObject blockHeader = responseContent.getJSONObject("block_header").getJSONObject("raw_data");
+    curBlockNumFromSolidity = blockHeader.getLong("number");
+    printJsonContent(blockHeader);
+    Assert.assertTrue(curBlockNumFromSolidity > 19838446);
+    Assert.assertTrue(blockHeader.getLong("timestamp") > 1589780175000L);
+  }
+
+  /**
+   * constructor.
+   */
+  @Test(enabled = true, description = "Get block by number from trongrid solidity")
+  public void test07GetBlockByNumFromTrongridSolidity() {
+    response = getBlockByNum(curBlockNumFromSolidity,true);
+    JSONObject getBlockByNumFromSolidityJsonBody = parseResponseContent(response);
+    Assert.assertEquals(getBlockByNumFromSolidityJsonBody,getNowBlockFromSolidityJsonBody);
+  }
+
 
 
   /**

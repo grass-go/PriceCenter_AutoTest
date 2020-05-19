@@ -9,7 +9,9 @@ import tron.trongrid.base.Base;
 
 public class queryTransaction extends Base {
 
-  JSONObject transactionInfo;
+  JSONObject transactionInfoBody;
+  JSONObject transactionBody;
+  JSONArray getTransactionByBlockNumJsonArrayBody;
   /**
    * constructor.
    */
@@ -17,6 +19,7 @@ public class queryTransaction extends Base {
   public void test01GetTransactionByIdFromTrongrid() {
     response = getTransactionById(txid);
     responseContent = parseResponseContent(response);
+    transactionBody = responseContent;
     printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getJSONArray("ret")
         .getJSONObject(0).getString("contractRet").equals("SUCCESS"));
@@ -34,11 +37,11 @@ public class queryTransaction extends Base {
     response = getTransactionInfoById(txid);
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
-    transactionInfo = responseContent;
-    Assert.assertTrue(transactionInfo.containsKey("log"));
-    Assert.assertTrue(transactionInfo.getInteger("fee") == 3500);
-    Assert.assertEquals(transactionInfo.getLong("blockNumber"), txidBlockNum);
-    Assert.assertTrue(transactionInfo.containsKey("internal_transactions"));
+    transactionInfoBody = responseContent;
+    Assert.assertTrue(transactionInfoBody.containsKey("log"));
+    Assert.assertTrue(transactionInfoBody.getInteger("fee") == 3500);
+    Assert.assertEquals(transactionInfoBody.getLong("blockNumber"), txidBlockNum);
+    Assert.assertTrue(transactionInfoBody.containsKey("internal_transactions"));
   }
 
   /**
@@ -48,9 +51,45 @@ public class queryTransaction extends Base {
   public void test03GetTransactionInfoByBlockNumFromTrongrid() {
     response = getTransactionInfoByBlockNum(txidBlockNum);
     JSONArray responseContent = parseResponseContentToArray(response);
+    getTransactionByBlockNumJsonArrayBody = responseContent;
     Assert.assertEquals(responseContent.size(),47);
-    Assert.assertTrue(responseContent.contains(transactionInfo));
+    Assert.assertTrue(responseContent.contains(transactionInfoBody));
   }
+
+
+  /**
+   * constructor.
+   */
+  @Test(enabled = true, description = "Get transaction by id from trongrid solidity")
+  public void test04GetTransactionByIdFromTrongridSolidity() {
+    response = getTransactionById(txid,true);
+    responseContent = parseResponseContent(response);
+    Assert.assertEquals(transactionBody,responseContent);
+   }
+
+  /**
+   * constructor.
+   */
+  @Test(enabled = true, description = "Get transaction info by id from trongrid solidity")
+  public void test05GetTransactionInfoByIdFromTrongridSolidity() {
+    response = getTransactionInfoById(txid,true);
+    responseContent = parseResponseContent(response);
+    printJsonContent(transactionInfoBody);
+    printJsonContent(responseContent);
+    Assert.assertEquals(transactionInfoBody,responseContent);
+  }
+
+  /**
+   * constructor.
+   */
+  @Test(enabled = true, description = "Get transaction info by block number from trongrid solidity")
+  public void test06GetTransactionInfoByBlockNumFromTrongridSolidity() {
+    response = getTransactionInfoByBlockNum(txidBlockNum,true);
+    JSONArray responseContent = parseResponseContentToArray(response);
+    Assert.assertEquals(getTransactionByBlockNumJsonArrayBody,responseContent);
+  }
+
+
 
   /**
    * constructor.
