@@ -1,14 +1,13 @@
-package tron.trongrid.trongridCase;
+package tron.trongrid.trongridCase.fullnodeOrSolidityAPI;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
-import tron.trongrid.base.Base;
+import tron.trongrid.base.fullOrSolidityBase;
 
-public class queryNode extends Base {
+public class queryNode extends fullOrSolidityBase {
 
   /**
    * constructor.

@@ -1,13 +1,13 @@
-package tron.trongrid.trongridCase;
+package tron.trongrid.trongridCase.fullnodeOrSolidityAPI;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.junit.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
-import tron.trongrid.base.Base;
+import tron.trongrid.base.fullOrSolidityBase;
 
-public class queryTrc10 extends Base {
+public class queryTrc10 extends fullOrSolidityBase {
 
   JSONObject bttJsonBody;
   JSONArray assetList;

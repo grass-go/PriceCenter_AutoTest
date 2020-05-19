@@ -1,12 +1,11 @@
-package tron.trongrid.trongridCase;
+package tron.trongrid.trongridCase.fullnodeOrSolidityAPI;
 
-import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
-import tron.trongrid.base.Base;
+import tron.trongrid.base.fullOrSolidityBase;
 
-public class createAddress extends Base {
+public class createAddress extends fullOrSolidityBase {
 
   /**
    * constructor.

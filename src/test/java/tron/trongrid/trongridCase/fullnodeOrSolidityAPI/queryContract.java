@@ -1,11 +1,11 @@
-package tron.trongrid.trongridCase;
+package tron.trongrid.trongridCase.fullnodeOrSolidityAPI;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
-import tron.trongrid.base.Base;
+import tron.trongrid.base.fullOrSolidityBase;
 
-public class queryContract extends Base {
+public class queryContract extends fullOrSolidityBase {
 
   /**
    * constructor.

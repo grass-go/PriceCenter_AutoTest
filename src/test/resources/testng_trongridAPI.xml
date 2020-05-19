@@ -7,7 +7,7 @@
     </listeners>
     <test name="trongridAPI">
         <packages>
-            <package name="tron.trongrid.trongridCase"></package>
+            <package name="tron.trongrid.trongridCase.*"></package>
         </packages>
     </test>
 </suite>

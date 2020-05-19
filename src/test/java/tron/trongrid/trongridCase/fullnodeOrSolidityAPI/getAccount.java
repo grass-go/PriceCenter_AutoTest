@@ -1,13 +1,12 @@
-package tron.trongrid.trongridCase;
+package tron.trongrid.trongridCase.fullnodeOrSolidityAPI;
 
 import com.alibaba.fastjson.JSONObject;
-import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
-import tron.trongrid.base.Base;
+import tron.trongrid.base.fullOrSolidityBase;
 
-public class getAccount extends Base {
+public class getAccount extends fullOrSolidityBase {
 
     JSONObject getAccountBody;
 

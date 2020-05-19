@@ -15,7 +15,7 @@ import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
 import tron.common.utils.Configuration;
 
-public class Base {
+public class fullOrSolidityBase {
 
   public static String queryAddress = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddress");
   public static String winAddress = Configuration.getByPath("testng.conf").getString("tronGrid.winContractAddress");
