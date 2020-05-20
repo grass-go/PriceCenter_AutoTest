@@ -1,21 +1,21 @@
-package tron.trongrid.trongridCase;
+package tron.trongrid.trongridCase.fullnodeOrSolidityAPI;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
-import tron.trongrid.base.Base;
+import tron.trongrid.base.fullOrSolidityBase;
 
-public class queryContract extends Base {
+public class queryContract extends fullOrSolidityBase {
 
   /**
    * constructor.
    */
   @Test(enabled = true, description = "Get contract from trongrid")
   public void test01GetContractFromTrongrid() {
-    response = getContract(usdjContract);
+    response = getContract(usdjContractDSToken);
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
-    Assert.assertEquals(responseContent.getString("contract_address"),usdjContract);
+    Assert.assertEquals(responseContent.getString("contract_address"),usdjContractDSToken);
     Assert.assertEquals(responseContent.getString("origin_address"),usdjOriginAddress);
     Assert.assertTrue(responseContent.containsKey("code_hash"));
     Assert.assertTrue(responseContent.containsKey("origin_energy_limit"));

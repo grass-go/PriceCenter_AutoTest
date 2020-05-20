@@ -15,7 +15,7 @@ import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
 import tron.common.utils.Configuration;
 
-public class Base {
+public class fullOrSolidityBase {
 
   public static String queryAddress = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddress");
   public static String winAddress = Configuration.getByPath("testng.conf").getString("tronGrid.winContractAddress");
@@ -23,7 +23,7 @@ public class Base {
   public static String bttTokenId = Configuration.getByPath("testng.conf").getString("tronGrid.bttTokenId");
   public static Long feeLimit = Configuration.getByPath("testng.conf").getLong("tronGrid.feeLimit");
   public static String zeroBase64 = Configuration.getByPath("testng.conf").getString("tronGrid.zeroBase64");
-  public static String usdjContract = Configuration.getByPath("testng.conf").getString("tronGrid.usdjContract");
+  public static String usdjContractDSToken = Configuration.getByPath("testng.conf").getString("tronGrid.usdjContractDSToken");
   public static String usdjOriginAddress = Configuration.getByPath("testng.conf").getString("tronGrid.usdjOriginAddress");
   public static Integer bttVsTrxExchange = Configuration.getByPath("testng.conf").getInt("tronGrid.bttVsTrxExchange");
   public static Integer proposalId = Configuration.getByPath("testng.conf").getInt("tronGrid.proposalId");
@@ -34,6 +34,8 @@ public class Base {
   public static String bttOwnerAddress = Configuration.getByPath("testng.conf").getString("tronGrid.bttOwnerAddress");
   public static String delegateResourceFromAddress = Configuration.getByPath("testng.conf").getString("tronGrid.delegateResourceFromAddress");
   public static String delegateResourceToAddress = Configuration.getByPath("testng.conf").getString("tronGrid.delegateResourceToAddress");
+  public static String fullnode = "/wallet";
+  public static String solidity = "/walletsolidity";
   public static JSONObject responseContent;
   public static HttpResponse response;
   public static  String tronGridUrl = Configuration.getByPath("testng.conf").getString("tronGrid.tronGridUrl");
@@ -57,7 +59,7 @@ public class Base {
    */
   public static HttpResponse getAccount(String queryAddress) {
     try {
-      String requestUrl = tronGridUrl + "/wallet/getaccount";
+      String requestUrl = tronGridUrl + fullnode + "/getaccount";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("address", queryAddress);
       userBaseObj2.addProperty("visible",true);
@@ -68,6 +70,16 @@ public class Base {
       return null;
     }
     return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getAccount(String queryAddress,Boolean isSolidity) {
+    if (isSolidity) {
+      fullnode = solidity;
+    }
+    return getAccount(queryAddress);
   }
 
   /**
@@ -172,7 +184,7 @@ public class Base {
    */
   public static HttpResponse getNowBlock() {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getnowblock";
+      final String requestUrl = tronGridUrl  + fullnode + "/getnowblock";
       JsonObject userBaseObj2 = new JsonObject();
       //userBaseObj2.addProperty("visible", true);
       response = createConnect(requestUrl, userBaseObj2);
@@ -187,9 +199,19 @@ public class Base {
   /**
    * constructor.
    */
+  public static HttpResponse getNowBlock(Boolean isSolidity) {
+    if (isSolidity) {
+      fullnode = solidity;
+    }
+    return getNowBlock();
+  }
+
+  /**
+   * constructor.
+   */
   public static HttpResponse getBlockByNum(Long num) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getblockbynum";
+      final String requestUrl = tronGridUrl  + fullnode + "/getblockbynum";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("num", num);
       response = createConnect(requestUrl, userBaseObj2);
@@ -199,6 +221,16 @@ public class Base {
       return null;
     }
     return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getBlockByNum(Long num,Boolean isSolidity) {
+    if (isSolidity) {
+      fullnode = solidity;
+    }
+    return getBlockByNum(num);
   }
 
   /**
@@ -439,7 +471,7 @@ public class Base {
    */
   public static HttpResponse listWitnesses() {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/listwitnesses";
+      final String requestUrl = tronGridUrl  + fullnode + "/listwitnesses";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       response = createConnect(requestUrl, userBaseObj2);
@@ -449,6 +481,17 @@ public class Base {
       return null;
     }
     return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse listWitnesses(Boolean isSolidity) {
+    if (isSolidity) {
+      fullnode = solidity;
+    }
+
+    return listWitnesses();
   }
 
   /**
@@ -510,7 +553,7 @@ public class Base {
    */
   public static HttpResponse getTransactionById(String txid) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/gettransactionbyid";
+      final String requestUrl = tronGridUrl  + fullnode + "/gettransactionbyid";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       userBaseObj2.addProperty("value", txid);
@@ -521,6 +564,16 @@ public class Base {
       return null;
     }
     return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getTransactionById(String txid,Boolean isSolidity) {
+    if (isSolidity) {
+      fullnode = solidity;
+    }
+    return getTransactionById(txid);
   }
 
 
@@ -530,7 +583,7 @@ public class Base {
    */
   public static HttpResponse getTransactionInfoById(String txid) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/gettransactioninfobyid";
+      final String requestUrl = tronGridUrl  + fullnode + "/gettransactioninfobyid";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       userBaseObj2.addProperty("value", txid);
@@ -546,9 +599,19 @@ public class Base {
   /**
    * constructor.
    */
+  public static HttpResponse getTransactionInfoById(String txid,Boolean isSolidity) {
+    if (isSolidity) {
+      fullnode = solidity;
+    }
+    return getTransactionInfoById(txid);
+  }
+
+  /**
+   * constructor.
+   */
   public static HttpResponse getTransactionInfoByBlockNum(Long blockNum) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/gettransactioninfobyblocknum";
+      final String requestUrl = tronGridUrl  + fullnode + "/gettransactioninfobyblocknum";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       userBaseObj2.addProperty("num", blockNum);
@@ -561,13 +624,23 @@ public class Base {
     return response;
   }
 
+  /**
+   * constructor.
+   */
+  public static HttpResponse getTransactionInfoByBlockNum(Long blockNum,Boolean isSolidity) {
+    if (isSolidity) {
+      fullnode =solidity;
+    }
+    return getTransactionInfoByBlockNum(blockNum);
+  }
+
 
   /**
    * constructor.
    */
   public static HttpResponse getAssetIssueById(Integer assetId) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getassetissuebyid";
+      final String requestUrl = tronGridUrl  + fullnode + "/getassetissuebyid";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       userBaseObj2.addProperty("value", assetId);
@@ -578,6 +651,16 @@ public class Base {
       return null;
     }
     return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getAssetIssueById(Integer assetId,Boolean isSolidity) {
+    if (isSolidity) {
+      fullnode = solidity;
+    }
+    return getAssetIssueById(assetId);
   }
 
   /**
@@ -603,7 +686,7 @@ public class Base {
    */
   public static HttpResponse getAssetIssueList() {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getassetissuelist";
+      final String requestUrl = tronGridUrl  + fullnode + "/getassetissuelist";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       response = createConnect(requestUrl, userBaseObj2);
@@ -618,9 +701,20 @@ public class Base {
   /**
    * constructor.
    */
+  public static HttpResponse getAssetIssueList(Boolean isSolidity) {
+    if (isSolidity) {
+      fullnode = solidity;
+    }
+    return getAssetIssueList();
+  }
+
+
+  /**
+   * constructor.
+   */
   public static HttpResponse getPaginatedAssetIssueList(Integer offset, Integer limit) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getpaginatedassetissuelist";
+      final String requestUrl = tronGridUrl  + fullnode + "/getpaginatedassetissuelist";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       userBaseObj2.addProperty("offset", offset);
@@ -632,6 +726,16 @@ public class Base {
       return null;
     }
     return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getPaginatedAssetIssueList(Integer offset, Integer limit,Boolean isSolidity) {
+    if (isSolidity) {
+      fullnode = solidity;
+    }
+    return getPaginatedAssetIssueList(offset,limit);
   }
 
 
