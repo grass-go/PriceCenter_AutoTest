@@ -23,7 +23,7 @@ public class fullOrSolidityBase {
   public static String bttTokenId = Configuration.getByPath("testng.conf").getString("tronGrid.bttTokenId");
   public static Long feeLimit = Configuration.getByPath("testng.conf").getLong("tronGrid.feeLimit");
   public static String zeroBase64 = Configuration.getByPath("testng.conf").getString("tronGrid.zeroBase64");
-  public static String usdjContract = Configuration.getByPath("testng.conf").getString("tronGrid.usdjContract");
+  public static String usdjContractDSToken = Configuration.getByPath("testng.conf").getString("tronGrid.usdjContractDSToken");
   public static String usdjOriginAddress = Configuration.getByPath("testng.conf").getString("tronGrid.usdjOriginAddress");
   public static Integer bttVsTrxExchange = Configuration.getByPath("testng.conf").getInt("tronGrid.bttVsTrxExchange");
   public static Integer proposalId = Configuration.getByPath("testng.conf").getInt("tronGrid.proposalId");

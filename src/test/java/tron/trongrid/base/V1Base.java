@@ -25,12 +25,15 @@ public class V1Base {
 
 
   public static String queryAddress = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddress");
-  public static String winAddress = Configuration.getByPath("testng.conf").getString("tronGrid.winContractAddress");
+  public static String eventTxid = Configuration.getByPath("testng.conf").getString("tronGrid.eventTxid");
   public static String queryAddressBase64 = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddressBase64");
   public static String bttTokenId = Configuration.getByPath("testng.conf").getString("tronGrid.bttTokenId");
   public static Long feeLimit = Configuration.getByPath("testng.conf").getLong("tronGrid.feeLimit");
   public static String zeroBase64 = Configuration.getByPath("testng.conf").getString("tronGrid.zeroBase64");
+  public static String usdjContractDSToken = Configuration.getByPath("testng.conf").getString("tronGrid.usdjContractDSToken");
   public static String usdjContract = Configuration.getByPath("testng.conf").getString("tronGrid.usdjContract");
+  public static String usdjContractBase64 = Configuration.getByPath("testng.conf").getString("tronGrid.usdjContractBase64");
+  public static Long eventBlockNumber = Configuration.getByPath("testng.conf").getLong("tronGrid.eventBlockNumber");
   public static String usdjOriginAddress = Configuration.getByPath("testng.conf").getString("tronGrid.usdjOriginAddress");
   public static Integer bttVsTrxExchange = Configuration.getByPath("testng.conf").getInt("tronGrid.bttVsTrxExchange");
   public static Integer proposalId = Configuration.getByPath("testng.conf").getInt("tronGrid.proposalId");
@@ -90,6 +93,41 @@ public class V1Base {
   /**
    * constructor.
    */
+  public static JSONObject getTrc20TokenAccountBalanceInfo(String contractAddress,
+      Boolean is_only_confirmed,String orderBy,Integer limit) {
+    try {
+      String requestUrl = tronGridUrl + "v1/contracts/" + contractAddress + "/tokens" ;
+      JsonObject userBaseObj2 = new JsonObject();
+      if (!orderBy.isEmpty()) {
+        userBaseObj2.addProperty("order_by",orderBy);
+      }
+      if (limit != 20) {
+        userBaseObj2.addProperty("limit",limit);
+      }
+      userBaseObj2.addProperty("only_confirmed",is_only_confirmed);
+      response = createConnect(requestUrl, userBaseObj2);
+      return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpget.releaseConnection();
+      return null;
+    }
+  }
+
+  /**
+   * constructor.
+   */
+  public static JSONObject getTrc20TokenAccountBalanceInfo(String contractAddress) {
+    return getTrc20TokenAccountBalanceInfo(contractAddress,true,"",20);
+  }
+
+
+
+
+
+  /**
+   * constructor.
+   */
   public static JSONObject getTransactionInfoByAddress(String queryAddress) {
     return getTransactionInfoByAddress(queryAddress,true);
   }
@@ -110,6 +148,160 @@ public class V1Base {
       return null;
     }
   }
+
+  /**
+   * constructor.
+   */
+  public static JSONObject getEventByTransactionId(String txid) {
+    return getEventByTransactionId(txid,true);
+  }
+
+  /**
+   * constructor.
+   */
+  public static JSONObject getEventByTransactionId(String txid,Boolean is_only_confirmed) {
+    try {
+      String requestUrl = tronGridUrl + "v1/transactions/" + txid + "/events";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("only_confirmed",is_only_confirmed);
+      response = createConnect(requestUrl, userBaseObj2);
+      return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpget.releaseConnection();
+      return null;
+    }
+  }
+
+
+
+  /**
+   * constructor.
+   */
+  public static JSONObject getEventByLatestBlockNumber() {
+    return getEventByLatestBlockNumber(true);
+  }
+
+  /**
+   * constructor.
+   */
+  public static JSONObject getEventByLatestBlockNumber(Boolean is_only_confirmed) {
+    try {
+      String requestUrl = tronGridUrl + "v1/blocks/latest/events";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("only_confirmed",is_only_confirmed);
+      response = createConnect(requestUrl, userBaseObj2);
+      return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpget.releaseConnection();
+      return null;
+    }
+  }
+
+
+
+  /**
+   * constructor.
+   */
+  public static JSONObject getEventByContractAddress(String contractAddress) {
+    return getEventByContractAddress(contractAddress,true,"",0L,0L,0L,"");
+  }
+
+  /**
+   * constructor.
+   */
+  public static JSONObject getEventByContractAddress(String contractAddress,Boolean is_only_confirmed,
+      String eventName, Long blockNumber,Long minBlockTimestamp,Long maxBlockTimestamp,
+      String orderBy) {
+    try {
+      String requestUrl = tronGridUrl + "v1/contracts/" + contractAddress + "/events";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("only_confirmed",is_only_confirmed);
+      if (!eventName.isEmpty()){
+        userBaseObj2.addProperty("event_name",eventName);
+      }
+      if (blockNumber != 0) {
+        userBaseObj2.addProperty("block_number",blockNumber);
+      }
+      if (minBlockTimestamp != 0 && maxBlockTimestamp != 0) {
+        userBaseObj2.addProperty("min_block_timestamp",minBlockTimestamp);
+        userBaseObj2.addProperty("max_block_timestamp",maxBlockTimestamp);
+      }
+      if (!orderBy.isEmpty()) {
+        userBaseObj2.addProperty("order_by",orderBy);
+      }
+      response = createConnect(requestUrl, userBaseObj2);
+      return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpget.releaseConnection();
+      return null;
+    }
+  }
+
+  /**
+   * constructor.
+   */
+  public static JSONObject getTransactionInformationByContractAddress(String contractAddress) {
+    return getTransactionInformationByContractAddress(contractAddress,true,"",20,true);
+  }
+
+  /**
+   * constructor.
+   */
+  public static JSONObject getTransactionInformationByContractAddress(String contractAddress,
+      Boolean is_only_confirmed,String orderBy,Integer limit,Boolean searchInternal) {
+    try {
+      String requestUrl = tronGridUrl + "v1/contracts/" + contractAddress + "/transactions";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("only_confirmed",is_only_confirmed);
+      if (!orderBy.isEmpty()) {
+        userBaseObj2.addProperty("order_by", orderBy);
+      }
+      if (limit != 20) {
+        userBaseObj2.addProperty("limit",limit);
+      }
+      if (!searchInternal) {
+        userBaseObj2.addProperty("search_internal",searchInternal);
+      }
+      response = createConnect(requestUrl, userBaseObj2);
+      return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpget.releaseConnection();
+      return null;
+    }
+  }
+
+
+
+  /**
+   * constructor.
+   */
+  public static JSONObject getEventByBlockNumber(String blockNumber) {
+    return getEventByBlockNumber(blockNumber,true);
+  }
+
+  /**
+   * constructor.
+   */
+  public static JSONObject getEventByBlockNumber(String blockNumber,Boolean is_only_confirmed) {
+    try {
+      String requestUrl = tronGridUrl + "v1/blocks/" + blockNumber + "/events";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("only_confirmed",is_only_confirmed);
+      response = createConnect(requestUrl, userBaseObj2);
+      return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpget.releaseConnection();
+      return null;
+    }
+  }
+
+
+
 
   /**
    * constructor.

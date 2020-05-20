@@ -9,5 +9,8 @@
         <packages>
             <package name="tron.trongrid.trongridCase.*"></package>
         </packages>
+<!--      <classes>
+        <class name="tron.trongrid.trongridCase.V1API.eventByLatestBlock"></class>
+      </classes>-->
     </test>
 </suite>

@@ -12,10 +12,10 @@ public class queryContract extends fullOrSolidityBase {
    */
   @Test(enabled = true, description = "Get contract from trongrid")
   public void test01GetContractFromTrongrid() {
-    response = getContract(usdjContract);
+    response = getContract(usdjContractDSToken);
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
-    Assert.assertEquals(responseContent.getString("contract_address"),usdjContract);
+    Assert.assertEquals(responseContent.getString("contract_address"),usdjContractDSToken);
     Assert.assertEquals(responseContent.getString("origin_address"),usdjOriginAddress);
     Assert.assertTrue(responseContent.containsKey("code_hash"));
     Assert.assertTrue(responseContent.containsKey("origin_energy_limit"));
