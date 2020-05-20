@@ -113,7 +113,7 @@ public class AccountsList {
 
     //frozen json
     targetContent = responseContent.getJSONObject("frozen");
-    Assert.assertTrue(Integer.valueOf(targetContent.get("total").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(targetContent.get("total").toString()) >= 0);
     Assert.assertTrue(targetContent.containsKey("balances"));
 
     //accountResource json
