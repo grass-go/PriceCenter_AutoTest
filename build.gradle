@@ -94,3 +94,18 @@ task trongridAPI(type: Test) {
 
 
 }
+
+task chromeExtension(type: Test) {
+    useTestNG {
+        suites(file('src/test/resources/testng_chromeExtensitonUI.xml'))
+        parallel 'tests'
+        threadCount 1
+
+    }
+    testLogging {
+        exceptionFormat = 'full'
+        showStackTraces = "true"
+    }
+
+
+}

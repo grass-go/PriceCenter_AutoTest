@@ -1,14 +1,14 @@
-package tron.trongrid.trongridCase;
+package tron.trongrid.trongridCase.fullnodeOrSolidityAPI;
 
-import org.apache.http.HttpResponse;
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
-import tron.trongrid.base.Base;
+import tron.trongrid.base.fullOrSolidityBase;
 
-public class getAccount extends Base {
-  private static HttpResponse response1;
+public class getAccount extends fullOrSolidityBase {
 
+    JSONObject getAccountBody;
 
   /**
    * constructor.
@@ -17,10 +17,22 @@ public class getAccount extends Base {
   public void test01GetAccountFromTrongrid() {
     response = getAccount(queryAddress);
     responseContent = parseResponseContent(response);
-    printJsonContent(responseContent);
+    getAccountBody = responseContent;
+    //printJsonContent(responseContent);
     Assert.assertTrue(responseContent.size() > 10);
     Assert.assertTrue(responseContent.getLong("balance") >  0);
     Assert.assertEquals(responseContent.getString("create_time"),"1588824369000");
+  }
+
+  /**
+   * constructor.
+   */
+  @Test(enabled = true, description = "Get account from trongrid solidity")
+  public void test01GetAccountFromTrongridSolidity() {
+    response = getAccount(queryAddress,true);
+    responseContent = parseResponseContent(response);
+    //printJsonContent(responseContent);
+    Assert.assertEquals(responseContent,getAccountBody);
   }
 
   /**
