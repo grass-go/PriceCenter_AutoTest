@@ -37,7 +37,8 @@ public class transactionInfoByContractAddress extends V1Base {
    */
   @Test(enabled = true, description = "Get transaction information by contract address with not only confirmed from trongrid V1 API")
   public void test02GetTransactionInformationByContractAddressWithNotOnlyConfirmedFromTrongridV1() {
-    getTransactionInfoByContractAddressBody = getTransactionInformationByContractAddress(usdjContractBase64,false,"",20,true);
+    getTransactionInfoByContractAddressBody = getTransactionInformationByContractAddress(usdjContractBase64,
+        false,"",20,true,0L,0L);
     Assert.assertEquals(getTransactionInfoByContractAddressBody.getBoolean("success"), true);
     Assert.assertTrue(getTransactionInfoByContractAddressBody.containsKey("meta"));
     Assert.assertEquals(getTransactionInfoByContractAddressBody.getJSONArray("data").size(), 20);
@@ -58,14 +59,14 @@ public class transactionInfoByContractAddress extends V1Base {
   @Test(enabled = true, description = "Get transaction information by contract address with order by block_timestamp from trongrid V1 API")
   public void test03GetTransactionInformationByContractAddressWithOrderByBlockTimestampFromTrongridV1() {
     getTransactionInfoByContractAddressBody = getTransactionInformationByContractAddress(usdjContractBase64,
-        true,"block_timestamp,desc",20,true);
+        true,"block_timestamp,desc",20,true,0L,0L);
     transactionInfoData = getTransactionInfoByContractAddressBody.getJSONArray("data").getJSONObject(0);
     Long first_blockTimestampWithDesc = getTransactionInfoByContractAddressBody
         .getJSONArray("data").getJSONObject(0).getLong("block_timestamp");
     Long second_blockTimestampWithDesc = getTransactionInfoByContractAddressBody
         .getJSONArray("data").getJSONObject(1).getLong("block_timestamp");
     getTransactionInfoByContractAddressBody = getTransactionInformationByContractAddress(usdjContractBase64,
-        true,"block_timestamp,asc",20,true);
+        true,"block_timestamp,asc",20,true,0L,0L);
     transactionInfoData = getTransactionInfoByContractAddressBody.getJSONArray("data").getJSONObject(0);
     Long first_blockTimestampWithAsc = getTransactionInfoByContractAddressBody
         .getJSONArray("data").getJSONObject(0).getLong("block_timestamp");
@@ -83,7 +84,7 @@ public class transactionInfoByContractAddress extends V1Base {
   @Test(enabled = true, description = "Get transaction information by contract address with limit from trongrid V1 API")
   public void test05GetTransactionInformationByContractAddressWithLimitFromTrongridV1() {
     getTransactionInfoByContractAddressBody = getTransactionInformationByContractAddress(usdjContractBase64,
-        true,"block_timestamp,asc",200,true);
+        true,"block_timestamp,asc",200,true,0L,0L);
     JSONArray transactionInfoArray = getTransactionInfoByContractAddressBody.getJSONArray("data");
     Assert.assertEquals(transactionInfoArray.size(),200);
   }
@@ -95,10 +96,28 @@ public class transactionInfoByContractAddress extends V1Base {
   @Test(enabled = true, description = "Get transaction information by contract address without search internal trongrid V1 API")
   public void test06GetTransactionInformationByContractAddressWithoutSearchInternalFromTrongridV1() {
     getTransactionInfoByContractAddressBody = getTransactionInformationByContractAddress(usdjContractBase64,
-        true,"",50,false);
+        true,"",50,false,0L,0L);
     JSONArray transactionInfoArray = getTransactionInfoByContractAddressBody.getJSONArray("data");
     for (int i = 0; i < transactionInfoArray.size();i++) {
       Assert.assertFalse(transactionInfoArray.getJSONObject(i).containsKey("internal_tx_id"));
+
+    }
+  }
+
+  /**
+   * constructor.
+   */
+  @Test(enabled = true, description = "Get transaction information by contract address with block timestamp V1 API")
+  public void test07GetTransactionInformationByContractAddressWithBlockTimestampFromTrongridV1() {
+    getTransactionInfoByContractAddressBody = getTransactionInformationByContractAddress(usdjContract,
+        true,"",20,true,
+        1585900190000L,1585900531000L);
+    JSONArray transactionInfoArray = getTransactionInfoByContractAddressBody.getJSONArray("data");
+    Assert.assertTrue(transactionInfoArray.size() == 2);
+    for (int i = 0; i < transactionInfoArray.size();i++) {
+      Assert.assertTrue(transactionInfoArray.getJSONObject(i).getLong("block_timestamp")
+          >= 1585900190000L && transactionInfoArray.getJSONObject(i).getLong("block_timestamp")
+      <= 1585900531000L);
     }
   }
 

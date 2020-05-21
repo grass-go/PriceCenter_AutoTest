@@ -244,14 +244,15 @@ public class V1Base {
    * constructor.
    */
   public static JSONObject getTransactionInformationByContractAddress(String contractAddress) {
-    return getTransactionInformationByContractAddress(contractAddress,true,"",20,true);
+    return getTransactionInformationByContractAddress(contractAddress,true,"",20,true,0L,0L);
   }
 
   /**
    * constructor.
    */
   public static JSONObject getTransactionInformationByContractAddress(String contractAddress,
-      Boolean is_only_confirmed,String orderBy,Integer limit,Boolean searchInternal) {
+      Boolean is_only_confirmed,String orderBy,Integer limit,Boolean searchInternal,
+      Long minBlockTimestamp,Long maxBlockTimestamp) {
     try {
       String requestUrl = tronGridUrl + "v1/contracts/" + contractAddress + "/transactions";
       JsonObject userBaseObj2 = new JsonObject();
@@ -264,6 +265,10 @@ public class V1Base {
       }
       if (!searchInternal) {
         userBaseObj2.addProperty("search_internal",searchInternal);
+      }
+      if (minBlockTimestamp != 0 && maxBlockTimestamp != 0) {
+        userBaseObj2.addProperty("min_block_timestamp",minBlockTimestamp);
+        userBaseObj2.addProperty("max_block_timestamp",maxBlockTimestamp);
       }
       response = createConnect(requestUrl, userBaseObj2);
       return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
