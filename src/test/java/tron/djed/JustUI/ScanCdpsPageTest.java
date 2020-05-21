@@ -40,7 +40,7 @@ public class ScanCdpsPageTest extends Base {
     scanCdpsPage.searchCdp_btn.click();
     Thread.sleep(1000);
     Assert
-        .assertEquals(DRIVER.getCurrentUrl(), "https://just.tronscan.org/?lang=en-US#/scan/cdps/3");
+        .assertEquals(DRIVER.getCurrentUrl(), URL + "/3");
     Thread.sleep(500);
     Assert.assertEquals("CDP ID: 3", scanCdpsPage.cdpId_text.getText());
     List<WebElement> cdpActionHistoryList_text = scanCdpsPage.cdpActionHistoryList_text;

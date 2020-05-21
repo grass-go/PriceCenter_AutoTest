@@ -58,7 +58,7 @@ public class ScanSummaryPageTest extends Base {
     scanSummaryPage.viewAll_btn.click();
     Thread.sleep(300);
     Assert
-        .assertEquals(DRIVER.getCurrentUrl(), "https://just.tronscan.org/?lang=en-US#/scan/cdps");
+        .assertEquals(DRIVER.getCurrentUrl(), URL + "/cdps");
     navigation.back();
   }
 
