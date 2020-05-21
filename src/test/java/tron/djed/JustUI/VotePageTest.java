@@ -14,7 +14,7 @@ import tron.chromeExtension.base.Base;
 import tron.common.utils.Configuration;
 import tron.common.utils.MyIRetryAnalyzer;
 
-public class CdpVotePage extends Base {
+public class VotePageTest extends Base {
 
   private String tronScanNode = Configuration.getByPath("testng.conf")
       .getString("JustIP");
@@ -28,7 +28,7 @@ public class CdpVotePage extends Base {
     navigation = DRIVER.navigate();
     String WindowsTronLink = DRIVER.getWindowHandle();
     ((JavascriptExecutor)DRIVER).executeScript("window.open('" + URL + "')");
-    Thread.sleep(3000);
+    Thread.sleep(1000);
     Set<String> allWindow = DRIVER.getWindowHandles();
     for(String i:allWindow){
       if (i != WindowsTronLink){ DRIVER.switchTo().window(i);}
@@ -38,7 +38,7 @@ public class CdpVotePage extends Base {
   @BeforeMethod
   public void beforeTest() throws Exception{
     navigation.refresh();
-    Thread.sleep(6000);
+    Thread.sleep(9000);
   }
 
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
