@@ -55,11 +55,11 @@ public class HomePageTest extends Base {
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/aside/div/div[2]/div/div[4]/div[1]/span/span[1]/span")).isDisplayed());
 
     // Global CDP info
-    Assert.assertEquals(DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/aside/div/div[4]/div/h3[1]")).getText(),"Global CDP Collateralization");
+    Assert.assertEquals(DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/aside/div/div[4]/div/h3[1]")).getText(),"CDP 全局质押率");
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/aside/div/div[4]/div/div[1]/span/span[1]")).isDisplayed());
 
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/aside/div/div[4]/div/div[2]/span/span[1]/span")).isDisplayed());
-    Assert.assertEquals(DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/aside/div/div[4]/div/h3[2]")).getText(),"USDJ Total Supply");
+    Assert.assertEquals(DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/aside/div/div[4]/div/h3[2]")).getText(),"USDJ 全网总量");
   }
 
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
