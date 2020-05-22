@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="djedAPI" parallel="tests" thread-count="1">
-  <listeners>
-    <listener class-name="tron.common.utils.SqlDjed"/>
-  </listeners>
-  <test name="djedAPI">
-    <classes>
-      <class name="tron.djed.JustUI.LoginPageTest"></class>
-      <class name="tron.djed.JustUI.HomePageTest"></class>
-      <class name="tron.djed.JustUI.VotePageTest"></class>
-      <class name="tron.djed.JustUI.ScanCdpsPageTest"></class>
-      <class name="tron.djed.JustUI.ScanTokensPageTest"></class>
-      <class name="tron.djed.JustUI.ScanGovernancePageTest"></class>
-      <class name="tron.djed.JustUI.ScanSummaryPageTest"></class>
-      <class name="tron.djed.JustUI.ScanSystemPageTest"></class>
-    </classes>
+<!--  <listeners>-->
+<!--    <listener class-name="tron.common.utils.SqlDjed"/>-->
+<!--  </listeners>-->
+  <test name="djedUI">
+    <packages>
+      <package name="tron.djed.JustUI"></package>
+    </packages>
   </test>
 </suite>
