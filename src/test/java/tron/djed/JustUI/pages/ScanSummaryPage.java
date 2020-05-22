@@ -7,11 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
 import tron.chromeExtension.pages.AbstractPage;
 
-/**
- * mine page
- */
 public class ScanSummaryPage extends AbstractPage {
-
 
   public ScanSummaryPage(ChromeDriver driver) {
     super(driver);

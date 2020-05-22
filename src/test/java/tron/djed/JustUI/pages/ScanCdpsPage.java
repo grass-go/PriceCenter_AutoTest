@@ -7,11 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
 import tron.chromeExtension.pages.AbstractPage;
 
-/**
- * mine page
- */
 public class ScanCdpsPage extends AbstractPage {
-
 
   public ScanCdpsPage(ChromeDriver driver) {
     super(driver);

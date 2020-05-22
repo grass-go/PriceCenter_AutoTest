@@ -29,7 +29,7 @@ public class ScanSummaryPageTest extends Base {
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "trx")
-  public void testTrx() {
+  public void testTrx001() {
     String trxCollateralization_text = scanSummaryPage.trxCollateralization_text.getText();
     String trxCollateralization_text1 = trxCollateralization_text.split("≈")[0].replaceAll(" ", "")
         .replaceAll(",", "");
@@ -48,13 +48,13 @@ public class ScanSummaryPageTest extends Base {
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "recentCdpList")
-  public void testRecentCdpList() {
+  public void testRecentCdpList002() {
     List<WebElement> cdpList_text = scanSummaryPage.recentCdpList_text;
     Assert.assertTrue(cdpList_text.size() > 0);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "viewAll")
-  public void testViewAll() throws Exception {
+  public void testViewAll003() throws Exception {
     scanSummaryPage.viewAll_btn.click();
     Thread.sleep(300);
     Assert

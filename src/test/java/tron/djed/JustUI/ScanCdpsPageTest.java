@@ -29,13 +29,13 @@ public class ScanCdpsPageTest extends Base {
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "cdpList")
-  public void testCdpList() {
+  public void testCdpList001() {
     List<WebElement> cdpList_text = scanCdpsPage.cdpsList_text;
     Assert.assertTrue(cdpList_text.size() > 0);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "serachCdp")
-  public void testSerachCdp() throws Exception {
+  public void testSerachCdp002() throws Exception {
     scanCdpsPage.serachCdp_input.sendKeys("3");
     scanCdpsPage.searchCdp_btn.click();
     Thread.sleep(1000);
