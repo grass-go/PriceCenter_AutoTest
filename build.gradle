@@ -109,3 +109,18 @@ task chromeExtension(type: Test) {
 
 
 }
+
+
+task justUI(type: Test) {
+
+    useTestNG {
+        suites(file('src/test/resources/testng_justUI.xml'))
+        parallel 'tests'
+        threadCount 1
+
+    }
+    testLogging {
+        exceptionFormat = 'full'
+        showStackTraces = "true"
+    }
+}
