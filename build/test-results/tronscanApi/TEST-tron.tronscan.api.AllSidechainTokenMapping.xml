@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="tron.tronscan.api.AllSidechainTokenMapping" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-05-12T03:08:19" hostname="zhukaideiMac" time="0.615">
+  <properties/>
+  <testcase name="getAllSidechainTokenMapping" classname="tron.tronscan.api.AllSidechainTokenMapping" time="0.615"/>
+  <system-out><![CDATA[11:08:19.595 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection request: [route: {}->http://tronexapi.tronscan.org:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+11:08:19.595 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection leased: [id: 66][route: {}->http://tronexapi.tronscan.org:80][total kept alive: 0; route allocated: 1 of 80; total allocated: 1 of 100]
+11:08:19.595 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnectionOperator - Connecting to tronexapi.tronscan.org:80
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAddCookies - CookieSpec selected: default
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestAuthCache - Auth cache not set in the context
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestTargetAuthentication - Target auth state: UNCHALLENGED
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.client.protocol.RequestProxyAuthentication - Proxy auth state: UNCHALLENGED
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.impl.client.DefaultHttpClient - Attempt 1 to execute request
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Sending request: GET /external/sidechain/getAllSidechainTokenMapping HTTP/1.1
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "GET /external/sidechain/getAllSidechainTokenMapping HTTP/1.1[\r][\n]"
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Content-type: application/json; charset=utf-8[\r][\n]"
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Connection: Close[\r][\n]"
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "Host: tronexapi.tronscan.org[\r][\n]"
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)[\r][\n]"
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.wire -  >> "[\r][\n]"
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.headers - >> GET /external/sidechain/getAllSidechainTokenMapping HTTP/1.1
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Content-type: application/json; charset=utf-8
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Connection: Close
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.headers - >> Host: tronexapi.tronscan.org
+11:08:19.899 [TestNG-tests-1] DEBUG org.apache.http.headers - >> User-Agent: Apache-HttpClient/4.5.3 (Java/1.8.0_211)
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "HTTP/1.1 200 OK[\r][\n]"
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Server: nginx/1.12.2[\r][\n]"
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Date: Tue, 12 May 2020 03:08:21 GMT[\r][\n]"
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Type: application/json;charset=UTF-8[\r][\n]"
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Content-Length: 1866[\r][\n]"
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Connection: close[\r][\n]"
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Vary: Accept-Encoding[\r][\n]"
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Access-Control-Allow-Origin: *[\r][\n]"
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Access-Control-Allow-Headers: *[\r][\n]"
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS[\r][\n]"
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "[\r][\n]"
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Receiving response: HTTP/1.1 200 OK
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.headers - << HTTP/1.1 200 OK
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.headers - << Server: nginx/1.12.2
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.headers - << Date: Tue, 12 May 2020 03:08:21 GMT
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Type: application/json;charset=UTF-8
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.headers - << Content-Length: 1866
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.headers - << Connection: close
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.headers - << Vary: Accept-Encoding
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.headers - << Access-Control-Allow-Origin: *
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.headers - << Access-Control-Allow-Headers: *
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.headers - << Access-Control-Allow-Methods: GET,POST,PUT,DELETE,OPTIONS
+http://tronexapi.tronscan.org/external/sidechain/getAllSidechainTokenMapping 请求总耗时：614 毫秒
+11:08:20.209 [TestNG-tests-1] INFO tron.tronscan.api.AllSidechainTokenMapping - code is 200
+11:08:20.209 [TestNG-tests-1] DEBUG org.apache.http.wire -  << "{"retCode":"0","retMsg":[],"data":{"sidechainTokens":[{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","mainchain_address":"TTT2UVAa28scLpN6zmJUGeJNWV3kSLScKN","sidechain_address":"TM9d82tZmUzWFrM7C8wMjcXYPNhxB8zVtR","type":20},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","mainchain_address":"TWo2n3sNWoQuquRWQdrr3geNfu9Ja5Pe2T","sidechain_address":"TAQJzSEpcAVsJSaJyKzap8e1q9UyW5ggQS","type":20},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","mainchain_address":"THfmqF3g64ChfRLArhwuCSip98BGgMzSEN","sidechain_address":"TCjKYnPBt3YiKw2EYpBmghVLvnFCNe62He","type":20},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","mainchain_address":"TQZ549Ej1ZxSxS2xkYg4vXjpmGA2dN8DLN","sidechain_address":"TFhM4sdyVuJyCmkXAWwqs3McCGZpUTb691","type":20},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","mainchain_address":"TE8zDgsVuZB7DEpbAivNPcjVFUP7CTdthB","sidechain_address":"TAxnSDZomHSSeZXLKovjqWovVqSiTfETD2","type":20},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","mainchain_address":"TUZdQPoKfGtUYNpaM9w77Cot2nvcE8H7xW","sidechain_address":"TGooPVARSM57ckahzbbehG2FSUJbkouKHQ","type":20},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","mainchain_address":"TRMwqmzb29SYJbDHi2UGgLqPQfjZQT3Qf8","sidechain_address":"TTC4Kp4pzMv3NXSDyG6o91TcVRyHSMXmSW","type":20},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","mainchain_address":"TXgxGokbKCeHrg6CbSgtJegZN9hEmVhwBP","sidechain_address":"TH5z8gRuiX699UfAjVibyCPyJQBu1ibupc","type":20},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","mainchain_address":"TDJ4Vs1Wc22TU32wZBgFwqAk3V4TCqKHXk","sidechain_address":"TZ9E5LV6NAM8XTJQLNKdt2TC7XeAgurmaN","type":20},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","mainchain_address":"TP5oVouh7zhZFSx6MgSLTEACZmkwvvzmUk","sidechain_address":"TFe1uEMGLcXHD1MWvq9hhciUnXLAY8oMjP","type":20}]}}"
+11:08:20.210 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.DefaultClientConnection - Connection 0.0.0.0:56791<->3.14.14.175:80 closed
+11:08:20.210 [TestNG-tests-1] DEBUG org.apache.http.impl.conn.PoolingClientConnectionManager - Connection released: [id: 66][route: {}->http://tronexapi.tronscan.org:80][total kept alive: 0; route allocated: 0 of 80; total allocated: 0 of 100]
+11:08:20.210 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON Start---------------------------
+11:08:20.210 [TestNG-tests-1] INFO tron.common.TronscanApiList - data:{"sidechainTokens":[{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","sidechain_address":"TM9d82tZmUzWFrM7C8wMjcXYPNhxB8zVtR","type":20,"mainchain_address":"TTT2UVAa28scLpN6zmJUGeJNWV3kSLScKN"},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","sidechain_address":"TAQJzSEpcAVsJSaJyKzap8e1q9UyW5ggQS","type":20,"mainchain_address":"TWo2n3sNWoQuquRWQdrr3geNfu9Ja5Pe2T"},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","sidechain_address":"TCjKYnPBt3YiKw2EYpBmghVLvnFCNe62He","type":20,"mainchain_address":"THfmqF3g64ChfRLArhwuCSip98BGgMzSEN"},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","sidechain_address":"TFhM4sdyVuJyCmkXAWwqs3McCGZpUTb691","type":20,"mainchain_address":"TQZ549Ej1ZxSxS2xkYg4vXjpmGA2dN8DLN"},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","sidechain_address":"TAxnSDZomHSSeZXLKovjqWovVqSiTfETD2","type":20,"mainchain_address":"TE8zDgsVuZB7DEpbAivNPcjVFUP7CTdthB"},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","sidechain_address":"TGooPVARSM57ckahzbbehG2FSUJbkouKHQ","type":20,"mainchain_address":"TUZdQPoKfGtUYNpaM9w77Cot2nvcE8H7xW"},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","sidechain_address":"TTC4Kp4pzMv3NXSDyG6o91TcVRyHSMXmSW","type":20,"mainchain_address":"TRMwqmzb29SYJbDHi2UGgLqPQfjZQT3Qf8"},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","sidechain_address":"TH5z8gRuiX699UfAjVibyCPyJQBu1ibupc","type":20,"mainchain_address":"TXgxGokbKCeHrg6CbSgtJegZN9hEmVhwBP"},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","sidechain_address":"TZ9E5LV6NAM8XTJQLNKdt2TC7XeAgurmaN","type":20,"mainchain_address":"TDJ4Vs1Wc22TU32wZBgFwqAk3V4TCqKHXk"},{"chainid":"413AF23F37DA0D48234FDD43D89931E98E1144481B","sidechain_address":"TFe1uEMGLcXHD1MWvq9hhciUnXLAY8oMjP","type":20,"mainchain_address":"TP5oVouh7zhZFSx6MgSLTEACZmkwvvzmUk"}]}
+11:08:20.210 [TestNG-tests-1] INFO tron.common.TronscanApiList - retCode:0
+11:08:20.210 [TestNG-tests-1] INFO tron.common.TronscanApiList - retMsg:[]
+11:08:20.210 [TestNG-tests-1] INFO tron.common.TronscanApiList - JSON content size are: 3
+11:08:20.210 [TestNG-tests-1] INFO tron.common.TronscanApiList - ----------------------------Print JSON End-----------------------------
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
