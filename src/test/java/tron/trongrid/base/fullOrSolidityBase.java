@@ -13,6 +13,8 @@ import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 import tron.common.utils.Configuration;
 
 public class fullOrSolidityBase {
@@ -38,7 +40,8 @@ public class fullOrSolidityBase {
   public static String solidity = "/walletsolidity";
   public static JSONObject responseContent;
   public static HttpResponse response;
-  public static  String tronGridUrl = Configuration.getByPath("testng.conf").getString("tronGrid.tronGridUrl");
+  //public static  String tronGridUrl = Configuration.getByPath("testng.conf").getString("tronGrid.tronGridUrl");
+  public static  String tronGridUrl;
   static HttpClient httpClient;
   static HttpPost httppost;
   static Integer connectionTimeout = Configuration.getByPath("testng.conf")
@@ -53,6 +56,19 @@ public class fullOrSolidityBase {
 
     httpClient = new DefaultHttpClient(pccm);
   }
+
+
+  /**
+   * constructor.
+   */
+  @Parameters({"trongridUrl"})
+  @BeforeTest()
+  public void getMonitorUrl(String trongridUrl) {
+    tronGridUrl = trongridUrl;
+  }
+
+
+
 
   /**
    * constructor.

@@ -95,6 +95,23 @@ task trongridAPI(type: Test) {
 
 }
 
+task trongridMonitor(type: Test) {
+
+    useTestNG {
+        suites(file('src/test/resources/testng_trongrid_monitor.xml'))
+        parallel 'tests'
+        threadCount 1
+
+    }
+    testLogging {
+        exceptionFormat = 'full'
+        showStackTraces = "true"
+    }
+
+
+}
+
+
 task chromeExtension(type: Test) {
     useTestNG {
         suites(file('src/test/resources/testng_chromeExtensitonUI.xml'))

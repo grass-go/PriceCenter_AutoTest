@@ -19,6 +19,9 @@ import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 import tron.common.utils.Configuration;
 
 public class V1Base {
@@ -62,6 +65,16 @@ public class V1Base {
     pccm.setMaxTotal(100);
 
     httpClient = new DefaultHttpClient(pccm);
+  }
+
+
+  /**
+   * constructor.
+   */
+  @Parameters({"trongridUrl"})
+  @BeforeTest()
+  public void getMonitorUrl(String trongridUrl) {
+    tronGridUrl = trongridUrl;
   }
 
   /**

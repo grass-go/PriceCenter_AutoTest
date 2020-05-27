@@ -23,11 +23,11 @@ public class querySr extends fullOrSolidityBase {
     firstWitnessInfo = witnessList.getJSONObject(0);
     printJsonContent(firstWitnessInfo);
     Assert.assertEquals(firstWitnessInfo.getString("address").substring(0,2), "41");
-    Assert.assertTrue(firstWitnessInfo.containsKey("isJobs"));
+/*    Assert.assertTrue(firstWitnessInfo.containsKey("isJobs"));
     Assert.assertTrue(firstWitnessInfo.containsKey("totalProduced"));
     Assert.assertTrue(firstWitnessInfo.containsKey("latestSlotNum"));
     Assert.assertTrue(firstWitnessInfo.containsKey("voteCount"));
-    Assert.assertTrue(firstWitnessInfo.containsKey("totalMissed"));
+    Assert.assertTrue(firstWitnessInfo.containsKey("totalMissed"));*/
     Assert.assertTrue(firstWitnessInfo.containsKey("url"));
   }
 
