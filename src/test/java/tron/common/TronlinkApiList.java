@@ -1,5 +1,6 @@
 package tron.common;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
@@ -10,6 +11,7 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import jdk.nashorn.internal.parser.JSONParser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -136,19 +138,101 @@ public static HttpResponse search(String node, Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse allasset(String node,String address) {
+    try {
+      String requestUrl = "https://" + node + "api/wallet/class/allasset";
+      System.out.println("requestUrl"+requestUrl);
+      JsonObject body = new JsonObject();
+      body.addProperty("address", address);
+      response = createPostConnect(requestUrl,body);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  public static HttpResponse assetlist(String node,String address) {
+    try {
+      String requestUrl = "https://" + node + "api/wallet/assetlist";
+      System.out.println("requestUrl"+requestUrl);
+      JsonObject body = new JsonObject();
+      body.addProperty("address", address);
+      response = createPostConnect(requestUrl,body);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  public static HttpResponse hot_token(String node,String address) {
+    try {
+      String requestUrl = "https://" + node + "api/wallet/hot_token";
+      System.out.println("requestUrl"+requestUrl);
+      JsonObject body = new JsonObject();
+      body.addProperty("address", address);
+      response = createPostConnect(requestUrl,body);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  public static HttpResponse addasset(String node,String json) {
+    try {
+      String requestUrl = "https://" + node + "api/wallet/addasset";
+      System.out.println("requestUrl"+requestUrl);
+      response = createPostConnect(requestUrl,json);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
 
 
   /**
    * constructor.
    */
-  public static HttpResponse createConnect(String url) {
-    return createConnect(url, null);
+
+
+  public static HttpResponse createPostConnect(String url, String requestBody) {
+    try {
+      httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
+          connectionTimeout);
+      httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+
+      httppost = new HttpPost(url);
+      httppost.setHeader("Content-type", "application/json; charset=utf-8");
+      httppost.setHeader("Connection", "Close");
+      if (requestBody != null) {
+        StringEntity entity = new StringEntity(requestBody, Charset.forName("UTF-8"));
+        entity.setContentEncoding("UTF-8");
+        entity.setContentType("application/json");
+        httppost.setEntity(entity);
+      }
+      SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
+      System.out.println("请求开始时间： " + formatter.format(new Date()));
+      response = httpClient.execute(httppost);
+      System.out.println("请求结束时间： " + formatter.format(new Date()));
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
   }
 
   /**
    * constructor.
    */
-  public static HttpResponse createConnect(String url, JsonObject requestBody) {
+  public static HttpResponse createPostConnect(String url, JsonObject requestBody) {
     try {
       httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
           connectionTimeout);
