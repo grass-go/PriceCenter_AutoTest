@@ -6,7 +6,7 @@
     </listeners>
     <test name="tronlinkAPI">
         <packages>
-            <package name="tron.tronlink"></package>
+            <package name="tron.tronlink.*"></package>
         </packages>
     </test>
 </suite>
