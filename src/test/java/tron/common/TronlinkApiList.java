@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
+import java.net.URI;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -19,11 +20,13 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
+import org.junit.Assert;
 import tron.common.utils.Configuration;
 @Slf4j
 public class TronlinkApiList {
@@ -31,6 +34,8 @@ public class TronlinkApiList {
   static HttpClient httpClient;
   static HttpPost httppost;
   static HttpGet httpget;
+
+  static HttpGet httpGet;
   public static String HttpNode = "https://list.tronlink.org";
   static HttpResponse response;
   static Integer connectionTimeout = Configuration.getByPath("testng.conf")
@@ -78,6 +83,20 @@ public class TronlinkApiList {
     return response;
   }
 
+  public static HttpResponse multiTrxReword(HashMap<String, String> param) throws Exception{
+    final String requestUrl = HttpNode + "/api/wallet/multi/trx_record";
+    URIBuilder builder = new URIBuilder(requestUrl);
+    if (param != null) {
+      for (String key : param.keySet()) {
+        builder.addParameter(key, param.get(key));
+      }
+    }
+    URI uri = builder.build();
+    //System.out.println(requestUrl);
+    response = createGetConnect(uri);
+    Assert.assertTrue(TronlinkApiList.verificationResult(response));
+    return response;
+  }
   public static HttpResponse head(String node) {
     try {
       String requestUrl = "http://" + node + "api/dapp/v2/head";
@@ -171,6 +190,15 @@ public static HttpResponse search(String node, Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse lotteryData() throws Exception{
+    final String requesturl = HttpNode + "/api/wallet/lottery/default_data";
+    URIBuilder builder = new URIBuilder(requesturl);
+    URI uri = builder.build();
+    System.out.println(uri);
+    response = createGetConnect(requesturl);
+    return response;
+  }
+
   public static HttpResponse hot_token(String node,String address) {
     try {
       String requestUrl = "https://" + node + "api/wallet/hot_token";
@@ -234,6 +262,14 @@ public static HttpResponse search(String node, Map<String, String> params) {
       trc20ContractAddressList.add(contractAddress);
     }
     return trc20ContractAddressList;
+  }
+  public static Boolean verificationResult(HttpResponse response) {
+    if (response.getStatusLine().getStatusCode() != 200) {
+      return false;
+    }
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+
+    return true;
   }
 
   /**
@@ -313,6 +349,22 @@ public static HttpResponse search(String node, Map<String, String> params) {
    */
   public static HttpResponse createGetConnect(String url) {
     return createGetConnect(url, null);
+  }
+  public static HttpResponse createGetConnect(URI uri) {
+    try {
+      httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
+          connectionTimeout);
+      httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+      httpGet = new HttpGet(uri);
+      httpGet.setHeader("Content-type", "application/json; charset=utf-8");
+      httpGet.setHeader("Connection", "Close");
+      response = httpClient.execute(httpGet);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpGet.releaseConnection();
+      return null;
+    }
+    return response;
   }
 
   /**
