@@ -18,7 +18,7 @@ public class trc20_info {
       .getStringList("tronlink.ip.list")
       .get(0);
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void dapp_classify(){
 
     response = TronlinkApiList.classify(node);

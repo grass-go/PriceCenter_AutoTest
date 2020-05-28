@@ -8,8 +8,10 @@ import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import jdk.nashorn.internal.parser.JSONParser;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +31,7 @@ public class TronlinkApiList {
   static HttpClient httpClient;
   static HttpPost httppost;
   static HttpGet httpget;
+  public static String HttpNode = "https://list.tronlink.org";
   static HttpResponse response;
   static Integer connectionTimeout = Configuration.getByPath("testng.conf")
       .getInt("defaultParameter.httpConnectionTimeout");
@@ -196,11 +199,51 @@ public static HttpResponse search(String node, Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse addAsset(String node ,JSONObject address) throws Exception {
+    final String requestUrl ="https://" + node + "/api/wallet/addasset";
+    response = createConnect(requestUrl, address);
+    return response;
+  }
+  public static HttpResponse getAllClassAsset(String node ,JSONObject address) throws Exception {
+    final String requestUrl = node + "/api/wallet/class/allasset";
+    response = createConnect(requestUrl, address);
+    return response;
+  }
+
+  public static List<String> getTrc10TokenIdList(JSONArray tokenArray) throws Exception {
+    List<String> tokenIdList = new ArrayList<>();
+    String id = "";
+    for (int i = 0; i < tokenArray.size();i++) {
+      id = tokenArray.getJSONObject(i).getString("id");
+      if (id.isEmpty()){
+        continue;
+      }
+      tokenIdList.add(id);
+    }
+    return tokenIdList;
+  }
+
+  public static List<String> getTrc20AddressList(JSONArray tokenArray) throws Exception {
+    List<String> trc20ContractAddressList = new ArrayList<>();
+    String contractAddress = "";
+    for (int i = 0; i < tokenArray.size();i++) {
+      contractAddress = tokenArray.getJSONObject(i).getString("contractAddress");
+      if (contractAddress.isEmpty()){
+        continue;
+      }
+      trc20ContractAddressList.add(contractAddress);
+    }
+    return trc20ContractAddressList;
+  }
 
   /**
    * constructor.
    */
-
+  public static HttpResponse getInviteCode(JSONObject param) throws Exception {
+    final String requestUrl = HttpNode + "/api/wallet/invite/get_code";
+    response = createConnect(requestUrl, param);
+    return response;
+  }
 
   public static HttpResponse createPostConnect(String url, String requestBody) {
     try {
@@ -226,6 +269,12 @@ public static HttpResponse search(String node, Map<String, String> params) {
       httppost.releaseConnection();
       return null;
     }
+    return response;
+  }
+
+  public static HttpResponse insertInviteCode(JSONObject param) throws Exception {
+    final String requestUrl = HttpNode + "/api/wallet/invite/code";
+    response = createConnect(requestUrl, param);
     return response;
   }
 
@@ -378,7 +427,29 @@ public static HttpResponse search(String node, Map<String, String> params) {
     log.info("JSON content size are: " + responseContent.size());
     log.info("----------------------------Print JSON End-----------------------------");
   }
-
+  public static HttpResponse createConnect(String url, JSONObject requestBody) {
+    try {
+      httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
+          connectionTimeout);
+      httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+      httppost = new HttpPost(url);
+      httppost.setHeader("Content-type", "application/json; charset=utf-8");
+      httppost.setHeader("Connection", "Close");
+      if (requestBody != null) {
+        StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
+        entity.setContentEncoding("UTF-8");
+        entity.setContentType("application/json");
+        httppost.setEntity(entity);
+      }
+      System.out.println(httppost.toString());
+      response = httpClient.execute(httppost);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
 
 
 

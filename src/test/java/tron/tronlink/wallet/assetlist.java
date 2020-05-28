@@ -3,6 +3,7 @@ package tron.tronlink.wallet;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
@@ -18,6 +19,8 @@ public class assetlist {
   private String node = Configuration.getByPath("testng.conf")
       .getStringList("tronlink.ip.list")
       .get(0);
+  private JsonObject addressJson = new JsonObject();
+
 
   @Test(enabled = true)
   public void assetlist(){
@@ -52,4 +55,37 @@ public class assetlist {
       Assert.assertTrue(jsonObject.containsKey("inSideChain"));
     }
   }
+
+  @Test(enabled = true, description = "Api /TronlinkApiList/wallet/assetlist test")
+  public void test001Assetlist() throws Exception {
+    response = TronlinkApiList.assetlist(node,"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    targetContent = responseContent.getJSONObject("data");
+    TronlinkApiList.printJsonContent(targetContent);
+
+    Assert.assertTrue(targetContent.getFloat("totalTRX") >= 0);
+    Assert.assertTrue(targetContent.getJSONObject("price").getDouble("priceUSD") > 0);
+    Assert.assertTrue(targetContent.getJSONObject("price").getDouble("priceCny") > 0);
+
+    JSONArray tokenArray = targetContent.getJSONArray("token");
+    Assert.assertTrue(tokenArray.size() >= 2);
+  }
+
+
+  @Test(enabled = true, description = "Api /TronlinkApiList/wallet/assetlist exception test")
+  public void test002AssetlistException() throws Exception {
+    //Base58 decode address can't get right information
+    response = TronlinkApiList.assetlist(node,"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
+
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    targetContent = responseContent.getJSONObject("data");
+    TronlinkApiList.printJsonContent(targetContent);
+
+    Assert.assertTrue(targetContent.getFloat("totalTRX") == 0);
+    Assert.assertTrue(targetContent.getJSONObject("price").getDouble("priceUSD") > 0);
+    Assert.assertTrue(targetContent.getJSONObject("price").getDouble("priceCny") > 0);
+
+  }
+
+  
 }
