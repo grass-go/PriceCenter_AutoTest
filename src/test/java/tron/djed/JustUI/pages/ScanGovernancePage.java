@@ -21,11 +21,11 @@ public class ScanGovernancePage extends AbstractPage {
 
   public ScanGovernancePage enterScanGovernancePage() throws Exception {
     try {
-      TimeUnit.SECONDS.sleep(10);
-      driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+      TimeUnit.SECONDS.sleep(20);
+      driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     } catch (Exception e) {
-      TimeUnit.SECONDS.sleep(10);
-      driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+      TimeUnit.SECONDS.sleep(20);
+      driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
     return new ScanGovernancePage(driver);
   }
