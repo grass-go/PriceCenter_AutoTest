@@ -146,6 +146,28 @@ public class FundsInfo {
     }
   }
 
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
+  public void totalFundBalance() {
+    //Get response
+    response = TronscanApiList.getFundsInfo(tronScanNode);
+    log.info("code is " + response.getStatusLine().getStatusCode());
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+    Assert.assertTrue(responseContent.containsKey("genesisBlockIssue"));
+    Assert.assertTrue(responseContent.containsKey("totalBlockPay"));
+    Assert.assertTrue(responseContent.containsKey("totalNodePay"));
+    Assert.assertTrue(responseContent.containsKey("burnPerDay"));
+    Assert.assertTrue(responseContent.containsKey("burnByCharge"));
+    Assert.assertTrue(responseContent.containsKey("totalTurnOver"));
+    Assert.assertTrue(responseContent.containsKey("fundSumBalance"));
+    Assert.assertTrue(responseContent.containsKey("donateBalance"));
+    Assert.assertTrue(responseContent.containsKey("fundTrx"));
+    Assert.assertTrue(responseContent.containsKey("turnOver"));
+    Assert.assertTrue(responseContent.getString("totalFundBalance") == "33177933703065630");
+  }
+
+
   /**
    * constructor.
    */
