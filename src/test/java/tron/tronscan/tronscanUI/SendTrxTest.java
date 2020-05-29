@@ -29,7 +29,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         }
     }
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "TRX转账")
+    @Test(enabled = false,retryAnalyzer = MyIRetryAnalyzer.class,description = "TRX转账")
     public void testTrx() throws Exception{
         Step.login(driver);
         {

@@ -35,7 +35,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
 //        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     }
 
-    @Test(enabled = true,description = "Trc10转账")
+    @Test(enabled = false,description = "Trc10转账")
     public void testTrc10() throws Exception{
         Step.login(driver);
         {
