@@ -32,7 +32,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         }
     }
 
-    @Test(enabled = true,description = "合约部署和验证",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = false,description = "合约部署和验证",retryAnalyzer = MyIRetryAnalyzer.class)
     public void testContract_deplyment() throws Exception{
         Step.login(driver);
         {
@@ -90,7 +90,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         driver.findElement(By.cssSelector("#g-recaptcha")).click();
         driver.findElement(By.cssSelector(".text-center > div.contract-compiler-button > button")).click();
     }
-    @AfterMethod(enabled = true)
+    @AfterMethod(enabled = false)
     public void end() throws Exception {
         WebBrowser.tearDownBrowser();
     }
