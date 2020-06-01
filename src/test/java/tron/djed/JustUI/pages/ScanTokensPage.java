@@ -36,11 +36,11 @@ public class ScanTokensPage extends AbstractPage {
 
   public ScanTokensPage enterScanTokensPage() throws Exception {
     try {
-      TimeUnit.SECONDS.sleep(15);
-      driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+      TimeUnit.SECONDS.sleep(20);
+      driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     } catch (Exception e) {
-      TimeUnit.SECONDS.sleep(15);
-      driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+      TimeUnit.SECONDS.sleep(20);
+      driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
     return new ScanTokensPage(driver);
   }
