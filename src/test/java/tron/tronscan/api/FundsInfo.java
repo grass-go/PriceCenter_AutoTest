@@ -146,7 +146,7 @@ public class FundsInfo {
     }
   }
 
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
+  @Test(enabled = false,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
   public void totalFundBalance() {
     //Get response
     response = TronscanApiList.getFundsInfo(tronScanNode);
