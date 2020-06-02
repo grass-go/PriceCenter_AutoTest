@@ -31,7 +31,7 @@ public class Trc20TokensParam {
     /**
      * constructor.根据创建者获取trc20信息
      */
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "根据创建者获取trc20信息")
+    @Test(enabled = false,retryAnalyzer = MyIRetryAnalyzer.class,description = "根据创建者获取trc20信息")
     public void getTrc20Tokens() {
         String issuer_addr = "TW5y9tuvgummvvuhfmmBQES7fVUhEdqPHK";
         Map<String, String> params = new HashMap<>();

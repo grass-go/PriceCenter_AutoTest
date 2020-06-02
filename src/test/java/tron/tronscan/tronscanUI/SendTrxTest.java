@@ -52,7 +52,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         driver.close();
     }
 
-    @AfterMethod(enabled = true)
+    @AfterMethod(enabled = false)
     public void end() throws Exception {
         WebBrowser.tearDownBrowser();
     }

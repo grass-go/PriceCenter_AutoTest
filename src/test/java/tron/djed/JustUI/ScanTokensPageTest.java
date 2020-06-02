@@ -30,22 +30,22 @@ public class ScanTokensPageTest extends Base {
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "jstPrice")
-  public void testJstPrice001() {
+  public void test001JstPrice() {
     Assert.assertNotNull(scanTokensPage.jstPrice_text);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "priceFeeds")
-  public void testPriceFeeds002() {
+  public void test002PriceFeeds() {
     Assert.assertNotNull(scanTokensPage.usdjSupply_text);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "ptrxTrxRatio")
-  public void testPtrxTrxRatio003() {
+  public void test003PtrxTrxRatio() {
     Assert.assertNotNull(scanTokensPage.ptrxTrxRatio_text);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "jstContractAddress")
-  public void testJstContractAddress004() throws Exception {
+  public void test004JstContractAddress() throws Exception {
     scanTokensPage.jstContractAddress_link.click();
     Thread.sleep(500);
     Set<String> allWindow = DRIVER.getWindowHandles();
@@ -65,7 +65,7 @@ public class ScanTokensPageTest extends Base {
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "usdjContractAddress")
-  public void testUsdjContractAddress005() throws Exception {
+  public void test005UsdjContractAddress() throws Exception {
     System.out.println(
         "scanTokensPage.totalSupply_text.getText():" + scanTokensPage.totalSupply_text.getText());
     Assert.assertTrue(Double.parseDouble(scanTokensPage.totalSupply_text.getText()) > 0);
@@ -87,7 +87,7 @@ public class ScanTokensPageTest extends Base {
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "ptrxContractAddress")
-  public void testPtrxContractAddress006() throws Exception {
+  public void test006PtrxContractAddress() throws Exception {
     scanTokensPage.ptrxContractAddress_link.click();
     Thread.sleep(1000);
     Set<String> allWindow = DRIVER.getWindowHandles();

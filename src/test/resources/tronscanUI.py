@@ -8,7 +8,7 @@ def ding(fail_class):
     mes = ""
     for i in fail_class:
         mes += "- " + i + "\n"
-    webhook = "https://oapi.dingtalk.com/robot/send?access_token=c1f36f510c16df2d261e91a2205fb21d487d853e87118b118d781ceffc3ee799"
+    webhook = "https://oapi.dingtalk.com/robot/send?access_token=dc0c335fd70aebb29bda7ad63b936283fbd9545d6a04b8aadc85f28a106c7aff"
     header = {"Content-Type": "application/json","Charset": "UTF-8"}
     tex = "test"
     message ={
@@ -31,7 +31,7 @@ def ding(fail_class):
     print(info.text)
 
 def dingSucess():
-    webhook = "https://oapi.dingtalk.com/robot/send?access_token=c1f36f510c16df2d261e91a2205fb21d487d853e87118b118d781ceffc3ee799"
+    webhook = "https://oapi.dingtalk.com/robot/send?access_token=dc0c335fd70aebb29bda7ad63b936283fbd9545d6a04b8aadc85f28a106c7aff"
     header = {"Content-Type": "application/json","Charset": "UTF-8"}
     tex = "test"
     message ={

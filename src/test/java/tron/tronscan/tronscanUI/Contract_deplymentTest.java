@@ -90,7 +90,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         driver.findElement(By.cssSelector("#g-recaptcha")).click();
         driver.findElement(By.cssSelector(".text-center > div.contract-compiler-button > button")).click();
     }
-    @AfterMethod(enabled = true)
+    @AfterMethod(enabled = false)
     public void end() throws Exception {
         WebBrowser.tearDownBrowser();
     }
