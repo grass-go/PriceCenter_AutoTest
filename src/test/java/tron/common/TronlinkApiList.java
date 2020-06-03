@@ -519,5 +519,39 @@ public static HttpResponse search(String node, Map<String, String> params) {
     httpget.releaseConnection();
   }
 
+  public static HttpResponse createGetConnect(URI uri,HashMap<String,String> header) {
+    try {
+      httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
+          connectionTimeout);
+      httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+      httpGet = new HttpGet(uri);
+      httpGet.setHeader("Content-type", "application/json; charset=utf-8");
+      httpGet.setHeader("Connection", "Close");
+      for (HashMap.Entry<String,String> entry : header.entrySet()){
+        httpGet.setHeader(entry.getKey(),entry.getValue());
+      }
+      response = httpClient.execute(httpGet);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpGet.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+
+  public static HttpResponse upgrade(HashMap<String,String> header) throws Exception{
+    final String requestUrl = HttpNode + "/api/v1/wallet/upgrade";
+    URIBuilder builder = new URIBuilder(requestUrl);
+    if (header != null) {
+      for (String key : header.keySet()) {
+        builder.addParameter(key, header.get(key));
+      }
+    }
+    URI uri = builder.build();
+    response = createGetConnect(uri,header);
+    Assert.assertTrue(TronlinkApiList.verificationResult(response));
+    return response;
+  }
 
 }
