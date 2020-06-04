@@ -46,7 +46,7 @@ private  String URL = "https://"+tronScanNode+"/#/sr/representatives";
         //点跳转
         driver.findElement(By.cssSelector("div:nth-child(1) > div > div.row.representatives-data-wrap > div > div > div > div > h6 > a > span")).click();
         Assert.assertTrue(!driver.findElement(By.cssSelector("#root > div.header-top.nav-item-page > div.container.d-flex.sub-header > h4 > span > span")).getText().isEmpty());
-        Assert.assertTrue(!driver.findElement(By.cssSelector("#root > main > div > div > div > div > div > div >div >div > svg > text.highcharts-title > tspan")).getText().isEmpty());
+        Assert.assertTrue(!driver.findElement(By.cssSelector("div > table > thead > tr > th.ant-table-align-left > span > div > span.ant-table-column-title")).getText().isEmpty());
         driver.close();
     }
 
