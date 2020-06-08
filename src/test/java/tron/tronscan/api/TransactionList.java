@@ -349,7 +349,8 @@ public class TransactionList {
     Assert.assertTrue(responseContent.getLong("othersAmount") > 0);
     Assert.assertTrue(responseContent.getDouble("othersProportion") > 0);
 
-    }
+
+  }
 
   /**
    * constructor.
