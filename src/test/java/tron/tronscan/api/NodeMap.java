@@ -88,6 +88,15 @@ public class NodeMap {
 
   }
 
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "download daily new address number and transaction number info")
+  public void nodeOnline() {
+    response = TronscanApiList.nodemapOnline();
+    log.info("code is " + response.getStatusLine().getStatusCode());
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    Assert.assertTrue(responseContent.getInteger("total") > 0);
+
+  }
   /**
    * constructor.
    */

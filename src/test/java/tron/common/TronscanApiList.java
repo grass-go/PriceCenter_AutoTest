@@ -288,6 +288,19 @@ public class TronscanApiList {
         return response;
     }
 
+    public static HttpResponse nodemapOnline() {
+        try {
+            String requestUrl = "https://server.tron.network/api/v2/node/nodemap";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
     /**
      * constructor.
      */
