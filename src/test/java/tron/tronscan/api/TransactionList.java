@@ -318,6 +318,39 @@ public class TransactionList {
 
   }
 
+  @Test
+  public void testStatistics(){
+    response = TronscanApiList.statistics(tronScanNode);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+    Assert.assertTrue(responseContent.getLong("lastDayTxCount") > 0);
+    Assert.assertTrue(responseContent.getLong("lastDayTxAmount") > 0);
+    Assert.assertTrue(responseContent.getLong("txCount") > 0);
+    Assert.assertTrue(responseContent.getLong("txAmount") > 0);
+    Assert.assertTrue(responseContent.getLong("triggerProportion") > 0);
+    Assert.assertTrue(responseContent.getLong("triggerAmount") > 0);
+    Assert.assertTrue(responseContent.getLong("triggerProportion") > 0);
+    Assert.assertTrue(responseContent.getLong("trc20Count") > 0);
+    Assert.assertTrue(responseContent.getLong("trc20Amount") > 0);
+    Assert.assertTrue(responseContent.getLong("trc20Proportion") > 0);
+    Assert.assertTrue(responseContent.getLong("trxTransferCount") > 0);
+    Assert.assertTrue(responseContent.getLong("trxTransferProportion") > 0);
+    Assert.assertTrue(responseContent.getLong("trc10TransferCount") > 0);
+    Assert.assertTrue(responseContent.getLong("trc10TransferCount") > 0);
+    Assert.assertTrue(responseContent.getLong("trc10TransferProportion") > 0);
+    Assert.assertTrue(responseContent.getLong("votesCount") > 0);
+    Assert.assertTrue(responseContent.getLong("votesAmount") > 0);
+    Assert.assertTrue(responseContent.getDouble("votesProportion") > 0);
+    Assert.assertTrue(responseContent.getLong("freezeBalanceCount") > 0);
+    Assert.assertTrue(responseContent.getLong("freezeBalanceAmount") > 0);
+    Assert.assertTrue(responseContent.getDouble("freezeBalanceProportion") > 0);
+    Assert.assertTrue(responseContent.getLong("othersCount") > 0);
+    Assert.assertTrue(responseContent.getLong("othersAmount") > 0);
+    Assert.assertTrue(responseContent.getDouble("othersProportion") > 0);
+
+    }
+
   /**
    * constructor.
    */

@@ -745,6 +745,19 @@ public class TronscanApiList {
         return response;
     }
 
+    public static HttpResponse statistics(String tronscanNode) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/transaction/statistics";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
     /**
      * constructor.
      */
