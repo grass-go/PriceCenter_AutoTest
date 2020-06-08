@@ -32,6 +32,13 @@ public class HomePageTest extends Base {
     for(String i:allWindow){
       if (i != WindowsTronLink){ DRIVER.switchTo().window(i);}
     }
+    Thread.sleep(5000);
+    DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div/button[1]"))
+        .click();
+    Thread.sleep(3000);
+    DRIVER.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button"))
+        .click();
+    Thread.sleep(5000);
   }
 
   @BeforeMethod
@@ -65,11 +72,11 @@ public class HomePageTest extends Base {
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test002CdpDepositBtn() throws Exception{
 
-    Thread.sleep(300);
+    Thread.sleep(10000);
 
     // click [deposit] btn and deposit form display , Current statuation is displayed
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[2]/button")).click();
-    Thread.sleep(1000);
+    Thread.sleep(2000);
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"dialog\"]/div/form/div[2]")).isDisplayed());
 
     // deposit btn is enEnabled
@@ -86,6 +93,7 @@ public class HomePageTest extends Base {
 
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test003CdpWithdrawBtn() throws Exception{
+    Thread.sleep(10000);
     // click [withdraw] btn and withdraw form display , Current statuation is displayed
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[3]/div[1]/div[2]/div[3]/button")).click();
     Thread.sleep(1000);
@@ -96,6 +104,7 @@ public class HomePageTest extends Base {
 
     // set value 1 TRX  and withdraw btn is Enable
     DRIVER.findElement(By.xpath("//*[@id=\"inputValue\"]")).sendKeys("1");
+    Thread.sleep(2000);
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"dialog\"]/div/form/div[3]/button[2]")).isEnabled());
     Thread.sleep(1000);
 
@@ -106,6 +115,7 @@ public class HomePageTest extends Base {
 
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test004CdpPayBackBtn() throws Exception{
+    Thread.sleep(10000);
     // click [PayBack] btn and withdraw form display , Current statuation is displayed
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[3]/div[2]/div[1]/div[2]/button")).click();
     Thread.sleep(1000);
@@ -212,6 +222,21 @@ public class HomePageTest extends Base {
   }
 
 
+  @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class)
+  public void test009Exit() throws Exception {
+    // exit
+    DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[1]/div[2]/a")).click();
+    Thread.sleep(1000);
+    DRIVER.findElement(By.xpath("/html/body/div[2]/div/div/ul/li[2]/div")).click();
+    Thread.sleep(1000);
+    Assert.assertEquals("未连接钱包",
+        DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div/div[1]"))
+            .getText());
+    Assert.assertEquals("登录",
+        DRIVER.findElement(
+            By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[1]/div[2]/div[1]/div/div/div"))
+            .getText());
+  }
 
   @AfterClass(enabled = true)
   public void after() throws Exception {
