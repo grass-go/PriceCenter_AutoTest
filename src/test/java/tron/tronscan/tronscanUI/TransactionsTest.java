@@ -17,7 +17,7 @@ import tron.common.utils.Configuration;
 public class TransactionsTest {
     private String tronScanNode = Configuration.getByPath("testng.conf")
     .getString("tronscanIP");
-private  String URL = "https://"+tronScanNode+"/#/";
+private  String URL = "https://"+tronScanNode+"/#/blockchain/transactions";
     WebBrowser webBrowser = new WebBrowser();
     public static WebDriver driver;
     @BeforeMethod(enabled = true)
@@ -30,19 +30,14 @@ private  String URL = "https://"+tronScanNode+"/#/";
 
     @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
     public void transactionTest() throws Exception{
-        Step.login(driver);
-        {
-            WebElement element = driver.findElement(By.cssSelector(".dropdown-toggle > span"));
-            Actions builder = new Actions(driver);
-            builder.moveToElement(element).perform();
-        }
-        //点击交易
-        driver.findElement(By.cssSelector(".dropdown-item:nth-child(7) > span:nth-child(3)")).click();
+
+        Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"txcont\"]/div/div[1]/span/span/span")).getText().isEmpty());
+        Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"txcont\"]/div/div[2]/span/span/span")).getText().isEmpty());
+        Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"tradingAmount\"]/div/div[1]/span/span/span/span")).getText().isEmpty());
+        Assert.assertTrue(!driver.findElement(By.xpath("//*[@id=\"tradingAmount\"]/div/div[2]/span/span/span/span")).getText().isEmpty());
+
         //点击第一条交易记录
-        driver.findElement(By.cssSelector(".ant-table-row:nth-child(1) .ellipsis_box_start")).click();
-        Assert.assertTrue(!driver.findElement(By.cssSelector(".block-status-tag > span")).getText().isEmpty());
-        Assert.assertTrue(!driver.findElement(By.cssSelector(".badge > span")).getText().isEmpty());
-        Assert.assertTrue(!driver.findElement(By.cssSelector(".block-status-tag > span")).getText().isEmpty());
+
     }
 
     @AfterMethod(enabled = true)
