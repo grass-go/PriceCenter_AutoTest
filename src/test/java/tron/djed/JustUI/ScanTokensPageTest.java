@@ -46,6 +46,7 @@ public class ScanTokensPageTest extends Base {
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "jstContractAddress")
   public void test004JstContractAddress() throws Exception {
+    Thread.sleep(2000);
     scanTokensPage.jstContractAddress_link.click();
     Thread.sleep(500);
     Set<String> allWindow = DRIVER.getWindowHandles();
@@ -66,6 +67,7 @@ public class ScanTokensPageTest extends Base {
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "usdjContractAddress")
   public void test005UsdjContractAddress() throws Exception {
+    Thread.sleep(2000);
     System.out.println(
         "scanTokensPage.totalSupply_text.getText():" + scanTokensPage.totalSupply_text.getText());
     Assert.assertTrue(Double.parseDouble(scanTokensPage.totalSupply_text.getText()) > 0);
@@ -88,6 +90,7 @@ public class ScanTokensPageTest extends Base {
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "ptrxContractAddress")
   public void test006PtrxContractAddress() throws Exception {
+    Thread.sleep(2000);
     scanTokensPage.ptrxContractAddress_link.click();
     Thread.sleep(1000);
     Set<String> allWindow = DRIVER.getWindowHandles();
