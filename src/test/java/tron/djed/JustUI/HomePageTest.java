@@ -72,7 +72,7 @@ public class HomePageTest extends Base {
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test002CdpDepositBtn() throws Exception{
 
-    Thread.sleep(10000);
+    Thread.sleep(15000);
 
     // click [deposit] btn and deposit form display , Current statuation is displayed
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[2]/button")).click();

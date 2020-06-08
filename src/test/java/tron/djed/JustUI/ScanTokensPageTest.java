@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.openqa.selenium.WebDriver.Navigation;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
 import tron.common.utils.Configuration;
@@ -27,6 +28,12 @@ public class ScanTokensPageTest extends Base {
     navigation = DRIVER.navigate();
     scanTokensPage = new ScanTokensPage(DRIVER).enterScanTokensPage();
     justLink = DRIVER.getWindowHandle();
+  }
+
+  @BeforeMethod
+  public void beforeTest() throws Exception {
+    navigation.refresh();
+    Thread.sleep(9000);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "jstPrice")
