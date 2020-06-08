@@ -320,7 +320,7 @@ public class TransactionList {
 
   @Test
   public void testStatistics(){
-    response = TronscanApiList.statistics(tronScanNode);
+    response = TronscanApiList.statistics();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
