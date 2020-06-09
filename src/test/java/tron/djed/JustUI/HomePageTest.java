@@ -50,6 +50,7 @@ public class HomePageTest extends Base {
   //@Test
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test001HomeDis() throws Exception{
+    Thread.sleep(5000);
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/header/h1")).isDisplayed());
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[2]/div/div[1]/div[1]")).isDisplayed());
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/aside/div/div[1]/table/tbody/tr[1]/td[2]/span")).isDisplayed());

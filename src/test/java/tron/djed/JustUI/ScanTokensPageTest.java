@@ -33,7 +33,7 @@ public class ScanTokensPageTest extends Base {
   @BeforeMethod
   public void beforeTest() throws Exception {
     navigation.refresh();
-    Thread.sleep(9000);
+    Thread.sleep(20000);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "jstPrice")
