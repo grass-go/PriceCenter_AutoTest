@@ -4,6 +4,8 @@ import java.util.Set;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver.Navigation;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -19,12 +21,14 @@ public class HomePageTest extends Base {
       .getString("JustIP");
   private  String URL = "https://"+tronScanNode+"/#/home";
   Navigation navigation;
+  WebDriverWait wait;
 
   @BeforeClass
   public void before() throws Exception{
     setUpChromeDriver();
     loginAccount();
     navigation = DRIVER.navigate();
+    wait = new WebDriverWait(DRIVER, 7);
     String WindowsTronLink = DRIVER.getWindowHandle();
     ((JavascriptExecutor)DRIVER).executeScript("window.open('" + URL + "')");
     Thread.sleep(1000);
@@ -78,6 +82,8 @@ public class HomePageTest extends Base {
     // click [deposit] btn and deposit form display , Current statuation is displayed
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[2]/button")).click();
     Thread.sleep(2000);
+    wait.until(ExpectedConditions
+        .visibilityOf(DRIVER.findElement(By.xpath("//*[@id=\"dialog\"]/div/form/div[2]"))));
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"dialog\"]/div/form/div[2]")).isDisplayed());
 
     // deposit btn is enEnabled
@@ -170,6 +176,8 @@ public class HomePageTest extends Base {
     Thread.sleep(1000);
 
     // [COLLATERALIZE & generate USDJ] btn is Enabled and  yellow warning is display
+    wait.until(ExpectedConditions
+        .visibilityOf(DRIVER.findElement(By.xpath("//*[@id=\"generateBtn\"]/button"))));
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"generateBtn\"]/button")).isEnabled());
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"newCup\"]/div[7]/div")).isDisplayed());
 
