@@ -3,6 +3,8 @@ package tron.djed.JustUI;
 import java.util.Set;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver.Navigation;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -20,6 +22,7 @@ public class ScanTokensPageTest extends Base {
   Navigation navigation;
   ScanTokensPage scanTokensPage;
   String justLink;
+  WebDriverWait wait;
 
   @BeforeClass
   public void before() throws Exception {
@@ -28,12 +31,13 @@ public class ScanTokensPageTest extends Base {
     navigation = DRIVER.navigate();
     scanTokensPage = new ScanTokensPage(DRIVER).enterScanTokensPage();
     justLink = DRIVER.getWindowHandle();
+    wait = new WebDriverWait(DRIVER, 30);
   }
 
   @BeforeMethod
   public void beforeTest() throws Exception {
     navigation.refresh();
-    Thread.sleep(20000);
+    Thread.sleep(2000);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "jstPrice")
@@ -53,7 +57,7 @@ public class ScanTokensPageTest extends Base {
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "jstContractAddress")
   public void test004JstContractAddress() throws Exception {
-    Thread.sleep(2000);
+    wait.until(ExpectedConditions.elementToBeClickable(scanTokensPage.jstContractAddress_link));
     scanTokensPage.jstContractAddress_link.click();
     Thread.sleep(500);
     Set<String> allWindow = DRIVER.getWindowHandles();
@@ -74,10 +78,11 @@ public class ScanTokensPageTest extends Base {
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "usdjContractAddress")
   public void test005UsdjContractAddress() throws Exception {
-    Thread.sleep(2000);
+    wait.until(ExpectedConditions.visibilityOf(scanTokensPage.totalSupply_text));
     System.out.println(
         "scanTokensPage.totalSupply_text.getText():" + scanTokensPage.totalSupply_text.getText());
     Assert.assertTrue(Double.parseDouble(scanTokensPage.totalSupply_text.getText()) > 0);
+    wait.until(ExpectedConditions.elementToBeClickable(scanTokensPage.usdjContractAddress_link));
     scanTokensPage.usdjContractAddress_link.click();
     Thread.sleep(1000);
     Set<String> allWindow = DRIVER.getWindowHandles();
@@ -97,7 +102,7 @@ public class ScanTokensPageTest extends Base {
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "ptrxContractAddress")
   public void test006PtrxContractAddress() throws Exception {
-    Thread.sleep(2000);
+    wait.until(ExpectedConditions.elementToBeClickable(scanTokensPage.ptrxContractAddress_link));
     scanTokensPage.ptrxContractAddress_link.click();
     Thread.sleep(1000);
     Set<String> allWindow = DRIVER.getWindowHandles();
