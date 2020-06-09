@@ -28,7 +28,7 @@ public class HomePageTest extends Base {
     setUpChromeDriver();
     loginAccount();
     navigation = DRIVER.navigate();
-    wait = new WebDriverWait(DRIVER, 7);
+    wait = new WebDriverWait(DRIVER, 10);
     String WindowsTronLink = DRIVER.getWindowHandle();
     ((JavascriptExecutor)DRIVER).executeScript("window.open('" + URL + "')");
     Thread.sleep(1000);
@@ -37,24 +37,31 @@ public class HomePageTest extends Base {
       if (i != WindowsTronLink){ DRIVER.switchTo().window(i);}
     }
     Thread.sleep(5000);
-    DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div/button[1]"))
-        .click();
-    Thread.sleep(3000);
-    DRIVER.findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button"))
-        .click();
-    Thread.sleep(5000);
+
+    if (!DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[1]/div[2]/a")).getText()
+        .contains("...")) {
+      DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div/button[1]"))
+          .click();
+      Thread.sleep(3000);
+      DRIVER
+          .findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button"))
+          .click();
+      Thread.sleep(5000);
+    }
   }
 
   @BeforeMethod
   public void beforeTest() throws Exception{
     navigation.refresh();
-    Thread.sleep(9000);
+    Thread.sleep(16000);
   }
 
   //@Test
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test001HomeDis() throws Exception{
     Thread.sleep(5000);
+    wait.until(ExpectedConditions.visibilityOf(DRIVER.findElement(By.xpath(
+        "//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/header/h1"))));
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/header/h1")).isDisplayed());
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[2]/div/div[1]/div[1]")).isDisplayed());
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/aside/div/div[1]/table/tbody/tr[1]/td[2]/span")).isDisplayed());
@@ -79,6 +86,8 @@ public class HomePageTest extends Base {
 
     Thread.sleep(15000);
 
+    wait.until(ExpectedConditions.elementToBeClickable(DRIVER.findElement(By.xpath(
+        "//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[2]/button"))));
     // click [deposit] btn and deposit form display , Current statuation is displayed
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[2]/button")).click();
     Thread.sleep(2000);
@@ -101,6 +110,8 @@ public class HomePageTest extends Base {
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test003CdpWithdrawBtn() throws Exception{
     Thread.sleep(10000);
+    wait.until(ExpectedConditions.elementToBeClickable(DRIVER.findElement(By.xpath(
+        "//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[3]/div[1]/div[2]/div[3]/button"))));
     // click [withdraw] btn and withdraw form display , Current statuation is displayed
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[3]/div[1]/div[2]/div[3]/button")).click();
     Thread.sleep(1000);
@@ -123,6 +134,8 @@ public class HomePageTest extends Base {
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test004CdpPayBackBtn() throws Exception{
     Thread.sleep(10000);
+    wait.until(ExpectedConditions.elementToBeClickable(DRIVER.findElement(By.xpath(
+        "//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[3]/div[2]/div[1]/div[2]/button"))));
     // click [PayBack] btn and withdraw form display , Current statuation is displayed
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[3]/div[2]/div[1]/div[2]/button")).click();
     Thread.sleep(1000);
@@ -143,6 +156,8 @@ public class HomePageTest extends Base {
 
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test005CdpGenerateBtn() throws Exception{
+    wait.until(ExpectedConditions.elementToBeClickable(DRIVER.findElement(By.xpath(
+        "//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[3]/div[2]/div[2]/div[3]/button"))));
     // click [Generate] btn and withdraw form display , Current statuation is displayed
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[3]/div[2]/div[2]/div[3]/button")).click();
     Thread.sleep(1000);
@@ -163,6 +178,8 @@ public class HomePageTest extends Base {
 
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test006NewCdpBtn() throws Exception{
+    wait.until(ExpectedConditions.elementToBeClickable(DRIVER.findElement(By.xpath(
+        "//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[1]/div[2]/div/div/div/div[1]/div[2]"))));
     // click [+] btn to new CDP
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[1]/div[2]/div/div/div/div[1]/div[2]")).click();
     Thread.sleep(1000);
@@ -188,6 +205,8 @@ public class HomePageTest extends Base {
 
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test007MoveCdpBtn() throws Exception{
+    wait.until(ExpectedConditions.elementToBeClickable(DRIVER.findElement(By.xpath(
+        "//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[1]/a[1]"))));
     // click [MOVE CDP]
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[1]/a[1]")).click();
     Thread.sleep(1000);
@@ -213,10 +232,15 @@ public class HomePageTest extends Base {
 
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test008CloseCdpBtn() throws Exception{
+    wait.until(ExpectedConditions
+        .elementToBeSelected(DRIVER.findElement(By.xpath(
+            "//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[1]/a[2]"))));
     // click [CLOSE CDP]
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[1]/a[2]")).click();
     Thread.sleep(1000);
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"dialog\"]/div")).isDisplayed());
+    wait.until(ExpectedConditions
+        .elementToBeSelected(DRIVER.findElement(By.xpath("//*[@id=\"govFeeMkr\"]"))));
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"govFeeMkr\"]")).isSelected());
 
     // select USDJ to pay
