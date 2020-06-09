@@ -2,6 +2,7 @@ package tron.chromeExtension.base;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import tron.chromeExtension.pages.LoginPage;
@@ -101,4 +102,12 @@ public class Base {
       Process process = Runtime.getRuntime().exec("sh kill_chrome.sh");
     }
 
+  public boolean elementIsExist(By locator) {
+    try {
+      DRIVER.findElement(locator);
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
+  }
 }

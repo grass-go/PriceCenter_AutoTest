@@ -37,9 +37,7 @@ public class HomePageTest extends Base {
       if (i != WindowsTronLink){ DRIVER.switchTo().window(i);}
     }
     Thread.sleep(5000);
-
-    if (!DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[1]/div[2]/a")).getText()
-        .contains("...")) {
+    if (!elementIsExist(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[1]/div[2]/a"))) {
       DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div/button[1]"))
           .click();
       Thread.sleep(3000);
@@ -233,8 +231,8 @@ public class HomePageTest extends Base {
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test008CloseCdpBtn() throws Exception{
     wait.until(ExpectedConditions
-        .elementToBeSelected(DRIVER.findElement(By.xpath(
-            "//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[1]/a[2]"))));
+        .elementToBeClickable(By.xpath(
+            "//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[1]/a[2]")));
     // click [CLOSE CDP]
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[1]/a[2]")).click();
     Thread.sleep(1000);
