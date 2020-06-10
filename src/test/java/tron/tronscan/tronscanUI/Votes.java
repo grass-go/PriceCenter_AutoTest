@@ -29,7 +29,7 @@ private  String URL = "https://"+tronScanNode+"/#/sr/votes";
         }
     }
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "投票顶部验证")
     public void testVoteText() throws Exception{
         driver.manage().window().setSize(new Dimension(2560, 1440));
         Thread.sleep(200);
