@@ -41,6 +41,8 @@ public class HomePageTest extends Base {
       DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div/button[1]"))
           .click();
       Thread.sleep(3000);
+      wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+          "/html/body/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button")));
       DRIVER
           .findElement(By.xpath("/html/body/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button"))
           .click();
@@ -84,8 +86,8 @@ public class HomePageTest extends Base {
 
     Thread.sleep(15000);
 
-    wait.until(ExpectedConditions.elementToBeClickable(DRIVER.findElement(By.xpath(
-        "//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[2]/button"))));
+    wait.until(ExpectedConditions.elementToBeClickable(By.xpath(
+        "//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[2]/button")));
     // click [deposit] btn and deposit form display , Current statuation is displayed
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[2]/main/div/div[3]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[2]/button")).click();
     Thread.sleep(2000);
