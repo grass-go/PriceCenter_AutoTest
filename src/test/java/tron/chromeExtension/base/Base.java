@@ -1,16 +1,13 @@
 package tron.chromeExtension.base;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Properties;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.BeforeTest;
+import tron.chromeExtension.pages.LoginPage;
+import tron.chromeExtension.pages.MainPage;
 import tron.common.utils.Configuration;
-import tron.chromeExtension.pages.*;
 
 public class Base {
 
@@ -71,6 +68,7 @@ public class Base {
           DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
           loginPage.login_btn.click();
           DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+          Thread.sleep(6000);
           Float trxBalance = Float.valueOf(loginPage.trxBalance.getText());
           if (trxBalance > 0) {
             return true;
@@ -104,4 +102,12 @@ public class Base {
       Process process = Runtime.getRuntime().exec("sh kill_chrome.sh");
     }
 
+  public boolean elementIsExist(By locator) {
+    try {
+      DRIVER.findElement(locator);
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
+  }
 }

@@ -288,6 +288,19 @@ public class TronscanApiList {
         return response;
     }
 
+    public static HttpResponse nodemapOnline() {
+        try {
+            String requestUrl = "https://server.tron.network/api/v2/node/nodemap";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
     /**
      * constructor.
      */
@@ -735,6 +748,19 @@ public class TronscanApiList {
     public static HttpResponse getSimple_Transaction(String tronscanNode) {
         try {
             String requestUrl = "http://" + tronscanNode + "api/simple-transaction";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse statistics() {
+        try {
+            String requestUrl = "https://apilist.tronscan.org/api/transaction/statistics";
             System.out.println(requestUrl);
             response = createGetConnect(requestUrl);
         } catch (Exception e) {

@@ -42,6 +42,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         //点定位账户
         driver.findElement(By.cssSelector("#root > main > nav > div > ul > li:nth-child(1) > a > span")).click();
         //点领取奖励
+        Thread.sleep(3000);
         WebElement vote= driver.findElement ( By.cssSelector("#account_title > div.row.mt-3 > div > div > div > table > tbody > tr:nth-child(4) > td >span"));
         String vote_string = vote.getText();
         String[]  strs=vote_string.split(" ");
