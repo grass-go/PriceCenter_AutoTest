@@ -9,6 +9,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import javax.print.DocFlavor;
+
 import tron.common.utils.MyIRetryAnalyzer;
 import tron.common.utils.Step;
 import tron.common.utils.WebBrowser;
@@ -42,6 +44,32 @@ private  String URL = "https://"+tronScanNode+"/#/";
 //        driver.findElement(By.cssSelector(".btn-lg.btn-danger ")).click();
 //        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "TRX Unfrozen");
     }
+
+    @Test(enabled = true,description = "账户页标签")
+    public void tagTest() throws Exception{
+        Step.login(driver);
+        {
+            WebElement element = driver.findElement(By.cssSelector(".dropdown-toggle > span"));
+            Actions builder = new Actions(driver);
+            builder.moveToElement(element).perform();
+        }
+        //定位标签
+        driver.findElement(By.cssSelector("#root > main > nav > div > ul > li:nth-child(4) > a > span")).click();
+        //标签名称
+        Assert.assertEquals(driver.findElement(By.cssSelector("#account_tags > div > div > div > div.d-flex.justify-content-between.account-switch > h5 > span")).getText(),"Tags list");
+        //标题说明
+        driver.findElement(By.cssSelector("#account_tags > div > div > div > p > span")).getText().isEmpty();
+        //点添加
+        driver.findElement(By.cssSelector("#account_tags > div > div > div > div.d-flex.justify-content-between.account-switch > button")).getText().isEmpty();
+//        driver.findElement(By.cssSelector("#account_tags > div > div > div > div.d-flex.justify-content-between.account-switch > button")).click();
+        Thread.sleep(200);
+
+        //添加标题内容
+//        Assert.assertEquals(driver.findElement(By.cssSelector("body > div:nth-child(13) > div > div.modal.show > div > div > div.text-center.modal-header > h5 > span")).getText(),"Add a tag");
+
+
+    }
+
     @AfterMethod(enabled = true)
     public void end() throws Exception {
         WebBrowser.tearDownBrowser();
