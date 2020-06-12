@@ -142,7 +142,7 @@ public class AccountsList {
 
     //representative json
     targetContent = responseContent.getJSONObject("representative");
-    Assert.assertTrue(Integer.valueOf(targetContent.get("lastWithDrawTime").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(targetContent.get("lastWithDrawTime").toString()) >= 0);
     Assert.assertTrue(Integer.valueOf(targetContent.get("allowance").toString()) >= 0);
     //enabled
     Assert.assertTrue(targetContent.containsKey("enabled"));
