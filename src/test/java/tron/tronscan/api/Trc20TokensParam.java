@@ -35,7 +35,7 @@ public class Trc20TokensParam {
     public void getTrc20Tokens() {
         String issuer_addr = "TW5y9tuvgummvvuhfmmBQES7fVUhEdqPHK";
         Map<String, String> params = new HashMap<>();
-        params.put("issuerAddr", issuer_addr);
+        params.put("issuer_addr", issuer_addr);
         response = TronscanApiList.getTrc20Tokens(tronScanNode,params);
         log.info("code is " + response.getStatusLine().getStatusCode());
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
