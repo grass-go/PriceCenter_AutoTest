@@ -45,7 +45,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
 //        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "TRX Unfrozen");
     }
 
-    @Test(enabled = true,description = "账户页标签")
+    @Test(enabled = true,description = "账户页标签",retryAnalyzer = MyIRetryAnalyzer.class)
     public void tagTest() throws Exception{
         Step.login(driver);
         {
@@ -54,7 +54,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
             builder.moveToElement(element).perform();
         }
         //定位标签
-        driver.findElement(By.cssSelector("#root > main > nav > div > ul > li:nth-child(4) > a > span")).click();
+        driver.findElement(By.cssSelector("#root > main > nav > div > ul > li:nth-child(3) > a > span")).getText().isEmpty();
         //标签名称
         Assert.assertEquals(driver.findElement(By.cssSelector("#account_tags > div > div > div > div.d-flex.justify-content-between.account-switch > h5 > span")).getText(),"Tags list");
         //标题说明

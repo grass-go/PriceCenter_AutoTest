@@ -30,7 +30,7 @@ public class Step {
             driver.findElement(By.cssSelector(".btn-danger:nth-child(3)")).click();
             Thread.sleep(200);
             driver.findElement(By.cssSelector(".dropdown-toggle > span:nth-child(1)")).click();
-            driver.findElement(By.cssSelector(".justify-content-end > div")).click();
+            driver.findElement(By.cssSelector("div > a > div > div > div.ellipsis_box_start")).click();
             Assert.assertEquals(driver.findElement(By.cssSelector("span > .d-flex div")).getText(), "TMEKAfwpJLGSFKbrDDveCQFE9KD95JqPHD");
             Thread.sleep(200);
     }
