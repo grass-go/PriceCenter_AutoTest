@@ -1760,14 +1760,15 @@ public class TronscanApiList {
     }
 
     /**
-     * constructor.退出登陆
+     * constructor.忘记密码发送邮箱验证码
      */
-    public static HttpResponse postFPSendMail(String tronscanNode,String email) {
+    public static HttpResponse postFPSendMail(String tronscanNode,String email,String g_recaptcha) {
         try {
             String requestUrl = "http://" + tronscanNode + "external/user/forgetPassword/sendMail";
             System.out.println("requestUrl"+requestUrl);
             JsonObject body = new JsonObject();
             body.addProperty("email", email);
+            body.addProperty("g-recaptcha-response",g_recaptcha);
             response = createConnect(requestUrl,body);
         } catch (Exception e) {
             e.printStackTrace();
