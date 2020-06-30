@@ -1777,6 +1777,35 @@ public class TronscanApiList {
         return response;
     }
     /**
+     * constructor.转账列表优化新增接口
+     */
+    public static HttpResponse getStatistics(String tronscanNode) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/transfer/statistics";
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.支持按时间段返回数据。
+     */
+    public static HttpResponse getTrc10trc20(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/trc10trc20-transfer";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+    /**
      * constructor.
      */
     public static HttpResponse createConnect(String url) {

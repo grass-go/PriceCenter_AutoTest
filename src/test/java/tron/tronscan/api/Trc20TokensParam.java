@@ -77,6 +77,88 @@ public class Trc20TokensParam {
         Assert.assertTrue(sidechainsObject.containsKey("chainid"));
         Assert.assertTrue(sidechainsObject.containsKey("type"));
     }
+
+    /**
+     * constructor.转账列表优化新增接口
+     * 返回昨日新增转账数、交易额，累积转账数、交易额，TRX转账/10币转账/20币转账的交易数，交易额及分别的转账数占比。
+     * 数据均为被动刷新方式更新数据  交易数 3秒更新一次，交易额3分钟更新一次。
+     */
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "刷新数据接口")
+    public void getStatistics() {
+        response = TronscanApiList.getStatistics(tronScanNode);
+        log.info("code is " + response.getStatusLine().getStatusCode());
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TronscanApiList.parseResponseContent(response);
+        TronscanApiList.printJsonContent(responseContent);
+
+        //three object, "retCode" and "Data"
+        Assert.assertTrue(responseContent.size() >= 3);
+        Assert.assertTrue(responseContent.containsKey("trc20Proportion"));
+        Assert.assertTrue(Double.valueOf(responseContent.get("trxTransferAmount").toString()) >= 0);
+        Assert.assertTrue(responseContent.containsKey("trc10TransferCount"));
+        Assert.assertTrue(responseContent.containsKey("lastDayTransfersCount"));
+        Assert.assertTrue(responseContent.containsKey("trxTransferCount"));
+        Assert.assertTrue(responseContent.containsKey("transfersCount"));
+        Assert.assertTrue(Double.valueOf(responseContent.get("trc20Amount").toString()) >= 0);
+        Assert.assertTrue(Double.valueOf(responseContent.get("trc10TransferProportion").toString()) >= 0);
+        Assert.assertTrue(responseContent.containsKey("trc20Count"));
+        Assert.assertTrue(Double.valueOf(responseContent.get("trc10TransferAmount").toString()) >= 0);
+        Assert.assertTrue(Double.valueOf(responseContent.get("transfersAmount").toString()) >= 0);
+        Assert.assertTrue(Double.valueOf(responseContent.get("trxTransferProportion").toString()) >= 0);
+        Assert.assertTrue(Double.valueOf(responseContent.get("lastDayTransfersAmount").toString()) >= 0);
+
+    }
+
+    /**
+     * constructor.转账列表优化
+     * 支持按时间段返回数据
+     */
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "按时间段返回数据")
+    public void getTrc10trc20() {
+        int limit = 20;
+        int start = 0;
+        Boolean count = true;
+        Map<String, String> params = new HashMap<>();
+        params.put("sort", "-timestamp");
+        params.put("count", String.valueOf(count));
+        params.put("limit", String.valueOf(limit));
+        params.put("start", String.valueOf(start));
+        params.put("start_timestamp", "1529856000000");
+        params.put("end_timestamp", "1593509437573");
+
+        response = TronscanApiList.getTrc10trc20(tronScanNode,params);
+        log.info("code is " + response.getStatusLine().getStatusCode());
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TronscanApiList.parseResponseContent(response);
+        TronscanApiList.printJsonContent(responseContent);
+
+        //three object, "retCode" and "Data"
+        Assert.assertTrue(responseContent.size() >= 3);
+        Assert.assertTrue(responseContent.getLong("total") > 0);
+        Assert.assertTrue(responseContent.getLong("rangeTotal") > 0);
+        //contractMap
+        Assert.assertTrue(responseContent.containsKey("contractMap"));
+        //transfers
+        responseArrayContent = responseContent.getJSONArray("transfers");
+        JSONObject responseObject = responseArrayContent.getJSONObject(0);
+        Assert.assertTrue(responseObject.containsKey("contractRet"));
+        Assert.assertTrue(responseObject.containsKey("amount"));
+        Assert.assertTrue(responseObject.containsKey("cost"));
+        Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+        Assert.assertTrue(patternAddress.matcher(responseObject.getString("owner_address")).matches());
+        Assert.assertTrue(patternAddress.matcher(responseObject.getString("to_address")).matches());
+        Assert.assertTrue(patternAddress.matcher(responseObject.getString("contract_address")).matches());
+        Assert.assertTrue(patternAddress.matcher(responseObject.getString("from_address")).matches());
+        Assert.assertTrue(responseObject.containsKey("date_created"));
+        Assert.assertTrue(responseObject.containsKey("revert"));
+        Assert.assertTrue(responseObject.containsKey("type"));
+        Assert.assertTrue(responseObject.containsKey("confirmed"));
+        Assert.assertTrue(responseObject.containsKey("block"));
+        Assert.assertTrue(responseObject.containsKey("contract_ret"));
+        Assert.assertTrue(responseObject.containsKey("hash"));
+
+    }
+
     /**
      * constructor.
      */
