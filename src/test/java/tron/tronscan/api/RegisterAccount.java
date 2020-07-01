@@ -29,8 +29,16 @@ public class RegisterAccount {
 
     /**
      * constructor.
-     * 注册接口
-     * 点击创建用户后，对相关信息进行校验，并向注册邮箱发送激活链接
+     * 功能: 点击创建用户后，对相关信息进行校验，并向注册邮箱发送激活链接
+     * 		请求方法: POST
+     * 		入参：
+     * 			email: 注册邮箱
+     * 			password: 注册密码，前端应进行加密后向后端传输加密后的密文。
+     * 			verify_password: 再次输入的确认密码。前端应进行加密后向后端传输加密后的密文
+     * 			location: 当前域名，用于拼接激活链接
+     * 			g-recaptcha-response: 谷歌人机认证结果
+     * 		返回:
+     * 			成功或失败原因，详见错误码表
      */
     @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "注册接口")
     public void postRegister() {
@@ -39,7 +47,8 @@ public class RegisterAccount {
         String password = "jianghong5215";
         String verify_password = "jianghong5215";
         String location = "";
-        response = TronscanApiList.postRegister(tronScanNode,email,password,verify_password,location);
+        String g_recaptcha = "true";
+        response = TronscanApiList.postRegister(tronScanNode,email,password,verify_password,location,g_recaptcha);
         log.info("code is " + response.getStatusLine().getStatusCode());
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronscanApiList.parseResponseContent(response);
@@ -56,14 +65,20 @@ public class RegisterAccount {
 
     /**
      * constructor.
-     * 注册重新发送激活链接
+     * 功能: 邮箱注册时，重新发送激活链接
+     * 		请求方法: POST
+     * 		入参:
+     * 			email: 注册邮箱
+     * 			location: 当前域名，用于拼接激活链接
+     * 			g-recaptcha-response: 谷歌人机认证结果
      */
     @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "邮箱注册时，重新发送激活链接")
     public void postRegisterResend() {
         //Get response
         String email = "Holly.jiang@tron.network";
         String location = "";
-        response = TronscanApiList.postRegisterResend(tronScanNode,email,location);
+        String g_recaptcha = "true";
+        response = TronscanApiList.postRegisterResend(tronScanNode,email,location,g_recaptcha);
         log.info("code is " + response.getStatusLine().getStatusCode());
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronscanApiList.parseResponseContent(response);
