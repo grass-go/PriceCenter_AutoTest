@@ -100,7 +100,7 @@ public class ScanTokensPageTest extends Base {
     DRIVER.switchTo().window(justLink);
   }
 
-  @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "ptrxContractAddress")
+  @Test(enabled = false, retryAnalyzer = MyIRetryAnalyzer.class, description = "ptrxContractAddress")
   public void test006PtrxContractAddress() throws Exception {
     wait.until(ExpectedConditions.elementToBeClickable(scanTokensPage.ptrxContractAddress_link));
     scanTokensPage.ptrxContractAddress_link.click();

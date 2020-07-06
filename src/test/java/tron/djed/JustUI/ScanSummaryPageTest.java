@@ -53,7 +53,7 @@ public class ScanSummaryPageTest extends Base {
     Assert.assertTrue(cdpList_text.size() > 0);
   }
 
-  @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "viewAll")
+  @Test(enabled = false, retryAnalyzer = MyIRetryAnalyzer.class, description = "viewAll")
   public void testViewAll003() throws Exception {
     scanSummaryPage.viewAll_btn.click();
     Thread.sleep(300);

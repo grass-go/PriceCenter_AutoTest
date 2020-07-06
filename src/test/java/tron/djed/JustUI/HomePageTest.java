@@ -255,7 +255,7 @@ public class HomePageTest extends Base {
   }
 
 
-  @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class)
+  @Test(enabled = false, retryAnalyzer = MyIRetryAnalyzer.class)
   public void test009Exit() throws Exception {
     // exit
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[1]/div[2]/a")).click();
