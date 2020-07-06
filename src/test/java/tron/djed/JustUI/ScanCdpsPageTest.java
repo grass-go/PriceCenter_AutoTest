@@ -62,7 +62,7 @@ public class ScanCdpsPageTest extends Base {
     Assert.assertTrue(cdpActionHistoryList_text.size() > 0);
   }
 
-  @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class)
+  @Test(enabled = false, retryAnalyzer = MyIRetryAnalyzer.class)
   public void test003LoginWithTronlink() throws Exception {
     // login
     scanCdpsPage.login_btn.click();
@@ -91,7 +91,7 @@ public class ScanCdpsPageTest extends Base {
     Assert.assertTrue(scanCdpsPage.login_address.getText().contains("..."));
   }
 
-  @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class)
+  @Test(enabled = false, retryAnalyzer = MyIRetryAnalyzer.class)
   public void test004Exit() throws Exception {
     // exit
     scanCdpsPage.login_address.click();
@@ -102,7 +102,7 @@ public class ScanCdpsPageTest extends Base {
     Assert.assertTrue(scanCdpsPage.login.getText().contains("Login"));
   }
 
-  @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class)
+  @Test(enabled = false, retryAnalyzer = MyIRetryAnalyzer.class)
   public void test005LoginWithLedger() throws Exception {
     // login
     scanCdpsPage.login_btn.click();
