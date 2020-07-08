@@ -4,6 +4,8 @@ import java.util.List;
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver.Navigation;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -19,6 +21,7 @@ public class ScanSummaryPageTest extends Base {
   private String URL = "https://" + node + "/?lang=en-US#/scan";
   Navigation navigation;
   ScanSummaryPage scanSummaryPage;
+  WebDriverWait wait;
 
   @BeforeClass
   public void before() throws Exception {
@@ -26,6 +29,7 @@ public class ScanSummaryPageTest extends Base {
     DRIVER.get(URL);
     navigation = DRIVER.navigate();
     scanSummaryPage = new ScanSummaryPage(DRIVER).enterScanSummaryPage();
+    wait = new WebDriverWait(DRIVER, 30);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "trx")
@@ -53,8 +57,10 @@ public class ScanSummaryPageTest extends Base {
     Assert.assertTrue(cdpList_text.size() > 0);
   }
 
-  @Test(enabled = false, retryAnalyzer = MyIRetryAnalyzer.class, description = "viewAll")
+  @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "viewAll")
   public void testViewAll003() throws Exception {
+    wait.until(ExpectedConditions.elementToBeClickable(scanSummaryPage.viewAll_btn));
+    Thread.sleep(3000);
     scanSummaryPage.viewAll_btn.click();
     Thread.sleep(300);
     Assert

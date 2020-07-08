@@ -44,10 +44,10 @@ public class ScanCdpsPage extends AbstractPage {
   @FindBy(xpath = "/html/body/div[3]/div/div[2]/div/div[2]/div[2]/div/div[2]/button")
   public WebElement login_tronlink_btn;
 
-  @FindBy(xpath = "//*[@id=\"root\"]/div[1]/section/header/div/div[3]/a")
+  @FindBy(xpath = "//*[@id=\"root\"]/div[1]/section/header/div/div[3]/a[2]")
   public WebElement login_address;
 
-  @FindBy(xpath = "/html/body/div[3]/div/div/ul/li[2]/div")
+  @FindBy(xpath = "/html/body/div[2]/div/div/ul/li[2]/div")
   public WebElement exit_btn;
 
   @FindBy(xpath = "/html/body/div[3]/div/div[2]/div/div[2]/div[2]/div/div[2]/a")
