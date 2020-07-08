@@ -30,12 +30,12 @@ public class ScanGovernancePageTest extends Base {
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "stabilityFee")
-  public void testStabilityFee001() {
+  public void test001StabilityFee() {
     Assert.assertNotNull(scanGovernancePage.stabilityFee_text);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "txHash")
-  public void testTxHash002() throws Exception {
+  public void test002TxHash() throws Exception {
     scanGovernancePage.txHash_link.click();
     Thread.sleep(500);
     Set<String> allWindow = DRIVER.getWindowHandles();
@@ -50,7 +50,38 @@ public class ScanGovernancePageTest extends Base {
             .contains(
                 "https://tronscan.org/#/transaction/4c3b61b24b1cbd83c0ff43cff74913c0e0336009c574f87e7a429d716e8b53cf"));
     navigation.back();
-    logoutAccount();
+    DRIVER.switchTo().window(justLink);
+  }
+
+  @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "helpCenter")
+  public void test003HelpCenter() throws Exception {
+    scanGovernancePage.helpCenter_link.click();
+    Thread.sleep(500);
+    Set<String> allWindow = DRIVER.getWindowHandles();
+    for (String i : allWindow) {
+      if (i != justLink) {
+        DRIVER.switchTo().window(i);
+      }
+    }
+    Thread.sleep(1000);
+    Assert.assertTrue(DRIVER.getCurrentUrl().contains("https://justorg.zendesk.com/hc"));
+    navigation.back();
+    DRIVER.switchTo().window(justLink);
+  }
+
+  @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "contactUs")
+  public void test004ContactUs() throws Exception {
+    scanGovernancePage.contactUs_link.click();
+    Thread.sleep(500);
+    Set<String> allWindow = DRIVER.getWindowHandles();
+    for (String i : allWindow) {
+      if (i != justLink) {
+        DRIVER.switchTo().window(i);
+      }
+    }
+    Thread.sleep(1000);
+    Assert.assertTrue(DRIVER.getCurrentUrl().contains("https://t.me/just_defi"));
+    navigation.back();
     DRIVER.switchTo().window(justLink);
   }
 

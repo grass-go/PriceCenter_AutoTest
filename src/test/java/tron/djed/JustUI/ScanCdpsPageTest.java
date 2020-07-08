@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
 import tron.common.utils.Configuration;
@@ -43,6 +44,12 @@ public class ScanCdpsPageTest extends Base {
     Thread.sleep(2000);
   }
 
+  @BeforeMethod
+  public void beforeTest() throws Exception {
+    navigation.refresh();
+    Thread.sleep(10000);
+  }
+
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "cdpList")
   public void test001CdpList() {
     List<WebElement> cdpList_text = scanCdpsPage.cdpsList_text;
@@ -62,7 +69,7 @@ public class ScanCdpsPageTest extends Base {
     Assert.assertTrue(cdpActionHistoryList_text.size() > 0);
   }
 
-  @Test(enabled = false, retryAnalyzer = MyIRetryAnalyzer.class)
+  @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class)
   public void test003LoginWithTronlink() throws Exception {
     // login
     scanCdpsPage.login_btn.click();
@@ -71,6 +78,7 @@ public class ScanCdpsPageTest extends Base {
     Actions action = new Actions(DRIVER);
     action.moveToElement(scanCdpsPage.loginWithTronlink);
     System.out.println("2222222222");
+    Thread.sleep(1000);
     scanCdpsPage.loginWithTronlink_btn.click();
     Thread.sleep(8000);
     scanCdpsPage.tronlink_link.click();
@@ -91,7 +99,7 @@ public class ScanCdpsPageTest extends Base {
     Assert.assertTrue(scanCdpsPage.login_address.getText().contains("..."));
   }
 
-  @Test(enabled = false, retryAnalyzer = MyIRetryAnalyzer.class)
+  @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class)
   public void test004Exit() throws Exception {
     // exit
     scanCdpsPage.login_address.click();
@@ -102,7 +110,7 @@ public class ScanCdpsPageTest extends Base {
     Assert.assertTrue(scanCdpsPage.login.getText().contains("Login"));
   }
 
-  @Test(enabled = false, retryAnalyzer = MyIRetryAnalyzer.class)
+  @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class)
   public void test005LoginWithLedger() throws Exception {
     // login
     scanCdpsPage.login_btn.click();
