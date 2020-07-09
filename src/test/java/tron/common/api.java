@@ -311,7 +311,7 @@ public class api {
   }
 
   public static HttpResponse marketPairList() throws Exception{
-    final String requesturl = HttpNode + "/api/exchange/marketPair/list";
+    final String requesturl = "https://api.trx.market/api/exchange/marketPair/list";
     URIBuilder builder = new URIBuilder(requesturl);
     URI uri = builder.build();
     System.out.println(uri);
