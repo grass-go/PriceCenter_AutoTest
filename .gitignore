@@ -1,3 +1,18 @@
 
 # Default ignored files
 /workspace.xml
+.idea
+*iml
+.DS_Store
+socketMessage.log
+# gradle
+.gradle
+build
+
+# log
+logs
+consensus-logs
+tronlink-UI-test.iml
+
+# lombok
+out
