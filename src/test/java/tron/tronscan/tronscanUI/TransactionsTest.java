@@ -42,15 +42,15 @@ private  String URL = "https://"+tronScanNode+"/#/blockchain/transactions";
     @Test(enabled = true,description = "交易类型分布",retryAnalyzer = MyIRetryAnalyzer.class)
     public void transType() throws Exception{
         //标题：交易数
-        Assert.assertEquals(driver.findElement(By.cssSelector("#txcont > h2 > span:nth-child(2)")).getText(),"TxCount");
+        Assert.assertEquals(driver.findElement(By.cssSelector("#txcont > h2 > span:nth-child(2)")).getText(),"Txn Count");
         //数据更新3sec时间
         driver.findElement(By.cssSelector("#txcont > h2 > span.updatedWrapper > span > span > span:nth-child(1)")).getText().isEmpty();
         //昨日新增交易数
         driver.findElement(By.cssSelector("#txcont > div > div:nth-child(1) > span > span > span")).getText().isEmpty();
-        Assert.assertEquals(driver.findElement(By.cssSelector("#txcont > div > div:nth-child(1) > div > span > span")).getText(),"New Transactions Yesterday");
+        Assert.assertEquals(driver.findElement(By.cssSelector("#txcont > div > div:nth-child(1) > div > span > span")).getText(),"New Txns Yesterday");
         //累计交易数
         driver.findElement(By.cssSelector("#txcont > div > div:nth-child(2) > span > span > span")).getText().isEmpty();
-        Assert.assertEquals(driver.findElement(By.cssSelector("#txcont > div > div:nth-child(2) > div > span > span")).getText(),"Cumulative TxCount");
+        Assert.assertEquals(driver.findElement(By.cssSelector("#txcont > div > div:nth-child(2) > div > span > span")).getText(),"Total Txn Count");
         //标题：交易额
         Assert.assertEquals(driver.findElement(By.cssSelector("#tradingAmount > h2 > span:nth-child(2)")).getText(),"Trading Volume");
         //更新时间为3min
