@@ -112,6 +112,56 @@ public class TronlinkApiList {
     return response;
   }
 
+  public static HttpResponse apiTransferTrx(HashMap<String, String> param) throws Exception{
+    final String requestUrl = HttpNode + "/api/transfer/trx";
+    URIBuilder builder = new URIBuilder(requestUrl);
+    if (param != null) {
+      for (String key : param.keySet()) {
+        builder.addParameter(key, param.get(key));
+      }
+    }
+    URI uri = builder.build();
+    //System.out.println(requestUrl);
+    response = createGetConnect(uri);
+    return response;
+  }
+
+  public static HttpResponse apiTransferToken10(HashMap<String, String> param) throws Exception{
+    final String requestUrl = HttpNode + "/api/transfer/token10";
+    URIBuilder builder = new URIBuilder(requestUrl);
+    if (param != null) {
+      for (String key : param.keySet()) {
+        builder.addParameter(key, param.get(key));
+      }
+    }
+    URI uri = builder.build();
+    //System.out.println(requestUrl);
+    response = createGetConnect(uri);
+    return response;
+  }
+
+  public static HttpResponse apiTransferTrc20(HashMap<String, String> param) throws Exception{
+    final String requestUrl = HttpNode + "/api/transfer/trc20";
+    URIBuilder builder = new URIBuilder(requestUrl);
+    if (param != null) {
+      for (String key : param.keySet()) {
+        builder.addParameter(key, param.get(key));
+      }
+    }
+    URI uri = builder.build();
+    //System.out.println(requestUrl);
+    response = createGetConnect(uri);
+    return response;
+  }
+
+  public static HttpResponse votingV2Witness(String node) throws Exception{
+    String requestUrl = "http://" + node + "/api/voting/v2/witness";
+
+    //System.out.println(requestUrl);
+    response = createGetConnect(requestUrl);
+    return response;
+  }
+
   public static HttpResponse head(String node) {
     try {
       String requestUrl = "http://" + node + "api/dapp/v2/head";

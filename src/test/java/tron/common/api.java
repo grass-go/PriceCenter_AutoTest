@@ -46,8 +46,8 @@ public class api {
   static HttpPost httppost;
   static HttpGet httpGet;
   static HttpResponse response;
-  static Integer connectionTimeout = 2000;
-  static Integer soTimeout = 4000;
+  static Integer connectionTimeout = 4000;
+  static Integer soTimeout = 10000;
   static String transactionString;
   static String transactionSignString;
   static JSONObject responseContent;
