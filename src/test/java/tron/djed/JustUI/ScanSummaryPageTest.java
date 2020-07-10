@@ -2,6 +2,7 @@ package tron.djed.JustUI;
 
 import java.util.List;
 import org.junit.Assert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver.Navigation;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -66,8 +67,9 @@ public class ScanSummaryPageTest extends Base {
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "viewAll")
   public void testViewAll003() throws Exception {
+    ((JavascriptExecutor) DRIVER).executeScript("window.scrollTo(0,document.body.scrollHeight)");
+    Thread.sleep(1000);
     wait.until(ExpectedConditions.elementToBeClickable(scanSummaryPage.viewAll_btn));
-    Thread.sleep(3000);
     scanSummaryPage.viewAll_btn.click();
     Thread.sleep(300);
     Assert
