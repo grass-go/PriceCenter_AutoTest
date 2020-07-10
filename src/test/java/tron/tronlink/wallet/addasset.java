@@ -24,21 +24,19 @@ public class addasset {
   List<String> trc10tokenList = new ArrayList<>();
   List<String> trc20ContractAddressList = new ArrayList<>();
 
-  @BeforeClass(enabled = true)
+  @BeforeClass(enabled = true,description = "please use hex address,get all asset")
   public void removeAllTokenList() throws Exception{
-    tokenJson.put("address","TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
+    tokenJson.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
     //只传输地址的时候，会返回该地址当前添加过的资产
-    response = TronlinkApiList.addasset(node,"{\n" +" \"address\": \"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe\"}");
+    response = TronlinkApiList.addasset(node,"{\n" +" \"address\": \"414db7719251ce8ba74549ba35bbdc02418ecde595\"}");
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
     JSONArray tokenArray = assetInformation.getJSONArray("data");
     trc10tokenList = TronlinkApiList.getTrc10TokenIdList(tokenArray);
     trc20ContractAddressList = TronlinkApiList.getTrc20AddressList(tokenArray);
-    tokenJson.put("token10Cancel",trc10tokenList);
-    tokenJson.put("token20Cancel",trc20ContractAddressList);
-    response = TronlinkApiList.addasset(node,"{\n" +" \"address\": \"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe\"}");
   }
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void addasset(){
 
     response = TronlinkApiList.addasset(node,"{\n"
@@ -59,7 +57,9 @@ public class addasset {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     responseArrayContent = responseContent.getJSONArray("data");
+    System.out.println("```````````````````````");
     System.out.println(responseArrayContent);
+    System.out.println("```````````````````````");
     //data object
     for (Object json:responseArrayContent
     ) {
@@ -83,61 +83,58 @@ public class addasset {
     }
     System.out.println(responseArrayContent.size());
   }
-  @Test(enabled = true,description = "Test add all trc10 token to account.")
-  public void test001AddAllTrc10TokenToAccount() throws Exception {
+
+  @Test(enabled = true,description = "Test cancel trc10 token to account.1002000 is always exist")
+  public void test001CancelTrc10FromAccount() throws Exception {
     tokenJson.clear();
-    tokenJson.put("address","TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
-    tokenJson.put("token10",trc10tokenList);
+    tokenJson.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595"); //sophia's address
+    tokenJson.put("token10Cancel",trc10tokenList);
     response = TronlinkApiList.addAsset(node,tokenJson);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
     JSONArray tokenArray = assetInformation.getJSONArray("data");
-    System.out.println("trc10 token size are:" + tokenArray.size());
-    Assert.assertTrue(tokenArray.size() >= 0);
+    Assert.assertTrue(TronlinkApiList.getTrc10TokenIdList(tokenArray).size()==1);
+    Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()==trc20ContractAddressList.size());
+  }
+
+  @Test(enabled = true,description = "Test add all trc10 token to account.")
+  public void test002AddAllTrc10TokenToAccount() throws Exception {
+    tokenJson.clear();
+    tokenJson.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
+    tokenJson.put("token10",trc10tokenList);
+    response = TronlinkApiList.addAsset(node,tokenJson);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
+    JSONArray tokenArray = assetInformation.getJSONArray("data");
+    Assert.assertTrue(TronlinkApiList.getTrc10TokenIdList(tokenArray).size()==trc10tokenList.size());
+    Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()==trc20ContractAddressList.size());
+
+  }
+
+  @Test(enabled = true,description = "Test cancel trc20 token ,four trc20 token are always exist")
+  public void test003CancelTrc20FromAccount() throws Exception {
+    tokenJson.clear();
+    tokenJson.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
+    tokenJson.put("token20Cancel",trc20ContractAddressList);
+    response = TronlinkApiList.addAsset(node,tokenJson);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
+    JSONArray tokenArray = assetInformation.getJSONArray("data");
+    Assert.assertTrue(TronlinkApiList.getTrc10TokenIdList(tokenArray).size()>0);
+    Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()<trc20ContractAddressList.size());
   }
 
   @Test(enabled = true,description = "Test add all trc20 token to account.")
-  public void test002AddAllTrc20ToAccount() throws Exception {
+  public void test004AddAllTrc20ToAccount() throws Exception {
     tokenJson.clear();
-    tokenJson.put("address","TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
+    tokenJson.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
     tokenJson.put("token20",trc20ContractAddressList);
     response = TronlinkApiList.addAsset(node,tokenJson);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
     JSONArray tokenArray = assetInformation.getJSONArray("data");
-    //TronlinkApiList.printJsonArray(tokenArray);
-    System.out.println("trc10 + trc 20 token size are:" + tokenArray.size());
-    Assert.assertTrue(tokenArray.size() >= 0);
-
-
-    tokenJson.clear();
-    tokenJson.put("address","TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
-    //只传输地址的时候，会返回该地址当前添加过的资产
-    response = TronlinkApiList.addAsset(node,tokenJson);
-    assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
-    tokenArray = assetInformation.getJSONArray("data");
-    System.out.println("Now account have token size:" + tokenArray.size());
-  }
-
-  @Test(enabled = true,description = "Test cancel trc10 token to account.")
-  public void test003CancelTrc10FromAccount() throws Exception {
-    tokenJson.clear();
-    tokenJson.put("address","TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
-    tokenJson.put("token10Cancel",trc10tokenList);
-    response = TronlinkApiList.addAsset(node,tokenJson);
-    JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
-    JSONArray tokenArray = assetInformation.getJSONArray("data");
-    Assert.assertTrue(tokenArray.size() >= 5);
-  }
-
-
-  @Test(enabled = true,description = "Test cancel trc20 token to account.")
-  public void test004CancelTrc20FromAccount() throws Exception {
-    tokenJson.clear();
-    tokenJson.put("address","TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
-    tokenJson.put("token20Cancel",trc20ContractAddressList);
-    response = TronlinkApiList.addAsset(node,tokenJson);
-    JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
-    JSONArray tokenArray = assetInformation.getJSONArray("data");
-    Assert.assertTrue(tokenArray.size() >= 1);
+    Assert.assertTrue(TronlinkApiList.getTrc10TokenIdList(tokenArray).size()>0);
+    Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()==trc20ContractAddressList.size());
   }
 
 }
