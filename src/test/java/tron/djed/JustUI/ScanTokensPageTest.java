@@ -2,6 +2,7 @@ package tron.djed.JustUI;
 
 import java.util.Set;
 import org.junit.Assert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver.Navigation;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -101,6 +102,8 @@ public class ScanTokensPageTest extends Base {
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "ptrxContractAddress")
   public void test006PtrxContractAddress() throws Exception {
+    ((JavascriptExecutor) DRIVER).executeScript("window.scrollTo(0,document.body.scrollHeight)");
+    Thread.sleep(1000);
     wait.until(ExpectedConditions.elementToBeClickable(scanTokensPage.ptrxContractAddress_link));
     scanTokensPage.ptrxContractAddress_link.click();
     Thread.sleep(1000);
