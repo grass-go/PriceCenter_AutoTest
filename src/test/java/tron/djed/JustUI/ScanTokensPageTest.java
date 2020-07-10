@@ -36,6 +36,7 @@ public class ScanTokensPageTest extends Base {
 
   @BeforeMethod
   public void beforeTest() throws Exception {
+    DRIVER.switchTo().window(justLink);
     navigation.refresh();
     Thread.sleep(25000);
   }
@@ -72,7 +73,6 @@ public class ScanTokensPageTest extends Base {
         .assertTrue(DRIVER.getCurrentUrl()
             .contains("https://tronscan.org/#/contract/TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9"));
     navigation.back();
-    logoutAccount();
     DRIVER.switchTo().window(justLink);
   }
 
@@ -96,7 +96,6 @@ public class ScanTokensPageTest extends Base {
         .assertTrue(DRIVER.getCurrentUrl()
             .contains("https://tronscan.org/#/contract/TMwFHYXLJaRUPeW6421aqXL4ZEzPRFGkGT"));
     navigation.back();
-    logoutAccount();
     DRIVER.switchTo().window(justLink);
   }
 
@@ -116,7 +115,6 @@ public class ScanTokensPageTest extends Base {
         .assertTrue(DRIVER.getCurrentUrl()
             .contains("https://tronscan.org/#/address/TWjE8mAr3a7ZwgtyBxzmkuumnNZdEFJ4DD"));
     navigation.back();
-    logoutAccount();
     DRIVER.switchTo().window(justLink);
   }
 

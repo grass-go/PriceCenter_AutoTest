@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
 import tron.common.utils.Configuration;
@@ -30,6 +31,12 @@ public class ScanSummaryPageTest extends Base {
     navigation = DRIVER.navigate();
     scanSummaryPage = new ScanSummaryPage(DRIVER).enterScanSummaryPage();
     wait = new WebDriverWait(DRIVER, 30);
+  }
+
+  @BeforeMethod
+  public void beforeTest() throws Exception {
+    navigation.refresh();
+    Thread.sleep(20000);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "trx")

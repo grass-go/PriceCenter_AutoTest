@@ -43,7 +43,7 @@ public class VotePageTest extends Base {
           .findElement(By.cssSelector(
               "li[class='ant-select-dropdown-menu-item tronlinkHeadRight ant-select-dropdown-menu-item-active']"))
           .click();
-      Thread.sleep(2000);
+      Thread.sleep(4000);
       DRIVER
           .findElement(By.xpath("/html/body/div[3]/div/div[2]/div/div[2]/div[2]/div/div[2]/button"))
           .click();
