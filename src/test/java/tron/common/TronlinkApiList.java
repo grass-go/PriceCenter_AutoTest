@@ -97,6 +97,21 @@ public class TronlinkApiList {
     Assert.assertTrue(TronlinkApiList.verificationResult(response));
     return response;
   }
+
+  public static HttpResponse trc20Info(HashMap<String, String> param) throws Exception{
+    final String requestUrl = HttpNode + "/api/wallet/trc20_info";
+    URIBuilder builder = new URIBuilder(requestUrl);
+    if (param != null) {
+      for (String key : param.keySet()) {
+        builder.addParameter(key, param.get(key));
+      }
+    }
+    URI uri = builder.build();
+    //System.out.println(requestUrl);
+    response = createGetConnect(uri);
+    return response;
+  }
+
   public static HttpResponse head(String node) {
     try {
       String requestUrl = "http://" + node + "api/dapp/v2/head";
