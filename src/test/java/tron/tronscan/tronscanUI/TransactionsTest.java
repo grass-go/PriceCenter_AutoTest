@@ -65,7 +65,7 @@ private  String URL = "https://"+tronScanNode+"/#/blockchain/transactions";
         Assert.assertEquals(driver.findElement(By.cssSelector(" div.representatives-list-wrap > div > div > div.col-md-6.mb-20-style > div > div > div.bg-tron-light > h6 > span")).getText(),"Transaction Type Distribution");
         driver.close();
     }
-    @Test(enabled = true,description = "交易列表数据",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = false,description = "交易列表数据",retryAnalyzer = MyIRetryAnalyzer.class)
     public void transTypeList() throws Exception{
         //转账列表时间刷新文案
         driver.findElement(By.cssSelector("#root > main > div.row > div > div > div.d-flex > span:nth-child(1) > span")).getText().isEmpty();
