@@ -111,6 +111,23 @@ task trongridMonitor(type: Test) {
 
 }
 
+task tronwebAPI(type: Test) {
+
+    useTestNG {
+        suites(file('src/test/resources/testng_tronwebAPI.xml'))
+        parallel 'tests'
+        threadCount 1
+
+    }
+    testLogging {
+        exceptionFormat = 'full'
+        showStackTraces = "true"
+    }
+
+
+}
+
+
 
 task chromeExtension(type: Test) {
     useTestNG {
