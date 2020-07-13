@@ -27,7 +27,7 @@ public class queryBlock extends fullOrSolidityBase {
     Integer transactionNumInBlock = 0;
     Integer retryTimes = 0;
     while (transactionNumInBlock < 1 && retryTimes++ < 15) {
-      response = getNowBlock();
+      response = getNowBlock(false);
       responseContent = parseResponseContent(response);
       transactionNumInBlock = responseContent.getJSONArray("transactions").size();
       System.out.println("transactionNum: " + transactionNumInBlock);
@@ -48,7 +48,7 @@ public class queryBlock extends fullOrSolidityBase {
    */
   @Test(enabled = true, description = "Get block by number from trongrid")
   public void test02GetBlockByNumFromTrongrid() {
-    response = getBlockByNum(curBlockNum);
+    response = getBlockByNum(curBlockNum,false);
     JSONObject getBlockByNumJsonBody = parseResponseContent(response);
     Assert.assertEquals(getBlockByNumJsonBody,getNowBlockJsonBody);
   }

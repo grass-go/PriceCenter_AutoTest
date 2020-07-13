@@ -17,7 +17,7 @@ public class queryTransaction extends fullOrSolidityBase {
    */
   @Test(enabled = true, description = "Get transaction by id from trongrid")
   public void test01GetTransactionByIdFromTrongrid() {
-    response = getTransactionById(txid);
+    response = getTransactionById(txid,false);
     responseContent = parseResponseContent(response);
     transactionBody = responseContent;
     printJsonContent(responseContent);
@@ -34,7 +34,7 @@ public class queryTransaction extends fullOrSolidityBase {
    */
   @Test(enabled = true, description = "Get transaction info by id from trongrid")
   public void test02GetTransactionInfoByIdFromTrongrid() {
-    response = getTransactionInfoById(txid);
+    response = getTransactionInfoById(txid,false);
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     transactionInfoBody = responseContent;
@@ -49,11 +49,25 @@ public class queryTransaction extends fullOrSolidityBase {
    */
   @Test(enabled = true, description = "Get transaction info by block number from trongrid")
   public void test03GetTransactionInfoByBlockNumFromTrongrid() {
-    response = getTransactionInfoByBlockNum(txidBlockNum);
+    response = getTransactionInfoByBlockNum(txidBlockNum, false);
     JSONArray responseContent = parseResponseContentToArray(response);
     getTransactionByBlockNumJsonArrayBody = responseContent;
     Assert.assertEquals(responseContent.size(),47);
-    Assert.assertTrue(responseContent.contains(transactionInfoBody));
+    for (int i=0;i<responseContent.size();i++){
+      JSONObject jo= responseContent.getJSONObject(i);
+      if (jo.getString("id").equals(txid)){
+        boolean flag=true;
+        for(String k:transactionInfoBody.keySet()){
+          if (!(jo.get(k).toString()).equals(transactionInfoBody.get(k).toString())){
+            flag = false;
+            break;
+          }
+        }
+        if (!flag){
+          Assert.assertTrue(false);
+        }
+      }
+    }
   }
 
 

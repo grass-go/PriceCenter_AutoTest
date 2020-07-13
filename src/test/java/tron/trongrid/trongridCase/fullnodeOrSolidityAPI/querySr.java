@@ -16,7 +16,7 @@ public class querySr extends fullOrSolidityBase {
    */
   @Test(enabled = true, description = "List witnesses from trongrid")
   public void test01ListWitnessesFromTrongrid() {
-    response = listWitnesses();
+    response = listWitnesses(false);
     witnessList = parseResponseContent(response).getJSONArray("witnesses");
     //printJsonContent(responseContent);
     Assert.assertTrue(witnessList.size() > 100);

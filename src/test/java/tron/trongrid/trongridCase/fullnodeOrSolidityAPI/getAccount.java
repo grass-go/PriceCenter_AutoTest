@@ -15,7 +15,7 @@ public class getAccount extends fullOrSolidityBase {
    */
   @Test(enabled = true, description = "Get account from trongrid")
   public void test01GetAccountFromTrongrid() {
-    response = getAccount(queryAddress);
+    response = getAccount(queryAddress,false);
     responseContent = parseResponseContent(response);
     getAccountBody = responseContent;
     //printJsonContent(responseContent);

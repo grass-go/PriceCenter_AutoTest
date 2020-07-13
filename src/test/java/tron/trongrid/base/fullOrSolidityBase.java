@@ -36,6 +36,7 @@ public class fullOrSolidityBase {
   public static String bttOwnerAddress = Configuration.getByPath("testng.conf").getString("tronGrid.bttOwnerAddress");
   public static String delegateResourceFromAddress = Configuration.getByPath("testng.conf").getString("tronGrid.delegateResourceFromAddress");
   public static String delegateResourceToAddress = Configuration.getByPath("testng.conf").getString("tronGrid.delegateResourceToAddress");
+  public static String walletStr = "/wallet";
   public static String fullnode = "/wallet";
   public static String solidity = "/walletsolidity";
   public static JSONObject responseContent;
@@ -94,6 +95,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getAccount(String queryAddress,Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getAccount(queryAddress);
   }
@@ -218,6 +221,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getNowBlock(Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getNowBlock();
   }
@@ -245,6 +250,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getBlockByNum(Long num,Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getBlockByNum(num);
   }
@@ -505,6 +512,8 @@ public class fullOrSolidityBase {
   public static HttpResponse listWitnesses(Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
 
     return listWitnesses();
@@ -588,6 +597,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getTransactionById(String txid,Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getTransactionById(txid);
   }
@@ -618,6 +629,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getTransactionInfoById(String txid,Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getTransactionInfoById(txid);
   }
@@ -646,6 +659,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getTransactionInfoByBlockNum(Long blockNum,Boolean isSolidity) {
     if (isSolidity) {
       fullnode =solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getTransactionInfoByBlockNum(blockNum);
   }
@@ -675,6 +690,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getAssetIssueById(Integer assetId,Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getAssetIssueById(assetId);
   }
@@ -720,6 +737,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getAssetIssueList(Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getAssetIssueList();
   }
@@ -750,6 +769,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getPaginatedAssetIssueList(Integer offset, Integer limit,Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getPaginatedAssetIssueList(offset,limit);
   }

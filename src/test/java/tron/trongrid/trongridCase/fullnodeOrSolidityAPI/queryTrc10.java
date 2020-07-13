@@ -40,7 +40,7 @@ public class queryTrc10 extends fullOrSolidityBase {
    */
   @Test(enabled = true, description = "Get asset issue by id from trongrid")
   public void test02GetAssetIssueByIdFromTrongrid() {
-    response = getAssetIssueById(Integer.valueOf(bttTokenId));
+    response = getAssetIssueById(Integer.valueOf(bttTokenId), false);
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     Assert.assertEquals(responseContent,bttJsonBody);
@@ -51,7 +51,7 @@ public class queryTrc10 extends fullOrSolidityBase {
    */
   @Test(enabled = true, description = "Get asset issue list from trongrid")
   public void test03GetAssetIssueListFromTrongrid() {
-    response = getAssetIssueList();
+    response = getAssetIssueList(false);
     responseContent = parseResponseContent(response);
     //printJsonContent(responseContent);
     assetList = responseContent.getJSONArray("assetIssue");
@@ -65,7 +65,7 @@ public class queryTrc10 extends fullOrSolidityBase {
    */
   @Test(enabled = true, description = "Get paginated assetissue list from trongrid")
   public void test04GetPaginatedAssetIssueListFromTrongrid() {
-    response = getPaginatedAssetIssueList(1970,50);
+    response = getPaginatedAssetIssueList(1970,50, false);
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     paginatedAssetList = responseContent.getJSONArray("assetIssue");
