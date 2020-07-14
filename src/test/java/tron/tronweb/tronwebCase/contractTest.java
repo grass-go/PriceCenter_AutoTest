@@ -12,7 +12,7 @@ public class contractTest extends Base{
   @Test(enabled = true,description = "Test get contract from abi")
   public void test01GetContractFromAbiTest() throws IOException{
     functionName = "getContractFromAbi";
-    String contractInfo = executeJavaScript(nodecmd  + contractDir + functionName);
+    String contractInfo = executeJavaScript(contractDir + functionName);
     //System.out.println(contractInfo);
     Assert.assertTrue(contractInfo.contains("eventServer"));
     Assert.assertTrue(contractInfo.contains("solidityNode"));
@@ -23,11 +23,11 @@ public class contractTest extends Base{
   @Test(enabled = true,description = "Test get contract from address")
   public void test02GetContractFromAddressTest() throws IOException{
     functionName = "getContractFromAddress ";
-    String contractInfo = executeJavaScript(nodecmd  + contractDir + functionName + usdjContractAddress);
+    String contractInfo = executeJavaScript(contractDir + functionName + usdjContractAddress);
     System.out.println(contractInfo);
     Assert.assertTrue(contractInfo.contains(usdjContractAddress));
 
-    contractInfo = executeJavaScript(nodecmd  + contractDir + functionName + usdjContractBase64Address);
+    contractInfo = executeJavaScript(contractDir + functionName + usdjContractBase64Address);
     System.out.println(contractInfo);
     Assert.assertTrue(contractInfo.contains(usdjContractBase64Address));
 
