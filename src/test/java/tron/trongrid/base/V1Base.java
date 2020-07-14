@@ -286,6 +286,7 @@ public class V1Base {
         userBaseObj2.addProperty("max_block_timestamp",maxBlockTimestamp);
       }
       response = createConnect(requestUrl, userBaseObj2);
+      Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
       return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
     } catch (Exception e) {
       e.printStackTrace();
