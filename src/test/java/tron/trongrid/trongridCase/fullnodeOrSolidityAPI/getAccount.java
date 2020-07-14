@@ -32,7 +32,7 @@ public class getAccount extends fullOrSolidityBase {
     response = getAccount(queryAddress,true);
     responseContent = parseResponseContent(response);
     //printJsonContent(responseContent);
-    Assert.assertEquals(responseContent,getAccountBody);
+    Assert.assertTrue(fullOrSolidityBase.compareJsonObject(responseContent,getAccountBody));
   }
 
   /**

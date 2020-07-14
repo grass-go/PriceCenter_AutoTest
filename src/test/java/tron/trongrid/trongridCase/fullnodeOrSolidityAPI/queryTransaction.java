@@ -53,21 +53,7 @@ public class queryTransaction extends fullOrSolidityBase {
     JSONArray responseContent = parseResponseContentToArray(response);
     getTransactionByBlockNumJsonArrayBody = responseContent;
     Assert.assertEquals(responseContent.size(),47);
-    for (int i=0;i<responseContent.size();i++){
-      JSONObject jo= responseContent.getJSONObject(i);
-      if (jo.getString("id").equals(txid)){
-        boolean flag=true;
-        for(String k:transactionInfoBody.keySet()){
-          if (!(jo.get(k).toString()).equals(transactionInfoBody.get(k).toString())){
-            flag = false;
-            break;
-          }
-        }
-        if (!flag){
-          Assert.assertTrue(false);
-        }
-      }
-    }
+    Assert.assertTrue(fullOrSolidityBase.jsonarrayContainsJsonobject(responseContent,transactionInfoBody));
   }
 
 
@@ -78,7 +64,8 @@ public class queryTransaction extends fullOrSolidityBase {
   public void test04GetTransactionByIdFromTrongridSolidity() {
     response = getTransactionById(txid,true);
     responseContent = parseResponseContent(response);
-    Assert.assertEquals(transactionBody,responseContent);
+    Assert.assertTrue(fullOrSolidityBase.compareJsonObject(transactionBody,responseContent));
+//    Assert.assertEquals(transactionBody,responseContent);
    }
 
   /**
@@ -90,7 +77,8 @@ public class queryTransaction extends fullOrSolidityBase {
     responseContent = parseResponseContent(response);
     printJsonContent(transactionInfoBody);
     printJsonContent(responseContent);
-    Assert.assertEquals(transactionInfoBody,responseContent);
+    Assert.assertTrue(fullOrSolidityBase.compareJsonObject(transactionInfoBody,responseContent));
+//    Assert.assertEquals(transactionInfoBody,responseContent);
   }
 
   /**
@@ -100,7 +88,8 @@ public class queryTransaction extends fullOrSolidityBase {
   public void test06GetTransactionInfoByBlockNumFromTrongridSolidity() {
     response = getTransactionInfoByBlockNum(txidBlockNum,true);
     JSONArray responseContent = parseResponseContentToArray(response);
-    Assert.assertEquals(getTransactionByBlockNumJsonArrayBody,responseContent);
+//    Assert.assertEquals(getTransactionByBlockNumJsonArrayBody,responseContent);
+    Assert.assertTrue(fullOrSolidityBase.compareJsonArray(getTransactionByBlockNumJsonArrayBody,responseContent));
   }
 
 

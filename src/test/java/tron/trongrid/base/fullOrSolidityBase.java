@@ -68,8 +68,67 @@ public class fullOrSolidityBase {
     tronGridUrl = trongridUrl;
   }
 
+  /**
+   * compare jsonobject
+   * @param first jsonobject
+   * @param second jsonobject
+   * @return true: if keys and values are same(order is not important), false: not same
+   */
+  public static boolean compareJsonObject(JSONObject first, JSONObject second) {
+    if(first==null || second==null || (first.size() != second.size())){
+      return false;
+    }
 
+    for(String k:first.keySet()){
+      if (!second.containsKey(k) || !(first.get(k).toString()).equals(second.get(k).toString())){
+        return false;
+      }
+    }
+    return true;
+  }
 
+  /**
+   * compare jsonarray
+   * @param firstArray  jsonarray
+   * @param secondArray jsonarray
+   * @return true: two jsonarray have same size, and jsonobjects are same(same keys and values,do not care key order ),
+   */
+  public static boolean compareJsonArray(JSONArray firstArray, JSONArray secondArray) {
+    if(firstArray==null || secondArray==null || (firstArray.size() != secondArray.size()) ){
+      return false;
+    }
+    for (int i=0;i<firstArray.size();i++){
+      JSONObject jo = firstArray.getJSONObject(i);
+      int j=0;
+      boolean flag=false;
+      for (j=0;j<secondArray.size();j++) {
+        JSONObject jos = secondArray.getJSONObject(j);
+        if (compareJsonObject(jo,jos)){
+          flag = true;
+          break;
+        }
+      }
+      if (!flag){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * whether the jsonarray has the jsonobject(key order not care)
+   * @param ja
+   * @param jb
+   * @return
+   */
+  public static boolean jsonarrayContainsJsonobject(JSONArray ja,JSONObject jb){
+    for(int i=0;i<ja.size();i++){
+      if(compareJsonObject(ja.getJSONObject(i),jb)){
+        return true;
+      }
+    }
+    return false;
+  }
 
   /**
    * constructor.
