@@ -27,7 +27,7 @@ public class queryBlock extends fullOrSolidityBase {
     Integer transactionNumInBlock = 0;
     Integer retryTimes = 0;
     while (transactionNumInBlock < 1 && retryTimes++ < 15) {
-      response = getNowBlock();
+      response = getNowBlock(false);
       responseContent = parseResponseContent(response);
       transactionNumInBlock = responseContent.getJSONArray("transactions").size();
       System.out.println("transactionNum: " + transactionNumInBlock);
@@ -48,9 +48,9 @@ public class queryBlock extends fullOrSolidityBase {
    */
   @Test(enabled = true, description = "Get block by number from trongrid")
   public void test02GetBlockByNumFromTrongrid() {
-    response = getBlockByNum(curBlockNum);
+    response = getBlockByNum(curBlockNum,false);
     JSONObject getBlockByNumJsonBody = parseResponseContent(response);
-    Assert.assertEquals(getBlockByNumJsonBody,getNowBlockJsonBody);
+    Assert.assertTrue(fullOrSolidityBase.compareJsonObject(getBlockByNumJsonBody,getNowBlockJsonBody));
   }
 
   /**
@@ -60,7 +60,7 @@ public class queryBlock extends fullOrSolidityBase {
   public void test03GetBlockByIdFromTrongrid() {
     response = getBlockById(blockId);
     JSONObject getBlockByIdJsonBody = parseResponseContent(response);
-    Assert.assertEquals(getBlockByIdJsonBody,getNowBlockJsonBody);
+    Assert.assertTrue(fullOrSolidityBase.compareJsonObject(getBlockByIdJsonBody,getNowBlockJsonBody));
   }
 
   /**
@@ -123,7 +123,7 @@ public class queryBlock extends fullOrSolidityBase {
   public void test07GetBlockByNumFromTrongridSolidity() {
     response = getBlockByNum(curBlockNumFromSolidity,true);
     JSONObject getBlockByNumFromSolidityJsonBody = parseResponseContent(response);
-    Assert.assertEquals(getBlockByNumFromSolidityJsonBody,getNowBlockFromSolidityJsonBody);
+    Assert.assertTrue(fullOrSolidityBase.compareJsonObject(getBlockByNumFromSolidityJsonBody,getNowBlockFromSolidityJsonBody));
   }
 
 

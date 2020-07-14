@@ -36,6 +36,7 @@ public class fullOrSolidityBase {
   public static String bttOwnerAddress = Configuration.getByPath("testng.conf").getString("tronGrid.bttOwnerAddress");
   public static String delegateResourceFromAddress = Configuration.getByPath("testng.conf").getString("tronGrid.delegateResourceFromAddress");
   public static String delegateResourceToAddress = Configuration.getByPath("testng.conf").getString("tronGrid.delegateResourceToAddress");
+  public static String walletStr = "/wallet";
   public static String fullnode = "/wallet";
   public static String solidity = "/walletsolidity";
   public static JSONObject responseContent;
@@ -67,8 +68,67 @@ public class fullOrSolidityBase {
     tronGridUrl = trongridUrl;
   }
 
+  /**
+   * compare jsonobject
+   * @param first jsonobject
+   * @param second jsonobject
+   * @return true: if keys and values are same(order is not important), false: not same
+   */
+  public static boolean compareJsonObject(JSONObject first, JSONObject second) {
+    if(first==null || second==null || (first.size() != second.size())){
+      return false;
+    }
 
+    for(String k:first.keySet()){
+      if (!second.containsKey(k) || !(first.get(k).toString()).equals(second.get(k).toString())){
+        return false;
+      }
+    }
+    return true;
+  }
 
+  /**
+   * compare jsonarray
+   * @param firstArray  jsonarray
+   * @param secondArray jsonarray
+   * @return true: two jsonarray have same size, and jsonobjects are same(same keys and values,do not care key order ),
+   */
+  public static boolean compareJsonArray(JSONArray firstArray, JSONArray secondArray) {
+    if(firstArray==null || secondArray==null || (firstArray.size() != secondArray.size()) ){
+      return false;
+    }
+    for (int i=0;i<firstArray.size();i++){
+      JSONObject jo = firstArray.getJSONObject(i);
+      int j=0;
+      boolean flag=false;
+      for (j=0;j<secondArray.size();j++) {
+        JSONObject jos = secondArray.getJSONObject(j);
+        if (compareJsonObject(jo,jos)){
+          flag = true;
+          break;
+        }
+      }
+      if (!flag){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * whether the jsonarray has the jsonobject(key order not care)
+   * @param ja
+   * @param jb
+   * @return
+   */
+  public static boolean jsonarrayContainsJsonobject(JSONArray ja,JSONObject jb){
+    for(int i=0;i<ja.size();i++){
+      if(compareJsonObject(ja.getJSONObject(i),jb)){
+        return true;
+      }
+    }
+    return false;
+  }
 
   /**
    * constructor.
@@ -94,6 +154,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getAccount(String queryAddress,Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getAccount(queryAddress);
   }
@@ -218,6 +280,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getNowBlock(Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getNowBlock();
   }
@@ -245,6 +309,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getBlockByNum(Long num,Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getBlockByNum(num);
   }
@@ -505,6 +571,8 @@ public class fullOrSolidityBase {
   public static HttpResponse listWitnesses(Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
 
     return listWitnesses();
@@ -588,6 +656,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getTransactionById(String txid,Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getTransactionById(txid);
   }
@@ -618,6 +688,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getTransactionInfoById(String txid,Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getTransactionInfoById(txid);
   }
@@ -646,6 +718,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getTransactionInfoByBlockNum(Long blockNum,Boolean isSolidity) {
     if (isSolidity) {
       fullnode =solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getTransactionInfoByBlockNum(blockNum);
   }
@@ -675,6 +749,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getAssetIssueById(Integer assetId,Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getAssetIssueById(assetId);
   }
@@ -720,6 +796,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getAssetIssueList(Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getAssetIssueList();
   }
@@ -750,6 +828,8 @@ public class fullOrSolidityBase {
   public static HttpResponse getPaginatedAssetIssueList(Integer offset, Integer limit,Boolean isSolidity) {
     if (isSolidity) {
       fullnode = solidity;
+    }else {
+      fullnode = walletStr;
     }
     return getPaginatedAssetIssueList(offset,limit);
   }
