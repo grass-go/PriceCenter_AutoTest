@@ -12,12 +12,18 @@ const tronWeb = new TronWeb(fullNode,solidityNode,eventServer,privateKey);
 
 function createAccount() {
 console.log(tronWeb.createAccount())
+}
 
+function isAddress(input) {
+console.log(tronWeb.isAddress(input))
 }
 
 switch(arguments[0]) {
      case "createAccount":
         createAccount()
+        break;
+     case "isAddress":
+        isAddress(arguments[1])
         break;
      default:
         break;

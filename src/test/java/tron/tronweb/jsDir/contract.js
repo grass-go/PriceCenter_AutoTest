@@ -18,12 +18,30 @@ function getContractFromAddress(input) {
 console.log(tronWeb.contract([input]))
 }
 
+function getEventByTransactionID(input) {
+    //console.log("input:"+input)
+    tronWeb.getEventByTransactionID(input).then(result => {console.log(result)})
+}
+
+function getEventResult(contractAddress, eventname, size_input) {
+    tronWeb.getEventResult(contractAddress,{eventName:eventname,size:size_input}).then(result => {console.log(result)})
+
+}
+
+
 switch(arguments[0]) {
      case "getContractFromAbi":
         getContractFromAbi()
         break;
      case "getContractFromAddress":
         getContractFromAddress(arguments[1])
+        break;
+     case "getEventByTransactionID":
+        getEventByTransactionID(arguments[1])
+        break;
+     case "getEventResult":
+        getEventResult(arguments[1],arguments[2],arguments[3])
+        break;
      default:
         break;
 }
