@@ -162,6 +162,41 @@ public class TronlinkApiList {
     return response;
   }
 
+  public static HttpResponse votingV2Search(Map<String, String> params) throws Exception{
+    String requestUrl = HttpNode + "/api/voting/v2/search";
+
+    response = createGetConnect(requestUrl, params);
+    return response;
+  }
+
+  public static HttpResponse votingV2Self(Map<String, String> params) throws Exception{
+    String requestUrl = HttpNode + "/api/voting/v2/self";
+
+    response = createGetConnect(requestUrl, params);
+    return response;
+  }
+
+  public static HttpResponse walletMarketBanner(Map<String, String> params) throws Exception{
+    String requestUrl = HttpNode + "/wallet/market/banner";
+
+    response = createGetConnect(requestUrl, params);
+    return response;
+  }
+
+  public static HttpResponse walletMarketFavorite(Map<String, String> params) throws Exception{
+    String requestUrl = HttpNode + "/wallet/market/favorite";
+
+    response = createGetConnect(requestUrl, params);
+    return response;
+  }
+
+  public static HttpResponse walletMarketTrxUsdt(Map<String, String> params) throws Exception{
+    String requestUrl = HttpNode + "/wallet/market/trx_usdt";
+
+    response = createGetConnect(requestUrl, params);
+    return response;
+  }
+
   public static HttpResponse head(String node) {
     try {
       String requestUrl = "http://" + node + "api/dapp/v2/head";
@@ -451,6 +486,11 @@ public static HttpResponse search(String node, Map<String, String> params) {
       }
       httpget = new HttpGet(url);
       httpget.addHeader("Lang","1");
+      httpget.addHeader("Version","3.7.0");
+      httpget.addHeader("DeviceID","1111111111");
+      httpget.addHeader("chain","MainChain");
+      httpget.addHeader("packageName","com.tronlinkpro.wallet");
+      httpget.addHeader("System","Android");
       httpget.setHeader("Content-type", "application/json; charset=utf-8");
       httpget.setHeader("Connection", "Keep-Alive");
 //      SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
