@@ -1921,6 +1921,55 @@ public class TronscanApiList {
         }
         return response;
     }
+
+    /**
+     * constructor.trx市值及流通量。
+     */
+    public static HttpResponse getSystemHomepage(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/system/homepage-bundle";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.
+     * tronex节点新增两个返回值
+     */
+    public static HttpResponse getOverView_usage(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/stats/overview";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.
+     * trx交易量
+     */
+    public static HttpResponse getFreezeresource(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/freezeresource";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
     /**
      * constructor.
      */
