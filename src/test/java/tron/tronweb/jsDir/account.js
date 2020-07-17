@@ -26,6 +26,14 @@ function defaultPrivateKey() {
 console.log(tronWeb.defaultPrivateKey)
 }
 
+function setAddress(input) {
+console.log(tronWeb.setAddress(input))
+}
+
+function defaultAddress() {
+console.log(tronWeb.defaultAddress)
+}
+
 switch(arguments[0]) {
      case "createAccount":
         createAccount()
@@ -36,6 +44,10 @@ switch(arguments[0]) {
      case "setPrivateKey":
         setPrivateKey(arguments[1])
         defaultPrivateKey()
+        break;
+     case "setAddress":
+        setAddress(arguments[1])
+        defaultAddress()
         break;
      default:
         break;

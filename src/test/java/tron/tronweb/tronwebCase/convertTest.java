@@ -73,8 +73,60 @@ public class convertTest extends Base{
     convertInfo = executeJavaScript(convertDir + functionName +  " " +blockInput);
     System.out.println(convertInfo);
     Assert.assertTrue(convertInfo.equals("undefined"));
+  }
 
+  @Test(enabled = true,description = "Test sha3 convert")
+  public void test07Sha3Convert() throws IOException{
+    functionName = "sha3";
+    String input = " testSha3Convert";
+    String result = executeJavaScript(convertDir + functionName + input);
+    System.out.println(result);
+    Assert.assertTrue(result.contains("b721c6a5b9434b9a383851a91e8176a6633479ea216fe6c590609644be441d9d"));
+  }
 
+  @Test(enabled = true,description = "Test to ascii")
+  public void test08ToAscii() throws IOException{
+    functionName = "toAscii";
+    String input = " 0x74726f6e";
+    String result = executeJavaScript(convertDir + functionName + input);
+    System.out.println(result);
+    Assert.assertTrue(result.equals("tron"));
+  }
+
+  @Test(enabled = true,description = "Test to big number")
+  public void test09ToBigNumber() throws IOException{
+    functionName = "toBigNumber";
+    String input = " 200000000000000000000001";
+    String result = executeJavaScript(convertDir + functionName + input);
+    System.out.println(result);
+    Assert.assertTrue(result.contains("2.0000000000000002e+23"));
+  }
+
+  @Test(enabled = true,description = "Test to decimal")
+  public void test10ToDecimal() throws IOException{
+    functionName = "toDecimal";
+    String convertString = " 0x15";
+    String convertInfo = executeJavaScript(convertDir + functionName +convertString);
+    System.out.println(convertInfo);
+    Assert.assertTrue(convertInfo.contains("21"));
+  }
+
+  @Test(enabled = true,description = "Test to sun")
+  public void test11ToSun() throws IOException{
+    functionName = "toSun";
+    String convertString = " 10";
+    String convertInfo = executeJavaScript(convertDir + functionName +convertString);
+    System.out.println(convertInfo);
+    Assert.assertTrue(convertInfo.contains("10000000"));
+  }
+
+  @Test(enabled = true,description = "Test from Utf8")
+  public void test12ToUtf8() throws IOException{
+    functionName = "toUtf8";
+    String convertString = " 0x74657374";
+    String convertInfo = executeJavaScript(convertDir + functionName +convertString);
+    System.out.println(convertInfo);
+    Assert.assertTrue(convertInfo.contains("test"));
   }
 
 

@@ -52,5 +52,23 @@ public class accountTest extends Base{
     Assert.assertTrue(result.contains(privateKey));
   }
 
+  @Test(enabled = true,description = "Test set address")
+  public void test04SetAddress() throws IOException{
+    functionName = "setAddress ";
+    String address = usdjContractAddress;
+    String result = executeJavaScript(accountDir + functionName + address);
+    System.out.println(result);
+    Assert.assertTrue(result.toLowerCase().contains(usdjContractAddress.toLowerCase())
+        && result.toLowerCase().contains(usdjContractBase64Address.toLowerCase()));
+
+
+    address = usdjContractBase64Address;
+    result = executeJavaScript(accountDir + functionName + address);
+    System.out.println(result);
+    Assert.assertTrue(result.toLowerCase().contains(usdjContractAddress.toLowerCase())
+        && result.toLowerCase().contains(usdjContractBase64Address.toLowerCase()));
+
+  }
+
 
 }
