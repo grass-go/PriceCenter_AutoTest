@@ -110,9 +110,9 @@ public class HomepageList {
         Assert.assertFalse(targetContent.get("totalAddress").toString().isEmpty());
         Assert.assertFalse(targetContent.get("newBlockSeen").toString().isEmpty());
         //energy_usage
-        Assert.assertTrue(Long.valueOf(targetContent.get("energy_usage").toString()) > 1000);
+        Assert.assertTrue(Long.valueOf(targetContent.get("energy_usage").toString()) >= 0);
         //net_usage
-        Assert.assertTrue(Long.valueOf(targetContent.get("net_usage").toString()) > 1000);
+        Assert.assertTrue(Long.valueOf(targetContent.get("net_usage").toString()) >= 0);
 
     }
 
