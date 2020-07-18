@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="tronwebAPI" parallel="tests" thread-count="1">
-<!--    <listeners>
-        <listener class-name="tron.common.utils.SqlTrongridAPI"/>
-            <listener class-name="tron.common.utils.RetryListener"/>
-    </listeners>-->
+    <listeners>
+        <listener class-name="tron.common.utils.SqlTronwebAPI"/>
+<!--            <listener class-name="tron.common.utils.RetryListener"/>-->
+    </listeners>
     <test name="tronwebAPI">
         <packages>
             <package name="tron.tronweb.tronwebCase"></package>

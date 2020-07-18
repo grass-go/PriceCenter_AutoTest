@@ -43,5 +43,32 @@ public class accountTest extends Base{
 
   }
 
+  @Test(enabled = true,description = "Test set privateKey")
+  public void test03SetPrivateKey() throws IOException{
+    functionName = "setPrivateKey ";
+    String privateKey = "a8107ea1c97c90cd4d84e79cd79d327def6362cc6fd498fc3d3766a6a71924f6";
+    String result = executeJavaScript(accountDir + functionName + privateKey);
+    System.out.println(result);
+    Assert.assertTrue(result.contains(privateKey));
+  }
+
+  @Test(enabled = true,description = "Test set address")
+  public void test04SetAddress() throws IOException{
+    functionName = "setAddress ";
+    String address = usdjContractAddress;
+    String result = executeJavaScript(accountDir + functionName + address);
+    System.out.println(result);
+    Assert.assertTrue(result.toLowerCase().contains(usdjContractAddress.toLowerCase())
+        && result.toLowerCase().contains(usdjContractBase64Address.toLowerCase()));
+
+
+    address = usdjContractBase64Address;
+    result = executeJavaScript(accountDir + functionName + address);
+    System.out.println(result);
+    Assert.assertTrue(result.toLowerCase().contains(usdjContractAddress.toLowerCase())
+        && result.toLowerCase().contains(usdjContractBase64Address.toLowerCase()));
+
+  }
+
 
 }
