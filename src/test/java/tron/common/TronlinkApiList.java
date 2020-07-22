@@ -248,6 +248,19 @@ public class TronlinkApiList {
     return response;
   }
 
+  public static HttpResponse dappId(Map<String, String> params) {
+    try {
+      String requestUrl = HttpNode + "/api/dapp/v2/dapp/id";
+      System.out.println(requestUrl);
+      response = createGetConnect(requestUrl);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpget.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
 public static HttpResponse search(String node, Map<String, String> params) {
     try {
       String requestUrl = "http://" + node + "api/dapp/v2/dapp/search";

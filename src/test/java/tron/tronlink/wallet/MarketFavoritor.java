@@ -18,24 +18,33 @@ public class MarketFavoritor {
 
   @Test(enabled = false)
   public void Test000getMarketFavoritor() throws Exception {
-    param.put("address","TH48niZfbwHMyqZwEB8wmHfzcvR8ZzJKC6"); //sophia's address
+    param.put("token","TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7"); //win
+    param.put("token","TMwFHYXLJaRUPeW6421aqXL4ZEzPRFGkGT"); //usdj
+    param.put("token","1000226");
     response = TronlinkApiList.walletMarketFavorite(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-     responseArrayContent = responseContent.getJSONArray("data");
+    JSONObject data = responseContent.getJSONObject("data");
+    Assert.assertTrue(data.containsKey("total"));
+    Assert.assertTrue(data.getInteger("total")==3);
+    responseArrayContent = data.getJSONArray("rows");
 
     //data object
     for (Object json:responseArrayContent) {
       JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
-      Assert.assertTrue(jsonObject.containsKey("tokenAddress"));
-      Assert.assertTrue(jsonObject.containsKey("balance"));
-      Assert.assertTrue(jsonObject.getInteger("balance")>0);
-      Assert.assertTrue(jsonObject.containsKey("balanceStr"));
-      Assert.assertTrue(jsonObject.containsKey("decimals"));
-      Assert.assertTrue(jsonObject.containsKey("logoUrl"));
-      Assert.assertTrue(jsonObject.containsKey("name"));
-      Assert.assertTrue(jsonObject.containsKey("shortName"));
-      Assert.assertTrue(jsonObject.containsKey("isMapping"));
+      Assert.assertTrue(jsonObject.containsKey("fTokenName"));
+      Assert.assertTrue(jsonObject.containsKey("sTokenName"));
+      Assert.assertTrue(jsonObject.containsKey("fShortName"));
+      Assert.assertTrue(jsonObject.containsKey("sShortName"));
+      Assert.assertTrue(jsonObject.containsKey("fTokenAddr"));
+      Assert.assertTrue(jsonObject.containsKey("sTokenAddr"));
+      Assert.assertTrue(jsonObject.containsKey("price"));
+      Assert.assertTrue(jsonObject.containsKey("sPrecision"));
+      Assert.assertTrue(jsonObject.containsKey("id"));
+      Assert.assertTrue(jsonObject.containsKey("unit"));
+      Assert.assertTrue(jsonObject.containsKey("volume"));
+      Assert.assertTrue(jsonObject.containsKey("volume24h"));
+      Assert.assertTrue(jsonObject.containsKey("gain"));
     }
   }
 }

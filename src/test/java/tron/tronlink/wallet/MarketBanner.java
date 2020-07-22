@@ -23,20 +23,21 @@ public class MarketBanner {
     response = TronlinkApiList.walletMarketBanner(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-     responseArrayContent = responseContent.getJSONArray("data");
+    responseArrayContent = responseContent.getJSONArray("data");
 
     //data object
     for (Object json:responseArrayContent) {
       JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
-      Assert.assertTrue(jsonObject.containsKey("tokenAddress"));
-      Assert.assertTrue(jsonObject.containsKey("balance"));
-      Assert.assertTrue(jsonObject.getInteger("balance")>0);
-      Assert.assertTrue(jsonObject.containsKey("balanceStr"));
-      Assert.assertTrue(jsonObject.containsKey("decimals"));
-      Assert.assertTrue(jsonObject.containsKey("logoUrl"));
-      Assert.assertTrue(jsonObject.containsKey("name"));
-      Assert.assertTrue(jsonObject.containsKey("shortName"));
-      Assert.assertTrue(jsonObject.containsKey("isMapping"));
+      Assert.assertTrue(jsonObject.containsKey("id"));
+      Assert.assertTrue(jsonObject.containsKey("title"));
+      Assert.assertTrue(jsonObject.containsKey("icon"));
+      Assert.assertTrue(jsonObject.containsKey("home_url"));
+      Assert.assertTrue(jsonObject.containsKey("type"));
+      Assert.assertTrue(jsonObject.containsKey("vote_reward"));
+      Assert.assertTrue(jsonObject.containsKey("button_text"));
+      Assert.assertTrue(jsonObject.containsKey("describe"));
+      Assert.assertTrue(jsonObject.containsKey("created_at"));
+      Assert.assertTrue(jsonObject.containsKey("updated_at"));
     }
   }
 }

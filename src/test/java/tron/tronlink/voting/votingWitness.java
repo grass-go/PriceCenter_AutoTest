@@ -26,8 +26,6 @@ public class votingWitness {
     Assert.assertTrue(responseContent.getInteger("total")>0);
     Assert.assertTrue(responseContent.containsKey("totalVotes"));
     Assert.assertTrue(responseContent.getInteger("totalVotes")>0);
-    Assert.assertTrue(responseContent.containsKey("fastestRise"));
-    fastestRise = responseContent.getJSONObject("fastestRise");
     Assert.assertTrue(responseContent.containsKey("data"));
     responseArrayContent = responseContent.getJSONArray("data");
 
@@ -46,6 +44,9 @@ public class votingWitness {
       Assert.assertTrue(jsonObject.containsKey("brokerage"));
       Assert.assertTrue(jsonObject.containsKey("votesPercentage"));
       Assert.assertTrue(jsonObject.containsKey("change_cycle"));
+//      Assert.assertTrue(jsonObject.containsKey("producedTotal"));
+//      Assert.assertTrue(jsonObject.containsKey("annualized_income"));
+//      Assert.assertTrue(jsonObject.containsKey("totalVotes"));
     }
   }
 }
