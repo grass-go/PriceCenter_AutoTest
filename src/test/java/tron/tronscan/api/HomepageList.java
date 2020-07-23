@@ -53,7 +53,7 @@ public class HomepageList {
         Assert.assertTrue(responseContent.size() >= 5);
         Assert.assertTrue(responseContent.containsKey("node"));
         Assert.assertTrue(responseContent.containsKey("trx_price_graph"));
-        Assert.assertTrue(Double.valueOf(responseContent.get("total_turnover").toString()) >= 0);
+//        Assert.assertTrue(Double.valueOf(responseContent.get("total_turnover").toString()) >= 0);
         //tps
         Assert.assertTrue(responseContent.containsKey("tps"));
         //yesterdayStat
