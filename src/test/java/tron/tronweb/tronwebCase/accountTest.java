@@ -88,4 +88,58 @@ public class accountTest extends Base{
     Assert.assertTrue(jsonObject.containsKey("owner_permission"));
   }
 
+  @Test(enabled = true, description = "Test get account resource")
+  public void test06GetAccountResource() throws IOException {
+    functionName = "getAccountResources ";
+    String address = queryAddress;
+    String result = executeJavaScript(accountDir + functionName + address);
+    System.out.println(result);
+    JSONObject jsonObject = JSONObject.parseObject(result);
+    Assert.assertTrue(jsonObject.containsKey("freeNetLimit"));
+    Assert.assertTrue(jsonObject.containsKey("NetLimit"));
+    Assert.assertTrue(jsonObject.containsKey("TotalNetLimit"));
+    Assert.assertTrue(jsonObject.containsKey("TotalNetWeight"));
+    Assert.assertTrue(jsonObject.containsKey("TotalEnergyLimit"));
+  }
+
+  @Test(enabled = true, description = "Test get balance")
+  public void test07GetBalance() throws IOException {
+    functionName = "getBalance ";
+    String address = queryAddress;
+    String result = executeJavaScript(accountDir + functionName + address);
+    System.out.println(result);
+    Long re = Long.valueOf(result);
+    Assert.assertTrue(re > 0);
+  }
+
+  @Test(enabled = true, description = "Test get bandwidth")
+  public void test08GetBandwidth() throws IOException {
+    functionName = "getBandwidth ";
+    String address = queryAddress;
+    String result = executeJavaScript(accountDir + functionName + address);
+    System.out.println(result);
+    Long re = Long.valueOf(result);
+    Assert.assertTrue(re >= 0);
+  }
+
+  @Test(enabled = true, description = "Test get brokerage")
+  public void test09GetBrokerage() throws IOException {
+    functionName = "getBrokerage ";
+    String address = querySrAddress;
+    String result = executeJavaScript(accountDir + functionName + address);
+    System.out.println(result);
+    Long re = Long.valueOf(result);
+    Assert.assertTrue(re >= 0 && re <= 100);
+  }
+
+  @Test(enabled = true, description = "Test get reward")
+  public void test09GetReward() throws IOException {
+    functionName = "getReward ";
+    String address = querySrAddress;
+    String result = executeJavaScript(accountDir + functionName + address);
+    System.out.println(result);
+    Long re = Long.valueOf(result);
+    Assert.assertTrue(re >= 0);
+  }
+
 }

@@ -17,6 +17,8 @@ public class Base {
   public String usdjContractBase64Address = "411E8D88B8516ED59B8DBEF73B286D562C51D486AA";
   public String queryAddress = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddress");
   public String queryAddress41 = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddressBase64With41Start");
+  public String querySrAddress = Configuration.getByPath("testng.conf").getString("tronWeb.querySrAddress");
+  public String querySrAddress41 = Configuration.getByPath("testng.conf").getString("tronWeb.querySrAddressWith41Start");
 
   public  String executeJavaScript(String cmd) throws IOException {
     Process process = Runtime.getRuntime().exec("node " + cmd);

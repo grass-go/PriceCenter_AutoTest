@@ -38,6 +38,25 @@ function getAccount(input) {
     tronWeb.trx.getAccount(input).then(result => console.log(JSON.stringify(result)))
 }
 
+function getAccountResources(input) {
+    tronWeb.trx.getAccountResources(input).then(result => console.log(JSON.stringify(result)))
+}
+
+function getBalance(input) {
+    tronWeb.trx.getBalance(input).then(result => console.log(result))
+}
+
+function getBandwidth(input) {
+    tronWeb.trx.getBandwidth(input).then(result => console.log(result))
+}
+
+function getBrokerage(input) {
+    tronWeb.trx.getBrokerage(input).then(result => console.log(result))
+}
+
+function getReward(input) {
+    tronWeb.trx.getReward(input).then(result => console.log(result))
+}
 switch(arguments[0]) {
      case "createAccount":
         createAccount()
@@ -55,6 +74,21 @@ switch(arguments[0]) {
         break;
     case "getAccount":
         getAccount(arguments[1])
+        break;
+    case "getAccountResources":
+        getAccountResources(arguments[1])
+        break;
+    case "getBalance":
+        getBalance(arguments[1])
+        break;
+    case "getBandwidth":
+        getBandwidth(arguments[1])
+        break;
+    case "getBrokerage":
+        getBrokerage(arguments[1])
+        break;
+    case "getReward":
+        getReward(arguments[1])
         break;
      default:
         break;
