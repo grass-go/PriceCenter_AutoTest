@@ -13,6 +13,7 @@ public class Base {
   public String contractDir = "src/test/java/tron/tronweb/jsDir/contract.js ";
   public String accountDir = "src/test/java/tron/tronweb/jsDir/account.js ";
   public String convertDir = "src/test/java/tron/tronweb/jsDir/convertTool.js ";
+  public String blockDir = "src/test/java/tron/tronweb/jsDir/block.js ";
   public String usdjContractAddress = "TCkkpmnY38nsXAtideWzHTybvbMozzXUot";
   public String usdjContractBase64Address = "411E8D88B8516ED59B8DBEF73B286D562C51D486AA";
   public String queryAddress = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddress");
