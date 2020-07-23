@@ -1,6 +1,7 @@
 package tron.tronweb.tronwebCase;
 
 import java.io.IOException;
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.tronweb.base.Base;
@@ -70,5 +71,21 @@ public class accountTest extends Base{
 
   }
 
+  @Test(enabled = true, description = "Test get account")
+  public void test05GetAccount() throws IOException {
+    functionName = "getAccount ";
+    String address = queryAddress;
+    String result = executeJavaScript(accountDir + functionName + address);
+    System.out.println(result);
+    JSONObject jsonObject = JSONObject.parseObject(result);
+    Assert.assertTrue(jsonObject.containsKey("balance"));
+    Assert.assertTrue(jsonObject.getInteger("balance") > 0);
+    Assert.assertTrue(jsonObject.containsKey("address"));
+    Assert.assertEquals(queryAddress41.toLowerCase(), jsonObject.getString("address"));
+    Assert.assertTrue(jsonObject.containsKey("account_resource"));
+    Assert.assertTrue(jsonObject.containsKey("create_time"));
+    Assert.assertEquals(1588824369000L, jsonObject.getLongValue("create_time"));
+    Assert.assertTrue(jsonObject.containsKey("owner_permission"));
+  }
 
 }

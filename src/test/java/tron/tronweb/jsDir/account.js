@@ -34,6 +34,10 @@ function defaultAddress() {
 console.log(tronWeb.defaultAddress)
 }
 
+function getAccount(input) {
+    tronWeb.trx.getAccount(input).then(result => console.log(JSON.stringify(result)))
+}
+
 switch(arguments[0]) {
      case "createAccount":
         createAccount()
@@ -48,6 +52,9 @@ switch(arguments[0]) {
      case "setAddress":
         setAddress(arguments[1])
         defaultAddress()
+        break;
+    case "getAccount":
+        getAccount(arguments[1])
         break;
      default:
         break;
