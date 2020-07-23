@@ -1,5 +1,7 @@
 package tron.tronweb.base;
 
+import tron.common.utils.Configuration;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Scanner;
@@ -13,6 +15,8 @@ public class Base {
   public String convertDir = "src/test/java/tron/tronweb/jsDir/convertTool.js ";
   public String usdjContractAddress = "TCkkpmnY38nsXAtideWzHTybvbMozzXUot";
   public String usdjContractBase64Address = "411E8D88B8516ED59B8DBEF73B286D562C51D486AA";
+  public String queryAddress = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddress");
+  public String queryAddress41 = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddressBase64With41Start");
 
   public  String executeJavaScript(String cmd) throws IOException {
     Process process = Runtime.getRuntime().exec("node " + cmd);
