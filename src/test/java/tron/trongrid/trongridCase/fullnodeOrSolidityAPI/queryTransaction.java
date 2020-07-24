@@ -43,7 +43,7 @@ public class queryTransaction extends fullOrSolidityBase {
     Assert.assertTrue(transactionInfoBody.containsKey("log"));
     Assert.assertTrue(transactionInfoBody.getInteger("fee") == 3500);
     Assert.assertEquals(transactionInfoBody.getLong("blockNumber"), txidBlockNum);
-    Assert.assertTrue(transactionInfoBody.containsKey("internal_transactions"));
+//    Assert.assertTrue(transactionInfoBody.containsKey("internal_transactions"));
   }
 
   /**
