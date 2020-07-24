@@ -909,6 +909,19 @@ public class fullOrSolidityBase {
     }
   }
 
+  /**
+   * constructor.
+   */
+  public static int getSubStringCount(String orgine, String find) {
+    int count=0;
+    for (int i =0;i+5<orgine.length();i++){
+      if(orgine.substring(i,i+5).equals(find)){
+        count++;
+      }
+    }
+    return count;
+  }
+
 
   /**
    * constructor.
