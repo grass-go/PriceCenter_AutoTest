@@ -19,11 +19,10 @@ public class VotingSelf {
   private HttpResponse response;
 
 
-  @Test(enabled = false,description = "get self voting witness")
+  @Test(enabled = true,description = "get self voting witness")
   public void Test000getVotingSelf() throws Exception {
     Map<String, String> params = new HashMap<>();
-    params.put("address","TH48niZfbwHMyqZwEB8wmHfzcvR8ZzJKC6"); //sophia's address
-
+    params.put("address","TXTNcgJHD9GPfpiTbSG2VGtfdfii9VcpEr"); //sophia's address
     response = TronlinkApiList.votingV2Self(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);

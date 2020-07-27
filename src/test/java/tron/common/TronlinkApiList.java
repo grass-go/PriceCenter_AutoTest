@@ -176,22 +176,22 @@ public class TronlinkApiList {
     return response;
   }
 
-  public static HttpResponse walletMarketBanner(Map<String, String> params) throws Exception{
-    String requestUrl = HttpNode + "/wallet/market/banner";
+  public static HttpResponse walletMarketBanner() {
+    String requestUrl = HttpNode + "/api/wallet/market/banner";
 
-    response = createGetConnect(requestUrl, params);
+    response = createGetConnect(requestUrl);
     return response;
   }
 
   public static HttpResponse walletMarketFavorite(Map<String, String> params) throws Exception{
-    String requestUrl = HttpNode + "/wallet/market/favorite";
+    String requestUrl = HttpNode + "/api/wallet/market/favorite";
 
     response = createGetConnect(requestUrl, params);
     return response;
   }
 
   public static HttpResponse walletMarketTrxUsdt(Map<String, String> params) throws Exception{
-    String requestUrl = HttpNode + "/wallet/market/trx_usdt";
+    String requestUrl = HttpNode + "/api/wallet/market/trx_usdt";
 
     response = createGetConnect(requestUrl, params);
     return response;

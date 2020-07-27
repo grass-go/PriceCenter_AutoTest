@@ -18,25 +18,29 @@ public class VotingSearch {
   private HttpResponse response;
 
 
-  @Test(enabled = false,description = "search witness by keywords")
+  @Test(enabled = true,description = "search witness by keywords")
   public void Test000SearchWitness() throws Exception {
 
     Map<String, String> params = new HashMap<>();
-    params.put("keyword","bit");
+    params.put("keyword","TK");
     response = TronlinkApiList.votingV2Search(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    Assert.assertTrue(responseContent.containsKey("total"));
-    Assert.assertTrue(responseContent.getInteger("total")>0);
-    Assert.assertTrue(responseContent.containsKey("totalVotes"));
-    Assert.assertTrue(responseContent.getInteger("totalVotes")>0);
+
     Assert.assertTrue(responseContent.containsKey("data"));
-    responseArrayContent = responseContent.getJSONArray("data");
+    JSONObject ob = responseContent.getJSONObject("data");
+    Assert.assertTrue(ob.containsKey("total"));
+    Assert.assertTrue(ob.getInteger("total")>0);
+    Assert.assertTrue(ob.containsKey("totalVotes"));
+    Assert.assertTrue(ob.getInteger("totalVotes")>0);
+    Assert.assertTrue(ob.containsKey("data"));
+    responseArrayContent = ob.getJSONArray("data");
 
     //data object
     for (Object json:responseArrayContent) {
       JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
       Assert.assertTrue(jsonObject.containsKey("lastRanking"));
+      Assert.assertTrue(jsonObject.containsKey("ranking"));
       Assert.assertTrue(jsonObject.containsKey("address"));
       Assert.assertTrue(jsonObject.containsKey("name"));
       Assert.assertTrue(jsonObject.containsKey("url"));

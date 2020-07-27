@@ -33,7 +33,7 @@ public class votingWitness {
     for (Object json:responseArrayContent) {
       JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
       Assert.assertTrue(jsonObject.containsKey("lastRanking"));
-      Assert.assertTrue(jsonObject.containsKey("realTimeRanking"));
+      Assert.assertTrue(jsonObject.containsKey("ranking"));
       Assert.assertTrue(jsonObject.containsKey("address"));
       Assert.assertTrue(jsonObject.containsKey("name"));
       Assert.assertTrue(jsonObject.containsKey("url"));
@@ -44,9 +44,9 @@ public class votingWitness {
       Assert.assertTrue(jsonObject.containsKey("brokerage"));
       Assert.assertTrue(jsonObject.containsKey("votesPercentage"));
       Assert.assertTrue(jsonObject.containsKey("change_cycle"));
-//      Assert.assertTrue(jsonObject.containsKey("producedTotal"));
-//      Assert.assertTrue(jsonObject.containsKey("annualized_income"));
-//      Assert.assertTrue(jsonObject.containsKey("totalVotes"));
+      Assert.assertTrue(jsonObject.containsKey("producedTotal"));
+      Assert.assertTrue(jsonObject.containsKey("annualized_income"));
+      Assert.assertTrue(jsonObject.containsKey("totalVotes"));
     }
   }
 }
