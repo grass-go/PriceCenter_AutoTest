@@ -17,10 +17,9 @@ public class MarketBanner {
   private HttpResponse response;
   private HashMap<String,String> param = new HashMap<>();
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void Test000getMarketBanner() throws Exception {
-    param.put("address","TH48niZfbwHMyqZwEB8wmHfzcvR8ZzJKC6"); //sophia's address
-    response = TronlinkApiList.walletMarketBanner(param);
+    response = TronlinkApiList.walletMarketBanner();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     responseArrayContent = responseContent.getJSONArray("data");
@@ -35,7 +34,9 @@ public class MarketBanner {
       Assert.assertTrue(jsonObject.containsKey("type"));
       Assert.assertTrue(jsonObject.containsKey("vote_reward"));
       Assert.assertTrue(jsonObject.containsKey("button_text"));
-      Assert.assertTrue(jsonObject.containsKey("describe"));
+      Assert.assertTrue(jsonObject.containsKey("introduction"));
+      Assert.assertTrue(jsonObject.containsKey("yield"));
+      Assert.assertTrue(jsonObject.containsKey("lang"));
       Assert.assertTrue(jsonObject.containsKey("created_at"));
       Assert.assertTrue(jsonObject.containsKey("updated_at"));
     }
