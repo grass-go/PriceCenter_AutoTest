@@ -142,4 +142,40 @@ public class chainTest extends Base {
         }
     }
 
+    @Test(enabled = true, description = "Test listSuperRepresentatives")
+    public void test08ListTokens() throws IOException {
+        functionName = "listTokens ";
+        String result = executeJavaScript(chainDir + functionName);
+//        System.out.println(result);
+        JSONArray jsonArray = JSONObject.parseArray(result);
+        Assert.assertTrue(jsonArray.size()>20);
+        for(Object ob: jsonArray){
+            Assert.assertTrue(((JSONObject)ob).containsKey("owner_address"));
+            Assert.assertTrue(((JSONObject)ob).containsKey("name"));
+            Assert.assertTrue(((JSONObject)ob).containsKey("total_supply"));
+            Assert.assertTrue(((JSONObject)ob).containsKey("trx_num"));
+            Assert.assertTrue(((JSONObject)ob).containsKey("num"));
+            Assert.assertTrue(((JSONObject)ob).containsKey("start_time"));
+            Assert.assertTrue(((JSONObject)ob).containsKey("end_time"));
+            Assert.assertTrue(((JSONObject)ob).containsKey("description"));
+            Assert.assertTrue(((JSONObject)ob).containsKey("url"));
+            Assert.assertTrue(((JSONObject)ob).containsKey("id"));
+            if (((JSONObject)ob).getIntValue("id") == 1002000){
+                Assert.assertEquals(1548000000000L,((JSONObject)ob).getLongValue("start_time"));
+                Assert.assertEquals(1,((JSONObject)ob).getIntValue("trx_num"));
+                Assert.assertEquals(990000000000000000L,((JSONObject)ob).getLongValue("total_supply"));
+                Assert.assertEquals(6,((JSONObject)ob).getIntValue("precision"));
+                Assert.assertEquals(1,((JSONObject)ob).getIntValue("num"));
+                Assert.assertEquals("BitTorrent",((JSONObject)ob).getString("name"));
+                Assert.assertEquals(1548000001000L,((JSONObject)ob).getLongValue("end_time"));
+                Assert.assertEquals("OfficialTokenofBitTorrentProtocol",((JSONObject)ob).getString("description"));
+                Assert.assertEquals("4137fa1a56eb8c503624701d776d95f6dae1d9f0d6",((JSONObject)ob).getString("owner_address"));
+                Assert.assertEquals("BTT",((JSONObject)ob).getString("abbr"));
+                Assert.assertEquals("www.bittorrent.com",((JSONObject)ob).getString("url"));
+            }
+
+
+        }
+    }
+
 }
