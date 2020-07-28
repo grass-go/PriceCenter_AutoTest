@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
@@ -25,10 +26,10 @@ public class VotingSelf {
     params.put("address","TXTNcgJHD9GPfpiTbSG2VGtfdfii9VcpEr"); //sophia's address
     response = TronlinkApiList.votingV2Self(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    System.out.println("========");
+    System.out.println(EntityUtils.toString(response.getEntity()));
+    System.out.println("========");
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    System.out.println("========");
-    System.out.println(responseContent.toJSONString());
-    System.out.println("========");
     Assert.assertTrue(responseContent.containsKey("total"));
     Assert.assertTrue(responseContent.getInteger("total")>0);
     Assert.assertTrue(responseContent.containsKey("totalVotes"));
