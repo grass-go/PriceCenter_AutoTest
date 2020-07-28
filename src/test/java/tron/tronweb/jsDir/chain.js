@@ -36,6 +36,10 @@ function listProposals() {
     tronWeb.trx.listProposals().then(result => console.log(JSON.stringify(result)))
 }
 
+function listSuperRepresentatives() {
+    tronWeb.trx.listSuperRepresentatives().then(result => console.log(JSON.stringify(result)))
+}
+
 
 switch(arguments[0]) {
     case "getChainParameters":
@@ -55,6 +59,9 @@ switch(arguments[0]) {
         break;
     case "listProposals":
         listProposals()
+        break;
+    case "listSuperRepresentatives":
+        listSuperRepresentatives()
         break;
      default:
         break;

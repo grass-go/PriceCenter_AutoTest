@@ -100,12 +100,46 @@ public class chainTest extends Base {
         Assert.assertTrue(result.contains(":18888"));
     }
 
-    @Test(enabled = false, description = "Test list proposals")
+    @Test(enabled = true, description = "Test list proposals")
     public void test06listProposals() throws IOException {
-        functionName = "listNodes ";
+        functionName = "listProposals ";
         String result = executeJavaScript(chainDir + functionName);
         System.out.println(result);
+        JSONArray jsonArray = JSONObject.parseArray(result);
+        Assert.assertTrue(jsonArray.size()>0);
+        for(Object ob: jsonArray){
+            Assert.assertTrue(((JSONObject)ob).containsKey("proposal_id"));
+            Assert.assertTrue(((JSONObject)ob).containsKey("proposer_address"));
+            Assert.assertTrue(((JSONObject)ob).containsKey("parameters"));
+            Assert.assertTrue(((JSONObject)ob).containsKey("expiration_time"));
+            Assert.assertTrue(((JSONObject)ob).containsKey("create_time"));
+            Assert.assertTrue(((JSONObject)ob).containsKey("state"));
+            if(((JSONObject)ob).getIntValue("proposal_id") == 39){
+                Assert.assertEquals("41fcbc93454e116c2213f794d931c03b0943df2633",((JSONObject)ob).getString("proposer_address"));
+                Assert.assertEquals(1594552686000L,((JSONObject)ob).getLongValue("create_time"));
+                Assert.assertEquals("DISAPPROVED",((JSONObject)ob).getString("state"));
+            }
+        }
+    }
 
+    @Test(enabled = true, description = "Test listSuperRepresentatives")
+    public void test07ListSuperRepresentatives() throws IOException {
+        functionName = "listSuperRepresentatives ";
+        String result = executeJavaScript(chainDir + functionName);
+        System.out.println(result);
+        JSONArray jsonArray = JSONObject.parseArray(result);
+        Assert.assertTrue(jsonArray.size()>27);
+        for(Object ob: jsonArray){
+            Assert.assertTrue(((JSONObject)ob).containsKey("address"));
+            Assert.assertTrue(((JSONObject)ob).containsKey("url"));
+            if(((JSONObject)ob).getBooleanValue("isJobs")){
+                Assert.assertTrue(((JSONObject)ob).containsKey("voteCount"));
+                Assert.assertTrue(((JSONObject)ob).containsKey("totalProduced"));
+                Assert.assertTrue(((JSONObject)ob).containsKey("totalMissed"));
+                Assert.assertTrue(((JSONObject)ob).containsKey("latestBlockNum"));
+                Assert.assertTrue(((JSONObject)ob).containsKey("latestSlotNum"));
+            }
+        }
     }
 
 }
