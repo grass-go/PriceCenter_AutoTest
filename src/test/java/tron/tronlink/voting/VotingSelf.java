@@ -26,6 +26,9 @@ public class VotingSelf {
     response = TronlinkApiList.votingV2Self(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    System.out.println("========");
+    System.out.println(responseContent.toJSONString());
+    System.out.println("========");
     Assert.assertTrue(responseContent.containsKey("total"));
     Assert.assertTrue(responseContent.getInteger("total")>0);
     Assert.assertTrue(responseContent.containsKey("totalVotes"));
