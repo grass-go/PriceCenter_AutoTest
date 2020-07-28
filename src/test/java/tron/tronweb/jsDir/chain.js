@@ -44,6 +44,10 @@ function listTokens() {
     tronWeb.trx.listTokens().then(result => console.log(JSON.stringify(result)))
 }
 
+function getExchangeByID(input) {
+    tronWeb.trx.getExchangeByID(input).then(result => console.log(JSON.stringify(result)))
+}
+
 
 switch(arguments[0]) {
     case "getChainParameters":
@@ -69,6 +73,9 @@ switch(arguments[0]) {
         break;
     case "listTokens":
         listTokens()
+        break;
+    case "getExchangeByID":
+        getExchangeByID(arguments[1])
         break;
      default:
         break;

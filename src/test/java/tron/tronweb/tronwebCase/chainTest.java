@@ -142,7 +142,7 @@ public class chainTest extends Base {
         }
     }
 
-    @Test(enabled = true, description = "Test listSuperRepresentatives")
+    @Test(enabled = true, description = "Test list tokens")
     public void test08ListTokens() throws IOException {
         functionName = "listTokens ";
         String result = executeJavaScript(chainDir + functionName);
@@ -173,9 +173,22 @@ public class chainTest extends Base {
                 Assert.assertEquals("BTT",((JSONObject)ob).getString("abbr"));
                 Assert.assertEquals("www.bittorrent.com",((JSONObject)ob).getString("url"));
             }
-
-
         }
+    }
+
+    @Test(enabled = true, description = "Test getExchangeByID")
+    public void test09GetExchangeByID() throws IOException {
+        functionName = "getExchangeByID ";
+        String result = executeJavaScript(chainDir + functionName+ "1");
+        System.out.println(result);
+        JSONObject object = JSONObject.parseObject(result);
+        Assert.assertEquals(1,object.getIntValue("exchange_id"));
+        Assert.assertEquals("41f596e85bfd042744f76880979a133da0728679d9",object.getString("creator_address"));
+        Assert.assertEquals(1539673398000L,object.getLongValue("create_time"));
+        Assert.assertEquals("31303030353634",object.getString("first_token_id"));
+        Assert.assertEquals(174,object.getLongValue("first_token_balance"));
+        Assert.assertEquals("5f",object.getString("second_token_id"));
+        Assert.assertEquals(85199,object.getLongValue("second_token_balance"));
     }
 
 }
