@@ -573,6 +573,9 @@ public static HttpResponse search(String node, Map<String, String> params) {
   public static JSONObject parseJsonObResponseContent(HttpResponse response) {
     try {
       String result = EntityUtils.toString(response.getEntity());
+      System.out.println("======");
+      System.out.println(result);
+      System.out.println("======");
 //      result = result.substring(0, result.lastIndexOf("}"));
 //      result = result + ",\"requestTime\":" + requestTime + "}";
       StringEntity entity = new StringEntity(result, Charset.forName("UTF-8"));

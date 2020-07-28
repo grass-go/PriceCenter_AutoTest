@@ -26,9 +26,6 @@ public class VotingSelf {
     params.put("address","TXTNcgJHD9GPfpiTbSG2VGtfdfii9VcpEr"); //sophia's address
     response = TronlinkApiList.votingV2Self(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    System.out.println("========");
-    System.out.println(EntityUtils.toString(response.getEntity()));
-    System.out.println("========");
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     Assert.assertTrue(responseContent.containsKey("total"));
     Assert.assertTrue(responseContent.getInteger("total")>0);
