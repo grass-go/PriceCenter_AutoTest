@@ -9,15 +9,36 @@ const privateKey = "3481E79956D4BD95F358AC96D151C976392FC4E3FC132F78A847906DE588
 const tronWeb = new TronWeb(fullNode,solidityNode,eventServer,privateKey);
 
 
-function getBlock() {
-    tronWeb.trx.getBlock('').then(result => console.log(JSON.stringify(result)))
+function getTokenByID(input) {
+    tronWeb.trx.getTokenByID(input).then(result => console.log(JSON.stringify(result)))
+}
+
+function getTokenFromID(input) {
+    tronWeb.trx.getTokenFromID(input).then(result => console.log(JSON.stringify(result)))
+}
+
+function getTokenListByName(input) {
+    tronWeb.trx.getTokenListByName(input).then(result => console.log(JSON.stringify(result)))
+}
+
+function getTokensIssuedByAddress(input) {
+    tronWeb.trx.getTokensIssuedByAddress(input).then(result => console.log(JSON.stringify(result)))
 }
 
 
 
 switch(arguments[0]) {
-    case "getBlock":
-        getBlock()
+    case "getTokenByID":
+        getTokenByID(arguments[1])
+        break;
+    case "getTokenFromID":
+        getTokenFromID(arguments[1])
+        break;
+    case "getTokenListByName":
+        getTokenListByName(arguments[1])
+        break;
+    case "getTokensIssuedByAddress":
+        getTokensIssuedByAddress(arguments[1])
         break;
 
      default:
