@@ -9,13 +9,13 @@ const privateKey = "3481E79956D4BD95F358AC96D151C976392FC4E3FC132F78A847906DE588
 const tronWeb = new TronWeb(fullNode,solidityNode,eventServer,privateKey);
 
 
-function getBlock() {
-    tronWeb.trx.getBlock('').then(result => console.log(JSON.stringify(result)))
+function getTransaction(input) {
+    tronWeb.trx.getTransaction(input).then(result => console.log(JSON.stringify(result)))
 }
 
 switch(arguments[0]) {
-    case "getBlock":
-        getBlock()
+    case "getTransaction":
+        getTransaction(arguments[1])
         break;
 
      default:
