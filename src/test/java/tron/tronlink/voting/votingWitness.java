@@ -8,6 +8,9 @@ import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class votingWitness {
   private JSONObject responseContent;
@@ -18,8 +21,9 @@ public class votingWitness {
 
   @Test(enabled = true,description = "get all witnesses")
   public void Test000getAllWitnesses() throws Exception {
-
-    response = TronlinkApiList.votingV2Witness(node);
+    Map<String, String> params = new HashMap<>();
+    params.put("sort_type","1");
+    response = TronlinkApiList.votingV2Witness(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     Assert.assertTrue(responseContent.containsKey("total"));

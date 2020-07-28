@@ -154,11 +154,11 @@ public class TronlinkApiList {
     return response;
   }
 
-  public static HttpResponse votingV2Witness(String node) throws Exception{
-    String requestUrl = "http://" + node + "/api/voting/v2/witness";
+  public static HttpResponse votingV2Witness(Map<String, String> params) throws Exception{
+    String requestUrl = HttpNode + "/api/voting/v2/witness";
 
     //System.out.println(requestUrl);
-    response = createGetConnect(requestUrl);
+    response = createGetConnect(requestUrl, params);
     return response;
   }
 

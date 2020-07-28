@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MarketBanner {
   private JSONObject responseContent;
@@ -23,6 +24,22 @@ public class MarketBanner {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     responseArrayContent = responseContent.getJSONArray("data");
+/*
+    Map<String, String> params = new HashMap<>();
+    params.put("sort_type","1");
+    HttpResponse rs = TronlinkApiList.votingV2Witness(params);
+    Assert.assertEquals(rs.getStatusLine().getStatusCode(), 200);
+    JSONObject rc = TronlinkApiList.parseJsonObResponseContent(rs);
+
+    Assert.assertTrue(rc.containsKey("data"));
+    JSONArray rac = rc.getJSONArray("data");
+    JSONObject jo = rac.getJSONObject(0);
+    System.out.println("---------------");
+    System.out.println(jo.toJSONString());
+    System.out.println("---------------");
+    String annualizedIncome = String.valueOf(jo.getDoubleValue("annualized_income"));
+    String ai = annualizedIncome.substring(0,4);*/
+
 
     //data object
     for (Object json:responseArrayContent) {
@@ -39,6 +56,9 @@ public class MarketBanner {
       Assert.assertTrue(jsonObject.containsKey("lang"));
       Assert.assertTrue(jsonObject.containsKey("created_at"));
       Assert.assertTrue(jsonObject.containsKey("updated_at"));
+      /*if(jsonObject.getIntValue("id") == 2){
+        Assert.assertEquals(ai+"%", jsonObject.getString("vote_reward"));
+      }*/
     }
   }
 }
