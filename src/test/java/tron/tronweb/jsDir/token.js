@@ -25,6 +25,10 @@ function getTokensIssuedByAddress(input) {
     tronWeb.trx.getTokensIssuedByAddress(input).then(result => console.log(JSON.stringify(result)))
 }
 
+function getContract(input) {
+    tronWeb.trx.getContract(input).then(result => console.log(JSON.stringify(result)))
+}
+
 
 
 switch(arguments[0]) {
@@ -39,6 +43,9 @@ switch(arguments[0]) {
         break;
     case "getTokensIssuedByAddress":
         getTokensIssuedByAddress(arguments[1])
+        break;
+    case "getContract":
+        getContract(arguments[1])
         break;
 
      default:

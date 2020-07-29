@@ -31,6 +31,14 @@ function getApprovedList() {
     tronWeb.trx.getApprovedList(trans).then(result => console.log(JSON.stringify(result)))
 }
 
+function getUnconfirmedTransactionInfo(input) {
+    tronWeb.trx.getUnconfirmedTransactionInfo(input).then(result => console.log(JSON.stringify(result)))
+}
+
+function getConfirmedTransaction(input) {
+    tronWeb.trx.getConfirmedTransaction(input).then(result => console.log(JSON.stringify(result)))
+}
+
 switch(arguments[0]) {
     case "getTransaction":
         getTransaction(arguments[1]);
@@ -48,6 +56,12 @@ switch(arguments[0]) {
         break;
     case "getApprovedList":
         getApprovedList(arguments[1]);
+        break;
+    case "getUnconfirmedTransactionInfo":
+        getUnconfirmedTransactionInfo(arguments[1]);
+        break;
+    case "getConfirmedTransaction":
+        getConfirmedTransaction(arguments[1]);
         break;
     default:
         break;

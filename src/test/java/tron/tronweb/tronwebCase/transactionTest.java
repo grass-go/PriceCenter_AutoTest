@@ -93,6 +93,36 @@ public class transactionTest extends Base {
         Assert.assertTrue(result.contains("\"ref_block_bytes\":\"c251\""));
     }
 
+    @Test(enabled = true, description = "Test get Unconfirmed TransactionInfo")
+    public void test06GetUnconfirmedTransactionInfo() throws IOException {
+        functionName = "getUnconfirmedTransactionInfo ";
+        String result = executeJavaScript(transactionDir + functionName + queryTractionId );
+        System.out.println(result);
+        JSONObject jsonObject = JSONObject.parseObject(result);
+        Assert.assertEquals(queryTractionId, jsonObject.getString("id"));
+        Assert.assertEquals(21854857L, jsonObject.getLongValue("blockNumber"));
+        Assert.assertEquals(1595833767000L, jsonObject.getLongValue("blockTimeStamp"));
+        Assert.assertEquals(299, jsonObject.getJSONObject("receipt").getIntValue("net_usage"));
+    }
+
+    @Test(enabled = true, description = "Test getConfirmedTransaction by id ")
+    public void test07GetConfirmedTransaction() throws IOException {
+        functionName = "getConfirmedTransaction ";
+        String result = executeJavaScript(transactionDir + functionName + queryTractionId);
+        System.out.println(result);
+        JSONObject jsonObject = JSONObject.parseObject(result);
+        Assert.assertEquals(queryTractionId, jsonObject.getString("txID"));
+        Assert.assertEquals("SUCCESS",
+                jsonObject.getJSONArray("ret").getJSONObject(0).getString("contractRet"));
+        JSONObject rawData = jsonObject.getJSONObject("raw_data");
+        Assert.assertEquals(1595833744078L, rawData.getLongValue("timestamp"));
+        Assert.assertEquals(1595833797000L, rawData.getLongValue("expiration"));
+        Assert.assertEquals("d7ba39131fc4be0d", rawData.getString("ref_block_hash"));
+        Assert.assertEquals("7a6d", rawData.getString("ref_block_bytes"));
+        Assert.assertEquals("VoteWitnessContract",
+                rawData.getJSONArray("contract").getJSONObject(0).getString("type"));
+    }
+
 }
 
 
