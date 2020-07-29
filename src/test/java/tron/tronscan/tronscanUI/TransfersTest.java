@@ -66,10 +66,10 @@ public class TransfersTest {
     @Test(enabled = true,description = "转账列表数据",retryAnalyzer = MyIRetryAnalyzer.class)
     public void transfersList() throws Exception{
         //转账列表时间刷新文案
-        driver.findElement(By.cssSelector("#root > main > div.row > div > div > div.d-flex > span:nth-child(1) > span")).getText().isEmpty();
+        driver.findElement(By.cssSelector("#root > main > div.d-flex > span:nth-child(1) > span")).getText().isEmpty();
         Thread.sleep(300);
         //列表中第一行数据点击
-        driver.findElement(By.cssSelector("#root > main > div.row > div > div > div:nth-child(2) > div > div > div > div > div > div > div > table > tbody > tr:nth-child(1)> td:nth-child(1)")).click();
+        driver.findElement(By.cssSelector("#root > main > div.row > div > div > div > div > div > div > div > div > div > div > table > tbody > tr:nth-child(1) > td:nth-child(1)")).click();
         Thread.sleep(300);
         //跳转交易详情
         Assert.assertEquals(driver.findElement(By.cssSelector(" #root > div.header-top.nav-item-page > div.container.d-flex.sub-header > h4 > span > span")).getText(),"TRANSFERS");
