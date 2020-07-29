@@ -1,6 +1,8 @@
 package tron.tronweb.tronwebCase;
 
 import java.io.IOException;
+
+import com.alibaba.fastjson.JSONObject;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.tronweb.base.Base;
@@ -55,5 +57,18 @@ public class contractTest extends Base{
     Assert.assertTrue(eventInfo.contains("result"));
   }
 
+  @Test(enabled = true, description = "Test getContract")
+  public void test05GetContract() throws IOException {
+    functionName = "getContract ";
+    String address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"; //Tether USD (USDT)
+    String result = executeJavaScript(contractDir + functionName + address);
+    System.out.println(result);
+    JSONObject jsonObject = JSONObject.parseObject(result);
+    Assert.assertEquals("41a614f803b6fd780986a42c78ec9c7f77e6ded13c", jsonObject.getString("contract_address"));
+    Assert.assertEquals(10000000, jsonObject.getIntValue("origin_energy_limit"));
+    Assert.assertEquals("TetherToken", jsonObject.getString("name"));
+    Assert.assertEquals(30, jsonObject.getIntValue("consume_user_resource_percent"));
+    Assert.assertEquals("41517591d35d313bf6a5e33098284502b045e2bc08", jsonObject.getString("origin_address"));
+  }
 
 }
