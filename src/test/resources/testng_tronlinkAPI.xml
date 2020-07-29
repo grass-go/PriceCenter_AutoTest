@@ -4,6 +4,9 @@
     <listeners>
         <listener class-name="tron.common.utils.SqlTronlinkAPI"/>
     </listeners>
+    <listeners>
+        <listener class-name="tron.common.utils.RetryListener"/>
+    </listeners>
     <test name="tronlinkAPI">
         <packages>
             <package name="tron.tronlink.*"></package>
