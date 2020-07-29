@@ -25,8 +25,6 @@ function getTokensIssuedByAddress(input) {
     tronWeb.trx.getTokensIssuedByAddress(input).then(result => console.log(JSON.stringify(result)))
 }
 
-
-
 switch(arguments[0]) {
     case "getTokenByID":
         getTokenByID(arguments[1])
@@ -40,7 +38,6 @@ switch(arguments[0]) {
     case "getTokensIssuedByAddress":
         getTokensIssuedByAddress(arguments[1])
         break;
-
-     default:
+    default:
         break;
 }

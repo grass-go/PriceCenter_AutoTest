@@ -28,6 +28,10 @@ function getEventResult(contractAddress, eventname, size_input) {
 
 }
 
+function getContract(input) {
+    tronWeb.trx.getContract(input).then(result => console.log(JSON.stringify(result)))
+}
+
 
 switch(arguments[0]) {
      case "getContractFromAbi":
@@ -41,6 +45,9 @@ switch(arguments[0]) {
         break;
      case "getEventResult":
         getEventResult(arguments[1],arguments[2],arguments[3])
+        break;
+    case "getContract":
+        getContract(arguments[1])
         break;
      default:
         break;

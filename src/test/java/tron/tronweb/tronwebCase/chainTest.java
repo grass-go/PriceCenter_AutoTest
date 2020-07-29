@@ -191,4 +191,12 @@ public class chainTest extends Base {
         Assert.assertEquals(85199,object.getLongValue("second_token_balance"));
     }
 
+    @Test(enabled = true, description = "Test timeUntilNextVoteCycle")
+    public void test09timeUntilNextVoteCycle() throws IOException {
+        functionName = "timeUntilNextVoteCycle ";
+        String result = executeJavaScript(chainDir + functionName+ "1");
+        System.out.println(result);
+        Assert.assertTrue(Long.valueOf(result)>=0);
+    }
+
 }

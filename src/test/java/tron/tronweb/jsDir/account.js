@@ -57,6 +57,18 @@ function getBrokerage(input) {
 function getReward(input) {
     tronWeb.trx.getReward(input).then(result => console.log(result))
 }
+
+function getUnconfirmedBalance(input) {
+    tronWeb.trx.getUnconfirmedBalance(input).then(result => console.log(result))
+}
+
+function getUnconfirmedBrokerage(input) {
+    tronWeb.trx.getUnconfirmedBrokerage(input).then(result => console.log(result))
+}
+
+function getUnconfirmedReward(input) {
+    tronWeb.trx.getUnconfirmedReward(input).then(result => console.log(result))
+}
 switch(arguments[0]) {
      case "createAccount":
         createAccount()
@@ -89,6 +101,15 @@ switch(arguments[0]) {
         break;
     case "getReward":
         getReward(arguments[1])
+        break;
+    case "getUnconfirmedBalance":
+        getUnconfirmedBalance(arguments[1])
+        break;
+    case "getUnconfirmedBrokerage":
+        getUnconfirmedBrokerage(arguments[1])
+        break;
+    case "getUnconfirmedReward":
+        getUnconfirmedReward(arguments[1])
         break;
      default:
         break;

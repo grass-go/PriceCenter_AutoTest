@@ -78,6 +78,7 @@ public class tokenTest extends Base {
     Assert.assertEquals(address, jsonObject.getString("owner_address"));
     Assert.assertEquals(1002000, jsonObject.getIntValue("id"));
   }
+
 }
 
 

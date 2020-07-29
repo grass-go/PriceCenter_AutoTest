@@ -142,4 +142,34 @@ public class accountTest extends Base{
     Assert.assertTrue(re >= 0);
   }
 
+  @Test(enabled = true, description = "Test get unconfirmed balance")
+  public void test10GetUnconfirmedBalance() throws IOException {
+    functionName = "getUnconfirmedBalance ";
+    String address = queryAddress;
+    String result = executeJavaScript(accountDir + functionName + address);
+    System.out.println(result);
+    Long re = Long.valueOf(result);
+    Assert.assertTrue(re > 0);
+  }
+
+  @Test(enabled = true, description = "Test get unconfirmed Brokerage")
+  public void test11GetUnconfirmedBrokerage() throws IOException {
+    functionName = "getUnconfirmedBrokerage ";
+    String address = queryAddress;
+    String result = executeJavaScript(accountDir + functionName + address);
+    System.out.println(result);
+    Long re = Long.valueOf(result);
+    Assert.assertTrue(re >= 0 && re <= 100);
+  }
+
+  @Test(enabled = true, description = "Test get unconfirmed reward")
+  public void test12GetUnconfirmedReward() throws IOException {
+    functionName = "getUnconfirmedReward ";
+    String address = querySrAddress;
+    String result = executeJavaScript(accountDir + functionName + address);
+    System.out.println(result);
+    Long re = Long.valueOf(result);
+    Assert.assertTrue(re >= 0);
+  }
+
 }
