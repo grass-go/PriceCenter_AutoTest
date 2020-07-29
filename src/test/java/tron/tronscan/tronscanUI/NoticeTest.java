@@ -6,14 +6,16 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import tron.common.utils.Configuration;
 import tron.common.utils.MyIRetryAnalyzer;
 import tron.common.utils.WebBrowser;
 
 public class NoticeTest {
-    private static String URL = "https://tronscan.org/#/";
+    private String tronScanNode = Configuration.getByPath("testng.conf")
+            .getString("tronscanIP");
+    private  String URL = "https://"+tronScanNode+"/#/blockchain/blocks";
     WebBrowser webBrowser = new WebBrowser();
     public static WebDriver driver;
-
     @BeforeMethod(enabled = true)
     public void start() throws Exception {
         try {
@@ -21,23 +23,24 @@ public class NoticeTest {
         } catch (Exception e) {
         }
     }
-    @Test(enabled = true,description = "广播栏",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = true,description = "广播栏")
     public void testTop() throws Exception{
-        Boolean real_display = driver.findElement(By.cssSelector("div.container-fluid > div > div.justify-content-center > div > div >img")).isDisplayed();
+        driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(1) > span > span > a > span > span")).click();
+        Boolean real_display = driver.findElement(By.cssSelector("#root > main > div.homeNotice> div > div > div > div.hidden-mobile > div > img")).isDisplayed();
         if(real_display){
            //广播三条数据
-           driver.findElement(By.xpath("//*[@id=\"root\"]/main/div[1]/div/div[1]/div/div/div"));
+           //driver.findElement(By.xpath("//*[@id=\"root\"]/main/div[1]/div/div[1]/div/div/div"));
            //
-           driver.findElement(By.cssSelector("div.container-fluid > div > div.justify-content-center > div > div > div > a.item-0 > span.title")).getText().isEmpty();
-           driver.findElement(By.cssSelector("div.container-fluid > div > div.justify-content-center > div > div > div > a.item-0 > span.date")).getText().isEmpty();
+           driver.findElement(By.cssSelector("#root > main > div.homeNotice > div > div > div > div.hidden-mobile > div > div > a.item-0.item > span.title")).getText().isEmpty();
+           driver.findElement(By.cssSelector("#root > main > div.homeNotice > div > div > div > div.hidden-mobile > div > div > a.item-0.item > span.date")).getText().isEmpty();
             //
-           driver.findElement(By.cssSelector("div.container-fluid > div > div.justify-content-center > div > div > div > a.item-1 > span.title")).getText().isEmpty();
-           driver.findElement(By.cssSelector("div.container-fluid > div > div.justify-content-center > div > div > div > a.item-1 > span.date")).getText().isEmpty();
+           driver.findElement(By.cssSelector("#root > main > div.homeNotice> div > div > div > div.hidden-mobile > div > div > a.item-1.item > span.title")).getText().isEmpty();
+           driver.findElement(By.cssSelector("#root > main > div.homeNotice> div > div > div > div.hidden-mobile > div > div > a.item-1.item > span.date")).getText().isEmpty();
             //
-           driver.findElement(By.cssSelector("div.container-fluid > div > div.justify-content-center > div > div > div > a.item-2 > span.title")).getText().isEmpty();
-           driver.findElement(By.cssSelector("div.container-fluid > div > div.justify-content-center > div > div > div > a.item-2 > span.date")).getText().isEmpty();
+           driver.findElement(By.cssSelector("#root > main > div.homeNotice > div > div > div > div.hidden-mobile > div > div > a.item-2.item > span.title")).getText().isEmpty();
+           driver.findElement(By.cssSelector("#root > main > div.homeNotice > div > div > div > div.hidden-mobile > div > div > a.item-2.item > span.date")).getText().isEmpty();
            //more
-           driver.findElement(By.cssSelector("div.container-fluid > div > div.justify-content-center > div > div > a > span")).click();
+           driver.findElement(By.cssSelector("#root > main > div.homeNotice > div > div > div > div.hidden-mobile > div > a > span")).click();
            driver.close();
        }
 
