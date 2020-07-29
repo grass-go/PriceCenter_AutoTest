@@ -48,6 +48,10 @@ function getExchangeByID(input) {
     tronWeb.trx.getExchangeByID(input).then(result => console.log(JSON.stringify(result)))
 }
 
+function timeUntilNextVoteCycle() {
+    tronWeb.trx.timeUntilNextVoteCycle().then(result => console.log(result))
+}
+
 
 switch(arguments[0]) {
     case "getChainParameters":
@@ -76,6 +80,9 @@ switch(arguments[0]) {
         break;
     case "getExchangeByID":
         getExchangeByID(arguments[1])
+        break;
+    case "timeUntilNextVoteCycle":
+        timeUntilNextVoteCycle()
         break;
      default:
         break;
