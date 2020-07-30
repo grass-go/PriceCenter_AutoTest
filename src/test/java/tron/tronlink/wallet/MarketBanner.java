@@ -40,7 +40,8 @@ public class MarketBanner {
     String ai = annualizedIncome.substring(0,4);
     double origin = Double.valueOf(ai);
     int value = Integer.valueOf(annualizedIncome.charAt(4));
-    if(value>=5){
+    System.out.println("value: " + value+"    origin: "+ origin + "   annualizedIncome: "+ annualizedIncome);
+    if(value>=53){
       origin = origin + 0.01;
     }
 
