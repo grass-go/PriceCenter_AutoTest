@@ -38,7 +38,11 @@ public class MarketBanner {
     System.out.println("---------------");
     String annualizedIncome = String.valueOf(jo.getDoubleValue("annualized_income"));
     String ai = annualizedIncome.substring(0,4);
-
+    double origin = Double.valueOf(ai);
+    int value = Integer.valueOf(annualizedIncome.charAt(4));
+    if(value>=5){
+      origin = origin + 0.01;
+    }
 
     //data object
     for (Object json:responseArrayContent) {
@@ -56,7 +60,7 @@ public class MarketBanner {
       Assert.assertTrue(jsonObject.containsKey("created_at"));
       Assert.assertTrue(jsonObject.containsKey("updated_at"));
       if(jsonObject.getIntValue("id") == 2){
-        Assert.assertEquals(ai+"%", jsonObject.getString("vote_reward"));
+        Assert.assertEquals(origin+"%", jsonObject.getString("vote_reward"));
       }
     }
   }
