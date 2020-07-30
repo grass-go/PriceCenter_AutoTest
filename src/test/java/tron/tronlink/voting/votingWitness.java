@@ -21,6 +21,10 @@ public class votingWitness {
 
   @Test(enabled = true,description = "get all witnesses")
   public void Test000getAllWitnesses() throws Exception {
+    boolean re = TronlinkApiList.getAllWitnessFromTronscan();
+    if(!re){
+      System.out.println("* * * * * * * tronscan get witness error * * * * * *");
+    }
     Map<String, String> params = new HashMap<>();
     params.put("sort_type","1");
     response = TronlinkApiList.votingV2Witness(params);
