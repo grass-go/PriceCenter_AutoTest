@@ -162,6 +162,24 @@ public class TronlinkApiList {
     return response;
   }
 
+  public static boolean getAllWitnessFromTronscan() {
+    String requestUrl = "https://apilist.tronscan.org/api/vote/witness";
+    response = createGetConnect(requestUrl);
+//    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    if ((response.getStatusLine().getStatusCode() != 200)
+            || responseContent == null
+            || !(responseContent.containsKey("total"))
+            || !(responseContent.getInteger("total") > 0)
+            || !(responseContent.containsKey("totalVotes"))
+            || !(responseContent.getInteger("totalVotes") > 0)
+            || !(responseContent.containsKey("data"))
+            || !(responseContent.getJSONArray("data").size() > 0)) {
+      return false;
+    }
+    return true;
+  }
+
   public static HttpResponse votingV2Search(Map<String, String> params) throws Exception{
     String requestUrl = HttpNode + "/api/voting/v2/search";
 
