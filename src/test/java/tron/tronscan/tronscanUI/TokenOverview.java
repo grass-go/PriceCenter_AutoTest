@@ -35,11 +35,11 @@ public class TokenOverview {
         //TRON通证总数文案
         driver.findElement(By.cssSelector("div.token-num-wrap > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > span")).getText().isEmpty();
         //7days通证总数
-        driver.findElement(By.cssSelector("div.token-num-wrap > div:nth-child(1) > div:nth-child(3) > div:nth-child(1) > span")).getText().isEmpty();
+        driver.findElement(By.cssSelector("div.token-num-wrap> div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > span")).getText().isEmpty();
         //收录的通证数
         driver.findElement(By.cssSelector("div.token-num-wrap> div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > span")).getText().isEmpty();
         //7days新增Tronscan通证数
-        driver.findElement(By.cssSelector("div.token-num-wrap > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > span")).getText().isEmpty();
+        driver.findElement(By.cssSelector("div.token-num-wrap> div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > span")).getText().isEmpty();
         //10trc和20trc
         driver.findElement(By.cssSelector("div.d-flex> div.d-md-flex > div > div > label:nth-child(2) > span:nth-child(2)")).click();
         driver.findElement(By.cssSelector("div.d-md-flex > div > div > label:nth-child(3) > span:nth-child(2)")).click();
@@ -49,29 +49,11 @@ public class TokenOverview {
     @Test(enabled = true,description = "查看进入的通证是否是10token",retryAnalyzer = MyIRetryAnalyzer.class)
     public void trc10Test() throws Exception{
         driver.findElement(By.cssSelector("div.container.d-flex.sub-header > h4 > span > span")).getText().isEmpty();
-        driver.findElement(By.cssSelector("div.d-flex> div.d-md-flex > div > div > label:nth-child(2) > span:nth-child(2)")).click();
+        driver.findElement(By.cssSelector("div.d-flex > div.d-md-flex.apply-trc20.apply-all.align-items-center > div > div > label:nth-child(2) > span:nth-child(2)")).click();
         //点击一个10token详情
         driver.findElement(By.cssSelector("table > tbody > tr.ant-table-row.trc20-star-ad.ant-table-row-level-0 > td.ant_table.d-sm-table-cell.token-list-action.ant-table-row-cell-break-word > div > a > span")).getText().isEmpty();
         Thread.sleep(200);
-        driver.findElement(By.cssSelector("table > tbody > tr:nth-child(2) > td.ant_table.d-sm-table-cell.token-list-action.ant-table-row-cell-break-word > div > a > span")).click();
-        //匹配是否是10通证
-        Thread.sleep(200);
-       // Assert.assertEquals(driver.findElement(By.cssSelector("#root > main > div > div > div:nth-child(1) > div.card-body.mt-2 > div > div.token-sign")).getText(), "TRC10");
-        Thread.sleep(200);
-        //点通证转账
-        driver.findElement(By.cssSelector("#root > main > div > div > div.card.mt-3 > div.card-header > ul > li:nth-child(2) > a > span > span")).click();
-        //14 days
-        driver.findElement(By.cssSelector("div > label:nth-child(2) > span:nth-child(2) > span")).click();
-        //14天total文案说明
-        driver.findElement(By.cssSelector("div:nth-child(1) > div > div > div > span:nth-child(4) > span:nth-child(1)")).getText().isEmpty();
-        Thread.sleep(200);
-        //通证持有者
-        driver.findElement(By.cssSelector("div > div.card.mt-3 > div.card-header > ul > li:nth-child(3) > a > span > span")).click();
-        //通证持有者内部展示
-        driver.findElement(By.cssSelector(" div.card.mt-3 > div.card-body.p-0 > div.row.transfers > div > div.holder-distribution > section.distribution-header > span")).getText().isEmpty();
-        driver.findElement(By.cssSelector("div.nav-searchbar > div > div:nth-child(1) > div > div:nth-child(1) > span:nth-child(1)")).getText().isEmpty();
-        //交易市场
-        driver.findElement(By.cssSelector("div > div.card.mt-3 > div.card-header > ul > li:nth-child(4) > a > span > span")).click();
+        driver.findElement(By.cssSelector("table > tbody > tr:nth-child(1) > td.ant_table.d-sm-table-cell.token-list-action.ant-table-row-cell-break-word > div > a > span")).getText().isEmpty();
         driver.close();
 
     }
