@@ -30,7 +30,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         }
     }
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "解冻")
+    @Test(enabled = false,retryAnalyzer = MyIRetryAnalyzer.class,description = "解冻")
     public void testUnFreeze() throws Exception{
         Step.login(driver);
         {
@@ -45,7 +45,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
 //        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "TRX Unfrozen");
     }
 
-    @Test(enabled = true,description = "账户页标签",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = false,description = "账户页标签",retryAnalyzer = MyIRetryAnalyzer.class)
     public void tagTest() throws Exception{
         Step.login(driver);
         {

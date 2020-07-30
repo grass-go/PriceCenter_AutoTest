@@ -23,7 +23,7 @@ public class NoticeTest {
         } catch (Exception e) {
         }
     }
-    @Test(enabled = true,description = "广播栏",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = false,description = "广播栏",retryAnalyzer = MyIRetryAnalyzer.class)
     public void testTop() throws Exception{
         //转义跳转-给出地址跳转的，后期修复
        driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(1) > span > span > a > span > span")).click();
@@ -42,7 +42,7 @@ public class NoticeTest {
        driver.close();
    }
 
-    @Test(enabled = true,description = "数据栏",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled =false,description = "数据栏")
     public void topDataTest() throws Exception {
         //转义跳转-给出地址跳转的，后期修复
         driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(1) > span > span > a > span > span")).click();
