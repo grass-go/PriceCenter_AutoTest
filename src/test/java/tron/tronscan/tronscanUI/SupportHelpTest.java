@@ -25,8 +25,9 @@ public class SupportHelpTest {
         }
     }
 
-    @Test(enabled = true,description = "支持与帮助--新手引导",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = false,description = "支持与帮助--新手引导")
     public void testHelp() throws Exception{
+        //点更多
         driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(9) > div > span > span > span > span")).click();
         driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(9) > div > div > div:nth-child(3) > h6 > span")).getText().isEmpty();
         //新手引导
@@ -36,7 +37,7 @@ public class SupportHelpTest {
         driver.close();
     }
 
-    @Test(enabled = true,description = "支持与帮助--常见问题",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = false,description = "支持与帮助--常见问题",retryAnalyzer = MyIRetryAnalyzer.class)
     public void testFAQ() throws Exception{
         //更多中常见问题
         driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(9) > div > span > span > span > span")).click();
