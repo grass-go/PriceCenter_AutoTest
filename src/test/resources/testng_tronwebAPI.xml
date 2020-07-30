@@ -3,7 +3,7 @@
 <suite name="tronwebAPI" parallel="tests" thread-count="1">
     <listeners>
         <listener class-name="tron.common.utils.SqlTronwebAPI"/>
-<!--            <listener class-name="tron.common.utils.RetryListener"/>-->
+        <listener class-name="tron.common.utils.RetryListener"/>
     </listeners>
     <test name="tronwebAPI">
         <packages>
