@@ -27,7 +27,7 @@ public class SupportHelpTest {
         }
     }
 
-    @Test(enabled = true,description = "支持与帮助--新手引导")
+    @Test(enabled = true,description = "支持与帮助--新手引导",retryAnalyzer = MyIRetryAnalyzer.class)
     public void testHelp() throws Exception{
         //点更多
         driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(9) > div > span > span > span > span")).click();
