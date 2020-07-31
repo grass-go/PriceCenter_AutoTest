@@ -24,12 +24,17 @@ public class Step {
                 Actions builder = new Actions(driver);
                 builder.moveToElement(element).perform();
             }
+            //导入账号
             driver.findElement(By.cssSelector(".px-2:nth-child(3) span")).click();
+            //账户私钥
             driver.findElement(By.cssSelector(".form-control:nth-child(2)")).click();
             driver.findElement(By.cssSelector(".form-control:nth-child(2)")).sendKeys("a43d44d5781fb43ccb0551c449b8324a5e0999372765d20b9fa3ddca63e463a5");
+            //点登录
             driver.findElement(By.cssSelector(".btn-danger:nth-child(3)")).click();
             Thread.sleep(200);
+            //点钱包
             driver.findElement(By.cssSelector(".dropdown-toggle > span:nth-child(1)")).click();
+            //点账户地址
             driver.findElement(By.cssSelector("div > a > div > div > div.ellipsis_box_start")).click();
             Assert.assertEquals(driver.findElement(By.cssSelector("span > .d-flex div")).getText(), "TMEKAfwpJLGSFKbrDDveCQFE9KD95JqPHD");
             Thread.sleep(200);
