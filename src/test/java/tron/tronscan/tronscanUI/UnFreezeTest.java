@@ -48,7 +48,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
 //        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "TRX Unfrozen");
     }
 
-    @Test(enabled = true,description = "账户页标签")
+    @Test(enabled = true,description = "账户页标签",retryAnalyzer = MyIRetryAnalyzer.class)
     public void tagTest() throws Exception{
         Step.login(driver);
         {
