@@ -13,25 +13,23 @@ import tron.common.utils.WebBrowser;
 public class NoticeTest {
     private String tronScanNode = Configuration.getByPath("testng.conf")
             .getString("tronscanIP");
-    private  String URL = "https://"+tronScanNode+"/#/blockchain/blocks";
+    private  String URL = "https://"+tronScanNode+"/#/";
     WebBrowser webBrowser = new WebBrowser();
     public static WebDriver driver;
     @BeforeMethod(enabled = true)
     public void start() throws Exception {
         try {
             driver = webBrowser.startChrome(URL);
+            driver.navigate().refresh();
+            Thread.sleep(300);
         } catch (Exception e) {
         }
     }
-    @Test(enabled = false,description = "广播栏",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = true,description = "广播栏",retryAnalyzer = MyIRetryAnalyzer.class)
     public void testTop() throws Exception{
-        //转义跳转-给出地址跳转的，后期修复
-       driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(1) > span > span > a > span > span")).click();
-        Thread.sleep(200);
-         //
-//       driver.findElement(By.cssSelector("#root > main > div.homeNotice > div > div > div > div.hidden-mobile > div > div > a.item-0.item > span.title")).getText().isEmpty();
-//       driver.findElement(By.cssSelector("#root > main > div.homeNotice > div > div > div > div.hidden-mobile > div > div > a.item-0.item > span.date")).getText().isEmpty();
-        //
+       //广播三个广告
+       driver.findElement(By.cssSelector("#root > main > div.homeNotice > div > div > div > div.hidden-mobile > div > div > a.item-0.item > span.title")).getText().isEmpty();
+       driver.findElement(By.cssSelector("#root > main > div.homeNotice > div > div > div > div.hidden-mobile > div > div > a.item-0.item > span.date")).getText().isEmpty();
        driver.findElement(By.cssSelector("#root > main > div.homeNotice> div > div > div > div.hidden-mobile > div > div > a.item-1.item > span.title")).getText().isEmpty();
        driver.findElement(By.cssSelector("#root > main > div.homeNotice> div > div > div > div.hidden-mobile > div > div > a.item-1.item > span.date")).getText().isEmpty();
         //
@@ -42,41 +40,40 @@ public class NoticeTest {
        driver.close();
    }
 
-    @Test(enabled =false,description = "数据栏")
+    @Test(enabled =true,description = "数据栏",retryAnalyzer = MyIRetryAnalyzer.class)
     public void topDataTest() throws Exception {
-        //转义跳转-给出地址跳转的，后期修复
-        driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(1) > span > span > a > span > span")).click();
-        Thread.sleep(200);
         //最新区块
-        driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(1) > a > h2 > span")).getText().isEmpty();
-        driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center> div > div > div:nth-child(1) > a > p > span")).getText().isEmpty();
-        Thread.sleep(200);
-        //交易总数
-        driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(2) > h2 > span")).getText().isEmpty();
-        driver.findElement(By.cssSelector(" div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(2) > p > span")).getText().isEmpty();
-        Thread.sleep(200);
-        //账户总数
-        driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(3) > h2 > span")).getText().isEmpty();
-        driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center> div > div > div:nth-child(3) > p > span")).getText().isEmpty();
-        //driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div.text-center.mr-0 > div > div > div:nth-child(4) > div > h2 >span:nth-child(2) > span")).getText().isEmpty();
-        Thread.sleep(200);
-        //TRX冻结量
-        driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center> div > div > div:nth-child(6) > a > h2 > span")).getText().isEmpty();
-        driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(6) > a > p > span")).getText().isEmpty();
-        Thread.sleep(200);
-        //合约总数
-        driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(7) > h2 > span")).getText().isEmpty();
-        driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(7) > p > span")).getText().isEmpty();
-        //通证总数
-        driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(8) > a > h2 > span")).getText().isEmpty();
-        driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(8) > a > p > span")).getText().isEmpty();
-
+//        Boolean tot_block = driver.findElement(By.cssSelector("#root > main > div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center")).isDisplayed();
+//        if (tot_block) {
+            driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(1) > a > h2 > span")).getText().isEmpty();
+            driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center> div > div > div:nth-child(1) > a > p > span")).getText().isEmpty();
+            Thread.sleep(200);
+            //交易总数
+            driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(2) > h2 > span")).getText().isEmpty();
+            driver.findElement(By.cssSelector(" div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(2) > p > span")).getText().isEmpty();
+            Thread.sleep(200);
+            //账户总数
+            driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(3) > h2 > span")).getText().isEmpty();
+            driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center> div > div > div:nth-child(3) > p > span")).getText().isEmpty();
+            //driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div.text-center.mr-0 > div > div > div:nth-child(4) > div > h2 >span:nth-child(2) > span")).getText().isEmpty();
+            Thread.sleep(200);
+            //TRX冻结量
+            driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center> div > div > div:nth-child(6) > a > h2 > span")).getText().isEmpty();
+            driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(6) > a > p > span")).getText().isEmpty();
+            Thread.sleep(200);
+            //合约总数
+            driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(7) > h2 > span")).getText().isEmpty();
+            driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(7) > p > span")).getText().isEmpty();
+            //通证总数
+            driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(8) > a > h2 > span")).getText().isEmpty();
+            driver.findElement(By.cssSelector("div:nth-child(2) > div > div > div:nth-child(1) > div > div > div.text-center > div > div > div:nth-child(8) > a > p > span")).getText().isEmpty();
+//        }
         //展开
         Thread.sleep(200);
         driver.findElement(By.xpath("//*[@id=\"root\"]/main/div[2]/div/div/div[1]/div/div/span/span")).click();
         driver.findElement(By.xpath("//*[@id=\"root\"]/main/div[2]/div/div/div[1]/div/div/div[2]/div[1]/span/span")).getText().isEmpty();
         driver.findElement(By.xpath("//*[@id=\"root\"]/main/div[2]/div/div/div[1]/div/div/div[2]/div[3]/span/span")).getText().isEmpty();
-        Thread.sleep(200);
+        Thread.sleep(300);
         //收起
         driver.findElement(By.xpath("//*[@id=\"root\"]/main/div[2]/div/div/div[1]/div/div/span/span")).click();
         driver.close();

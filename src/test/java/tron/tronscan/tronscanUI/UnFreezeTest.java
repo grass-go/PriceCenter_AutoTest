@@ -26,11 +26,13 @@ private  String URL = "https://"+tronScanNode+"/#/";
     public void start() throws Exception {
         try {
             driver = webBrowser.startChrome(URL);
+            driver.navigate().refresh();
+            Thread.sleep(300);
         } catch (Exception e) {
         }
     }
 
-    @Test(enabled = false,retryAnalyzer = MyIRetryAnalyzer.class,description = "解冻")
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "解冻")
     public void testUnFreeze() throws Exception{
         Step.login(driver);
         {
@@ -40,12 +42,13 @@ private  String URL = "https://"+tronScanNode+"/#/";
         }
         driver.findElement(By.cssSelector(".btn-danger.mr-2:nth-child(1)")).click();
         Thread.sleep(200);
+        driver.close();
         //点弹窗-解冻
 //        driver.findElement(By.cssSelector(".btn-lg.btn-danger ")).click();
 //        Assert.assertEquals(driver.findElement(By.cssSelector(".sweet-alert > h2")).getText(), "TRX Unfrozen");
     }
 
-    @Test(enabled = false,description = "账户页标签",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = true,description = "账户页标签")
     public void tagTest() throws Exception{
         Step.login(driver);
         {
@@ -63,6 +66,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         driver.findElement(By.cssSelector("#account_tags > div > div > div > div.d-flex.justify-content-between.account-switch > button")).getText().isEmpty();
 //        driver.findElement(By.cssSelector("#account_tags > div > div > div > div.d-flex.justify-content-between.account-switch > button")).click();
         Thread.sleep(200);
+        driver.close();
 
         //添加标题内容
 //        Assert.assertEquals(driver.findElement(By.cssSelector("body > div:nth-child(13) > div > div.modal.show > div > div > div.text-center.modal-header > h5 > span")).getText(),"Add a tag");

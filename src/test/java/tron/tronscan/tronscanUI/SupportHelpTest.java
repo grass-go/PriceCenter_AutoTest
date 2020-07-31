@@ -20,12 +20,14 @@ public class SupportHelpTest {
     public void start() throws Exception {
         try {
             driver = webBrowser.startChrome(URL);
+            driver.navigate().refresh();
+            Thread.sleep(300);
         } catch (Exception e) {
 
         }
     }
 
-    @Test(enabled = false,description = "支持与帮助--新手引导")
+    @Test(enabled = true,description = "支持与帮助--新手引导")
     public void testHelp() throws Exception{
         //点更多
         driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(9) > div > span > span > span > span")).click();
@@ -37,7 +39,7 @@ public class SupportHelpTest {
         driver.close();
     }
 
-    @Test(enabled = false,description = "支持与帮助--常见问题",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = true,description = "支持与帮助--常见问题",retryAnalyzer = MyIRetryAnalyzer.class)
     public void testFAQ() throws Exception{
         //更多中常见问题
         driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(9) > div > span > span > span > span")).click();

@@ -14,76 +14,65 @@ import tron.common.utils.Configuration;
 public class SearchTest {
         private String tronScanNode = Configuration.getByPath("testng.conf")
     .getString("tronscanIP");
-private  String URL = "https://"+tronScanNode+"/#/blockchain/blocks";
+private  String URL = "https://"+tronScanNode+"/#/";
         WebBrowser webBrowser = new WebBrowser();
         public static WebDriver driver;
         @BeforeMethod(enabled = true)
         public void start() throws Exception {
             try {
                 driver = webBrowser.startChrome(URL);
+                driver.navigate().refresh();
             } catch (Exception e) {
 
             }
         }
 
-    @Test(enabled = false)
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "首页搜索框-地址")
     public void testSearchAddressText() throws Exception{
-        //转义跳转-给出地址跳转的，后期修复
-        driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(1) > span > span > a > span > span")).click();
-        Thread.sleep(200);
         driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div/div/div/div/div/input")).click();
-//        driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div/div/div/div/div/input")).sendKeys("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
-//        Thread.sleep(300);
-//        Assert.assertEquals(driver.findElement(By.cssSelector("#_searchBox > a > div > span > strong")).getText(),"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
-//        Thread.sleep(300);
-//        driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a/div/span/strong")).click();
-//        Thread.sleep(300);
-//        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div[1]/span/div/div/span/div/a/div")).getText(),"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
-
-    }
-
-    @Test(enabled = false)
-    public void testSearchContractText() throws Exception{
-        //转义跳转-给出地址跳转的，后期修复
-        driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(1) > span > span > a > span > span")).click();
-        Thread.sleep(200);
-
-//        driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div/div/div/div/div/input")).sendKeys("TVRqMwBZU13c4wx6Hi6jqroCnYv2nrqQU1");
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div/div/div/div/div/input")).sendKeys("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
         Thread.sleep(300);
-//        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a/div/span/strong")).getText(),"TVRqMwBZU13c4wx6Hi6jqroCnYv2nrqQU1");
-//        driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a")).click();
-//        Thread.sleep(300);
-//        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div/h6/span/div/div/span/div/a/div")).getText(),"TVRqMwBZU13c4wx6Hi6jqroCnYv2nrqQU1");
+        Assert.assertEquals(driver.findElement(By.cssSelector("#_searchBox > a > div > span > strong")).getText(),"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
+        Thread.sleep(300);
+        driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a/div/span/strong")).click();
+        Thread.sleep(300);
+        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div[1]/span/div/div/span/div/a/div")).getText(),"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
 
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "首页搜索框-合约")
+    public void testSearchContractText() throws Exception{
+
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div/div/div/div/div/input")).sendKeys("TVRqMwBZU13c4wx6Hi6jqroCnYv2nrqQU1");
+        Thread.sleep(300);
+        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a/div/span/strong")).getText(),"TVRqMwBZU13c4wx6Hi6jqroCnYv2nrqQU1");
+        driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a")).click();
+        Thread.sleep(300);
+        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div/h6/span/div/div/span/div/a/div")).getText(),"TVRqMwBZU13c4wx6Hi6jqroCnYv2nrqQU1");
+
+    }
+
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "首页搜索框-10")
     public void testSearchTrc10Text() throws Exception{
-        //转义跳转-给出地址跳转的，后期修复
-        driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(1) > span > span > a > span > span")).click();
-        Thread.sleep(200);
 
         driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div/div/div/div/div/input")).sendKeys("BTT");
-//        Thread.sleep(300);
-//        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a/div/span/strong")).getText(),"BitTorrent(BTT) 1002000");
-//        driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a")).click();
-//        Thread.sleep(300);
-//        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div[2]/div[2]/div[2]/div/span")).getText(),"1002000");
+        Thread.sleep(300);
+        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a/div/span/strong")).getText(),"BitTorrent(BTT) 1002000");
+        driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a")).click();
+        Thread.sleep(300);
+        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div[2]/div[2]/div[2]/div/span")).getText(),"1002000");
 
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "首页搜索框-20")
     public void testSearchTrc20Text() throws Exception{
-        //转义跳转-给出地址跳转的，后期修复
-        driver.findElement(By.cssSelector("#navbar-top > ul > li:nth-child(1) > span > span > a > span > span")).click();
-        Thread.sleep(200);
 
         driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div/div/div/div/div/input")).sendKeys("USDT");
         Thread.sleep(300);
-//        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a/div/span/strong")).getText(),"Tether USD(USDT) TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
-//        driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a")).click();
-//        Thread.sleep(300);
-//        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div[2]/div[2]/div[2]/div/span/span/div/div/span/div/a/div")).getText(),"TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
+        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a/div/span/strong")).getText(),"Tether USD(USDT) TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
+        driver.findElement(By.xpath("//*[@id=\"_searchBox\"]/a")).click();
+        Thread.sleep(300);
+        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"root\"]/main/div/div/div[1]/div[2]/div[2]/div[2]/div/span/span/div/div/span/div/a/div")).getText(),"TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
 
     }
 

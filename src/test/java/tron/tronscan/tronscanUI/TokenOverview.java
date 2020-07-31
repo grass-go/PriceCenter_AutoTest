@@ -22,6 +22,8 @@ public class TokenOverview {
     public void start() throws Exception {
         try {
             driver = webBrowser.startChrome(URL);
+            driver.navigate().refresh();
+            Thread.sleep(300);
         } catch (Exception e) {
         }
     }
@@ -74,7 +76,7 @@ public class TokenOverview {
         //14 days
         driver.findElement(By.cssSelector("div.col-xs-8.col-sm-6 > div > label.ant-radio-button-wrapper.ant-radio-button-wrapper-checked > span:nth-child(2) > span")).click();
         //14天total文案说明
-        driver.findElement(By.cssSelector("div.row.transfers.token20Detail > div > div > div:nth-child(1) > div:nth-child(2) > div > div > div > span:nth-child(4) > span:nth-child(1)")).getText().isEmpty();
+        driver.findElement(By.cssSelector(" div.card-body > div.row > div > div > div:nth-child(1) > div:nth-child(2) > div > div > div > span:nth-child(2)")).getText().isEmpty();
         Thread.sleep(200);
         //通证持有者
         driver.findElement(By.cssSelector("div > div.card.mt-3 > div.card-header > ul > li:nth-child(2) > a > span > span")).click();

@@ -39,10 +39,10 @@ private  String URL = "https://"+tronScanNode+"/#/blockchain/transactions";
         //点击第一条交易记录
 
     }
-    @Test(enabled = true,description = "交易类型分布",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = true,description = "交易类型分布")
     public void transType() throws Exception{
         //标题：交易数
-        Assert.assertEquals(driver.findElement(By.cssSelector("#txcont > h2 > span:nth-child(2)")).getText(),"Txn Count");
+        Assert.assertEquals(driver.findElement(By.cssSelector("#txcont > h2 > span:nth-child(2)")).getText(),"交易数");
         //数据更新3sec时间
         driver.findElement(By.cssSelector("#txcont > h2 > span.updatedWrapper > span > span > span:nth-child(1)")).getText().isEmpty();
         //昨日新增交易数

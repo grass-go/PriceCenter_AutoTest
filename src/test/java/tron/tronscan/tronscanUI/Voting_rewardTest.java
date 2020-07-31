@@ -16,7 +16,7 @@ import tron.common.utils.WebBrowser;
 import tron.common.utils.Configuration;
 
 public class Voting_rewardTest {
-    private String tronScanNode = Configuration.getByPath("testtronscan.conf")
+    private String tronScanNode = Configuration.getByPath("testng.conf")
     .getString("tronscanIP");
 private  String URL = "https://"+tronScanNode+"/#/";
     WebBrowser webBrowser = new WebBrowser();
@@ -26,15 +26,17 @@ private  String URL = "https://"+tronScanNode+"/#/";
     public void start() throws Exception {
         try {
             driver = webBrowser.startChrome(URL);
+            driver.navigate().refresh();
+            Thread.sleep(300);
         } catch (Exception e) {
 
         }
     }
 
-    @Test(enabled = false,description = "领取奖励",retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = true,description = "领取奖励")
     public void testVoting_reward() throws Exception {
         Step.login(driver);
-         {
+        {
             WebElement element = driver.findElement(By.cssSelector(".dropdown-toggle > span"));
             Actions builder = new Actions(driver);
             builder.moveToElement(element).perform();
@@ -51,7 +53,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
             if( testqq > 0.000000){
                 Thread.sleep(300);
                 //点领取
-//                driver.findElement(By.cssSelector("div.row.mt-3 > div > div > div > table > tbody > tr:nth-child(4) > td > a")).click();
+                driver.findElement(By.cssSelector("div.row.mt-3 > div > div > div > table > tbody > tr:nth-child(4) > td > a")).click();
                 Assert.assertEquals(driver.findElement(By.cssSelector("div.row.mt-3 > div > div > div > table > tbody > tr:nth-child(4) > td > a > span")).getText(),"COLLECT REWARD");
 //                driver.findElement(By.cssSelector(".sweet-alert > p > span > button"));
             }
