@@ -61,7 +61,7 @@ public class MarketBanner {
       Assert.assertTrue(jsonObject.containsKey("created_at"));
       Assert.assertTrue(jsonObject.containsKey("updated_at"));
       if(jsonObject.getIntValue("id") == 2){
-        Assert.assertEquals(origin+"%", jsonObject.getString("vote_reward"));
+        Assert.assertTrue(Double.valueOf(jsonObject.getString("vote_reward").substring(0,4))-origin == 0);
       }
     }
   }
