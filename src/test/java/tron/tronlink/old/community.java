@@ -5,7 +5,9 @@ import org.apache.http.HttpResponse;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import tron.common.api;
-public class community {
+import tron.tronlink.base.TronlinkBase;
+
+public class community extends TronlinkBase {
   private HttpResponse response;
 
   @Test(enabled = true, description = "Api GET /api/v1/wallet/community test")

@@ -28,7 +28,7 @@ public class addasset {
   public void removeAllTokenList() throws Exception{
     tokenJson.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
     //只传输地址的时候，会返回该地址当前添加过的资产
-    response = TronlinkApiList.addasset(node,"{\n" +" \"address\": \"414db7719251ce8ba74549ba35bbdc02418ecde595\"}");
+    response = TronlinkApiList.addasset("{\n" +" \"address\": \"414db7719251ce8ba74549ba35bbdc02418ecde595\"}");
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
     JSONArray tokenArray = assetInformation.getJSONArray("data");
@@ -39,7 +39,7 @@ public class addasset {
   @Test(enabled = false)
   public void addasset(){
 
-    response = TronlinkApiList.addasset(node,"{\n"
+    response = TronlinkApiList.addasset("{\n"
         + "  \"address\": \"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe\",\n"
         + "  \"token10\": [\n"
         + "    \"zzz\"\n"
@@ -89,7 +89,7 @@ public class addasset {
     tokenJson.clear();
     tokenJson.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595"); //sophia's address
     tokenJson.put("token10Cancel",trc10tokenList);
-    response = TronlinkApiList.addAsset(node,tokenJson);
+    response = TronlinkApiList.addAsset(tokenJson);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
     JSONArray tokenArray = assetInformation.getJSONArray("data");
@@ -102,7 +102,7 @@ public class addasset {
     tokenJson.clear();
     tokenJson.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
     tokenJson.put("token10",trc10tokenList);
-    response = TronlinkApiList.addAsset(node,tokenJson);
+    response = TronlinkApiList.addAsset(tokenJson);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
     JSONArray tokenArray = assetInformation.getJSONArray("data");
@@ -116,7 +116,7 @@ public class addasset {
     tokenJson.clear();
     tokenJson.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
     tokenJson.put("token20Cancel",trc20ContractAddressList);
-    response = TronlinkApiList.addAsset(node,tokenJson);
+    response = TronlinkApiList.addAsset(tokenJson);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
     JSONArray tokenArray = assetInformation.getJSONArray("data");
@@ -129,7 +129,7 @@ public class addasset {
     tokenJson.clear();
     tokenJson.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
     tokenJson.put("token20",trc20ContractAddressList);
-    response = TronlinkApiList.addAsset(node,tokenJson);
+    response = TronlinkApiList.addAsset(tokenJson);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
     JSONArray tokenArray = assetInformation.getJSONArray("data");

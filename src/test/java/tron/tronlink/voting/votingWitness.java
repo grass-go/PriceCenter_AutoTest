@@ -7,12 +7,13 @@ import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
+import tron.tronlink.base.TronlinkBase;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class votingWitness {
+public class votingWitness extends TronlinkBase {
   private JSONObject responseContent;
   private JSONArray responseArrayContent;
   private JSONObject fastestRise;

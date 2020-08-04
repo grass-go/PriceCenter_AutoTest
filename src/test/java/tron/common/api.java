@@ -1,19 +1,13 @@
 package tron.common;
 
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonReader;
-import java.io.FileReader;
-import java.io.StringReader;
-import java.net.URI;
-import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -21,24 +15,19 @@ import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
+import tron.tronlink.base.TronlinkBase;
 
-import java.io.IOException;
+import java.net.URI;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 public class api {
   public static String HOME_HOST = "https://list.tronlink.org";//host
   public static String TEST_HOST = "https://testlist.tronlink.org";//test
   public static String PRE_HOST = "https://testpre.tronlink.org";//pre
-  public static String HttpNode = HOME_HOST;
+  public static String HttpNode = TronlinkBase.tronlinkUrl;
   public static String testAddressBase58 = "TKpJUP4CCymphdug1XmGzDGDmGXZjLyf29";
   public static String testAddressBase64 = "416C0214C9995C6F3A61AB23F0EB84B0CDE7FD9C7C";
   public static String testAccountKey = "7400E3D0727F8A61041A8E8BF86599FE5597CE19DE451E59AED07D60967A5E25";

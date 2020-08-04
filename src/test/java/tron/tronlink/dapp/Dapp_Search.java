@@ -10,8 +10,9 @@ import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.common.utils.Configuration;
+import tron.tronlink.base.TronlinkBase;
 
-public class Dapp_Search {
+public class Dapp_Search extends TronlinkBase {
 
   private JSONObject responseContent;
   private JSONArray responseArrayContent;
@@ -24,7 +25,7 @@ public class Dapp_Search {
   public void dapp_search(){
     Map<String, String> params = new HashMap<>();
     params.put("name","WINK");
-    response = TronlinkApiList.search(node,params);
+    response = TronlinkApiList.search(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     //data object

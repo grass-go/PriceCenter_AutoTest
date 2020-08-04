@@ -11,8 +11,9 @@ import tron.common.DjedApiList;
 import tron.common.TronlinkApiList;
 import tron.common.TronscanApiList;
 import tron.common.utils.Configuration;
+import tron.tronlink.base.TronlinkBase;
 
-public class Dapp_Classify {
+public class Dapp_Classify extends TronlinkBase {
 
   private JSONObject responseContent;
   private JSONArray responseArrayContent;
@@ -25,7 +26,7 @@ public class Dapp_Classify {
   @Test(enabled = true)
   public void dapp_classify(){
 
-    response = TronlinkApiList.classify(node);
+    response = TronlinkApiList.classify();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseArrayContent = TronlinkApiList.parseResponseContent(response);
     //data object

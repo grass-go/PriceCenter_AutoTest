@@ -8,11 +8,12 @@ import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.common.utils.Configuration;
+import tron.tronlink.base.TronlinkBase;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Dapp_History {
+public class Dapp_History extends TronlinkBase {
 
     private JSONObject responseContent;
     private JSONArray responseArrayContent;
@@ -26,7 +27,7 @@ public class Dapp_History {
     public void history() {
         Map<String, String> params = new HashMap<>();
         params.put("address","TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
-        response = TronlinkApiList.history(node,params);
+        response = TronlinkApiList.history(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         //data object

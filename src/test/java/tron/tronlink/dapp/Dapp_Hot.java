@@ -8,8 +8,9 @@ import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.common.utils.Configuration;
+import tron.tronlink.base.TronlinkBase;
 
-public class Dapp_Hot {
+public class Dapp_Hot extends TronlinkBase {
   private JSONObject responseContent;
   private JSONArray responseArrayContent;
   private JSONObject targetContent;
@@ -21,7 +22,7 @@ public class Dapp_Hot {
   @Test(enabled = true)
   public void hot_recommend() {
 
-    response = TronlinkApiList.hot_recommend(node);
+    response = TronlinkApiList.hot_recommend();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     //data object
@@ -41,7 +42,7 @@ public class Dapp_Hot {
 
   @Test(enabled = true)
   public void hot_search(){
-    response = TronlinkApiList.hot_search(node);
+    response = TronlinkApiList.hot_search();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     //data object

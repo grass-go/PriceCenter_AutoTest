@@ -10,8 +10,9 @@ import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.common.utils.Configuration;
+import tron.tronlink.base.TronlinkBase;
 
-public class Dapp_List {
+public class Dapp_List extends TronlinkBase {
   private JSONObject responseContent;
   private JSONArray responseArrayContent;
   private JSONObject targetContent;
@@ -23,7 +24,7 @@ public class Dapp_List {
   public void dapp_all(){
     Map<String, String> params = new HashMap<>();
     params.put("all","1");
-    response = TronlinkApiList.dapp_list(node,params);
+    response = TronlinkApiList.dapp_list(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     //data object
@@ -50,7 +51,7 @@ public class Dapp_List {
     params.put("all","0");
     params.put("is_roll","1");
     params.put("page_size","10");
-    response = TronlinkApiList.dapp_list(node,params);
+    response = TronlinkApiList.dapp_list(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     //data object

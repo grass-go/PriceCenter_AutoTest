@@ -1,20 +1,8 @@
 package tron.common;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
-import java.net.URI;
-import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import jdk.nashorn.internal.parser.JSONParser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -28,6 +16,15 @@ import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
 import tron.common.utils.Configuration;
+import tron.tronlink.base.TronlinkBase;
+
+import java.net.URI;
+import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.*;
+
 @Slf4j
 public class TronlinkApiList {
 
@@ -36,7 +33,8 @@ public class TronlinkApiList {
   static HttpGet httpget;
 
   static HttpGet httpGet;
-  public static String HttpNode = "https://list.tronlink.org";
+//  public static String HttpNode = "https://list.tronlink.org";
+  public static String HttpNode = TronlinkBase.tronlinkUrl;
   static HttpResponse response;
   static Integer connectionTimeout = Configuration.getByPath("testng.conf")
       .getInt("defaultParameter.httpConnectionTimeout");
@@ -57,9 +55,9 @@ public class TronlinkApiList {
     httpClient = new DefaultHttpClient(pccm);
   }
 
-  public static HttpResponse classify(String node) {
+  public static HttpResponse classify() {
     try {
-      String requestUrl = "http://" + node + "/api/dapp/v2/classify";
+      String requestUrl = HttpNode + "/api/dapp/v2/classify";
       System.out.println(requestUrl);
       response = createGetConnect(requestUrl);
     } catch (Exception e) {
@@ -70,9 +68,9 @@ public class TronlinkApiList {
     return response;
   }
 
-  public static HttpResponse hot_recommend(String node) {
+  public static HttpResponse hot_recommend() {
     try {
-      String requestUrl = "http://" + node + "api/dapp/v2/dapp/hot_recommend";
+      String requestUrl = HttpNode + "/api/dapp/v2/dapp/hot_recommend";
       System.out.println(requestUrl);
       response = createGetConnect(requestUrl);
     } catch (Exception e) {
@@ -163,7 +161,8 @@ public class TronlinkApiList {
   }
 
   public static boolean getAllWitnessFromTronscan() {
-    String requestUrl = "https://apilist.tronscan.org/api/vote/witness";
+//    String requestUrl = "https://apilist.tronscan.org/api/vote/witness";
+    String requestUrl = TronlinkBase.tronscanApiUrl;
     response = createGetConnect(requestUrl);
 //    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
@@ -215,9 +214,9 @@ public class TronlinkApiList {
     return response;
   }
 
-  public static HttpResponse head(String node) {
+  public static HttpResponse head() {
     try {
-      String requestUrl = "http://" + node + "api/dapp/v2/head";
+      String requestUrl = HttpNode + "/api/dapp/v2/head";
       System.out.println(requestUrl);
       response = createGetConnect(requestUrl);
     } catch (Exception e) {
@@ -227,9 +226,9 @@ public class TronlinkApiList {
     }
     return response;
   }
-  public static HttpResponse hot_search(String node) {
+  public static HttpResponse hot_search() {
     try {
-      String requestUrl = "http://" + node + "api/dapp/v2/dapp/hot_search";
+      String requestUrl = HttpNode + "/api/dapp/v2/dapp/hot_search";
       System.out.println(requestUrl);
       response = createGetConnect(requestUrl);
     } catch (Exception e) {
@@ -240,9 +239,9 @@ public class TronlinkApiList {
     return response;
   }
 
-  public static HttpResponse dapp_list(String node, Map<String, String> params) {
+  public static HttpResponse dapp_list(Map<String, String> params) {
     try {
-      String requestUrl = "http://" + node + "api/dapp/v2/dapp";
+      String requestUrl = HttpNode + "/api/dapp/v2/dapp";
       System.out.println(requestUrl);
       response = createGetConnect(requestUrl, params);
     } catch (Exception e) {
@@ -279,9 +278,9 @@ public class TronlinkApiList {
     return response;
   }
 
-public static HttpResponse search(String node, Map<String, String> params) {
+public static HttpResponse search(Map<String, String> params) {
     try {
-      String requestUrl = "http://" + node + "api/dapp/v2/dapp/search";
+      String requestUrl = HttpNode + "/api/dapp/v2/dapp/search";
       System.out.println(requestUrl);
       response = createGetConnect(requestUrl, params);
     } catch (Exception e) {
@@ -292,9 +291,9 @@ public static HttpResponse search(String node, Map<String, String> params) {
     return response;
   }
 
-  public static HttpResponse history(String node, Map<String, String> params) {
+  public static HttpResponse history(Map<String, String> params) {
     try {
-      String requestUrl = "http://" + node + "api/dapp/v2/dapp/history";
+      String requestUrl = HttpNode + "/api/dapp/v2/dapp/history";
       System.out.println(requestUrl);
       response = createGetConnect(requestUrl, params);
     } catch (Exception e) {
@@ -305,9 +304,9 @@ public static HttpResponse search(String node, Map<String, String> params) {
     return response;
   }
 
-  public static HttpResponse allasset(String node,String address) {
+  public static HttpResponse allasset(String address) {
     try {
-      String requestUrl = "https://" + node + "api/wallet/class/allasset";
+      String requestUrl = HttpNode + "/api/wallet/class/allasset";
       System.out.println("requestUrl"+requestUrl);
       JsonObject body = new JsonObject();
       body.addProperty("address", address);
@@ -320,9 +319,9 @@ public static HttpResponse search(String node, Map<String, String> params) {
     return response;
   }
 
-  public static HttpResponse assetlist(String node,String address) {
+  public static HttpResponse assetlist(String address) {
     try {
-      String requestUrl = "https://" + node + "api/wallet/assetlist";
+      String requestUrl = HttpNode + "/api/wallet/assetlist";
       System.out.println("requestUrl"+requestUrl);
       JsonObject body = new JsonObject();
       body.addProperty("address", address);
@@ -344,9 +343,9 @@ public static HttpResponse search(String node, Map<String, String> params) {
     return response;
   }
 
-  public static HttpResponse hot_token(String node,String address) {
+  public static HttpResponse hot_token(String address) {
     try {
-      String requestUrl = "https://" + node + "api/wallet/hot_token";
+      String requestUrl = HttpNode + "/api/wallet/hot_token";
       System.out.println("requestUrl"+requestUrl);
       JsonObject body = new JsonObject();
       body.addProperty("address", address);
@@ -359,9 +358,9 @@ public static HttpResponse search(String node, Map<String, String> params) {
     return response;
   }
 
-  public static HttpResponse addasset(String node,String json) {
+  public static HttpResponse addasset(String json) {
     try {
-      String requestUrl = "https://" + node + "api/wallet/addasset";
+      String requestUrl = HttpNode + "/api/wallet/addasset";
       System.out.println("requestUrl"+requestUrl);
       response = createPostConnect(requestUrl,json);
     } catch (Exception e) {
@@ -372,8 +371,8 @@ public static HttpResponse search(String node, Map<String, String> params) {
     return response;
   }
 
-  public static HttpResponse addAsset(String node ,JSONObject address) throws Exception {
-    final String requestUrl ="https://" + node + "/api/wallet/addasset";
+  public static HttpResponse addAsset(JSONObject address) throws Exception {
+    final String requestUrl =HttpNode + "/api/wallet/addasset";
     response = createConnect(requestUrl, address);
     return response;
   }

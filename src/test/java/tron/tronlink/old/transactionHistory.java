@@ -8,8 +8,9 @@ import org.apache.http.HttpResponse;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import tron.common.api;
+import tron.tronlink.base.TronlinkBase;
 
-public class transactionHistory {
+public class transactionHistory extends TronlinkBase {
   private HttpResponse response;
 
   @Test(enabled = true, description = "Api GET /api/simple-transaction test")

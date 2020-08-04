@@ -7,8 +7,9 @@ import org.apache.http.HttpResponse;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import tron.common.api;
+import tron.tronlink.base.TronlinkBase;
 
-public class lotteryRecord {
+public class lotteryRecord extends TronlinkBase {
   private HttpResponse response;
   private HashMap<String,String> parameter = new HashMap();
 

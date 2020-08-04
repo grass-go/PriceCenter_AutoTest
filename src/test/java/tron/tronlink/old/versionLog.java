@@ -6,7 +6,9 @@ import org.apache.http.HttpResponse;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import tron.common.api;
-public class versionLog {
+import tron.tronlink.base.TronlinkBase;
+
+public class versionLog extends TronlinkBase {
   private HttpResponse response;
   private HashMap<String,String> parameter = new HashMap();
 

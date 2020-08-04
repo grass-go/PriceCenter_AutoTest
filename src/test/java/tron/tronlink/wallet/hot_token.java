@@ -1,6 +1,5 @@
 package tron.tronlink.wallet;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.http.HttpResponse;
@@ -22,7 +21,7 @@ public class hot_token {
   @Test(enabled = true)
   public void hot_token(){
 
-    response = TronlinkApiList.hot_token(node,"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
+    response = TronlinkApiList.hot_token("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     targetContent = responseContent.getJSONObject("data");

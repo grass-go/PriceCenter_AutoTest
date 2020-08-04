@@ -6,8 +6,9 @@ import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
+import tron.tronlink.base.TronlinkBase;
 
-public class upgrade {
+public class upgrade extends TronlinkBase {
   private HttpResponse response;
   private JSONObject responseContent;
   private HashMap<String,String> param = new HashMap<>();

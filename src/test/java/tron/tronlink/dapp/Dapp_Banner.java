@@ -7,8 +7,9 @@ import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
+import tron.tronlink.base.TronlinkBase;
 
-public class Dapp_Banner {
+public class Dapp_Banner extends TronlinkBase {
 
     private JSONObject responseContent;
     private HttpResponse response;

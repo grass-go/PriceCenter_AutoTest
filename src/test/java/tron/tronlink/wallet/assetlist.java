@@ -25,7 +25,7 @@ public class assetlist {
   @Test(enabled = true)
   public void assetlist(){
 
-    response = TronlinkApiList.assetlist(node,"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
+    response = TronlinkApiList.assetlist("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     targetContent = responseContent.getJSONObject("data");
@@ -58,7 +58,7 @@ public class assetlist {
 
   @Test(enabled = true, description = "Api /TronlinkApiList/wallet/assetlist test")
   public void test001Assetlist() throws Exception {
-    response = TronlinkApiList.assetlist(node,"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
+    response = TronlinkApiList.assetlist("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     targetContent = responseContent.getJSONObject("data");
     TronlinkApiList.printJsonContent(targetContent);
@@ -75,7 +75,7 @@ public class assetlist {
   @Test(enabled = true, description = "Api /TronlinkApiList/wallet/assetlist exception test")
   public void test002AssetlistException() throws Exception {
     //Base58 decode address can't get right information
-    response = TronlinkApiList.assetlist(node,"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
+    response = TronlinkApiList.assetlist("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
 
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     targetContent = responseContent.getJSONObject("data");

@@ -8,12 +8,13 @@ import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
+import tron.tronlink.base.TronlinkBase;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class VotingSelf {
+public class VotingSelf extends TronlinkBase {
   private JSONObject responseContent;
   private JSONArray responseArrayContent;
   private JSONObject fastestRise;

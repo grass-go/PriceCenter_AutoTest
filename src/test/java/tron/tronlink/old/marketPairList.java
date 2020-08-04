@@ -7,8 +7,9 @@ import org.apache.http.HttpResponse;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import tron.common.api;
+import tron.tronlink.base.TronlinkBase;
 
-public class marketPairList {
+public class marketPairList extends TronlinkBase {
   private HttpResponse response;
 
   @Test(enabled = true, description = "Api GET /api/exchange/marketPair/list test")

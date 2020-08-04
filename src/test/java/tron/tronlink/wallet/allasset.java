@@ -21,7 +21,7 @@ public class allasset {
   @Test(enabled = true)
   public void dapp_classify(){
 
-    response = TronlinkApiList.allasset(node,"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
+    response = TronlinkApiList.allasset("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     responseArrayContent = responseContent.getJSONArray("data");

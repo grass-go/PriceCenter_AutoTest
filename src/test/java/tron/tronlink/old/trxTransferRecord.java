@@ -7,7 +7,9 @@ import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.api;
-public class trxTransferRecord {
+import tron.tronlink.base.TronlinkBase;
+
+public class trxTransferRecord extends TronlinkBase {
   private HttpResponse response;
   private JSONObject responseContent;
   private HashMap<String,String> param = new HashMap<>();
