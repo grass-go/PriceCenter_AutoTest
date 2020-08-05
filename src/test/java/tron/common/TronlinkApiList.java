@@ -16,6 +16,7 @@ import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
 import tron.common.utils.Configuration;
+import tron.trondata.base.TrondataBase;
 import tron.tronlink.base.TronlinkBase;
 
 import java.net.URI;
@@ -33,7 +34,7 @@ public class TronlinkApiList {
   static HttpGet httpget;
 
   static HttpGet httpGet;
-//  public static String HttpNode = "https://list.tronlink.org";
+  public static String HttpTronDataNode = TrondataBase.trondataUrl;
   public static String HttpNode = TronlinkBase.tronlinkUrl;
   static HttpResponse response;
   static Integer connectionTimeout = Configuration.getByPath("testng.conf")
@@ -407,6 +408,55 @@ public static HttpResponse search(Map<String, String> params) {
     }
     return trc20ContractAddressList;
   }
+
+  public static HttpResponse getTransferTrx(Map<String, String> params) {
+    try {
+      String requestUrl = HttpTronDataNode + "/api/transfer/trx";
+      response = createGetConnectNoHeader(requestUrl,params);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  public static HttpResponse getTransferToken10(Map<String, String> params) {
+    try {
+      String requestUrl = HttpTronDataNode + "/api/transfer/token10";
+      response = createGetConnectNoHeader(requestUrl,params);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  public static HttpResponse getTransferTrc20(Map<String, String> params) {
+    try {
+      String requestUrl = HttpTronDataNode + "/api/transfer/trc20";
+      response = createGetConnectNoHeader(requestUrl,params);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  public static HttpResponse getTrc20Holders(Map<String, String> params) {
+    try {
+      String requestUrl = HttpTronDataNode + "/api/trc20/holders";
+      response = createGetConnectNoHeader(requestUrl,params);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
   public static Boolean verificationResult(HttpResponse response) {
     if (response.getStatusLine().getStatusCode() != 200) {
       return false;
@@ -506,6 +556,37 @@ public static HttpResponse search(Map<String, String> params) {
     } catch (Exception e) {
       e.printStackTrace();
       httpGet.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse createGetConnectNoHeader(String url, Map<String, String> params) {
+    try {
+      httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
+              connectionTimeout);
+      httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+      if (params != null) {
+        StringBuffer stringBuffer = new StringBuffer(url);
+        stringBuffer.append("?");
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+          stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
+        }
+        stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+        url = stringBuffer.toString();
+      }
+      httpget = new HttpGet(url);
+      Instant startTime = Instant.now();
+      response = httpClient.execute(httpget);
+      Instant endTime = Instant.now();
+      requestTime = Duration.between(startTime, endTime).toMillis();
+      System.out.println(url + " 请求总耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpget.releaseConnection();
       return null;
     }
     return response;

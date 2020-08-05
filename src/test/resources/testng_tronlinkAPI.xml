@@ -13,4 +13,10 @@
             <package name="tron.tronlink.*"></package>
         </packages>
     </test>
+    <test name="trondataAPI">
+        <parameter name="trondataUrl" value="http://47.252.85.29:8899"></parameter>
+        <packages>
+            <package name="tron.trondata.*"></package>
+        </packages>
+    </test>
 </suite>
