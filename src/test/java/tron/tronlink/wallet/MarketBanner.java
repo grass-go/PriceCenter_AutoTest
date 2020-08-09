@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,8 +43,12 @@ public class MarketBanner {
     int value = Integer.valueOf(annualizedIncome.charAt(4));
     System.out.println("value: " + value+"    origin: "+ origin + "   annualizedIncome: "+ annualizedIncome);
     if(value>=53){
-      origin = origin + 0.01;
+      BigDecimal b1=new BigDecimal(Double.toString(origin));
+      BigDecimal b2=new BigDecimal("0.01");
+      origin = b1.add(b2).doubleValue();
       System.out.println("origin + 0.01");
+      System.out.println("after origin + 0.01: "+origin);
+
     }
 
     //data object
@@ -62,6 +67,8 @@ public class MarketBanner {
       Assert.assertTrue(jsonObject.containsKey("created_at"));
       Assert.assertTrue(jsonObject.containsKey("updated_at"));
       if(jsonObject.getIntValue("id") == 2){
+        System.out.println("-- ---- vote_reward: "+jsonObject.getString("vote_reward").substring(0,4));
+        System.out.println("-- ---- origin : "+origin);
         System.out.println("-- - - - --:"+(Double.valueOf(jsonObject.getString("vote_reward").substring(0,4))-origin));
         Assert.assertTrue(Double.valueOf(jsonObject.getString("vote_reward").substring(0,4))-origin == 0);
       }
