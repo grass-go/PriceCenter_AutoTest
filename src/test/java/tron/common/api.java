@@ -305,6 +305,7 @@ public class api {
     URI uri = builder.build();
     System.out.println(uri);
     response = createGetConnect(uri);
+    Assert.assertNotEquals(null,response);
     System.out.println("status code: "+ response.getStatusLine().getStatusCode());
     Assert.assertTrue(api.verificationResult(response));
     return response;
