@@ -1945,7 +1945,7 @@ public class TronscanApiList {
         try {
             String requestUrl = "http://" + tronscanNode + "api/stats/overview";
             System.out.println(requestUrl);
-            response = createGetConnect(requestUrl);
+            response = createGetConnect(requestUrl,params);
         } catch (Exception e) {
             e.printStackTrace();
             httpget.releaseConnection();
@@ -1962,10 +1962,88 @@ public class TronscanApiList {
         try {
             String requestUrl = "http://" + tronscanNode + "api/freezeresource";
             System.out.println(requestUrl);
-            response = createGetConnect(requestUrl);
+            response = createGetConnect(requestUrl,params);
         } catch (Exception e) {
             e.printStackTrace();
             httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.
+     * 获取用户可展示的token列表，包括token名称，id，余额等信息
+     */
+    public static HttpResponse getWallet(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/account/wallet";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+
+    /**
+     * constructor.
+     * 获取用户可展示的token列表，包括token名称，id，余额等信息
+     */
+    public static HttpResponse getTokenSearch(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/token/search";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+
+    /**
+     * constructor.
+     * 增加一个账户的token可展示列表
+     */
+    public static HttpResponse postAddShowList(String tronscanNode, String address,
+                                             String show_list) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/account/addShowList";
+            System.out.println("requestUrl"+requestUrl);
+
+            JsonObject body = new JsonObject();
+            body.addProperty("address", address);
+            body.addProperty("show_list",show_list);
+            response = createConnect(requestUrl, body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.
+     * 增加一个账户的token屏蔽列表
+     */
+    public static HttpResponse postAddBlockList(String tronscanNode, String address,
+                                               String show_list) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/account/addBlockList";
+            System.out.println("requestUrl"+requestUrl);
+
+            JsonObject body = new JsonObject();
+            body.addProperty("address", address);
+            body.addProperty("show_list",show_list);
+            response = createConnect(requestUrl, body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
             return null;
         }
         return response;
