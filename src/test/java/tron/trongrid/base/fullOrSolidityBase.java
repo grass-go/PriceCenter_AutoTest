@@ -76,11 +76,18 @@ public class fullOrSolidityBase {
    */
   public static boolean compareJsonObject(JSONObject first, JSONObject second) {
     if(first==null || second==null || (first.size() != second.size())){
+      System.out.println("-------- json object is null or size not equal");
       return false;
     }
 
     for(String k:first.keySet()){
       if (!second.containsKey(k) || !(first.get(k).toString()).equals(second.get(k).toString())){
+        if (!second.containsKey(k)){
+          System.out.println("------- k: "+k+"  second does not contain ");
+        }else {
+          System.out.println("------- value not equal     first value"+first.get(k).toString()+"   second value : "
+                  +second.get(k).toString());
+        }
         return false;
       }
     }
@@ -95,6 +102,7 @@ public class fullOrSolidityBase {
    */
   public static boolean compareJsonArray(JSONArray firstArray, JSONArray secondArray) {
     if(firstArray==null || secondArray==null || (firstArray.size() != secondArray.size()) ){
+      System.out.println("-------json array is null or size not equal");
       return false;
     }
     for (int i=0;i<firstArray.size();i++){

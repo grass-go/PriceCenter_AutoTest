@@ -113,7 +113,7 @@ public class chainTest extends Base {
             Assert.assertTrue(((JSONObject)ob).containsKey("parameters"));
             Assert.assertTrue(((JSONObject)ob).containsKey("expiration_time"));
             Assert.assertTrue(((JSONObject)ob).containsKey("create_time"));
-            Assert.assertTrue(((JSONObject)ob).containsKey("state"));
+//            Assert.assertTrue(((JSONObject)ob).containsKey("state"));
             if(((JSONObject)ob).getIntValue("proposal_id") == 39){
                 Assert.assertEquals("41fcbc93454e116c2213f794d931c03b0943df2633",((JSONObject)ob).getString("proposer_address"));
                 Assert.assertEquals(1594552686000L,((JSONObject)ob).getLongValue("create_time"));

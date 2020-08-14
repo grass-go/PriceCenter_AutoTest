@@ -1,4 +1,4 @@
-package tron.djed;
+package tron.djed.JustAPI;
 
 import org.testng.annotations.Test;
 
@@ -20,7 +20,7 @@ public class test {
     static final String USER = "root";
     static final String PASS = "zK199595@";
 
-    @Test
+    @Test(enabled = false)
     public void test(){
         Connection conn = null;
         Statement stmt = null;

@@ -1,4 +1,4 @@
-package tron.djed;
+package tron.djed.JustAPI;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -9,7 +9,7 @@ import tron.common.DjedApiList;
 import tron.common.TronscanApiList;
 import tron.common.utils.Configuration;
 
-public class PollList {
+public class Executive {
     private JSONObject responseContent;
     private JSONArray responseArrayContent;
     private JSONObject targetContent;
@@ -19,25 +19,22 @@ public class PollList {
             .get(0);
 
     @Test(enabled = true)
-    public void pollList () {
+    public void executiveList () {
 
-        response = DjedApiList.pollList(node);
+        response = DjedApiList.executiveList(node);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronscanApiList.parseResponseContent(response);
         TronscanApiList.printJsonContent(responseContent);
         //data object
         responseArrayContent = responseContent.getJSONArray("data");
         JSONObject responseObject = responseArrayContent.getJSONObject(responseArrayContent.size() - 1);
-        Assert.assertTrue(responseObject.containsKey("content"));
-        Assert.assertTrue(responseObject.containsKey("endTime"));
-        Assert.assertTrue(responseObject.containsKey("id"));
-        Assert.assertTrue(responseObject.containsKey("pollKey"));
-        Assert.assertTrue(responseObject.containsKey("startTime"));
-        Assert.assertTrue(responseObject.containsKey("title"));
         Assert.assertTrue(responseObject.containsKey("summary"));
-        Assert.assertTrue(responseObject.containsKey("votersCount"));
-        Assert.assertTrue(responseObject.containsKey("votesSum"));
-        Assert.assertTrue(responseObject.containsKey("winningOpt"));
+        Assert.assertTrue(responseObject.containsKey("voteSlate"));
+        Assert.assertTrue(responseObject.containsKey("executiveKey"));
+        Assert.assertTrue(responseObject.containsKey("startTime"));
+        Assert.assertTrue(responseObject.containsKey("id"));
+        Assert.assertTrue(responseObject.containsKey("title"));
+        Assert.assertTrue(responseObject.containsKey("content"));
 
     }
 }
