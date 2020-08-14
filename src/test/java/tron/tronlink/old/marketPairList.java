@@ -34,7 +34,7 @@ public class marketPairList extends TronlinkBase {
       Assert.assertEquals("TRX",exchangeJSON.getString("sShortName"));
       Assert.assertTrue(!exchangeJSON.getString("fTokenAddr").isEmpty());
       Assert.assertTrue(!exchangeJSON.getString("unit").isEmpty());
-      Assert.assertTrue(!exchangeJSON.getString("logo").isEmpty());
+//      Assert.assertTrue(!exchangeJSON.getString("logo").isEmpty());
     }
   }
 }
