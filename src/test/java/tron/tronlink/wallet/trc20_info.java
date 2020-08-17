@@ -31,7 +31,7 @@ public class trc20_info {
       JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
       Assert.assertTrue(jsonObject.containsKey("tokenAddress"));
       Assert.assertTrue(jsonObject.containsKey("balance"));
-      Assert.assertTrue(jsonObject.getInteger("balance")>0);
+      Assert.assertTrue(jsonObject.getDoubleValue("balance")>0);
       Assert.assertTrue(jsonObject.containsKey("balanceStr"));
       Assert.assertTrue(jsonObject.containsKey("decimals"));
       Assert.assertTrue(jsonObject.containsKey("logoUrl"));
