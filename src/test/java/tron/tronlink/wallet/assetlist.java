@@ -31,7 +31,7 @@ public class assetlist extends TronlinkBase {
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     targetContent = responseContent.getJSONObject("data");
     Assert.assertTrue(targetContent.containsKey("totalTRX"));
-    Assert.assertTrue(jsonObject.getDoubleValue("totalTRX") > 0);
+    Assert.assertTrue(targetContent.getDoubleValue("totalTRX") > 0);
     jsonObject = targetContent.getJSONObject("price");
     Assert.assertTrue(jsonObject.containsKey("priceCny"));
     Assert.assertTrue(jsonObject.containsKey("priceUSD"));
