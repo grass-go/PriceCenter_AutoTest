@@ -59,6 +59,14 @@ public class assetlist extends TronlinkBase {
               || "USDJ".equals(shortname) || "BTT".equals(shortname)){
         Assert.assertTrue(jsonObject.getDoubleValue("price") > 0);
         Assert.assertTrue(jsonObject.getDoubleValue("trxCount") > 0);
+        Assert.assertTrue(jsonObject.getDoubleValue("totalBalance") > 0);
+      }
+      int type = jsonObject.getIntValue("type");
+      if(type == 0){
+        Assert.assertTrue(jsonObject.getDoubleValue("totalBalance")>0);
+        Assert.assertTrue(jsonObject.getDoubleValue("balance")>0);
+        Assert.assertTrue(jsonObject.getDoubleValue("trxCount")>0);
+        Assert.assertEquals(0,jsonObject.getIntValue("price"));
       }
       Assert.assertTrue(jsonObject.containsKey("inMainChain"));
       Assert.assertTrue(jsonObject.containsKey("inSideChain"));
