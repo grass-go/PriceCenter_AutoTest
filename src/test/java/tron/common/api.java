@@ -299,12 +299,12 @@ public class api {
     return response;
   }
 
-  public static HttpResponse marketPairList() throws Exception{
+  public static HttpResponse marketPairList(HashMap<String,String> header) throws Exception{
     final String requesturl = "https://list.tronlink.org/api/exchange/marketPair/list";
     URIBuilder builder = new URIBuilder(requesturl);
     URI uri = builder.build();
     System.out.println(uri);
-    response = createGetConnect(uri);
+    response = createGetConnect(uri,header);
     Assert.assertNotEquals(null,response);
     System.out.println("status code: "+ response.getStatusLine().getStatusCode());
     Assert.assertTrue(api.verificationResult(response));
