@@ -1990,7 +1990,7 @@ public class TronscanApiList {
 
     /**
      * constructor.
-     * 获取用户可展示的token列表，包括token名称，id，余额等信息
+     * token搜索
      */
     public static HttpResponse getTokenSearch(String tronscanNode,Map<String, String> params) {
         try {
@@ -2010,15 +2010,15 @@ public class TronscanApiList {
      * 增加一个账户的token可展示列表
      */
     public static HttpResponse postAddShowList(String tronscanNode, String address,
-                                             String show_list) {
+                                             String showlist) {
         try {
             String requestUrl = "http://" + tronscanNode + "external/account/addShowList";
-            System.out.println("requestUrl"+requestUrl);
+            System.out.println(""+requestUrl);
 
             JsonObject body = new JsonObject();
             body.addProperty("address", address);
-            body.addProperty("show_list",show_list);
-            response = createConnect(requestUrl, body);
+            body.addProperty("show_list",showlist);
+            response = createConnect(requestUrl,body);
         } catch (Exception e) {
             e.printStackTrace();
             httppost.releaseConnection();
@@ -2031,15 +2031,15 @@ public class TronscanApiList {
      * constructor.
      * 增加一个账户的token屏蔽列表
      */
-    public static HttpResponse postAddBlockList(String tronscanNode, String address,
-                                               String show_list) {
+    public static HttpResponse postDeleBlockList(String tronscanNode, String address,
+                                               String blocklist) {
         try {
             String requestUrl = "http://" + tronscanNode + "external/account/addBlockList";
-            System.out.println("requestUrl"+requestUrl);
+            System.out.println(""+requestUrl);
 
             JsonObject body = new JsonObject();
             body.addProperty("address", address);
-            body.addProperty("show_list",show_list);
+            body.addProperty("block_list",blocklist);
             response = createConnect(requestUrl, body);
         } catch (Exception e) {
             e.printStackTrace();
