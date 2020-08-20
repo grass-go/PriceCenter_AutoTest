@@ -7,10 +7,12 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import lombok.extern.slf4j.Slf4j;
 import tron.common.utils.Configuration;
 import tron.common.utils.MyIRetryAnalyzer;
 import tron.common.utils.WebBrowser;
 
+@Slf4j
 public class TransfersTest {
 
     private String tronScanNode = Configuration.getByPath("testng.conf")
@@ -72,7 +74,7 @@ public class TransfersTest {
         driver.findElement(By.cssSelector("#root > main > div.row > div > div > div > div > div > div > div > div > div > div > table > tbody > tr:nth-child(1) > td:nth-child(1)")).click();
         Thread.sleep(300);
         //跳转交易详情
-        Assert.assertEquals(driver.findElement(By.cssSelector(" #root > div.header-top.nav-item-page > div.container.d-flex.sub-header > h4 > span > span")).getText(),"TRANSFERS");
+        Assert.assertEquals(driver.findElement(By.cssSelector(" #root > div.header-top.nav-item-page > div.container.d-flex.sub-header > h4 > span > span")).getText(),"TRANSACTION DETAILS");
         driver.close();
     }
     @AfterMethod(enabled = true)
