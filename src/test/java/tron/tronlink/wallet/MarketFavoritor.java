@@ -16,7 +16,7 @@ public class MarketFavoritor {
   private HttpResponse response;
   private HashMap<String,String> param = new HashMap<>();
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void Test000getMarketFavoritor() throws Exception {
     param.put("token","TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7&token=TVQ6jYV5yTtRsKcD8aRc1a4Kei4V45ixLn&token=1001090"); //win
     response = TronlinkApiList.walletMarketFavorite(param);
