@@ -27,11 +27,15 @@ public class getRewardList {
     private String tronScanNode = Configuration.getByPath("testng.conf")
             .getStringList("httpapi.ip.list").get(0);
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "修改密码验证码校验")
+    /**
+     * constructor.
+     * 该地址为有投票，有奖励分成，奖励大于0
+     */
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "收取收益")
     public void getReward() {
         //Get response
         Map<String, String> Params = new HashMap<>();
-        Params.put("address", "TGXB5txGBz5matSHmmYTPsbuBqYxHySL6N");
+        Params.put("address", "TSmZ71H9S6BQLdyGcr8QfG9qr92N6WUXKS");
         response = TronscanApiList.getReward(tronScanNode,Params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronscanApiList.parseResponseContent(response);
@@ -39,7 +43,7 @@ public class getRewardList {
 
         //object
         Assert.assertTrue(responseContent.size() >= 1);
-        Assert.assertTrue(Long.valueOf(responseContent.get("reward").toString()) >= 0);
+        Assert.assertTrue(Long.valueOf(responseContent.get("reward").toString()) > 0);
     }
 
     /**
