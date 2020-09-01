@@ -2048,6 +2048,22 @@ public class TronscanApiList {
         }
         return response;
     }
+
+    /**
+     * constructor.
+     * getReward收益
+     */
+    public static HttpResponse getReward(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "wallet/getReward";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
     /**
      * constructor.
      */
