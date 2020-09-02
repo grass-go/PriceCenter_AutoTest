@@ -48,6 +48,24 @@ public class getRewardList {
 
     /**
      * constructor.
+     * 该地址为无投票，无奖励分成，奖励永远等于0
+     */
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "收取收益为0")
+    public void getRewardTest02() {
+        //Get response
+        Map<String, String> Params = new HashMap<>();
+        Params.put("address", "TPz7T4sei4b8vqzYNMGzSYu9X6VdMFXzRp");
+        response = TronscanApiList.getReward(tronScanNode,Params);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TronscanApiList.parseResponseContent(response);
+        TronscanApiList.printJsonContent(responseContent);
+
+        //object
+        Assert.assertTrue(responseContent.size() == 1);
+        Assert.assertTrue(Long.valueOf(responseContent.get("reward").toString()) == 0);
+    }
+    /**
+     * constructor.
      */
     @AfterClass
     public void shutdown() throws InterruptedException {
