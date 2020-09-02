@@ -71,6 +71,7 @@ public class MarketBanner {
         System.out.println("-- ---- origin : "+origin);
         System.out.println("-- - - - --:"+(Double.valueOf(jsonObject.getString("vote_reward").substring(0,4))-origin));
         Assert.assertTrue(Double.valueOf(jsonObject.getString("vote_reward").substring(0,4))-origin == 0);
+        return;
       }
     }
   }
