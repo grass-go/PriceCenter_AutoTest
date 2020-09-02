@@ -170,9 +170,9 @@ public class TronlinkApiList {
     if ((response.getStatusLine().getStatusCode() != 200)
             || responseContent == null
             || !(responseContent.containsKey("total"))
-            || !(responseContent.getInteger("total") > 0)
+            || !(responseContent.getLongValue("total") > 0)
             || !(responseContent.containsKey("totalVotes"))
-            || !(responseContent.getInteger("totalVotes") > 0)
+            || !(responseContent.getLongValue("totalVotes") > 0)
             || !(responseContent.containsKey("data"))
             || !(responseContent.getJSONArray("data").size() > 0)) {
       return false;
