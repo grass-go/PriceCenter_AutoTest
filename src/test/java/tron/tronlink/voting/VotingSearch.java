@@ -36,7 +36,7 @@ public class VotingSearch extends TronlinkBase {
     Assert.assertTrue(ob.containsKey("total"));
     Assert.assertTrue(ob.getInteger("total")>0);
     Assert.assertTrue(ob.containsKey("totalVotes"));
-    Assert.assertTrue(ob.getInteger("totalVotes")>0);
+    Assert.assertTrue(ob.getLongValue("totalVotes")>0);
     Assert.assertTrue(ob.containsKey("data"));
     responseArrayContent = ob.getJSONArray("data");
 

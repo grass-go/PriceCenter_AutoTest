@@ -38,9 +38,10 @@ public class MarketBanner {
     System.out.println(jo.toJSONString());
     System.out.println("---------------");
     String annualizedIncome = String.valueOf(jo.getDoubleValue("annualized_income"));
-    String ai = annualizedIncome.substring(0,4);
+    int index = annualizedIncome.indexOf('.')+3;
+    String ai = annualizedIncome.substring(0,index);
     double origin = Double.valueOf(ai);
-    int value = Integer.valueOf(annualizedIncome.charAt(4));
+    int value = Integer.valueOf(annualizedIncome.charAt(index));
     System.out.println("value: " + value+"    origin: "+ origin + "   annualizedIncome: "+ annualizedIncome);
     if(value>=53){
       BigDecimal b1=new BigDecimal(Double.toString(origin));
@@ -67,10 +68,12 @@ public class MarketBanner {
       Assert.assertTrue(jsonObject.containsKey("created_at"));
       Assert.assertTrue(jsonObject.containsKey("updated_at"));
       if(jsonObject.getIntValue("id") == 2){
-        System.out.println("-- ---- vote_reward: "+jsonObject.getString("vote_reward").substring(0,4));
+        String reward = jsonObject.getString("vote_reward");
+        int indexReward = reward.indexOf('.') + 3;
+        System.out.println("-- ---- vote_reward: "+reward.substring(0,indexReward));
         System.out.println("-- ---- origin : "+origin);
-        System.out.println("-- - - - --:"+(Double.valueOf(jsonObject.getString("vote_reward").substring(0,4))-origin));
-        Assert.assertTrue(Double.valueOf(jsonObject.getString("vote_reward").substring(0,4))-origin == 0);
+        System.out.println("-- - - - --:"+(Double.valueOf(reward.substring(0,indexReward))-origin));
+        Assert.assertTrue(Double.valueOf(reward.substring(0,indexReward))-origin == 0);
         return;
       }
     }
