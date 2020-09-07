@@ -33,10 +33,8 @@ public class MarketPairList {
         responseArrayContent = targetContent.getJSONArray("rows");
         for (int i = 0;i < responseArrayContent.size() ; i++) {
             subtargetContent = responseArrayContent.getJSONObject(i);
-            String target = (String) subtargetContent.get("gain");
-            String removeStr = "-";
-            String newTarget = target.replace(removeStr, "");
-            Assert.assertTrue(Float.parseFloat(newTarget) < 2);
+            float target = subtargetContent.getFloat("gain");
+            Assert.assertTrue(target > -2 && target < 2);
         }
 
     }
