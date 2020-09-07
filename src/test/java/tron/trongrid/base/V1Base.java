@@ -19,6 +19,9 @@ import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 import tron.common.utils.Configuration;
 
 public class V1Base {
@@ -62,6 +65,16 @@ public class V1Base {
     pccm.setMaxTotal(100);
 
     httpClient = new DefaultHttpClient(pccm);
+  }
+
+
+  /**
+   * constructor.
+   */
+  @Parameters({"trongridUrl"})
+  @BeforeTest()
+  public void getMonitorUrl(String trongridUrl) {
+    tronGridUrl = trongridUrl;
   }
 
   /**
@@ -129,17 +142,19 @@ public class V1Base {
    * constructor.
    */
   public static JSONObject getTransactionInfoByAddress(String queryAddress) {
-    return getTransactionInfoByAddress(queryAddress,true);
+    return getTransactionInfoByAddress(queryAddress,true,false,"");
   }
 
   /**
    * constructor.
    */
-  public static JSONObject getTransactionInfoByAddress(String queryAddress,Boolean is_only_confirmed) {
+  public static JSONObject getTransactionInfoByAddress(String queryAddress,Boolean is_only_confirmed,Boolean only_vote_tx,String token_id) {
     try {
       String requestUrl = tronGridUrl + "v1/accounts/" + queryAddress + "/transactions";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("only_confirmed",is_only_confirmed);
+      userBaseObj2.addProperty("vote_tx",only_vote_tx);
+      userBaseObj2.addProperty("token_id",token_id);
       response = createConnect(requestUrl, userBaseObj2);
       return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
     } catch (Exception e) {
@@ -271,6 +286,7 @@ public class V1Base {
         userBaseObj2.addProperty("max_block_timestamp",maxBlockTimestamp);
       }
       response = createConnect(requestUrl, userBaseObj2);
+      Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
       return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
     } catch (Exception e) {
       e.printStackTrace();
@@ -312,17 +328,18 @@ public class V1Base {
    * constructor.
    */
   public static JSONObject getTrc20TransactionInfoByAddress(String queryAddress) {
-    return getTrc20TransactionInfoByAddress(queryAddress,true);
+    return getTrc20TransactionInfoByAddress(queryAddress,true,false);
   }
 
   /**
    * constructor.
    */
-  public static JSONObject getTrc20TransactionInfoByAddress(String queryAddress,Boolean is_only_confirmed) {
+  public static JSONObject getTrc20TransactionInfoByAddress(String queryAddress,Boolean is_only_confirmed,Boolean get_detail) {
     try {
       String requestUrl = tronGridUrl + "v1/accounts/" + queryAddress + "/transactions/trc20";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("only_confirmed",is_only_confirmed);
+      userBaseObj2.addProperty("get_detail",get_detail);
       response = createConnect(requestUrl, userBaseObj2);
       return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
     } catch (Exception e) {

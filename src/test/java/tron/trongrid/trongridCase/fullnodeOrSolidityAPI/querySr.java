@@ -16,18 +16,18 @@ public class querySr extends fullOrSolidityBase {
    */
   @Test(enabled = true, description = "List witnesses from trongrid")
   public void test01ListWitnessesFromTrongrid() {
-    response = listWitnesses();
+    response = listWitnesses(false);
     witnessList = parseResponseContent(response).getJSONArray("witnesses");
     //printJsonContent(responseContent);
     Assert.assertTrue(witnessList.size() > 100);
     firstWitnessInfo = witnessList.getJSONObject(0);
     printJsonContent(firstWitnessInfo);
     Assert.assertEquals(firstWitnessInfo.getString("address").substring(0,2), "41");
-    Assert.assertTrue(firstWitnessInfo.containsKey("isJobs"));
+/*    Assert.assertTrue(firstWitnessInfo.containsKey("isJobs"));
     Assert.assertTrue(firstWitnessInfo.containsKey("totalProduced"));
     Assert.assertTrue(firstWitnessInfo.containsKey("latestSlotNum"));
     Assert.assertTrue(firstWitnessInfo.containsKey("voteCount"));
-    Assert.assertTrue(firstWitnessInfo.containsKey("totalMissed"));
+    Assert.assertTrue(firstWitnessInfo.containsKey("totalMissed"));*/
     Assert.assertTrue(firstWitnessInfo.containsKey("url"));
   }
 

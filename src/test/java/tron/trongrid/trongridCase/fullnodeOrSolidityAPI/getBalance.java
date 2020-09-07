@@ -14,7 +14,7 @@ public class getBalance extends fullOrSolidityBase {
    */
   @Test(enabled = true, description = "Get trx balance from trongrid")
   public void test01GetTrxBalanceTrongrid() {
-    response = getAccount(queryAddress);
+    response = getAccount(queryAddress, false);
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getLong("balance") >  0);
@@ -25,7 +25,7 @@ public class getBalance extends fullOrSolidityBase {
    */
   @Test(enabled = true, description = "Get TRC10 BTT balance from trongrid")
   public void test02GetTrc10BttBalanceTrongrid() {
-    response = getAccount(queryAddress);
+    response = getAccount(queryAddress,false);
     responseContent = parseResponseContent(response);
     JSONArray trc10_json = responseContent.getJSONArray("assetV2");
     Boolean hasBttBalance = false;

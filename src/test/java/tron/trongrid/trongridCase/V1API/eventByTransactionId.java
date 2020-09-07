@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import tron.trongrid.base.V1Base;
+import tron.trongrid.base.fullOrSolidityBase;
 
 public class eventByTransactionId extends V1Base {
 
@@ -55,7 +56,7 @@ public class eventByTransactionId extends V1Base {
     Assert.assertEquals(getEventByBlockNumberBody.getBoolean("success"),true);
     Assert.assertTrue(getEventByBlockNumberBody.containsKey("meta"));
     JSONArray eventByblockNumberArray = getEventByBlockNumberBody.getJSONArray("data");
-    Assert.assertTrue(eventByblockNumberArray.contains(eventData));
+    Assert.assertTrue(fullOrSolidityBase.jsonarrayContainsJsonobject(eventByblockNumberArray,eventData));
   }
 
 

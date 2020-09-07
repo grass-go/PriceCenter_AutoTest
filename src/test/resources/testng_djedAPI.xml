@@ -6,14 +6,14 @@
     </listeners>
     <test name="djedAPI">
         <classes>
-            <class name="tron.djed.TokenInfo"></class>
-            <class name="tron.djed.CdpHistory"></class>
-            <class name="tron.djed.CdpInfo"></class>
-            <class name="tron.djed.CollInfo"></class>
-            <class name="tron.djed.PollList"></class>
-            <class name="tron.djed.Executive"></class>
-            <class name="tron.djed.FeedInfo"></class>
-            <class name="tron.djed.FeeInfo"></class>
+            <class name="tron.djed.JustAPI.TokenInfo"></class>
+            <class name="tron.djed.JustAPI.CdpHistory"></class>
+            <class name="tron.djed.JustAPI.CdpInfo"></class>
+            <class name="tron.djed.JustAPI.CollInfo"></class>
+            <class name="tron.djed.JustAPI.PollList"></class>
+            <class name="tron.djed.JustAPI.Executive"></class>
+            <class name="tron.djed.JustAPI.FeedInfo"></class>
+            <class name="tron.djed.JustAPI.FeeInfo"></class>
         </classes>
     </test>
 </suite>

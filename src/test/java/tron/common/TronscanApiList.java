@@ -288,6 +288,19 @@ public class TronscanApiList {
         return response;
     }
 
+    public static HttpResponse nodemapOnline() {
+        try {
+            String requestUrl = "https://server.tron.network/api/v2/node/nodemap";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
     /**
      * constructor.
      */
@@ -735,6 +748,19 @@ public class TronscanApiList {
     public static HttpResponse getSimple_Transaction(String tronscanNode) {
         try {
             String requestUrl = "http://" + tronscanNode + "api/simple-transaction";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse statistics() {
+        try {
+            String requestUrl = "https://apilist.tronscan.org/api/transaction/statistics";
             System.out.println(requestUrl);
             response = createGetConnect(requestUrl);
         } catch (Exception e) {
@@ -1579,6 +1605,461 @@ public class TronscanApiList {
         } catch (Exception e) {
             e.printStackTrace();
             httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.注册中心账户接口
+     */
+    public static HttpResponse postRegister(String tronscanNode,String email,String password,String verify_password,String location,String g_recaptcha) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/user/register";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("email", email);
+            body.addProperty("password",password);
+            body.addProperty("verify_password",verify_password);
+            body.addProperty("location",location);
+            body.addProperty("g-recaptcha-response",g_recaptcha);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.激活链接接口
+     */
+    public static HttpResponse getActivation(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/user/register/verify";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+    /**
+     * constructor.注册重新发送激活链接
+     *
+     */
+    public static HttpResponse postRegisterResend(String tronscanNode,String email,String location,String g_recaptcha) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/user/register/resend";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("email", email);
+            body.addProperty("location",location);
+            body.addProperty("g-recaptcha-response",g_recaptcha);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.中心账户登录接口
+     */
+    public static HttpResponse postCentrallogin(String tronscanNode,String email,String password,String mobile,String token) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/user/login";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("email", email);
+            body.addProperty("password",password);
+            body.addProperty("mobile",mobile);
+            body.addProperty("token",token);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.手机号登录发送验证码
+     */
+    public static HttpResponse postMobilLogin(String tronscanNode,String validate,String mobile) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/user/login/sendCaptcha";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("validate", validate);
+            body.addProperty("mobile",mobile);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.登陆状态下修改密码
+     */
+    public static HttpResponse postResetPassword(String tronscanNode,String user_id,String origin_password,String new_password,String verify_password) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/user/resetPassword";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("user_id", user_id);
+            body.addProperty("origin_password",origin_password);
+            body.addProperty("new_password",new_password);
+            body.addProperty("verify_password",verify_password);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+    /**
+     * constructor.退出登陆
+     */
+    public static HttpResponse postLogout(String tronscanNode,String user_id) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/user/logout";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("user_id", user_id);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.查询用户登陆状态
+     */
+    public static HttpResponse getUserStat(String tronscanNode) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/user/userStat";
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.忘记密码发送邮箱验证码
+     */
+    public static HttpResponse postFPSendMail(String tronscanNode,String email,String g_recaptcha) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/user/forgetPassword/sendMail";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("email", email);
+            body.addProperty("g-recaptcha-response",g_recaptcha);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+    /**
+     * constructor.修改密码验证码校验
+     */
+    public static HttpResponse postFPVerify(String tronscanNode,String email,String code) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/user/forgetPassword/verify";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("email", email);
+            body.addProperty("code",code);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.修改密码
+     */
+    public static HttpResponse postFPassword(String tronscanNode,String email,String token,String password,String verify_password) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/user/forgetPassword";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("email", email);
+            body.addProperty("token",token);
+            body.addProperty("password",password);
+            body.addProperty("verify_password",verify_password);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.中心账户.获取用户全部标签
+     */
+    public static HttpResponse getUserTag(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/user/tag";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.中心账户插入标签
+     */
+    public static HttpResponse postCenTagInsert(String tronscanNode,String user_id,String target_address,String tag,String description) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/user/tag/insert";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("user_id", user_id);
+            body.addProperty("target_address",target_address);
+            body.addProperty("tag",tag);
+            body.addProperty("description",description);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.中心账户修改标签
+     */
+    public static HttpResponse postCenTagUpdate(String tronscanNode,String user_id,String target_address,String tag,String description) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/user/tag/update";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("user_id", user_id);
+            body.addProperty("target_address",target_address);
+            body.addProperty("tag",tag);
+            body.addProperty("description",description);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+    /**
+     * constructor.中心账户删除标签
+     */
+    public static HttpResponse postCenTagDelete(String tronscanNode,String user_id,String target_address) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/user/tag/delete";
+            System.out.println("requestUrl"+requestUrl);
+            JsonObject body = new JsonObject();
+            body.addProperty("user_id", user_id);
+            body.addProperty("target_address",target_address);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+    /**
+     * constructor.转账列表优化新增接口
+     */
+    public static HttpResponse getStatistics(String tronscanNode) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/transfer/statistics";
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.支持按时间段返回数据。
+     */
+    public static HttpResponse getTrc10trc20(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/trc10trc20-transfer";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.trx市值及流通量。
+     */
+    public static HttpResponse getSystemHomepage(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/system/homepage-bundle";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.
+     * tronex节点新增两个返回值
+     */
+    public static HttpResponse getOverView_usage(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/stats/overview";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.
+     * trx交易量
+     */
+    public static HttpResponse getFreezeresource(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/freezeresource";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.
+     * 获取用户可展示的token列表，包括token名称，id，余额等信息
+     */
+    public static HttpResponse getWallet(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/account/wallet";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+
+    /**
+     * constructor.
+     * token搜索
+     */
+    public static HttpResponse getTokenSearch(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/token/search";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+
+    /**
+     * constructor.
+     * 增加一个账户的token可展示列表
+     */
+    public static HttpResponse postAddShowList(String tronscanNode, String address,
+                                             String showlist) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/account/addShowList";
+            System.out.println(""+requestUrl);
+
+            JsonObject body = new JsonObject();
+            body.addProperty("address", address);
+            body.addProperty("show_list",showlist);
+            response = createConnect(requestUrl,body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.
+     * 增加一个账户的token屏蔽列表
+     */
+    public static HttpResponse postDeleBlockList(String tronscanNode, String address,
+                                               String blocklist) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "external/account/addBlockList";
+            System.out.println(""+requestUrl);
+
+            JsonObject body = new JsonObject();
+            body.addProperty("address", address);
+            body.addProperty("block_list",blocklist);
+            response = createConnect(requestUrl, body);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.
+     * getReward收益
+     */
+    public static HttpResponse getReward(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "wallet/getReward";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
             return null;
         }
         return response;

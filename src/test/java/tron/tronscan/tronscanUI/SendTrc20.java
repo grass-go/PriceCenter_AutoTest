@@ -31,7 +31,7 @@ private  String URL = "https://"+tronScanNode+"/#/";
         }
     }
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "Trc20转账")
+    @Test(enabled = false,retryAnalyzer = MyIRetryAnalyzer.class,description = "Trc20转账")
     public void testTrc20() throws Exception{
         Step.login(driver);
         {

@@ -49,19 +49,21 @@ public class LoginPageTest extends Base{
     Assert.assertTrue(DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[1]/main/div/div/div/div/div/div[1]/div/div/div/a")).isDisplayed());
     DRIVER.findElement(By.xpath(("//*[@id=\"root\"]/div[1]/div[2]/div[1]/main/div/div/div/div/div/div[1]/div/div/div/a/div"))).click();
     Thread.sleep(300);
-    Assert.assertEquals(DRIVER.getCurrentUrl(),"https://just.tronscan.org/#/home");
+    Assert.assertEquals(DRIVER.getCurrentUrl(), "https://" + tronScanNode + "/#/home");
     navigation.back();
 
     // click left [Portal]
     DRIVER.findElement(By.xpath("//*[@id=\"portalIntro1\"]/ul/li[1]/a")).click();
-    Assert.assertEquals(DRIVER.getCurrentUrl(),"https://just.tronscan.org/#/home");
+    Assert.assertEquals(DRIVER.getCurrentUrl(), "https://" + tronScanNode + "/#/home");
     navigation.back();
   }
 
   //@Test
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test002ScanBtn() throws Exception{
-    Assert.assertEquals(DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[1]/main/div/div/div/div/div/div[2]/div/div/div/a")).getAttribute("href"),"https://just.tronscan.org/#scan");
+    Assert.assertEquals(DRIVER.findElement(By.xpath(
+        "//*[@id=\"root\"]/div[1]/div[2]/div[1]/main/div/div/div/div/div/div[2]/div/div/div/a"))
+        .getAttribute("href"), "https://" + tronScanNode + "/#scan");
 
     // change page by slick_point_btn
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[1]/main/div/div/div/ul/li[2]/button")).click();
@@ -69,12 +71,12 @@ public class LoginPageTest extends Base{
 
     // click [Enter]
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[1]/main/div/div/div/div/div/div[2]/div/div/div/a")).click();
-    Assert.assertEquals(DRIVER.getCurrentUrl(),"https://just.tronscan.org/#/scan");
+    Assert.assertEquals(DRIVER.getCurrentUrl(), "https://" + tronScanNode + "/#/scan");
     navigation.back();
 
     // click left [Scan]
     DRIVER.findElement(By.xpath(("//*[@id=\"portalIntro1\"]/ul/li[2]/a"))).click();
-    Assert.assertEquals(DRIVER.getCurrentUrl(),"https://just.tronscan.org/#/scan");
+    Assert.assertEquals(DRIVER.getCurrentUrl(), "https://" + tronScanNode + "/#/scan");
     navigation.back();
 
   }
@@ -82,7 +84,9 @@ public class LoginPageTest extends Base{
   //@Test
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test003GovBtn() throws Exception{
-    Assert.assertEquals(DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[1]/main/div/div/div/div/div/div[3]/div/div/div/a")).getAttribute("href"),"https://just.tronscan.org/#vote");
+    Assert.assertEquals(DRIVER.findElement(By.xpath(
+        "//*[@id=\"root\"]/div[1]/div[2]/div[1]/main/div/div/div/div/div/div[3]/div/div/div/a"))
+        .getAttribute("href"), "https://" + tronScanNode + "/#vote");
 
     // change page by slick_point_btn
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[1]/main/div/div/div/ul/li[3]/button")).click();
@@ -90,12 +94,12 @@ public class LoginPageTest extends Base{
 
     // click [Enter]
     DRIVER.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div[2]/div[1]/main/div/div/div/div/div/div[3]/div/div/div/a/div")).click();
-    Assert.assertEquals(DRIVER.getCurrentUrl(),"https://just.tronscan.org/#/vote");
+    Assert.assertEquals(DRIVER.getCurrentUrl(), "https://" + tronScanNode + "/#/vote");
     navigation.back();
 
     // click left [Governance]
     DRIVER.findElement(By.xpath(("//*[@id=\"portalIntro1\"]/ul/li[3]/a"))).click();
-    Assert.assertEquals(DRIVER.getCurrentUrl(),"https://just.tronscan.org/#/vote");
+    Assert.assertEquals(DRIVER.getCurrentUrl(), "https://" + tronScanNode + "/#/vote");
     navigation.back();
   }
 

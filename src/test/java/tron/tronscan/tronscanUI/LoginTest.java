@@ -9,6 +9,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import tron.common.utils.MyIRetryAnalyzer;
 import tron.common.utils.Step;
 import tron.common.utils.WebBrowser;
 import tron.common.utils.Configuration;
@@ -23,12 +24,14 @@ private  String URL = "https://"+tronScanNode+"/#/";
     public void start() throws Exception {
         try {
             driver = webBrowser.startChrome(URL);
+            driver.navigate().refresh();
+            Thread.sleep(300);
         } catch (Exception e) {
 
         }
     }
 
-    @Test(enabled = true)
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
     public void testLogin() throws Exception{
         Step.login(driver);
     }

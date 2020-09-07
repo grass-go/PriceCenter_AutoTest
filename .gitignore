@@ -1,11 +1,11 @@
 # IDEA
-.idea
+/.idea
 *iml
 .DS_Store
 socketMessage.log
 # gradle
-.gradle
-build
+/.gradle
+build/
 exceptionLogs
 # log
 logs
@@ -13,7 +13,7 @@ consensus-logs
 tronlink-UI-test.iml
 
 # lombok
-out
+out/
 
 # levelDB
 tron-data

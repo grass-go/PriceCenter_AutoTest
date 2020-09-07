@@ -2,9 +2,13 @@ package tron.djed.JustUI;
 
 import java.util.Set;
 import org.junit.Assert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver.Navigation;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
 import tron.common.utils.Configuration;
@@ -19,6 +23,7 @@ public class ScanTokensPageTest extends Base {
   Navigation navigation;
   ScanTokensPage scanTokensPage;
   String justLink;
+  WebDriverWait wait;
 
   @BeforeClass
   public void before() throws Exception {
@@ -27,25 +32,34 @@ public class ScanTokensPageTest extends Base {
     navigation = DRIVER.navigate();
     scanTokensPage = new ScanTokensPage(DRIVER).enterScanTokensPage();
     justLink = DRIVER.getWindowHandle();
+    wait = new WebDriverWait(DRIVER, 30);
+  }
+
+  @BeforeMethod
+  public void beforeTest() throws Exception {
+    DRIVER.switchTo().window(justLink);
+    navigation.refresh();
+    Thread.sleep(25000);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "jstPrice")
-  public void testJstPrice001() {
+  public void test001JstPrice() {
     Assert.assertNotNull(scanTokensPage.jstPrice_text);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "priceFeeds")
-  public void testPriceFeeds002() {
+  public void test002PriceFeeds() {
     Assert.assertNotNull(scanTokensPage.usdjSupply_text);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "ptrxTrxRatio")
-  public void testPtrxTrxRatio003() {
+  public void test003PtrxTrxRatio() {
     Assert.assertNotNull(scanTokensPage.ptrxTrxRatio_text);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "jstContractAddress")
-  public void testJstContractAddress004() throws Exception {
+  public void test004JstContractAddress() throws Exception {
+    wait.until(ExpectedConditions.elementToBeClickable(scanTokensPage.jstContractAddress_link));
     scanTokensPage.jstContractAddress_link.click();
     Thread.sleep(500);
     Set<String> allWindow = DRIVER.getWindowHandles();
@@ -60,15 +74,16 @@ public class ScanTokensPageTest extends Base {
         .assertTrue(DRIVER.getCurrentUrl()
             .contains("https://tronscan.org/#/contract/TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9"));
     navigation.back();
-    logoutAccount();
     DRIVER.switchTo().window(justLink);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "usdjContractAddress")
-  public void testUsdjContractAddress005() throws Exception {
+  public void test005UsdjContractAddress() throws Exception {
+    wait.until(ExpectedConditions.visibilityOf(scanTokensPage.totalSupply_text));
     System.out.println(
         "scanTokensPage.totalSupply_text.getText():" + scanTokensPage.totalSupply_text.getText());
     Assert.assertTrue(Double.parseDouble(scanTokensPage.totalSupply_text.getText()) > 0);
+    wait.until(ExpectedConditions.elementToBeClickable(scanTokensPage.usdjContractAddress_link));
     scanTokensPage.usdjContractAddress_link.click();
     Thread.sleep(1000);
     Set<String> allWindow = DRIVER.getWindowHandles();
@@ -82,12 +97,14 @@ public class ScanTokensPageTest extends Base {
         .assertTrue(DRIVER.getCurrentUrl()
             .contains("https://tronscan.org/#/contract/TMwFHYXLJaRUPeW6421aqXL4ZEzPRFGkGT"));
     navigation.back();
-    logoutAccount();
     DRIVER.switchTo().window(justLink);
   }
 
   @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "ptrxContractAddress")
-  public void testPtrxContractAddress006() throws Exception {
+  public void test006PtrxContractAddress() throws Exception {
+    ((JavascriptExecutor) DRIVER).executeScript("window.scrollTo(0,document.body.scrollHeight)");
+    Thread.sleep(1000);
+    wait.until(ExpectedConditions.elementToBeClickable(scanTokensPage.ptrxContractAddress_link));
     scanTokensPage.ptrxContractAddress_link.click();
     Thread.sleep(1000);
     Set<String> allWindow = DRIVER.getWindowHandles();
@@ -101,7 +118,6 @@ public class ScanTokensPageTest extends Base {
         .assertTrue(DRIVER.getCurrentUrl()
             .contains("https://tronscan.org/#/address/TWjE8mAr3a7ZwgtyBxzmkuumnNZdEFJ4DD"));
     navigation.back();
-    logoutAccount();
     DRIVER.switchTo().window(justLink);
   }
 
