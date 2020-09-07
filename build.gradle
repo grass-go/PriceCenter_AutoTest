@@ -75,7 +75,7 @@ task djedAPI(type: Test) {
         exceptionFormat = 'full'
         showStackTraces = "true"
     }
-    
+
 
 }
 
@@ -157,4 +157,21 @@ task justUI(type: Test) {
         exceptionFormat = 'full'
         showStackTraces = "true"
     }
+}
+
+
+task trxmarketAPI(type: Test) {
+
+    useTestNG {
+        suites(file('src/test/resources/testng_trxmarketAPI.xml'))
+        parallel 'tests'
+        threadCount 1
+
+    }
+    testLogging {
+        exceptionFormat = 'full'
+        showStackTraces = "true"
+    }
+
+
 }
