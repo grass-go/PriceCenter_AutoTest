@@ -11,7 +11,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
-import sun.plugin.dom.core.CoreConstants;
 import tron.common.utils.Configuration;
 
 import java.nio.charset.Charset;
