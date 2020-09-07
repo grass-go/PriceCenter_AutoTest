@@ -16,15 +16,20 @@ public class MarketFavoritor {
   private HttpResponse response;
   private HashMap<String,String> param = new HashMap<>();
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void Test000getMarketFavoritor() throws Exception {
-    param.put("token","TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7&token=TVQ6jYV5yTtRsKcD8aRc1a4Kei4V45ixLn&token=1001090"); //win
+    param.put("token","TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9_T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb&" +
+            "token=TVgAYofpQku5G4zenXnvxhbZxpzzrk8WVK_T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb" +
+            "&token=T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb_TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t" +
+            "&token=TMwFHYXLJaRUPeW6421aqXL4ZEzPRFGkGT_TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t" +
+            "&token=1002000_TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t" +
+            "&token=TTVTdn8ipmacfKsCHw5Za48NRnaBRKeJ44_TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"); //win
     response = TronlinkApiList.walletMarketFavorite(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     JSONObject data = responseContent.getJSONObject("data");
     Assert.assertTrue(data.containsKey("total"));
-    Assert.assertTrue(data.getInteger("total")==3);
+    Assert.assertTrue(data.getInteger("total")==6);
     responseArrayContent = data.getJSONArray("rows");
 
     //data object
