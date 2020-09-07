@@ -1,19 +1,25 @@
 package tron.common;
 
+import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
+import org.apache.http.util.EntityUtils;
 import sun.plugin.dom.core.CoreConstants;
 import tron.common.utils.Configuration;
 
+import java.nio.charset.Charset;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Map;
 
+@Slf4j
 public class TrxMarketApiList {
 
     static HttpClient httpClient;
@@ -72,6 +78,28 @@ public class TrxMarketApiList {
             return null;
         }
         return response;
+    }
+
+    public static JSONObject parseResponseContent(HttpResponse response){
+        try {
+            String result = EntityUtils.toString(response.getEntity());
+            StringEntity entity = new StringEntity(result, Charset.forName("UTF-8"));
+            response.setEntity(entity);
+            JSONObject obj = JSONObject.parseObject(result);
+            return obj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static void printJsonContent(JSONObject responseContent){
+        log.info("----------------------------Print JSON Start---------------------------");
+        for (String str : responseContent.keySet()) {
+            log.info(str + ":" + responseContent.get(str));
+        }
+        log.info("JSON content size are: " + responseContent.size());
+        log.info("----------------------------Print JSON End-----------------------------");
     }
 
     public static void disGetConnect(){
