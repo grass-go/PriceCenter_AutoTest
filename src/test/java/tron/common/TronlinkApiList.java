@@ -377,6 +377,13 @@ public static HttpResponse search(Map<String, String> params) {
     response = createConnect(requestUrl, address);
     return response;
   }
+
+  public static HttpResponse getAirdropTransaction(Map<String, String> params) {
+    final String requestUrl =HttpNode + "/api/wallet/airdrop_transaction";
+    response = createGetConnect(requestUrl, params);
+    return response;
+  }
+
   public static HttpResponse getAllClassAsset(String node ,JSONObject address) throws Exception {
     final String requestUrl = node + "/api/wallet/class/allasset";
     response = createConnect(requestUrl, address);
