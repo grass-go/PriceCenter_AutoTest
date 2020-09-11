@@ -515,6 +515,21 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse nilexGetAssetlist(String address,Map<String,String> header) {
+    try {
+      String requestUrl = "https://niletest.tronlink.org/api/wallet/assetlist";
+      System.out.println("requestUrl"+requestUrl);
+      JsonObject body = new JsonObject();
+      body.addProperty("address", address);
+      response = createPostConnectWithHeader(requestUrl,body,header);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
   /**
    * constructor.
    */
@@ -527,6 +542,41 @@ public static HttpResponse search(Map<String, String> params) {
       httppost = new HttpPost(url);
       httppost.setHeader("Content-type", "application/json; charset=utf-8");
       httppost.setHeader("Connection", "Close");
+      if (requestBody != null) {
+        StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
+        entity.setContentEncoding("UTF-8");
+        entity.setContentType("application/json");
+        httppost.setEntity(entity);
+      }
+      SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
+      System.out.println("请求开始时间： " + formatter.format(new Date()));
+      response = httpClient.execute(httppost);
+      System.out.println("请求结束时间： " + formatter.format(new Date()));
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse createPostConnectWithHeader(String url, JsonObject requestBody,Map<String,String> header) {
+    try {
+      httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
+              connectionTimeout);
+      httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+
+      httppost = new HttpPost(url);
+      httppost.setHeader("Content-type", "application/json; charset=utf-8");
+      httppost.setHeader("Connection", "Close");
+      if(header != null){
+        for(String key: header.keySet()){
+          httppost.setHeader(key,header.get(key));
+        }
+      }
       if (requestBody != null) {
         StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
         entity.setContentEncoding("UTF-8");
