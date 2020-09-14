@@ -3,11 +3,13 @@ import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 import lombok.extern.slf4j.Slf4j;
+
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.AfterClass;
@@ -67,7 +69,11 @@ public class SearchList {
       //vip_token
       Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("vip_token"));
       //icon
-      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("icon").toString().isEmpty());
+      String icon_key = exchangeArray.getJSONObject(i).get("icon").toString();
+      Assert.assertTrue(!icon_key.isEmpty());
+      HttpResponse httpResponse = TronscanApiList.getUrlkey(icon_key);
+      Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
+
       //name
       Assert.assertTrue(!exchangeArray.getJSONObject(i).get("name").toString().isEmpty());
       //type
@@ -77,7 +83,7 @@ public class SearchList {
         Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
         Assert.assertTrue(patternAddress.matcher(exchangeArray.getJSONObject(i).getString("id")).matches());
       }else{
-        Assert.assertTrue(Integer.valueOf(exchangeArray.getJSONObject(i).get("id").toString()) >= 0);
+        Assert.assertTrue(exchangeArray.getJSONObject(i).getLong("id") > 1000000);
       }
       //abbr
       Assert.assertTrue(!exchangeArray.getJSONObject(i).get("abbr").toString().isEmpty());
@@ -111,7 +117,10 @@ public class SearchList {
       //vip_token
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("vip_token"));
       //icon
-      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("icon").toString().isEmpty());
+      String icon_key = responseArrayContent.getJSONObject(i).get("icon").toString();
+      Assert.assertTrue(!icon_key.isEmpty());
+      HttpResponse httpResponse = TronscanApiList.getUrlkey(icon_key);
+      Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
       //name
       Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("name").toString().isEmpty());
       //type
@@ -121,7 +130,7 @@ public class SearchList {
         Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
         Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("token_id")).matches());
       }else{
-        Assert.assertTrue(Integer.valueOf(responseArrayContent.getJSONObject(i).get("token_id").toString()) >= 0);
+        Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("token_id") > 1000000);
       }
       //abbr
       Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("abbr").toString().isEmpty());

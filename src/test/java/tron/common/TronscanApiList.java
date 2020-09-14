@@ -2081,7 +2081,22 @@ public class TronscanApiList {
         }
         return response;
     }
-
+    /**
+     * constructor.
+     * 接口内部调用
+     */
+    public static HttpResponse getUrlkey(String url) {
+        try {
+            String requestUrl = url;
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
     /**
      * constructor.
      * 搜索框热门token查看
