@@ -10,7 +10,7 @@ public class generateaddress extends fullOrSolidityBase {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Generate address from trongrid")
+  @Test(enabled = false, description = "Generate address from trongrid")
   public void test01GenerateAddressFromTrongrid() {
     response = generateAddress(true);
     responseContent = parseResponseContent(response);
