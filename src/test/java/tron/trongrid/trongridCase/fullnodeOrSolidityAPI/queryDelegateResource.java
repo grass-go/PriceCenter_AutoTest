@@ -10,7 +10,7 @@ public class queryDelegateResource extends fullOrSolidityBase {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Get delegate resource from trongrid")
+  @Test(enabled = false, description = "Get delegate resource from trongrid")
   public void test01GetDelegateResourceFromTrongrid() {
     response = getDelegateResource(delegateResourceFromAddress,delegateResourceToAddress);
     responseContent = parseResponseContent(response).getJSONArray("delegatedResource").getJSONObject(0);
@@ -26,7 +26,7 @@ public class queryDelegateResource extends fullOrSolidityBase {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Get delegate resource index from trongrid")
+  @Test(enabled = false, description = "Get delegate resource index from trongrid")
   public void test02GetDelegateResourceIndexFromTrongrid() {
     response = getDelegateResourceIndex(delegateResourceToAddress);
     responseContent = parseResponseContent(response);
