@@ -45,24 +45,31 @@ public class TransfersToken_trc20 {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
-    Assert.assertTrue(responseContent.containsKey("total"));
-
+    //
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal >= total);
     //data object
     responseArrayContent = responseContent.getJSONArray("token_transfers");
-    JSONObject responseObject = responseArrayContent.getJSONObject(0);
-    Assert.assertTrue(responseObject.containsKey("transaction_id"));
-    Assert.assertTrue(responseObject.containsKey("block_ts"));
-    Assert.assertTrue(responseObject.containsKey("block"));
-    Assert.assertTrue(responseObject.containsKey("quant"));
-    Assert.assertTrue(responseObject.containsKey("confirmed"));
-    Assert.assertTrue(responseObject.containsKey("contractRet"));
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(
-        patternAddress.matcher(responseObject.getString("from_address")).matches());
-    Assert.assertTrue(
-        patternAddress.matcher(responseObject.getString("to_address")).matches());
-  }
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
+      Assert.assertTrue(patternHash.matcher(responseArrayContent.getJSONObject(i).getString("transaction_id")).matches());
 
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("block_ts"));
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).get("block").toString()) >= 1000000);
+
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("quant"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("confirmed"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("contractRet"));
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String from_address = responseArrayContent.getJSONObject(i).getString("from_address");
+      Assert.assertTrue(
+              patternAddress.matcher(from_address).matches() && !from_address.isEmpty());
+      String to_address = responseArrayContent.getJSONObject(i).getString("to_address");
+      Assert.assertTrue(
+              patternAddress.matcher(to_address).matches() && !to_address.isEmpty());
+    }
+  }
 
   /**
    * constructor.

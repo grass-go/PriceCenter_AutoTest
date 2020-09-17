@@ -46,27 +46,32 @@ public class TransferListBetweenTimeRange {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
+    //
 
-    //3 key
-    Assert.assertTrue(responseContent.containsKey("total"));
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal >= total);
+    //data
     responseArrayContent = responseContent.getJSONArray("data");
     Assert.assertEquals(responseArrayContent.size(), limit);
-    Assert.assertTrue(responseContent.getLong("rangeTotal") > 0);
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("data"));
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).get("block").toString()) >= 1000000);
+      Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
+      Assert.assertTrue(patternHash.matcher(responseArrayContent.getJSONObject(i).getString("transactionHash")).matches());
 
-    //data
-    targetContent = responseArrayContent.getJSONObject(0);
-    Assert.assertTrue(targetContent.containsKey("data"));
-    Assert.assertTrue(targetContent.containsKey("block"));
-    Assert.assertTrue(targetContent.containsKey("transactionHash"));
-    Assert.assertTrue(targetContent.containsKey("confirmed"));
-    Assert.assertTrue(targetContent.containsKey("timestamp"));
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(targetContent
-        .getString("transferFromAddress")).matches());
-    Assert.assertTrue(patternAddress.matcher(targetContent
-        .getString("transferToAddress")).matches());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("confirmed"));
+      //timestamp
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("timestamp").toString().isEmpty());
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String transferFromAddress = responseArrayContent.getJSONObject(i).getString("transferFromAddress");
+      Assert.assertTrue(
+              patternAddress.matcher(transferFromAddress).matches() && !transferFromAddress.isEmpty());
+      String transferToAddress = responseArrayContent.getJSONObject(i).getString("transferToAddress");
+      Assert.assertTrue(
+              patternAddress.matcher(transferToAddress).matches() && !transferToAddress.isEmpty());
+    }
   }
-
   /**
    * constructor.
    */

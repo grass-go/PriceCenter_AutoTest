@@ -34,6 +34,7 @@ public class TotalCount {
 
   /**
    * constructor.查询总数接口
+   * 类型为trc10trc20
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get a super totalCount's github link")
   public void getTotalCount() {
@@ -48,11 +49,30 @@ public class TotalCount {
     TronscanApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.size() == 2);
     //count
-    Assert.assertTrue(Long.valueOf(responseContent.get("count").toString()) >= 0);
-    Assert.assertTrue(!responseContent.get("type").toString().isEmpty());
-
+    Assert.assertTrue(Long.valueOf(responseContent.get("count").toString()) >= 1);
+    Assert.assertEquals(responseContent.getString("type"),"trc10trc20");
   }
 
+  /**
+   * constructor.查询总数接口
+   * 类型为11111
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get a super totalCount's github link")
+  public void getTotalCount02() {
+    //Get response
+    String address = "TAahLbGTZk6YuCycii72datPQEtyC5x231";
+    Map<String, String> params = new HashMap<>();
+    params.put("address", address);
+    params.put("type", "1111");
+    response = TronscanApiList.getTotalCount(tronScanNode, params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+    Assert.assertTrue(responseContent.size() == 2);
+    //count
+    Assert.assertTrue(Long.valueOf(responseContent.get("count").toString()) == 0);
+    Assert.assertTrue(responseContent.containsKey("type"));
+  }
   /**
    * constructor.
    */

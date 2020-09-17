@@ -50,20 +50,31 @@ public class Trc20TokensParam {
         targetContent = responseContent.getJSONObject("data");
         responseArrayContent = targetContent.getJSONArray("tokens");
         JSONObject responseObject = responseArrayContent.getJSONObject(0);
-        Assert.assertTrue(responseObject.containsKey("icon_url"));
-        Assert.assertTrue(responseObject.containsKey("symbol"));
-        Assert.assertTrue(responseObject.containsKey("total_supply"));
+        String icon_url = responseObject.get("icon_url").toString();
+        Assert.assertTrue(!icon_url.isEmpty());
+        HttpResponse httpResponse = TronscanApiList.getUrlkey(icon_url);
+        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
+        //
+        Assert.assertTrue(!responseObject.getString("symbol").isEmpty());
+        Assert.assertTrue(responseObject.getLong("total_supply") >= 1000000000);
+        //contract_address
         Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-        Assert.assertTrue(patternAddress.matcher(responseObject.getString("contract_address")).matches());
-        Assert.assertTrue(patternAddress.matcher(responseObject.getString("issuer_addr")).matches());
-        Assert.assertTrue(responseObject.containsKey("home_page"));
-        Assert.assertTrue(responseObject.containsKey("token_desc"));
-        Assert.assertTrue(responseObject.containsKey("update_time"));
+        String contract_address = responseObject.getString("contract_address");
+        Assert.assertTrue(patternAddress.matcher(contract_address).matches());
+        Assert.assertEquals(responseObject.getString("issuer_addr"),issuer_addr);
+
+        Assert.assertTrue(!responseObject.getString("home_page").isEmpty());
+        Assert.assertTrue(!responseObject.getString("token_desc").isEmpty());
+        Assert.assertTrue(!responseObject.getString("update_time").isEmpty());
         Assert.assertTrue(responseObject.containsKey("git_hub"));
-        Assert.assertTrue(responseObject.containsKey("decimals"));
-        Assert.assertTrue(responseObject.containsKey("name"));
-        Assert.assertTrue(responseObject.containsKey("issue_time"));
-        Assert.assertTrue(responseObject.containsKey("email"));
+        //decimals
+        Assert.assertTrue(responseObject
+                .getInteger("decimals") >= 0 && responseObject.getInteger("decimals") <= 7);
+        Assert.assertTrue(!responseObject.getString("name").isEmpty());
+        Assert.assertTrue(!responseObject.getString("issue_time").isEmpty());
+        //email
+        String email = responseObject.getString("email");
+        Assert.assertTrue(email.contains("@"));
 
         Assert.assertTrue(responseObject.containsKey("white_paper"));
         Assert.assertTrue(responseObject.containsKey("social_media"));
@@ -72,7 +83,7 @@ public class Trc20TokensParam {
         sidechainsArrayContent = responseObject.getJSONArray("sidechains");
         JSONObject sidechainsObject = sidechainsArrayContent.getJSONObject(0);
         Pattern sidechainsAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-        Assert.assertTrue(sidechainsAddress.matcher(sidechainsObject.getString("mainchain_address")).matches());
+        Assert.assertEquals(sidechainsObject.getString("mainchain_address"),contract_address);
         Assert.assertTrue(sidechainsAddress.matcher(sidechainsObject.getString("sidechain_address")).matches());
         Assert.assertTrue(sidechainsObject.containsKey("chainid"));
         Assert.assertTrue(sidechainsObject.containsKey("type"));
@@ -94,18 +105,18 @@ public class Trc20TokensParam {
         //three object, "retCode" and "Data"
         Assert.assertTrue(responseContent.size() >= 3);
         Assert.assertTrue(responseContent.containsKey("trc20Proportion"));
-        Assert.assertTrue(Double.valueOf(responseContent.get("trxTransferAmount").toString()) >= 0);
+        Assert.assertTrue(Double.valueOf(responseContent.get("trxTransferAmount").toString()) > 0);
         Assert.assertTrue(responseContent.containsKey("trc10TransferCount"));
         Assert.assertTrue(responseContent.containsKey("lastDayTransfersCount"));
         Assert.assertTrue(responseContent.containsKey("trxTransferCount"));
         Assert.assertTrue(responseContent.containsKey("transfersCount"));
         Assert.assertTrue(Double.valueOf(responseContent.get("trc20Amount").toString()) >= 0);
-        Assert.assertTrue(Double.valueOf(responseContent.get("trc10TransferProportion").toString()) >= 0);
+        Assert.assertTrue(Double.valueOf(responseContent.get("trc10TransferProportion").toString()) > 0);
         Assert.assertTrue(responseContent.containsKey("trc20Count"));
-        Assert.assertTrue(Double.valueOf(responseContent.get("trc10TransferAmount").toString()) >= 0);
-        Assert.assertTrue(Double.valueOf(responseContent.get("transfersAmount").toString()) >= 0);
-        Assert.assertTrue(Double.valueOf(responseContent.get("trxTransferProportion").toString()) >= 0);
-        Assert.assertTrue(Double.valueOf(responseContent.get("lastDayTransfersAmount").toString()) >= 0);
+        Assert.assertTrue(Double.valueOf(responseContent.get("trc10TransferAmount").toString()) > 0);
+        Assert.assertTrue(Double.valueOf(responseContent.get("transfersAmount").toString()) > 0);
+        Assert.assertTrue(Double.valueOf(responseContent.get("trxTransferProportion").toString()) > 0);
+        Assert.assertTrue(Double.valueOf(responseContent.get("lastDayTransfersAmount").toString()) > 0);
 
     }
 

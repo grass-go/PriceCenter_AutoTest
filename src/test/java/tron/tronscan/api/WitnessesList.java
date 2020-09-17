@@ -35,22 +35,25 @@ public class WitnessesList {
     log.info("code is " + response.getStatusLine().getStatusCode());
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseArrayContent = TronscanApiList.parseArrayResponseContent(response);
-    JSONObject responseObject = responseArrayContent.getJSONObject(0);
     Assert.assertTrue(responseArrayContent.size() >= 27);
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(responseObject.getString("address")).matches());
-    Assert.assertTrue(responseObject.containsKey("name"));
-    Assert.assertTrue(responseObject.containsKey("producer"));
-    Assert.assertTrue(responseObject.containsKey("missedTotal"));
-    Assert.assertTrue(responseObject.containsKey("producedTotal"));
-    Assert.assertFalse(responseObject.getString("url").isEmpty());
-    Assert.assertTrue(
-        responseObject.getLong("latestBlockNumber") < responseObject.getLong("latestSlotNumber"));
-    Assert.assertTrue(responseObject.getLong("votes") > 0);
-    Assert.assertTrue(responseObject.getLong("producePercentage") < 100);
-    Assert.assertTrue(responseObject.getLong("votesPercentage") > 0);
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("address")).matches());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("name"));
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("producer").toString().isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("missedTotal").toString().isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("missedTotal").toString().isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("producedTotal").toString().isEmpty());
+      String url_key = responseArrayContent.getJSONObject(i).get("url").toString();
+      //url长耗时
+      Assert.assertTrue(!url_key.isEmpty());
+      Assert.assertTrue(
+              responseArrayContent.getJSONObject(i).getLong("latestBlockNumber") <= responseArrayContent.getJSONObject(i).getLong("latestSlotNumber"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("votes") > 0);
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("producePercentage") <= 100);
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).getDouble("votesPercentage") > 0);
+    }
   }
-
   /**
    * constructor.
    */
@@ -69,15 +72,19 @@ public class WitnessesList {
       //name
       Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("name").toString().isEmpty());
       //url
-      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("url"));
+      String url_key = responseArrayContent.getJSONObject(i).get("url").toString();
+      //各别地址链接失败
+      Assert.assertTrue(!url_key.isEmpty());
+//      HttpResponse httpResponse = TronscanApiList.getUrlkey(url_key);
+//      Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
       //blockProduced
       Assert.assertTrue(
-          Long.valueOf(responseArrayContent.getJSONObject(i).get("blockProduced").toString()) >= 0);
+          Long.valueOf(responseArrayContent.getJSONObject(i).get("blockProduced").toString()) > 0);
       Assert.assertTrue(
-          Long.valueOf(responseArrayContent.getJSONObject(i).get("total").toString()) >= 0);
+          Long.valueOf(responseArrayContent.getJSONObject(i).get("total").toString()) > 0);
       //percentage
       Assert.assertTrue(
-          Double.valueOf(responseArrayContent.getJSONObject(i).get("percentage").toString()) >= 0);
+          Double.valueOf(responseArrayContent.getJSONObject(i).get("percentage").toString()) > 0);
     }
   }
 

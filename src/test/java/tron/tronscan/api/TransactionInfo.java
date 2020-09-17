@@ -43,19 +43,19 @@ public class TransactionInfo {
     Assert.assertTrue(!responseContent.get("contractRet").toString().isEmpty());
     Assert.assertTrue(!responseContent.getJSONObject("cost").isEmpty());
     Assert.assertTrue(responseContent.containsKey("data"));
-    Assert.assertTrue(responseContent.getInteger("contractType") >= 0);
+    Assert.assertTrue(responseContent.getInteger("contractType") > 0);
     Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
     Assert.assertTrue(patternAddress.matcher(responseContent.getString("toAddress")).matches());
     Assert.assertTrue(responseContent.getBoolean("confirmed"));
     targetContent = responseContent.getJSONObject("trigger_info");
     Assert.assertTrue(!targetContent.getString("method").isEmpty());
     Assert.assertTrue(targetContent.containsKey("parameter"));
-    Assert.assertTrue(targetContent.containsKey("call_value"));
-    Assert.assertTrue(responseContent.getLong("block") > 0);
+    Assert.assertTrue(targetContent.getInteger("call_value") >= 10000000);
+    Assert.assertTrue(responseContent.getLong("block") >= 1000000);
     Assert.assertTrue(patternAddress.matcher(responseContent.getString("ownerAddress")).matches());
     Assert.assertEquals(transactionHash,responseContent.getString("hash"));
     Assert.assertTrue(responseContent.containsKey("contractData"));
-    Assert.assertTrue(responseContent.getLong("timestamp") > 0);
+    Assert.assertTrue(!responseContent.getString("timestamp").isEmpty());
     Assert.assertTrue(!responseContent.getString("internal_transactions").isEmpty());
 
 
