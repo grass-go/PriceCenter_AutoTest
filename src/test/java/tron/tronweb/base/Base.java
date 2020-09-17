@@ -24,6 +24,8 @@ public class Base {
   public String querySrAddress = Configuration.getByPath("testng.conf").getString("tronWeb.querySrAddress");
   public String querySrAddress41 = Configuration.getByPath("testng.conf").getString("tronWeb.querySrAddressWith41Start");
   public String queryTractionId = Configuration.getByPath("testng.conf").getString("tronWeb.queryQractionId");
+  public String queryAddressSophia = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddressSophia");
+
 
   public  String executeJavaScript(String cmd) throws IOException {
     Process process = Runtime.getRuntime().exec("node " + cmd);

@@ -91,12 +91,12 @@ public class accountTest extends Base{
   @Test(enabled = true, description = "Test get account resource")
   public void test06GetAccountResource() throws IOException {
     functionName = "getAccountResources ";
-    String address = queryAddress;
+    String address = queryAddressSophia;
     String result = executeJavaScript(accountDir + functionName + address);
     System.out.println(result);
     JSONObject jsonObject = JSONObject.parseObject(result);
     Assert.assertTrue(jsonObject.containsKey("freeNetLimit"));
-//    Assert.assertTrue(jsonObject.containsKey("NetLimit"));
+    Assert.assertTrue(jsonObject.containsKey("NetLimit"));
     Assert.assertTrue(jsonObject.containsKey("TotalNetLimit"));
     Assert.assertTrue(jsonObject.containsKey("TotalNetWeight"));
     Assert.assertTrue(jsonObject.containsKey("TotalEnergyLimit"));
