@@ -96,7 +96,7 @@ public class accountTest extends Base{
     System.out.println(result);
     JSONObject jsonObject = JSONObject.parseObject(result);
     Assert.assertTrue(jsonObject.containsKey("freeNetLimit"));
-    Assert.assertTrue(jsonObject.containsKey("NetLimit"));
+//    Assert.assertTrue(jsonObject.containsKey("NetLimit"));
     Assert.assertTrue(jsonObject.containsKey("TotalNetLimit"));
     Assert.assertTrue(jsonObject.containsKey("TotalNetWeight"));
     Assert.assertTrue(jsonObject.containsKey("TotalEnergyLimit"));
