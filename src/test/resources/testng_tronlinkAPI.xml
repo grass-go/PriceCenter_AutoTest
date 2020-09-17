@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="tronlinkAPI" parallel="tests" thread-count="1">
+<suite name="tronlinkAPI" parallel="classes" thread-count="2">
     <listeners>
         <listener class-name="tron.common.utils.SqlTronlinkAPI"/>
-        <listener class-name="tron.common.utils.RetryListener"/>
+<!--        <listener class-name="tron.common.utils.RetryListener"/>-->
     </listeners>
 
     <test name="tronlinkAPI">
