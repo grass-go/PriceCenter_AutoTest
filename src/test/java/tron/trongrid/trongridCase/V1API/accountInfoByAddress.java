@@ -36,7 +36,7 @@ public class accountInfoByAddress extends V1Base {
     Assert.assertTrue(accountData.getLong("balance") > 0);
     Assert.assertTrue(accountData.containsKey("trc20"));
     Assert.assertTrue(accountData.containsKey("latest_consume_free_time"));
-    Assert.assertTrue(accountData.containsKey("acquired_delegated_frozen_balance_for_bandwidth"));
+//    Assert.assertTrue(accountData.containsKey("acquired_delegated_frozen_balance_for_bandwidth"));
   }
 
   /**
