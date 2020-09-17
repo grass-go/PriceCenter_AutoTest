@@ -40,7 +40,7 @@ public class SystemList {
     TronscanApiList.printJsonContent(responseContent);
 
     //System status has 5 key:value
-    Assert.assertTrue(responseContent.size() >= 5);
+    Assert.assertTrue(responseContent.size() == 5);
 
     //database has block and confirmedBlock, confirmedBlock <= block
     targetContent = responseContent.getJSONObject("database");
@@ -50,7 +50,7 @@ public class SystemList {
 
     //sync has one key:value,
     targetContent = responseContent.getJSONObject("sync");
-    Assert.assertTrue(Double.valueOf(targetContent.get("progress").toString()) >= 95);
+    Assert.assertTrue(Double.valueOf(targetContent.get("progress").toString()) <= 100);
 
     //network type should be mainnet
     targetContent = responseContent.getJSONObject("network");
@@ -88,7 +88,7 @@ public class SystemList {
     TronscanApiList.printJsonContent(responseContent);
 
     //System status has 5 key:value
-    Assert.assertTrue(responseContent.size() >= 2);
+    Assert.assertTrue(responseContent.size() == 2);
     //type
     Assert.assertTrue(!responseContent.get("type").toString().isEmpty());
     //data
@@ -115,11 +115,12 @@ public class SystemList {
     TronscanApiList.printJsonContent(responseContent);
 
     //System status has 5 key:value
-    Assert.assertTrue(responseContent.size() >= 3);
+    Assert.assertTrue(responseContent.size() == 4);
     //node
     targetContent = responseContent.getJSONObject("node");
     //total
-    Assert.assertTrue(targetContent.containsKey("total"));
+//    Assert.assertTrue(targetContent.containsKey("total"));
+    Assert.assertTrue(Long.valueOf(targetContent.get("total").toString())>1000);
     //code
     Assert.assertTrue(targetContent.containsKey("code"));
     //yesterdayStat

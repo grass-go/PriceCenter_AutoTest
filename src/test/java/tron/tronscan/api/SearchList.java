@@ -35,6 +35,7 @@ public class SearchList {
 
   /**
    * constructor.
+   * 查询给出结果不为空
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "搜索框查询接口")
   public void getSearch() {
@@ -45,12 +46,48 @@ public class SearchList {
     responseArrayContent = TronscanApiList.parseArrayResponseContent(response);
     Assert.assertTrue(responseArrayContent.size() > 0);
     for (int i = 0; i < responseArrayContent.size(); i++) {
-      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("value"));
-      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("desc"));
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("value").toString().isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("desc").toString().isEmpty());
     }
   }
 
 
+  /**
+   * constructor.
+   * term为指定的地址
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "搜索框查询接口")
+  public void getSearch02() {
+    Map<String, String> Params = new HashMap<>();
+    Params.put("term", "TSmZ71H9S6BQLdyGcr8QfG9qr92N6WUXKS");
+    response = TronscanApiList.getSearch(tronScanNode, Params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseArrayContent = TronscanApiList.parseArrayResponseContent(response);
+    Assert.assertTrue(responseArrayContent.size() > 0);
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Assert.assertEquals(responseArrayContent.getJSONObject(i).getString("value"),"TSmZ71H9S6BQLdyGcr8QfG9qr92N6WUXKS");
+      Assert.assertEquals(responseArrayContent.getJSONObject(i).getString("desc"),"Address");
+
+    }
+  }
+  /**
+   * constructor.
+   * term为指定的合约
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "搜索框查询接口")
+  public void getSearch03() {
+    Map<String, String> Params = new HashMap<>();
+    Params.put("term", "TVRqMwBZU13c4wx6Hi6jqroCnYv2nrqQU1");
+    response = TronscanApiList.getSearch(tronScanNode, Params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseArrayContent = TronscanApiList.parseArrayResponseContent(response);
+    Assert.assertTrue(responseArrayContent.size() > 0);
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Assert.assertEquals(responseArrayContent.getJSONObject(i).getString("value"),"TVRqMwBZU13c4wx6Hi6jqroCnYv2nrqQU1");
+      Assert.assertEquals(responseArrayContent.getJSONObject(i).getString("desc"),"Contract");
+
+    }
+  }
   /**
    * constructor.
    * 热门通证、热门合约查看
@@ -95,7 +132,7 @@ public class SearchList {
       //verify_status
       Assert.assertTrue(contractArray.getJSONObject(i).containsKey("verify_status"));
       //name
-      Assert.assertTrue(!contractArray.getJSONObject(i).get("name").toString().isEmpty());
+      Assert.assertTrue(contractArray.getJSONObject(i).containsKey("name"));
       //contract_address
       Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
       Assert.assertTrue(patternAddress.matcher(contractArray.getJSONObject(i).getString("contract_address")).matches());

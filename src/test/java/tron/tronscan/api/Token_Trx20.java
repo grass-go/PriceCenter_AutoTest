@@ -55,50 +55,57 @@ public class Token_Trx20 {
     JSONArray exchangeArray = responseContent.getJSONArray("trc20_tokens");
     Assert.assertTrue(rangeTotal >= total);
     //Assert.assertTrue(responseContent.containsKey("rangeTotal"));
-
-    targetContent = exchangeArray.getJSONObject(0);
-    //icon_url
-    Assert.assertTrue(targetContent.containsKey("icon_url"));
-    //total_supply and issue_ts Contain > 0
-    Assert.assertTrue(Double.valueOf(targetContent.get("total_supply").toString()) >= 0);
-    Assert.assertTrue(Double.valueOf(targetContent.get("issue_ts").toString()) >= 0);
-    //volume24h and index
-    Assert.assertTrue(Double.valueOf(targetContent.get("volume24h").toString()) >= 0);
-    Assert.assertTrue(Long.valueOf(targetContent.get("index").toString()) >= 1);
-    Assert.assertTrue(!targetContent.get("symbol").toString().isEmpty());
-    //total_supply_str can empty
-    Assert.assertTrue(targetContent.containsKey("total_supply_str"));
-    //contract_address
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert
-        .assertTrue(patternAddress.matcher(targetContent.getString("contract_address")).matches());
-    //gain
-    Assert.assertTrue(targetContent.containsKey("gain"));
-    //home_page
-    Assert.assertTrue(!targetContent.get("home_page").toString().isEmpty());
-    Assert.assertTrue(Double.valueOf(targetContent.get("volume").toString()) >= 0);
-    //contract_address
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("issue_address")).matches());
-    //token_desc
-    Assert.assertTrue(!targetContent.get("token_desc").toString().isEmpty());
-    Assert.assertTrue(Double.valueOf(targetContent.get("price_trx").toString()) >= 0);
-    //git_hub
-    Assert.assertTrue(!targetContent.get("git_hub").toString().isEmpty());
-    //price
-    Assert.assertTrue(targetContent.containsKey("price"));
-    //total_supply_with_decimals
-    Assert.assertTrue(
-        Double.valueOf(targetContent.get("total_supply_with_decimals").toString()) >= 1000);
-    //decimals
-    Integer decimals = Integer.valueOf(targetContent.get("decimals").toString());
-    Assert.assertTrue(decimals >= 0 && decimals <= 7);
-    //name
-    Assert.assertTrue(!targetContent.get("name").toString().isEmpty());
-    //social_media_list
-    Assert.assertTrue(!targetContent.get("social_media_list").toString().isEmpty());
-    Assert.assertTrue(!targetContent.get("issue_time").toString().isEmpty());
-    Assert.assertTrue(targetContent.containsKey("white_paper"));
-    Assert.assertTrue(targetContent.containsKey("social_media"));
+    for (int i = 0; i < exchangeArray.size(); i++) {
+      //icon_url
+      String icon_url = exchangeArray.getJSONObject(i).get("icon_url").toString();
+      Assert.assertTrue(!icon_url.isEmpty());
+      if (icon_url.substring(0, 7) == "http://") {
+        HttpResponse httpResponse = TronscanApiList.getUrlkey(icon_url);
+        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
+      } else {
+        Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("icon_url"));
+      }
+      //total_supply and issue_ts Contain > 0
+      Assert.assertTrue(Double.valueOf(exchangeArray.getJSONObject(i).get("total_supply").toString()) >= 0);
+      Assert.assertTrue(Double.valueOf(exchangeArray.getJSONObject(i).get("issue_ts").toString()) == 0);
+      //volume24h and index
+      Assert.assertTrue(Double.valueOf(exchangeArray.getJSONObject(i).get("volume24h").toString()) >= 0);
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("index").toString()) >= 1);
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("symbol").toString().isEmpty());
+      //total_supply_str can empty
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("total_supply_str"));
+      //contract_address
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String contract_address = exchangeArray.getJSONObject(i).getString("contract_address");
+      Assert.assertTrue(patternAddress.matcher(contract_address).matches() && !contract_address.isEmpty());
+      //gain
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("gain"));
+      //home_page
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("home_page").toString().isEmpty());
+      Assert.assertTrue(Double.valueOf(exchangeArray.getJSONObject(i).get("volume").toString()) >= 0);
+      //issue_address Part is empty
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("issue_address"));
+      //token_desc
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("token_desc").toString().isEmpty());
+      Assert.assertTrue(Double.valueOf(exchangeArray.getJSONObject(i).get("price_trx").toString()) >= 0);
+      //git_hub
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("git_hub"));
+      //price can null
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("price"));
+      //total_supply_with_decimals
+      Assert.assertTrue(
+              Double.valueOf(exchangeArray.getJSONObject(i).get("total_supply_with_decimals").toString()) >= 1000000000);
+      //decimals
+      Integer decimals = Integer.valueOf(exchangeArray.getJSONObject(i).get("decimals").toString());
+      Assert.assertTrue(decimals >= 0 && decimals <= 18);
+      //name
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("name").toString().isEmpty());
+      //social_media_list
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("social_media_list"));
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("issue_time").toString().isEmpty());
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("white_paper"));
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("social_media"));
+    }
   }
 
   /**
@@ -126,45 +133,85 @@ public class Token_Trx20 {
     Assert.assertTrue(responseContent.size() == 4);
     Long total = Long.valueOf(responseContent.get("total").toString());
     Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
-    Assert.assertTrue(responseContent.containsKey("contractMap"));
-    JSONArray exchangeArray = responseContent.getJSONArray("transfers");
     Assert.assertTrue(total >= rangeTotal);
-    //Assert.assertTrue(responseContent.containsKey("rangeTotal"));
-    targetContent = exchangeArray.getJSONObject(0);
-    //contractRet
-    Assert.assertTrue(targetContent.containsKey("contractRet"));
-    //amount > 1
-    Assert.assertTrue(Long.valueOf(targetContent.get("amount").toString()) >= 1);
-    sonContent = targetContent.getJSONObject("cost");
-    //address
-    Assert.assertTrue(sonContent.containsKey("net_fee"));
-    Assert.assertTrue(sonContent.containsKey("energy_usage"));
-    Assert.assertTrue(sonContent.containsKey("energy_fee"));
-    //实际消耗的能量
-    Long energy_usage_total = Long.valueOf(sonContent.get("energy_usage_total").toString());
-    //允许使用的最大能量
-    Long origin_energy_usage = Long.valueOf(sonContent.get("origin_energy_usage").toString());
-    Assert.assertTrue(origin_energy_usage >= energy_usage_total);
-    //net_usage
-    Assert.assertTrue(Long.valueOf(sonContent.get("net_usage").toString()) >= 1);
-    //date_created
-    Assert.assertTrue(Long.valueOf(targetContent.get("date_created").toString()) >= 1566962952);
-    //owner_address
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("owner_address")).matches());
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("to_address")).matches());
-    Assert
-        .assertTrue(patternAddress.matcher(targetContent.getString("contract_address")).matches());
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("from_address")).matches());
-    //block
-    Assert.assertTrue(Long.valueOf(targetContent.get("block").toString()) >= 100);
-    //type
-    Assert.assertTrue(targetContent.containsKey("type"));
-    //confirmed
-    Assert.assertTrue(Boolean.valueOf(targetContent.getString("confirmed")));
-    //parentHash and hash  64 place
-    Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
-    Assert.assertTrue(patternHash.matcher(targetContent.getString("hash")).matches());
+    //contract_map
+    Assert.assertTrue(!responseContent.get("contractMap").toString().isEmpty());
+    //transfers
+    JSONArray exchangeArray = responseContent.getJSONArray("transfers");
+    for (int i = 0; i < exchangeArray.size(); i++) {
+      //contractRet
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("contractRet"));
+      //amount > 1
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("amount").toString()) >= 1);
+      sonContent = exchangeArray.getJSONObject(i).getJSONObject("cost");
+      //address
+      Assert.assertTrue(sonContent.containsKey("net_fee"));
+      Assert.assertTrue(sonContent.containsKey("energy_usage"));
+      Assert.assertTrue(sonContent.containsKey("energy_fee"));
+      //实际消耗的能量
+      Long energy_usage_total = Long.valueOf(sonContent.get("energy_usage_total").toString());
+      //允许使用的最大能量
+      Long origin_energy_usage = Long.valueOf(sonContent.get("origin_energy_usage").toString());
+      Assert.assertTrue(origin_energy_usage >= energy_usage_total);
+      //net_usage
+      Assert.assertTrue(Long.valueOf(sonContent.get("net_usage").toString()) >= 0);
+      //date_created
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("date_created").toString()) >= 1566962952);
+      //owner_address
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String owner_address = exchangeArray.getJSONObject(i).getString("owner_address");
+      Assert.assertTrue(patternAddress.matcher(owner_address).matches() && !owner_address.isEmpty());
+      String to_address = exchangeArray.getJSONObject(i).getString("to_address");
+      Assert.assertTrue(patternAddress.matcher(to_address).matches() && !to_address.isEmpty());
+      //block
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("block").toString()) >= 10000000);
+      //type
+      String type = exchangeArray.getJSONObject(i).getString("type");
+      String tokenType = exchangeArray.getJSONObject(i).getString("tokenType");
+      Assert.assertEquals(type,tokenType);
+      //confirmed
+      Assert.assertTrue(Boolean.valueOf(exchangeArray.getJSONObject(i).getString("confirmed")));
+//      token_name
+      if (tokenType == "trc10") {
+        Assert.assertTrue(!exchangeArray.getJSONObject(i).get("token_name").toString().isEmpty());
+      }
+      //parentHash and hash  64 place
+      Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
+      Assert.assertTrue(patternHash.matcher(exchangeArray.getJSONObject(i).getString("hash")).matches());
+    }
+  }
+
+  /**
+   * constructor.
+   * 地址下无token
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "地址下无token")
+  public void getTokentrc20_transfer_02() {
+    //Get response
+    Map<String, String> Params = new HashMap<>();
+    Params.put("sort", "-timestamp");
+    Params.put("limit", "20");
+    Params.put("start", "0");
+    Params.put("count", "true");
+    Params.put("total", "0");
+    Params.put("start_timestamp", "1529856000000");
+    Params.put("end_timestamp", "1567588908615");
+    Params.put("direction", "all");
+    Params.put("address", "TSmZ71H9S6BQLdyGcr8QfG9qr92N6WUXKS");
+    response = TronscanApiList.getTokentrc20_transfer(tronScanNode, Params);
+
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+    //three object, "total" and "Data"
+    Assert.assertTrue(responseContent.size() == 4);
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(total >= rangeTotal);
+    //contractMap
+    Assert.assertTrue(responseContent.containsKey("contractMap"));
+    //transfers
+    Assert.assertTrue(responseContent.containsKey("transfers"));
   }
 
   /**
@@ -184,21 +231,22 @@ public class Token_Trx20 {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
-
+    Assert.assertTrue(responseContent.size() == 4);
     Long total = Long.valueOf(responseContent.get("total").toString());
     Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
 
     Assert.assertTrue(rangeTotal >= total);
+    //contract_map
+    Assert.assertTrue(!responseContent.get("contractMap").toString().isEmpty());
     //Address list
     JSONArray exchangeArray = responseContent.getJSONArray("trc20_tokens");
     Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
     Assert.assertTrue(exchangeArray.size() > 0);
     for (int i = 0; i < exchangeArray.size(); i++) {
+      String holder_address = exchangeArray.getJSONObject(i).getString("holder_address");
+      Assert.assertTrue(patternAddress.matcher(holder_address).matches() && !holder_address.isEmpty());
       Assert.assertTrue(
-          patternAddress.matcher(exchangeArray.getJSONObject(i).getString("holder_address"))
-              .matches());
-      Assert.assertTrue(
-          Long.valueOf(exchangeArray.getJSONObject(i).get("balance").toString()) > 1000);
+          Long.valueOf(exchangeArray.getJSONObject(i).get("balance").toString()) > 1000000000);
     }
 
   }

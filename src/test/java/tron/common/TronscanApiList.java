@@ -699,7 +699,7 @@ public class TronscanApiList {
      */
     public static HttpResponse getSingleTokenList(String tronscanNode) {
         try {
-            String requestUrl = "http://" + tronscanNode + "api/token?id=1001761&showAll=1";
+            String requestUrl = "http://" + tronscanNode + "api/token";
             System.out.println(requestUrl);
             response = createGetConnect(requestUrl);
         } catch (Exception e) {

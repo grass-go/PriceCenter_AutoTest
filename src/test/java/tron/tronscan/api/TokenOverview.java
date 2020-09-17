@@ -57,32 +57,43 @@ public class TokenOverview {
     Long total = Long.valueOf(responseContent.get("total").toString());
     Long totalAll = Long.valueOf(responseContent.get("totalAll").toString());
     Assert.assertTrue(totalAll >= total);
-    Assert.assertTrue(Long.valueOf(responseContent.get("currentWeekAll").toString()) >= 0);
-    Assert.assertTrue(Long.valueOf(responseContent.get("valueAtLeast").toString()) >= 0);
-    Assert.assertTrue(Long.valueOf(responseContent.get("currentWeekTotalAll").toString()) >= 0);
+    Long all = Long.valueOf(responseContent.get("all").toString());
+    Long valueAtLeast = Long.valueOf(responseContent.get("valueAtLeast").toString());
+    Assert.assertTrue(all >= valueAtLeast);
+    Assert.assertTrue(Long.valueOf(valueAtLeast) == 10000);
+    Long currentWeekAll = Long.valueOf(responseContent.get("currentWeekAll").toString());
+    Long currentWeekTotalAll = Long.valueOf(responseContent.get("currentWeekTotalAll").toString());
+    Assert.assertTrue(currentWeekAll >= currentWeekTotalAll);
 
     JSONArray exchangeArray = responseContent.getJSONArray("tokens");
-    targetContent = exchangeArray.getJSONObject(0);
-    //address
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("contractAddress")).matches());
-    //description
-    Assert.assertTrue(targetContent.containsKey("description"));
-    //supply
-    Assert.assertTrue(Long.valueOf(targetContent.get("supply").toString()) >= 0);
-    Assert.assertTrue(!targetContent.get("imgUrl").toString().isEmpty());
-    //nrOfTokenHolders
-    Assert.assertTrue(!targetContent.get("nrOfTokenHolders").toString().isEmpty());
-    //isTop
-    //Assert.assertTrue(Boolean.valueOf(targetContent.getString("isTop")));
-    Assert.assertTrue(!targetContent.get("name").toString().isEmpty());
-    Assert.assertTrue(!targetContent.get("projectSite").toString().isEmpty());
-    Assert.assertTrue(!targetContent.get("abbr").toString().isEmpty());
-    Integer decimals = Integer.valueOf(targetContent.get("decimal").toString());
-    Assert.assertTrue(decimals >= 0 && decimals <= 18);
-    //tokenType
-    Assert.assertTrue(!targetContent.get("tokenType").toString().isEmpty());
-
+    for (int i = 0; i < exchangeArray.size(); i++) {
+      //description
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("description").toString().isEmpty());
+      //supply
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("supply").toString()) >= 10000000);
+      //imgUrl
+      String imgUrl_key = exchangeArray.getJSONObject(i).get("imgUrl").toString();
+      Assert.assertTrue(!imgUrl_key.isEmpty());
+      HttpResponse httpResponse = TronscanApiList.getUrlkey(imgUrl_key);
+      Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
+      //nrOfTokenHolders
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("nrOfTokenHolders").toString().isEmpty());
+      //isTop
+      //Assert.assertTrue(Boolean.valueOf(targetContent.getString("isTop")));
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("name").toString().isEmpty());
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("projectSite").toString().isEmpty());
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("abbr").toString().isEmpty());
+      Integer decimals = Integer.valueOf(exchangeArray.getJSONObject(i).get("decimal").toString());
+      Assert.assertTrue(decimals >= 0 && decimals <= 18);
+      //tokenType
+      String tokenType = exchangeArray.getJSONObject(i).get("tokenType").toString();
+      Assert.assertTrue(!tokenType.isEmpty());
+      if (tokenType == "trc20"){
+        Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+        String contractAddress = exchangeArray.getJSONObject(i).getString("contractAddress");
+        Assert.assertTrue(patternAddress.matcher(contractAddress).matches() && !contractAddress.isEmpty());
+      }
+    }
   }
 
   /**

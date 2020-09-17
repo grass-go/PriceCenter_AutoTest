@@ -29,6 +29,7 @@ public class SingleProposalList {
 
   /**
    * constructor
+   * 委员会提议
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List a single proposal detail")
   public void test01getSingleProposalList() {
@@ -41,39 +42,56 @@ public class SingleProposalList {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
-    Assert.assertTrue(responseContent.containsKey("proposalId"));
-    Assert.assertTrue(responseContent.containsKey("expirationTime"));
-    Assert.assertTrue(responseContent.containsKey("createTime"));
+    Assert.assertEquals(responseContent.getString("proposalId"),id);
+    Assert.assertEquals(responseContent.getString("expirationTime"),"1547704800000");
+    Assert.assertEquals(responseContent.getString("createTime"),"1547443404000");
 
     //approvals array
     responseArrayContent = responseContent.getJSONArray("approvals");
-    //object approval
-    targetContent = responseArrayContent.getJSONObject(0);
     Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("address")).matches());
-    Assert.assertTrue(targetContent.containsKey("name"));
-    Assert.assertTrue(targetContent.containsKey("url"));
-    Assert.assertTrue(targetContent.containsKey("missedTotal"));
-    Assert.assertTrue(targetContent.containsKey("producedTotal"));
-    Assert.assertTrue(targetContent.containsKey("producedTrx"));
-    Assert.assertTrue(Double.valueOf(targetContent.getString("producePercentage")) <= 100);
-    Assert.assertTrue(Double.valueOf(targetContent.getString("votesPercentage")) <= 100);
-    Assert.assertTrue(!targetContent.getString("latestBlockNumber").isEmpty());
-    Assert.assertTrue(!targetContent.getString("latestSlotNumber").isEmpty());
-    Assert.assertTrue(!targetContent.getString("latestSlotNumber").isEmpty());
-
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      //object approval
+      Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("address")).matches());
+      //name
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("name").toString().isEmpty());
+      //url
+      String url_key = responseArrayContent.getJSONObject(i).get("url").toString();
+      Assert.assertTrue(!url_key.isEmpty());
+      if (url_key.substring(0, 7)=="http://") {
+        HttpResponse httpResponse = TronscanApiList.getUrlkey(url_key);
+        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
+      } else {
+        Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("url"));
+      }
+      //丢块最低为0
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).getLong("missedTotal").toString()) >= 0);
+      //产块最低为0
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).getLong("producedTotal").toString()) >= 0);
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).get("producedTrx").toString()) == 0);
+      Assert.assertTrue(Double.valueOf(responseArrayContent.getJSONObject(i).getString("producePercentage")) <= 100);
+      Assert.assertTrue(Double.valueOf(responseArrayContent.getJSONObject(i).getString("votesPercentage")) <= 100);
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("latestBlockNumber").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("latestSlotNumber").isEmpty());
+    }
     //object proposer
     targetContent = responseContent.getJSONObject("proposer");
-    Assert.assertTrue(targetContent.containsKey("name"));
-    Assert.assertTrue(targetContent.containsKey("url"));
-    Assert.assertTrue(targetContent.containsKey("missedTotal"));
-    Assert.assertTrue(targetContent.containsKey("producedTotal"));
-    Assert.assertTrue(targetContent.containsKey("producedTrx"));
-    Assert.assertTrue(targetContent.containsKey("votes"));
+    Assert.assertTrue(!targetContent.get("name").toString().isEmpty());
+    //url
+    String url_key = targetContent.get("url").toString();
+    Assert.assertTrue(!url_key.isEmpty());
+    if (url_key.substring(0, 7)=="http://") {
+      HttpResponse httpResponse = TronscanApiList.getUrlkey(url_key);
+      Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
+    } else {
+      Assert.assertTrue(targetContent.containsKey("url"));
+    }
+    Assert.assertTrue(Long.valueOf(targetContent.getLong("missedTotal").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(targetContent.getLong("producedTotal").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(targetContent.get("producedTrx").toString()) == 0);
+    Assert.assertTrue(Long.valueOf(targetContent.get("votes").toString()) >= 0);
     Assert.assertTrue(Double.valueOf(targetContent.getString("producePercentage")) <= 100);
     Assert.assertTrue(Double.valueOf(targetContent.getString("votesPercentage")) <= 100);
     Assert.assertTrue(!targetContent.getString("latestBlockNumber").isEmpty());
-    Assert.assertTrue(!targetContent.getString("latestSlotNumber").isEmpty());
     Assert.assertTrue(!targetContent.getString("latestSlotNumber").isEmpty());
     Assert.assertTrue(patternAddress.matcher(targetContent.getString("address")).matches());
   }
