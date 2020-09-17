@@ -482,6 +482,12 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse failTransfer(JSONObject body) {
+    final String requestUrl =HttpNode + "/api/wallet/fail_transfer";
+    response = createConnect(requestUrl, body);
+    return response;
+  }
+
   public static HttpResponse createPostConnect(String url, String requestBody) {
     try {
       httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
@@ -776,7 +782,13 @@ public static HttpResponse search(Map<String, String> params) {
       httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
       httppost = new HttpPost(url);
       httppost.setHeader("Content-type", "application/json; charset=utf-8");
-      httppost.setHeader("Connection", "Close");
+      httppost.setHeader("Connection", "keep-alive");
+      httppost.addHeader("Lang","1");
+      httppost.addHeader("Version","3.7.0");
+      httppost.addHeader("DeviceID","1111111111");
+      httppost.addHeader("chain","MainChain");
+      httppost.addHeader("packageName","com.tronlinkpro.wallet");
+      httppost.addHeader("System","Android");
       if (requestBody != null) {
         StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
         entity.setContentEncoding("UTF-8");
