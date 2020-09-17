@@ -26,7 +26,8 @@ import tron.common.utils.Configuration;
 
 public class V1Base {
 
-
+  public static String queryAddressSophia = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddressSophia");
+  public static String queryAddressSophiaBase64 = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddressSophiaBase64");
   public static String queryAddress = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddress");
   public static String eventTxid = Configuration.getByPath("testng.conf").getString("tronGrid.eventTxid");
   public static String queryAddressBase64 = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddressBase64");
