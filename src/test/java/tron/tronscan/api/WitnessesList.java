@@ -49,9 +49,9 @@ public class WitnessesList {
       Assert.assertTrue(!url_key.isEmpty());
       Assert.assertTrue(
               responseArrayContent.getJSONObject(i).getLong("latestBlockNumber") <= responseArrayContent.getJSONObject(i).getLong("latestSlotNumber"));
-      Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("votes") > 0);
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("votes") >= 0);
       Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("producePercentage") <= 100);
-      Assert.assertTrue(responseArrayContent.getJSONObject(i).getDouble("votesPercentage") > 0);
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).getDouble("votesPercentage") >= 0);
     }
   }
   /**
