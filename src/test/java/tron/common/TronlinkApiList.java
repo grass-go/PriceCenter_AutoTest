@@ -496,7 +496,7 @@ public static HttpResponse search(Map<String, String> params) {
 
       httppost = new HttpPost(url);
       httppost.setHeader("Content-type", "application/json; charset=utf-8");
-      httppost.setHeader("Connection", "Close");
+      httppost.setHeader("Connection", "Keep-Alive");
       if (requestBody != null) {
         StringEntity entity = new StringEntity(requestBody, Charset.forName("UTF-8"));
         entity.setContentEncoding("UTF-8");
@@ -547,7 +547,7 @@ public static HttpResponse search(Map<String, String> params) {
 
       httppost = new HttpPost(url);
       httppost.setHeader("Content-type", "application/json; charset=utf-8");
-      httppost.setHeader("Connection", "Close");
+      httppost.setHeader("Connection", "Keep-Alive");
       if (requestBody != null) {
         StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
         entity.setContentEncoding("UTF-8");
@@ -642,6 +642,7 @@ public static HttpResponse search(Map<String, String> params) {
         url = stringBuffer.toString();
       }
       httpget = new HttpGet(url);
+      httpget.setHeader("Connection", "Keep-Alive");
       Instant startTime = Instant.now();
       response = httpClient.execute(httpget);
       Instant endTime = Instant.now();
