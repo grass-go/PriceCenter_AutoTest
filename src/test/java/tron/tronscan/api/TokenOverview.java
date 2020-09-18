@@ -70,7 +70,7 @@ public class TokenOverview {
       //description
       Assert.assertTrue(!exchangeArray.getJSONObject(i).get("description").toString().isEmpty());
       //supply
-      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("supply").toString()) >= 10000000);
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("supply").toString().isEmpty());
       //imgUrl
       String imgUrl_key = exchangeArray.getJSONObject(i).get("imgUrl").toString();
       Assert.assertTrue(!imgUrl_key.isEmpty());
