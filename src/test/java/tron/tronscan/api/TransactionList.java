@@ -47,26 +47,30 @@ public class TransactionList {
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
 
-    Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 1000000000);
     Long total = Long.valueOf(responseContent.get("total").toString());
     Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
     Assert.assertTrue(rangeTotal >= total);
     responseArrayContent = responseContent.getJSONArray("data");
-    JSONObject responseObject = responseArrayContent.getJSONObject(0);
-    Assert.assertTrue(responseObject.containsKey("hash"));
-    Assert.assertTrue(responseObject.containsKey("block"));
-    Assert.assertTrue(responseObject.containsKey("timestamp"));
-    Assert.assertTrue(responseObject.containsKey("contractType"));
-    Assert.assertTrue(responseObject.containsKey("confirmed"));
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(responseObject.getString("ownerAddress")).matches());
-    Assert.assertTrue(patternAddress.matcher(responseObject.getString("toAddress")).matches());
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("hash"));
+      String hash_key = responseArrayContent.getJSONObject(i).getString("hash");
+      Assert.assertEquals(hash_key.length(), 64);
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("block") >= 10000000);
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("timestamp").isEmpty());
 
-    responseObject = responseObject.getJSONObject("contractData");
-    Assert.assertTrue(patternAddress.matcher(responseObject.getString("owner_address")).matches());
-//    Assert.assertTrue(patternAddress.matcher(responseObject.getString("to_address")).matches());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("contractType").isEmpty());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("confirmed"));
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String ownerAddress = responseArrayContent.getJSONObject(i).getString("ownerAddress");
+      Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("toAddress"));
+      //contractData
+      JSONObject responseObject = responseArrayContent.getJSONObject(i).getJSONObject("contractData");
+      Assert.assertEquals(responseObject.getString("owner_address"),ownerAddress);
+      Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
+    }
   }
-
   /**
    * constructor. limit为零
    */
@@ -85,8 +89,9 @@ public class TransactionList {
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.size() == 5);
-    Assert.assertTrue(responseContent.containsKey("total"));
-    Assert.assertTrue(responseContent.containsKey("rangeTotal"));
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal >= total);
     Assert.assertTrue(responseContent.containsKey("data"));
     Assert.assertTrue(responseContent.containsKey("wholeChainTxCount"));
     Assert.assertTrue(responseContent.containsKey("contractMap"));
@@ -111,29 +116,29 @@ public class TransactionList {
     Assert.assertTrue(responseContent.size() >= 3);
     Long total = Long.valueOf(responseContent.get("total").toString());
     Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
-    JSONArray exchangeArray = responseContent.getJSONArray("data");
     Assert.assertTrue(rangeTotal >= total);
-
-    targetContent = exchangeArray.getJSONObject(0);
-    //exchangeID
-    Assert.assertTrue(Integer.valueOf(targetContent.get("exchangeID").toString()) >= 1);
-    //blockID
-    Assert.assertTrue(Long.valueOf(targetContent.get("blockID").toString()) >= 1);
-    //tokenID
-    Assert.assertTrue(targetContent.containsKey("tokenID"));
-    //createTime
-    Assert.assertTrue(targetContent.containsKey("createTime"));
-    //hash
-    Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
-    Assert.assertTrue(patternHash.matcher(targetContent.getString("trx_hash")).matches());
-    //quant
-    Assert.assertTrue(targetContent.containsKey("quant"));
-    //address
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("creatorAddress")).matches());
-    //confirmed
-    Assert.assertTrue(Boolean.valueOf(targetContent.getString("confirmed")));
-
+    //data
+    JSONArray exchangeArray = responseContent.getJSONArray("data");
+    for (int i = 0; i < exchangeArray.size(); i++) {
+      //exchangeID
+      Assert.assertTrue(Integer.valueOf(exchangeArray.getJSONObject(i).get("exchangeID").toString()) >= 1);
+      //blockID
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("blockID").toString()) >= 10000000);
+      //tokenID
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).getString("tokenID").isEmpty());
+      //createTime
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).getString("createTime").isEmpty());
+      //hash
+      Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
+      Assert.assertTrue(patternHash.matcher(exchangeArray.getJSONObject(i).getString("trx_hash")).matches());
+      //quant
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("quant"));
+      //address
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      Assert.assertTrue(patternAddress.matcher(exchangeArray.getJSONObject(i).getString("creatorAddress")).matches());
+      //confirmed
+      Assert.assertTrue(Boolean.valueOf(exchangeArray.getJSONObject(i).getString("confirmed")));
+    }
   }
 
   /**
@@ -155,46 +160,40 @@ public class TransactionList {
     TronscanApiList.printJsonContent(responseContent);
     //three object, "total" and "Data","rangeTotal"
     Assert.assertTrue(responseContent.size() >= 0);
-    Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) > 1000000000);
     Long total = Long.valueOf(responseContent.get("total").toString());
     Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
     Assert.assertTrue(rangeTotal >= total);
     JSONArray exchangeArray = responseContent.getJSONArray("data");
+    for (int i = 0; i < exchangeArray.size(); i++) {
+      //contractRet
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("contractRet"));
+      //data
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("data"));
+      //contractRet
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("contractType").toString().isEmpty());
+      //fee
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("fee"));
+      //toAddress
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String ownerAddress = exchangeArray.getJSONObject(i).getString("ownerAddress");
+      Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
+      //confirmed
+      Assert.assertTrue(Boolean.valueOf(exchangeArray.getJSONObject(i).getString("confirmed")));
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("Events"));
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("SmartCalls"));
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("block").toString()) >= 1000000);
+      //hash
+      Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
+      Assert.assertTrue(patternHash.matcher(exchangeArray.getJSONObject(i).getString("hash")).matches());
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("id"));
+      //timestamp
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("timestamp").toString().isEmpty());
+      //contractData json
+      proposalContent = exchangeArray.getJSONObject(i).getJSONObject("contractData");
+      Assert.assertEquals(proposalContent.getString("owner_address"),ownerAddress);
 
-    targetContent = exchangeArray.getJSONObject(0);
-    //contractRet
-    Assert.assertTrue(targetContent.containsKey("contractRet"));
-    //cost json
-    Assert.assertTrue(targetContent.containsKey("cost"));
-    //data
-    Assert.assertTrue(targetContent.containsKey("data"));
-    //contractRet
-    Assert.assertTrue(!targetContent.get("contractType").toString().isEmpty());
-    //fee
-    Assert.assertTrue(targetContent.containsKey("fee"));
-    //toAddress
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("toAddress")).matches());
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("ownerAddress")).matches());
-    //confirmed
-    Assert.assertTrue(Boolean.valueOf(targetContent.getString("confirmed")));
-    Assert.assertTrue(targetContent.containsKey("Events"));
-    Assert.assertTrue(targetContent.containsKey("SmartCalls"));
-    Assert.assertTrue(targetContent.containsKey("block"));
-    //hash
-    Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
-    Assert.assertTrue(patternHash.matcher(targetContent.getString("hash")).matches());
-    Assert.assertTrue(targetContent.containsKey("id"));
-    //contractData json
-    proposalContent = targetContent.getJSONObject("contractData");
-    //contractData Contain owner_address，contract_address
-    Assert.assertTrue(patternAddress.matcher(proposalContent.getString("owner_address")).matches());
-    Assert.assertTrue(patternAddress.matcher(proposalContent.getString("contract_address")).matches());
-    //call_value
-    Assert.assertTrue(Long.valueOf(proposalContent.get("call_value").toString()) >= 0);
-    //timestamp
-    Assert.assertTrue(targetContent.containsKey("timestamp"));
-
+    }
 
   }
 
@@ -224,52 +223,49 @@ public class TransactionList {
     Assert.assertTrue(rangeTotal >= total);
 
     JSONArray exchangeArray = responseContent.getJSONArray("data");
+    for (int i = 0; i < exchangeArray.size(); i++) {
+      //contractRet
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("contractRet"));
+      //cost json
+      proposalContent = exchangeArray.getJSONObject(i).getJSONObject("cost");
+      //net_fee
+      Assert.assertTrue(Long.valueOf(proposalContent.get("net_fee").toString()) >= 0);
+      //energy_usage
+      Assert.assertTrue(Long.valueOf(proposalContent.get("energy_usage").toString()) >= 0);
+      //energy_fee
+      Assert.assertTrue(Long.valueOf(proposalContent.get("energy_fee").toString()) >= 0);
+      //energy_usage_total
+      Assert.assertTrue(Long.valueOf(proposalContent.get("energy_usage_total").toString()) >= 0);
+      //origin_energy_usage
+      Assert.assertTrue(Long.valueOf(proposalContent.get("origin_energy_usage").toString()) >= 0);
+      //net_usage
+      Assert.assertTrue(Long.valueOf(proposalContent.get("net_usage").toString()) >= 0);
+      //data
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("data"));
+      //contractRet
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("contractType").toString().isEmpty());
+      //fee
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("fee"));
+      //toAddress
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String ownerAddress = exchangeArray.getJSONObject(i).getString("ownerAddress");
+      Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
+      //confirmed
+      Assert.assertTrue(Boolean.valueOf(exchangeArray.getJSONObject(i).getString("confirmed")));
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("Events"));
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("SmartCalls"));
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("block").toString()) >= 1000000);
+      //hash
+      Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
+      Assert.assertTrue(patternHash.matcher(exchangeArray.getJSONObject(i).getString("hash")).matches());
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("id"));
+      //timestamp
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("timestamp").toString().isEmpty());
+      //contractData json
+      proposalContent = exchangeArray.getJSONObject(i).getJSONObject("contractData");
+      Assert.assertEquals(proposalContent.getString("owner_address"),ownerAddress);
 
-    targetContent = exchangeArray.getJSONObject(0);
-    //contractRet
-    Assert.assertTrue(targetContent.containsKey("contractRet"));
-    //cost json
-    proposalContent = targetContent.getJSONObject("cost");
-    //net_fee
-    Assert.assertTrue(Long.valueOf(proposalContent.get("net_fee").toString()) >= 0);
-    //energy_usage
-    Assert.assertTrue(Long.valueOf(proposalContent.get("energy_usage").toString()) >= 0);
-    //energy_fee
-    Assert.assertTrue(Long.valueOf(proposalContent.get("energy_fee").toString()) >= 0);
-    //energy_usage_total
-    Assert.assertTrue(Long.valueOf(proposalContent.get("energy_usage_total").toString()) >= 0);
-    //origin_energy_usage
-    Assert.assertTrue(Long.valueOf(proposalContent.get("origin_energy_usage").toString()) >= 0);
-    //net_usage
-    Assert.assertTrue(Long.valueOf(proposalContent.get("net_usage").toString()) >= 0);
-    //data
-    Assert.assertTrue(targetContent.containsKey("data"));
-    //contractRet
-    Assert.assertTrue(!targetContent.get("contractType").toString().isEmpty());
-    //fee
-    Assert.assertTrue(targetContent.containsKey("fee"));
-    //toAddress
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("toAddress")).matches());
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("ownerAddress")).matches());
-    //confirmed
-    Assert.assertTrue(Boolean.valueOf(targetContent.getString("confirmed")));
-    Assert.assertTrue(targetContent.containsKey("Events"));
-    Assert.assertTrue(targetContent.containsKey("SmartCalls"));
-    Assert.assertTrue(targetContent.containsKey("block"));
-    //hash
-    Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
-    Assert.assertTrue(patternHash.matcher(targetContent.getString("hash")).matches());
-    Assert.assertTrue(targetContent.containsKey("id"));
-    //contractData json
-    proposalContent = targetContent.getJSONObject("contractData");
-//    Assert.assertTrue(proposalContent.containsKey("data"));
-    //contractData Contain owner_address，contract_address
-    Assert.assertTrue(patternAddress.matcher(proposalContent.getString("owner_address")).matches());
-
-    //timestamp
-    Assert.assertTrue(targetContent.containsKey("timestamp"));
-
+    }
   }
 
 
@@ -294,31 +290,27 @@ public class TransactionList {
     for (int i = 0; i < responseArrayContent.size(); i++) {
 
       //hash
-      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("hash").toString().isEmpty());
+      Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
+      Assert.assertTrue(patternHash.matcher(responseArrayContent.getJSONObject(i).getString("hash")).matches());
       //timestamp
-      Assert.assertTrue(
-          Long.valueOf(responseArrayContent.getJSONObject(i).get("timestamp").toString()) >= 0);
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("timestamp").toString().isEmpty());
       //ownerAddress
       Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String ownerAddress = responseArrayContent.getJSONObject(i).getString("ownerAddress");
+      Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
       Assert.assertTrue(
-          patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("ownerAddress"))
-              .matches());
-      Assert.assertTrue(
-          patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("toAddress"))
-              .matches());
+          patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("toAddress")).matches());
       //contractType
       Assert.assertTrue(
           !responseArrayContent.getJSONObject(i).get("contractType").toString().isEmpty());
-      //confirmed
-      //Assert.assertTrue(Boolean.valueOf(responseArrayContent.getJSONObject(i).getString("confirmed")));
-      //contractData
-      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("contractData"));
-
+      //contractData json
+      proposalContent = responseArrayContent.getJSONObject(i).getJSONObject("contractData");
+      Assert.assertEquals(proposalContent.getString("owner_address"),ownerAddress);
     }
 
   }
 
-  @Test
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void testStatistics(){
     response = TronscanApiList.statistics();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);

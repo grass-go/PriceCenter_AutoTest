@@ -46,23 +46,29 @@ public class TransferList {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
-    Assert.assertTrue(responseContent.containsKey("total"));
-
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal >= total);
     //data object
     responseArrayContent = responseContent.getJSONArray("data");
-    JSONObject responseObject = responseArrayContent.getJSONObject(0);
-    Assert.assertTrue(responseObject.containsKey("data"));
-    Assert.assertTrue(responseObject.containsKey("block"));
-    Assert.assertTrue(responseObject.containsKey("transactionHash"));
-    Assert.assertTrue(responseObject.containsKey("confirmed"));
-    Assert.assertTrue(responseObject.containsKey("timestamp"));
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(
-        patternAddress.matcher(responseObject.getString("transferFromAddress")).matches());
-    Assert.assertTrue(
-        patternAddress.matcher(responseObject.getString("transferToAddress")).matches());
-  }
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("data"));
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).get("block").toString()) >= 1000000);
+      Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
+      Assert.assertTrue(patternHash.matcher(responseArrayContent.getJSONObject(i).getString("transactionHash")).matches());
 
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("confirmed"));
+      //timestamp
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("timestamp").toString().isEmpty());
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String transferFromAddress = responseArrayContent.getJSONObject(i).getString("transferFromAddress");
+      Assert.assertTrue(
+              patternAddress.matcher(transferFromAddress).matches() && !transferFromAddress.isEmpty());
+      String transferToAddress = responseArrayContent.getJSONObject(i).getString("transferToAddress");
+      Assert.assertTrue(
+              patternAddress.matcher(transferToAddress).matches() && !transferToAddress.isEmpty());
+    }
+  }
   /**
    * constructor.获取simple-transfer方法
    */
@@ -83,7 +89,7 @@ public class TransferList {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
-    //total_votes
+    //total
     Long total = Long.valueOf(responseContent.get("total").toString());
     Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
     Assert.assertTrue(rangeTotal >= total);
@@ -94,26 +100,22 @@ public class TransferList {
     for (int i = 0; i < responseArrayContent.size(); i++) {
       //amount
       Assert.assertTrue(
-          Double.valueOf(responseArrayContent.getJSONObject(i).get("amount").toString()) >= 0);
+          Double.valueOf(responseArrayContent.getJSONObject(i).get("amount").toString()) > 0);
       //tokenName
-      Assert
-          .assertTrue(!responseArrayContent.getJSONObject(i).get("tokenName").toString().isEmpty());
+      Assert.assertEquals(responseArrayContent.getJSONObject(i).getString("tokenName"),"trx");
       //timestamp
-      Assert.assertTrue(
-          Long.valueOf(responseArrayContent.getJSONObject(i).get("timestamp").toString()) >= 0);
+      Assert
+          .assertTrue(!responseArrayContent.getJSONObject(i).get("timestamp").toString().isEmpty());
       //transferFromAddress
       Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      Assert.assertEquals(responseArrayContent.getJSONObject(i).getString("transferFromAddress"),from);
+      String transferToAddress = responseArrayContent.getJSONObject(i).getString("transferToAddress");
       Assert.assertTrue(
-          patternAddress
-              .matcher(responseArrayContent.getJSONObject(i).getString("transferFromAddress"))
-              .matches());
-      Assert.assertTrue(
-          patternAddress
-              .matcher(responseArrayContent.getJSONObject(i).getString("transferToAddress"))
-              .matches());
+              patternAddress.matcher(transferToAddress).matches() && !transferToAddress.isEmpty());
       //id
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("id"));
-      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("transactionHash"));
+      Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
+      Assert.assertTrue(patternHash.matcher(responseArrayContent.getJSONObject(i).getString("transactionHash")).matches());
       //confirmed
       Assert.assertTrue(
           Boolean.valueOf(responseArrayContent.getJSONObject(i).getString("confirmed")));

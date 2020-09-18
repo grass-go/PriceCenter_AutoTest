@@ -27,7 +27,7 @@ public class AccountsList {
       .get(0);
 
   /**
-   * constructor.13
+   * constructor.账户页列表接口
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List account")
   public void test01getAccount() {
@@ -48,15 +48,29 @@ public class AccountsList {
     JSONObject responseObject = responseArrayContent.getJSONObject(0);
     Assert.assertEquals(limit, responseArrayContent.size());
     Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+    //账户
     Assert.assertTrue(patternAddress.matcher(responseObject.getString("address")).matches());
-    Assert.assertTrue(responseObject.containsKey("balance"));
-    Assert.assertTrue(responseObject.containsKey("power"));
-    Assert.assertTrue(responseContent.containsKey("total"));
-    Assert.assertTrue(responseContent.containsKey("rangeTotal"));
+    //TRX总余额
+    Assert.assertTrue(Double.valueOf(responseObject.get("balance").toString()) > 0);
+    //冻结TRX数量
+    Assert.assertTrue(Long.valueOf(responseObject.get("power").toString()) >= 0);
+    //交易数量
+    Assert.assertTrue(Long.valueOf(responseObject.get("totalTransactionCount").toString()) > 0);
+    //账户是否为合约
+    Assert.assertTrue(responseContent.containsKey("contractMap"));
+    //页面仅展示的数量，如果大于10000，则最多显示10000
+    Long total = Long
+            .valueOf(responseContent.get("total").toString());
+    //总数据数量
+    Long rangeTotal = Long
+            .valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal >= total);
+
   }
 
   /**
-   * constructor.
+   * constructor.账户详情页接口
+   *
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get a single account's detail ")
   public void getAccountList() {
@@ -69,7 +83,7 @@ public class AccountsList {
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
     //data object
-    Assert.assertTrue(responseContent.size() >= 18);
+    Assert.assertTrue(responseContent.size() == 19);
     //allowExchange
     Assert.assertTrue(responseContent.containsKey("allowExchange"));
     Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
@@ -77,12 +91,19 @@ public class AccountsList {
     Assert.assertTrue(responseContent.containsKey("frozen_supply"));
     Assert.assertTrue(responseContent.containsKey("accountType"));
     Assert.assertTrue(responseContent.containsKey("exchanges"));
+    //名称
     Assert.assertTrue(responseContent.containsKey("name"));
-    Assert.assertTrue(responseContent.containsKey("voteTotal"));
+    //投票数
+    Assert.assertTrue(Long.valueOf(responseContent.get("voteTotal").toString()) >= 0);
+   //交易数
     Assert.assertTrue(Long.valueOf(responseContent.get("totalTransactionCount").toString()) >= 0);
     Assert.assertTrue(responseContent.containsKey("activePermissions"));
+    //创建时间
+    Assert.assertTrue(responseContent.containsKey("date_created"));
+    //可用余额
+    Assert.assertTrue(Double.valueOf(responseContent.get("balance").toString()) >= 0);
 
-    //trc20token_balances json
+    //地址下的20token
     JSONArray exchangeArray = responseContent.getJSONArray("trc20token_balances");
     targetContent = exchangeArray.getJSONObject(0);
     //symbol
@@ -113,6 +134,7 @@ public class AccountsList {
 
     //frozen json
     targetContent = responseContent.getJSONObject("frozen");
+    //冻结总数量获得的投票权
     Assert.assertTrue(Long.valueOf(targetContent.get("total").toString()) >= 0);
     Assert.assertTrue(targetContent.containsKey("balances"));
 

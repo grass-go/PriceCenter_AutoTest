@@ -699,7 +699,7 @@ public class TronscanApiList {
      */
     public static HttpResponse getSingleTokenList(String tronscanNode) {
         try {
-            String requestUrl = "http://" + tronscanNode + "api/token?id=1001761&showAll=1";
+            String requestUrl = "http://" + tronscanNode + "api/token";
             System.out.println(requestUrl);
             response = createGetConnect(requestUrl);
         } catch (Exception e) {
@@ -2057,6 +2057,55 @@ public class TronscanApiList {
         try {
             String requestUrl = "http://" + tronscanNode + "wallet/getReward";
             response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    /**
+     * constructor.
+     * 热门token、热门合约查看
+     */
+    public static HttpResponse getSearchHot(String tronscanNode) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/search/hot";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+    /**
+     * constructor.
+     * 接口内部调用
+     */
+    public static HttpResponse getUrlkey(String url) {
+        try {
+            String requestUrl = url;
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+    /**
+     * constructor.
+     * 搜索框热门token查看
+     */
+    public static HttpResponse getSearchBar(String tronscanNode) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/search/bar";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
         } catch (Exception e) {
             e.printStackTrace();
             httpget.releaseConnection();

@@ -67,24 +67,26 @@ public class VoteList {
     Assert.assertTrue(Long.valueOf(responseContent.get("total_votes").toString()) >= 10000);
     //candidates
     JSONArray exchangeArray = responseContent.getJSONArray("candidates");
-    targetContent = exchangeArray.getJSONObject(0);
-    //hasPage
-    Assert.assertTrue(!targetContent.get("hasPage").toString().isEmpty());
-    //address
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("address")).matches());
-    //name
-    Assert.assertTrue(targetContent.containsKey("name"));
-    Assert.assertTrue(!targetContent.get("url").toString().isEmpty());
-
-    //votes
-    Assert.assertTrue(Long.valueOf(targetContent.get("votes").toString()) >= 0);
-    //realTimeVotes
-    Assert.assertTrue(Long.valueOf(targetContent.get("realTimeVotes").toString()) >= 0);
-    Assert.assertTrue(!targetContent.get("change_cycle").toString().isEmpty());
-    Assert.assertTrue(!targetContent.get("change_day").toString().isEmpty());
+    for (int i = 0; i < exchangeArray.size(); i++) {
+      //hasPage
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("hasPage").toString().isEmpty());
+      //address
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      Assert.assertTrue(patternAddress.matcher(exchangeArray.getJSONObject(i).getString("address")).matches());
+      //name
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("name"));
+      String url_key = exchangeArray.getJSONObject(i).get("url").toString();
+      Assert.assertTrue(!url_key.isEmpty());
+//      HttpResponse httpResponse = TronscanApiList.getUrlkey(url_key);
+//      Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
+      //votes
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("votes").toString()) > 0);
+      //realTimeVotes
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("realTimeVotes").toString()) > 0);
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("change_cycle").toString().isEmpty());
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("change_day").toString().isEmpty());
+    }
   }
-
   /**
    * constructor.获取下一轮投票情况
    */

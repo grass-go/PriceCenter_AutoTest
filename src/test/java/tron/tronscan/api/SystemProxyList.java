@@ -55,8 +55,7 @@ public class SystemProxyList {
       Assert.assertTrue(bodyContent.containsKey("timestamp"));
       Assert.assertTrue(bodyContent.containsKey("error_code"));
       Assert.assertTrue(bodyContent.containsKey("error_message"));
-      //Assert.assertTrue(bodyContent.containsKey("credit_count"));
-      Assert.assertTrue(Long.valueOf(bodyContent.get("credit_count").toString()) >= 0);
+      Assert.assertTrue(Long.valueOf(bodyContent.get("credit_count").toString()) >= 1);
       Assert.assertTrue(Long.valueOf(bodyContent.get("elapsed").toString()) >= 0);
       Assert.assertTrue(bodyContent.containsKey("notice"));
 
@@ -64,16 +63,15 @@ public class SystemProxyList {
     bodyContent = responseContent.getJSONObject("data");
     //TRX
       trxContent = bodyContent.getJSONObject("TRX");
-        Assert.assertTrue(Integer.valueOf(trxContent.get("id").toString()) >= 0);
-        //Assert.assertTrue(!trxContent.get("id").toString().isEmpty());
-        Assert.assertTrue(!trxContent.get("name").toString().isEmpty());
-        Assert.assertTrue(!trxContent.get("symbol").toString().isEmpty());
-        Assert.assertTrue(!trxContent.get("slug").toString().isEmpty());
+        Assert.assertTrue(Integer.valueOf(trxContent.get("id").toString()) >= 1000);
+        Assert.assertTrue(trxContent.get("name").equals("TRON"));
+        Assert.assertTrue(trxContent.get("symbol").equals("TRX"));
+        Assert.assertTrue(trxContent.get("slug").equals("tron"));
         Assert.assertTrue(!trxContent.get("num_market_pairs").toString().isEmpty());
         Assert.assertTrue(!trxContent.get("date_added").toString().isEmpty());
         Assert.assertTrue(trxContent.containsKey("max_supply"));
-        Assert.assertTrue(trxContent.containsKey("total_supply"));
-        Assert.assertTrue(trxContent.containsKey("circulating_supply"));
+        Assert.assertTrue(Double.valueOf(trxContent.getString("total_supply")) >= 1000000000);
+        Assert.assertTrue(Double.valueOf(trxContent.getString("circulating_supply")) >= 1000000000);
         Assert.assertTrue(Integer.valueOf(trxContent.get("cmc_rank").toString()) >= 0);
         Assert.assertTrue(!trxContent.get("last_updated").toString().isEmpty());
         //quote
@@ -86,6 +84,7 @@ public class SystemProxyList {
           Assert.assertTrue(!ETHContent.get("percent_change_24h").toString().isEmpty());
           Assert.assertTrue(!ETHContent.get("percent_change_7d").toString().isEmpty());
           Assert.assertTrue(Double.valueOf(ETHContent.get("market_cap").toString()) >= 0);
+          Assert.assertTrue(Double.valueOf(ETHContent.get("price").toString()) >= 0);
           Assert.assertTrue(!ETHContent.get("last_updated").toString().isEmpty());
 
   }

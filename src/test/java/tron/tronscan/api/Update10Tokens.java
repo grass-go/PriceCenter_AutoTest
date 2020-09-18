@@ -37,7 +37,7 @@ public class Update10Tokens {
         //three object, "retCode" and "Data"
         Assert.assertTrue(responseContent.size() >= 3);
         Assert.assertTrue(responseContent.containsKey("retMsg"));
-        Assert.assertTrue(Double.valueOf(responseContent.get("retCode").toString()) >= 0);
+        Assert.assertTrue(Double.valueOf(responseContent.get("retCode").toString()) >= 1);
         //data
         Assert.assertTrue(responseContent.containsKey("data"));
 

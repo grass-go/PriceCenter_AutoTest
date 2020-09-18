@@ -52,11 +52,12 @@ public class Trc_Appeals {
         Assert.assertTrue(responseObject.containsKey("id"));
         Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
         Assert.assertTrue(patternAddress.matcher(responseObject.getString("address")).matches());
-        Assert.assertTrue(responseObject.containsKey("reasons"));
+        Assert.assertEquals(responseObject.getString("address"),address);
+        Assert.assertTrue(!responseObject.get("reasons").toString().isEmpty());
         Assert.assertTrue(responseObject.containsKey("content"));
         Assert.assertTrue(responseObject.containsKey("status"));
-        Assert.assertTrue(responseObject.containsKey("update_time"));
-        Assert.assertTrue(responseObject.containsKey("create_time"));
+        Assert.assertTrue(!responseObject.get("update_time").toString().isEmpty());
+        Assert.assertTrue(!responseObject.get("create_time").toString().isEmpty());
 
     }
 
@@ -81,11 +82,11 @@ public class Trc_Appeals {
         Assert.assertTrue(responseObject.containsKey("id"));
         Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
         Assert.assertTrue(patternAddress.matcher(responseObject.getString("address")).matches());
-        Assert.assertTrue(responseObject.containsKey("reasons"));
+        Assert.assertTrue(!responseObject.get("reasons").toString().isEmpty());
         Assert.assertTrue(responseObject.containsKey("content"));
         Assert.assertTrue(responseObject.containsKey("status"));
-        Assert.assertTrue(responseObject.containsKey("update_time"));
-        Assert.assertTrue(responseObject.containsKey("create_time"));
+        Assert.assertTrue(!responseObject.get("update_time").toString().isEmpty());
+        Assert.assertTrue(!responseObject.get("create_time").toString().isEmpty());
 
     }
 
@@ -113,11 +114,12 @@ public class Trc_Appeals {
         Assert.assertTrue(responseObject.containsKey("id"));
         Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
         Assert.assertTrue(patternAddress.matcher(responseObject.getString("address")).matches());
-        Assert.assertTrue(responseObject.containsKey("reasons"));
+        Assert.assertEquals(responseObject.getString("address"),address);
+        Assert.assertTrue(!responseObject.get("reasons").toString().isEmpty());
         Assert.assertTrue(responseObject.containsKey("content"));
         Assert.assertTrue(responseObject.containsKey("status"));
-        Assert.assertTrue(responseObject.containsKey("update_time"));
-        Assert.assertTrue(responseObject.containsKey("create_time"));
+        Assert.assertTrue(!responseObject.get("update_time").toString().isEmpty());
+        Assert.assertTrue(!responseObject.get("create_time").toString().isEmpty());
 
     }
     /**

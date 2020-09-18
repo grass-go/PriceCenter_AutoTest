@@ -45,24 +45,28 @@ public class VotersList {
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
 
-    Assert.assertTrue(responseContent.containsKey("total"));
-    Assert.assertTrue(responseContent.containsKey("totalVotes"));
-
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long totalVotes = Long.valueOf(responseContent.get("totalVotes").toString());
+    Assert.assertTrue(totalVotes >= total);
     //object data
     responseArrayContent = responseContent.getJSONArray("data");
     Assert.assertEquals(limit, responseArrayContent.size());
-    targetContent = responseArrayContent.getJSONObject(0);
-    Assert.assertTrue(targetContent.containsKey("timestamp"));
-    Assert.assertTrue(targetContent.containsKey("candidateUrl"));
-    Assert.assertTrue(targetContent.containsKey("candidateName"));
-    Assert.assertTrue(targetContent.containsKey("voterAvailableVotes"));
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("voterAddress")).matches());
-    Assert
-        .assertTrue(patternAddress.matcher(targetContent.getString("candidateAddress")).matches());
-    Assert.assertTrue(Long.valueOf(targetContent.getString("votes")) > 0);
-  }
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("timestamp").toString().isEmpty());
+      String candidateUrl = responseArrayContent.getJSONObject(i).get("candidateUrl").toString();
+      Assert.assertTrue(!candidateUrl.isEmpty());
+      HttpResponse httpResponse = TronscanApiList.getUrlkey(candidateUrl);
+      Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
 
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("candidateName").toString().isEmpty());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("voterAvailableVotes"));
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("voterAddress")).matches());
+      Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("candidateAddress")).matches());
+      Assert.assertEquals(responseArrayContent.getJSONObject(i).getString("candidateAddress"),address);
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).getString("votes")) > 0);
+    }
+  }
   /**
    * constructor.
    */

@@ -44,22 +44,25 @@ public class VoteWitnesses {
     Integer dataSize = responseContent.getJSONArray("data").size();
     Assert.assertEquals(total, dataSize);
     Assert.assertTrue(totalVotes > 0);
-
-    //Key data
-    targetContent = responseContent.getJSONArray("data").getJSONObject(0);
-    Assert.assertTrue(targetContent.containsKey("hasPage"));
     Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("address")).matches());
-    Assert.assertTrue(targetContent.containsKey("name"));
-    Assert.assertTrue(targetContent.containsKey("changeVotes"));
-    Assert.assertTrue(targetContent.containsKey("lastRanking"));
-    Assert.assertTrue(targetContent.containsKey("change_cycle"));
-    Assert.assertTrue(targetContent.containsKey("realTimeRanking"));
-    Assert.assertTrue(targetContent.containsKey("lastCycleVotes"));
-    Assert.assertTrue(targetContent.containsKey("realTimeVotes"));
-    Assert.assertTrue(targetContent.containsKey("votesPercentage"));
-    Assert.assertTrue(targetContent.containsKey("url"));
+    //Key data
+    responseArrayContent = responseContent.getJSONArray("data");
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("hasPage").isEmpty());
 
+      Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("address")).matches());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("name"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("changeVotes"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("lastRanking"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("change_cycle"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("realTimeRanking"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("lastCycleVotes"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("realTimeVotes"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("votesPercentage"));
+      //包含非url形式
+      String url_key = responseArrayContent.getJSONObject(i).get("url").toString();
+      Assert.assertTrue(!url_key.isEmpty());
+    }
     //Key fastestRise
     targetContent = responseContent.getJSONObject("fastestRise");
     Assert.assertTrue(targetContent.containsKey("hasPage"));
@@ -71,8 +74,12 @@ public class VoteWitnesses {
     Assert.assertTrue(targetContent.containsKey("realTimeRanking"));
     Assert.assertTrue(targetContent.containsKey("lastCycleVotes"));
     Assert.assertTrue(targetContent.containsKey("realTimeVotes"));
-    Assert.assertTrue(targetContent.containsKey("votesPercentage"));
-    Assert.assertTrue(targetContent.containsKey("url"));
+    Assert.assertTrue(targetContent.getLong("lastCycleVotes") > 0);
+    Assert.assertTrue(targetContent.getLong("realTimeVotes") > 0);
+    Assert.assertTrue(Double.valueOf(targetContent.get("votesPercentage").toString()) <= 100);
+    String url_key = targetContent.get("url").toString();
+    Assert.assertTrue(!url_key.isEmpty());
+
   }
 
   /**

@@ -18,7 +18,7 @@ public class accountInfoByAddress extends V1Base {
    */
   @Test(enabled = true, description = "Get account info by address from trongrid V1 API")
   public void test01GetAccountInfoByAddressFromTrongridV1() {
-    getAccountInfoByAddressBody = getAccountInfoByAddress(queryAddress);
+    getAccountInfoByAddressBody = getAccountInfoByAddress(queryAddressSophia);
     //printJsonContent(getAccountInfoByAddressBody);
     Assert.assertEquals(getAccountInfoByAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getAccountInfoByAddressBody.containsKey("meta"));
@@ -26,10 +26,10 @@ public class accountInfoByAddress extends V1Base {
     printJsonContent(accountData);
     Assert.assertTrue(accountData.containsKey("owner_permission"));
     Assert.assertTrue(accountData.containsKey("active_permission"));
-    Assert.assertTrue(queryAddressBase64.toLowerCase()
+    Assert.assertTrue(queryAddressSophiaBase64.toLowerCase()
         .contains(accountData.getString("address").substring(2).toLowerCase()));
     base64Address = "41" + accountData.getString("address").substring(2);
-    Assert.assertTrue(accountData.getLong("create_time") == 1588824369000L);
+    Assert.assertTrue(accountData.getLong("create_time") == 1600312881000L);
     Assert.assertTrue(accountData.containsKey("free_asset_net_usageV2"));
     Assert.assertTrue(accountData.containsKey("latest_opration_time"));
     Assert.assertTrue(accountData.containsKey("assetV2"));
@@ -44,7 +44,7 @@ public class accountInfoByAddress extends V1Base {
    */
   @Test(enabled = true, description = "Get account info by address with only unconfirmed from trongrid V1 API")
   public void test02GetAccountInfoByAddressWithOnlyUnconfirmedFromTrongridV1() {
-    getAccountInfoByAddressBody = getAccountInfoByAddress(queryAddress,false);
+    getAccountInfoByAddressBody = getAccountInfoByAddress(queryAddressSophia,false);
     Assert.assertEquals(getAccountInfoByAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getAccountInfoByAddressBody.containsKey("meta"));
     Assert.assertEquals(accountData,getAccountInfoByAddressBody.getJSONArray("data").getJSONObject(0));

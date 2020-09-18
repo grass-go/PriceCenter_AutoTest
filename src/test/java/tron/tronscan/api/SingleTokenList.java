@@ -8,6 +8,11 @@ import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
+
 import tron.common.TronscanApiList;
 import tron.common.utils.Configuration;
 
@@ -37,52 +42,57 @@ public class SingleTokenList {
 
     //Three key, "total","totalAll","data"
     Assert.assertTrue(responseContent.size() == 4);
-    Assert.assertTrue(responseContent.containsKey("total"));
-    Assert.assertTrue(responseContent.containsKey("totalAll"));
+    Long total = Long
+            .valueOf(responseContent.get("total").toString());
+    Long totalAll = Long
+            .valueOf(responseContent.get("totalAll").toString());
+    Assert.assertTrue(totalAll >= total);
     Assert.assertTrue(responseContent.containsKey("contractMap"));
     //data
     responseArrayContent = responseContent.getJSONArray("data");
-    targetContent = responseArrayContent.getJSONObject(0);
-    Assert.assertTrue(targetContent.getLong("totalTransactions") >= 0);
-    Assert.assertTrue(targetContent.containsKey("country"));
-    Assert.assertTrue(targetContent.getLong("tokenID") >= 1000000);
-    Assert.assertTrue(targetContent.getLong("participated") > 0);
-    Assert.assertTrue(targetContent
-        .getInteger("precision") >= 0 && targetContent.getInteger("precision") <= 7);
-    Assert.assertTrue(targetContent.containsKey("num"));
-    Assert.assertTrue(targetContent.containsKey("available"));
-    Assert.assertTrue(targetContent.containsKey("reputation"));
-    Assert.assertTrue(targetContent.containsKey("description"));
-    Assert.assertTrue(targetContent.containsKey("issuedPercentage"));
-    Assert.assertTrue(targetContent.containsKey("nrOfTokenHolders"));
-    Assert.assertTrue(targetContent.containsKey("voteScore"));
-    Assert.assertTrue(targetContent.containsKey("dateCreated"));
-    Assert.assertTrue(targetContent.containsKey("price"));
-    Assert.assertTrue(targetContent.containsKey("percentage"));
-    Assert.assertTrue(targetContent.containsKey("startTime"));
-    Assert.assertTrue(targetContent.containsKey("id"));
-    Assert.assertTrue(targetContent.containsKey("issued"));
-    Assert.assertTrue(targetContent.containsKey("trxNum"));
-    Assert.assertTrue(targetContent.containsKey("abbr"));
-    Assert.assertTrue(targetContent.containsKey("website"));
-    Assert.assertTrue(targetContent.containsKey("github"));
-    Assert.assertTrue(targetContent.containsKey("availableSupply"));
-    Assert.assertTrue(targetContent.containsKey("totalSupply"));
-    Assert.assertTrue(targetContent.containsKey("index"));
-    Assert.assertTrue(targetContent.containsKey("frozenTotal"));
-    Assert.assertTrue(targetContent.containsKey("frozen"));
-    Assert.assertTrue(targetContent.containsKey("canShow"));
-    Assert.assertTrue(targetContent.containsKey("remaining"));
-    Assert.assertTrue(targetContent.containsKey("url"));
-    Assert.assertTrue(targetContent.containsKey("frozenPercentage"));
-    Assert.assertTrue(targetContent.containsKey("imgUrl"));
-    Assert.assertTrue(targetContent.containsKey("isBlack"));
-    Assert.assertTrue(targetContent.containsKey("remainingPercentage"));
-    Assert.assertTrue(targetContent.containsKey("name"));
-    Assert.assertTrue(targetContent.containsKey("ownerAddress"));
-    Assert.assertTrue(targetContent.containsKey("endTime"));
-    Assert.assertTrue(targetContent.containsKey("white_paper"));
-    Assert.assertTrue(targetContent.containsKey("social_media"));
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("totalTransactions") >= 0);
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("country"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("tokenID") >= 1000000);
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("participated") > 0);
+      Assert.assertTrue(responseArrayContent.getJSONObject(i)
+              .getInteger("precision") >= 0 && responseArrayContent.getJSONObject(i).getInteger("precision") <= 7);
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("num"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("available"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("reputation"));
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("description").isEmpty());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("issuedPercentage"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("nrOfTokenHolders"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("voteScore"));
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("dateCreated").isEmpty());
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).getLong("price").toString()) >= 100000);
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("percentage"));
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("startTime").isEmpty());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("id"));
+      Assert.assertTrue(Double.valueOf(responseArrayContent.getJSONObject(i).getLong("issued").toString()) >= 100000000);
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).getLong("trxNum").toString()) >= 1000000);
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("abbr").isEmpty());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("website"));
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("github").isEmpty());
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).getLong("availableSupply").toString()) == 0);
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).getLong("totalSupply").toString()) >= 1000000000);
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("index"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("frozenTotal"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("frozen"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("canShow"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("remaining"));
+      //此地址打印链接打不开https://www.hashcoins.com/,所以不能用状态判断
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("url").isEmpty());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("frozenPercentage"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("isBlack"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("remainingPercentage"));
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("name").isEmpty());
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("ownerAddress")).matches());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("endTime").isEmpty());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("white_paper"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("social_media"));
+    }
   }
 
   /**

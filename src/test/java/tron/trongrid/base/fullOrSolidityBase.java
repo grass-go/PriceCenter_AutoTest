@@ -36,6 +36,10 @@ public class fullOrSolidityBase {
   public static String bttOwnerAddress = Configuration.getByPath("testng.conf").getString("tronGrid.bttOwnerAddress");
   public static String delegateResourceFromAddress = Configuration.getByPath("testng.conf").getString("tronGrid.delegateResourceFromAddress");
   public static String delegateResourceToAddress = Configuration.getByPath("testng.conf").getString("tronGrid.delegateResourceToAddress");
+  public static String delegateResourceFromAddressSophia = Configuration.getByPath("testng.conf").getString("tronGrid.delegateResourceFromAddressSophia");
+  public static String delegateResourceToAddressSophia = Configuration.getByPath("testng.conf").getString("tronGrid.delegateResourceToAddressSophia");
+  public static String queryAddressSophia = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddressSophia");
+
   public static String walletStr = "/wallet";
   public static String fullnode = "/wallet";
   public static String solidity = "/walletsolidity";

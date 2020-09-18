@@ -64,15 +64,15 @@ public class WalletList {
         Assert.assertTrue(Long.valueOf(responseContent.getString("count")) > 0);
         //object data
         responseArrayContent = responseContent.getJSONArray("data");
-        targetContent = responseArrayContent.getJSONObject(0);
-        Assert.assertTrue(targetContent.containsKey("token_price"));
-        Assert.assertTrue(targetContent.containsKey("token_id"));
-        Assert.assertTrue(targetContent.containsKey("balance"));
-        Assert.assertTrue(targetContent.containsKey("token_abbr"));
-        Assert.assertTrue(targetContent.containsKey("token_name"));
-        Assert.assertTrue(targetContent.containsKey("token_value"));
-        Assert.assertTrue(targetContent.containsKey("token_type"));
-
+        for (int i = 0; i < responseArrayContent.size(); i++) {
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("token_price").toString().isEmpty());
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("token_id").toString().isEmpty());
+            Assert.assertTrue(Double.valueOf(responseArrayContent.getJSONObject(i).getString("balance")) > 0);
+            String token_abbr = responseArrayContent.getJSONObject(i).getString("token_abbr");
+            String token_name = responseArrayContent.getJSONObject(i).getString("token_name");
+            Assert.assertEquals(token_abbr,token_name);
+            Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("token_type"));
+        }
     }
 
     /**
@@ -109,15 +109,16 @@ public class WalletList {
         Assert.assertTrue(Long.valueOf(responseContent.getString("count")) > 0);
         //object data
         responseArrayContent = responseContent.getJSONArray("data");
-        targetContent = responseArrayContent.getJSONObject(0);
-        Assert.assertTrue(targetContent.containsKey("token_price"));
-        Assert.assertTrue(targetContent.containsKey("token_id"));
-        Assert.assertTrue(targetContent.containsKey("balance"));
-        Assert.assertTrue(targetContent.containsKey("token_abbr"));
-        Assert.assertTrue(targetContent.containsKey("token_name"));
-        Assert.assertTrue(targetContent.containsKey("frozen"));
-        Assert.assertTrue(targetContent.containsKey("token_type"));
-
+        for (int i = 0; i < responseArrayContent.size(); i++) {
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("token_price").toString().isEmpty());
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("token_id").toString().isEmpty());
+            //当前余额为0
+            Assert.assertTrue(Double.valueOf(responseArrayContent.getJSONObject(i).getString("balance")) >= 0);
+            String token_abbr = responseArrayContent.getJSONObject(i).getString("token_abbr");
+            String token_name = responseArrayContent.getJSONObject(i).getString("token_name");
+            Assert.assertEquals(token_abbr,token_name);
+            Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("token_type"));
+        }
     }
 
     /**
@@ -147,10 +148,7 @@ public class WalletList {
         //count
         Assert.assertTrue(Long.valueOf(responseContent.getString("count")) >= 0);
         //object data
-        responseArrayContent = responseContent.getJSONArray("data");
-//        targetContent = responseArrayContent.getJSONObject(0);
-//        Assert.assertTrue(targetContent.containsKey("value"));
-//        Assert.assertTrue(targetContent.containsKey("desc"));
+        Assert.assertTrue(responseContent.containsKey("data"));
 
     }
 
