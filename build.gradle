@@ -84,8 +84,8 @@ task tronlinkAPI(type: Test) {
 
     useTestNG {
         suites(file('src/test/resources/testng_tronlinkAPI.xml'))
-        parallel 'classes'
-        threadCount 2
+        parallel 'tests'
+        threadCount 1
 
     }
     testLogging {
