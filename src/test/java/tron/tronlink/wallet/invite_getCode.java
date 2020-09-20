@@ -2,7 +2,7 @@ package tron.tronlink.wallet;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.http.HttpResponse;
-import org.testng.Assert;
+import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 
@@ -17,13 +17,15 @@ public class invite_getCode {
     // 线上环境暂时报错
     parameter.put("address", "TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
     response = TronlinkApiList.getInviteCode(parameter);
-
+    Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     JSONObject inviteCodeinfo = TronlinkApiList.parseJsonObResponseContent(response);
-    System.out.println(inviteCodeinfo);
+
     TronlinkApiList.printJsonContent(inviteCodeinfo);
     JSONObject data = inviteCodeinfo.getJSONObject("data");
-//    Assert.assertTrue(data.getString("address") == "TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
-//    Assert.assertTrue(data.getString("invitationCode") == "cN0J");
-//    Assert.assertTrue(!data.getString("isInvited").isEmpty());
+    Assert.assertTrue(data.containsKey("address"));
+    Assert.assertEquals("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe",data.getString("address"));
+    Assert.assertTrue(data.containsKey("invitationCode"));
+    Assert.assertNotEquals("",data.getString("invitationCode"));
+    Assert.assertNotEquals("0000",data.getString("invitationCode"));
   }
 }
