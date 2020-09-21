@@ -3,8 +3,6 @@ package tron.tronlink.wallet;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.BeforeClass;
@@ -12,14 +10,15 @@ import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.common.utils.Configuration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class addasset {
   private JSONObject responseContent;
   private JSONArray responseArrayContent;
   private JSONObject targetContent;
   private HttpResponse response;
-  private String node = Configuration.getByPath("testng.conf")
-      .getStringList("tronlink.ip.list")
-      .get(0);
+
   private JSONObject tokenJson = new JSONObject();
   List<String> trc10tokenList = new ArrayList<>();
   List<String> trc20ContractAddressList = new ArrayList<>();
@@ -129,6 +128,20 @@ public class addasset {
     tokenJson.clear();
     tokenJson.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
     tokenJson.put("token20",trc20ContractAddressList);
+    response = TronlinkApiList.addAsset(tokenJson);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
+    JSONArray tokenArray = assetInformation.getJSONArray("data");
+    Assert.assertTrue(TronlinkApiList.getTrc10TokenIdList(tokenArray).size()>0);
+    Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()==trc20ContractAddressList.size());
+  }
+
+  @Test(enabled = true,description = "Test add all token to account.")
+  public void test005AddAllTokenToAccount() throws Exception {
+    tokenJson.clear();
+    tokenJson.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
+    tokenJson.put("token20",trc20ContractAddressList);
+    tokenJson.put("token10",trc10tokenList);
     response = TronlinkApiList.addAsset(tokenJson);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
