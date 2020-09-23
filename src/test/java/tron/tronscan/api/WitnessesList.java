@@ -49,9 +49,20 @@ public class WitnessesList {
       Assert.assertTrue(!url_key.isEmpty());
       Assert.assertTrue(
               responseArrayContent.getJSONObject(i).getLong("latestBlockNumber") <= responseArrayContent.getJSONObject(i).getLong("latestSlotNumber"));
+
       Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("votes") > 0);
       Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("producePercentage") <= 100);
       Assert.assertTrue(responseArrayContent.getJSONObject(i).getDouble("votesPercentage") > 0);
+
+      //上一轮票数
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("votes") >= 0);
+      //变动的投票，有部分数据是负数
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("changeVotes").isEmpty());
+      //实时投票
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("realTimeVotes") >= 0);
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("producePercentage") <= 100);
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).getDouble("votesPercentage") < 100);
+
     }
   }
   /**

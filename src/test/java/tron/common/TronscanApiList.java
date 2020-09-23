@@ -593,18 +593,14 @@ public class TronscanApiList {
     }
 
     /**
-     * constructor.
+     * constructor.合约下的交易
      */
     public static HttpResponse getContractTransactionList(String tronscanNode,
-                                                          String contractAddress, Integer limit) {
+                                                          Map<String, String> params) {
         try {
-            String requestUrl = "http://" + tronscanNode
-                    + "api/contracts/transaction?sort=-timestamp&count=true&"
-                    + "limit=" + limit
-                    + "&start=0&"
-                    + "contract=" + contractAddress;
+            String requestUrl = "http://" + tronscanNode + "api/contracts/transaction";
             System.out.println(requestUrl);
-            response = createGetConnect(requestUrl);
+            response = createGetConnect(requestUrl, params);
         } catch (Exception e) {
             e.printStackTrace();
             httpget.releaseConnection();
@@ -612,7 +608,6 @@ public class TronscanApiList {
         }
         return response;
     }
-
     /**
      * constructor.
      */
