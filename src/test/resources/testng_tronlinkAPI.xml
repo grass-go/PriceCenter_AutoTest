@@ -8,7 +8,7 @@
 
     <test name="tronlinkAPI">
         <parameter name="tronlinkUrl" value="https://list.tronlink.org"></parameter>
-        <parameter name="tronscanApiUrl" value="https://apilist.tronscan.org/api/vote/witness"></parameter>
+        <parameter name="tronscanApiUrl" value="https://apilist.tronscan.org"></parameter>
         <packages>
             <package name="tron.tronlink.*"></package>
         </packages>

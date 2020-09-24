@@ -23,6 +23,16 @@ public class VotingSelf extends TronlinkBase {
 
   @Test(enabled = true,description = "get self voting witness")
   public void Test000getVotingSelf() throws Exception {
+    Map<String, String> map = new HashMap<>();
+    map.put("start","0");
+    map.put("limit","10");
+    map.put("voter","TXTNcgJHD9GPfpiTbSG2VGtfdfii9VcpEr");
+    boolean re = TronlinkApiList.getVoteSelfFromTronscan(map);
+    if(!re){
+      System.out.println("* * * * * * * tronscan get vote self error * * * * * *");
+    }
+
+
     Map<String, String> params = new HashMap<>();
     params.put("address","TXTNcgJHD9GPfpiTbSG2VGtfdfii9VcpEr"); //sophia's address
     response = TronlinkApiList.votingV2Self(params);
