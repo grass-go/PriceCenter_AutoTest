@@ -12,6 +12,7 @@ import tron.tronlink.base.TronlinkBase;
 
 public class transactionHistory extends TronlinkBase {
   private HttpResponse response;
+  private String defaultHash = "bf1da4cac95c7edc0b219fed147460fc32eacc47736728a70710a76d8ce0bec2";
 
   @Test(enabled = true, description = "Api GET /api/simple-transaction test")
   public void test001TransactionTo() throws Exception {
@@ -29,6 +30,17 @@ public class transactionHistory extends TronlinkBase {
       Assert.assertTrue(!history.getString("ownerAddress").isEmpty());
       Assert.assertTrue(!history.getString("toAddress").isEmpty());
       Assert.assertTrue(!history.getString("contractType").isEmpty());
+//      String toAddress = history.getString("toAddress");
+//      Assert.assertEquals("TMNQnpTsNHuK1NwqMf6WTBydXvNsv9p6of",toAddress);
+      String hash = history.getString("hash");
+
+      if(defaultHash.equals(hash)){
+        JSONObject contractData = history.getJSONObject("contractData");
+        Assert.assertEquals("10000000",contractData.getString("amount"));
+        Assert.assertEquals("1002636",contractData.getString("asset_name"));
+        Assert.assertEquals("THvoHCwueb9WHMdiVk5M2kYd9HUKVdh6wv",contractData.getString("owner_address"));
+        Assert.assertEquals("TMNQnpTsNHuK1NwqMf6WTBydXvNsv9p6of",contractData.getString("to_address"));
+      }
     }
 
 
