@@ -29,6 +29,7 @@ public class ContractTriggerList {
 
   /**
    * constructor.
+   * 合约调用展示接口
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = " List all the triggers of the contracts in the blockchain")
   public void test01getContractTrigger() {
@@ -48,22 +49,28 @@ public class ContractTriggerList {
 
     //object data
     responseArrayContent = responseContent.getJSONArray("data");
-    JSONObject responseObject = responseArrayContent.getJSONObject(0);
-    Assert.assertTrue(responseArrayContent.size() == 20);
-    Assert.assertTrue(Integer.valueOf(responseObject.getString("block")) > 0);
-    Assert.assertTrue(responseObject.containsKey("callData"));
-    Assert.assertTrue(responseObject.containsKey("callValue"));
-    Assert.assertTrue(responseObject.containsKey("contractType"));
-    Assert.assertTrue(responseObject.containsKey("token"));
-    Assert.assertTrue(Boolean.valueOf(responseObject.getString("confirmed")));
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert
-        .assertTrue(patternAddress.matcher(responseObject.getString("contractAddress")).matches());
-    Assert.assertTrue(patternAddress.matcher(responseObject.getString("ownerAddress")).matches());
-    Assert.assertTrue(!responseObject.getString("hash").isEmpty());
-    Assert.assertTrue(!responseObject.getString("timestamp").isEmpty());
-    Assert.assertTrue(!responseObject.getString("result").isEmpty());
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Assert.assertTrue(responseArrayContent.size() == 20);
+      Assert.assertTrue(Integer.valueOf(responseArrayContent.getJSONObject(i).getString("block")) > 0);
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("callData"));
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).getString("callValue")) >= 0);
 
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("contractType"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("token"));
+      Assert.assertTrue(Boolean.valueOf(responseArrayContent.getJSONObject(i).getString("confirmed")));
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      //地址不能唯空
+      String contractAddress = responseArrayContent.getJSONObject(i).getString("contractAddress");
+      Assert.assertTrue(patternAddress.matcher(contractAddress).matches() && !contractAddress.isEmpty());
+      String ownerAddress = responseArrayContent.getJSONObject(i).getString("ownerAddress");
+      Assert.assertTrue(patternAddress.matcher(ownerAddress).matches() && !ownerAddress.isEmpty());
+
+      Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
+      String hash = responseArrayContent.getJSONObject(i).getString("hash");
+      Assert.assertTrue(patternHash.matcher(hash).matches() && !hash.isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("timestamp").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("result").isEmpty());
+    }
   }
 
   /**

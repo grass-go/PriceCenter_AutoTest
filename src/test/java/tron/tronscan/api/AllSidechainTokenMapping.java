@@ -37,7 +37,7 @@ public class AllSidechainTokenMapping {
         TronscanApiList.printJsonContent(responseContent);
 
         //three object, "retCode" and "Data"
-        Assert.assertTrue(responseContent.size() >= 3);
+        Assert.assertTrue(responseContent.size() == 3);
         Assert.assertTrue(responseContent.containsKey("retMsg"));
         Assert.assertTrue(Double.valueOf(responseContent.get("retCode").toString()) >= 0);
         //data
@@ -46,6 +46,7 @@ public class AllSidechainTokenMapping {
         Assert.assertTrue(responseArrayContent.size() > 0);
         for (int i = 0; i < responseArrayContent.size(); i++) {
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("chainid").toString().isEmpty());
+            Assert.assertEquals(responseArrayContent.getJSONObject(i).get("chainid").toString(),"413AF23F37DA0D48234FDD43D89931E98E1144481B");
             Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
             Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("mainchain_address")).matches());
             Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("sidechain_address")).matches());

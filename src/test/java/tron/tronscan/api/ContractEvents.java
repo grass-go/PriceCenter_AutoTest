@@ -28,6 +28,8 @@ public class ContractEvents {
 
   /**
    * constructor.
+   * 原是合约中的20转账接口，前端现改为token_trc20/transfer接口
+   * 此接口现保持当前状态
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get contract events")
   public void getContractEvents() {
@@ -38,43 +40,43 @@ public class ContractEvents {
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
 
-    JSONArray contractEventArray = responseContent.getJSONArray("data");
+    JSONArray exchangeArray = responseContent.getJSONArray("data");
+    for (int i = 0; i < exchangeArray.size(); i++) {
+      //amount
+//      targetContent = exchangeArray.getJSONObject(0);
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("amount").toString()) >= 0);
 
-    //amount
-    targetContent = contractEventArray.getJSONObject(0);
-    Assert.assertTrue(Long.valueOf(targetContent.get("amount").toString()) >= 0);
+      //transferFromAddress
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      Assert.assertTrue(patternAddress.matcher(exchangeArray.getJSONObject(i)
+              .getString("transferFromAddress")).matches());
 
-    //transferFromAddress
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(targetContent
-        .getString("transferFromAddress")).matches());
+      //data
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("data"));
 
-    //data
-    Assert.assertTrue(targetContent.containsKey("data"));
+      //decimals
+      Integer decimals = Integer.valueOf(exchangeArray.getJSONObject(i).get("decimals").toString());
+      Assert.assertTrue(decimals >= 0 && decimals <= 18);
 
-    //decimals
-    Integer decimals = Integer.valueOf(targetContent.get("decimals").toString());
-    Assert.assertTrue(decimals >= 0 && decimals <= 7);
+      //tokenName
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("tokenName"));
 
-    //tokenName
-    Assert.assertTrue(!targetContent.get("tokenName").toString().isEmpty());
+      //transferToAddress
+      Assert.assertTrue(patternAddress.matcher(exchangeArray.getJSONObject(i)
+              .getString("transferToAddress")).matches());
 
-    //transferToAddress
-    Assert.assertTrue(patternAddress.matcher(targetContent
-        .getString("transferToAddress")).matches());
+      //block
+      Assert.assertTrue(Integer.valueOf(exchangeArray.getJSONObject(i).get("block").toString()) > 1000000);
 
-    //block
-    Assert.assertTrue(Integer.valueOf(targetContent.get("block").toString()) > 0);
+      //confirmed
+      Assert.assertTrue(Boolean.valueOf(exchangeArray.getJSONObject(i).getString("confirmed")));
 
-    //confirmed
-    Assert.assertTrue(Boolean.valueOf(targetContent.getString("confirmed")));
+      //transactionHash
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("transactionHash").toString().isEmpty());
 
-    //transactionHash
-    Assert.assertTrue(!targetContent.get("transactionHash").toString().isEmpty());
-
-    //timestamp
-    Assert.assertTrue(!targetContent.get("timestamp").toString().isEmpty());
-
+      //timestamp
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("timestamp").toString().isEmpty());
+    }
   }
 
   /**

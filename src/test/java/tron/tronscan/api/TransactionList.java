@@ -26,11 +26,15 @@ public class TransactionList {
   private JSONObject targetContent;
   private HttpResponse response;
   private String tronScanNode = Configuration.getByPath("testng.conf")
-      .getStringList("tronscan.ip.list")
-      .get(0);
+      .getStringList("tronscan.ip.list").get(0);
+  private String accountAddress = Configuration.getByPath("testng.conf")
+          .getString("defaultParameter.accountAddress");
 
   /**
    * constructor. limit不为零
+   * 根据地址查询出合约下的交易，当前地址显示rangeTotal大于10000条时，目前total只展示10000条
+   * 账户页下的交易界面
+   * 未做筛选，total首页展示20条数据
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
   public void test01getBlockDetail() {
@@ -40,7 +44,7 @@ public class TransactionList {
     Params.put("limit", "20");
     Params.put("count", "true");
     Params.put("start", "0");
-    Params.put("address", "TMuA6YqfCeX8EhbfYEg5y7S4DqzSJireY9");
+    Params.put("address", accountAddress);
     response = TronscanApiList.getTransactionList(tronScanNode, Params);
     log.info("code is " + response.getStatusLine().getStatusCode());
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -50,7 +54,7 @@ public class TransactionList {
     Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 1000000000);
     Long total = Long.valueOf(responseContent.get("total").toString());
     Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
-    Assert.assertTrue(rangeTotal >= total);
+    Assert.assertTrue(rangeTotal >= total && total >0);
     responseArrayContent = responseContent.getJSONArray("data");
     for (int i = 0; i < responseArrayContent.size(); i++) {
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("hash"));
@@ -65,6 +69,176 @@ public class TransactionList {
       String ownerAddress = responseArrayContent.getJSONObject(i).getString("ownerAddress");
       Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("toAddress"));
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("contractRet").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("result").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenType").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenId").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("amount").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenAbbr").isEmpty());
+      //contractData
+      JSONObject responseObject = responseArrayContent.getJSONObject(i).getJSONObject("contractData");
+      Assert.assertEquals(responseObject.getString("owner_address"),ownerAddress);
+      Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
+    }
+  }
+  /**
+   * constructor. limit不为零
+   * 根据地址查询出合约下的交易，当前地址显示rangeTotal大于10000条时，目前total只展示10000条
+   * 账户页下的交易界面
+   * 当前hash是当前账户地址内部交易页面中的hash数据，查询出来的数据有且只有一条
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
+  public void test01getBlockDetail02() {
+    //Get response
+    String keyword = "334fadcf1465237ea09e10f3f38873a4c5b445fdaf725d44266c8760090120fe";
+    Map<String, String> Params = new HashMap<>();
+    Params.put("sort", "-number");
+    Params.put("limit", "20");
+    Params.put("count", "true");
+    Params.put("start", "0");
+    Params.put("address", accountAddress);
+    //账户交易页下的hash值，通过搜索hash值有且只能查询出一条数据
+    Params.put("keyword",keyword);
+    response = TronscanApiList.getTransactionList(tronScanNode, Params);
+    log.info("code is " + response.getStatusLine().getStatusCode());
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+
+    Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 1000000000);
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal == total && total ==1);
+    responseArrayContent = responseContent.getJSONArray("data");
+    targetContent = responseArrayContent.getJSONObject(0);
+      Assert.assertTrue(targetContent.containsKey("hash"));
+      String hash_key = targetContent.getString("hash");
+      Assert.assertEquals(hash_key.length(), 64);
+      Assert.assertEquals(hash_key, keyword);
+      Assert.assertTrue(targetContent.getLong("block") >= 10000000);
+      Assert.assertTrue(!targetContent.getString("timestamp").isEmpty());
+
+      Assert.assertTrue(!targetContent.getString("contractType").isEmpty());
+      Assert.assertTrue(targetContent.containsKey("confirmed"));
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String ownerAddress = targetContent.getString("ownerAddress");
+      Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
+      Assert.assertTrue(targetContent.containsKey("toAddress"));
+      Assert.assertTrue(!targetContent.getString("contractRet").isEmpty());
+      Assert.assertTrue(!targetContent.getString("result").isEmpty());
+      Assert.assertTrue(!targetContent.getString("tokenType").isEmpty());
+      Assert.assertTrue(!targetContent.getString("tokenId").isEmpty());
+      Assert.assertTrue(!targetContent.getString("amount").isEmpty());
+      Assert.assertTrue(!targetContent.getString("tokenAbbr").isEmpty());
+      //contractData
+      JSONObject responseObject = targetContent.getJSONObject("contractData");
+      Assert.assertEquals(responseObject.getString("owner_address"),ownerAddress);
+      Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
+
+  }
+  /**
+   * constructor. limit不为零
+   * 根据地址查询出合约下的交易，当前地址显示rangeTotal大于10000条时，目前total只展示10000条
+   * 账户页下的交易界面
+   * 按地址搜索
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
+  public void test01getBlockDetail03() {
+    //Get response
+//    String keyword = "";
+    Map<String, String> Params = new HashMap<>();
+    Params.put("sort", "-number");
+    Params.put("limit", "20");
+    Params.put("count", "true");
+    Params.put("start", "0");
+    Params.put("address", accountAddress);
+    //搜索框中输入交易页中相关的地址，搜索出来的数据有且只有一条或多条
+    Params.put("keyword",accountAddress);
+    response = TronscanApiList.getTransactionList(tronScanNode, Params);
+    log.info("code is " + response.getStatusLine().getStatusCode());
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+
+    Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 1000000000);
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal >= total && total >0);
+    responseArrayContent = responseContent.getJSONArray("data");
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("hash"));
+      String hash_key = responseArrayContent.getJSONObject(i).getString("hash");
+      Assert.assertEquals(hash_key.length(), 64);
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("block") >= 10000000);
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("timestamp").isEmpty());
+
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("contractType").isEmpty());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("confirmed"));
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String ownerAddress = responseArrayContent.getJSONObject(i).getString("ownerAddress");
+      Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("toAddress"));
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("contractRet").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("result").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenType").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenId").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("amount").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenAbbr").isEmpty());
+      //contractData
+      JSONObject responseObject = responseArrayContent.getJSONObject(i).getJSONObject("contractData");
+      Assert.assertEquals(responseObject.getString("owner_address"),ownerAddress);
+      Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
+    }
+  }
+  /**
+   * constructor. limit不为零
+   * 根据地址查询出合约下的交易，当前地址显示rangeTotal大于10000条时，目前total只展示10000条
+   * 账户页下的交易界面
+   * 按时间查询，在有交易的时间范围内，查出多条
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
+  public void test01getBlockDetail04() {
+    //Get response
+//    String keyword = "";
+    Map<String, String> Params = new HashMap<>();
+    Params.put("sort", "-number");
+    Params.put("limit", "20");
+    Params.put("count", "true");
+    Params.put("start", "0");
+    Params.put("address", accountAddress);
+    //按时间查询，在有交易的情况下，时间搜索出多条数据，2020年9月14号-24号数据
+    Params.put("start_timestamp","1600081660061");
+    Params.put("end_timestamp","1600945664678");
+    response = TronscanApiList.getTransactionList(tronScanNode, Params);
+    log.info("code is " + response.getStatusLine().getStatusCode());
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+
+    Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 1000000000);
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal >= total && total >0);
+    responseArrayContent = responseContent.getJSONArray("data");
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("hash"));
+      String hash_key = responseArrayContent.getJSONObject(i).getString("hash");
+      Assert.assertEquals(hash_key.length(), 64);
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("block") >= 10000000);
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("timestamp").isEmpty());
+
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("contractType").isEmpty());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("confirmed"));
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String ownerAddress = responseArrayContent.getJSONObject(i).getString("ownerAddress");
+      Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("toAddress"));
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("contractRet").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("result").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenType").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenId").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("amount").isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenAbbr").isEmpty());
       //contractData
       JSONObject responseObject = responseArrayContent.getJSONObject(i).getJSONObject("contractData");
       Assert.assertEquals(responseObject.getString("owner_address"),ownerAddress);
@@ -73,16 +247,19 @@ public class TransactionList {
   }
   /**
    * constructor. limit为零
+   * 搜索中输入错误的数据，查询出来的数据为空
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
-  public void test02getBlockDetail() {
+  public void test02getBlockDetail05() {
     //Get response
     Map<String, String> Params = new HashMap<>();
     Params.put("sort", "-number");
     Params.put("limit", "0");
     Params.put("count", "true");
     Params.put("start", "0");
-    Params.put("address", "TMuA6YqfCeX8EhbfYEg5y7S4DqzSJireY9");
+    Params.put("address", accountAddress);
+    //输入错误的数据
+    Params.put("keyword","9999");
     response = TronscanApiList.getTransactionList(tronScanNode, Params);
     log.info("code is " + response.getStatusLine().getStatusCode());
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -91,12 +268,41 @@ public class TransactionList {
     Assert.assertTrue(responseContent.size() == 5);
     Long total = Long.valueOf(responseContent.get("total").toString());
     Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
-    Assert.assertTrue(rangeTotal >= total);
+    Assert.assertTrue(rangeTotal == total && total==0);
     Assert.assertTrue(responseContent.containsKey("data"));
     Assert.assertTrue(responseContent.containsKey("wholeChainTxCount"));
     Assert.assertTrue(responseContent.containsKey("contractMap"));
   }
 
+  /**
+   * constructor. limit为零
+   * 时间查询数据，查询出来的数据为空
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
+  public void test02getBlockDetail06() {
+    //Get response
+    Map<String, String> Params = new HashMap<>();
+    Params.put("sort", "-number");
+    Params.put("limit", "0");
+    Params.put("count", "true");
+    Params.put("start", "0");
+    Params.put("address", accountAddress);
+    //按时间查询，2020年9月19号数据为空
+    Params.put("start_timestamp","1600513660061");
+    Params.put("end_timestamp","1600513664678");
+    response = TronscanApiList.getTransactionList(tronScanNode, Params);
+    log.info("code is " + response.getStatusLine().getStatusCode());
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+    Assert.assertTrue(responseContent.size() == 5);
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal == total && total==0);
+    Assert.assertTrue(responseContent.containsKey("data"));
+    Assert.assertTrue(responseContent.containsKey("wholeChainTxCount"));
+    Assert.assertTrue(responseContent.containsKey("contractMap"));
+  }
   /**
    * constructor.
    */

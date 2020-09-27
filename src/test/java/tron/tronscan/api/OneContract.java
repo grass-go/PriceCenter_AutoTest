@@ -30,15 +30,17 @@ public class OneContract {
   private HttpResponse response;
   private String tronScanNode = Configuration.getByPath("testng.conf")
       .getStringList("tronscan.ip.list").get(0);
+  private String contractAddress = Configuration.getByPath("testng.conf")
+          .getString("defaultParameter.contractAddress");
 
   /**
-   * constructor.合约能量统计信息
+   * constructor.
+   * 合约能量统计信息展示接口
    */
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization onecontractenergystatistic")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "")
   public void getOneContractEnergy() {
-    String address = "TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3";
     Map<String, String> params = new HashMap<>();
-    params.put("address", address);
+    params.put("address", contractAddress);
     response = TronscanApiList.getOneContractEnergy(tronScanNode, params);
     log.info("code is " + response.getStatusLine().getStatusCode());
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -46,11 +48,11 @@ public class OneContract {
     TronscanApiList.printJsonContent(responseContent);
 
     //System status has 5 key:value
-    Assert.assertTrue(responseContent.size() >= 3);
+    Assert.assertTrue(responseContent.size() == 3);
     //total
     Long total = Long.valueOf(responseContent.get("total").toString());
     Long totalEnergy = Long.valueOf(responseContent.get("totalEnergy").toString());
-    Assert.assertTrue(totalEnergy >= total);
+    Assert.assertTrue(totalEnergy >= total && total>0);
 
     //data list
     responseArrayContent = responseContent.getJSONArray("data");
@@ -59,7 +61,7 @@ public class OneContract {
     for (int i = 0; i < responseArrayContent.size(); i++) {
       //trx
       Assert.assertTrue(
-          Long.valueOf(responseArrayContent.getJSONObject(i).get("trx").toString()) >= 0);
+          Long.valueOf(responseArrayContent.getJSONObject(i).get("trx").toString()) > 0);
       //day
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("day"));
       //total_energy
@@ -73,14 +75,13 @@ public class OneContract {
   }
 
   /**
-   * constructor.单个合约调用统计信息
+   * constructor.单个合约调用统计Trigger信息
    */
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization onecontracttriggerstatistic")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "")
   public void getOneContractTrigger() {
     //Get response
-    String address = "TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3";
     Map<String, String> params = new HashMap<>();
-    params.put("address", address);
+    params.put("address", contractAddress);
     response = TronscanApiList.getOneContractTrigger(tronScanNode, params);
     log.info("code is " + response.getStatusLine().getStatusCode());
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -88,11 +89,12 @@ public class OneContract {
     TronscanApiList.printJsonContent(responseContent);
 
     //System status has 5 key:value
-    Assert.assertTrue(responseContent.size() >= 3);
+    Assert.assertTrue(responseContent.size() == 3);
     //total
-    Assert.assertTrue(Long.valueOf(responseContent.get("total").toString()) >= 0);
-    //totalCallerAmount
-    Assert.assertTrue(Long.valueOf(responseContent.get("totalAmount").toString()) >= 0);
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long totalAmount = Long.valueOf(responseContent.get("totalAmount").toString());
+
+    Assert.assertTrue(totalAmount >= total && total >0);
 
     //data list
     responseArrayContent = responseContent.getJSONArray("data");
@@ -101,25 +103,21 @@ public class OneContract {
     for (int i = 0; i < responseArrayContent.size(); i++) {
       //amount
       Assert.assertTrue(
-          Double.valueOf(responseArrayContent.getJSONObject(i).get("amount").toString())
-              >= 0);
+          Double.valueOf(responseArrayContent.getJSONObject(i).get("amount").toString()) > 0);
       //day
       Assert.assertTrue(
-          Long.valueOf(responseArrayContent.getJSONObject(i).get("day").toString())
-              >= 0);
-
+          Long.valueOf(responseArrayContent.getJSONObject(i).get("day").toString()) > 0);
     }
   }
 
   /**
-   * constructor.单个合约调用者统计信息
+   * constructor.单个合约调用者统计Caller信息
    */
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization onecontractcallerstatistic")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "")
   public void getOneContractCaller() {
     //Get response
-    String address = "TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3";
     Map<String, String> params = new HashMap<>();
-    params.put("address", address);
+    params.put("address", contractAddress);
     response = TronscanApiList.getOneContractCaller(tronScanNode, params);
     log.info("code is " + response.getStatusLine().getStatusCode());
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -127,12 +125,11 @@ public class OneContract {
     TronscanApiList.printJsonContent(responseContent);
 
     //System status has 5 key:value
-    Assert.assertTrue(responseContent.size() >= 3);
-    //total
-    Assert.assertTrue(Long.valueOf(responseContent.get("total").toString()) >= 0);
-    //totalCallerAmount
-    Assert.assertTrue(Long.valueOf(responseContent.get("totalCallerAmount").toString()) >= 0);
+    Assert.assertTrue(responseContent.size() == 3);
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long totalCallerAmount = Long.valueOf(responseContent.get("totalCallerAmount").toString());
 
+    Assert.assertTrue(totalCallerAmount >= total && total >0);
     //data list
     responseArrayContent = responseContent.getJSONArray("data");
 
@@ -140,12 +137,10 @@ public class OneContract {
     for (int i = 0; i < responseArrayContent.size(); i++) {
       //amount
       Assert.assertTrue(
-          Double.valueOf(responseArrayContent.getJSONObject(i).get("amount").toString())
-              >= 0);
+          Double.valueOf(responseArrayContent.getJSONObject(i).get("amount").toString()) > 0);
       //day
       Assert.assertTrue(
-          Long.valueOf(responseArrayContent.getJSONObject(i).get("day").toString())
-              >= 0);
+          Long.valueOf(responseArrayContent.getJSONObject(i).get("day").toString()) > 0);
 
     }
 
@@ -154,12 +149,11 @@ public class OneContract {
   /**
    * constructor.一个合约的caller信息
    */
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization onecontractcallers")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "")
   public void getCallers() {
     //Get response
-    String address = "TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3";
     Map<String, String> params = new HashMap<>();
-    params.put("address", address);
+    params.put("address", contractAddress);
     response = TronscanApiList.getCallers(tronScanNode, params);
     log.info("code is " + response.getStatusLine().getStatusCode());
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -167,11 +161,12 @@ public class OneContract {
     TronscanApiList.printJsonContent(responseContent);
 
     //System status has 5 key:value
-    Assert.assertTrue(responseContent.size() >= 3);
+    Assert.assertTrue(responseContent.size() == 4);
     //total
-    Assert.assertTrue(Long.valueOf(responseContent.get("total").toString()) >= 0);
-    //totalCallerAmount
-    Assert.assertTrue(Long.valueOf(responseContent.get("totalCallerAmount").toString()) >= 0);
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long totalCallerAmount = Long.valueOf(responseContent.get("totalCallerAmount").toString());
+
+    Assert.assertTrue(totalCallerAmount >= total && total >=0);
 
     //data list
     Assert.assertTrue(responseContent.containsKey("data"));
@@ -181,12 +176,11 @@ public class OneContract {
   /**
    * constructor.单个合约调用者统计信息
    */
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List data synchronization onecontract-callvalue")
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "")
   public void getCaller_value() {
     //Get response
-    String address = "TEEXEWrkMFKapSMJ6mErg39ELFKDqEs6w3";
     Map<String, String> params = new HashMap<>();
-    params.put("address", address);
+    params.put("address", contractAddress);
     response = TronscanApiList.getCaller_value(tronScanNode, params);
     log.info("code is " + response.getStatusLine().getStatusCode());
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -202,12 +196,10 @@ public class OneContract {
     for (int i = 0; i < responseArrayContent.size(); i++) {
       //amount
       Assert.assertTrue(
-          Double.valueOf(responseArrayContent.getJSONObject(i).get("valueInTrx").toString())
-              >= 0);
+          Double.valueOf(responseArrayContent.getJSONObject(i).get("valueInTrx").toString()) > 0);
       //day
       Assert.assertTrue(
-          Long.valueOf(responseArrayContent.getJSONObject(i).get("day").toString())
-              >= 0);
+          Long.valueOf(responseArrayContent.getJSONObject(i).get("day").toString()) > 0);
     }
   }
 

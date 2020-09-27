@@ -28,6 +28,7 @@ public class ContractsList {
 
   /**
    * constructor.
+   * 合约概览展示接口
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List contract list")
   public void test01getContractsList() {
@@ -43,11 +44,14 @@ public class ContractsList {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
 
-    //3 key
+    //4 key
     Assert.assertTrue(responseContent.size() == 4);
-    Assert.assertTrue(responseContent.getLong("total") > 0);
-    Assert.assertTrue(responseContent.getLong("rangeTotal") > 0);
-    Assert.assertTrue(responseContent.containsKey("status"));
+    Long total = Long
+            .valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long
+            .valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal >= total && total <= 10000 && total>0);
+    Assert.assertTrue(!responseContent.getString("status").isEmpty());
 
     //Address list
     responseArrayContent = responseContent.getJSONArray("data");
@@ -57,7 +61,10 @@ public class ContractsList {
       Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i)
           .getString("address")).matches());
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("name"));
-      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("trxCount"));
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("verify_status").isEmpty());
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).getString("balance")) >= 0);
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).getString("trxCount")) > 0);
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("date_created").isEmpty());
 
     }
 

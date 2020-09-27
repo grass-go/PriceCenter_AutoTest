@@ -62,7 +62,15 @@ public class CentralLogin {
         Assert.assertTrue(responseContent.containsKey("retMsg"));
         Assert.assertTrue(Double.valueOf(responseContent.get("retCode").toString()) >= 0);
         //data
-        Assert.assertTrue(responseContent.containsKey("data"));
+//        Assert.assertTrue(responseContent.containsKey("data"));
+        targetContent = responseContent.getJSONObject("data");
+        Assert.assertTrue(Double.valueOf(targetContent.get("update_time").toString()) > 1590000000);
+        Assert.assertTrue(Integer.valueOf(targetContent.get("id").toString()) > 0);
+        Assert.assertTrue(!targetContent.get("email").toString().isEmpty());
+        Assert.assertEquals(targetContent.get("email").toString(),email);
+        Assert.assertTrue(Double.valueOf(targetContent.get("register_time").toString()) > 1590000000);
+        Assert.assertTrue(!targetContent.get("activated").toString().isEmpty());
+        Assert.assertTrue(!targetContent.get("token").toString().isEmpty());
     }
 
     /**

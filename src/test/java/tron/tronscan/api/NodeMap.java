@@ -45,7 +45,8 @@ public class NodeMap {
     Assert.assertTrue(responseContent.size() >= 3);
     Integer total = Integer.valueOf(responseContent.get("total").toString());
     JSONArray exchangeArray = responseContent.getJSONArray("data");
-    Assert.assertTrue(exchangeArray.size() == total);
+    //当前节点大于0
+    Assert.assertTrue(exchangeArray.size() == total && total >0);
     Assert.assertTrue(Double.valueOf(responseContent.get("code").toString()) >= 0);
     //country
     targetContent = exchangeArray.getJSONObject(0);

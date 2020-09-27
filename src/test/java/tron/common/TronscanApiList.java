@@ -162,11 +162,11 @@ public class TronscanApiList {
     /**
      * constructor.
      */
-    public static HttpResponse getExchangesList(String tronscanNode) {
+    public static HttpResponse getExchangesList(String tronscanNode,Map<String, String> params) {
         try {
-            String requestUrl = "http://" + tronscanNode + "api/exchanges/list?sort=-balance";
+            String requestUrl = "http://" + tronscanNode + "api/exchanges/list";
             System.out.println(requestUrl);
-            response = createGetConnect(requestUrl);
+            response = createGetConnect(requestUrl,params);
         } catch (Exception e) {
             e.printStackTrace();
             httpget.releaseConnection();
@@ -368,11 +368,11 @@ public class TronscanApiList {
     /**
      * constructor.
      */
-    public static HttpResponse getOverViewList(String tronscanNode) {
+    public static HttpResponse getOverViewList(String tronscanNode,Map<String, String> params) {
         try {
             String requestUrl = "http://" + tronscanNode + "api/stats/overview";
             System.out.println(requestUrl);
-            response = createGetConnect(requestUrl);
+            response = createGetConnect(requestUrl,params);
         } catch (Exception e) {
             e.printStackTrace();
             httpget.releaseConnection();

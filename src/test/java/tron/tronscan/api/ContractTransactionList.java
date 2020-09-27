@@ -57,7 +57,7 @@ public class ContractTransactionList {
             .valueOf(responseContent.get("total").toString());
     Long rangeTotal = Long
             .valueOf(responseContent.get("rangeTotal").toString());
-    Assert.assertTrue(rangeTotal >= total && total <= 10000);
+    Assert.assertTrue(rangeTotal >= total && total <= 10000 && total>0);
     //contractMap
     Assert.assertTrue(!responseContent.get("contractMap").toString().isEmpty());
     //data

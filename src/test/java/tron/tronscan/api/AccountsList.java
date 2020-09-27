@@ -28,12 +28,14 @@ public class AccountsList {
 
   /**
    * constructor.账户页列表接口
+   * 根据地址查询出合约下的交易，当前地址显示rangeTotal大于10000条时，目前total只展示10000条
+   *
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List account")
   public void test01getAccount() {
     System.out.println();
     //Get response
-    int limit = 3;
+    int limit = 20;
     Map<String, String> params = new HashMap<>();
     params.put("sort", "-balance");
     params.put("limit", String.valueOf(limit));
@@ -43,34 +45,34 @@ public class AccountsList {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
+    //total
+    //页面仅展示的数量，如果大于10000，则最多显示10000
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal >= total && total > 0 && total <= 10000);
     //data object
     responseArrayContent = responseContent.getJSONArray("data");
     JSONObject responseObject = responseArrayContent.getJSONObject(0);
-    Assert.assertEquals(limit, responseArrayContent.size());
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    //账户
-    Assert.assertTrue(patternAddress.matcher(responseObject.getString("address")).matches());
-    //TRX总余额
-    Assert.assertTrue(Double.valueOf(responseObject.get("balance").toString()) > 0);
-    //冻结TRX数量
-    Assert.assertTrue(Long.valueOf(responseObject.get("power").toString()) >= 0);
-    //交易数量
-    Assert.assertTrue(Long.valueOf(responseObject.get("totalTransactionCount").toString()) > 0);
-    //账户是否为合约
-    Assert.assertTrue(responseContent.containsKey("contractMap"));
-    //页面仅展示的数量，如果大于10000，则最多显示10000
-    Long total = Long
-            .valueOf(responseContent.get("total").toString());
-    //总数据数量
-    Long rangeTotal = Long
-            .valueOf(responseContent.get("rangeTotal").toString());
-    Assert.assertTrue(rangeTotal >= total);
-
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Assert.assertEquals(limit, responseArrayContent.size());
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      //账户
+      String address = responseObject.getString("address");
+      Assert.assertTrue(patternAddress.matcher(address).matches() && !address.isEmpty());
+      //TRX总余额
+      Assert.assertTrue(Double.valueOf(responseObject.get("balance").toString()) > 0);
+      //冻结TRX数量
+      Assert.assertTrue(Long.valueOf(responseObject.get("power").toString()) >= 0);
+      //交易数量
+      Assert.assertTrue(Long.valueOf(responseObject.get("totalTransactionCount").toString()) > 0);
+      //账户是否为合约
+      Assert.assertTrue(responseContent.containsKey("contractMap"));
+    }
   }
 
   /**
    * constructor.账户详情页接口
-   *
+   * 普通账户
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get a single account's detail ")
   public void getAccountList() {
@@ -87,12 +89,15 @@ public class AccountsList {
     //allowExchange
     Assert.assertTrue(responseContent.containsKey("allowExchange"));
     Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(responseContent.getString("address")).matches());
+    String addressOb = responseContent.getString("address");
+    Assert.assertTrue(patternAddress.matcher(addressOb).matches());
+    Assert.assertEquals(addressOb,address);
     Assert.assertTrue(responseContent.containsKey("frozen_supply"));
     Assert.assertTrue(responseContent.containsKey("accountType"));
     Assert.assertTrue(responseContent.containsKey("exchanges"));
     //名称
     Assert.assertTrue(responseContent.containsKey("name"));
+    Assert.assertTrue(!responseContent.get("bandwidth").toString().isEmpty());
     //投票数
     Assert.assertTrue(Long.valueOf(responseContent.get("voteTotal").toString()) >= 0);
    //交易数
@@ -101,15 +106,15 @@ public class AccountsList {
     //创建时间
     Assert.assertTrue(responseContent.containsKey("date_created"));
     //可用余额
-    Assert.assertTrue(Double.valueOf(responseContent.get("balance").toString()) >= 0);
-
+    Assert.assertTrue(Double.valueOf(responseContent.get("balance").toString()) > 0);
+    Assert.assertTrue(!responseContent.get("date_created").toString().isEmpty());
     //地址下的20token
     JSONArray exchangeArray = responseContent.getJSONArray("trc20token_balances");
     targetContent = exchangeArray.getJSONObject(0);
     //symbol
     Assert.assertTrue(!targetContent.get("symbol").toString().isEmpty());
     //balance
-    Assert.assertTrue(Double.valueOf(targetContent.get("balance").toString()) >= 0);
+    Assert.assertTrue(Double.valueOf(targetContent.get("balance").toString()) > 0);
     //decimals
     Integer decimals = Integer.valueOf(targetContent.get("decimals").toString());
     Assert.assertTrue(decimals >= 0 && decimals <= 18);
@@ -124,8 +129,8 @@ public class AccountsList {
     //energyRemaining
     Assert.assertTrue(Long.valueOf(targetContent.get("energyRemaining").toString()) >= 0);
     //totalEnergyLimit
-    Assert.assertTrue(Long.valueOf(targetContent.get("totalEnergyLimit").toString()) >= 0);
-    Assert.assertTrue(Long.valueOf(targetContent.get("totalEnergyWeight").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(targetContent.get("totalEnergyLimit").toString()) > 0);
+    Assert.assertTrue(Long.valueOf(targetContent.get("totalEnergyWeight").toString()) > 0);
     Assert.assertTrue(Double.valueOf(targetContent.get("netUsed").toString()) >= 0);
     Assert.assertTrue(Double.valueOf(targetContent.get("storageLimit").toString()) >= 0);
     Assert.assertTrue(Double.valueOf(targetContent.get("storagePercentage").toString()) >= 0);
@@ -145,14 +150,14 @@ public class AccountsList {
     //tokenBalances json
     JSONArray tokenBalancesArray = responseContent.getJSONArray("tokenBalances");
     targetContent = tokenBalancesArray.getJSONObject(0);
-    Assert.assertTrue(Long.valueOf(targetContent.get("balance").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(targetContent.get("balance").toString()) > 0);
     Assert.assertTrue(targetContent.containsKey("name"));
 
 
     //balances json
     JSONArray balancesArray = responseContent.getJSONArray("balances");
     targetContent = balancesArray.getJSONObject(0);
-    Assert.assertTrue(Long.valueOf(targetContent.get("balance").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(targetContent.get("balance").toString()) > 0);
     Assert.assertTrue(targetContent.containsKey("name"));
 
     //delegated json
@@ -222,7 +227,7 @@ public class AccountsList {
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get a super representative's github link")
   public void getAccountSr() {
     //Get response
-    String address = "TGzz8gjYiYRqpfmDwnLxfgPuLVNmpCswVp";
+    String address = "TDDQuZKCF5dNqZV8pTjL3pNiPS2FnGngw2";
     Map<String, String> params = new HashMap<>();
     params.put("address", address);
     response = TronscanApiList.getAccountSr(tronScanNode, params);
@@ -233,7 +238,10 @@ public class AccountsList {
     Assert.assertTrue(responseContent.size() == 1);
     targetContent = responseContent.getJSONObject("data");
     //address
-    Assert.assertTrue(targetContent.containsKey("address"));
+    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+    //账户
+    String addressOb = targetContent.getString("address");
+    Assert.assertTrue(patternAddress.matcher(addressOb).matches() && !addressOb.isEmpty());
     //githubLink
     Assert.assertTrue(targetContent.containsKey("githubLink"));
 

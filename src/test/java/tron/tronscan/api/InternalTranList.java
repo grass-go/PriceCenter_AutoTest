@@ -94,7 +94,7 @@ public class InternalTranList {
    * constructor.
    * 查询合约内部合约内交易
    * 根据地址查询出合约下的交易，当前地址显示rangeTotal大于10000条时，目前total只展示10000条
-   * 当前hash是当前账户地址内部交易页面中的hash数据，查询出来的数据有且只有一条
+   * 当前hash是当前合约地址内部交易页面中的hash数据，查询出来的数据有且只有一条
    *
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the internal transactions related to a specified account(only display the latest 10,000 data records in the query time range) ")

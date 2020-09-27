@@ -50,17 +50,15 @@ public class HomepageList {
         TronscanApiList.printJsonContent(responseContent);
 
         //Five object
-        Assert.assertTrue(responseContent.size() >= 4);
-        Assert.assertTrue(responseContent.containsKey("node"));
-//        Assert.assertTrue(responseContent.containsKey("trx_price_graph"));
-//        Assert.assertTrue(Double.valueOf(responseContent.get("total_turnover").toString()) >= 0);
-        //tps
-        Assert.assertTrue(responseContent.containsKey("tps"));
+        Assert.assertTrue(responseContent.size() == 4);
+        Assert.assertTrue(!responseContent.get("node").toString().isEmpty());
+        Assert.assertTrue(Double.valueOf(responseContent.get("trx_volume_24h").toString()) > 0);
+
+        Assert.assertTrue(!responseContent.get("tps").toString().isEmpty());
         //yesterdayStat
         targetContent = responseContent.getJSONObject("yesterdayStat");
-        Assert.assertTrue(targetContent.containsKey("data"));
+        Assert.assertTrue(!targetContent.get("data").toString().isEmpty());
         Assert.assertTrue(Boolean.valueOf(targetContent.getString("success")));
-
     }
 
 
@@ -87,7 +85,7 @@ public class HomepageList {
         TronscanApiList.printJsonContent(responseContent);
 
         //Five object
-        Assert.assertTrue(responseContent.size() >= 2);
+        Assert.assertTrue(responseContent.size() == 2);
         //two object "success" and "data"
         Assert.assertTrue(Boolean.valueOf(responseContent.getString("success")));
         JSONArray exchangeArray = responseContent.getJSONArray("data");
@@ -140,23 +138,23 @@ public class HomepageList {
         TronscanApiList.printJsonContent(responseContent);
 
         //Five object
-        Assert.assertTrue(responseContent.size() >= 2);
+        Assert.assertTrue(responseContent.size() == 2);
         Assert.assertTrue(responseContent.containsKey("total"));
 
         //data json
         JSONArray tokenBalancesArray = responseContent.getJSONArray("data");
         targetContent = tokenBalancesArray.getJSONObject(0);
         for (int i = 0; i < targetContent.size(); i++) {
-            Assert.assertTrue(Double.valueOf(targetContent.get("freezing_rate").toString()) >= 0);
-            Assert.assertTrue(Double.valueOf(targetContent.get("net_rate").toString()) >= 0);
+            Assert.assertTrue(Double.valueOf(targetContent.get("freezing_rate").toString()) > 0);
+            Assert.assertTrue(Double.valueOf(targetContent.get("net_rate").toString()) > 0);
 
-            Assert.assertTrue(Long.valueOf(targetContent.get("total_energy_weight").toString()) >= 0);
-            Assert.assertTrue(Double.valueOf(targetContent.get("total_turn_over").toString()) >= 0);
-            Assert.assertTrue(Double.valueOf(targetContent.get("energy_rate").toString()) >= 0);
+            Assert.assertTrue(Long.valueOf(targetContent.get("total_energy_weight").toString()) > 1000000);
+            Assert.assertTrue(Double.valueOf(targetContent.get("total_turn_over").toString()) > 1000000);
+            Assert.assertTrue(Double.valueOf(targetContent.get("energy_rate").toString()) > 0);
 
-            Assert.assertTrue(Long.valueOf(targetContent.get("total_net_weight").toString()) >= 0);
+            Assert.assertTrue(Long.valueOf(targetContent.get("total_net_weight").toString()) > 1000000);
             //total_freeze_weight  trx冻结量
-            Assert.assertTrue(Long.valueOf(targetContent.get("total_freeze_weight").toString()) >= 0);
+            Assert.assertTrue(Long.valueOf(targetContent.get("total_freeze_weight").toString()) > 1000000);
             Assert.assertTrue(targetContent.containsKey("day"));
         }
 
