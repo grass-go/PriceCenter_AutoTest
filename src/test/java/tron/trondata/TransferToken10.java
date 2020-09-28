@@ -25,6 +25,7 @@ public class TransferToken10 extends TrondataBase {
     params.put("address",queryAddress);
     params.put("trc10Id","1002881");
     params.put("direction","0");
+    params.put("db_version","1");
     response = TronlinkApiList.getTransferToken10(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
@@ -58,6 +59,7 @@ public class TransferToken10 extends TrondataBase {
     params.put("direction","1");
     params.put("start_timestamp","1596610454000");
     params.put("end_timestamp","1596610464000");
+    params.put("db_version","1");
     response = TronlinkApiList.getTransferToken10(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
@@ -93,6 +95,7 @@ public class TransferToken10 extends TrondataBase {
     params.put("end_timestamp","1594709226000");
     params.put("start","1");
     params.put("limit","1");
+    params.put("db_version","1");
     response = TronlinkApiList.getTransferToken10(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);

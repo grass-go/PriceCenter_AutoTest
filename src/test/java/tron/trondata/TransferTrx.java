@@ -24,6 +24,7 @@ public class TransferTrx extends TrondataBase {
     Map<String, String> params = new HashMap<>();
     params.put("address",queryAddress);
     params.put("direction","0");
+    params.put("db_version","1");
     response = TronlinkApiList.getTransferTrx(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
@@ -58,6 +59,7 @@ public class TransferTrx extends TrondataBase {
     params.put("direction","1");
     params.put("start_timestamp","1593573629009");
     params.put("end_timestamp","1594780242000");
+    params.put("db_version","1");
     response = TronlinkApiList.getTransferTrx(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
@@ -87,6 +89,7 @@ public class TransferTrx extends TrondataBase {
     params.put("end_timestamp","1596078660000");
     params.put("start","1");
     params.put("limit","1");
+    params.put("db_version","1");
     response = TronlinkApiList.getTransferTrx(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
