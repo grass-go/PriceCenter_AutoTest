@@ -53,20 +53,20 @@ public class OverViewList {
       //data
       Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("date"));
       //avgBlockTime
-      Assert.assertTrue(Long.valueOf(targetContent.get("avgBlockTime").toString()) > 0);
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("avgBlockTime").toString()) > 0);
       //totalBlockCount 区块数
-      Assert.assertTrue(Long.valueOf(targetContent.get("totalBlockCount").toString()) > 1000);
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("totalBlockCount").toString()) > 1000);
       //totalTransaction 交易数
-      Assert.assertTrue(Long.valueOf(targetContent.get("totalTransaction").toString()) > 0);
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("totalTransaction").toString()) > 0);
       //blockchainSize
-      Assert.assertTrue(Long.valueOf(targetContent.get("blockchainSize").toString()) > 1000);
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("blockchainSize").toString()) > 1000);
       //avgBlockSize
-      Assert.assertTrue(Long.valueOf(targetContent.get("avgBlockSize").toString()) > 10);
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("avgBlockSize").toString()) > 10);
       //
-      Assert.assertFalse(targetContent.get("newTransactionSeen").toString().isEmpty());
-      Assert.assertFalse(targetContent.get("newAddressSeen").toString().isEmpty());
-      Assert.assertFalse(targetContent.get("totalAddress").toString().isEmpty());
-      Assert.assertFalse(targetContent.get("newBlockSeen").toString().isEmpty());
+      Assert.assertFalse(exchangeArray.getJSONObject(i).get("newTransactionSeen").toString().isEmpty());
+      Assert.assertFalse(exchangeArray.getJSONObject(i).get("newAddressSeen").toString().isEmpty());
+      Assert.assertFalse(exchangeArray.getJSONObject(i).get("totalAddress").toString().isEmpty());
+      Assert.assertFalse(exchangeArray.getJSONObject(i).get("newBlockSeen").toString().isEmpty());
     }
   }
   /**

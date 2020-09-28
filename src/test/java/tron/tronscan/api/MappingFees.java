@@ -45,7 +45,7 @@ public class MappingFees {
         Assert.assertTrue(Long.valueOf(targetContent.get("mappingFee").toString()) >= 1000);
         Assert.assertTrue(Long.valueOf(targetContent.get("trxDepositMinValue").toString()) > 0);
         Assert.assertTrue(Long.valueOf(targetContent.get("depositFee").toString()) >= 0);
-        Assert.assertTrue(Long.valueOf(targetContent.get("withdrawFee").toString()) > 0);
+        Assert.assertTrue(Long.valueOf(targetContent.get("withdrawFee").toString()) >= 0);
         Assert.assertTrue(Long.valueOf(targetContent.get("trxWithdrawMinValue").toString()) >= 10);
 
     }

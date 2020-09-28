@@ -45,7 +45,7 @@ public class ExchangeListAll {
 
       //up_down_percent > -1 && up_down_percent < 1
       Double upDownPercent = Double.valueOf(exchangeArray.getJSONObject(i).get("up_down_percent").toString());
-      Assert.assertTrue(upDownPercent >= -1 && upDownPercent <= 1);
+      Assert.assertTrue(upDownPercent >= -1 && upDownPercent <= 10);
 
       //second_token_balance
       Long secondTokenBalance = Long.valueOf(exchangeArray.getJSONObject(i).get("second_token_balance").toString());

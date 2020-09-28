@@ -53,10 +53,10 @@ public class TagCase {
         targetContent = responseContent.getJSONObject("data");
         //contract_map
         Assert.assertTrue(!targetContent.get("contract_map").toString().isEmpty());
-        Assert.assertTrue(Integer.valueOf(targetContent.get("total").toString()) > 0);
+        Assert.assertTrue(Integer.valueOf(targetContent.get("total").toString()) >= 0);
         //user_tags
         responseArrayContent = targetContent.getJSONArray("user_tags");
-        Assert.assertTrue(responseArrayContent.size() > 0);
+        Assert.assertTrue(responseArrayContent.size() >= 0);
         for (int i = 0; i < responseArrayContent.size(); i++) {
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("tag").toString().isEmpty());
             Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
@@ -126,7 +126,7 @@ public class TagCase {
         targetContent = responseContent.getJSONObject("data");
         //recommend_tags
         responseArrayContent = targetContent.getJSONArray("recommend_tags");
-        Assert.assertTrue(responseArrayContent.size() > 0);
+        Assert.assertTrue(responseArrayContent.size() >= 0);
         for (int i = 0; i < responseArrayContent.size(); i++) {
             Assert.assertTrue(Integer.valueOf(responseArrayContent.getJSONObject(i).get("number").toString()) == 1);
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("tag").toString().isEmpty());

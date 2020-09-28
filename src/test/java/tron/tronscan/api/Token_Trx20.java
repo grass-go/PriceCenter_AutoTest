@@ -95,7 +95,7 @@ public class Token_Trx20 {
       Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("price"));
       //total_supply_with_decimals
       Assert.assertTrue(
-              Double.valueOf(exchangeArray.getJSONObject(i).get("total_supply_with_decimals").toString()) >= 1000000000);
+              Double.valueOf(exchangeArray.getJSONObject(i).get("total_supply_with_decimals").toString()) >= 10000000);
       //decimals
       Integer decimals = Integer.valueOf(exchangeArray.getJSONObject(i).get("decimals").toString());
       Assert.assertTrue(decimals >= 0 && decimals <= 18);
