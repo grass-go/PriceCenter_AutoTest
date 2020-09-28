@@ -3,6 +3,7 @@ package tron.tronscan.api;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.beust.jcommander.converters.IParameterSplitter;
+import com.sun.jna.platform.win32.WinDef;
 
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
@@ -26,7 +27,7 @@ public class CentralAccount {
     private JSONArray responseArrayContent;
     private HttpResponse response;
     private String tronScanNode = Configuration.getByPath("testng.conf")
-            .getStringList("tronexapi.ip.list").get(0);
+            .getStringList("tronscan.ip.list").get(0);
 
     /**
      * constructor.
@@ -107,8 +108,8 @@ public class CentralAccount {
      */
     @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "获取账户打的所有标签")
     public void getUserTag() {
-        String user_id = "d0216aab31f8638269b106f139a24ff531592531574";
-        String target_address = "TSmZ71H9S6BQLdyGcr8QfG9qr92N6WUXKS";
+        String user_id = "36326";
+        String target_address = "TNaRAoLUyYEV2uF7GUrzSjRQTU8v5ZJ5VR";
         Map<String, String> params = new HashMap<>();
         params.put("user_id", user_id);
         params.put("start","0");
@@ -126,7 +127,21 @@ public class CentralAccount {
         Assert.assertTrue(responseContent.containsKey("retMsg"));
         Assert.assertTrue(Double.valueOf(responseContent.get("retCode").toString()) >= 0);
         //data
-        Assert.assertTrue(responseContent.containsKey("data"));
+//        Assert.assertTrue(responseContent.containsKey("data"));
+        targetContent = responseContent.getJSONObject("data");
+
+//        Assert.assertTrue(!targetContent.getString("contract_map").isEmpty());
+        Assert.assertTrue(Long.valueOf(targetContent.get("total").toString()) >= 1);
+
+        responseArrayContent = targetContent.getJSONArray("user_tags");
+        JSONObject tags_ob = responseArrayContent.getJSONObject(0);
+        Assert.assertEquals(tags_ob.getString("userId"),user_id);
+        Assert.assertEquals(tags_ob.getString("targetAddress"),target_address);
+        Assert.assertTrue(!tags_ob.getString("tag").isEmpty());
+        Assert.assertTrue(tags_ob.containsKey("description"));
+        Assert.assertTrue(!tags_ob.getString("dateCreated").isEmpty());
+        Assert.assertTrue(!tags_ob.getString("dateUpdated").isEmpty());
+
     }
 
     /**

@@ -23,7 +23,7 @@ public class SideChainList {
     private JSONObject targetContent;
     private HttpResponse response;
     private String tronScanNode = Configuration.getByPath("testng.conf")
-            .getStringList("tronexapi.ip.list")
+            .getStringList("tronscan.ip.list")
             .get(0);
 
     /**
@@ -47,11 +47,11 @@ public class SideChainList {
         targetContent = responseContent.getJSONObject("data");
         responseArrayContent = targetContent.getJSONArray("chains");
         JSONObject responseObject = responseArrayContent.getJSONObject(0);
-        Assert.assertEquals(responseObject.getString("chainid"),"413AF23F37DA0D48234FDD43D89931E98E1144481B");
+        Assert.assertEquals(responseObject.getString("chainid"),"41E209E4DE650F0150788E8EC5CAFA240A23EB8EB7");
         Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
         Assert.assertTrue(patternAddress.matcher(responseObject.getString("mainchain_gateway")).matches());
         Assert.assertTrue(patternAddress.matcher(responseObject.getString("sidechain_gateway")).matches());
-        Assert.assertEquals(responseObject.getString("name"),"公链部-dapp测试链");
+        Assert.assertEquals(responseObject.getString("name"),"DappChain");
         Assert.assertTrue(responseObject.getString("rpc").substring(0,7).equals("http://"));
 
     }
