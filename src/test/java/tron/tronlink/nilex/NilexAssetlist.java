@@ -34,7 +34,7 @@ public class NilexAssetlist extends TronlinkBase {
     Assert.assertTrue(targetContent.getDoubleValue("totalTRX") > 0);
   }
 
-  @Test(enabled = true, description = "Get Assetlist From DappChain")
+  @Test(enabled = false, description = "Get Assetlist From DappChain")
   public void test001GetAssetlistFromDappChain(){
     header.put("Lang","1");
     header.put("Version","3.7.0");
