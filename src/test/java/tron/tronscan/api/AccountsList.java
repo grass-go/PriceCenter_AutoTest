@@ -311,7 +311,7 @@ public class AccountsList {
     Assert.assertTrue(responseContent.size() == 2);
     JSONArray dataArray = responseContent.getJSONArray("data");
     for (int i = 0; i < dataArray.size(); i++) {
-      Assert.assertTrue(!dataArray.getJSONObject(i).getString("day_string").isEmpty());
+      Assert.assertTrue(!dataArray.getJSONObject(i).getString("date_string").isEmpty());
       Assert.assertTrue(!dataArray.getJSONObject(i).getString("date").isEmpty());
       Assert.assertTrue(Long.valueOf(dataArray.getJSONObject(i).getString("new_account_seen")) > 0);
       Assert.assertTrue(Long.valueOf(dataArray.getJSONObject(i).getString("total_account")) >= 0);

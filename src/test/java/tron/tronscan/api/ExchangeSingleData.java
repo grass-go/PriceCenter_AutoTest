@@ -48,7 +48,7 @@ public class ExchangeSingleData {
 
     //Two object, "total" and "Data"
     Assert.assertTrue(responseContent.size() >= 2);
-    JSONArray exchangeArray = responseContent.getJSONArray("data");
+    JSONArray exchangeArray = responseContent.getJSONArray("Data");
     Assert.assertTrue(Integer.valueOf(responseContent.get("total").toString()) > 0);
     for (int i = 0; i < exchangeArray.size(); i++) {
       //first_token_id

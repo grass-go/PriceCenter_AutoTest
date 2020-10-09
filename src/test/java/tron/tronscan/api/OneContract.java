@@ -188,7 +188,7 @@ public class OneContract {
     TronscanApiList.printJsonContent(responseContent);
 
     //System status has 5 key:value
-    Assert.assertTrue(responseContent.size() == 2);
+    Assert.assertTrue(responseContent.size() == 1);
     //data list
     responseArrayContent = responseContent.getJSONArray("data");
 

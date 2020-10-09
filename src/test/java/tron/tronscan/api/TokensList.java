@@ -205,7 +205,7 @@ public class TokensList {
     Assert.assertTrue(!responseContent.getString("from").isEmpty());
     Assert.assertTrue(!responseContent.getString("token").isEmpty());
     //
-    Assert.assertTrue(Double.valueOf(responseContent.get("percent_change_1h").toString()) > 0);
+    Assert.assertTrue(Double.valueOf(responseContent.get("percent_change_1h").toString()) > -1);
     Assert.assertTrue(responseContent.containsKey("percent_change_24h"));
     Assert.assertTrue(Double.valueOf(responseContent.get("price_in_usd").toString()) > 0);
     Assert.assertTrue(Double.valueOf(responseContent.get("volume_24h").toString()) > 0);
@@ -259,7 +259,7 @@ public class TokensList {
     targetContent = responseArrayContent.getJSONObject(0);
     Assert.assertTrue(!targetContent.getString("volume").isEmpty());
     Assert.assertTrue(Double.valueOf(targetContent.getString("high")) > 0);
-    Assert.assertTrue(Double.valueOf(targetContent.getString("market_cap")) > 100000);
+    Assert.assertTrue(Double.valueOf(targetContent.getString("market_cap")) >= 0);
     Assert.assertTrue(Double.valueOf(targetContent.getString("low")) > 0);
     Assert.assertTrue(!targetContent.getString("time").isEmpty());
     Assert.assertTrue(!targetContent.getString("source").isEmpty());
