@@ -188,7 +188,7 @@ public class OneContract {
     TronscanApiList.printJsonContent(responseContent);
 
     //System status has 5 key:value
-    Assert.assertTrue(responseContent.size() == 1);
+    Assert.assertTrue(responseContent.size() == 2);
     //data list
     responseArrayContent = responseContent.getJSONArray("data");
 
@@ -196,7 +196,7 @@ public class OneContract {
     for (int i = 0; i < responseArrayContent.size(); i++) {
       //amount
       Assert.assertTrue(
-          Double.valueOf(responseArrayContent.getJSONObject(i).get("valueInTrx").toString()) > 0);
+          Double.valueOf(responseArrayContent.getJSONObject(i).get("valueInTrx").toString()) >= 0);
       //day
       Assert.assertTrue(
           Long.valueOf(responseArrayContent.getJSONObject(i).get("day").toString()) > 0);

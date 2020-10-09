@@ -99,7 +99,25 @@ public class VoteList {
     //nextCycle
     Assert.assertTrue(Long.valueOf(responseContent.get("nextCycle").toString()) >= 10000);
   }
+  /**
+   * constructor.
+   * 判断是否已提取奖励
+   * 已提取返回true
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "")
+  public void getAddressReward() {
+    //Get response
+    Map<String, String> Params = new HashMap<>();
+    Params.put("address", "TPz7T4sei4b8vqzYNMGzSYu9X6VdMFXzRp");
+    response = TronscanApiList.getAddressReward(tronScanNode,Params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
 
+    //object
+    Assert.assertTrue(responseContent.size() == 1);
+    Assert.assertTrue(Boolean.valueOf(responseContent.get("reward").toString()));
+  }
   /**
    * constructor.
    */

@@ -75,6 +75,7 @@ public class TransfersToken_trc20 {
       Assert.assertTrue(
               patternAddress.matcher(contract_address).matches() && !contract_address.isEmpty());
       Assert.assertEquals(responseArrayContent.getJSONObject(i).getString("tokenId"),contract_address);
+
     }
   }
 
@@ -326,6 +327,21 @@ public class TransfersToken_trc20 {
     Assert.assertTrue(rangeTotal == total && total==0);
     //token_transfers object
     Assert.assertTrue(responseContent.containsKey("token_transfers"));
+
+  }
+
+  /**
+   * constructor.
+   * 合约下的TRC20转账
+   * 有无参数返回状态为0
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
+  public void getTotalSupply() {
+    //Get response
+    response = TronscanApiList.getTotalSupply(tronScanNode);
+    log.info("code is " + response.getStatusLine().getStatusCode());
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
 
   }
   /**

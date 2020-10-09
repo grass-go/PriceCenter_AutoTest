@@ -72,7 +72,7 @@ public class TokensList {
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("percentage"));
       Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("startTime").isEmpty());
       Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("id") >= 1000000);
-      Assert.assertTrue(Double.valueOf(responseArrayContent.getJSONObject(i).getString("issued")) >= 1000);
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("issued").isEmpty());
       Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("trxNum") >= 1000000);
       Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("abbr").isEmpty());
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("website"));
@@ -84,7 +84,7 @@ public class TokensList {
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("frozen"));
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("canShow"));
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("remaining"));
-      Assert.assertTrue(Double.valueOf(responseArrayContent.getJSONObject(i).getString("remaining")) >= 1);
+      Assert.assertTrue(Double.valueOf(responseArrayContent.getJSONObject(i).getString("remaining")) >= 0);
       String url_key = responseArrayContent.getJSONObject(i).get("url").toString();
 //      if (url_key != "https://www.hashcoins.com/"){
 //        Assert.assertTrue(!url_key.isEmpty());
@@ -141,39 +141,143 @@ public class TokensList {
   }
 
   /**
-   * constructor.获取trc10 token持有者
+     * constructor.获取trc10 token持有者
+     */
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get token holders of a trc10 token;")
+    public void getTokenholders() {
+      String address = "TF5Bn4cJCT6GVeUgyCN4rBhDg42KBrpAjg";
+      Map<String, String> params = new HashMap<>();
+      params.put("address", address);
+      response = TronscanApiList.getTokenholders(tronScanNode, params);
+      Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+      responseContent = TronscanApiList.parseResponseContent(response);
+      TronscanApiList.printJsonContent(responseContent);
+      //total
+      Long total = Long.valueOf(responseContent.get("total").toString());
+      Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+      Assert.assertTrue(rangeTotal >= total);
+      //data list
+      responseArrayContent = responseContent.getJSONArray("data");
+
+      Assert.assertTrue(responseArrayContent.size() > 0);
+      for (int i = 0; i < responseArrayContent.size(); i++) {
+        //name
+        Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("name").toString().isEmpty());
+        //balance
+        Assert.assertTrue(
+                Long.valueOf(responseArrayContent.getJSONObject(i).get("balance").toString()) >= 1000000000);
+        //address
+        Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+        Assert.assertTrue(
+                patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("address")).matches());
+
+      }
+  }
+
+  /**
+   * constructor.
    */
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get token holders of a trc10 token;")
-  public void getTokenholders() {
-    String address = "TF5Bn4cJCT6GVeUgyCN4rBhDg42KBrpAjg";
-    Map<String, String> params = new HashMap<>();
-    params.put("address", address);
-    response = TronscanApiList.getTokenholders(tronScanNode, params);
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "")
+  public void getPosition_distribution() {
+   //
+    response = TronscanApiList.getPosition_distribution(tronScanNode);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
-    //total
-    Long total = Long.valueOf(responseContent.get("total").toString());
-    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
-    Assert.assertTrue(rangeTotal >= total);
-    //data list
-    responseArrayContent = responseContent.getJSONArray("data");
-
-    Assert.assertTrue(responseArrayContent.size() > 0);
-    for (int i = 0; i < responseArrayContent.size(); i++) {
-      //name
-      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("name").toString().isEmpty());
-      //balance
-      Assert.assertTrue(
-          Long.valueOf(responseArrayContent.getJSONObject(i).get("balance").toString()) >= 1000000000);
-      //address
-      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-      Assert.assertTrue(
-          patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("address")).matches());
-
-    }
   }
 
+  /**
+   * constructor
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get token holders of a trc10 token;")
+  public void getPrice() {
+    //
+    response = TronscanApiList.getPrice(tronScanNode);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+    //
+    Assert.assertTrue(Double.valueOf(responseContent.get("price_in_eth").toString()) > 0);
+    Assert.assertTrue(Double.valueOf(responseContent.get("price_in_trx").toString()) > 0);
+    Assert.assertTrue(Double.valueOf(responseContent.get("price_in_eur").toString()) > 0);
+    Assert.assertTrue(Double.valueOf(responseContent.get("price_in_btc").toString()) > 0);
+    Assert.assertTrue(!responseContent.getString("token").isEmpty());
+    Assert.assertTrue(!responseContent.getString("from").isEmpty());
+    Assert.assertTrue(!responseContent.getString("token").isEmpty());
+    //
+    Assert.assertTrue(Double.valueOf(responseContent.get("percent_change_1h").toString()) > 0);
+    Assert.assertTrue(responseContent.containsKey("percent_change_24h"));
+    Assert.assertTrue(Double.valueOf(responseContent.get("price_in_usd").toString()) > 0);
+    Assert.assertTrue(Double.valueOf(responseContent.get("volume_24h").toString()) > 0);
+    Assert.assertTrue(Double.valueOf(responseContent.get("percent_change_7d").toString()) > 0);
+  }
+
+  /**
+   * constructor
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "")
+  public void getStatistic() {
+    //
+    response = TronscanApiList.getStatistic(tronScanNode);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+    //
+  }
+
+  /**
+   * constructor
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "")
+  public void getId_mapper() {
+    //
+    response = TronscanApiList.getId_mapper(tronScanNode);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+    //
+    responseArrayContent = responseContent.getJSONArray("data");
+    targetContent = responseArrayContent.getJSONObject(0);
+    Assert.assertTrue(!targetContent.getString("address").isEmpty());
+    Assert.assertTrue(!targetContent.getString("mapper_id").isEmpty());
+    Assert.assertTrue(!targetContent.getString("status").isEmpty());
+  }
+
+  /**
+   * constructor
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "")
+  public void getVolume() {
+    //
+    response = TronscanApiList.getVolume(tronScanNode);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+    Assert.assertTrue(Long.valueOf(responseContent.getString("total")) > 0);
+    //
+    responseArrayContent = responseContent.getJSONArray("data");
+    targetContent = responseArrayContent.getJSONObject(0);
+    Assert.assertTrue(!targetContent.getString("volume").isEmpty());
+    Assert.assertTrue(Double.valueOf(targetContent.getString("high")) > 0);
+    Assert.assertTrue(Double.valueOf(targetContent.getString("market_cap")) > 100000);
+    Assert.assertTrue(Double.valueOf(targetContent.getString("low")) > 0);
+    Assert.assertTrue(!targetContent.getString("time").isEmpty());
+    Assert.assertTrue(!targetContent.getString("source").isEmpty());
+    Assert.assertTrue(Double.valueOf(targetContent.getString("close")) > 0);
+    Assert.assertTrue(Double.valueOf(targetContent.getString("open")) > 0);
+  }
+  /**
+   * constructor
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "")
+  public void getVolume_sourceList() {
+    //
+    response = TronscanApiList.getVolume_sourceList(tronScanNode);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+//    TronscanApiList.printJsonContent(responseContent);
+
+  }
   /**
    * constructor.
    */

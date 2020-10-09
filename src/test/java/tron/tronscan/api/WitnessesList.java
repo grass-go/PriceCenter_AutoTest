@@ -3,6 +3,8 @@ import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.jna.platform.win32.WinDef;
+
 import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
@@ -99,6 +101,53 @@ public class WitnessesList {
     }
   }
 
+  /**
+   * constructor.
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "")
+  public void getGeneral_info() {
+    response = TronscanApiList.getGeneral_info(tronScanNode);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+    //total
+    Assert.assertTrue(Long.valueOf(responseContent.getString("total")) > 0);
+    Assert.assertTrue(Long.valueOf(responseContent.getString("increaseOf30Day")) > 0);
+    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+    //minBlocksCount
+    targetContent = responseContent.getJSONObject("minBlocksCount");
+    patternAddress.matcher(targetContent.getString("address")).matches();
+    Assert.assertTrue(!targetContent.getString("name").isEmpty());
+    Assert.assertTrue(!targetContent.getString("url").isEmpty());
+    Assert.assertTrue(Double.valueOf(targetContent.getString("missedTotal")) > 0);
+    Assert.assertTrue(Double.valueOf(targetContent.getString("producedTotal")) > 100000);
+    Assert.assertTrue(Double.valueOf(targetContent.getString("producePercentage")) < 100);
+
+   //highestEfficiency
+    JSONObject highestContent = responseContent.getJSONObject("highestEfficiency");
+    patternAddress.matcher(highestContent.getString("address")).matches();
+    Assert.assertTrue(!highestContent.getString("name").isEmpty());
+    Assert.assertTrue(!highestContent.getString("url").isEmpty());
+    Assert.assertTrue(Double.valueOf(highestContent.getString("missedTotal")) > 0);
+    Assert.assertTrue(Double.valueOf(highestContent.getString("producedTotal")) > 100000);
+    Assert.assertTrue(Double.valueOf(highestContent.getString("producePercentage")) < 100);
+    //lowestEfficiency
+    JSONObject lowestContent = responseContent.getJSONObject("lowestEfficiency");
+    patternAddress.matcher(lowestContent.getString("address")).matches();
+    Assert.assertTrue(!lowestContent.getString("name").isEmpty());
+    Assert.assertTrue(!lowestContent.getString("url").isEmpty());
+    Assert.assertTrue(Double.valueOf(lowestContent.getString("missedTotal")) > 0);
+    Assert.assertTrue(Double.valueOf(lowestContent.getString("producedTotal")) > 100000);
+    Assert.assertTrue(Double.valueOf(lowestContent.getString("producePercentage")) < 100);
+    //maxBlocksCount
+    JSONObject maxContent = responseContent.getJSONObject("maxBlocksCount");
+    patternAddress.matcher(maxContent.getString("address")).matches();
+    Assert.assertTrue(!maxContent.getString("name").isEmpty());
+    Assert.assertTrue(!maxContent.getString("url").isEmpty());
+    Assert.assertTrue(Double.valueOf(maxContent.getString("missedTotal")) > 0);
+    Assert.assertTrue(Double.valueOf(maxContent.getString("producedTotal")) > 100000);
+    Assert.assertTrue(Double.valueOf(maxContent.getString("producePercentage")) < 100);
+  }
   /**
    * constructor.
    */

@@ -4,6 +4,7 @@ import tron.common.utils.MyIRetryAnalyzer;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
@@ -34,7 +35,14 @@ public class ContractEvents {
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get contract events")
   public void getContractEvents() {
     //Get response
-    response = TronscanApiList.getContractEvents(tronScanNode);
+    String keyword = "TBfHSbt7rARV5P9FiZfWQE9Z5a9NVypqbz";
+    Map<String, String> params = new HashMap<>();
+    params.put("contract", keyword);
+    params.put("start", "0");
+    params.put("limit", "20");
+    params.put("start_timestamp", "1548000000000");
+    params.put("end_timestamp", "1548056638507");
+    response = TronscanApiList.getContractEvents(tronScanNode,params);
     log.info("code is " + response.getStatusLine().getStatusCode());
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
@@ -77,6 +85,22 @@ public class ContractEvents {
       //timestamp
       Assert.assertTrue(!exchangeArray.getJSONObject(i).get("timestamp").toString().isEmpty());
     }
+  }
+
+
+  /**
+   * constructor.
+   *
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get contract events")
+  public void getInterchain_event() {
+    //Get response
+    response = TronscanApiList.getInterchain_event(tronScanNode);
+    log.info("code is " + response.getStatusLine().getStatusCode());
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+
   }
 
   /**

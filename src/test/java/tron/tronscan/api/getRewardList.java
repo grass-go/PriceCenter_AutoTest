@@ -64,6 +64,7 @@ public class getRewardList {
         Assert.assertTrue(responseContent.size() == 1);
         Assert.assertTrue(Long.valueOf(responseContent.get("reward").toString()) == 0);
     }
+
     /**
      * constructor.
      */

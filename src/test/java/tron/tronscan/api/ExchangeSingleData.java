@@ -48,9 +48,8 @@ public class ExchangeSingleData {
 
     //Two object, "total" and "Data"
     Assert.assertTrue(responseContent.size() >= 2);
-    Integer total = Integer.valueOf(responseContent.get("total").toString());
-    JSONArray exchangeArray = responseContent.getJSONArray("Data");
-    Assert.assertTrue(exchangeArray.size() == total);
+    JSONArray exchangeArray = responseContent.getJSONArray("data");
+    Assert.assertTrue(Integer.valueOf(responseContent.get("total").toString()) > 0);
     for (int i = 0; i < exchangeArray.size(); i++) {
       //first_token_id
       Long firstTokenId = Long.valueOf(exchangeArray.getJSONObject(i).get("first_token_id").toString());
@@ -58,7 +57,7 @@ public class ExchangeSingleData {
 
       //up_down_percent > =0
       Double upDownPercent = Double.valueOf(exchangeArray.getJSONObject(i).get("up_down_percent").toString());
-      Assert.assertTrue(upDownPercent >= -1);
+      Assert.assertTrue(upDownPercent >= -100);
 
       //second_token_balance
       Long secondTokenBalance = Long.valueOf(exchangeArray.getJSONObject(i).get("second_token_balance").toString());

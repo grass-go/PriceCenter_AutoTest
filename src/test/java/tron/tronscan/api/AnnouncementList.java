@@ -31,8 +31,14 @@ public class AnnouncementList {
 
   /**
    * constructor.查询trc20通证持有者
+   * ******
+   * * ******
+   * * ******
+   * * ******
+   * 此接口废弃，不用了
+   *
    */
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "查询trc20通证持有者")
+  @Test(enabled = false,retryAnalyzer = MyIRetryAnalyzer.class, description = "查询trc20通证持有者")
   public void getAnnouncement() {
     //
     String address = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";

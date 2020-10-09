@@ -85,7 +85,7 @@ public class AccountsList {
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
     //data object
-    Assert.assertTrue(responseContent.size() == 19);
+    Assert.assertTrue(responseContent.size() >= 18);
     //allowExchange
     Assert.assertTrue(responseContent.containsKey("allowExchange"));
     Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
@@ -247,6 +247,77 @@ public class AccountsList {
 
   }
 
+//以下为Hbase后补加接口
+
+  /**
+   * constructor.查看
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get a super representative's github link")
+  public void getAccountResource() {
+    //Get response
+    String address = "TDDQuZKCF5dNqZV8pTjL3pNiPS2FnGngw2";
+    Map<String, String> params = new HashMap<>();
+    params.put("address", address);
+    response = TronscanApiList.getResource(tronScanNode, params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+    Assert.assertTrue(Long.valueOf(responseContent.getString("total")) >= 0);
+    //data object
+    Assert.assertTrue(responseContent.size() == 2);
+    Assert.assertTrue(responseContent.containsKey("data"));
+  }
+
+  /**
+   * constructor.查看
+   * getActive_statistic
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "")
+  public void getActive_statistic() {
+    //Get response
+    response = TronscanApiList.getActive_statistic(tronScanNode);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+    Assert.assertTrue(Long.valueOf(responseContent.getString("total")) >= 0);
+    //data object
+    Assert.assertTrue(responseContent.size() == 2);
+    JSONArray dataArray = responseContent.getJSONArray("data");
+    for (int i = 0; i < dataArray.size(); i++) {
+      Assert.assertTrue(!dataArray.getJSONObject(i).getString("day_string").isEmpty());
+      Assert.assertTrue(!dataArray.getJSONObject(i).getString("day_time").isEmpty());
+      Assert.assertTrue(Long.valueOf(dataArray.getJSONObject(i).getString("active_count")) > 0);
+      Assert.assertTrue(Double.valueOf(dataArray.getJSONObject(i).getString("amount")) > 0);
+      Assert.assertTrue(Long.valueOf(dataArray.getJSONObject(i).getString("transactions")) > 0);
+      Assert.assertTrue(!dataArray.getJSONObject(i).getString("type").isEmpty());
+      Assert.assertTrue(Double.valueOf(dataArray.getJSONObject(i).getString("proportion")) > 0);
+      Assert.assertTrue(Double.valueOf(dataArray.getJSONObject(i).getString("mom")) > -100);
+
+    }
+  }
+  /**
+   * constructor.查看
+   * getIncrease
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "")
+  public void getIncrease() {
+    //Get response
+    response = TronscanApiList.getIncrease(tronScanNode);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+    Assert.assertTrue(!responseContent.getString("success").isEmpty());
+    //data object
+    Assert.assertTrue(responseContent.size() == 2);
+    JSONArray dataArray = responseContent.getJSONArray("data");
+    for (int i = 0; i < dataArray.size(); i++) {
+      Assert.assertTrue(!dataArray.getJSONObject(i).getString("day_string").isEmpty());
+      Assert.assertTrue(!dataArray.getJSONObject(i).getString("date").isEmpty());
+      Assert.assertTrue(Long.valueOf(dataArray.getJSONObject(i).getString("new_account_seen")) > 0);
+      Assert.assertTrue(Long.valueOf(dataArray.getJSONObject(i).getString("total_account")) >= 0);
+
+    }
+  }
   /**
    * constructor.
    */
