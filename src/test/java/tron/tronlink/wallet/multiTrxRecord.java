@@ -43,7 +43,7 @@ public class multiTrxRecord {
     }
   }
 
-  @Test(enabled = true, description = "Api multiTrxReword test success")
+  @Test(enabled = false, description = "Api multiTrxReword test success")
   public void multiTrxRecord1() throws Exception {
     param.put("address","TRqgwhHbfscXq3Ym3FJSFwxprpto1S4nSW");
     param.put("start","0");
