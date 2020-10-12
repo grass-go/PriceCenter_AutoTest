@@ -21,10 +21,10 @@ public class MarketBanner {
 
   @Test(enabled = true)
   public void Test000getMarketBanner() throws Exception {
-    response = TronlinkApiList.walletMarketBanner();
+    /*response = TronlinkApiList.walletMarketBanner();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    responseArrayContent = responseContent.getJSONArray("data");
+    responseArrayContent = responseContent.getJSONArray("data");*/
     Map<String, String> params = new HashMap<>();
     params.put("sort_type","1");
     HttpResponse rs = TronlinkApiList.votingV2Witness(params);
@@ -51,6 +51,11 @@ public class MarketBanner {
       System.out.println("after origin + 0.01: "+origin);
 
     }
+
+    response = TronlinkApiList.walletMarketBanner();
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseArrayContent = responseContent.getJSONArray("data");
 
     //data object
     for (Object json:responseArrayContent) {
