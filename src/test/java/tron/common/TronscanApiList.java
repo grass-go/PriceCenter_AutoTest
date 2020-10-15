@@ -2341,6 +2341,22 @@ public class TronscanApiList {
         }
         return response;
     }
+
+    /**
+     * constructor.
+     * USDT匿名合约新增分析图
+     */
+    public static HttpResponse getShieldedUsdtStatistics(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/shieldedUsdtStatistics";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
     /**
      * constructor.
      */
