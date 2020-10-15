@@ -74,6 +74,7 @@ public class ContractsList {
    * constructor.
    * USDT匿名合约新增分析图接口
    * 指定给TQEuSEVRk1GtfExm5q9T8a1w84GvgQJ13V地址加的分析图
+   *
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List contract list")
   public void getShieldedUsdtStatistics() {
