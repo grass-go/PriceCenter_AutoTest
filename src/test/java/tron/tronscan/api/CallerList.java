@@ -87,7 +87,7 @@ public class CallerList {
     TronscanApiList.printJsonContent(responseContent);
 
     //System status has 5 key:value
-    Assert.assertTrue(responseContent.size() == 4);
+    Assert.assertTrue(responseContent.size() == 5);
     //total
     Long total = Long
         .valueOf(responseContent.get("total").toString());
@@ -98,7 +98,7 @@ public class CallerList {
 
     //totalCallerAmount
     Assert.assertTrue(Long.valueOf(responseContent.get("totalCallerAmount").toString()) >= 0);
-//    Assert.assertTrue(Long.valueOf(responseContent.get("totalEnergy").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(responseContent.get("totalEnergy").toString()) >= 0);
     //data list
     responseArrayContent = responseContent.getJSONArray("data");
 

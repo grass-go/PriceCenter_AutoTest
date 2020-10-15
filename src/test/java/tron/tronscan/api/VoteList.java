@@ -80,9 +80,9 @@ public class VoteList {
 //      HttpResponse httpResponse = TronscanApiList.getUrlkey(url_key);
 //      Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
       //votes
-      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("votes").toString()) > 0);
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("votes").toString()) >= 0);
       //realTimeVotes
-      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("realTimeVotes").toString()) > 0);
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("realTimeVotes").toString()) >= 0);
       Assert.assertTrue(!exchangeArray.getJSONObject(i).get("change_cycle").toString().isEmpty());
       Assert.assertTrue(!exchangeArray.getJSONObject(i).get("change_day").toString().isEmpty());
     }

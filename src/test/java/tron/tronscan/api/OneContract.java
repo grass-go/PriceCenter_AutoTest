@@ -3,6 +3,8 @@ import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.jna.platform.win32.WinDef;
+
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
@@ -186,9 +188,9 @@ public class OneContract {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
-
+    Assert.assertTrue(Long.valueOf(responseContent.getString("total")) >0);
     //System status has 5 key:value
-    Assert.assertTrue(responseContent.size() == 1);
+    Assert.assertTrue(responseContent.size() == 2);
     //data list
     responseArrayContent = responseContent.getJSONArray("data");
 
