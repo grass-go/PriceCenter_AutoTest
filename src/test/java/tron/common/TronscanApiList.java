@@ -2345,6 +2345,7 @@ public class TronscanApiList {
     /**
      * constructor.
      * USDT匿名合约新增分析图
+     * 指定用户
      */
     public static HttpResponse getShieldedUsdtStatistics(String tronscanNode,Map<String, String> params) {
         try {
