@@ -49,7 +49,7 @@ public class Dapp_List extends TronlinkBase {
   public void dapp_isroll(){
     Map<String, String> params = new HashMap<>();
     params.put("all","0");
-    params.put("is_roll","1");
+    params.put("is_roll","2");
     params.put("page_size","10");
     response = TronlinkApiList.dapp_list(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -67,10 +67,10 @@ public class Dapp_List extends TronlinkBase {
       Assert.assertTrue(jsonObject.containsKey("home_url"));
       Assert.assertTrue(jsonObject.containsKey("slogan"));
       Assert.assertTrue(jsonObject.containsKey("is_roll"));
-//      Assert.assertTrue(jsonObject.getInteger("is_roll") == 1);
+      Assert.assertTrue(jsonObject.getInteger("is_roll") == 2);
     }
     System.out.println(responseArrayContent.size());
-    Assert.assertTrue(responseArrayContent.size() == 10);
+    Assert.assertTrue(responseArrayContent.size() == 1);
   }
 
 }
