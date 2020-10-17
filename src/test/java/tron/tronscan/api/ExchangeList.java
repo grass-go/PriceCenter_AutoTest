@@ -4,6 +4,7 @@ import tron.common.utils.MyIRetryAnalyzer;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
@@ -32,7 +33,9 @@ public class ExchangeList {
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get exchange list")
   public void getExchangeList() {
     //Get response
-    response = TronscanApiList.getExchangesList(tronScanNode);
+    Map<String, String> params = new HashMap<>();
+
+    response = TronscanApiList.getExchangesList(tronScanNode,params);
     log.info("code is " + response.getStatusLine().getStatusCode());
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
@@ -40,70 +43,69 @@ public class ExchangeList {
 
     //Two object, "total" and "Data"
     Assert.assertTrue(responseContent.size() >= 2);
-    Integer total = Integer.valueOf(responseContent.get("total").toString());
+    Assert.assertTrue(Integer.valueOf(responseContent.get("total").toString()) > 0);
     JSONArray exchangeArray = responseContent.getJSONArray("Data");
-    Assert.assertTrue(exchangeArray.size() == total);
 
     //first_token_id
-    targetContent = exchangeArray.getJSONObject(0);
-    Long firstTokenId = Long.valueOf(targetContent.get("first_token_id").toString());
-    Assert.assertTrue(firstTokenId > 1000000);
+    for (int i = 0; i < exchangeArray.size(); i++) {
+      Long firstTokenId = Long.valueOf(exchangeArray.getJSONObject(i).get("first_token_id").toString());
+      Assert.assertTrue(firstTokenId > 1000000);
 
-    //up_down_percent > -1 && up_down_percent < 1
-    Double upDownPercent = Double.valueOf(targetContent.get("up_down_percent").toString());
-    Assert.assertTrue(upDownPercent >= -10 );
+      //up_down_percent > -1 && up_down_percent < 1
+      Double upDownPercent = Double.valueOf(exchangeArray.getJSONObject(i).get("up_down_percent").toString());
+      Assert.assertTrue(upDownPercent >= -100);
 
-    //second_token_balance
-    Long secondTokenBalance = Long.valueOf(targetContent.get("second_token_balance").toString());
-    Assert.assertTrue(secondTokenBalance >= 0);
+      //second_token_balance
+      Long secondTokenBalance = Long.valueOf(exchangeArray.getJSONObject(i).get("second_token_balance").toString());
+      Assert.assertTrue(secondTokenBalance >= 0);
 
-    //exchange_name
-    String exchangeName = targetContent.getString("exchange_name");
-    Assert.assertTrue(exchangeName.contains(firstTokenId.toString()));
+      //exchange_name
+      String exchangeName = exchangeArray.getJSONObject(i).getString("exchange_name");
+      Assert.assertTrue(exchangeName.contains(firstTokenId.toString()));
 
-    //volume
-    Assert.assertTrue(!targetContent.get("volume").toString().isEmpty());
+      //volume
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("volume").toString().isEmpty());
 
-    //exchange_id
-    Assert.assertTrue(Integer.valueOf(targetContent.get("exchange_id").toString()) > 0);
+      //exchange_id
+      Assert.assertTrue(Integer.valueOf(exchangeArray.getJSONObject(i).get("exchange_id").toString()) > 0);
 
-    //high
-    Assert.assertTrue(!targetContent.get("high").toString().isEmpty());
+      //high
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("high").toString().isEmpty());
 
-    //first_token_balance
-    Long firstTokenBalance = Long.valueOf(targetContent.get("first_token_balance").toString());
-    Assert.assertTrue(firstTokenBalance >= 0);
+      //first_token_balance
+      Long firstTokenBalance = Long.valueOf(exchangeArray.getJSONObject(i).get("first_token_balance").toString());
+      Assert.assertTrue(firstTokenBalance >= 0);
 
-    //high
-    Assert.assertTrue(!targetContent.get("low").toString().isEmpty());
+      //high
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("low").toString().isEmpty());
 
-    //Price
-    Double price = Double.valueOf(targetContent.get("price").toString());
-    Assert.assertTrue(price >= 0);
+      //Price
+      Double price = Double.valueOf(exchangeArray.getJSONObject(i).get("price").toString());
+      Assert.assertTrue(price >= 0);
 
-    //first_owner_address
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(targetContent
-        .getString("first_owner_address")).matches());
+      //first_owner_address
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      Assert.assertTrue(patternAddress.matcher(exchangeArray.getJSONObject(i)
+              .getString("first_owner_address")).matches());
 
-    //creator_address
-    Assert.assertTrue(patternAddress.matcher(targetContent.getString("creator_address")).matches());
+      //creator_address
+      Assert.assertTrue(patternAddress.matcher(exchangeArray.getJSONObject(i).getString("creator_address")).matches());
 
-    //svolume
-    Assert.assertTrue(!targetContent.get("svolume").toString().isEmpty());
+      //svolume
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("svolume").toString().isEmpty());
 
-    //first_token_abbr
-    Assert.assertTrue(!targetContent.get("first_token_abbr").toString().isEmpty());
+      //first_token_abbr
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("first_token_abbr").toString().isEmpty());
 
-    //exchange_abbr_name
-    Assert.assertTrue(!targetContent.get("exchange_abbr_name").toString().isEmpty());
+      //exchange_abbr_name
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("exchange_abbr_name").toString().isEmpty());
 
-    //second_token_id
-    Assert.assertTrue(!targetContent.get("second_token_id").toString().isEmpty());
+      //second_token_id
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("second_token_id").toString().isEmpty());
 
-    //status
-    Assert.assertTrue(!targetContent.get("status").toString().isEmpty());
-
+      //status
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("status").toString().isEmpty());
+    }
   }
 
   /**

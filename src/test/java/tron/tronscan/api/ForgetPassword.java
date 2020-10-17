@@ -22,7 +22,7 @@ public class ForgetPassword {
     private JSONArray responseArrayContent;
     private HttpResponse response;
     private String tronScanNode = Configuration.getByPath("testng.conf")
-            .getStringList("tronexapi.ip.list").get(0);
+            .getStringList("tronscan.ip.list").get(0);
 
     /**
      * constructor.

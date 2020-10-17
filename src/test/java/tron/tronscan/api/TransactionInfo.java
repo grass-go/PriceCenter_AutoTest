@@ -64,6 +64,24 @@ public class TransactionInfo {
   /**
    * constructor.
    */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Query transaction hash and get a transaction detail info;")
+  public void getAccount_proposal() {
+    //Get response
+    response = TronscanApiList.getAccount_proposal(tronScanNode);
+    log.info("code is " + response.getStatusLine().getStatusCode());
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+
+    //2 key
+    Assert.assertTrue(responseContent.size() > 0);
+    Assert.assertTrue(Long.valueOf(responseContent.get("total").toString()) >= 0);
+    Assert.assertTrue(responseContent.containsKey("data"));
+
+  }
+  /**
+   * constructor.
+   */
   @AfterClass
   public void shutdown() throws InterruptedException {
     TronscanApiList.disGetConnect();

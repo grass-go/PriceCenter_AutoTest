@@ -27,7 +27,7 @@ public class WalletList {
     private JSONObject targetContent;
     private HttpResponse response;
     private String tronScanNode = Configuration.getByPath("testng.conf")
-            .getStringList("tronexapi.ip.list")
+            .getStringList("tronscan.ip.list")
             .get(0);
 
     /**
@@ -67,10 +67,9 @@ public class WalletList {
         for (int i = 0; i < responseArrayContent.size(); i++) {
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("token_price").toString().isEmpty());
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("token_id").toString().isEmpty());
-            Assert.assertTrue(Double.valueOf(responseArrayContent.getJSONObject(i).getString("balance")) > 0);
-            String token_abbr = responseArrayContent.getJSONObject(i).getString("token_abbr");
-            String token_name = responseArrayContent.getJSONObject(i).getString("token_name");
-            Assert.assertEquals(token_abbr,token_name);
+            Assert.assertTrue(Double.valueOf(responseArrayContent.getJSONObject(i).getString("balance")) >= 0);
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("token_abbr").toString().isEmpty());
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("token_name").toString().isEmpty());
             Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("token_type"));
         }
     }
@@ -114,9 +113,8 @@ public class WalletList {
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("token_id").toString().isEmpty());
             //当前余额为0
             Assert.assertTrue(Double.valueOf(responseArrayContent.getJSONObject(i).getString("balance")) >= 0);
-            String token_abbr = responseArrayContent.getJSONObject(i).getString("token_abbr");
-            String token_name = responseArrayContent.getJSONObject(i).getString("token_name");
-            Assert.assertEquals(token_abbr,token_name);
+            Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("token_abbr"));
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("token_name").toString().isEmpty());
             Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("token_type"));
         }
     }

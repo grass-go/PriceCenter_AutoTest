@@ -22,7 +22,7 @@ public class AllSidechainTokenMapping {
     private JSONObject targetContent;
     private HttpResponse response;
     private String tronScanNode = Configuration.getByPath("testng.conf")
-            .getStringList("tronexapi.ip.list")
+            .getStringList("tronscan.ip.list")
             .get(0);
 
     /**
@@ -37,7 +37,7 @@ public class AllSidechainTokenMapping {
         TronscanApiList.printJsonContent(responseContent);
 
         //three object, "retCode" and "Data"
-        Assert.assertTrue(responseContent.size() >= 3);
+        Assert.assertTrue(responseContent.size() == 3);
         Assert.assertTrue(responseContent.containsKey("retMsg"));
         Assert.assertTrue(Double.valueOf(responseContent.get("retCode").toString()) >= 0);
         //data

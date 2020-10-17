@@ -28,6 +28,7 @@ public class Chainparameters {
 
   /**
    * constructor.
+   * 提议页面的展示
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get chainparameters list")
   public void getchainparameters() {
@@ -43,11 +44,13 @@ public class Chainparameters {
     Assert.assertTrue(chainParameters.size() >= 28);
 
     //getMaintenanceTimeInterval
-    targetContent = chainParameters.getJSONObject(0);
-    Assert.assertTrue(targetContent.get("key").equals("getMaintenanceTimeInterval"));
-    Assert.assertTrue(!targetContent.get("value").toString().isEmpty());
-  }
+    for (int i = 0; i < chainParameters.size(); i++) {
+      Assert.assertTrue(!chainParameters.getJSONObject(i).get("key").toString().isEmpty());
+      Assert.assertTrue(chainParameters.getJSONObject(0).get("key").equals("getMaintenanceTimeInterval"));
+      Assert.assertTrue(!chainParameters.getJSONObject(i).get("value").toString().isEmpty());
 
+    }
+  }
   /**
    * constructor.
    */

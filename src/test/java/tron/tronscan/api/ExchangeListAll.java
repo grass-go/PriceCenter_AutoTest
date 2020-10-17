@@ -35,67 +35,67 @@ public class ExchangeListAll {
     log.info("code is " + response.getStatusLine().getStatusCode());
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     JSONArray responseContent = TronscanApiList.parseArrayResponseContent(response);
-    //TronscanApiList.printJsonArrayContent(responseContent);
+    TronscanApiList.printJsonArrayContent(responseContent);
     JSONArray exchangeArray = responseContent;
 
     //first_token_id
-    targetContent = exchangeArray.getJSONObject(0);
-    Long firstTokenId = Long.valueOf(targetContent.get("first_token_id").toString());
-    Assert.assertTrue(firstTokenId > 1000000);
+    for (int i = 0; i < exchangeArray.size(); i++) {
+      Long firstTokenId = Long.valueOf(exchangeArray.getJSONObject(i).get("first_token_id").toString());
+      Assert.assertTrue(firstTokenId > 1000000);
 
-    //up_down_percent > -1 && up_down_percent < 1
-    Double upDownPercent = Double.valueOf(targetContent.get("up_down_percent").toString());
-    Assert.assertTrue(upDownPercent >= -1 && upDownPercent <= 1);
+      //up_down_percent > -1 && up_down_percent < 1
+      Double upDownPercent = Double.valueOf(exchangeArray.getJSONObject(i).get("up_down_percent").toString());
+      Assert.assertTrue(upDownPercent >= -100 );
 
-    //second_token_balance
-    Long secondTokenBalance = Long.valueOf(targetContent.get("second_token_balance").toString());
-    Assert.assertTrue(secondTokenBalance >= 0);
+      //second_token_balance
+      Long secondTokenBalance = Long.valueOf(exchangeArray.getJSONObject(i).get("second_token_balance").toString());
+      Assert.assertTrue(secondTokenBalance >= 0);
 
-    //exchange_name
-    String exchangeName = targetContent.getString("exchange_name");
-    Assert.assertTrue(exchangeName.contains(firstTokenId.toString()));
+      //exchange_name
+      String exchangeName = exchangeArray.getJSONObject(i).getString("exchange_name");
+      Assert.assertTrue(exchangeName.contains(firstTokenId.toString()));
 
-    //volume
-    Assert.assertTrue(!targetContent.get("volume").toString().isEmpty());
+      //volume
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("volume").toString().isEmpty());
 
-    //exchange_id
-    Assert.assertTrue(Integer.valueOf(targetContent.get("exchange_id").toString()) > 0);
+      //exchange_id
+      Assert.assertTrue(Integer.valueOf(exchangeArray.getJSONObject(i).get("exchange_id").toString()) > 0);
 
-    //high
-    Assert.assertTrue(!targetContent.get("high").toString().isEmpty());
+      //high
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("high").toString().isEmpty());
 
-    //first_token_balance
-    Long firstTokenBalance = Long.valueOf(targetContent.get("first_token_balance").toString());
-    Assert.assertTrue(firstTokenBalance >= 0);
+      //first_token_balance
+      Long firstTokenBalance = Long.valueOf(exchangeArray.getJSONObject(i).get("first_token_balance").toString());
+      Assert.assertTrue(firstTokenBalance >= 0);
 
-    //high
-    Assert.assertTrue(!targetContent.get("low").toString().isEmpty());
+      //high
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("low").toString().isEmpty());
 
-    //Price
-    Double price = Double.valueOf(targetContent.get("price").toString());
-    Assert.assertTrue(price >= 0);
+      //Price
+      Double price = Double.valueOf(exchangeArray.getJSONObject(i).get("price").toString());
+      Assert.assertTrue(price >= 0);
 
-    //first_owner_address
-    Assert.assertTrue(targetContent.containsKey("first_owner_address"));
+      //first_owner_address
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("first_owner_address"));
 
-    //creator_address
-    Assert.assertTrue(targetContent.containsKey("creator_address"));
+      //creator_address
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("creator_address"));
 
-    //svolume
-    Assert.assertTrue(!targetContent.get("svolume").toString().isEmpty());
+      //svolume
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("svolume").toString().isEmpty());
 
-    //first_token_abbr
-    Assert.assertTrue(!targetContent.get("first_token_abbr").toString().isEmpty());
+      //first_token_abbr
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("first_token_abbr"));
 
-    //exchange_abbr_name
-    Assert.assertTrue(!targetContent.get("exchange_abbr_name").toString().isEmpty());
+      //exchange_abbr_name
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("exchange_abbr_name").toString().isEmpty());
 
-    //second_token_id
-    Assert.assertTrue(!targetContent.get("second_token_id").toString().isEmpty());
+      //second_token_id
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("second_token_id").toString().isEmpty());
 
-    //status
-    Assert.assertTrue(!targetContent.get("status").toString().isEmpty());
-
+      //status
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("status").toString().isEmpty());
+    }
   }
 
   /**

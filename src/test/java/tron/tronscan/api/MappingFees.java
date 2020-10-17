@@ -20,7 +20,7 @@ public class MappingFees {
     private JSONObject targetContent;
     private HttpResponse response;
     private String tronScanNode = Configuration.getByPath("testng.conf")
-            .getStringList("tronexapi.ip.list")
+            .getStringList("tronscan.ip.list")
             .get(0);
 
     /**
@@ -40,12 +40,13 @@ public class MappingFees {
         Assert.assertTrue(Double.valueOf(responseContent.get("retCode").toString()) >= 0);
         //data
         targetContent = responseContent.getJSONObject("data");
-        Assert.assertTrue(Long.valueOf(targetContent.get("retryFee").toString()) >= 0);
-        Assert.assertTrue(Long.valueOf(targetContent.get("mappingFee").toString()) >= 0);
-        Assert.assertTrue(Long.valueOf(targetContent.get("trxDepositMinValue").toString()) >= 0);
+        Assert.assertTrue(Long.valueOf(targetContent.get("retryFee").toString()) > 0);
+        //mappingFee
+        Assert.assertTrue(Long.valueOf(targetContent.get("mappingFee").toString()) >= 1000);
+        Assert.assertTrue(Long.valueOf(targetContent.get("trxDepositMinValue").toString()) > 0);
         Assert.assertTrue(Long.valueOf(targetContent.get("depositFee").toString()) >= 0);
         Assert.assertTrue(Long.valueOf(targetContent.get("withdrawFee").toString()) >= 0);
-        Assert.assertTrue(Long.valueOf(targetContent.get("trxWithdrawMinValue").toString()) >= 0);
+        Assert.assertTrue(Long.valueOf(targetContent.get("trxWithdrawMinValue").toString()) >= 10);
 
     }
     /**

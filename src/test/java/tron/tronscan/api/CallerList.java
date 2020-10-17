@@ -43,7 +43,7 @@ public class CallerList {
     TronscanApiList.printJsonContent(responseContent);
 
     //System status has 5 key:value
-    Assert.assertTrue(responseContent.size() >= 4);
+    Assert.assertTrue(responseContent.size() == 4);
     //total
     Assert.assertTrue(!responseContent.get("total").toString().isEmpty());
 
@@ -51,16 +51,16 @@ public class CallerList {
     targetContent = responseContent.getJSONObject("max");
 
     //caller_amount
-    Assert.assertTrue(Double.valueOf(targetContent.get("caller_amount").toString()) >= 0);
+    Assert.assertTrue(Double.valueOf(targetContent.get("caller_amount").toString()) > 0);
     //day
-    Assert.assertTrue(Long.valueOf(targetContent.get("day").toString()) >= 0);
+    Assert.assertTrue(!targetContent.get("day").toString().isEmpty());
 
     //min
     targetContent = responseContent.getJSONObject("min");
     //caller_amount
-    Assert.assertTrue(Double.valueOf(targetContent.get("caller_amount").toString()) >= 0);
+    Assert.assertTrue(Double.valueOf(targetContent.get("caller_amount").toString()) > 0);
     //day
-    Assert.assertTrue(Long.valueOf(targetContent.get("day").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(targetContent.get("day").toString()) > 1500000000);
 
     //data list
     responseArrayContent = responseContent.getJSONArray("data");
@@ -68,9 +68,8 @@ public class CallerList {
     Assert.assertTrue(responseArrayContent.size() > 0);
     for (int i = 0; i < responseArrayContent.size(); i++) {
       Assert.assertTrue(
-          Double.valueOf(responseArrayContent.getJSONObject(i).get("caller_amount").toString())
-              >= 0);
-      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("day"));
+          Double.valueOf(responseArrayContent.getJSONObject(i).get("caller_amount").toString()) > 0);
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("day").toString().isEmpty());
 
     }
   }
@@ -88,35 +87,33 @@ public class CallerList {
     TronscanApiList.printJsonContent(responseContent);
 
     //System status has 5 key:value
-    Assert.assertTrue(responseContent.size() >= 4);
+    Assert.assertTrue(responseContent.size() == 5);
     //total
     Long total = Long
         .valueOf(responseContent.get("total").toString());
     //totalTrigger
     Long totalTrigger = Long
         .valueOf(responseContent.get("totalTrigger").toString());
-    Assert.assertTrue(totalTrigger >= total);
+    Assert.assertTrue(totalTrigger >= 0 && total >= 0);
 
     //totalCallerAmount
     Assert.assertTrue(Long.valueOf(responseContent.get("totalCallerAmount").toString()) >= 0);
-
+    Assert.assertTrue(Long.valueOf(responseContent.get("totalEnergy").toString()) >= 0);
     //data list
     responseArrayContent = responseContent.getJSONArray("data");
 
     Assert.assertTrue(responseArrayContent.size() > 0);
     for (int i = 0; i < responseArrayContent.size(); i++) {
       Assert.assertTrue(
-          Double.valueOf(responseArrayContent.getJSONObject(i).get("trigger_amount").toString())
-              >= 0);
+          Double.valueOf(responseArrayContent.getJSONObject(i).get("trigger_amount").toString()) >= 0);
       Assert.assertTrue(
-          Long.valueOf(responseArrayContent.getJSONObject(i).get("caller_amount").toString())
-              >= 0);
+          Long.valueOf(responseArrayContent.getJSONObject(i).get("caller_amount").toString()) > 0);
       //name
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("name"));
       //contract_address
       Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-      Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i)
-          .getString("contract_address")).matches());
+      String contract_address = responseArrayContent.getJSONObject(i).getString("contract_address");
+      Assert.assertTrue(patternAddress.matcher(contract_address).matches() && !contract_address.isEmpty());
 
     }
   }

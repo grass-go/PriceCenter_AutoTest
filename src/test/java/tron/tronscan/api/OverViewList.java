@@ -3,8 +3,9 @@ import tron.common.utils.MyIRetryAnalyzer;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+
 import java.util.HashMap;
-import java.util.regex.Pattern;
+import java.util.Map;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.AfterClass;
@@ -32,10 +33,14 @@ public class OverViewList {
 
   /**
    * constructor.
+   * 账户列表展示接口
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Blockchain data overview in history")
   public void getOverViewList() {
-    response = TronscanApiList.getOverViewList(tronScanNode);
+    int day = 1;
+    Map<String, String> params = new HashMap<>();
+    params.put("days",Integer.toString(day));
+    response = TronscanApiList.getOverViewList(tronScanNode,params);
     //log.info("code is " + response.getStatusLine().getStatusCode());
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
@@ -44,25 +49,25 @@ public class OverViewList {
     //two object "success" and "data"
     Assert.assertTrue(Boolean.valueOf(responseContent.getString("success")));
     JSONArray exchangeArray = responseContent.getJSONArray("data");
-    targetContent = exchangeArray.getJSONObject(0);
-    //data
-    Assert.assertTrue(targetContent.containsKey("date"));
-    //avgBlockTime
-    Assert.assertTrue(Long.valueOf(targetContent.get("avgBlockTime").toString()) > 0);
-    //totalBlockCount 区块数
-    Assert.assertTrue(Long.valueOf(targetContent.get("totalBlockCount").toString()) > 1000);
-    //totalTransaction 交易数
-    Assert.assertTrue(Long.valueOf(targetContent.get("totalTransaction").toString()) > 0);
-    //blockchainSize
-    Assert.assertTrue(Long.valueOf(targetContent.get("blockchainSize").toString()) > 1000);
-    //avgBlockSize
-    Assert.assertTrue(Long.valueOf(targetContent.get("avgBlockSize").toString()) > 10);
-    //
-    Assert.assertFalse(targetContent.get("newTransactionSeen").toString().isEmpty());
-    Assert.assertFalse(targetContent.get("newAddressSeen").toString().isEmpty());
-    Assert.assertFalse(targetContent.get("totalAddress").toString().isEmpty());
-    Assert.assertFalse(targetContent.get("newBlockSeen").toString().isEmpty());
-
+    for (int i = 0; i < exchangeArray.size(); i++) {
+      //data
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("date"));
+      //avgBlockTime
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("avgBlockTime").toString()) > 0);
+      //totalBlockCount 区块数
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("totalBlockCount").toString()) >= 0);
+      //totalTransaction 交易数
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("totalTransaction").toString()) >= 0);
+      //blockchainSize
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("blockchainSize").toString()) >= 0);
+      //avgBlockSize
+      Assert.assertTrue(Long.valueOf(exchangeArray.getJSONObject(i).get("avgBlockSize").toString()) > 10);
+      //
+      Assert.assertFalse(exchangeArray.getJSONObject(i).get("newTransactionSeen").toString().isEmpty());
+      Assert.assertFalse(exchangeArray.getJSONObject(i).get("newAddressSeen").toString().isEmpty());
+      Assert.assertFalse(exchangeArray.getJSONObject(i).get("totalAddress").toString().isEmpty());
+      Assert.assertFalse(exchangeArray.getJSONObject(i).get("newBlockSeen").toString().isEmpty());
+    }
   }
   /**
    * constructor.

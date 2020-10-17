@@ -73,7 +73,7 @@ public class SingleTokenList {
       Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).getLong("trxNum").toString()) >= 1000000);
       Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("abbr").isEmpty());
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("website"));
-      Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("github").isEmpty());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("github"));
       Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).getLong("availableSupply").toString()) == 0);
       Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).getLong("totalSupply").toString()) >= 1000000000);
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("index"));

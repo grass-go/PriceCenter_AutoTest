@@ -25,18 +25,19 @@ public class Trc20TokensParam {
     private JSONArray sidechainsArrayContent;
     private HttpResponse response;
     private String tronScanNode = Configuration.getByPath("testng.conf")
-            .getStringList("tronexapi.ip.list")
+            .getStringList("tronscan.ip.list")
             .get(0);
 
     /**
      * constructor.根据创建者获取trc20信息
+     * 合约概览中trc20token信息
      */
     @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "根据创建者获取trc20信息")
     public void getTrc20Tokens() {
-        String issuer_addr = "TW5y9tuvgummvvuhfmmBQES7fVUhEdqPHK";
+        String issuer_addr = "TZEZWXYQS44388xBoMhQdpL1HrBZFLfDpt";
         Map<String, String> params = new HashMap<>();
         params.put("issuer_addr", issuer_addr);
-        response = TronscanApiList.getTrc20Tokens(tronScanNode,params);
+        response = TronscanApiList.getTrc20Tokens(tronScanNode, params);
         log.info("code is " + response.getStatusLine().getStatusCode());
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronscanApiList.parseResponseContent(response);
@@ -49,46 +50,51 @@ public class Trc20TokensParam {
         //data
         targetContent = responseContent.getJSONObject("data");
         responseArrayContent = targetContent.getJSONArray("tokens");
-        JSONObject responseObject = responseArrayContent.getJSONObject(0);
-        String icon_url = responseObject.get("icon_url").toString();
-        Assert.assertTrue(!icon_url.isEmpty());
-        HttpResponse httpResponse = TronscanApiList.getUrlkey(icon_url);
-        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
-        //
-        Assert.assertTrue(!responseObject.getString("symbol").isEmpty());
-        Assert.assertTrue(responseObject.getLong("total_supply") >= 1000000000);
-        //contract_address
-        Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-        String contract_address = responseObject.getString("contract_address");
-        Assert.assertTrue(patternAddress.matcher(contract_address).matches());
-        Assert.assertEquals(responseObject.getString("issuer_addr"),issuer_addr);
+        for (int i = 0; i < responseArrayContent.size(); i++) {
+            String icon_url = responseArrayContent.getJSONObject(i).get("icon_url").toString();
+            Assert.assertTrue(!icon_url.isEmpty());
+            //各别url是图片
+            Boolean url_real = responseArrayContent.getJSONObject(i).getString("icon_url").substring(0,8).equals("https://");
+            if(url_real){
+                HttpResponse httpResponse = TronscanApiList.getUrlkey(icon_url);
+                Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
+            }
+            //
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("symbol").isEmpty());
+            Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("total_supply") >= 1000000000);
+            //contract_address
+            Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+            String contract_address = responseArrayContent.getJSONObject(i).getString("contract_address");
+            Assert.assertTrue(patternAddress.matcher(contract_address).matches());
+            Assert.assertEquals(responseArrayContent.getJSONObject(i).getString("issuer_addr"), issuer_addr);
 
-        Assert.assertTrue(!responseObject.getString("home_page").isEmpty());
-        Assert.assertTrue(!responseObject.getString("token_desc").isEmpty());
-        Assert.assertTrue(!responseObject.getString("update_time").isEmpty());
-        Assert.assertTrue(responseObject.containsKey("git_hub"));
-        //decimals
-        Assert.assertTrue(responseObject
-                .getInteger("decimals") >= 0 && responseObject.getInteger("decimals") <= 7);
-        Assert.assertTrue(!responseObject.getString("name").isEmpty());
-        Assert.assertTrue(!responseObject.getString("issue_time").isEmpty());
-        //email
-        String email = responseObject.getString("email");
-        Assert.assertTrue(email.contains("@"));
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("home_page").isEmpty());
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("token_desc").isEmpty());
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("update_time").isEmpty());
+            Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("git_hub"));
+            //decimals
+            Assert.assertTrue(responseArrayContent.getJSONObject(i)
+                    .getInteger("decimals") >= 0 && responseArrayContent.getJSONObject(i).getInteger("decimals") <= 7);
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("name").isEmpty());
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("issue_time").isEmpty());
+            //email
+//            String email = responseArrayContent.getJSONObject(i).getString("email");
+//            Assert.assertTrue(email.contains("@"));
 
-        Assert.assertTrue(responseObject.containsKey("white_paper"));
-        Assert.assertTrue(responseObject.containsKey("social_media"));
-        Assert.assertTrue(responseObject.containsKey("status"));
-        //sidechains
-        sidechainsArrayContent = responseObject.getJSONArray("sidechains");
-        JSONObject sidechainsObject = sidechainsArrayContent.getJSONObject(0);
-        Pattern sidechainsAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-        Assert.assertEquals(sidechainsObject.getString("mainchain_address"),contract_address);
-        Assert.assertTrue(sidechainsAddress.matcher(sidechainsObject.getString("sidechain_address")).matches());
-        Assert.assertTrue(sidechainsObject.containsKey("chainid"));
-        Assert.assertTrue(sidechainsObject.containsKey("type"));
+            Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("white_paper"));
+            Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("social_media"));
+            Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("status"));
+            Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("sidechains"));
+            //sidechains
+//            sidechainsArrayContent = responseArrayContent.getJSONObject(i).getJSONArray("sidechains");
+//            JSONObject sidechainsObject = sidechainsArrayContent.getJSONObject(0);
+//            Pattern sidechainsAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+//            Assert.assertEquals(sidechainsObject.getString("mainchain_address"), contract_address);
+//            Assert.assertTrue(sidechainsAddress.matcher(sidechainsObject.getString("sidechain_address")).matches());
+//            Assert.assertTrue(sidechainsObject.containsKey("chainid"));
+//            Assert.assertTrue(sidechainsObject.containsKey("type"));
+        }
     }
-
     /**
      * constructor.转账列表优化新增接口
      * 返回昨日新增转账数、交易额，累积转账数、交易额，TRX转账/10币转账/20币转账的交易数，交易额及分别的转账数占比。
@@ -151,23 +157,26 @@ public class Trc20TokensParam {
         Assert.assertTrue(responseContent.containsKey("contractMap"));
         //transfers
         responseArrayContent = responseContent.getJSONArray("transfers");
-        JSONObject responseObject = responseArrayContent.getJSONObject(0);
-        Assert.assertTrue(responseObject.containsKey("contractRet"));
-        Assert.assertTrue(responseObject.containsKey("amount"));
-        Assert.assertTrue(responseObject.containsKey("cost"));
-        Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-        Assert.assertTrue(patternAddress.matcher(responseObject.getString("owner_address")).matches());
-        Assert.assertTrue(patternAddress.matcher(responseObject.getString("to_address")).matches());
-        Assert.assertTrue(patternAddress.matcher(responseObject.getString("contract_address")).matches());
-        Assert.assertTrue(patternAddress.matcher(responseObject.getString("from_address")).matches());
-        Assert.assertTrue(responseObject.containsKey("date_created"));
-        Assert.assertTrue(responseObject.containsKey("revert"));
-        Assert.assertTrue(responseObject.containsKey("type"));
-        Assert.assertTrue(responseObject.containsKey("confirmed"));
-        Assert.assertTrue(responseObject.containsKey("block"));
-        Assert.assertTrue(responseObject.containsKey("contract_ret"));
-        Assert.assertTrue(responseObject.containsKey("hash"));
+        for (int i = 0; i < responseArrayContent.size(); i++) {
+            JSONObject responseObject = responseArrayContent.getJSONObject(0);
 
+            Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("contractRet"));
+            Assert.assertTrue(Double.valueOf(responseArrayContent.getJSONObject(i).getString("amount")) >0);
+            Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("cost"));
+            Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+            Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("owner_address")).matches());
+            Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("to_address")).matches());
+//            Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("contract_address")).matches());
+//            Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("from_address")).matches());
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("date_created").isEmpty());
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("type").isEmpty());
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("confirmed").isEmpty());
+            Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).getString("block")) > 10000000);
+            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("contract_ret").isEmpty());
+            Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
+            String hash = responseArrayContent.getJSONObject(i).getString("hash");
+            Assert.assertTrue(patternHash.matcher(hash).matches() && !hash.isEmpty());
+        }
     }
 
     /**

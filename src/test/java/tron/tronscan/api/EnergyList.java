@@ -45,18 +45,18 @@ public class EnergyList {
     //System status has 5 key:value
     Assert.assertTrue(responseContent.size() >= 4);
     //total
-    Assert.assertTrue(!responseContent.get("total").toString().isEmpty());
+    Assert.assertTrue(Integer.valueOf(responseContent.get("total").toString()) > 0);
 
     //max
     targetContent = responseContent.getJSONObject("max");
 
     //total_energy
-    Assert.assertTrue(Long.valueOf(targetContent.get("total_energy").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(targetContent.get("total_energy").toString()) > 0);
     //energy
-    Assert.assertTrue(Long.valueOf(targetContent.get("energy").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(targetContent.get("energy").toString()) > 0);
     //trx
-    Assert.assertTrue(Long.valueOf(targetContent.get("trx").toString()) >= 0);
-    Assert.assertTrue(Long.valueOf(targetContent.get("day").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(targetContent.get("trx").toString()) > 0);
+    Assert.assertTrue(Long.valueOf(targetContent.get("day").toString()) > 1000000);
 
     //min
     targetContent = responseContent.getJSONObject("min");
@@ -66,7 +66,7 @@ public class EnergyList {
     Assert.assertTrue(Long.valueOf(targetContent.get("energy").toString()) >= 0);
     //trx
     Assert.assertTrue(Long.valueOf(targetContent.get("trx").toString()) >= 0);
-    Assert.assertTrue(Long.valueOf(targetContent.get("day").toString()) >= 0);
+    Assert.assertTrue(Long.valueOf(targetContent.get("day").toString()) > 0);
 
     //data list
     responseArrayContent = responseContent.getJSONArray("data");
@@ -75,7 +75,7 @@ public class EnergyList {
     for (int i = 0; i < responseArrayContent.size(); i++) {
       Assert.assertTrue(
           Long.valueOf(responseArrayContent.getJSONObject(i).get("trx").toString()) >= 0);
-      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("day"));
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).get("day").toString()) > 0);
       //
       Long total_energy = Long
           .valueOf(responseArrayContent.getJSONObject(i).get("total_energy").toString());
@@ -99,7 +99,7 @@ public class EnergyList {
     TronscanApiList.printJsonContent(responseContent);
 
     //System status has 5 key:value
-    Assert.assertTrue(responseContent.size() >= 3);
+    Assert.assertTrue(responseContent.size() == 3);
     //total
     Long total = Long.valueOf(responseContent.get("total").toString());
     Long totalEnergy = Long.valueOf(responseContent.get("totalEnergy").toString());

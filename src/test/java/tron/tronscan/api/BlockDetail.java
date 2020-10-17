@@ -29,35 +29,53 @@ public class BlockDetail {
 
   /**
    * constructor
+   * 区块展示接口
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get a single block's detail")
   public void test01getBlockDetail() {
     //Get response
     Map<String, String> params = new HashMap<>();
     String blockNumber = "458888";
-    params.put("number", blockNumber);
+    params.put("sort", "-number");
+    params.put("limit", "20");
+    params.put("count", "true");
+    params.put("start", "0");
     response = TronscanApiList.getBlockDetail(tronScanNode, params);
     log.info("code is " + response.getStatusLine().getStatusCode());
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
-    responseArrayContent = responseContent.getJSONArray("data");
-    JSONObject responseObject = responseArrayContent.getJSONObject(0);
-    Assert.assertTrue(responseObject.containsKey("hash"));
-    Assert.assertTrue(responseObject.containsKey("size"));
-    Assert.assertTrue(responseObject.containsKey("timestamp"));
-    Assert.assertTrue(responseObject.containsKey("txTrieRoot"));
-    Assert.assertTrue(responseObject.containsKey("parentHash"));
-    Assert.assertTrue(responseObject.containsKey("witnessId"));
-    Assert.assertTrue(responseObject.containsKey("nrOfTrx"));
-    Assert.assertTrue(responseObject.containsKey("confirmed"));
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(responseObject.getString("witnessAddress")).matches());
-    Assert.assertEquals(blockNumber, responseObject.getString("number"));
-  }
+    //total
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal >= total && total > 0);
 
+    responseArrayContent = responseContent.getJSONArray("data");
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("hash"));
+      Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
+      String hash = responseArrayContent.getJSONObject(i).getString("hash");
+      Assert.assertTrue(patternHash.matcher(hash).matches() && !hash.isEmpty());
+
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).get("size").toString()) > 0);
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("timestamp").toString().isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("txTrieRoot").toString().isEmpty());
+      //parentHash
+      String parentHash = responseArrayContent.getJSONObject(i).getString("parentHash");
+      Assert.assertTrue(patternHash.matcher(parentHash).matches() && !parentHash.isEmpty());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("witnessId"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("nrOfTrx"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("confirmed"));
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String witnessAddress = responseArrayContent.getJSONObject(i).getString("witnessAddress");
+      Assert.assertTrue(patternAddress.matcher(witnessAddress).matches() && !witnessAddress.isEmpty());
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).get("number").toString()) >1000000);
+
+    }
+  }
   /**
    * constructor limit不为零
+   * 查寻时间范围内数据
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the blocks in the blockchain")
   public void test02getBlocksList() {
@@ -75,26 +93,37 @@ public class BlockDetail {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
-    //Assert.assertTrue(responseContent.containsKey("total"));
+   //total
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal >= total && total > 0);
 
-    //data object
     responseArrayContent = responseContent.getJSONArray("data");
-    JSONObject responseObject = responseArrayContent.getJSONObject(0);
-    Assert.assertEquals(limit, responseArrayContent.size());
-    Assert.assertTrue(responseObject.containsKey("hash"));
-    Assert.assertTrue(responseObject.containsKey("size"));
-    Assert.assertTrue(!responseObject.getString("timestamp").isEmpty());
-    Assert.assertTrue(responseObject.containsKey("txTrieRoot"));
-    Assert.assertTrue(!responseObject.getString("parentHash").isEmpty());
-    Assert.assertTrue(responseObject.containsKey("witnessId"));
-    Assert.assertTrue(responseObject.containsKey("nrOfTrx"));
-    Assert.assertTrue(Boolean.valueOf(responseObject.getString("confirmed")));
-    Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
-    Assert.assertTrue(patternAddress.matcher(responseObject.getString("witnessAddress")).matches());
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("hash"));
+      Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
+      String hash = responseArrayContent.getJSONObject(i).getString("hash");
+      Assert.assertTrue(patternHash.matcher(hash).matches() && !hash.isEmpty());
+
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).get("size").toString()) > 0);
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("timestamp").toString().isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("txTrieRoot").toString().isEmpty());
+      //parentHash
+      String parentHash = responseArrayContent.getJSONObject(i).getString("parentHash");
+      Assert.assertTrue(patternHash.matcher(parentHash).matches() && !parentHash.isEmpty());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("witnessId"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("nrOfTrx"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("confirmed"));
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String witnessAddress = responseArrayContent.getJSONObject(i).getString("witnessAddress");
+      Assert.assertTrue(patternAddress.matcher(witnessAddress).matches() && !witnessAddress.isEmpty());
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).get("number").toString()) >1000000);
+    }
   }
 
   /**
-   * constructor limit为零
+   * constructor 查询当前时间范围内的数据
+   * 翻页到0页，显示data为0
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the blocks in the blockchain")
   public void test03getBlocksList() {
@@ -120,7 +149,8 @@ public class BlockDetail {
   }
 
   /**
-   * constructor. limit不为零
+   * constructor.
+   * producer为出块者，进入出块者详情页
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List all the blocks produced by the specified SR in the blockchain")
   public void getBlocksList() {
@@ -138,9 +168,82 @@ public class BlockDetail {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
-    Assert.assertTrue(responseContent.containsKey("data"));
+    //total
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal >= total && total > 0);
+
+    responseArrayContent = responseContent.getJSONArray("data");
+    for (int i = 0; i < responseArrayContent.size(); i++) {
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("hash"));
+      Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
+      String hash = responseArrayContent.getJSONObject(i).getString("hash");
+      Assert.assertTrue(patternHash.matcher(hash).matches() && !hash.isEmpty());
+
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).get("size").toString()) > 0);
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("timestamp").toString().isEmpty());
+      Assert.assertTrue(!responseArrayContent.getJSONObject(i).get("txTrieRoot").toString().isEmpty());
+      //parentHash
+      String parentHash = responseArrayContent.getJSONObject(i).getString("parentHash");
+      Assert.assertTrue(patternHash.matcher(parentHash).matches() && !parentHash.isEmpty());
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("witnessId"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("nrOfTrx"));
+      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("confirmed"));
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String witnessAddress = responseArrayContent.getJSONObject(i).getString("witnessAddress");
+      Assert.assertTrue(patternAddress.matcher(witnessAddress).matches() && !witnessAddress.isEmpty());
+      Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).get("number").toString()) >1000000);
+    }
   }
 
+  /**
+   * constructor
+   * 区块展示接口
+   * 根据区块名称，进入区块详情页
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Get a single block's detail")
+  public void test01getBlockDetail05() {
+    //Get response
+    Map<String, String> params = new HashMap<>();
+    String blockNumber = "458888";
+    params.put("sort", "-number");
+    params.put("limit", "20");
+    params.put("count", "true");
+    params.put("start", "0");
+    params.put("number", blockNumber);
+    response = TronscanApiList.getBlockDetail(tronScanNode, params);
+    log.info("code is " + response.getStatusLine().getStatusCode());
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+    //total
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal >= total && total > 0);
+
+    responseArrayContent = responseContent.getJSONArray("data");
+    targetContent = responseArrayContent.getJSONObject(0);
+      Assert.assertTrue(targetContent.containsKey("hash"));
+      Pattern patternHash = Pattern.compile("^[a-z0-9]{64}");
+      String hash = targetContent.getString("hash");
+      Assert.assertTrue(patternHash.matcher(hash).matches() && !hash.isEmpty());
+
+      Assert.assertTrue(Long.valueOf(targetContent.get("size").toString()) > 0);
+      Assert.assertTrue(!targetContent.get("timestamp").toString().isEmpty());
+      Assert.assertTrue(!targetContent.get("txTrieRoot").toString().isEmpty());
+      //parentHash
+      String parentHash = targetContent.getString("parentHash");
+      Assert.assertTrue(patternHash.matcher(parentHash).matches() && !parentHash.isEmpty());
+      Assert.assertTrue(targetContent.containsKey("witnessId"));
+      Assert.assertTrue(targetContent.containsKey("nrOfTrx"));
+      Assert.assertTrue(targetContent.containsKey("confirmed"));
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String witnessAddress = targetContent.getString("witnessAddress");
+      Assert.assertTrue(patternAddress.matcher(witnessAddress).matches() && !witnessAddress.isEmpty());
+      Assert.assertTrue(Long.valueOf(targetContent.get("number").toString()) ==458888);
+      Assert.assertEquals(blockNumber, targetContent.getString("number"));
+
+  }
   /**
    * constructor.
    */
