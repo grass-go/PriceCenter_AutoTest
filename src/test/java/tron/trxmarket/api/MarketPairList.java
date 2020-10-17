@@ -9,6 +9,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import tron.common.TrxMarketApiList;
 import tron.common.utils.Configuration;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class MarketPairList {
     private HttpResponse response;
     private String trxmarketNode = Configuration.getByPath("testng.conf").getStringList("trxmarket.ip.list").get(0);
 
-    @Test(enabled = true, description = "Get MarketPair List")
+    @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "Get MarketPair List")
     public void test01getPairList(){
         System.out.println();
         response = TrxMarketApiList.getList(trxmarketNode);
@@ -42,7 +43,7 @@ public class MarketPairList {
 
     }
 
-    @Test(enabled = true, description = "Search List By Ids For BTT")
+    @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "Search List By Ids For BTT")
     public void test02searchListByIds(){
         System.out.println();
         int ids = 39;
@@ -57,7 +58,7 @@ public class MarketPairList {
 
     }
 
-    @Test(enabled = true, description = "Search List By key For BTT")
+    @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "Search List By key For BTT")
     public void test03searchListByKey(){
         System.out.println();
         int sortType = 1;
@@ -72,6 +73,23 @@ public class MarketPairList {
         Assert.assertTrue(responseContent.size() == 3);
 
     }
+
+    @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "Search HistoricalTrades")
+    public void test04getHistoricalTrades(){
+        System.out.println();
+        Map<String, String> params = new HashMap<>();
+        params.put("pair", "BTT-TRX");
+        params.put("limit", "20");
+        params.put("fromId", "101338");
+        response = TrxMarketApiList.getHistoricalTrades(trxmarketNode, params);
+        log.info("code is " + response.getStatusLine().getStatusCode());
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TrxMarketApiList.parseResponseContent(response);
+        TrxMarketApiList.printJsonContent(responseContent);
+        Assert.assertTrue(responseContent.size() == 3);
+
+    }
+
 
     @AfterClass
     public void shutdown() throws InterruptedException{

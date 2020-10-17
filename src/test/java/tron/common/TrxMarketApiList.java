@@ -120,9 +120,35 @@ public class TrxMarketApiList {
         return response;
     }
 
+    public static HttpResponse getDepthChart(String trxMarketNode,String pairId){
+        try {
+            String requestUrl = "https://" + trxMarketNode + "api/trxmarket/depth/" + pairId;
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e){
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+
+    }
+
     public static HttpResponse getUserOrder(String trxMarketNode, Map<String, String> params) {
         try {
             String requestUrl = "https://" + trxMarketNode + "api/exchange/user/order";
+            response = createGetConnect(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse getHistoricalTrades(String trxMarketNode, Map<String, String> params) {
+        try {
+            String requestUrl = "https://" + trxMarketNode + "api/trxmarket/historicalTrades";
             response = createGetConnect(requestUrl, params);
         } catch (Exception e) {
             e.printStackTrace();

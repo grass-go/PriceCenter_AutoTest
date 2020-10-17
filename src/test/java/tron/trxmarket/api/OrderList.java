@@ -9,8 +9,11 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import tron.common.TrxMarketApiList;
 import tron.common.utils.Configuration;
+import tron.common.utils.MyIRetryAnalyzer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -23,7 +26,7 @@ public class OrderList {
     private HttpResponse response;
     private String trxmarketNode = Configuration.getByPath("testng.conf").getStringList("trxmarket.ip.list").get(0);
 
-    @Test(enabled = true, description = "Get BTT Order List")
+    @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "Get BTT Order List")
     public void test01orderList(){
         int pairId = 39;
         System.out.println();
@@ -36,7 +39,7 @@ public class OrderList {
 
     }
 
-    @Test(enabled = true, description = "Get BTT Latest Order")
+    @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "Get BTT Latest Order")
     public void test02latestOrders(){
         System.out.println();
         int limit = 20;
@@ -55,7 +58,7 @@ public class OrderList {
 
     }
 
-    @Test(enabled = true, description = "GET User Order")
+    @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "GET User Order")
     public void test03userOrders(){
         System.out.println();
         int limit = 7;
@@ -74,16 +77,21 @@ public class OrderList {
 
     }
 
-    @Test(enabled = true, description = "GET Top Price")
+    @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "GET Top Price")
     public void test04topPrice(){
-        int pairId = 39;
-        System.out.println();
-        response = TrxMarketApiList.getTopPrice(trxmarketNode, String.valueOf(pairId));
-        log.info("code is " + response.getStatusLine().getStatusCode());
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TrxMarketApiList.parseResponseContent(response);
-        TrxMarketApiList.printJsonContent(responseContent);
-        Assert.assertTrue(responseContent.size() == 3);
+        List list = new ArrayList();
+        list.add(39);     // BTT/TRX pairId
+        list.add(419);    // JST/TRX pairId
+        list.add(514);    // SUN/TRX pairId
+        list.add(69);     // WIN/TRX pairId
+        for(Object obj : list){
+            response = TrxMarketApiList.getTopPrice(trxmarketNode, String.valueOf(obj));
+            log.info("code is " + response.getStatusLine().getStatusCode());
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+            responseContent = TrxMarketApiList.parseResponseContent(response);
+            TrxMarketApiList.printJsonContent(responseContent);
+            Assert.assertTrue(responseContent.size() == 3);
+        }
 
     }
     @AfterClass

@@ -9,6 +9,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import tron.common.TrxMarketApiList;
 import tron.common.utils.Configuration;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class KChart {
     private HttpResponse response;
     private String trxmarketNode = Configuration.getByPath("testng.conf").getStringList("trxmarket.ip.list").get(0);
 
-    @Test(enabled = true, description = "Get BTT K Chart Message")
+    @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "Get BTT K Chart Message")
     public void test01getKChart(){
         System.out.println();
         int pairId = 39;
@@ -39,6 +40,19 @@ public class KChart {
         responseContent = TrxMarketApiList.parseResponseContent(response);
         TrxMarketApiList.printJsonContent(responseContent);
         Assert.assertTrue(responseContent.size() == 5);
+
+    }
+
+    @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "Get BTT Depth Chart Message")
+    public void test02getDepthChart(){
+        int pairId = 39;
+        System.out.println();
+        response = TrxMarketApiList.getDepthChart(trxmarketNode, String.valueOf(pairId));
+        log.info("code is " + response.getStatusLine().getStatusCode());
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TrxMarketApiList.parseResponseContent(response);
+        TrxMarketApiList.printJsonContent(responseContent);
+        Assert.assertTrue(responseContent.size() == 3);
 
     }
     @AfterClass
