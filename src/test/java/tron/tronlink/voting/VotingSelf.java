@@ -25,11 +25,17 @@ public class VotingSelf extends TronlinkBase {
   public void Test000getVotingSelf() throws Exception {
     Map<String, String> map = new HashMap<>();
     map.put("start","0");
-    map.put("limit","10");
+    map.put("limit","0");
     map.put("voter","TXTNcgJHD9GPfpiTbSG2VGtfdfii9VcpEr");
     boolean re = TronlinkApiList.getVoteSelfFromTronscan(map);
     if(!re){
-      System.out.println("* * * * * * * tronscan get vote self error * * * * * *");
+      System.out.println("* * * * * * * tronscan get vote self total * * * * * *");
+    }
+
+    map.put("limit","10");
+    re = TronlinkApiList.getVoteSelfFromTronscan(map);
+    if(!re){
+      System.out.println("* * * * * * * tronscan get vote self data  * * * * * *");
     }
 
 
@@ -39,9 +45,9 @@ public class VotingSelf extends TronlinkBase {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     Assert.assertTrue(responseContent.containsKey("total"));
-//    Assert.assertTrue(responseContent.getLongValue("total")>0);
+    Assert.assertTrue(responseContent.getLongValue("total")>0);
     Assert.assertTrue(responseContent.containsKey("totalVotes"));
-//    Assert.assertTrue(responseContent.getLongValue("totalVotes")>0);
+    Assert.assertTrue(responseContent.getLongValue("totalVotes")>0);
     Assert.assertTrue(responseContent.containsKey("data"));
     responseArrayContent = responseContent.getJSONArray("data");
 

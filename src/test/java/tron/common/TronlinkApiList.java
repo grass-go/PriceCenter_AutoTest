@@ -190,8 +190,7 @@ public class TronlinkApiList {
             || !(responseContent.getLongValue("total") > 0)
             || !(responseContent.containsKey("totalVotes"))
             || !(responseContent.getLongValue("totalVotes") > 0)
-            || !(responseContent.containsKey("data"))
-            || !(responseContent.getJSONArray("data").size() > 0)) {
+            || !(responseContent.containsKey("data"))) {
       return false;
     }
     return true;
