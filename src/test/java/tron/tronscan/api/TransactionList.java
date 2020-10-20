@@ -337,7 +337,7 @@ public class TransactionList {
       Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
       Assert.assertTrue(patternAddress.matcher(exchangeArray.getJSONObject(i).getString("creatorAddress")).matches());
       //confirmed
-      Assert.assertTrue(Boolean.valueOf(exchangeArray.getJSONObject(i).getString("confirmed")));
+      Assert.assertTrue(exchangeArray.getJSONObject(i).containsKey("confirmed"));
     }
   }
 
