@@ -52,6 +52,8 @@ public class MarketBanner {
 
     }
 
+    Thread.sleep(3000);
+
     response = TronlinkApiList.walletMarketBanner();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
