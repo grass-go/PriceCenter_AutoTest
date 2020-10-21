@@ -160,6 +160,56 @@ public class TokenOverview {
       }
     }
   }
+
+  /**
+   * constructor.获取TRC20 Token
+   * 按照field=contractAddress后只返回部分字段
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "查询通证列表")
+  public void getTokenOverview03() {
+    //Get response
+    int limit = 20;
+    Map<String, String> params = new HashMap<>();
+    params.put("sort", "priceInTrx");
+    params.put("limit", String.valueOf(limit));
+    params.put("start", "0");
+    params.put("filter", "trc20");
+    params.put("field", "contractAddress");
+    response = TronscanApiList.getTokenOverview(tronScanNode, params);
+    log.info("code is " + response.getStatusLine().getStatusCode());
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+    //data object
+    Assert.assertTrue(responseContent.size() >= 7);
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long totalAll = Long.valueOf(responseContent.get("totalAll").toString());
+    Assert.assertTrue(totalAll >= total);
+    Long all = Long.valueOf(responseContent.get("all").toString());
+    Long valueAtLeast = Long.valueOf(responseContent.get("valueAtLeast").toString());
+    Assert.assertTrue(all >= valueAtLeast);
+    Assert.assertTrue(Long.valueOf(valueAtLeast) == 10000);
+    Long currentWeekAll = Long.valueOf(responseContent.get("currentWeekAll").toString());
+    Long currentWeekTotalAll = Long.valueOf(responseContent.get("currentWeekTotalAll").toString());
+    Assert.assertTrue(currentWeekAll >= currentWeekTotalAll);
+
+    JSONArray exchangeArray = responseContent.getJSONArray("tokens");
+    for (int i = 0; i < exchangeArray.size(); i++) {
+      //imgUrl
+      String imgUrl_key = exchangeArray.getJSONObject(i).get("imgUrl").toString();
+      Assert.assertTrue(!imgUrl_key.isEmpty());
+      HttpResponse httpResponse = TronscanApiList.getUrlkey(imgUrl_key);
+      Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("name").toString().isEmpty());
+      Assert.assertTrue(!exchangeArray.getJSONObject(i).get("abbr").toString().isEmpty());
+      Integer decimals = Integer.valueOf(exchangeArray.getJSONObject(i).get("decimal").toString());
+      Assert.assertTrue(decimals >= 0 && decimals <= 18);
+      Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
+      String contractAddress = exchangeArray.getJSONObject(i).getString("contractAddress");
+      Assert.assertTrue(patternAddress.matcher(contractAddress).matches() && !contractAddress.isEmpty());
+
+    }
+  }
   /**
    * constructor.
    */
