@@ -2358,6 +2358,22 @@ public class TronscanApiList {
         }
         return response;
     }
+
+    /**
+     * constructor.
+     * 最佳数据表-合约
+     */
+    public static HttpResponse getTop10(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/top10";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
     /**
      * constructor.
      */
