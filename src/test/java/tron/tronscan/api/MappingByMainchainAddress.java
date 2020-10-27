@@ -24,13 +24,15 @@ public class MappingByMainchainAddress {
     private JSONObject targetContent;
     private HttpResponse response;
     private String tronScanNode = Configuration.getByPath("testng.conf")
-            .getStringList("tronexapi.ip.list")
+            .getStringList("tronscan.ip.list")
             .get(0);
 
+//    目前是没有从主链到侧链的测试入口
     /**
+     *
      * constructor.根据主链地址获取侧链地址
      */
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "根据主链地址获取侧链地址")
+    @Test(enabled = false,retryAnalyzer = MyIRetryAnalyzer.class,description = "根据主链地址获取侧链地址")
     public void getByMainchain() {
         String mainchainAddress = "TTT2UVAa28scLpN6zmJUGeJNWV3kSLScKN";
         String sidechainAddress01 = "TM9d82tZmUzWFrM7C8wMjcXYPNhxB8zVtR";
@@ -66,7 +68,7 @@ public class MappingByMainchainAddress {
     /**
      * constructor.根据侧链地址获取主链地址
      */
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "根据侧链地址获取主链地址")
+    @Test(enabled = false,retryAnalyzer = MyIRetryAnalyzer.class,description = "根据侧链地址获取主链地址")
     public void getBySidechain() {
         String sidechainAddress = "TM9d82tZmUzWFrM7C8wMjcXYPNhxB8zVtR";
         String mainchainAddress01 = "TTT2UVAa28scLpN6zmJUGeJNWV3kSLScKN";
