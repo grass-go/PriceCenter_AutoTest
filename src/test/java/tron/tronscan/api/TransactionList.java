@@ -473,6 +473,8 @@ public class TransactionList {
    * 20币的交易数据统计
    * 账户地址下的20币带有交易，交易列表不为空
    */
+  //目前是在对于产品设计来说，这个接口查询的数据是为空的，现在是将20token的查询改为查询转账数据
+
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "查询个人账户页下20token上交易列表")
   public void getTransaction_token20() {
     Map<String, String> Params = new HashMap<>();

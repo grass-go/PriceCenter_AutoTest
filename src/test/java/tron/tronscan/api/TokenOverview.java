@@ -139,8 +139,10 @@ public class TokenOverview {
       //imgUrl
       String imgUrl_key = exchangeArray.getJSONObject(i).get("imgUrl").toString();
       Assert.assertTrue(!imgUrl_key.isEmpty());
-      HttpResponse httpResponse = TronscanApiList.getUrlkey(imgUrl_key);
-      Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
+      if(imgUrl_key.substring(0, 8) == "https://") {
+        HttpResponse httpResponse = TronscanApiList.getUrlkey(imgUrl_key);
+        Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
+      }
       //nrOfTokenHolders
       Assert.assertTrue(!exchangeArray.getJSONObject(i).get("nrOfTokenHolders").toString().isEmpty());
       //isTop
