@@ -111,6 +111,19 @@ public class TronlinkApiList {
     return response;
   }
 
+  public static HttpResponse getInterChainEvent(HashMap<String, String> param) throws Exception{
+    final String requestUrl = HttpNode + "/api/interchain-event";
+    URIBuilder builder = new URIBuilder(requestUrl);
+    if (param != null) {
+      for (String key : param.keySet()) {
+        builder.addParameter(key, param.get(key));
+      }
+    }
+    URI uri = builder.build();
+    response = createGetConnect(uri);
+    return response;
+  }
+
   public static HttpResponse apiTransferTrx(HashMap<String, String> param) throws Exception{
     final String requestUrl = HttpNode + "/api/transfer/trx";
     URIBuilder builder = new URIBuilder(requestUrl);
