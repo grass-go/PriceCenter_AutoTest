@@ -25,4 +25,10 @@
                     <package name="tron.trongrid.trongridCase.*"></package>
                 </packages>
     </test>
+    <test name="trongridAPI-v1event">
+        <parameter name="trongridUrl" value="https://v1event.trongrid.io/"/>
+        <packages>
+            <package name="tron.trongrid.trongridCase.V1API.*"></package>
+        </packages>
+    </test>
 </suite>
