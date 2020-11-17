@@ -3,13 +3,6 @@ package tron.common;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
-import java.nio.charset.Charset;
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -21,6 +14,14 @@ import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
 import tron.common.utils.Configuration;
+
+import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Slf4j
@@ -1891,7 +1892,19 @@ public class TronscanApiList {
      */
     public static HttpResponse getStatistics(String tronscanNode) {
         try {
-            String requestUrl = "http://" + tronscanNode + "api/transfer/statistics";
+            String requestUrl = "https://" + tronscanNode + "api/transfer/statistics";
+            response = createGetConnect(requestUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse getTransactionStatistics(String tronscanNode) {
+        try {
+            String requestUrl = "https://" + tronscanNode + "api/transaction/statistics";
             response = createGetConnect(requestUrl);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1906,7 +1919,7 @@ public class TronscanApiList {
      */
     public static HttpResponse getTrc10trc20(String tronscanNode,Map<String, String> params) {
         try {
-            String requestUrl = "http://" + tronscanNode + "api/trc10trc20-transfer";
+            String requestUrl = "httpS://" + tronscanNode + "api/trc10trc20-transfer";
             response = createGetConnect(requestUrl,params);
         } catch (Exception e) {
             e.printStackTrace();
