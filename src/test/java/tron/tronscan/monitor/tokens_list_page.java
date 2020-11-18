@@ -183,7 +183,7 @@ public class tokens_list_page {
             Assert.assertTrue(!exchangeArray.getJSONObject(i).get("supply").toString().isEmpty());
             //imgUrl
             String imgUrl_key = exchangeArray.getJSONObject(i).get("imgUrl").toString();
-            Assert.assertTrue(!imgUrl_key.isEmpty());
+//            Assert.assertTrue(!imgUrl_key.isEmpty());
 //            HttpResponse httpResponse = TronscanApiList.getUrlkey(imgUrl_key);
 //            Assert.assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);
             //nrOfTokenHolders
