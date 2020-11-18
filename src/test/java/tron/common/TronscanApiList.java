@@ -1950,7 +1950,7 @@ public class TronscanApiList {
      */
     public static HttpResponse getOverView_usage(String tronscanNode,Map<String, String> params) {
         try {
-            String requestUrl = "http://" + tronscanNode + "api/stats/overview";
+            String requestUrl = "https://" + tronscanNode + "api/stats/overview";
             System.out.println(requestUrl);
             response = createGetConnect(requestUrl,params);
         } catch (Exception e) {
