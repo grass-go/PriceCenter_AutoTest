@@ -32,7 +32,7 @@ public class TransactionList {
 
   /**
    * constructor. limit不为零
-   * 根据地址查询出合约下的交易，当前地址显示rangeTotal大于10000条时，目前total只展示10000条
+   * 根据地址查询出账户下的交易，当前地址显示rangeTotal大于10000条时，目前total只展示10000条
    * 账户页下的交易界面
    * 未做筛选，total首页展示20条数据
    */
@@ -78,13 +78,15 @@ public class TransactionList {
       Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
     }
   }
+
+  //该功能搜索框前端已去掉
   /**
    * constructor. limit不为零
-   * 根据地址查询出合约下的交易，当前地址显示rangeTotal大于10000条时，目前total只展示10000条
+   * 根据地址查询出账户下的交易，当前地址显示rangeTotal大于10000条时，目前total只展示10000条
    * 账户页下的交易界面
    * 当前hash是当前账户地址内部交易页面中的hash数据，查询出来的数据有且只有一条
    */
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
+  @Test(enabled = false,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
   public void test01getBlockDetail02() {
     //Get response
     String keyword = "334fadcf1465237ea09e10f3f38873a4c5b445fdaf725d44266c8760090120fe";
@@ -133,13 +135,15 @@ public class TransactionList {
       Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
 
   }
+
+  //该功能搜索框前端已去掉
   /**
    * constructor. limit不为零
-   * 根据地址查询出合约下的交易，当前地址显示rangeTotal大于10000条时，目前total只展示10000条
+   * 根据地址查询出账户下的交易，当前地址显示rangeTotal大于10000条时，目前total只展示10000条
    * 账户页下的交易界面
    * 按地址搜索
    */
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
+  @Test(enabled = false,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
   public void test01getBlockDetail03() {
     //Get response
 //    String keyword = "";
@@ -214,6 +218,7 @@ public class TransactionList {
     Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
     Assert.assertTrue(rangeTotal >= total && total >0);
     responseArrayContent = responseContent.getJSONArray("data");
+    Assert.assertTrue(total == responseArrayContent.size());
     for (int i = 0; i < responseArrayContent.size(); i++) {
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("hash"));
       String hash_key = responseArrayContent.getJSONObject(i).getString("hash");
@@ -239,11 +244,13 @@ public class TransactionList {
       Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
     }
   }
+
+  //该功能搜索框前端已去掉
   /**
    * constructor. limit为零
    * 搜索中输入错误的数据，查询出来的数据为空
    */
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
+  @Test(enabled = false,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
   public void test02getBlockDetail05() {
     //Get response
     Map<String, String> Params = new HashMap<>();
@@ -293,6 +300,9 @@ public class TransactionList {
     Long total = Long.valueOf(responseContent.get("total").toString());
     Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
     Assert.assertTrue(rangeTotal == total && total==0);
+    responseArrayContent = responseContent.getJSONArray("data");
+    //total应与data中的个数一致
+    Assert.assertTrue(total == responseArrayContent.size());
     Assert.assertTrue(responseContent.containsKey("data"));
     Assert.assertTrue(responseContent.containsKey("wholeChainTxCount"));
     Assert.assertTrue(responseContent.containsKey("contractMap"));
