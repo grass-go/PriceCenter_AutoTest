@@ -209,7 +209,7 @@ public class TokensList {
     Assert.assertTrue(responseContent.containsKey("percent_change_24h"));
     Assert.assertTrue(Double.valueOf(responseContent.get("price_in_usd").toString()) > 0);
     Assert.assertTrue(Double.valueOf(responseContent.get("volume_24h").toString()) > 0);
-    Assert.assertTrue(Double.valueOf(responseContent.get("percent_change_7d").toString()) > 0);
+    Assert.assertTrue(responseContent.containsKey("percent_change_7d"));
   }
 
   /**

@@ -59,6 +59,8 @@ public class VoteWitnesses {
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("lastCycleVotes"));
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("realTimeVotes"));
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("votesPercentage"));
+      //annualizedRate
+      Assert.assertTrue(Double.valueOf(responseArrayContent.getJSONObject(i).get("annualizedRate").toString()) >= 0);
       //包含非url形式
       String url_key = responseArrayContent.getJSONObject(i).get("url").toString();
       Assert.assertTrue(!url_key.isEmpty());
@@ -84,6 +86,7 @@ public class VoteWitnesses {
 
   /**
    * constructor.
+   * 投票中无查询地址，则查询数据为空
    */
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "地址的witness查询")
   public void getVoteWitness() {

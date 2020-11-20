@@ -48,6 +48,22 @@ task tronscan(type: Test) {
     }
 
 }
+
+task tronscanMonitor(type: Test) {
+
+    useTestNG {
+        suites(file('src/test/resources/testng_tronscanMonitor.xml'))
+        parallel 'tests'
+        threadCount 1
+
+    }
+    testLogging {
+        exceptionFormat = 'full'
+        showStackTraces = "true"
+    }
+
+}
+
 task tronscanApi(type: Test) {
 
     useTestNG {

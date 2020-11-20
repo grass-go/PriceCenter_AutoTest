@@ -64,7 +64,7 @@ public class trc20TransactionInfoByAddress extends V1Base {
     getTrc20TransactionInfoByAddressBody = getTrc20TransactionInfoByAddress(queryAddressBase64With41Start,false,true);
     Assert.assertEquals(getTrc20TransactionInfoByAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getTrc20TransactionInfoByAddressBody.containsKey("meta"));
-    Assert.assertTrue(getTrc20TransactionInfoByAddressBody.getJSONArray("data").getJSONObject(0).containsKey("detail"));
+//    Assert.assertTrue(getTrc20TransactionInfoByAddressBody.getJSONArray("data").getJSONObject(0).containsKey("detail"));
   }
 
 

@@ -326,10 +326,38 @@ public class TransfersToken_trc20 {
     Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
     Assert.assertTrue(rangeTotal == total && total==0);
     //token_transfers object
-    Assert.assertTrue(responseContent.containsKey("token_transfers"));
-
+    responseArrayContent = responseContent.getJSONArray("token_transfers");
+    Assert.assertTrue(responseArrayContent.size() == 0);
   }
 
+  /**
+   * constructor.
+   * 合约下的TRC20转账
+   * 按账户页中TRC20转账中地址查询
+   * limit=0时，token_transfers中的个数，数据保持一致为0
+   */
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "List the transactions related to a specified account")
+  public void test01getBlockDetail08() {
+    //Get response
+    Map<String, String> params = new HashMap<>();
+    params.put("limit", "0");
+    params.put("start", "0");
+    params.put("relatedAddress", contractAddress);
+    params.put("sort","-timestamp");
+    params.put("count","true");
+    response = TronscanApiList.getTransfersTrc20List(tronScanNode, params);
+    log.info("code is " + response.getStatusLine().getStatusCode());
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronscanApiList.parseResponseContent(response);
+    TronscanApiList.printJsonContent(responseContent);
+    //
+    Long total = Long.valueOf(responseContent.get("total").toString());
+    Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+    Assert.assertTrue(rangeTotal > 0 && total>=0);
+    //token_transfers object
+    responseArrayContent = responseContent.getJSONArray("token_transfers");
+    Assert.assertTrue(responseArrayContent.size() == 0);
+  }
   /**
    * constructor.
    * 合约下的TRC20转账

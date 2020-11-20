@@ -129,8 +129,8 @@ public class HomepageList {
     public void getFreezeresource() {
         //Get response
         Map<String, String> Params = new HashMap<>();
-        Params.put("start_day", "2020-06-07");
-        Params.put("end_day","2020-06-20");
+        Params.put("start_day", "");
+        Params.put("end_day","");
         response = TronscanApiList.getFreezeresource(tronScanNode,Params);
         log.info("code is " + response.getStatusLine().getStatusCode());
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
