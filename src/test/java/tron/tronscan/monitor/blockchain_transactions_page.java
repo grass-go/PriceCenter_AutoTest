@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import tron.common.TronscanApiList;
 import tron.common.utils.Configuration;
 import tron.common.utils.MyIRetryAnalyzer;
+import tron.common.utils.RetryTronscanMonitor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +27,10 @@ public class blockchain_transactions_page {
             .getStringList("tronscan.ip.list").get(0);
     private String accountAddress = Configuration.getByPath("testng.conf")
             .getString("defaultParameter.accountAddress");
+    String url = "https://tronscan.org/#/blockchain/transactions";
 
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "区块链-交易")
+    @Test(enabled = true,retryAnalyzer = RetryTronscanMonitor.class, description = "区块链-交易")
     public void blockchain_transactions_page() {
         //Get response
         int end_time = (int) (System.currentTimeMillis() / 1000) ;
@@ -42,6 +44,7 @@ public class blockchain_transactions_page {
         Params.put("end_timestamp",end_timestamp);
         response = TronscanApiList.getTransactionList(tronScanNode, Params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 100);
         responseContent = TronscanApiList.parseResponseContent(response);
         TronscanApiList.printJsonContent(responseContent);
 
