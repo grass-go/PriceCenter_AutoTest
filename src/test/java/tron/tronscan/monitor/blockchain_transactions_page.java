@@ -44,7 +44,6 @@ public class blockchain_transactions_page {
         Params.put("end_timestamp",end_timestamp);
         response = TronscanApiList.getTransactionList(tronScanNode, Params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 100);
         responseContent = TronscanApiList.parseResponseContent(response);
         TronscanApiList.printJsonContent(responseContent);
 
