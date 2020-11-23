@@ -155,7 +155,7 @@ public class blockchain_transfers_page {
         Assert.assertTrue(responseContent.containsKey("trc10TransferCount"));
         Assert.assertTrue(responseContent.containsKey("lastDayTransfersCount"));
         Assert.assertTrue(responseContent.containsKey("trxTransferCount"));
-        Assert.assertTrue((rangeTotal - responseContent.getLong("transfersCount")) < 1000);
+        Assert.assertTrue((rangeTotal - responseContent.getLong("transfersCount")) < 300000);
         Assert.assertTrue(Double.valueOf(responseContent.get("trc20Amount").toString()) > 10000);
         Assert.assertTrue(Double.valueOf(responseContent.get("transfersCount").toString()) > 336422769);
         Assert.assertTrue(Double.valueOf(responseContent.get("trc10TransferProportion").toString()) > 0);
