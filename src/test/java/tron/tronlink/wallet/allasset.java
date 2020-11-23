@@ -19,7 +19,7 @@ public class allasset {
       .get(0);
 
   @Test(enabled = true)
-  public void dapp_classify(){
+  public void Test000GetAllAsset(){
 
     response = TronlinkApiList.allasset("TAVNk5hkaPNJcTf6TvJVgBWEaRhuiHE5Ab");
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
