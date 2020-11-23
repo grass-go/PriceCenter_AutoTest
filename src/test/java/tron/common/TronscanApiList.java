@@ -1917,9 +1917,33 @@ public class TronscanApiList {
     /**
      * constructor.支持按时间段返回数据。
      */
+    public static HttpResponse getTrc20(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "httpS://" + tronscanNode + "api/token_trc20/transfers";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
     public static HttpResponse getTrc10trc20(String tronscanNode,Map<String, String> params) {
         try {
-            String requestUrl = "httpS://" + tronscanNode + "api/trc10trc20-transfer";
+            String requestUrl = "httpS://" + tronscanNode + "api/token_trc20";
+            response = createGetConnect(requestUrl,params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse getTransfer(String tronscanNode,Map<String, String> params) {
+        try {
+            String requestUrl = "httpS://" + tronscanNode + "api/transfer";
             response = createGetConnect(requestUrl,params);
         } catch (Exception e) {
             e.printStackTrace();
