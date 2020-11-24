@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -583,6 +584,7 @@ public static HttpResponse search(Map<String, String> params) {
         entity.setContentType("application/json");
         httppost.setEntity(entity);
       }
+      System.out.println(httppost.toString());
       SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
       System.out.println("请求开始时间： " + formatter.format(new Date()));
       response = httpClient.execute(httppost);
@@ -619,6 +621,7 @@ public static HttpResponse search(Map<String, String> params) {
         httppost.setEntity(entity);
       }
       SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
+      System.out.println(httppost.toString());
       System.out.println("请求开始时间： " + formatter.format(new Date()));
       response = httpClient.execute(httppost);
       System.out.println("请求结束时间： " + formatter.format(new Date()));
@@ -641,6 +644,7 @@ public static HttpResponse search(Map<String, String> params) {
       httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
           connectionTimeout);
       httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+      log.info("url: " +uri.toString());
       httpGet = new HttpGet(uri);
       httpGet.setHeader("Content-type", "application/json; charset=utf-8");
       httpGet.setHeader("Connection", "Close");
@@ -711,8 +715,10 @@ public static HttpResponse search(Map<String, String> params) {
       httpget.addHeader("System","Android");
       httpget.setHeader("Content-type", "application/json; charset=utf-8");
       httpget.setHeader("Connection", "Keep-Alive");
-//      SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-//      System.out.println("请求开始时间： "+formatter.format(new Date()));
+      Header[] allHeaders = httpget.getAllHeaders();
+      for (int i = 0; i < allHeaders.length; i++) {
+        System.out.println(allHeaders[i]);
+      }
       Instant startTime = Instant.now();
       response = httpClient.execute(httpget);
       Instant endTime = Instant.now();
@@ -819,6 +825,10 @@ public static HttpResponse search(Map<String, String> params) {
       httppost.addHeader("chain","MainChain");
       httppost.addHeader("packageName","com.tronlinkpro.wallet");
       httppost.addHeader("System","Android");
+      Header[] allHeaders = httppost.getAllHeaders();
+      for (int i = 0; i < allHeaders.length; i++) {
+        System.out.println(allHeaders[i]);
+      }
       if (requestBody != null) {
         StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
         entity.setContentEncoding("UTF-8");
@@ -856,6 +866,7 @@ public static HttpResponse search(Map<String, String> params) {
       httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
           connectionTimeout);
       httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+      log.info("url: " + uri.toString());
       httpGet = new HttpGet(uri);
       httpGet.setHeader("Content-type", "application/json; charset=utf-8");
       httpGet.setHeader("Connection", "Close");
