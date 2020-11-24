@@ -47,7 +47,7 @@ public class votes_page {
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("hasPage").isEmpty());
             Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("address")).matches());
             Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("name"));
-            Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("changeVotes") != 0);
+            Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("changeVotes") > 0);
             Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("lastRanking") > 0);
             Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("change_cycle"));
             Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("realTimeRanking") > 0);
