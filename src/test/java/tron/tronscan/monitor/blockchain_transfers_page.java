@@ -129,7 +129,6 @@ public class blockchain_transfers_page {
             Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("from_address")).matches());
             Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("to_address")).matches());
             Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("contract_address")).matches());
-            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenAbbr").isEmpty());
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("confirmed").isEmpty());
             Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).getString("block")) > 10000000);
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("contractRet").isEmpty());
