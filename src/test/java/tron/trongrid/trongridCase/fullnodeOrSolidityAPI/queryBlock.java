@@ -50,6 +50,7 @@ public class queryBlock extends fullOrSolidityBase {
   public void test02GetBlockByNumFromTrongrid() {
     response = getBlockByNum(curBlockNum,false);
     JSONObject getBlockByNumJsonBody = parseResponseContent(response);
+    printJsonContent(getBlockByNumJsonBody);
     Assert.assertTrue(fullOrSolidityBase.compareJsonObject(getBlockByNumJsonBody,getNowBlockJsonBody));
   }
 
@@ -60,6 +61,7 @@ public class queryBlock extends fullOrSolidityBase {
   public void test03GetBlockByIdFromTrongrid() {
     response = getBlockById(blockId);
     JSONObject getBlockByIdJsonBody = parseResponseContent(response);
+    printJsonContent(getBlockByIdJsonBody);
     Assert.assertTrue(fullOrSolidityBase.compareJsonObject(getBlockByIdJsonBody,getNowBlockJsonBody));
   }
 
@@ -70,6 +72,7 @@ public class queryBlock extends fullOrSolidityBase {
   public void test04GetBlockByLatestNumFromTrongrid() {
     response = getBlockByLatestNum(latestNum);
     responseContent = parseResponseContent(response);
+    printJsonContent(responseContent);
     JSONArray getBlockByLatestNumJsonBody = responseContent.getJSONArray("block");
     Assert.assertTrue(getBlockByLatestNumJsonBody.size() == latestNum);
     System.out.println("-----------------------------------------------------------");
@@ -84,6 +87,7 @@ public class queryBlock extends fullOrSolidityBase {
   public void test05GetBlockByLimitNextFromTrongrid() {
     response = getBlockByLimitNext(curBlockNum - LimitNextRange, curBlockNum + 1);
     responseContent = parseResponseContent(response);
+    printJsonContent(responseContent);
     JSONArray getBlockByLimitNextJsonBody = responseContent.getJSONArray("block");
     System.out.println("getBlockByLimitNextJsonBody.size():" + getBlockByLimitNextJsonBody.size());
     Assert.assertTrue(getBlockByLimitNextJsonBody.size() >= LimitNextRange);
@@ -123,6 +127,7 @@ public class queryBlock extends fullOrSolidityBase {
   public void test07GetBlockByNumFromTrongridSolidity() {
     response = getBlockByNum(curBlockNumFromSolidity,true);
     JSONObject getBlockByNumFromSolidityJsonBody = parseResponseContent(response);
+    printJsonContent(getBlockByNumFromSolidityJsonBody);
     Assert.assertTrue(fullOrSolidityBase.compareJsonObject(getBlockByNumFromSolidityJsonBody,getNowBlockFromSolidityJsonBody));
   }
 

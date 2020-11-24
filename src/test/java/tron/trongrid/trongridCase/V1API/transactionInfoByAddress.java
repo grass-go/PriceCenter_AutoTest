@@ -17,6 +17,7 @@ public class transactionInfoByAddress extends V1Base {
   @Test(enabled = true, description = "Get transaction info by address from trongrid V1 API")
   public void test01GetTransactionInfoByAddressFromTrongridV1() {
     getTransactionInfoByAddressBody = getTransactionInfoByAddress(queryAddress);
+    printJsonContent(getTransactionInfoByAddressBody);
     Assert.assertEquals(getTransactionInfoByAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getTransactionInfoByAddressBody.containsKey("meta"));
     transactionData = getTransactionInfoByAddressBody.getJSONArray("data").getJSONObject(0);
@@ -40,6 +41,7 @@ public class transactionInfoByAddress extends V1Base {
   @Test(enabled = true, description = "Get transaction info by address with only unconfirmed from trongrid V1 API")
   public void test02GetTransactionInfoByAddressWithOnlyUnconfirmedFromTrongridV1() {
     getTransactionInfoByAddressBody = getTransactionInfoByAddress(queryAddress,false,false,"");
+    printJsonContent(getTransactionInfoByAddressBody);
     Assert.assertEquals(getTransactionInfoByAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getTransactionInfoByAddressBody.containsKey("meta"));
     Assert.assertEquals(transactionData,getTransactionInfoByAddressBody.getJSONArray("data").getJSONObject(0));
@@ -51,6 +53,7 @@ public class transactionInfoByAddress extends V1Base {
   @Test(enabled = true, description = "Get transaction info by address with only unconfirmed from trongrid V1 API")
   public void test03GetTransactionInfoByAddressWithBase64AddressFromTrongridV1() {
     getTransactionInfoByAddressBody = getTransactionInfoByAddress(queryAddressBase64With41Start);
+    printJsonContent(getTransactionInfoByAddressBody);
     Assert.assertEquals(getTransactionInfoByAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getTransactionInfoByAddressBody.containsKey("meta"));
     Assert.assertEquals(transactionData,getTransactionInfoByAddressBody.getJSONArray("data").getJSONObject(0));
@@ -62,6 +65,7 @@ public class transactionInfoByAddress extends V1Base {
   @Test(enabled = true, description = "Get transaction info by address with Only VoteTx from trongrid V1 API")
   public void test04GetTransactionInfoByAddressWithOnlyVoteTxFromTrongridV1() {
     JSONObject body = getTransactionInfoByAddress(delegateResourceFromAddress,false,true,"");
+    printJsonContent(body);
     Assert.assertEquals(body.getBoolean("success"),true);
     Assert.assertTrue(body.containsKey("meta"));
     Assert.assertTrue(body.getJSONArray("data")
@@ -76,6 +80,7 @@ public class transactionInfoByAddress extends V1Base {
   @Test(enabled = true, description = "Get transaction info by address with token id from trongrid V1 API")
   public void test05GetTransactionInfoByAddressWithTokenIdFromTrongridV1() {
     JSONObject body = getTransactionInfoByAddress(queryAddress,false,false,"1002000");
+    printJsonContent(body);
     Assert.assertEquals(body.getBoolean("success"),true);
     Assert.assertTrue(body.containsKey("meta"));
     Assert.assertTrue(body.getJSONArray("data").size()>0);

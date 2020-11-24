@@ -26,6 +26,7 @@ public class eventByLatestBlock extends V1Base {
       Assert.assertTrue(getEventByLatestBlockBody.containsKey("meta"));
       Thread.sleep(3000);
     }
+    printJsonContent(getEventByLatestBlockBody);
     Assert.assertTrue(getEventByLatestBlockBody.getJSONArray("data").size() > 0);
     eventArray = getEventByLatestBlockBody.getJSONArray("data");
 
@@ -41,6 +42,7 @@ public class eventByLatestBlock extends V1Base {
   @Test(enabled = true, description = "Get event by latest block without confirmed from trongrid V1 API")
   public void test01GetEventByLatestBlockWithoutConfirmedFromTrongridV1() {
     getEventByLatestBlockBody = getEventByLatestBlockNumber(false);
+    printJsonContent(getEventByLatestBlockBody);
     Assert.assertEquals(getEventByLatestBlockBody.getBoolean("success"),true);
     Assert.assertTrue(getEventByLatestBlockBody.containsKey("meta"));
     Assert.assertTrue(getEventByLatestBlockBody.getJSONArray("data").size() >=0);

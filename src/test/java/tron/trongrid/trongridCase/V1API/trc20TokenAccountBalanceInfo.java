@@ -23,6 +23,7 @@ public class trc20TokenAccountBalanceInfo extends V1Base {
   @Test(enabled = true, description = "Get trc20 token account balance from trongrid V1 API")
   public void test01GetTrc20TokenAccountBalanceFromTrongridV1() {
     getTrc20TokenAccountBalanceInfoBody = getTrc20TokenAccountBalanceInfo(usdjContractBase64);
+    printJsonContent(getTrc20TokenAccountBalanceInfoBody);
     Assert.assertEquals(getTrc20TokenAccountBalanceInfoBody.getBoolean("success"),true);
     Assert.assertTrue(getTrc20TokenAccountBalanceInfoBody.containsKey("meta"));
     accountBalanceInfoData = getTrc20TokenAccountBalanceInfoBody.getJSONArray("data").getJSONObject(0);
@@ -39,6 +40,7 @@ public class trc20TokenAccountBalanceInfo extends V1Base {
   @Test(enabled = true, description = "Get trc20 token account balance with no confirmed from trongrid V1 API")
   public void test02GetTrc20TokenAccountBalanceWithNoConfirmedFromTrongridV1() {
     getTrc20TokenAccountBalanceInfoBody = getTrc20TokenAccountBalanceInfo(usdjContractBase64,false,"",20);
+    printJsonContent(getTrc20TokenAccountBalanceInfoBody);
     Assert.assertEquals(getTrc20TokenAccountBalanceInfoBody.getBoolean("success"),true);
     Assert.assertTrue(getTrc20TokenAccountBalanceInfoBody.containsKey("meta"));
     accountBalanceInfoData = getTrc20TokenAccountBalanceInfoBody.getJSONArray("data").getJSONObject(0);
@@ -56,6 +58,7 @@ public class trc20TokenAccountBalanceInfo extends V1Base {
   public void test03GetTrc20TokenAccountBalanceWithOrderbyFromTrongridV1() {
     getTrc20TokenAccountBalanceInfoBody = getTrc20TokenAccountBalanceInfo(usdjContractBase64,false,
         "balance,desc",20);
+    printJsonContent(getTrc20TokenAccountBalanceInfoBody);
     Assert.assertEquals(getTrc20TokenAccountBalanceInfoBody.getBoolean("success"),true);
     Assert.assertTrue(getTrc20TokenAccountBalanceInfoBody.containsKey("meta"));
     trc20TokenAccountArray = getTrc20TokenAccountBalanceInfoBody.getJSONArray("data");
@@ -76,6 +79,7 @@ public class trc20TokenAccountBalanceInfo extends V1Base {
 
     getTrc20TokenAccountBalanceInfoBody = getTrc20TokenAccountBalanceInfo(usdjContractBase64,false,
         "balance,asc",20);
+    printJsonContent(getTrc20TokenAccountBalanceInfoBody);
     Assert.assertEquals(getTrc20TokenAccountBalanceInfoBody.getBoolean("success"),true);
     Assert.assertTrue(getTrc20TokenAccountBalanceInfoBody.containsKey("meta"));
     trc20TokenAccountArray = getTrc20TokenAccountBalanceInfoBody.getJSONArray("data");
@@ -105,6 +109,7 @@ public class trc20TokenAccountBalanceInfo extends V1Base {
   public void test04GetTrc20TokenAccountBalanceWithLimitFromTrongridV1() {
     getTrc20TokenAccountBalanceInfoBody = getTrc20TokenAccountBalanceInfo(usdjContractBase64,false,
         "balance,desc",200);
+    printJsonContent(getTrc20TokenAccountBalanceInfoBody);
     Assert.assertEquals(getTrc20TokenAccountBalanceInfoBody.getBoolean("success"),true);
     Assert.assertTrue(getTrc20TokenAccountBalanceInfoBody.containsKey("meta"));
     trc20TokenAccountArray = getTrc20TokenAccountBalanceInfoBody.getJSONArray("data");

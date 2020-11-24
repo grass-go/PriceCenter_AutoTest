@@ -21,6 +21,7 @@ public class eventByTransactionId extends V1Base {
   @Test(enabled = true, description = "Get event by transaction id from trongrid V1 API")
   public void test01GetEventTransactionByIdFromTrongridV1() {
     getEventByTransactionIIdBody = getEventByTransactionId(eventTxid);
+    printJsonContent(getEventByTransactionIIdBody);
     Assert.assertEquals(getEventByTransactionIIdBody.getBoolean("success"),true);
     Assert.assertTrue(getEventByTransactionIIdBody.containsKey("meta"));
     Assert.assertTrue(getEventByTransactionIIdBody.getJSONArray("data").size()>=5);
@@ -41,6 +42,7 @@ public class eventByTransactionId extends V1Base {
   @Test(enabled = true, description = "Get event by transaction id with not only confirmed from trongrid V1 API")
   public void test02GetEventTransactionByIdWithNotOnlyConfirmedFromTrongridV1() {
     getEventByTransactionIIdBody = getEventByTransactionId(eventTxid,false);
+    printJsonContent(getEventByTransactionIIdBody);
     Assert.assertEquals(getEventByTransactionIIdBody.getBoolean("success"),true);
     Assert.assertTrue(getEventByTransactionIIdBody.containsKey("meta"));
     Assert.assertEquals(eventData,getEventByTransactionIIdBody.getJSONArray("data").getJSONObject(0));
@@ -53,6 +55,7 @@ public class eventByTransactionId extends V1Base {
   @Test(enabled = true, description = "Get event by block number from trongrid V1 API")
   public void test03GetEventByBlockNumberFromTrongridV1() {
     getEventByBlockNumberBody = getEventByBlockNumber(String.valueOf(eventBlockNumber),true);
+    printJsonContent(getEventByBlockNumberBody);
     Assert.assertEquals(getEventByBlockNumberBody.getBoolean("success"),true);
     Assert.assertTrue(getEventByBlockNumberBody.containsKey("meta"));
     JSONArray eventByblockNumberArray = getEventByBlockNumberBody.getJSONArray("data");

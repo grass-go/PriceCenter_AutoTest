@@ -18,7 +18,7 @@ public class getAccount extends fullOrSolidityBase {
     response = getAccount(queryAddress,false);
     responseContent = parseResponseContent(response);
     getAccountBody = responseContent;
-    //printJsonContent(responseContent);
+    printJsonContent(responseContent);
     Assert.assertTrue(responseContent.size() > 10);
     Assert.assertTrue(responseContent.getLong("balance") >  0);
     Assert.assertEquals(responseContent.getString("create_time"),"1588824369000");
@@ -31,7 +31,7 @@ public class getAccount extends fullOrSolidityBase {
   public void test01GetAccountFromTrongridSolidity() {
     response = getAccount(queryAddress,true);
     responseContent = parseResponseContent(response);
-    //printJsonContent(responseContent);
+    printJsonContent(responseContent);
     Assert.assertTrue(fullOrSolidityBase.compareJsonObject(responseContent,getAccountBody));
   }
 
