@@ -97,7 +97,7 @@ public class queryTrc10 extends fullOrSolidityBase {
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     JSONArray assetListFromSolidity = responseContent.getJSONArray("assetIssue");
-    Assert.assertTrue(fullOrSolidityBase.compareJsonArray(assetListFromSolidity,assetList));
+    Assert.assertTrue(fullOrSolidityBase.compareJsonWithKey("id",assetListFromSolidity,assetList));
   }
 
   /**

@@ -127,6 +127,39 @@ public class fullOrSolidityBase {
     return true;
   }
 
+  public static boolean compareJsonWithKey(String key,JSONArray target,JSONArray source) {
+
+    if (target == null || source ==null || (target.size() != source.size())){
+      System.out.println("====from compareJsonWithKey 0000  target.size: "+target.size()+"  source.size:"+source.size());
+      return false;
+    }
+
+    int size = target.size();
+    int size1 = source.size();
+
+    for (int i=0;i<size;i++){
+      JSONObject ob = target.getJSONObject(i);
+      boolean flag = false;
+      for (int j=0;j<size1;j++){
+        JSONObject ob1 = source.getJSONObject(j);
+        if(ob.getString(key) != null &&!(ob.getString(key).equals("")) && ((ob.getString(key)).equals(ob1.getString(key)))){
+          if(ob.size() !=ob1.size()){
+            System.out.println("====from compareJsonWithKey 1111 asset size not equal  id: "+ob.getString(key));
+            return false;
+          }
+          for(String s: ob.keySet()){
+            if (!((ob.getString(s)).equals(ob1.getString(s)))){
+              System.out.println("====from compareJsonWithKey 2222 asset one key with diff value !!  key: "+s
+                      +"\n  value-tar: "+ob.getString(s) +" \n value-sour: "+ob1.getString(s));
+              return false;
+            }
+          }
+        }
+      }
+    }
+    return true;
+  }
+
   /**
    * whether the jsonarray has the jsonobject(key order not care)
    * @param ja
