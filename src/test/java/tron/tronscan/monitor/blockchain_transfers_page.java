@@ -127,10 +127,8 @@ public class blockchain_transfers_page {
             Assert.assertTrue(Double.valueOf(responseArrayContent.getJSONObject(i).getString("quant")) >=0);
             Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
             Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("from_address")).matches());
-            Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("tokenId")).matches());
             Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("to_address")).matches());
             Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("contract_address")).matches());
-            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenType").isEmpty());
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenAbbr").isEmpty());
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("confirmed").isEmpty());
             Assert.assertTrue(Long.valueOf(responseArrayContent.getJSONObject(i).getString("block")) > 10000000);
