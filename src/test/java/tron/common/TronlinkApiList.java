@@ -534,9 +534,8 @@ public static HttpResponse search(Map<String, String> params) {
         httppost.setEntity(entity);
       }
       SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-      System.out.println("请求开始时间： " + formatter.format(new Date()));
+      System.out.println("url: " + httppost.toString() + "\n params:"+requestBody);
       response = httpClient.execute(httppost);
-      System.out.println("请求结束时间： " + formatter.format(new Date()));
     } catch (Exception e) {
       e.printStackTrace();
       httppost.releaseConnection();
@@ -584,11 +583,9 @@ public static HttpResponse search(Map<String, String> params) {
         entity.setContentType("application/json");
         httppost.setEntity(entity);
       }
-      System.out.println(httppost.toString());
+      System.out.println("url: "+httppost.toString() + "\n params: "+requestBody.toString());
       SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-      System.out.println("请求开始时间： " + formatter.format(new Date()));
       response = httpClient.execute(httppost);
-      System.out.println("请求结束时间： " + formatter.format(new Date()));
     } catch (Exception e) {
       e.printStackTrace();
       httppost.releaseConnection();
@@ -612,6 +609,7 @@ public static HttpResponse search(Map<String, String> params) {
       if(header != null){
         for(String key: header.keySet()){
           httppost.setHeader(key,header.get(key));
+          System.out.println(key+": "+header.get(key));
         }
       }
       if (requestBody != null) {
@@ -621,10 +619,8 @@ public static HttpResponse search(Map<String, String> params) {
         httppost.setEntity(entity);
       }
       SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-      System.out.println(httppost.toString());
-      System.out.println("请求开始时间： " + formatter.format(new Date()));
+      System.out.println("url: "+httppost.toString()+"\nparams: "+requestBody.toString());
       response = httpClient.execute(httppost);
-      System.out.println("请求结束时间： " + formatter.format(new Date()));
     } catch (Exception e) {
       e.printStackTrace();
       httppost.releaseConnection();
@@ -724,7 +720,6 @@ public static HttpResponse search(Map<String, String> params) {
       Instant endTime = Instant.now();
       requestTime = Duration.between(startTime, endTime).toMillis();
       System.out.println(url + " 请求总耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
-//      System.out.println("请求结束时间： "+formatter.format(new Date()));
     } catch (Exception e) {
       e.printStackTrace();
       httpget.releaseConnection();
@@ -825,17 +820,20 @@ public static HttpResponse search(Map<String, String> params) {
       httppost.addHeader("chain","MainChain");
       httppost.addHeader("packageName","com.tronlinkpro.wallet");
       httppost.addHeader("System","Android");
-      Header[] allHeaders = httppost.getAllHeaders();
-      for (int i = 0; i < allHeaders.length; i++) {
-        System.out.println(allHeaders[i]);
-      }
       if (requestBody != null) {
         StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
         entity.setContentEncoding("UTF-8");
         entity.setContentType("application/json");
         httppost.setEntity(entity);
       }
-      System.out.println(httppost.toString());
+      System.out.println("url:"+httppost.toString());
+      if(requestBody != null){
+        System.out.println("params: "+requestBody.toJSONString());
+      }
+      Header[] allHeaders = httppost.getAllHeaders();
+      for (int i = 0; i < allHeaders.length; i++) {
+        System.out.println(allHeaders[i]);
+      }
       response = httpClient.execute(httppost);
     } catch (Exception e) {
       e.printStackTrace();
@@ -872,6 +870,7 @@ public static HttpResponse search(Map<String, String> params) {
       httpGet.setHeader("Connection", "Close");
       for (HashMap.Entry<String,String> entry : header.entrySet()){
         httpGet.setHeader(entry.getKey(),entry.getValue());
+        System.out.println(entry.getKey() + ":" + entry.getValue());
       }
       response = httpClient.execute(httpGet);
     } catch (Exception e) {
