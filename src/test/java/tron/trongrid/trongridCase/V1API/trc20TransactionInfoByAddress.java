@@ -17,6 +17,7 @@ public class trc20TransactionInfoByAddress extends V1Base {
   @Test(enabled = true, description = "Get trc20 transaction info by address from trongrid V1 API")
   public void test01GetTrc20TransactionInfoByAddressFromTrongridV1() {
     getTrc20TransactionInfoByAddressBody = getTrc20TransactionInfoByAddress(queryAddress);
+    printJsonContent(getTrc20TransactionInfoByAddressBody);
     Assert.assertEquals(getTrc20TransactionInfoByAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getTrc20TransactionInfoByAddressBody.containsKey("meta"));
     trc20TransactionData = getTrc20TransactionInfoByAddressBody.getJSONArray("data").getJSONObject(0);
@@ -40,6 +41,7 @@ public class trc20TransactionInfoByAddress extends V1Base {
   @Test(enabled = true, description = "Get trc20 transaction info by address with only confirmed false from trongrid V1 API")
   public void test02GetTrc20TransactionInfoByAddressWithOnlyUnconfirmedFromTrongridV1() {
     getTrc20TransactionInfoByAddressBody = getTrc20TransactionInfoByAddress(queryAddress,false,false);
+    printJsonContent(getTrc20TransactionInfoByAddressBody);
     Assert.assertEquals(getTrc20TransactionInfoByAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getTrc20TransactionInfoByAddressBody.containsKey("meta"));
     Assert.assertEquals(trc20TransactionData,getTrc20TransactionInfoByAddressBody.getJSONArray("data").getJSONObject(0));
@@ -51,6 +53,7 @@ public class trc20TransactionInfoByAddress extends V1Base {
   @Test(enabled = true, description = "Get trc20 transaction info by address with only confirmed from trongrid V1 API")
   public void test03GetTrc20TransactionInfoByAddressWithBase64AddressFromTrongridV1() {
     getTrc20TransactionInfoByAddressBody = getTrc20TransactionInfoByAddress(queryAddressBase64With41Start);
+    printJsonContent(getTrc20TransactionInfoByAddressBody);
     Assert.assertEquals(getTrc20TransactionInfoByAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getTrc20TransactionInfoByAddressBody.containsKey("meta"));
     Assert.assertEquals(trc20TransactionData,getTrc20TransactionInfoByAddressBody.getJSONArray("data").getJSONObject(0));
@@ -62,6 +65,7 @@ public class trc20TransactionInfoByAddress extends V1Base {
   @Test(enabled = true, description = "Get trc20 transaction info by address with get detail from trongrid V1 API")
   public void test04GetTrc20TransactionInfoByAddressWithGetDetailFromTrongridV1() {
     getTrc20TransactionInfoByAddressBody = getTrc20TransactionInfoByAddress(queryAddressBase64With41Start,false,true);
+    printJsonContent(getTrc20TransactionInfoByAddressBody);
     Assert.assertEquals(getTrc20TransactionInfoByAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getTrc20TransactionInfoByAddressBody.containsKey("meta"));
 //    Assert.assertTrue(getTrc20TransactionInfoByAddressBody.getJSONArray("data").getJSONObject(0).containsKey("detail"));

@@ -27,6 +27,7 @@ public class getBalance extends fullOrSolidityBase {
   public void test02GetTrc10BttBalanceTrongrid() {
     response = getAccount(queryAddress,false);
     responseContent = parseResponseContent(response);
+    printJsonContent(responseContent);
     JSONArray trc10_json = responseContent.getJSONArray("assetV2");
     Boolean hasBttBalance = false;
     for(int i = 0; i < trc10_json.size();i++) {

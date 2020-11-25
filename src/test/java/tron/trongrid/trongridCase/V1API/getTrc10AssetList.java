@@ -19,6 +19,7 @@ public class getTrc10AssetList extends V1Base {
   @Test(enabled = true, description = "Get asset list from trongrid V1 API")
   public void test01GetAssetListFromTrongridV1() {
     getAssetListBody = getAssetList();
+    printJsonContent(getAssetListBody);
     Assert.assertEquals(getAssetListBody.getBoolean("success"),true);
     Assert.assertTrue(getAssetListBody.containsKey("meta"));
     Assert.assertEquals(getAssetListBody.getJSONArray("data").size(),20);
@@ -44,6 +45,7 @@ public class getTrc10AssetList extends V1Base {
   @Test(enabled = true, description = "Get asset list with max limit from trongrid V1 API")
   public void test02GetAssetListWithMaxLimitFromTrongridV1() {
     getAssetListBody = getAssetList("",100,"");
+    printJsonContent(getAssetListBody);
     Assert.assertEquals(getAssetListBody.getBoolean("success"),true);
     Assert.assertTrue(getAssetListBody.containsKey("meta"));
     Assert.assertEquals(getAssetListBody.getJSONArray("data").size(),100);
@@ -57,6 +59,7 @@ public class getTrc10AssetList extends V1Base {
   @Test(enabled = true, description = "Get asset list with fingerprint from trongrid V1 API")
   public void test03GetAssetListWithFingerprintFromTrongridV1() {
     getAssetListBody = getAssetList("",20,fingerprint);
+    printJsonContent(getAssetListBody);
     Assert.assertEquals(getAssetListBody.getBoolean("success"),true);
     Assert.assertTrue(getAssetListBody.containsKey("meta"));
     Assert.assertEquals(getAssetListBody.getJSONArray("data").size(),20);
@@ -69,12 +72,14 @@ public class getTrc10AssetList extends V1Base {
   @Test(enabled = true, description = "Get asset list with order by from trongrid V1 API")
   public void test04GetAssetListWithOrderByFromTrongridV1() {
     getAssetListBody = getAssetList("id,asc",20,"");
+    printJsonContent(getAssetListBody);
     Assert.assertEquals(getAssetListBody.getBoolean("success"),true);
     Assert.assertTrue(getAssetListBody.containsKey("meta"));
     Assert.assertTrue(getAssetListBody.getJSONArray("data").getJSONObject(0).getInteger("id") == 1000001);
 
 
     getAssetListBody = getAssetList("id,desc",20,"");
+    printJsonContent(getAssetListBody);
     Assert.assertEquals(getAssetListBody.getBoolean("success"),true);
     Assert.assertTrue(getAssetListBody.containsKey("meta"));
     Assert.assertTrue(getAssetListBody.getJSONArray("data").getJSONObject(0).getInteger("id") >= 1003009);
