@@ -2,18 +2,16 @@ package tron.tronscan.monitor;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
+import tron.common.TronscanApiList;
+import tron.common.utils.Configuration;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
-
-import tron.common.TronscanApiList;
-import tron.common.utils.Configuration;
-import tron.common.utils.MyIRetryAnalyzer;
 
 public class tokens_list_page {
     private final String foundationKey = Configuration.getByPath("testng.conf")

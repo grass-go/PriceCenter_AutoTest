@@ -56,7 +56,7 @@ public class queryTrc10 extends fullOrSolidityBase {
   public void test03GetAssetIssueListFromTrongrid() {
     response = getAssetIssueList(false);
     responseContent = parseResponseContent(response);
-    //printJsonContent(responseContent);
+    printJsonContent(responseContent);
     assetList = responseContent.getJSONArray("assetIssue");
     Assert.assertTrue(assetList.size() >= 3006);
     //Assert.assertTrue(assetList.contains(bttJsonBody));
@@ -69,6 +69,7 @@ public class queryTrc10 extends fullOrSolidityBase {
   @Test(enabled = true, description = "Get paginated assetissue list from trongrid")
   public void test04GetPaginatedAssetIssueListFromTrongrid() {
     response = getPaginatedAssetIssueList(1970,50, false);
+    printJsonContent(parseResponseContent(response));
     try {
       String result = EntityUtils.toString(response.getEntity());
       String find = "\"id\":";
@@ -94,9 +95,9 @@ public class queryTrc10 extends fullOrSolidityBase {
   public void test05GetAssetIssueListFromTrongridSolidity() {
     response = getAssetIssueList(true);
     responseContent = parseResponseContent(response);
-    //printJsonContent(responseContent);
+    printJsonContent(responseContent);
     JSONArray assetListFromSolidity = responseContent.getJSONArray("assetIssue");
-    Assert.assertTrue(fullOrSolidityBase.compareJsonArray(assetListFromSolidity,assetList));
+    Assert.assertTrue(fullOrSolidityBase.compareJsonWithKey("id",assetListFromSolidity,assetList));
   }
 
   /**
@@ -105,6 +106,7 @@ public class queryTrc10 extends fullOrSolidityBase {
   @Test(enabled = true, description = "Get paginated assetissue list from trongrid solidity")
   public void test06GetPaginatedAssetIssueListFromTrongridSolidity() {
     response = getPaginatedAssetIssueList(1970,50,true);
+    printJsonContent(parseResponseContent(response));
     try {
       String result = EntityUtils.toString(response.getEntity());
       String find = "\"id\":";

@@ -23,6 +23,7 @@ public class eventByContractAddress extends V1Base {
   @Test(enabled = true, description = "Get event by contract address from trongrid V1 API")
   public void test01GetEventByContractAddressFromTrongridV1() {
     getEventByContractAddressBody = getEventByContractAddress(usdjContract);
+    printJsonContent(getEventByContractAddressBody);
     Assert.assertEquals(getEventByContractAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getEventByContractAddressBody.containsKey("meta"));
     eventData = getEventByContractAddressBody.getJSONArray("data").getJSONObject(0);
@@ -44,6 +45,7 @@ public class eventByContractAddress extends V1Base {
   public void test02GetEventByContractAddressWithEventNameFromTrongridV1() {
     getEventByContractAddressBody = getEventByContractAddress(usdjContract,true,eventName,
         0L,0L,0L,"");
+    printJsonContent(getEventByContractAddressBody);
     Assert.assertEquals(getEventByContractAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getEventByContractAddressBody.containsKey("meta"));
     eventArray = getEventByContractAddressBody.getJSONArray("data");
@@ -59,6 +61,7 @@ public class eventByContractAddress extends V1Base {
   public void test03GetEventByContractAddressWithblockNumberFromTrongridV1() {
     getEventByContractAddressBody = getEventByContractAddress(usdjContract,true,eventName,0L,
         minBlockTimestamp,maxBlockTimestamp,"");
+    printJsonContent(getEventByContractAddressBody);
     Assert.assertEquals(getEventByContractAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getEventByContractAddressBody.containsKey("meta"));
     eventArray = getEventByContractAddressBody.getJSONArray("data");
@@ -76,6 +79,7 @@ public class eventByContractAddress extends V1Base {
   public void test04GetEventByContractAddressWithOrderByFromTrongridV1() {
     getEventByContractAddressBody = getEventByContractAddress(usdjContract,true,eventName,0L,
         0L,0L,"block_timestamp,desc");
+    printJsonContent(getEventByContractAddressBody);
     Assert.assertEquals(getEventByContractAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getEventByContractAddressBody.containsKey("meta"));
     eventArray = getEventByContractAddressBody.getJSONArray("data");

@@ -40,9 +40,9 @@ public class fullOrSolidityBase {
   public static String delegateResourceToAddressSophia = Configuration.getByPath("testng.conf").getString("tronGrid.delegateResourceToAddressSophia");
   public static String queryAddressSophia = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddressSophia");
 
-  public static String walletStr = "/wallet";
-  public static String fullnode = "/wallet";
-  public static String solidity = "/walletsolidity";
+  public static String walletStr = "wallet";
+  public static String fullnode = "wallet";
+  public static String solidity = "walletsolidity";
   public static JSONObject responseContent;
   public static HttpResponse response;
   //public static  String tronGridUrl = Configuration.getByPath("testng.conf").getString("tronGrid.tronGridUrl");
@@ -127,6 +127,39 @@ public class fullOrSolidityBase {
     return true;
   }
 
+  public static boolean compareJsonWithKey(String key,JSONArray target,JSONArray source) {
+
+    if (target == null || source ==null || (target.size() != source.size())){
+      System.out.println("====from compareJsonWithKey 0000  target.size: "+target.size()+"  source.size:"+source.size());
+      return false;
+    }
+
+    int size = target.size();
+    int size1 = source.size();
+
+    for (int i=0;i<size;i++){
+      JSONObject ob = target.getJSONObject(i);
+      boolean flag = false;
+      for (int j=0;j<size1;j++){
+        JSONObject ob1 = source.getJSONObject(j);
+        if(ob.getString(key) != null &&!(ob.getString(key).equals("")) && ((ob.getString(key)).equals(ob1.getString(key)))){
+          if(ob.size() !=ob1.size()){
+            System.out.println("====from compareJsonWithKey 1111 asset size not equal  id: "+ob.getString(key));
+            return false;
+          }
+          for(String s: ob.keySet()){
+            if (!((ob.getString(s)).equals(ob1.getString(s)))){
+              System.out.println("====from compareJsonWithKey 2222 asset one key with diff value !!  key: "+s
+                      +"\n  value-tar: "+ob.getString(s) +" \n value-sour: "+ob1.getString(s));
+              return false;
+            }
+          }
+        }
+      }
+    }
+    return true;
+  }
+
   /**
    * whether the jsonarray has the jsonobject(key order not care)
    * @param ja
@@ -177,7 +210,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse getAccountResource(String queryAddress) {
     try {
-      String requestUrl = tronGridUrl + "/wallet/getaccountresource";
+      String requestUrl = tronGridUrl + "wallet/getaccountresource";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("address", queryAddress);
       userBaseObj2.addProperty("visible",true);
@@ -195,7 +228,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse getAccountNet(String queryAddress) {
     try {
-      String requestUrl = tronGridUrl + "/wallet/getaccountnet";
+      String requestUrl = tronGridUrl + "wallet/getaccountnet";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("address", queryAddress);
       userBaseObj2.addProperty("visible",true);
@@ -214,7 +247,7 @@ public class fullOrSolidityBase {
   public static HttpResponse triggerConstantContract(String ownerAddress,
       String contractAddress, String functionSelector, String parameter, Long feeLimit) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/triggerconstantcontract";
+      final String requestUrl = tronGridUrl  + "wallet/triggerconstantcontract";
       JsonObject userBaseObj2 = new JsonObject();
 
       userBaseObj2.addProperty("owner_address", ownerAddress);
@@ -239,7 +272,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse createAddress(String password) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/createaddress";
+      final String requestUrl = tronGridUrl  + "wallet/createaddress";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("value", password);
       userBaseObj2.addProperty("visible", true);
@@ -257,7 +290,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse generateAddress(Boolean visible) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/generateaddress";
+      final String requestUrl = tronGridUrl  + "wallet/generateaddress";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", visible);
       response = createConnect(requestUrl, userBaseObj2);
@@ -332,7 +365,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse getBlockById(String id) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getblockbyid";
+      final String requestUrl = tronGridUrl  + "wallet/getblockbyid";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("value", id);
       response = createConnect(requestUrl, userBaseObj2);
@@ -349,7 +382,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse getBlockByLatestNum(Integer num) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getblockbylatestnum";
+      final String requestUrl = tronGridUrl  + "wallet/getblockbylatestnum";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("num", num);
       response = createConnect(requestUrl, userBaseObj2);
@@ -366,7 +399,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse getBlockByLimitNext(Long startNum,Long endNum) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getblockbylimitnext";
+      final String requestUrl = tronGridUrl  + "wallet/getblockbylimitnext";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("startNum", startNum);
       userBaseObj2.addProperty("endNum", endNum);
@@ -384,7 +417,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse getContract(String contracrt) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getcontract";
+      final String requestUrl = tronGridUrl  + "wallet/getcontract";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("value", contracrt);
       userBaseObj2.addProperty("visible", true);
@@ -402,7 +435,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse listExchanges() {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/listexchanges";
+      final String requestUrl = tronGridUrl  + "wallet/listexchanges";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       response = createConnect(requestUrl, userBaseObj2);
@@ -419,7 +452,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse getExchangeById(Integer exchangeId) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getexchangebyid";
+      final String requestUrl = tronGridUrl  + "wallet/getexchangebyid";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("id", exchangeId);
       response = createConnect(requestUrl, userBaseObj2);
@@ -436,7 +469,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse getDelegateResource(String fromAddress,String toAddress) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getdelegatedresource";
+      final String requestUrl = tronGridUrl  + "wallet/getdelegatedresource";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("fromAddress", fromAddress);
       userBaseObj2.addProperty("toAddress", toAddress);
@@ -455,7 +488,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse getDelegateResourceIndex(String address) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getdelegatedresourceaccountindex";
+      final String requestUrl = tronGridUrl  + "wallet/getdelegatedresourceaccountindex";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("value", address);
       userBaseObj2.addProperty("visible", true);
@@ -476,7 +509,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse listNodes() {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/listnodes";
+      final String requestUrl = tronGridUrl  + "wallet/listnodes";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       response = createConnect(requestUrl, userBaseObj2);
@@ -493,7 +526,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse getNodeInfo() {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getnodeinfo";
+      final String requestUrl = tronGridUrl  + "wallet/getnodeinfo";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       response = createConnect(requestUrl, userBaseObj2);
@@ -510,7 +543,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse listProposals() {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/listproposals";
+      final String requestUrl = tronGridUrl  + "wallet/listproposals";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       response = createConnect(requestUrl, userBaseObj2);
@@ -527,7 +560,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse getProposalById(Integer proposalId) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getproposalbyid";
+      final String requestUrl = tronGridUrl  + "wallet/getproposalbyid";
       JsonObject userBaseObj2 = new JsonObject();
       //userBaseObj2.addProperty("visible", true);
       userBaseObj2.addProperty("id", proposalId);
@@ -547,7 +580,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse getChainParameters() {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getchainparameters";
+      final String requestUrl = tronGridUrl  + "wallet/getchainparameters";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       response = createConnect(requestUrl, userBaseObj2);
@@ -595,7 +628,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse getNextMaintenanceTime() {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getnextmaintenancetime";
+      final String requestUrl = tronGridUrl  + "wallet/getnextmaintenancetime";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       response = createConnect(requestUrl, userBaseObj2);
@@ -612,7 +645,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse getBrokerage(String srAddress) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getBrokerage";
+      final String requestUrl = tronGridUrl  + "wallet/getBrokerage";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       userBaseObj2.addProperty("address", srAddress);
@@ -630,7 +663,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse getReward(String srAddress) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getReward";
+      final String requestUrl = tronGridUrl  + "wallet/getReward";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       userBaseObj2.addProperty("address", srAddress);
@@ -772,7 +805,7 @@ public class fullOrSolidityBase {
    */
   public static HttpResponse getAssetIssueByAccount(String accountAddress) {
     try {
-      final String requestUrl = tronGridUrl  + "/wallet/getassetissuebyaccount";
+      final String requestUrl = tronGridUrl  + "wallet/getassetissuebyaccount";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       userBaseObj2.addProperty("address", accountAddress);
@@ -867,6 +900,9 @@ public class fullOrSolidityBase {
         entity.setContentType("application/json");
         httppost.setEntity(entity);
       }
+      System.out.println(httppost.toString());
+      System.out.println("params: "+requestBody.toString());
+
       response = httpClient.execute(httppost);
     } catch (Exception e) {
       e.printStackTrace();
@@ -945,6 +981,15 @@ public class fullOrSolidityBase {
     }
     System.out.println("JSON content size are: " + responseContent.size());
     System.out.println("----------------------------Print JSON End-----------------------------");
+  }
+
+  /**
+   * constructor.
+   */
+  public static void printJsonArrayContent(JSONArray responseContent) {
+    System.out.println("----------------------------Print JSON Array Start---------------------------");
+    System.out.println(responseContent.toJSONString());
+    System.out.println("----------------------------Print JSON Array End-----------------------------");
   }
 
   /**

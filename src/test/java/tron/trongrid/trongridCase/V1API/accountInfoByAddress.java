@@ -19,7 +19,7 @@ public class accountInfoByAddress extends V1Base {
   @Test(enabled = true, description = "Get account info by address from trongrid V1 API")
   public void test01GetAccountInfoByAddressFromTrongridV1() {
     getAccountInfoByAddressBody = getAccountInfoByAddress(queryAddressSophia);
-    //printJsonContent(getAccountInfoByAddressBody);
+    printJsonContent(getAccountInfoByAddressBody);
     Assert.assertEquals(getAccountInfoByAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getAccountInfoByAddressBody.containsKey("meta"));
     accountData = getAccountInfoByAddressBody.getJSONArray("data").getJSONObject(0);
@@ -45,6 +45,7 @@ public class accountInfoByAddress extends V1Base {
   @Test(enabled = true, description = "Get account info by address with only unconfirmed from trongrid V1 API")
   public void test02GetAccountInfoByAddressWithOnlyUnconfirmedFromTrongridV1() {
     getAccountInfoByAddressBody = getAccountInfoByAddress(queryAddressSophia,false);
+    printJsonContent(getAccountInfoByAddressBody);
     Assert.assertEquals(getAccountInfoByAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getAccountInfoByAddressBody.containsKey("meta"));
     Assert.assertEquals(accountData,getAccountInfoByAddressBody.getJSONArray("data").getJSONObject(0));
@@ -56,6 +57,7 @@ public class accountInfoByAddress extends V1Base {
   @Test(enabled = true, description = "Get account info by address with base64 address from trongrid V1 API")
   public void test03GetAccountInfoByAddressWithBase64FromTrongridV1() {
     getAccountInfoByAddressBody = getAccountInfoByAddress(base64Address);
+    printJsonContent(getAccountInfoByAddressBody);
     Assert.assertEquals(getAccountInfoByAddressBody.getBoolean("success"),true);
     Assert.assertTrue(getAccountInfoByAddressBody.containsKey("meta"));
     Assert.assertEquals(accountData,getAccountInfoByAddressBody.getJSONArray("data").getJSONObject(0));

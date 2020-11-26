@@ -19,6 +19,7 @@ public class getTrc10AssetByName extends V1Base {
   @Test(enabled = true, description = "Get asset by name from trongrid V1 API")
   public void test01GetAssetByNameFromTrongridV1() {
     getAssetListBody = getAssetByName("BTT",2,"","",true);
+    printJsonContent(getAssetListBody);
     Assert.assertEquals(getAssetListBody.getBoolean("success"),true);
     Assert.assertTrue(getAssetListBody.containsKey("meta"));
     Assert.assertTrue(getAssetListBody.getJSONArray("data").size() == 2);
@@ -44,6 +45,7 @@ public class getTrc10AssetByName extends V1Base {
   @Test(enabled = true, description = "Get asset by name with fingerprint from trongrid V1 API")
   public void test02GetAssetByNameWithFingerprintFromTrongridV1() {
     getAssetListBody = getAssetByName("BTT",2,fingerprint,"",true);
+    printJsonContent(getAssetListBody);
     Assert.assertEquals(getAssetListBody.getBoolean("success"),true);
     Assert.assertTrue(getAssetListBody.containsKey("meta"));
     Assert.assertNotEquals(firstAssetData,getAssetListBody.getJSONArray("data").getJSONObject(0));
@@ -55,6 +57,7 @@ public class getTrc10AssetByName extends V1Base {
   @Test(enabled = true, description = "Get asset by name with order by from trongrid V1 API")
   public void test03GetAssetByNameWithOrderByFromTrongridV1() {
     getAssetListBody = getAssetByName("BTT",2,"","id,asc",true);
+    printJsonContent(getAssetListBody);
     Assert.assertNotEquals(firstAssetData,getAssetListBody.getJSONArray("data").getJSONObject(0));
   }
 
@@ -64,6 +67,7 @@ public class getTrc10AssetByName extends V1Base {
   @Test(enabled = true, description = "Get asset by name with not only confirmed from trongrid V1 API")
   public void test04GetAssetByNameWithNotOnlyConfirmedFromTrongridV1() {
     getAssetListBody = getAssetByName("BTT",20,"","",false);
+    printJsonContent(getAssetListBody);
     Assert.assertEquals(firstAssetData,getAssetListBody.getJSONArray("data").getJSONObject(0));
   }
 

@@ -19,6 +19,7 @@ public class getTrc10AssetByIdentifier extends V1Base {
   @Test(enabled = true, description = "Get asset by identifier with token id from trongrid V1 API")
   public void test01GetAssetByIdentifierWithTokenIdFromTrongridV1() {
     getAssetListBody = getAssetByIdentifier(bttTokenId);
+    printJsonContent(getAssetListBody);
     Assert.assertEquals(getAssetListBody.getBoolean("success"),true);
     Assert.assertTrue(getAssetListBody.containsKey("meta"));
     assetData = getAssetListBody.getJSONArray("data").getJSONObject(0);
@@ -42,6 +43,7 @@ public class getTrc10AssetByIdentifier extends V1Base {
   @Test(enabled = true, description = "Get asset by identifier with account address from trongrid V1 API")
   public void test02GetAssetByIdentifierWithAccountAddressFromTrongridV1() {
     getAssetListBody = getAssetByIdentifier(bttOwnerAddress);
+    printJsonContent(getAssetListBody);
     Assert.assertEquals(getAssetListBody.getBoolean("success"), true);
     Assert.assertTrue(getAssetListBody.containsKey("meta"));
     Assert.assertEquals(assetData,getAssetListBody.getJSONArray("data").getJSONObject(0));
@@ -53,6 +55,7 @@ public class getTrc10AssetByIdentifier extends V1Base {
   @Test(enabled = true, description = "Get asset by identifier with account base 64 address from trongrid V1 API")
   public void test02GetAssetByIdentifierWithAccountBase64AddressFromTrongridV1() {
     getAssetListBody = getAssetByIdentifier(bttOwnerAddressBase64);
+    printJsonContent(getAssetListBody);
     Assert.assertEquals(getAssetListBody.getBoolean("success"), true);
     Assert.assertTrue(getAssetListBody.containsKey("meta"));
     Assert.assertEquals(assetData,getAssetListBody.getJSONArray("data").getJSONObject(0));
@@ -65,6 +68,7 @@ public class getTrc10AssetByIdentifier extends V1Base {
   @Test(enabled = true, description = "Get asset by identifier with not only confirmed from trongrid V1 API")
   public void test02GetAssetByIdentifierWithNotOnlyConfirmedFromTrongridV1() {
     getAssetListBody = getAssetByIdentifier(bttOwnerAddressBase64,false);
+    printJsonContent(getAssetListBody);
     Assert.assertEquals(getAssetListBody.getBoolean("success"), true);
     Assert.assertTrue(getAssetListBody.containsKey("meta"));
     Assert.assertEquals(assetData,getAssetListBody.getJSONArray("data").getJSONObject(0));
