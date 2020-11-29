@@ -9,6 +9,10 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import tron.common.TrxMarketApiList;
 import tron.common.utils.Configuration;
+import tron.common.utils.MyIRetryAnalyzer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 public class MarketPairList {
@@ -36,6 +40,37 @@ public class MarketPairList {
             float target = subtargetContent.getFloat("gain");
             Assert.assertTrue(target > -1000 && target < 1000);
         }
+
+    }
+
+    @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "Search List By Ids For BTT")
+    public void test02searchListByIds(){
+        System.out.println();
+        int ids = 39;
+        Map<String, String> params = new HashMap<>();
+        params.put("ids", String.valueOf(ids));
+        response = TrxMarketApiList.searchListByIds(trxmarketNode, params);
+        log.info("code is " + response.getStatusLine().getStatusCode());
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TrxMarketApiList.parseResponseContent(response);
+        TrxMarketApiList.printJsonContent(responseContent);
+        Assert.assertTrue(responseContent.size() == 3);
+
+    }
+
+    @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "Search List By key For BTT")
+    public void test03searchListByKey(){
+        System.out.println();
+        int sortType = 1;
+        Map<String, String> params = new HashMap<>();
+        params.put("key", "btt");
+        params.put("sortType", String.valueOf(sortType));
+        response = TrxMarketApiList.searchListByKey(trxmarketNode, params);
+        log.info("code is " + response.getStatusLine().getStatusCode());
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TrxMarketApiList.parseResponseContent(response);
+        TrxMarketApiList.printJsonContent(responseContent);
+        Assert.assertTrue(responseContent.size() == 3);
 
     }
 
