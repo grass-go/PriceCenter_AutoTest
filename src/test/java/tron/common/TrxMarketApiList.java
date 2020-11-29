@@ -94,6 +94,32 @@ public class TrxMarketApiList {
         return response;
     }
 
+    public static HttpResponse getOrderList(String trxMarketNode,String pairId){
+        try {
+            String requestUrl = "https://" + trxMarketNode + "api/exchange/common/orderListV2/" + pairId;
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e){
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+
+    }
+
+    public static HttpResponse getLatestOrder(String trxMarketNode, Map<String, String> params) {
+        try {
+            String requestUrl = "https://" + trxMarketNode + "api/exchange/common/latestOrders";
+            response = createGetConnect(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
     public static HttpResponse createGetConnect(String url){
         return createGetConnect(url, null);
 
