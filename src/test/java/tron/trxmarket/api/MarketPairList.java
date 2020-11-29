@@ -74,6 +74,22 @@ public class MarketPairList {
 
     }
 
+    @Test(enabled = true, retryAnalyzer = MyIRetryAnalyzer.class, description = "Search HistoricalTrades")
+    public void test04getHistoricalTrades(){
+        System.out.println();
+        Map<String, String> params = new HashMap<>();
+        params.put("pair", "BTT-TRX");
+        params.put("limit", "20");
+        params.put("fromId", "101338");
+        response = TrxMarketApiList.getHistoricalTrades(trxmarketNode, params);
+        log.info("code is " + response.getStatusLine().getStatusCode());
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TrxMarketApiList.parseResponseContent(response);
+        TrxMarketApiList.printJsonContent(responseContent);
+        Assert.assertTrue(responseContent.size() == 3);
+
+    }
+
     @AfterClass
     public void shutdown() throws InterruptedException{
         TrxMarketApiList.disGetConnect();

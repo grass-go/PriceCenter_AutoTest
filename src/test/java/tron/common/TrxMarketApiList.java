@@ -82,6 +82,18 @@ public class TrxMarketApiList {
 
     }
 
+    public static HttpResponse getHistoricalTrades(String trxMarketNode, Map<String, String> params) {
+        try {
+            String requestUrl = "https://" + trxMarketNode + "api/trxmarket/historicalTrades";
+            response = createGetConnect(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
     public static HttpResponse createGetConnect(String url){
         return createGetConnect(url, null);
 
