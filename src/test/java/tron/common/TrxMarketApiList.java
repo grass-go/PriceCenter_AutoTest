@@ -54,6 +54,34 @@ public class TrxMarketApiList {
 
     }
 
+    public static HttpResponse searchListByIds(String trxMarketNode, Map<String, String> params){
+        try {
+            String requestUrl = "https://" + trxMarketNode + "api/exchange/marketPair/searchListByIds";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl, params);
+        } catch (Exception e){
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+
+    }
+
+    public static HttpResponse searchListByKey(String trxMarketNode, Map<String, String> params){
+        try {
+            String requestUrl = "https://" + trxMarketNode + "api/exchange/marketPair/market/searchList";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl, params);
+        } catch (Exception e){
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+
+    }
+
     public static HttpResponse createGetConnect(String url){
         return createGetConnect(url, null);
 
