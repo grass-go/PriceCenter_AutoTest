@@ -120,6 +120,32 @@ public class TrxMarketApiList {
         return response;
     }
 
+    public static HttpResponse getUserOrder(String trxMarketNode, Map<String, String> params) {
+        try {
+            String requestUrl = "https://" + trxMarketNode + "api/exchange/user/order";
+            response = createGetConnect(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse getTopPrice(String trxMarketNode,String pairId){
+        try {
+            String requestUrl = "https://" + trxMarketNode + "api/exchange/toppriceV2/" + pairId;
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e){
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+
+    }
+
     public static HttpResponse createGetConnect(String url){
         return createGetConnect(url, null);
 
