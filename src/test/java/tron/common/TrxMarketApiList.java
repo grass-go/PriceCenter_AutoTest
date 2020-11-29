@@ -91,6 +91,15 @@ public class TrxMarketApiList {
         try {
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,connectionTimeout);
             httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT,soTimeout);
+            if (params != null) {
+                StringBuffer stringBuffer = new StringBuffer(url);
+                stringBuffer.append("?");
+                for (Map.Entry<String, String> entry : params.entrySet()) {
+                    stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
+                }
+                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+                url = stringBuffer.toString();
+            }
             httpget = new HttpGet(url);
             httpget.setHeader("Content-type", "application/json; charset=utf-8");
             httpget.setHeader("Connection", "Close");
