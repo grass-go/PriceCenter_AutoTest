@@ -16,6 +16,7 @@ public class getAccount extends fullOrSolidityBase {
   @Test(enabled = true, description = "Get account from trongrid")
   public void test01GetAccountFromTrongrid() {
     response = getAccount(queryAddress,false);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response);
     getAccountBody = responseContent;
     printJsonContent(responseContent);
@@ -30,6 +31,7 @@ public class getAccount extends fullOrSolidityBase {
   @Test(enabled = true, description = "Get account from trongrid solidity")
   public void test01GetAccountFromTrongridSolidity() {
     response = getAccount(queryAddress,true);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     Assert.assertTrue(fullOrSolidityBase.compareJsonObject(responseContent,getAccountBody));

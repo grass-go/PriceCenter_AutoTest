@@ -93,8 +93,8 @@ public class queryTransaction extends fullOrSolidityBase {
   @Test(enabled = true, description = "Get transaction info by block number from trongrid solidity")
   public void test06GetTransactionInfoByBlockNumFromTrongridSolidity() {
     response = getTransactionInfoByBlockNum(txidBlockNum,true);
-    printJsonArrayContent(parseResponseContentToArray(response));
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    printJsonArrayContent(parseResponseContentToArray(response));
     JSONArray responseContent = parseResponseContentToArray(response);
     Assert.assertEquals(responseContent.size(),47);
 //    Assert.assertTrue(fullOrSolidityBase.compareJsonArray(getTransactionByBlockNumJsonArrayBody,responseContent));

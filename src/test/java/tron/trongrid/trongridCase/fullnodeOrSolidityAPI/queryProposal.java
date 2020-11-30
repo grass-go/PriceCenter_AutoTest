@@ -15,6 +15,7 @@ public class queryProposal extends fullOrSolidityBase {
   @Test(enabled = true, description = "Get proposal by id from trongrid")
   public void test01GetProposalByIdFromTrongrid() {
     response = getProposalById(proposalId);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     proposalJsonBody = responseContent;
@@ -35,6 +36,7 @@ public class queryProposal extends fullOrSolidityBase {
   @Test(enabled = true, description = "List proposals from trongrid")
   public void test02ListProposalsFromTrongrid() {
     response = listProposals();
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getJSONArray("proposals").contains(proposalJsonBody));

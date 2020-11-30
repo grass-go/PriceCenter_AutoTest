@@ -15,6 +15,7 @@ public class getBalance extends fullOrSolidityBase {
   @Test(enabled = true, description = "Get trx balance from trongrid")
   public void test01GetTrxBalanceTrongrid() {
     response = getAccount(queryAddress, false);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getLong("balance") >  0);
@@ -26,6 +27,7 @@ public class getBalance extends fullOrSolidityBase {
   @Test(enabled = true, description = "Get TRC10 BTT balance from trongrid")
   public void test02GetTrc10BttBalanceTrongrid() {
     response = getAccount(queryAddress,false);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     JSONArray trc10_json = responseContent.getJSONArray("assetV2");
@@ -47,6 +49,7 @@ public class getBalance extends fullOrSolidityBase {
   public void test03GetTrc20WinBalanceTrongrid() {
     response = triggerConstantContract(queryAddress, winAddress, "balanceOf(address)",
         queryAddressBase64, 1000000000L);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getJSONObject("result").getBoolean("result"));

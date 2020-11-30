@@ -15,6 +15,7 @@ public class queryNode extends fullOrSolidityBase {
   @Test(enabled = true, description = "List nodes from trongrid")
   public void test01ListNodesFromTrongrid() {
     response = listNodes();
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     JSONArray nodeArray = responseContent.getJSONArray("nodes");
@@ -29,6 +30,7 @@ public class queryNode extends fullOrSolidityBase {
   @Test(enabled = true, description = "Get node info from trongrid")
   public void test02GetNodeInfoFromTrongrid() {
     response = getNodeInfo();
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     Assert.assertTrue(responseContent.containsKey("totalFlow"));
@@ -41,6 +43,7 @@ public class queryNode extends fullOrSolidityBase {
   @Test(enabled = true, description = "Get chain parameters from trongrid")
   public void test03GetChainParametersFromTrongrid() {
     response = getChainParameters();
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     JSONArray chainParametersArray = responseContent.getJSONArray("chainParameter");
