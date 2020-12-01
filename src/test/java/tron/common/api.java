@@ -255,7 +255,7 @@ public class api {
     URI uri = builder.build();
     System.out.println(uri);
     response = createGetConnect(uri);
-    Assert.assertTrue(api.verificationResult(response));
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     return response;
   }
 
@@ -265,7 +265,7 @@ public class api {
     URI uri = builder.build();
     System.out.println(uri);
     response = createGetConnect(uri);
-    Assert.assertTrue(api.verificationResult(response));
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     return response;
   }
 
