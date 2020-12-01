@@ -52,8 +52,8 @@ public class votes_page {
             Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("change_cycle"));
             Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("realTimeRanking") > 0);
             Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("lastCycleVotes") <= lastCycleVotesNum);
-            Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("realTimeVotes") > 100000000L);
-            Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("lastCycleVotes") > 100000000L);
+            Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("realTimeVotes") > 10000000L);
+            Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("lastCycleVotes") > 10000000L);
             Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("votesPercentage"));
             //annualizedRate
             Assert.assertTrue(Double.valueOf(responseArrayContent.getJSONObject(i).get("annualizedRate").toString()) >= 0);
