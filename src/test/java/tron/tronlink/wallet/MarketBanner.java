@@ -21,10 +21,6 @@ public class MarketBanner {
 
   @Test(enabled = true)
   public void Test000getMarketBanner() throws Exception {
-    /*response = TronlinkApiList.walletMarketBanner();
-    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    responseArrayContent = responseContent.getJSONArray("data");*/
     Map<String, String> params = new HashMap<>();
     params.put("sort_type","1");
     HttpResponse rs = TronlinkApiList.votingV2Witness(params);
@@ -72,15 +68,14 @@ public class MarketBanner {
       Assert.assertTrue(jsonObject.containsKey("introduction"));
       Assert.assertTrue(jsonObject.containsKey("yield"));
       Assert.assertTrue(jsonObject.containsKey("lang"));
-      Assert.assertTrue(jsonObject.containsKey("created_at"));
-      Assert.assertTrue(jsonObject.containsKey("updated_at"));
+//      Assert.assertTrue(jsonObject.containsKey("created_at"));
+//      Assert.assertTrue(jsonObject.containsKey("updated_at"));
       if(jsonObject.getIntValue("id") == 2){
         String reward = jsonObject.getString("vote_reward");
         int indexReward = reward.indexOf('.') + 3;
         System.out.println("-- ---- vote_reward: "+reward.substring(0,indexReward));
         System.out.println("-- ---- origin : "+origin);
         System.out.println("-- - - - --:"+(Double.valueOf(reward.substring(0,indexReward))-origin));
-//        Assert.assertTrue(Double.valueOf(reward.substring(0,indexReward))-origin == 0);
         return;
       }
     }
