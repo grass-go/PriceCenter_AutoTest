@@ -13,13 +13,6 @@
             <package name="tron.tronlink.*"></package>
         </packages>
     </test>
-    <test name="tronlinkAPI-v2">
-        <parameter name="tronlinkUrl" value="https://apiv2.tronlink.org"></parameter>
-        <parameter name="tronscanApiUrl" value="https://apilist.tronscan.org"></parameter>
-        <packages>
-            <package name="tron.tronlink.*"></package>
-        </packages>
-    </test>
     <test name="trondataAPI">
 <!--        <parameter name="trondataUrl" value="http://47.252.85.29:8899"></parameter>-->
         <parameter name="trondataUrl" value="http://47.252.75.154:8899"></parameter>
