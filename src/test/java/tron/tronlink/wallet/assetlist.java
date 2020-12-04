@@ -89,7 +89,7 @@ public class assetlist extends TronlinkBase {
   }
 
 
-  @Test(enabled = true, description = "Api /TronlinkApiList/wallet/assetlist exception test")
+  @Test(enabled = false, description = "Api /TronlinkApiList/wallet/assetlist exception test,v2 is normal")
   public void test002AssetlistException() throws Exception {
     //Base58 decode address can't get right information
     response = TronlinkApiList.assetlist("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
