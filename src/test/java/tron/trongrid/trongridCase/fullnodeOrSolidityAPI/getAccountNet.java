@@ -13,6 +13,7 @@ public class getAccountNet extends fullOrSolidityBase {
   @Test(enabled = true, description = "Get account net from trongrid")
   public void test01GetAccountNetFromTrongrid() {
     response = getAccountNet(queryAddress);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     Assert.assertTrue(responseContent.size() > 3);

@@ -86,6 +86,7 @@ public class V1Base {
       //userBaseObj2.addProperty("address", queryAddress);
       userBaseObj2.addProperty("only_confirmed",is_only_confirmed);
       response = createConnect(requestUrl, userBaseObj2);
+      Assert.assertEquals(200,response.getStatusLine().getStatusCode());
       return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
     } catch (Exception e) {
       e.printStackTrace();
@@ -118,6 +119,7 @@ public class V1Base {
       }
       userBaseObj2.addProperty("only_confirmed",is_only_confirmed);
       response = createConnect(requestUrl, userBaseObj2);
+      Assert.assertEquals(200,response.getStatusLine().getStatusCode());
       return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
     } catch (Exception e) {
       e.printStackTrace();
@@ -155,6 +157,7 @@ public class V1Base {
       userBaseObj2.addProperty("vote_tx",only_vote_tx);
       userBaseObj2.addProperty("token_id",token_id);
       response = createConnect(requestUrl, userBaseObj2);
+      Assert.assertEquals(200,response.getStatusLine().getStatusCode());
       return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
     } catch (Exception e) {
       e.printStackTrace();
@@ -179,6 +182,7 @@ public class V1Base {
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("only_confirmed",is_only_confirmed);
       response = createConnect(requestUrl, userBaseObj2);
+      Assert.assertEquals(200,response.getStatusLine().getStatusCode());
       return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
     } catch (Exception e) {
       e.printStackTrace();
@@ -205,6 +209,7 @@ public class V1Base {
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("only_confirmed",is_only_confirmed);
       response = createConnect(requestUrl, userBaseObj2);
+      Assert.assertEquals(200,response.getStatusLine().getStatusCode());
       return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
     } catch (Exception e) {
       e.printStackTrace();
@@ -246,6 +251,7 @@ public class V1Base {
         userBaseObj2.addProperty("order_by",orderBy);
       }
       response = createConnect(requestUrl, userBaseObj2);
+      Assert.assertEquals(200,response.getStatusLine().getStatusCode());
       return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
     } catch (Exception e) {
       e.printStackTrace();
@@ -312,6 +318,7 @@ public class V1Base {
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("only_confirmed",is_only_confirmed);
       response = createConnect(requestUrl, userBaseObj2);
+      Assert.assertEquals(200,response.getStatusLine().getStatusCode());
       return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
     } catch (Exception e) {
       e.printStackTrace();
@@ -340,6 +347,7 @@ public class V1Base {
       userBaseObj2.addProperty("only_confirmed",is_only_confirmed);
       userBaseObj2.addProperty("get_detail",get_detail);
       response = createConnect(requestUrl, userBaseObj2);
+      Assert.assertEquals(200,response.getStatusLine().getStatusCode());
       return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
     } catch (Exception e) {
       e.printStackTrace();
@@ -367,6 +375,7 @@ public class V1Base {
         userBaseObj2.addProperty("fingerprint", fingerprint);
       }
       response = createConnect(requestUrl, userBaseObj2);
+      Assert.assertEquals(200,response.getStatusLine().getStatusCode());
       return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
     } catch (Exception e) {
       e.printStackTrace();
@@ -400,6 +409,7 @@ public class V1Base {
         userBaseObj2.addProperty("fingerprint", fingerprint);
       }
       response = createConnect(requestUrl, userBaseObj2);
+      Assert.assertEquals(200,response.getStatusLine().getStatusCode());
       return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
     } catch (Exception e) {
       e.printStackTrace();
@@ -433,6 +443,7 @@ public class V1Base {
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("only_confirmed",is_only_confirmed);
       response = createConnect(requestUrl, userBaseObj2);
+      Assert.assertEquals(200,response.getStatusLine().getStatusCode());
       return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
     } catch (Exception e) {
       e.printStackTrace();

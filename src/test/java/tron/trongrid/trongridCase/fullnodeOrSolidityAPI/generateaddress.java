@@ -13,6 +13,7 @@ public class generateaddress extends fullOrSolidityBase {
   @Test(enabled = false, description = "Generate address from trongrid")
   public void test01GenerateAddressFromTrongrid() {
     response = generateAddress(true);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     String base58Address = responseContent.getString("address");

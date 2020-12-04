@@ -13,6 +13,7 @@ public class getAccountResource extends fullOrSolidityBase {
   @Test(enabled = true, description = "Get account resource from trongrid")
   public void test01GetAccountResourceFromTrongrid() {
     response = getAccountResource(queryAddress);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     Assert.assertTrue(responseContent.size() > 3);

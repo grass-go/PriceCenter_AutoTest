@@ -13,6 +13,7 @@ public class queryDelegateResource extends fullOrSolidityBase {
   @Test(enabled = true, description = "Get delegate resource from trongrid")
   public void test01GetDelegateResourceFromTrongrid() {
     response = getDelegateResource(delegateResourceFromAddressSophia,delegateResourceToAddressSophia);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response).getJSONArray("delegatedResource").getJSONObject(0);
     printJsonContent(responseContent);
     Assert.assertTrue(responseContent.containsKey("expire_time_for_energy"));
@@ -29,6 +30,7 @@ public class queryDelegateResource extends fullOrSolidityBase {
   @Test(enabled = true, description = "Get delegate resource index from trongrid")
   public void test02GetDelegateResourceIndexFromTrongrid() {
     response = getDelegateResourceIndex(delegateResourceToAddressSophia);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     Assert.assertTrue(responseContent.containsKey("fromAccounts"));
