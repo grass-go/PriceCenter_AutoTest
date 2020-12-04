@@ -672,11 +672,12 @@ public static HttpResponse search(Map<String, String> params) {
       }
       httpget = new HttpGet(url);
       httpget.setHeader("Connection", "Keep-Alive");
+      System.out.println("---url: "+url);
       Instant startTime = Instant.now();
       response = httpClient.execute(httpget);
       Instant endTime = Instant.now();
       requestTime = Duration.between(startTime, endTime).toMillis();
-      System.out.println(url + " 请求总耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
+      System.out.println(" 请求总耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
     } catch (Exception e) {
       e.printStackTrace();
       httpget.releaseConnection();
