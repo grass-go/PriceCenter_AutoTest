@@ -9,7 +9,7 @@ import tron.common.TronlinkApiList;
 public class lotteryData {
   private HttpResponse response;
 
-  @Test(enabled = true, description = "Api GET /TronlinkApiList/wallet/lottery/default_data test")
+  @Test(enabled = false, description = "Api GET /TronlinkApiList/wallet/lottery/default_data test")
   public void test001LotteryData() throws Exception {
     response = TronlinkApiList.lotteryData();
     JSONObject lotteryDataInfo = TronlinkApiList.parseJsonObResponseContent(response);
