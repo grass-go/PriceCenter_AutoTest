@@ -188,7 +188,7 @@ public class chainTest extends Base {
         Assert.assertEquals("31303030353634",object.getString("first_token_id"));
         Assert.assertEquals(55,object.getLongValue("first_token_balance"));
         Assert.assertEquals("5f",object.getString("second_token_id"));
-        Assert.assertEquals(85199,object.getLongValue("second_token_balance"));
+        Assert.assertEquals(326459,object.getLongValue("second_token_balance"));
     }
 
     @Test(enabled = true, description = "Test timeUntilNextVoteCycle")
