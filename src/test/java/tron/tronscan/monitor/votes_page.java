@@ -80,8 +80,8 @@ public class votes_page {
         Assert.assertTrue(targetContent.containsKey("realTimeRanking"));
         Assert.assertTrue(targetContent.containsKey("lastCycleVotes"));
         Assert.assertTrue(targetContent.containsKey("realTimeVotes"));
-        Assert.assertTrue(targetContent.getInteger("lastCycleVotes") > 0);
-        Assert.assertTrue(targetContent.getInteger("realTimeVotes") > 0);
+        Assert.assertTrue(targetContent.getInteger("lastCycleVotes") >= 0);
+        Assert.assertTrue(targetContent.getInteger("realTimeVotes") >= 0);
         Assert.assertTrue(Double.valueOf(targetContent.get("votesPercentage").toString()) <= 100);
         String url_key = targetContent.get("url").toString();
         Assert.assertTrue(!url_key.isEmpty());
