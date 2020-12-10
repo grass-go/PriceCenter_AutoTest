@@ -16,6 +16,7 @@ public class queryExchange extends fullOrSolidityBase {
   @Test(enabled = true, description = "Get exchange by id from trongrid")
   public void test01GetExchangeFromTrongrid() {
     response = getExchangeById(bttVsTrxExchange);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response);
     exchangeJsonBody = responseContent;
     printJsonContent(responseContent);
@@ -28,6 +29,7 @@ public class queryExchange extends fullOrSolidityBase {
   @Test(enabled = true, description = "List exchanges from trongrid")
   public void test02ListExchangesFromTrongrid() {
     response = listExchanges();
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     JSONArray exchangsArray = responseContent.getJSONArray("exchanges");

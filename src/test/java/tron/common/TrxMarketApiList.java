@@ -54,6 +54,98 @@ public class TrxMarketApiList {
 
     }
 
+    public static HttpResponse searchListByIds(String trxMarketNode, Map<String, String> params){
+        try {
+            String requestUrl = "https://" + trxMarketNode + "api/exchange/marketPair/searchListByIds";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl, params);
+        } catch (Exception e){
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+
+    }
+
+    public static HttpResponse searchListByKey(String trxMarketNode, Map<String, String> params){
+        try {
+            String requestUrl = "https://" + trxMarketNode + "api/exchange/marketPair/market/searchList";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl, params);
+        } catch (Exception e){
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+
+    }
+
+    public static HttpResponse getHistoricalTrades(String trxMarketNode, Map<String, String> params) {
+        try {
+            String requestUrl = "https://" + trxMarketNode + "api/trxmarket/historicalTrades";
+            response = createGetConnect(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse getOrderList(String trxMarketNode,String pairId){
+        try {
+            String requestUrl = "https://" + trxMarketNode + "api/exchange/common/orderListV2/" + pairId;
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e){
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+
+    }
+
+    public static HttpResponse getLatestOrder(String trxMarketNode, Map<String, String> params) {
+        try {
+            String requestUrl = "https://" + trxMarketNode + "api/exchange/common/latestOrders";
+            response = createGetConnect(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse getUserOrder(String trxMarketNode, Map<String, String> params) {
+        try {
+            String requestUrl = "https://" + trxMarketNode + "api/exchange/user/order";
+            response = createGetConnect(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse getTopPrice(String trxMarketNode,String pairId){
+        try {
+            String requestUrl = "https://" + trxMarketNode + "api/exchange/toppriceV2/" + pairId;
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl);
+        } catch (Exception e){
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+
+    }
+
     public static HttpResponse createGetConnect(String url){
         return createGetConnect(url, null);
 
@@ -63,6 +155,15 @@ public class TrxMarketApiList {
         try {
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,connectionTimeout);
             httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT,soTimeout);
+            if (params != null) {
+                StringBuffer stringBuffer = new StringBuffer(url);
+                stringBuffer.append("?");
+                for (Map.Entry<String, String> entry : params.entrySet()) {
+                    stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
+                }
+                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+                url = stringBuffer.toString();
+            }
             httpget = new HttpGet(url);
             httpget.setHeader("Content-type", "application/json; charset=utf-8");
             httpget.setHeader("Connection", "Close");

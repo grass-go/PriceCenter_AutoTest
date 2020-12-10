@@ -17,6 +17,7 @@ public class querySr extends fullOrSolidityBase {
   @Test(enabled = true, description = "List witnesses from trongrid")
   public void test01ListWitnessesFromTrongrid() {
     response = listWitnesses(false);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     witnessList = parseResponseContent(response).getJSONArray("witnesses");
     //printJsonContent(responseContent);
     Assert.assertTrue(witnessList.size() > 100);
@@ -72,6 +73,7 @@ public class querySr extends fullOrSolidityBase {
   @Test(enabled = true, description = "List witnesses from trongrid solidity")
   public void test05ListWitnessesFromTrongridSolidity() {
     response = listWitnesses(true);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     printJsonContent(parseResponseContent(response));
     JSONArray witnessListSolidity  = parseResponseContent(response).getJSONArray("witnesses");
     Assert.assertEquals(witnessListSolidity.size(),witnessList.size());

@@ -812,8 +812,8 @@ public class address_page {
             Pattern patternAddress = Pattern.compile("^T[a-zA-Z1-9]{33}");
             String ownerAddress = responseArrayContent.getJSONObject(i).getString("ownerAddress");
             Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
-            Assert.assertTrue(
-                    patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("toAddress")).matches());
+//            Assert.assertTrue(
+//                    patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("toAddress")).matches());
             //contractType
             Assert.assertTrue(
                     !responseArrayContent.getJSONObject(i).get("contractType").toString().isEmpty());
