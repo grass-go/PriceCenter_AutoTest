@@ -43,8 +43,8 @@ public class address_page {
         responseArrayContent = responseContent.getJSONArray("trc20token_balances");
         JSONObject responseObject = responseArrayContent.getJSONObject(0);
         for (int i = 0; i < responseArrayContent.size(); i++) {
-            Assert.assertTrue(!responseObject.getString("contract_address").isEmpty());
-            String trc20Address = responseObject.getString("contract_address");
+            Assert.assertTrue(!responseObject.getString("tokenId").isEmpty());
+            String trc20Address = responseObject.getString("tokenId");
             Map<String, String> params2 = new HashMap<>();
             params2.put("contract",trc20Address);
             response = TronscanApiList.getTokentrc20(tronScanNode,params2);
