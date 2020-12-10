@@ -30,7 +30,7 @@ public class blockchain_transactions_page {
     String url = "https://tronscan.org/#/blockchain/transactions";
 
 
-    @Test(enabled = true,retryAnalyzer = RetryTronscanMonitor.class, description = "区块链-交易")
+    @Test(enabled = true, description = "区块链-交易")
     public void blockchain_transactions_page() {
         //Get response
         int end_time = (int) (System.currentTimeMillis() / 1000) ;
@@ -69,9 +69,8 @@ public class blockchain_transactions_page {
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("contractRet").isEmpty());
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("result").isEmpty());
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenType").isEmpty());
-            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenId").isEmpty());
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("amount").isEmpty());
-            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenAbbr").isEmpty());
+//            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenAbbr").isEmpty());
             //contractData
             JSONObject responseObject = responseArrayContent.getJSONObject(i).getJSONObject("contractData");
             Assert.assertEquals(responseObject.getString("owner_address"),ownerAddress);
@@ -81,6 +80,12 @@ public class blockchain_transactions_page {
             }catch (Exception e){
             }
 
+            //交易详情数据校验
+            response = TronscanApiList.getTransactionInfo(tronScanNode,hash_key);
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+            responseContent = TronscanApiList.parseResponseContent(response);
+            TronscanApiList.printJsonContent(responseContent);
+            Assert.assertFalse(responseContent.getString("contract_map").isEmpty());
 
 
             //交易数据
