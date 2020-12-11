@@ -68,7 +68,7 @@ public class blockchain_transactions_page {
             Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("toAddress"));
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("contractRet").isEmpty());
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("result").isEmpty());
-            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenType").isEmpty());
+//            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenType").isEmpty());
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("amount").isEmpty());
 //            Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("tokenAbbr").isEmpty());
             //contractData
