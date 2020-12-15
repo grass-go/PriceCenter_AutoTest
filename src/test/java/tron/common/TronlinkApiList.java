@@ -60,7 +60,7 @@ public class TronlinkApiList {
   public static HttpResponse classify() {
     try {
       String requestUrl = HttpNode + "/api/dapp/v2/classify";
-      System.out.println(requestUrl);
+      log.info(requestUrl);
       response = createGetConnect(requestUrl);
     } catch (Exception e) {
       e.printStackTrace();
@@ -73,7 +73,7 @@ public class TronlinkApiList {
   public static HttpResponse hot_recommend() {
     try {
       String requestUrl = HttpNode + "/api/dapp/v2/dapp/hot_recommend";
-      System.out.println(requestUrl);
+      log.info(requestUrl);
       response = createGetConnect(requestUrl);
     } catch (Exception e) {
       e.printStackTrace();
@@ -92,7 +92,6 @@ public class TronlinkApiList {
       }
     }
     URI uri = builder.build();
-    //System.out.println(requestUrl);
     response = createGetConnect(uri);
     Assert.assertTrue(TronlinkApiList.verificationResult(response));
     return response;
@@ -107,7 +106,6 @@ public class TronlinkApiList {
       }
     }
     URI uri = builder.build();
-    //System.out.println(requestUrl);
     response = createGetConnect(uri);
     return response;
   }
@@ -134,7 +132,6 @@ public class TronlinkApiList {
       }
     }
     URI uri = builder.build();
-    //System.out.println(requestUrl);
     response = createGetConnect(uri);
     return response;
   }
@@ -148,7 +145,6 @@ public class TronlinkApiList {
       }
     }
     URI uri = builder.build();
-    //System.out.println(requestUrl);
     response = createGetConnect(uri);
     return response;
   }
@@ -162,7 +158,6 @@ public class TronlinkApiList {
       }
     }
     URI uri = builder.build();
-    //System.out.println(requestUrl);
     response = createGetConnect(uri);
     return response;
   }
@@ -170,7 +165,6 @@ public class TronlinkApiList {
   public static HttpResponse votingV2Witness(Map<String, String> params) throws Exception{
     String requestUrl = HttpNode + "/api/voting/v2/witness";
 
-    //System.out.println(requestUrl);
     response = createGetConnect(requestUrl, params);
     return response;
   }
@@ -248,7 +242,7 @@ public class TronlinkApiList {
   public static HttpResponse head() {
     try {
       String requestUrl = HttpNode + "/api/dapp/v2/head";
-      System.out.println(requestUrl);
+      log.info(requestUrl);
       response = createGetConnect(requestUrl);
     } catch (Exception e) {
       e.printStackTrace();
@@ -260,7 +254,7 @@ public class TronlinkApiList {
   public static HttpResponse hot_search() {
     try {
       String requestUrl = HttpNode + "/api/dapp/v2/dapp/hot_search";
-      System.out.println(requestUrl);
+      log.info(requestUrl);
       response = createGetConnect(requestUrl);
     } catch (Exception e) {
       e.printStackTrace();
@@ -273,7 +267,7 @@ public class TronlinkApiList {
   public static HttpResponse dapp_list(Map<String, String> params) {
     try {
       String requestUrl = HttpNode + "/api/dapp/v2/dapp";
-      System.out.println(requestUrl);
+      log.info(requestUrl);
       response = createGetConnect(requestUrl, params);
     } catch (Exception e) {
       e.printStackTrace();
@@ -286,7 +280,6 @@ public class TronlinkApiList {
   public static HttpResponse dappBanner() {
     try {
       String requestUrl = HttpNode + "/api/dapp/v2/banner";
-      System.out.println(requestUrl);
       response = createGetConnect(requestUrl);
     } catch (Exception e) {
       e.printStackTrace();
@@ -299,7 +292,7 @@ public class TronlinkApiList {
   public static HttpResponse dappId(Map<String, String> params) {
     try {
       String requestUrl = HttpNode + "/api/dapp/v2/dapp/id";
-      System.out.println(requestUrl);
+      log.info(requestUrl);
       response = createGetConnect(requestUrl);
     } catch (Exception e) {
       e.printStackTrace();
@@ -312,7 +305,6 @@ public class TronlinkApiList {
 public static HttpResponse search(Map<String, String> params) {
     try {
       String requestUrl = HttpNode + "/api/dapp/v2/dapp/search";
-      System.out.println(requestUrl);
       response = createGetConnect(requestUrl, params);
     } catch (Exception e) {
       e.printStackTrace();
@@ -325,7 +317,6 @@ public static HttpResponse search(Map<String, String> params) {
   public static HttpResponse history(Map<String, String> params) {
     try {
       String requestUrl = HttpNode + "/api/dapp/v2/dapp/history";
-      System.out.println(requestUrl);
       response = createGetConnect(requestUrl, params);
     } catch (Exception e) {
       e.printStackTrace();
@@ -338,7 +329,6 @@ public static HttpResponse search(Map<String, String> params) {
   public static HttpResponse allasset(String address) {
     try {
       String requestUrl = HttpNode + "/api/wallet/class/allasset";
-      System.out.println("requestUrl"+requestUrl);
       JsonObject body = new JsonObject();
       body.addProperty("address", address);
       response = createPostConnect(requestUrl,body);
@@ -353,7 +343,6 @@ public static HttpResponse search(Map<String, String> params) {
   public static HttpResponse assetlist(String address) {
     try {
       String requestUrl = HttpNode + "/api/wallet/assetlist";
-      System.out.println("requestUrl"+requestUrl);
       JsonObject body = new JsonObject();
       body.addProperty("address", address);
       response = createPostConnect(requestUrl,body);
@@ -369,7 +358,6 @@ public static HttpResponse search(Map<String, String> params) {
     final String requesturl = HttpNode + "/api/wallet/lottery/default_data";
     URIBuilder builder = new URIBuilder(requesturl);
     URI uri = builder.build();
-    System.out.println(uri);
     response = createGetConnect(requesturl);
     return response;
   }
@@ -377,7 +365,6 @@ public static HttpResponse search(Map<String, String> params) {
   public static HttpResponse hot_token(String address) {
     try {
       String requestUrl = HttpNode + "/api/wallet/hot_token";
-      System.out.println("requestUrl"+requestUrl);
       JsonObject body = new JsonObject();
       body.addProperty("address", address);
       response = createPostConnect(requestUrl,body);
@@ -392,7 +379,6 @@ public static HttpResponse search(Map<String, String> params) {
   public static HttpResponse addasset(String json) {
     try {
       String requestUrl = HttpNode + "/api/wallet/addasset";
-      System.out.println("requestUrl"+requestUrl);
       response = createPostConnect(requestUrl,json);
     } catch (Exception e) {
       e.printStackTrace();
@@ -534,7 +520,7 @@ public static HttpResponse search(Map<String, String> params) {
         httppost.setEntity(entity);
       }
       SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-      System.out.println("url: " + httppost.toString() + "\n params:"+requestBody);
+      log.info("url: " + httppost.toString() + "\n params:"+requestBody);
       response = httpClient.execute(httppost);
     } catch (Exception e) {
       e.printStackTrace();
@@ -553,7 +539,6 @@ public static HttpResponse search(Map<String, String> params) {
   public static HttpResponse nilexGetAssetlist(String address,Map<String,String> header) {
     try {
       String requestUrl = "https://niletest.tronlink.org/api/wallet/assetlist";
-      System.out.println("requestUrl"+requestUrl);
       JsonObject body = new JsonObject();
       body.addProperty("address", address);
       response = createPostConnectWithHeader(requestUrl,body,header);
@@ -583,7 +568,7 @@ public static HttpResponse search(Map<String, String> params) {
         entity.setContentType("application/json");
         httppost.setEntity(entity);
       }
-      System.out.println("url: "+httppost.toString() + "\n params: "+requestBody.toString());
+      log.info("url: "+httppost.toString() + "\n params: "+requestBody.toString());
       SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
       response = httpClient.execute(httppost);
     } catch (Exception e) {
@@ -609,7 +594,7 @@ public static HttpResponse search(Map<String, String> params) {
       if(header != null){
         for(String key: header.keySet()){
           httppost.setHeader(key,header.get(key));
-          System.out.println(key+": "+header.get(key));
+          log.info(key+": "+header.get(key));
         }
       }
       if (requestBody != null) {
@@ -619,7 +604,7 @@ public static HttpResponse search(Map<String, String> params) {
         httppost.setEntity(entity);
       }
       SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-      System.out.println("url: "+httppost.toString()+"\nparams: "+requestBody.toString());
+      log.info("url: "+httppost.toString()+"\nparams: "+requestBody.toString());
       response = httpClient.execute(httppost);
     } catch (Exception e) {
       e.printStackTrace();
@@ -672,12 +657,12 @@ public static HttpResponse search(Map<String, String> params) {
       }
       httpget = new HttpGet(url);
       httpget.setHeader("Connection", "Keep-Alive");
-      System.out.println("---url: "+url);
+      log.info("---url: "+url);
       Instant startTime = Instant.now();
       response = httpClient.execute(httpget);
       Instant endTime = Instant.now();
       requestTime = Duration.between(startTime, endTime).toMillis();
-      System.out.println(" 请求总耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
+      log.info(" 请求总耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
     } catch (Exception e) {
       e.printStackTrace();
       httpget.releaseConnection();
@@ -714,13 +699,13 @@ public static HttpResponse search(Map<String, String> params) {
       httpget.setHeader("Connection", "Keep-Alive");
       Header[] allHeaders = httpget.getAllHeaders();
       for (int i = 0; i < allHeaders.length; i++) {
-        System.out.println(allHeaders[i]);
+        log.info(""+allHeaders[i]);
       }
       Instant startTime = Instant.now();
       response = httpClient.execute(httpget);
       Instant endTime = Instant.now();
       requestTime = Duration.between(startTime, endTime).toMillis();
-      System.out.println(url + " 请求总耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
+      log.info(url + " 请求总耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
     } catch (Exception e) {
       e.printStackTrace();
       httpget.releaseConnection();
@@ -735,7 +720,7 @@ public static HttpResponse search(Map<String, String> params) {
   public static JSONArray parseArrayResponseContent(HttpResponse response) {
     try {
       String result = EntityUtils.toString(response.getEntity());
-      System.out.println(result);
+      log.info(result);
       StringEntity entity = new StringEntity(result, Charset.forName("UTF-8"));
       response.setEntity(entity);
       JSONArray obj = JSONArray.parseArray(result);
@@ -766,9 +751,9 @@ public static HttpResponse search(Map<String, String> params) {
   public static JSONObject parseJsonObResponseContent(HttpResponse response) {
     try {
       String result = EntityUtils.toString(response.getEntity());
-      System.out.println("======");
-      System.out.println(result);
-      System.out.println("======");
+      log.info("======");
+      log.info(result);
+      log.info("======");
 //      result = result.substring(0, result.lastIndexOf("}"));
 //      result = result + ",\"requestTime\":" + requestTime + "}";
       StringEntity entity = new StringEntity(result, Charset.forName("UTF-8"));
@@ -827,13 +812,13 @@ public static HttpResponse search(Map<String, String> params) {
         entity.setContentType("application/json");
         httppost.setEntity(entity);
       }
-      System.out.println("url:"+httppost.toString());
+      log.info("url:"+httppost.toString());
       if(requestBody != null){
-        System.out.println("params: "+requestBody.toJSONString());
+        log.info("params: "+requestBody.toJSONString());
       }
       Header[] allHeaders = httppost.getAllHeaders();
       for (int i = 0; i < allHeaders.length; i++) {
-        System.out.println(allHeaders[i]);
+        log.info(""+allHeaders[i]);
       }
       response = httpClient.execute(httppost);
     } catch (Exception e) {
@@ -871,7 +856,7 @@ public static HttpResponse search(Map<String, String> params) {
       httpGet.setHeader("Connection", "Close");
       for (HashMap.Entry<String,String> entry : header.entrySet()){
         httpGet.setHeader(entry.getKey(),entry.getValue());
-        System.out.println(entry.getKey() + ":" + entry.getValue());
+        log.info(entry.getKey() + ":" + entry.getValue());
       }
       response = httpClient.execute(httpGet);
     } catch (Exception e) {
