@@ -135,7 +135,7 @@ public class chainTest extends Base {
             if(((JSONObject)ob).getBooleanValue("isJobs")){
                 Assert.assertTrue(((JSONObject)ob).containsKey("voteCount"));
                 Assert.assertTrue(((JSONObject)ob).containsKey("totalProduced"));
-                Assert.assertTrue(((JSONObject)ob).containsKey("totalMissed"));
+//                Assert.assertTrue(((JSONObject)ob).containsKey("totalMissed"));
                 Assert.assertTrue(((JSONObject)ob).containsKey("latestBlockNum"));
                 Assert.assertTrue(((JSONObject)ob).containsKey("latestSlotNum"));
             }
