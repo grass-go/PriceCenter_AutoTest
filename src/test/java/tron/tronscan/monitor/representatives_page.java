@@ -41,7 +41,7 @@ public class representatives_page {
         patternAddress.matcher(targetContent.getString("address")).matches();
         Assert.assertTrue(!targetContent.getString("name").isEmpty());
         Assert.assertTrue(!targetContent.getString("url").isEmpty());
-        Assert.assertTrue(Double.valueOf(targetContent.getString("missedTotal")) > 0);
+        Assert.assertTrue(Double.valueOf(targetContent.getString("missedTotal")) >= 0);
 //        Assert.assertTrue(Double.valueOf(targetContent.getString("producedTotal")) > 100000);
 //        Assert.assertTrue(Double.valueOf(targetContent.getString("producePercentage")) < 100);
 
