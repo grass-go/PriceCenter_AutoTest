@@ -51,7 +51,7 @@ public class representatives_page {
         patternAddress.matcher(maxContent.getString("address")).matches();
         Assert.assertTrue(!maxContent.getString("name").isEmpty());
         Assert.assertTrue(!maxContent.getString("url").isEmpty());
-        Assert.assertTrue(Double.valueOf(maxContent.getString("missedTotal")) > 0);
+        Assert.assertTrue(Double.valueOf(maxContent.getString("missedTotal")) >= 0);
         Assert.assertTrue(Double.valueOf(maxContent.getString("producedTotal")) > 100000);
         Assert.assertTrue(Double.valueOf(maxContent.getString("producePercentage")) < 100);
 
@@ -61,7 +61,7 @@ public class representatives_page {
         patternAddress.matcher(highestContent.getString("address")).matches();
         Assert.assertTrue(!highestContent.getString("name").isEmpty());
         Assert.assertTrue(!highestContent.getString("url").isEmpty());
-        Assert.assertTrue(Double.valueOf(highestContent.getString("missedTotal")) > 0);
+        Assert.assertTrue(Double.valueOf(highestContent.getString("missedTotal")) >= 0);
         Assert.assertTrue(Double.valueOf(highestContent.getString("producedTotal")) > 100000);
         Assert.assertTrue(Double.valueOf(highestContent.getString("producePercentage")) < 100);
         //lowestEfficiency
@@ -70,7 +70,7 @@ public class representatives_page {
         patternAddress.matcher(lowestContent.getString("address")).matches();
         Assert.assertTrue(!lowestContent.getString("name").isEmpty());
         Assert.assertTrue(!lowestContent.getString("url").isEmpty());
-        Assert.assertTrue(Double.valueOf(lowestContent.getString("missedTotal")) > 0);
+        Assert.assertTrue(Double.valueOf(lowestContent.getString("missedTotal")) >= 0);
 //        Assert.assertTrue(Double.valueOf(lowestContent.getString("producedTotal")) > 100000);
 //        Assert.assertTrue(Double.valueOf(lowestContent.getString("producePercentage")) < 100);
 
