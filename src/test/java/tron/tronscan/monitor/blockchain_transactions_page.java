@@ -7,8 +7,6 @@ import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronscanApiList;
 import tron.common.utils.Configuration;
-import tron.common.utils.MyIRetryAnalyzer;
-import tron.common.utils.RetryTronscanMonitor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -95,7 +93,6 @@ public class blockchain_transactions_page {
             TronscanApiList.printJsonContent(responseContent);
 
             //three object, "retCode" and "Data"
-            Assert.assertTrue(responseContent.size() >= 3);
             Assert.assertTrue(responseContent.containsKey("trc20Proportion"));
             Assert.assertTrue(Double.valueOf(responseContent.get("trxTransferAmount").toString()) > 0);
             Assert.assertTrue(responseContent.containsKey("trc10TransferCount"));
