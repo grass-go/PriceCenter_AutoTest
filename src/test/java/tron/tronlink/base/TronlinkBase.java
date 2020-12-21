@@ -8,6 +8,9 @@ public class TronlinkBase {
     public static  String tronlinkUrl = Configuration.getByPath("testng.conf").getString("tronlink.tronlinkUrl");
     public static  String tronscanApiUrl = Configuration.getByPath("testng.conf").getString("tronlink.tronscanApiUrl");
     public String queryAddress = Configuration.getByPath("testng.conf").getString("tronlink.queryAddress41");
+    public String queryAddress58 = Configuration.getByPath("testng.conf").getString("tronlink.queryAddress");
+    public  String queryAddressTxt41 = Configuration.getByPath("testng.conf").getString("tronlink.queryAddressTxt41");
+    public  String queryAddressTH48 = Configuration.getByPath("testng.conf").getString("tronlink.queryAddressTH48");
 
 
     @Parameters({"tronlinkUrl","tronscanApiUrl"})

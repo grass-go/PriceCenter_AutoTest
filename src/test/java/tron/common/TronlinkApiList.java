@@ -326,6 +326,18 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse accountList(JSONArray body) {
+    try {
+      String requestUrl = HttpNode + "/api/wallet/account/list";
+      response = createPostConnect(requestUrl,body);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
   public static HttpResponse allasset(String address) {
     try {
       String requestUrl = HttpNode + "/api/wallet/class/allasset";
@@ -606,6 +618,40 @@ public static HttpResponse search(Map<String, String> params) {
       SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
       log.info("url: "+httppost.toString()+"\nparams: "+requestBody.toString());
       response = httpClient.execute(httppost);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse createPostConnect(String url, JSONArray requestBody) {
+    try {
+      httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
+              connectionTimeout);
+      httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+
+      httppost = new HttpPost(url);
+      httppost.setHeader("Content-type", "application/json; charset=utf-8");
+      httppost.setHeader("Connection", "Close");
+      httppost.addHeader("Lang","1");
+      httppost.addHeader("Version","3.7.0");
+      httppost.addHeader("DeviceID","1111111111");
+      httppost.addHeader("chain","MainChain");
+      httppost.addHeader("packageName","com.tronlinkpro.wallet");
+      httppost.addHeader("System","Android");
+      if (requestBody != null) {
+        StringEntity entity = new StringEntity(requestBody.toJSONString(), Charset.forName("UTF-8"));
+        entity.setContentEncoding("UTF-8");
+        entity.setContentType("application/json");
+        httppost.setEntity(entity);
+      }
+      response = httpClient.execute(httppost);
+      log.info("url: "+httppost.toString()+"\nparams: "+requestBody.toString());
     } catch (Exception e) {
       e.printStackTrace();
       httppost.releaseConnection();
