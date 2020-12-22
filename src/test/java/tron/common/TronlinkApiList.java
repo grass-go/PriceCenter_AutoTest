@@ -400,6 +400,30 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse ieo() {
+    final String requestUrl =HttpNode + "/api/wallet/ieo";
+    response = createGetConnect(requestUrl, null);
+    return response;
+  }
+
+  public static HttpResponse getNodeInfo(JSONArray body) {
+    final String requestUrl =HttpNode + "/api/wallet/node_info";
+    response = createPostConnect(requestUrl,body);
+    return response;
+  }
+
+  public static HttpResponse getConfig() {
+    final String requestUrl =HttpNode + "/api/wallet/get_config";
+    response = createGetConnect(requestUrl,null);
+    return response;
+  }
+
+  public static HttpResponse dappToMainFee() {
+    final String requestUrl =HttpNode + "/api/transfer/dappToMainFee";
+    response = createGetConnect(requestUrl,null);
+    return response;
+  }
+
   public static HttpResponse addAsset(JSONObject address) throws Exception {
     final String requestUrl =HttpNode + "/api/wallet/addasset";
     response = createConnect(requestUrl, address);
