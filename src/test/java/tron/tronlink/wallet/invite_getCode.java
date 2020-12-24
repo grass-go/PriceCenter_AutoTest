@@ -12,7 +12,7 @@ public class invite_getCode {
   private JSONObject responseContent;
   private JSONObject parameter = new JSONObject();
 
-  @Test(enabled = false, description = "Api POST /api/wallet/invite/get_code test")
+  @Test(enabled = true, description = "Api POST /api/wallet/invite/get_code test")
   public void test001InviteGetCode() throws Exception {
     // 线上环境暂时报错
     parameter.put("address", "TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
