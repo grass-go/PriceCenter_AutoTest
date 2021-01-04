@@ -2,16 +2,14 @@ package tron.tronscan.monitor;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
-
-import java.util.regex.Pattern;
-
 import tron.common.TronscanApiList;
 import tron.common.utils.Configuration;
 import tron.common.utils.MyIRetryAnalyzer;
+
+import java.util.regex.Pattern;
 
 public class votes_page {
     private final String foundationKey = Configuration.getByPath("testng.conf")
@@ -47,7 +45,7 @@ public class votes_page {
             Assert.assertTrue(!responseArrayContent.getJSONObject(i).getString("hasPage").isEmpty());
             Assert.assertTrue(patternAddress.matcher(responseArrayContent.getJSONObject(i).getString("address")).matches());
             Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("name"));
-            Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("changeVotes") != 0);
+//            Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("changeVotes") != 0);
             Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("lastRanking") > 0);
             Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("change_cycle"));
             Assert.assertTrue(responseArrayContent.getJSONObject(i).getLong("realTimeRanking") > 0);
