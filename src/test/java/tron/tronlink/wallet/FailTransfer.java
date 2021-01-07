@@ -14,7 +14,7 @@ public class FailTransfer extends TronlinkBase {
   private HttpResponse response;
 
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void test00failTransfer(){
     Long time = System.currentTimeMillis();
     params.put("failLog","cxcz-"+time);
