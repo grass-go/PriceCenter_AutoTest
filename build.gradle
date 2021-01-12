@@ -9,6 +9,10 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven {
+        url  'https://dl.bintray.com/tronj/tronj'
+    }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -27,6 +31,11 @@ dependencies {
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     compile group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
     compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.44'
+    implementation 'org.tron.tronj:abi:0.1.1'
+    implementation 'org.tron.tronj:client:0.1.1'
+    implementation 'org.tron.tronj:utils:0.1.1'
+    implementation 'com.github.tronprotocol:java-tron:release_4.1.2-SNAPSHOT'
+
 
 }
 
