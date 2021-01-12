@@ -76,7 +76,6 @@ public class api {
     URI uri = builder.build();
     //System.out.println(requestUrl);
     response = createGetConnect(uri);
-    Assert.assertTrue(api.verificationResult(response));
     return response;
   }
 

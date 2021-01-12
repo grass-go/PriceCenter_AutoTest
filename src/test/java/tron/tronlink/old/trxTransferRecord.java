@@ -23,7 +23,7 @@ public class trxTransferRecord extends TronlinkBase {
 
 
     response = api.trxTransferRecord(param);
-    //Assert.assertTrue(api.verificationResult(response));
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = api.parseResponseContent(response);
     api.printJsonContent(responseContent);
     JSONArray transferArray = responseContent.getJSONArray("data");
