@@ -94,7 +94,6 @@ public class address_page {
             Assert.assertEquals(responseObject.getString("owner_address"), ownerAddress);
             Assert.assertTrue(patternAddress.matcher(ownerAddress).matches());
         }
-
         String start = String.valueOf(((int)Math.floor(total/20)*20));
         System.out.println(start);
         Map<String, String> Params2 = new HashMap<>();
@@ -106,6 +105,8 @@ public class address_page {
         response = TronscanApiList.getTransactionList(tronScanNode, Params2);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronscanApiList.parseResponseContent(response);
+        total = responseContent.getDouble("total");
+        rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
         TronscanApiList.printJsonContent(responseContent);
         Assert.assertTrue(rangeTotal >= total && total > 0);
         responseArrayContent = responseContent.getJSONArray("data");
