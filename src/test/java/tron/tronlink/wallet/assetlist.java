@@ -37,6 +37,7 @@ public class assetlist extends TronlinkBase {
     Assert.assertTrue(jsonObject.containsKey("priceUSD"));
     Assert.assertTrue(jsonObject.getDoubleValue("priceCny") > 0);
     Assert.assertTrue(jsonObject.getDoubleValue("priceUSD") > 0);
+    Assert.assertTrue(targetContent.getJSONArray("token").size()>1);
     //token object
     for (Object json:targetContent.getJSONArray("token")) {
       JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
