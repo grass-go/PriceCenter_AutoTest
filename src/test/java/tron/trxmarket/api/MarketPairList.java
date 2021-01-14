@@ -33,13 +33,13 @@ public class MarketPairList {
         responseContent = TrxMarketApiList.parseResponseContent(response);
         TrxMarketApiList.printJsonContent(responseContent);
         Assert.assertTrue(responseContent.size() == 3);
-        targetContent = responseContent.getJSONObject("data");
-        responseArrayContent = targetContent.getJSONArray("rows");
-        for (int i = 0;i < responseArrayContent.size() ; i++) {
-            subtargetContent = responseArrayContent.getJSONObject(i);
-            float target = subtargetContent.getFloat("gain");
-            Assert.assertTrue(target > -1000 && target < 1000);
-        }
+//        targetContent = responseContent.getJSONObject("data");
+//        responseArrayContent = targetContent.getJSONArray("rows");
+//        for (int i = 0;i < responseArrayContent.size() ; i++) {
+//            subtargetContent = responseArrayContent.getJSONObject(i);
+//            float target = subtargetContent.getFloat("gain");
+//            Assert.assertTrue(target > -1000 && target < 1000);
+//        }
 
     }
 
