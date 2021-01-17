@@ -93,7 +93,6 @@ public class TronlinkApiList {
     }
     URI uri = builder.build();
     response = createGetConnect(uri);
-    Assert.assertTrue(TronlinkApiList.verificationResult(response));
     return response;
   }
 
