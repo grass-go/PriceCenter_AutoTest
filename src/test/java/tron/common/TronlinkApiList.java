@@ -3,6 +3,7 @@ package tron.common;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
+import com.google.protobuf.ByteString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
@@ -16,10 +17,19 @@ import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
+import org.tron.api.WalletGrpc;
+import org.tron.common.crypto.ECKey;
+import org.tron.common.parameter.CommonParameter;
+import org.tron.common.utils.Sha256Hash;
+import org.tron.core.Wallet;
+import org.tron.protos.Protocol;
+import org.tron.protos.contract.BalanceContract;
+
 import tron.common.utils.Configuration;
 import tron.trondata.base.TrondataBase;
 import tron.tronlink.base.TronlinkBase;
 
+import java.math.BigInteger;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
@@ -48,6 +58,7 @@ public class TronlinkApiList {
   static JSONObject signResponseContent;
   static JSONObject transactionApprovedListContent;
   static Long requestTime = 0L;
+  static byte ADD_PRE_FIX_BYTE_MAINNET = (byte) 0x41;
 
   static {
     PoolingClientConnectionManager pccm = new PoolingClientConnectionManager();
@@ -515,6 +526,18 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse multiTransaction(JSONObject body) {
+    try {
+      String requestUrl = HttpNode + "/api/wallet/multi/transaction";
+      response = createConnect(requestUrl,body);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
   public static Boolean verificationResult(HttpResponse response) {
     if (response.getStatusLine().getStatusCode() != 200) {
       return false;
@@ -950,5 +973,74 @@ public static HttpResponse search(Map<String, String> params) {
     Assert.assertTrue(TronlinkApiList.verificationResult(response));
     return response;
   }
+
+  /**
+   * constructor.
+   */
+  public static Protocol.Transaction sendcoin(byte[] to, long amount, byte[] owner,
+                                               WalletGrpc.WalletBlockingStub blockingStubFull) {
+    Wallet.setAddressPreFixByte(ADD_PRE_FIX_BYTE_MAINNET);
+    BalanceContract.TransferContract.Builder builder = BalanceContract.TransferContract.newBuilder();
+    ByteString bsTo = ByteString.copyFrom(to);
+    ByteString bsOwner = ByteString.copyFrom(owner);
+    builder.setToAddress(bsTo);
+    builder.setOwnerAddress(bsOwner);
+    builder.setAmount(amount);
+
+    BalanceContract.TransferContract contract = builder.build();
+    Protocol.Transaction transaction = blockingStubFull.createTransaction(contract);
+    if (transaction == null || transaction.getRawData().getContractCount() == 0) {
+      log.info("transaction ==null");
+      return null;
+    }
+    return transaction;
+
+  }
+  /**
+   * constructor.
+   */
+
+  public static byte[] getFinalAddress(String priKey) {
+    ECKey temKey = null;
+    try {
+      BigInteger priK = new BigInteger(priKey, 16);
+      temKey = ECKey.fromPrivate(priK);
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+    return temKey.getAddress();
+  }
+
+  public static Protocol.Transaction addTransactionSignWithPermissionId(Protocol.Transaction transaction,
+                                                                        String priKey, int permissionId, WalletGrpc.WalletBlockingStub blockingStubFull) {
+    Wallet.setAddressPreFixByte(ADD_PRE_FIX_BYTE_MAINNET);
+    ECKey temKey = null;
+    try {
+      BigInteger priK = new BigInteger(priKey, 16);
+      temKey = ECKey.fromPrivate(priK);
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+
+    //transaction = setPermissionId(transaction, permissionId);
+    Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder();
+    Protocol.Transaction.Contract.Builder contract = raw.getContract(0).toBuilder()
+            .setPermissionId(permissionId);
+    raw.clearContract();
+    raw.addContract(contract);
+    transaction = transaction.toBuilder().setRawData(raw).build();
+
+    Protocol.Transaction.Builder transactionBuilderSigned = transaction.toBuilder();
+    byte[] hash = Sha256Hash.hash(CommonParameter.getInstance()
+            .isECKeyCryptoEngine(), transaction.getRawData().toByteArray());
+    ECKey ecKey = temKey;
+    ECKey.ECDSASignature signature = ecKey.sign(hash);
+    ByteString bsSign = ByteString.copyFrom(signature.toByteArray());
+    transactionBuilderSigned.addSignature(bsSign);
+    transaction = transactionBuilderSigned.build();
+    return transaction;
+  }
+
+
 
 }
