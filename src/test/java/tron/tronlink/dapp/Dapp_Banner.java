@@ -21,7 +21,7 @@ public class Dapp_Banner extends TronlinkBase {
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         JSONArray jsonArray = responseContent.getJSONArray("data");
-        Assert.assertTrue(jsonArray.size() >0);
+        Assert.assertTrue(jsonArray.size() ==0);
         for (Object json:jsonArray) {
             JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
             Assert.assertTrue(jsonObject.containsKey("id"));
