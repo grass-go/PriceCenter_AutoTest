@@ -17,14 +17,19 @@ import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
+import org.spongycastle.util.encoders.Hex;
+import org.tron.api.GrpcAPI;
 import org.tron.api.WalletGrpc;
 import org.tron.common.crypto.ECKey;
+import org.tron.common.crypto.Hash;
 import org.tron.common.parameter.CommonParameter;
+import org.tron.common.utils.ByteArray;
 import org.tron.common.utils.Sha256Hash;
 import org.tron.core.Wallet;
 import org.tron.protos.Protocol;
 import org.tron.protos.contract.BalanceContract;
 
+import org.tron.protos.contract.SmartContractOuterClass;
 import tron.common.utils.Configuration;
 import tron.trondata.base.TrondataBase;
 import tron.tronlink.base.TronlinkBase;
@@ -1041,6 +1046,87 @@ public static HttpResponse search(Map<String, String> params) {
     return transaction;
   }
 
+  public static Protocol.Transaction triggerContract(byte[] contractAddress, String method,
+                                                     String argsStr, Boolean isHex, long callValue, long feeLimit, String tokenId, long tokenValue,
+                                                     byte[] ownerAddress, WalletGrpc.WalletBlockingStub blockingStubFull) {
+    Wallet.setAddressPreFixByte(ADD_PRE_FIX_BYTE_MAINNET);
+    if (argsStr.equalsIgnoreCase("#")) {
+      log.info("argsstr is #");
+      argsStr = "";
+    }
+
+    byte[] owner = ownerAddress;
+    byte[] input = Hex.decode(parseMethod(method, argsStr, isHex));
+
+    SmartContractOuterClass.TriggerSmartContract.Builder builder = SmartContractOuterClass.TriggerSmartContract.newBuilder();
+    builder.setOwnerAddress(ByteString.copyFrom(owner));
+    builder.setContractAddress(ByteString.copyFrom(contractAddress));
+    builder.setData(ByteString.copyFrom(input));
+    builder.setCallValue(callValue);
+    builder.setTokenId(Long.parseLong(tokenId));
+    builder.setCallTokenValue(tokenValue);
+    SmartContractOuterClass.TriggerSmartContract triggerContract = builder.build();
+
+    GrpcAPI.TransactionExtention transactionExtention = blockingStubFull.triggerContract(triggerContract);
+    if (transactionExtention == null || !transactionExtention.getResult().getResult()) {
+      System.out.println("RPC create call trx failed!");
+      System.out.println("Code = " + transactionExtention.getResult().getCode());
+      System.out
+              .println("Message = " + transactionExtention.getResult().getMessage().toStringUtf8());
+      return null;
+    }
+    Protocol.Transaction transaction = transactionExtention.getTransaction();
+    if (transaction.getRetCount() != 0 && transactionExtention.getConstantResult(0) != null
+            && transactionExtention.getResult() != null) {
+      byte[] result = transactionExtention.getConstantResult(0).toByteArray();
+      System.out.println("message:" + transaction.getRet(0).getRet());
+      System.out.println(
+              ":" + ByteArray.toStr(transactionExtention.getResult().getMessage().toByteArray()));
+      System.out.println("Result:" + Hex.toHexString(result));
+      return null;
+    }
+
+    final GrpcAPI.TransactionExtention.Builder texBuilder = GrpcAPI.TransactionExtention.newBuilder();
+    Protocol.Transaction.Builder transBuilder = Protocol.Transaction.newBuilder();
+    Protocol.Transaction.raw.Builder rawBuilder = transactionExtention.getTransaction().getRawData()
+            .toBuilder();
+    rawBuilder.setFeeLimit(feeLimit);
+    transBuilder.setRawData(rawBuilder);
+    for (int i = 0; i < transactionExtention.getTransaction().getSignatureCount(); i++) {
+      ByteString s = transactionExtention.getTransaction().getSignature(i);
+      transBuilder.setSignature(i, s);
+    }
+    for (int i = 0; i < transactionExtention.getTransaction().getRetCount(); i++) {
+      Protocol.Transaction.Result r = transactionExtention.getTransaction().getRet(i);
+      transBuilder.setRet(i, r);
+    }
+    texBuilder.setTransaction(transBuilder);
+    texBuilder.setResult(transactionExtention.getResult());
+    texBuilder.setTxid(transactionExtention.getTxid());
+    transactionExtention = texBuilder.build();
+    if (transactionExtention == null) {
+      return null;
+    }
+    GrpcAPI.Return ret = transactionExtention.getResult();
+    if (!ret.getResult()) {
+      System.out.println("Code = " + ret.getCode());
+      System.out.println("Message = " + ret.getMessage().toStringUtf8());
+      return null;
+    }
+    transaction = transactionExtention.getTransaction();
+    return transaction;
+  }
+
+  //isHex must be true
+  public static String parseMethod(String methodSign, String input, boolean isHex) {
+    return parseSelector(methodSign) + input;
+  }
+
+  public static String parseSelector(String methodSign) {
+    byte[] selector = new byte[4];
+    System.arraycopy(Hash.sha3(methodSign.getBytes()), 0, selector, 0, 4);
+    return Hex.toHexString(selector);
+  }
 
 
 }

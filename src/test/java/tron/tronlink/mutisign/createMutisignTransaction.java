@@ -1,3 +1,4 @@
+/*
 package tron.tronlink.mutisign;
 
 import com.alibaba.fastjson.JSONObject;
@@ -115,9 +116,11 @@ public class createMutisignTransaction extends TronlinkBase {
     return transaction;
   }
 
-  /**
+  */
+/**
    * constructor.
-   */
+   *//*
+
   public static HttpResponse createConnect666(String url, JSONObject requestBody) {
     try {
       httpClient.getParams()
@@ -151,3 +154,4 @@ public class createMutisignTransaction extends TronlinkBase {
 
   
 }
+*/
