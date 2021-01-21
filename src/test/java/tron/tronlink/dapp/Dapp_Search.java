@@ -24,7 +24,7 @@ public class Dapp_Search extends TronlinkBase {
   @Test(enabled = true)
   public void dapp_search(){
     Map<String, String> params = new HashMap<>();
-    params.put("name","WINK");
+    params.put("name","JUST");
     response = TronlinkApiList.search(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
