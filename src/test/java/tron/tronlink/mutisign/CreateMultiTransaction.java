@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class CreateMultiTransaction {
     private org.tron.api.WalletGrpc.WalletBlockingStub blockingStubFull = null;
-    private String fullnode = "34.220.77.106:50051";  //线上
+    private String fullnode = "47.75.245.225:50051";  //线上
     private ManagedChannel channelFull = null;
     HttpResponse res;
     private JSONObject responseContent;
