@@ -35,6 +35,7 @@ dependencies {
 //    implementation 'org.tron.tronj:client:0.1.1'
 //    implementation 'org.tron.tronj:utils:0.1.1'
     implementation 'com.github.tronprotocol:java-tron:release_4.1.2-SNAPSHOT'
+    compile group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.5.1'
 
 
 }
