@@ -12,6 +12,7 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class GetSign {
+    //ANDROID_TEST("AndroidTest","SFSUIOJBFMLKSJIF", "SKDOE543KLMFSLKMJTIO4JTSSDFDSMKM65765",
     private static final String MAC_NAME = "HmacSHA1";
     private static final String ENCODING = "UTF-8";
     /**
@@ -73,9 +74,9 @@ public class GetSign {
     public static void main(String[] args) throws Exception{
         GetSign getSign1 = new GetSign();
         System.out.println(URLEncoder.encode(getSign1.getSignature(
-                 "official", "MainChain","1", "4105B49C6271FC5B2B8A8E1E980F6A12D9B66E2914",
+                 "official", "MainChain","1", "41F985738AE54FD87ED6CD07065905EBEA355E66CD",
                 "12345", "SFSUIOJBFMLKSJIF", "AndroidTest", "1:1:1:1", "1609302220000",
-                "v1.0.0", "/api/wallet/v2/asset", "GET")));
+                "v1.0.0", "/api/wallet/v2/addAsset", "POST")));
         /*System.out.println(URLEncoder.encode(getSign1.getSignature(
                 "official", "MainChain","1", "411D6D2E931B2088BB149B98BD35929DE0D958FCF2",
                 "12345", "SFSUIOJBFMLKSJIF", "AndroidTest", "1:1:1:1", "1609302220000",

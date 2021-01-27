@@ -602,9 +602,9 @@ public static HttpResponse search(Map<String, String> params) {
   public static HttpResponse nilexGetAssetlist(String address,Map<String,String> header) {
     try {
       String requestUrl = "https://niletest.tronlink.org/api/wallet/assetlist";
-      JsonObject body = new JsonObject();
-      body.addProperty("address", address);
-      response = createPostConnectWithHeader(requestUrl,body,header);
+      JSONObject body = new JSONObject();
+      body.put("address", address);
+      response = createPostConnectWithHeader(requestUrl,null,body,header);
     } catch (Exception e) {
       e.printStackTrace();
       httppost.releaseConnection();
@@ -649,6 +649,28 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse v2AddAsset(Map<String, String> params,JSONObject object) {
+    String requestUrl = HttpNode + "/api/wallet/v2/addAsset";
+    response = createPostConnectWithHeader(requestUrl,params, object,getV2Header());
+    return response;
+  }
+
+
+  public static Map<String, String> getV2Header(){
+    Map<String, String> header = new HashMap<>();
+    header.put("Lang","1");
+    header.put("Version","v1.0.0");
+    header.put("DeviceID","1:1:1:1");
+    header.put("chain","MainChain");
+    header.put("channel","official");
+    header.put("ts", "1609302220000");
+    header.put("packageName","com.tronlinkpro.wallet");
+    header.put("System","AndroidTest");
+    header.put("Content-type", "application/json; charset=utf-8");
+    header.put("Connection", "Keep-Alive");
+    return header;
+  }
+
   public static HttpResponse v2CreateGetConnect(String url, Map<String, String> params) {
     try {
       httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
@@ -665,17 +687,12 @@ public static HttpResponse search(Map<String, String> params) {
       }
       log.info(url);
       httpGet = new HttpGet(url);
-      httpGet.addHeader("Lang","1");
-      httpGet.addHeader("Version","v1.0.0");
-      httpGet.addHeader("DeviceID","1:1:1:1");
-      httpGet.addHeader("chain","MainChain");
-      httpGet.addHeader("channel","official");
-      httpGet.setHeader("ts", "1609302220000");
-      httpGet.addHeader("packageName","com.tronlinkpro.wallet");
-      httpGet.addHeader("System","AndroidTest");
-      httpGet.setHeader("Content-type", "application/json; charset=utf-8");
-      httpGet.setHeader("Connection", "Keep-Alive");
-
+      Map<String, String> header = getV2Header();
+      if(header != null){
+        for(String key: header.keySet()){
+          httpGet.addHeader(key,header.get(key));
+        }
+      }
       Header[] allHeaders = httpGet.getAllHeaders();
       for (int i = 0; i < allHeaders.length; i++) {
         log.info(""+allHeaders[i]);
@@ -721,12 +738,21 @@ public static HttpResponse search(Map<String, String> params) {
   /**
    * constructor.
    */
-  public static HttpResponse createPostConnectWithHeader(String url, JsonObject requestBody,Map<String,String> header) {
+  public static HttpResponse createPostConnectWithHeader(String url, Map<String, String> params,
+                                                         JSONObject requestBody,Map<String,String> header) {
     try {
       httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
               connectionTimeout);
       httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
-
+      if (params != null) {
+        StringBuffer stringBuffer = new StringBuffer(url);
+        stringBuffer.append("?");
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+          stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
+        }
+        stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+        url = stringBuffer.toString();
+      }
       httppost = new HttpPost(url);
       httppost.setHeader("Content-type", "application/json; charset=utf-8");
       httppost.setHeader("Connection", "Close");
