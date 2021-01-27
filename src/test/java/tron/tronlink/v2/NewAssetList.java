@@ -38,7 +38,7 @@ public class NewAssetList extends TronlinkBase {
     Assert.assertTrue(responseContent.containsKey("data"));
     dataContent = responseContent.getJSONObject("data");
     int count =dataContent.getIntValue("count");
-    Assert.assertEquals(2,count);
+    Assert.assertEquals(1,count);
     array = dataContent.getJSONArray("token");
     int type=0;
     for(int j=0;j<count;j++){
