@@ -613,6 +613,82 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse V2AllAssetList(Map<String, String> params) {
+    try {
+      String requestUrl = HttpNode +"/api/wallet/v2/allAssetList";
+      response = v2CreateGetConnect(requestUrl,params);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  public static HttpResponse v2AssetList(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/wallet/v2/assetList";
+    response = v2CreateGetConnect(requestUrl, params);
+    return response;
+  }
+
+  public static HttpResponse v2NewAssetList(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/wallet/v2/newAssetList";
+    response = v2CreateGetConnect(requestUrl, params);
+    return response;
+  }
+
+  public static HttpResponse v2SearchAsset(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/wallet/v2/search";
+    response = v2CreateGetConnect(requestUrl, params);
+    return response;
+  }
+
+  public static HttpResponse v2Asset(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/wallet/v2/asset";
+    response = v2CreateGetConnect(requestUrl, params);
+    return response;
+  }
+
+  public static HttpResponse v2CreateGetConnect(String url, Map<String, String> params) {
+    try {
+      httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
+              connectionTimeout);
+      httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+      if (params != null) {
+        StringBuffer stringBuffer = new StringBuffer(url);
+        stringBuffer.append("?");
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+          stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
+        }
+        stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+        url = stringBuffer.toString();
+      }
+      log.info(url);
+      httpGet = new HttpGet(url);
+      httpGet.addHeader("Lang","1");
+      httpGet.addHeader("Version","v1.0.0");
+      httpGet.addHeader("DeviceID","1:1:1:1");
+      httpGet.addHeader("chain","MainChain");
+      httpGet.addHeader("channel","official");
+      httpGet.setHeader("ts", "1609302220000");
+      httpGet.addHeader("packageName","com.tronlinkpro.wallet");
+      httpGet.addHeader("System","AndroidTest");
+      httpGet.setHeader("Content-type", "application/json; charset=utf-8");
+      httpGet.setHeader("Connection", "Keep-Alive");
+
+      Header[] allHeaders = httpGet.getAllHeaders();
+      for (int i = 0; i < allHeaders.length; i++) {
+        log.info(""+allHeaders[i]);
+      }
+      response = httpClient.execute(httpGet);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
   /**
    * constructor.
    */
