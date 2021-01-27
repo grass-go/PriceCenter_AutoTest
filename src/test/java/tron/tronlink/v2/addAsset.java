@@ -31,6 +31,9 @@ public class addAsset extends TronlinkBase {
 
   @Test(enabled = true)
   public void addAsset01(){
+    params.clear();
+    trc10tokenList.clear();
+    jsonObject.clear();
     params.put("nonce","12345");
     params.put("secretId","SFSUIOJBFMLKSJIF");
 //    params.put("signature","7%2B%2F36luYNVcnean87VL9AaY4O1o%3D");
