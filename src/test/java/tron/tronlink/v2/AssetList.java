@@ -39,7 +39,6 @@ public class AssetList extends TronlinkBase {
     Assert.assertEquals(1,tokenNum);
     JSONObject token = tokenArray.getJSONObject(0);
     Assert.assertEquals(0,token.getIntValue("type"));
-    Assert.assertEquals(1,token.getIntValue("top"));
     Assert.assertEquals("",token.getString("id"));
     Assert.assertEquals("",token.getString("contractAddress"));
     Assert.assertTrue(token.getLongValue("balance")>0);
