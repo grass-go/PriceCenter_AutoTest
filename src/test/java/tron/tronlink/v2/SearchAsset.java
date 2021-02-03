@@ -20,7 +20,7 @@ public class SearchAsset extends TronlinkBase {
 
   private JSONArray array = new JSONArray();
   Map<String, String> params = new HashMap<>();
-
+  //test
 
   @Test(enabled = true)
   public void searchAssetList01(){
