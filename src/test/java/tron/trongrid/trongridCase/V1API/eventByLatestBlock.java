@@ -19,7 +19,7 @@ public class eventByLatestBlock extends V1Base {
    */
   @Test(enabled = true, description = "Get event by latest block from trongrid V1 API")
   public void test01GetEventByLatestBlockFromTrongridV1() throws Exception{
-    Integer retryTime = 10;
+    Integer retryTime = 2;
     while (eventArray.size() == 0 && retryTime-- > 0) {
       getEventByLatestBlockBody = getEventByLatestBlockNumber();
       Assert.assertEquals(getEventByLatestBlockBody.getBoolean("success"), true);
