@@ -50,7 +50,7 @@ public class AccountList extends TronlinkBase {
     Assert.assertTrue(sum.subtract(new BigDecimal(dataContent.getLongValue("totalBalance"))).intValue() == 0);
   }
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void comparteBalanceStr() throws Exception {
     response = TronlinkApiList.assetlist(queryAddressTxt41);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
