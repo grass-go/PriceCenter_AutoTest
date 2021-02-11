@@ -29,7 +29,7 @@ public class chainTest extends Base {
             }else if ("getCreateAccountFee".equals(key)){
                 Assert.assertEquals(jsonObject.getLongValue("value"),100000);
             }else if ("getTransactionFee".equals(key)){
-                Assert.assertEquals(jsonObject.getLongValue("value"),40);
+                Assert.assertEquals(jsonObject.getLongValue("value"),140);
             }else if ("getWitnessPayPerBlock".equals(key)){
                 Assert.assertEquals(jsonObject.getLongValue("value"),16000000);
             }
