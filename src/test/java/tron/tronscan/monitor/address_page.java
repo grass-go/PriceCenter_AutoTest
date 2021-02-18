@@ -283,7 +283,7 @@ public class address_page {
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronscanApiList.parseResponseContent(response);
         TronscanApiList.printJsonContent(responseContent);
-        Assert.assertTrue(responseContent.size() == 5);
+        
         Long total = Long.valueOf(responseContent.get("total").toString());
         Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
         Assert.assertTrue(rangeTotal == total && total==0);
@@ -410,7 +410,7 @@ public class address_page {
         responseContent = TronscanApiList.parseResponseContent(response);
         TronscanApiList.printJsonContent(responseContent);
         //three object, "total" and "Data","rangeTotal"
-        Assert.assertTrue(responseContent.size() == 5);
+        
         Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 0);
         Assert.assertTrue(responseContent.containsKey("contractMap"));
         Long total = Long.valueOf(responseContent.get("total").toString());
@@ -487,7 +487,7 @@ public class address_page {
         responseContent = TronscanApiList.parseResponseContent(response);
         TronscanApiList.printJsonContent(responseContent);
         //three object, "total" and "Data","rangeTotal"
-        Assert.assertTrue(responseContent.size() == 5);
+        
         Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 0);
         Assert.assertTrue(responseContent.containsKey("contractMap"));
         //total不为空
@@ -523,7 +523,7 @@ public class address_page {
         responseContent = TronscanApiList.parseResponseContent(response);
         TronscanApiList.printJsonContent(responseContent);
         //three object, "total" and "Data","rangeTotal"
-        Assert.assertTrue(responseContent.size() == 5);
+        
         Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 0);
         Assert.assertTrue(responseContent.containsKey("contractMap"));
         //total不为空
@@ -558,7 +558,7 @@ public class address_page {
         responseContent = TronscanApiList.parseResponseContent(response);
         TronscanApiList.printJsonContent(responseContent);
         //three object, "total" and "Data","rangeTotal"
-        Assert.assertTrue(responseContent.size() == 5);
+        
         Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 0);
         Assert.assertTrue(responseContent.containsKey("contractMap"));
         //total不为空
@@ -593,7 +593,7 @@ public class address_page {
         responseContent = TronscanApiList.parseResponseContent(response);
         TronscanApiList.printJsonContent(responseContent);
         //three object, "total" and "Data","rangeTotal"
-        Assert.assertTrue(responseContent.size() == 5);
+        
         Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 0);
         Assert.assertTrue(responseContent.containsKey("contractMap"));
         //total不为空
@@ -629,7 +629,7 @@ public class address_page {
         responseContent = TronscanApiList.parseResponseContent(response);
         TronscanApiList.printJsonContent(responseContent);
         //three object, "total" and "Data","rangeTotal"
-        Assert.assertTrue(responseContent.size() == 5);
+        
         Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 0);
         Assert.assertTrue(responseContent.containsKey("contractMap"));
         //total不为空
@@ -665,7 +665,7 @@ public class address_page {
         responseContent = TronscanApiList.parseResponseContent(response);
         TronscanApiList.printJsonContent(responseContent);
         //three object, "total" and "Data","rangeTotal"
-        Assert.assertTrue(responseContent.size() == 5);
+        
         Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 0);
         Assert.assertTrue(responseContent.containsKey("contractMap"));
         //total不为空
@@ -700,7 +700,7 @@ public class address_page {
         responseContent = TronscanApiList.parseResponseContent(response);
         TronscanApiList.printJsonContent(responseContent);
         //three object, "total" and "Data","rangeTotal"
-        Assert.assertTrue(responseContent.size() == 5);
+        
         Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 0);
         Assert.assertTrue(responseContent.containsKey("contractMap"));
         //total不为空
@@ -735,7 +735,7 @@ public class address_page {
         responseContent = TronscanApiList.parseResponseContent(response);
         TronscanApiList.printJsonContent(responseContent);
         //three object, "total" and "Data","rangeTotal"
-        Assert.assertTrue(responseContent.size() == 5);
+        
         Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 0);
         Assert.assertTrue(responseContent.containsKey("contractMap"));
         //total不为空
@@ -770,7 +770,7 @@ public class address_page {
         responseContent = TronscanApiList.parseResponseContent(response);
         TronscanApiList.printJsonContent(responseContent);
         //three object, "total" and "Data","rangeTotal"
-        Assert.assertTrue(responseContent.size() == 5);
+        
         Assert.assertTrue(Long.valueOf(responseContent.get("wholeChainTxCount").toString()) >= 0);
         Assert.assertTrue(responseContent.containsKey("contractMap"));
         //total不为空
