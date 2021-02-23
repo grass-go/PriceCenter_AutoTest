@@ -263,6 +263,46 @@ public class V1Base {
   /**
    * constructor.
    */
+  public static JSONObject getEventByContractAddressWithKey(String contractAddress) {
+    return getEventByContractAddressWithKey(contractAddress,true,"",0L,0L,0L,"");
+  }
+
+  /**
+   * constructor.
+   */
+  public static JSONObject getEventByContractAddressWithKey(String contractAddress,Boolean is_only_confirmed,
+                                                     String eventName, Long blockNumber,Long minBlockTimestamp,Long maxBlockTimestamp,
+                                                     String orderBy) {
+    try {
+      String requestUrl = tronGridUrl + "v1/contracts/" + contractAddress + "/events";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("only_confirmed",is_only_confirmed);
+      if (!eventName.isEmpty()){
+        userBaseObj2.addProperty("event_name",eventName);
+      }
+      if (blockNumber != 0) {
+        userBaseObj2.addProperty("block_number",blockNumber);
+      }
+      if (minBlockTimestamp != 0 && maxBlockTimestamp != 0) {
+        userBaseObj2.addProperty("min_block_timestamp",minBlockTimestamp);
+        userBaseObj2.addProperty("max_block_timestamp",maxBlockTimestamp);
+      }
+      if (!orderBy.isEmpty()) {
+        userBaseObj2.addProperty("order_by",orderBy);
+      }
+      response = createConnectWithKey(requestUrl, userBaseObj2);
+      Assert.assertEquals(200,response.getStatusLine().getStatusCode());
+      return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpget.releaseConnection();
+      return null;
+    }
+  }
+
+  /**
+   * constructor.
+   */
   public static JSONObject getTransactionInformationByContractAddress(String contractAddress) {
     return getTransactionInformationByContractAddress(contractAddress,true,"",20,true,0L,0L);
   }
@@ -481,6 +521,47 @@ public class V1Base {
       }
       URI uri = uriBuilder.build();
       httpget.setURI(uri);
+      System.out.println("---------- " + httpget.getURI() + " --------------");
+      response = httpClient.execute(httpget);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpget.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse createConnectWithKey(String url, JsonObject requestBody) {
+    try {
+      httpClient.getParams()
+              .setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, connectionTimeout);
+      httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+      httpget = new HttpGet(url);
+
+      URIBuilder uriBuilder = new URIBuilder(url);
+      uriBuilder.setCharset(Charset.forName("UTF-8"));
+      if (requestBody != null) {
+        Iterator iter = requestBody.entrySet().iterator();
+        while (iter.hasNext()) {
+          Map.Entry entry = (Map.Entry) iter.next();
+          uriBuilder.setParameter(entry.getKey().toString(), entry.getValue().toString().replaceAll(
+                  "\"",""
+          ));
+        }
+      }
+      URI uri = uriBuilder.build();
+      httpget.setURI(uri);
+      httpget.addHeader("TRON-PRO-API-KEY", "50446bd3-7b0e-40bb-85cf-34617bbe1bec");
+      httpget.addHeader("User-Agent","a8iiu");
+      httpget.addHeader("Origin","https://6ty.1trog.io");
+      httpget.addHeader("Authorization","Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjQ1OTI0OTdj" +
+              "YjcxYTRhYjk4NDVhYzViZjA2ODFjYjYyIn0.eyJhdWQiOiJ0cm9uZ3JpZC5pbyJ9.MqyQcu5HtOcIeWSJ7Cez_x15Q26H2WlKEs" +
+              "uKXccrWKV2QAz9N-3Ze9T2VsmPZTpojuf-RvG4MvO-RsF4QhGPsN25ZljRA4xH3I9Tlh7m_m9be70ZFG4IJzoNCIstEIlyCKGxOSW5" +
+              "2u52rL5I63zf7GT_N2AIR4DQOsANP4J0TJsQfPgVNqDaNxpoOx01QihPlGiVctzsM-3r8z0Lx1ZrwHPr499fc75tg2gTXFg7wvCrUl-" +
+              "vbzCND-W3zBT3KngqBTgoaNpFJGCSro1FczifeOQQs-cwMS3NoMiy8WKB7rfHZzFJ3t1JD7arXezoimFLbjKYx1HE3OtaUwccPZSkew");
       System.out.println("---------- " + httpget.getURI() + " --------------");
       response = httpClient.execute(httpget);
     } catch (Exception e) {

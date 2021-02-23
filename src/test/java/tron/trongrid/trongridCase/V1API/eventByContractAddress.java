@@ -102,7 +102,27 @@ public class eventByContractAddress extends V1Base {
 
 
   }
-  
+
+
+  /**
+   * constructor.
+   */
+  @Test(enabled = true, description = "Get event by contract address from trongrid V1 API with key")
+  public void test05GetEventByContractAddressFromTrongridV1() {
+    getEventByContractAddressBody = getEventByContractAddressWithKey(usdjContract);
+    printJsonContent(getEventByContractAddressBody);
+    Assert.assertEquals(getEventByContractAddressBody.getBoolean("success"),true);
+    Assert.assertTrue(getEventByContractAddressBody.containsKey("meta"));
+    eventData = getEventByContractAddressBody.getJSONArray("data").getJSONObject(0);
+    printJsonContent(eventData);
+    Assert.assertFalse(eventData.getJSONObject("result").isEmpty());
+    Assert.assertFalse(eventData.getString("transaction_id").isEmpty());
+    Assert.assertFalse(eventData.getJSONObject("result_type").isEmpty());
+    Assert.assertTrue(eventData.getLong("block_timestamp") > 1584501014000L);
+    Assert.assertFalse(eventData.getString("event_name").isEmpty());
+    Assert.assertFalse(eventData.getString("contract_address").isEmpty());
+    Assert.assertTrue(eventData.containsKey("event_index"));
+  }
 
   /**
    * constructor.
