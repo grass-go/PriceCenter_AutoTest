@@ -62,7 +62,7 @@ public class representatives_page {
         Assert.assertTrue(!highestContent.getString("name").isEmpty());
         Assert.assertTrue(!highestContent.getString("url").isEmpty());
         Assert.assertTrue(Double.valueOf(highestContent.getString("missedTotal")) >= 0);
-        Assert.assertTrue(Double.valueOf(highestContent.getString("producedTotal")) > 1000);
+        Assert.assertTrue(Double.valueOf(highestContent.getString("producedTotal")) >= 0);
         Assert.assertTrue(Double.valueOf(highestContent.getString("producePercentage")) <= 100);
         //lowestEfficiency
         // 出块效率最低
