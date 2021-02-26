@@ -823,7 +823,7 @@ public class address_page {
 
     }
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
+    @Test(enabled = false,retryAnalyzer = MyIRetryAnalyzer.class)
     public void testStatistics(){
         response = TronscanApiList.statistics();
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
