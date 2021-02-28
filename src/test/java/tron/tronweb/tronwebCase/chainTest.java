@@ -186,7 +186,7 @@ public class chainTest extends Base {
         Assert.assertEquals("41f596e85bfd042744f76880979a133da0728679d9",object.getString("creator_address"));
         Assert.assertEquals(1539673398000L,object.getLongValue("create_time"));
         Assert.assertEquals("31303030353634",object.getString("first_token_id"));
-        Assert.assertEquals(55,object.getLongValue("first_token_balance"));
+        Assert.assertEquals(8,object.getLongValue("first_token_balance"));
         Assert.assertEquals("5f",object.getString("second_token_id"));
         Assert.assertEquals(326459,object.getLongValue("second_token_balance"));
     }
