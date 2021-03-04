@@ -25,8 +25,8 @@ public class search_page {
       .getStringList("tronscan.ip.list")
       .get(0);
 
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "search address")
-  public void search_address() {
+  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "search token")
+  public void search_token() {
     //Get response
     Map<String, String> params = new HashMap<>();
     params.put("term", "usdt");
@@ -42,7 +42,8 @@ public class search_page {
     JSONObject responseObject = responseArrayContent.getJSONObject(0);
     for (int i = 0; i < responseArrayContent.size(); i++) {
       Assert.assertTrue(!responseObject.getString("desc").isEmpty());
-
+      Assert.assertTrue(!responseObject.getString("contract_address").isEmpty());
+      Assert.assertTrue(!responseObject.getString("vip").isEmpty());
       try {
         Thread.sleep(500);
       }catch (Exception ex){
@@ -51,7 +52,9 @@ public class search_page {
   }
 
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "search token")
-  public void search_token(){
+  public void search_address(){
+    Map<String,String> params = new HashMap<>();
+
 
   }
 
