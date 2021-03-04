@@ -27,25 +27,22 @@ public class search_page {
 
   @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "search address")
   public void search_address() {
-    Map<String,String> token = new HashMap<>();
     //Get response
     Map<String, String> params = new HashMap<>();
-    params.put("address", "TKwmkoBFyhekCgkAZ7FmxnN6oaL3GyD8xR");
-    response = TronscanApiList.getAccountList(tronScanNode, params);
+    params.put("term", "usdt");
+    params.put("type","token");
+    params.put("start","0");
+    params.put("limit","20");
+    response = TronscanApiList.searchMain(tronScanNode, params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
     //data object
-    responseArrayContent = responseContent.getJSONArray("trc20token_balances");
+    responseArrayContent = responseContent.getJSONArray("search_result");
     JSONObject responseObject = responseArrayContent.getJSONObject(0);
     for (int i = 0; i < responseArrayContent.size(); i++) {
-      Assert.assertTrue(!responseObject.getString("tokenId").isEmpty());
-      String trc20Address = responseObject.getString("tokenId");
-      Map<String, String> params2 = new HashMap<>();
-      params2.put("contract",trc20Address);
-      response = TronscanApiList.getTokentrc20(tronScanNode,params2);
-      responseContent2 = TronscanApiList.parseResponseContent(response);
-//            Assert.assertTrue(responseContent2.getInteger("total") == 1);
+      Assert.assertTrue(!responseObject.getString("desc").isEmpty());
+
       try {
         Thread.sleep(500);
       }catch (Exception ex){

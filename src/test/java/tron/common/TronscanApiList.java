@@ -798,6 +798,18 @@ public class TronscanApiList {
         return response;
     }
 
+    public static HttpResponse searchMain(String tronscanNode, Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/search-type";
+            response = createGetConnect(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
     /**
      * constructor.
      */
