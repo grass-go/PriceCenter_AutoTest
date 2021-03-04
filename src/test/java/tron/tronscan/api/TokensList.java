@@ -94,7 +94,7 @@ public class TokensList {
         Assert.assertTrue(!url_key.isEmpty());
 //      }
       //
-      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("frozenPercentage"));
+//      Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("frozenPercentage"));
       //
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("isBlack"));
       Assert.assertTrue(responseArrayContent.getJSONObject(i).containsKey("remainingPercentage"));

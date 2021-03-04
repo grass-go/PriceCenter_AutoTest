@@ -42,7 +42,6 @@ public class TransferListBetweenTimeRange {
     params.put("end_timestamp", "1548057645667");
 
     response = TronscanApiList.getTransferList(tronScanNode, params);
-    log.info("code is " + response.getStatusLine().getStatusCode());
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronscanApiList.parseResponseContent(response);
     TronscanApiList.printJsonContent(responseContent);
