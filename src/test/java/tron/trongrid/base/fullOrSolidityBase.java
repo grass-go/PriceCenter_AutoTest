@@ -680,13 +680,17 @@ public class fullOrSolidityBase {
   /**
    * constructor.
    */
-  public static HttpResponse getTransactionById(String txid) {
+  public static HttpResponse getTransactionById(String txid,Boolean apiKey) {
     try {
       final String requestUrl = tronGridUrl  + fullnode + "/gettransactionbyid";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", true);
       userBaseObj2.addProperty("value", txid);
-      response = createConnect(requestUrl, userBaseObj2);
+      if (apiKey){
+        response = createConnectWithKey(requestUrl, userBaseObj2);
+      }else {
+        response = createConnect(requestUrl, userBaseObj2);
+      }
     } catch (Exception e) {
       e.printStackTrace();
       httppost.releaseConnection();
@@ -698,13 +702,13 @@ public class fullOrSolidityBase {
   /**
    * constructor.
    */
-  public static HttpResponse getTransactionById(String txid,Boolean isSolidity) {
+  public static HttpResponse getTransactionById(String txid,Boolean isSolidity,Boolean apiKey) {
     if (isSolidity) {
       fullnode = solidity;
     }else {
       fullnode = walletStr;
     }
-    return getTransactionById(txid);
+    return getTransactionById(txid,apiKey);
   }
 
 
@@ -894,6 +898,43 @@ public class fullOrSolidityBase {
       httppost = new HttpPost(url);
       httppost.setHeader("Content-type", "application/json; charset=utf-8");
       httppost.setHeader("Connection", "Close");
+      if (requestBody != null) {
+        StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
+        entity.setContentEncoding("UTF-8");
+        entity.setContentType("application/json");
+        httppost.setEntity(entity);
+      }
+      System.out.println(httppost.toString());
+      System.out.println("params: "+requestBody.toString());
+
+      response = httpClient.execute(httppost);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse createConnectWithKey(String url, JsonObject requestBody) {
+    try {
+      httpClient.getParams()
+              .setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, connectionTimeout);
+      httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+      httppost = new HttpPost(url);
+      httppost.setHeader("Content-type", "application/json; charset=utf-8");
+      httppost.setHeader("Connection", "Close");
+      httppost.addHeader("TRON-PRO-API-KEY", "50446bd3-7b0e-40bb-85cf-34617bbe1bec");
+      httppost.addHeader("User-Agent","a8iiu");
+      httppost.addHeader("Origin","https://6ty.1trog.io");
+      httppost.addHeader("Authorization","Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjQ1OTI0OTdj" +
+              "YjcxYTRhYjk4NDVhYzViZjA2ODFjYjYyIn0.eyJhdWQiOiJ0cm9uZ3JpZC5pbyJ9.MqyQcu5HtOcIeWSJ7Cez_x15Q26H2WlKEs" +
+              "uKXccrWKV2QAz9N-3Ze9T2VsmPZTpojuf-RvG4MvO-RsF4QhGPsN25ZljRA4xH3I9Tlh7m_m9be70ZFG4IJzoNCIstEIlyCKGxOSW5" +
+              "2u52rL5I63zf7GT_N2AIR4DQOsANP4J0TJsQfPgVNqDaNxpoOx01QihPlGiVctzsM-3r8z0Lx1ZrwHPr499fc75tg2gTXFg7wvCrUl-" +
+              "vbzCND-W3zBT3KngqBTgoaNpFJGCSro1FczifeOQQs-cwMS3NoMiy8WKB7rfHZzFJ3t1JD7arXezoimFLbjKYx1HE3OtaUwccPZSkew");
       if (requestBody != null) {
         StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
         entity.setContentEncoding("UTF-8");

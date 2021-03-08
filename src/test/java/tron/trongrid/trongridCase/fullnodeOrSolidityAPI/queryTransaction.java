@@ -17,7 +17,7 @@ public class queryTransaction extends fullOrSolidityBase {
    */
   @Test(enabled = true, description = "Get transaction by id from trongrid")
   public void test01GetTransactionByIdFromTrongrid() {
-    response = getTransactionById(txid,false);
+    response = getTransactionById(txid,false,false);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = parseResponseContent(response);
     transactionBody = responseContent;
@@ -66,7 +66,7 @@ public class queryTransaction extends fullOrSolidityBase {
    */
   @Test(enabled = true, description = "Get transaction by id from trongrid solidity")
   public void test04GetTransactionByIdFromTrongridSolidity() {
-    response = getTransactionById(txid,true);
+    response = getTransactionById(txid,true,false);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
@@ -77,8 +77,21 @@ public class queryTransaction extends fullOrSolidityBase {
   /**
    * constructor.
    */
+  @Test(enabled = true, description = "Get transaction by id from trongrid solidity with api key")
+  public void test05GetTransactionByIdFromTrongridSolidity() {
+    response = getTransactionById(txid,true,true);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = parseResponseContent(response);
+    printJsonContent(responseContent);
+    Assert.assertTrue(fullOrSolidityBase.compareJsonObject(transactionBody,responseContent));
+//    Assert.assertEquals(transactionBody,responseContent);
+  }
+
+  /**
+   * constructor.
+   */
   @Test(enabled = true, description = "Get transaction info by id from trongrid solidity")
-  public void test05GetTransactionInfoByIdFromTrongridSolidity() {
+  public void test06GetTransactionInfoByIdFromTrongridSolidity() {
     response = getTransactionInfoById(txid,true);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = parseResponseContent(response);
@@ -91,7 +104,7 @@ public class queryTransaction extends fullOrSolidityBase {
    * constructor.
    */
   @Test(enabled = true, description = "Get transaction info by block number from trongrid solidity")
-  public void test06GetTransactionInfoByBlockNumFromTrongridSolidity() {
+  public void test07GetTransactionInfoByBlockNumFromTrongridSolidity() {
     response = getTransactionInfoByBlockNum(txidBlockNum,true);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     printJsonArrayContent(parseResponseContentToArray(response));
@@ -99,6 +112,26 @@ public class queryTransaction extends fullOrSolidityBase {
     Assert.assertEquals(responseContent.size(),47);
 //    Assert.assertTrue(fullOrSolidityBase.compareJsonArray(getTransactionByBlockNumJsonArrayBody,responseContent));
   }
+
+  /**
+   * constructor.
+   */
+  @Test(enabled = true, description = "Get transaction by id from trongrid with api key")
+  public void test08GetTransactionByIdFromTrongridWithKey() {
+    response = getTransactionById(txid,false,true);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = parseResponseContent(response);
+    transactionBody = responseContent;
+    printJsonContent(responseContent);
+    Assert.assertTrue(responseContent.getJSONArray("ret")
+            .getJSONObject(0).getString("contractRet").equals("SUCCESS"));
+    Assert.assertTrue(responseContent.containsKey("signature"));
+    Assert.assertEquals(responseContent.getString("txID"),txid);
+    Assert.assertTrue(responseContent.getJSONObject("raw_data").getJSONArray("contract").getJSONObject((0)).getString("type").equals("TriggerSmartContract"));
+    Assert.assertTrue(responseContent.getJSONObject("raw_data").getLong("timestamp") ==1589788820805L);
+  }
+
+
 
 
 
