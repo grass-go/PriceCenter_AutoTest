@@ -810,6 +810,18 @@ public class TronscanApiList {
         return response;
     }
 
+    public static HttpResponse trxSupply(String tronscanNode, Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/turnover";
+            response = createGetConnect(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
     /**
      * constructor.
      */
