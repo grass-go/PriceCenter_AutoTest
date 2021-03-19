@@ -799,7 +799,6 @@ public class address_page {
         //data list
         responseArrayContent = responseContent.getJSONArray("data");
 
-        Assert.assertTrue(responseArrayContent.size() > 0);
         for (int i = 0; i < responseArrayContent.size(); i++) {
 
             //hash

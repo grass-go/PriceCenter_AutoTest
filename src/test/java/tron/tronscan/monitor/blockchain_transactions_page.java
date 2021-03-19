@@ -93,11 +93,11 @@ public class blockchain_transactions_page {
             TronscanApiList.printJsonContent(responseContent);
 
             //three object, "retCode" and "Data"
-//            Assert.assertTrue(responseContent.containsKey("trc20Proportion"));
-//            Assert.assertTrue(Double.valueOf(responseContent.get("trxTransferAmount").toString()) > 0);
-            Assert.assertTrue(responseContent.containsKey("trc10TransferCount"));
-            Assert.assertTrue(responseContent.getLong("lastDayTxCount") > 1000000);
-//            Assert.assertTrue(responseContent.getLong("lastDayTxAmount") > 100000000);
+////            Assert.assertTrue(responseContent.containsKey("trc20Proportion"));
+////            Assert.assertTrue(Double.valueOf(responseContent.get("trxTransferAmount").toString()) > 0);
+//            Assert.assertTrue(responseContent.containsKey("trc10TransferCount"));
+//            Assert.assertTrue(responseContent.getLong("lastDayTxCount") > 1000000);
+////            Assert.assertTrue(responseContent.getLong("lastDayTxAmount") > 100000000);
             Assert.assertTrue(responseContent.containsKey("trxTransferCount"));
             Assert.assertTrue(Double.valueOf(responseContent.get("txAmount").toString()) > 1108940999624238L);
 //            Assert.assertTrue((responseContent.getLong("txCount") - wholeChainTxCount) < 1000);
