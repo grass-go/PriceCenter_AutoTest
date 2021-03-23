@@ -29,7 +29,7 @@ public class TransferTrx extends TrondataBase {
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     Assert.assertTrue(responseContent.containsKey("page_size"));
-    Assert.assertEquals(16, responseContent.getIntValue("page_size"));
+    Assert.assertEquals(20, responseContent.getIntValue("page_size"));
     Assert.assertTrue(responseContent.containsKey("data"));
     responseArrayContent = responseContent.getJSONArray("data");
 
