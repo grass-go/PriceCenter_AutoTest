@@ -51,28 +51,4 @@ public class search_page {
     }
   }
 
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "search token")
-  public void search_address(){
-    Map<String,String> params = new HashMap<>();
-
-
-  }
-
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "search hash")
-  public void search_hash(){
-
-
-  }
-
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "search web site")
-  public void search_web(){
-
-
-  }
-
-  @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "search error")
-  public void search_error() {
-
-  }
-
 }
