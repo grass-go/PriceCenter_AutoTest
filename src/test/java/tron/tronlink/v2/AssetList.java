@@ -20,7 +20,7 @@ public class AssetList extends TronlinkBase {
   Map<String, String> params = new HashMap<>();
 
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void assetList01(){
     params.put("nonce","12345");
     params.put("secretId","SFSUIOJBFMLKSJIF");
@@ -36,12 +36,32 @@ public class AssetList extends TronlinkBase {
     dataContent = responseContent.getJSONObject("data");
     JSONArray tokenArray = dataContent.getJSONArray("token");
     int tokenNum = tokenArray.size();
-    Assert.assertEquals(1,tokenNum);
-    JSONObject token = tokenArray.getJSONObject(0);
-    Assert.assertEquals(0,token.getIntValue("type"));
-    Assert.assertEquals("",token.getString("id"));
-    Assert.assertEquals("",token.getString("contractAddress"));
-    Assert.assertTrue(token.getLongValue("balance")>0);
+    Assert.assertEquals(2,tokenNum);
+    for(int i=0;i<tokenNum;i++){
+      JSONObject token = tokenArray.getJSONObject(0);
+      int type = token.getIntValue("type");
+      String id = token.getString("id");
+      String contractAddress = token.getString("contractAddress");
+      switch (type){
+        case 0:
+          Assert.assertEquals("",id);
+          Assert.assertEquals("",contractAddress);
+          break;
+        case 1:
+          Assert.assertEquals("1002000",id);
+          Assert.assertEquals("",contractAddress);
+          break;
+        case 2:
+          Assert.assertEquals("",id);
+          Assert.assertEquals("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",contractAddress);
+          break;
+        default:
+          break;
+      }
+      Assert.assertEquals(1,token.getLongValue("isOfficial"));
+      Assert.assertTrue(token.getLongValue("balance")>0);
+    }
+
 
   }
 

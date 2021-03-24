@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.tronlink.base.TronlinkBase;
 
+import javax.sound.midi.Soundbank;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ public class AllAssetList extends TronlinkBase {
   Map<String, String> params = new HashMap<>();
 
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void allAssetList01(){
     params.put("nonce","12345");
     params.put("secretId","SFSUIOJBFMLKSJIF");
@@ -36,14 +37,19 @@ public class AllAssetList extends TronlinkBase {
     Assert.assertTrue(responseContent.containsKey("data"));
     dataContent = responseContent.getJSONObject("data");
     int count =dataContent.getIntValue("count");
-    Assert.assertEquals(3,count);
+    Assert.assertEquals(4,count);
     array = dataContent.getJSONArray("token");
     int type=0;
     for(int j=0;j<count;j++){
       object = array.getJSONObject(j);
       type=object.getIntValue("type");
+      String id=object.getString("id");
       if (type==1){
-        Assert.assertEquals("1002000",object.getString("id"));
+        if(!(("1002000".equals(id))||("1002962".equals(id)))){
+          log.info("------wrong token id ");
+          Assert.assertFalse(false);
+        }
+
       }else if (type==2){
         Assert.assertEquals("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",object.getString("contractAddress"));
       }
