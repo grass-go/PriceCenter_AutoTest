@@ -43,7 +43,7 @@ public class SocketMultiTrxRecord {
             };
             mWs.setConnectionLostTimeout(8);
             mWs.connect();
-            Thread.sleep(5000);
+            Thread.sleep(8000);
             Assert.assertTrue(flag);
             mWs.close();
         } catch (Exception e) {
