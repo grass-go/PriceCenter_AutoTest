@@ -18,7 +18,7 @@ import java.util.Map;
 public class SocketApiMessage {
     boolean flag = false;
     @Test(enabled = true,description = "get new asset push message ")
-    public void test00GetNotSignRecord() {
+    public void test00GetNewAssetPush() {
         Map<String,String> header = TronlinkApiList.getV2Header();
         JSONObject data = new JSONObject();
         JSONObject addressInfo = new JSONObject();
@@ -69,9 +69,9 @@ public class SocketApiMessage {
                     log.info("onError:"+e.getMessage());
                 }
             };
-            mWs.setConnectionLostTimeout(8);
+            mWs.setConnectionLostTimeout(9);
             mWs.connect();
-            Thread.sleep(5000);
+            Thread.sleep(7000);
             Assert.assertTrue(flag);
             mWs.close();
         } catch (Exception e) {
