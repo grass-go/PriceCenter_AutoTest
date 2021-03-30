@@ -41,9 +41,9 @@ public class SocketMultiTrxRecord {
                     log.info("onError:"+e.getMessage());
                 }
             };
-            mWs.setConnectionLostTimeout(8);
+            mWs.setConnectionLostTimeout(10);
             mWs.connect();
-            Thread.sleep(8000);
+            Thread.sleep(9000);
             Assert.assertTrue(flag);
             mWs.close();
         } catch (Exception e) {
