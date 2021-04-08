@@ -1292,6 +1292,18 @@ public class TronscanApiList {
         return response;
     }
 
+    public static HttpResponse getTrc721Inventory(String tronscanNode, Map<String, String> params) {
+        try {
+            String requestUrl = "http://" + tronscanNode + "api/trc721/token";
+            System.out.println(requestUrl);
+            response = createGetConnect(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
     /**
      * constructor.谷歌验证码
      */

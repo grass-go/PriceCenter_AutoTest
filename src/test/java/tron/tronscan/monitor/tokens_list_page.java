@@ -262,5 +262,29 @@ public class tokens_list_page {
             }
         }
     }
+
+
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "trc721通证详情库存信息")
+    public void tokeen721_inventory(){
+        //Get response
+        int limit = 20;
+        Map<String, String> params = new HashMap<>();
+        params.put("contract", "TPvGT3tWUNakTg23ARKMx46MGLT386nYWD");
+        params.put("limit", String.valueOf(limit));
+        params.put("start", "0");
+        response = TronscanApiList.getTrc721Inventory(tronScanNode, params);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TronscanApiList.parseResponseContent(response);
+        TronscanApiList.printJsonContent(responseContent);
+
+        responseArrayContent = responseContent.getJSONArray("data");
+        for (Object data:responseArrayContent
+             ) {
+            JSONObject tokenInfo = (JSONObject) data;
+            Assert.assertTrue(!tokenInfo.getString("token_id").isEmpty());
+            Assert.assertTrue(!tokenInfo.getString("owner_address").isEmpty());
+        }
+
+    }
 }
 
