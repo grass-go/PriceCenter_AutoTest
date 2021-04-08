@@ -23,7 +23,7 @@ public class blockchain_transfers_page {
             .getStringList("tronscan.ip.list")
             .get(0);
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "区块链-转账-TRX/TRC10")
+    @Test(enabled = false,retryAnalyzer = MyIRetryAnalyzer.class,description = "区块链-转账-TRX/TRC10")
     public void blockchain_transfers_page() {
         int limit = 20;
         int start = 0;
@@ -93,7 +93,7 @@ public class blockchain_transfers_page {
         Assert.assertTrue(Double.valueOf(responseContent.get("lastDayTransfersAmount").toString()) > 10000);
     }
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class,description = "区块链-转账-TRC20")
+    @Test(enabled = false,retryAnalyzer = MyIRetryAnalyzer.class,description = "区块链-转账-TRC20")
     public void blockchain_transfers_page_TRC20() {
         int limit = 20;
         int start = 0;
