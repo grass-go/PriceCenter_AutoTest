@@ -418,6 +418,7 @@ public class api {
 
   public static HttpResponse createGetConnect(URI uri) {
     try {
+      System.out.println(System.currentTimeMillis()+" : "+uri.toString());
       httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
           connectionTimeout);
       httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
