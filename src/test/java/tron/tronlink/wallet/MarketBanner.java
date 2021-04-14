@@ -39,16 +39,16 @@ public class MarketBanner {
     double origin = Double.valueOf(ai);
     int value = Integer.valueOf(annualizedIncome.charAt(index));
     System.out.println("value: " + value+"    origin: "+ origin + "   annualizedIncome: "+ annualizedIncome);
-    if(value>=53){
-      BigDecimal b1=new BigDecimal(Double.toString(origin));
-      BigDecimal b2=new BigDecimal("0.01");
-      origin = b1.add(b2).doubleValue();
-      System.out.println("origin + 0.01");
-      System.out.println("after origin + 0.01: "+origin);
-
-    }
-
-    Thread.sleep(3000);
+//    if(value>=53){
+//      BigDecimal b1=new BigDecimal(Double.toString(origin));
+//      BigDecimal b2=new BigDecimal("0.01");
+//      origin = b1.add(b2).doubleValue();
+//      System.out.println("origin + 0.01");
+//      System.out.println("after origin + 0.01: "+origin);
+//
+//    }
+//
+//    Thread.sleep(3000);
 
     response = TronlinkApiList.walletMarketBanner();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
