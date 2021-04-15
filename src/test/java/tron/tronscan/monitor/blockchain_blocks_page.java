@@ -110,6 +110,7 @@ public class blockchain_blocks_page {
 
         }
         Map<String, String> params2 = new HashMap<>();
+        rangeTotal--;
         params2.put("sort", "-timestamp");
         params2.put("count", "-true");
         params2.put("limit", "20");
@@ -124,7 +125,10 @@ public class blockchain_blocks_page {
         //total
         total = Long.valueOf(responseContent.get("total").toString());
         rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
+
         Assert.assertTrue(rangeTotal >= total && total > 0);
 
     }
+
+
 }
