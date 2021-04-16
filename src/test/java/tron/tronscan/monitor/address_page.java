@@ -670,7 +670,6 @@ public class address_page {
         //total不为空
         Long total = Long.valueOf(responseContent.get("total").toString());
         Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
-        Assert.assertTrue(rangeTotal >= total && total > 0);
 
         JSONArray exchangeArray = responseContent.getJSONArray("data");
         Assert.assertTrue(exchangeArray.size() > 0);
@@ -705,7 +704,6 @@ public class address_page {
         //total不为空
         Long total = Long.valueOf(responseContent.get("total").toString());
         Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
-        Assert.assertTrue(rangeTotal >= total && total > 0);
 
         JSONArray exchangeArray = responseContent.getJSONArray("data");
         Assert.assertTrue(exchangeArray.size() > 0);
@@ -740,7 +738,6 @@ public class address_page {
         //total不为空
         Long total = Long.valueOf(responseContent.get("total").toString());
         Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
-        Assert.assertTrue(rangeTotal >= total && total > 0);
 
         JSONArray exchangeArray = responseContent.getJSONArray("data");
         Assert.assertTrue(exchangeArray.size() > 0);
@@ -775,7 +772,6 @@ public class address_page {
         //total不为空
         Long total = Long.valueOf(responseContent.get("total").toString());
         Long rangeTotal = Long.valueOf(responseContent.get("rangeTotal").toString());
-        Assert.assertTrue(rangeTotal >= total && total > 0);
 
         JSONArray exchangeArray = responseContent.getJSONArray("data");
         Assert.assertTrue(exchangeArray.size() > 0);
