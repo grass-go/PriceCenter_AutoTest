@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
@@ -604,6 +605,8 @@ public static HttpResponse search(Map<String, String> params) {
       String requestUrl = "https://niletest.tronlink.org/api/wallet/assetlist";
       JSONObject body = new JSONObject();
       body.put("address", address);
+      header.put("Content-type", "application/json; charset=utf-8");
+      header.put("Connection", "Close");
       response = createPostConnectWithHeader(requestUrl,null,body,header);
     } catch (Exception e) {
       e.printStackTrace();
@@ -627,7 +630,32 @@ public static HttpResponse search(Map<String, String> params) {
 
   public static HttpResponse v2AssetList(Map<String, String> params) {
     final String requestUrl = HttpNode + "/api/wallet/v2/assetList";
+    log.info("requestUrl : " + requestUrl);
     response = v2CreateGetConnect(requestUrl, params);
+    return response;
+  }
+
+  public static HttpResponse v2GetAllCollection(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/wallet/nft/getAllCollection";
+    response = v2CreateGetConnect(requestUrl, params);
+    return response;
+  }
+
+  public static HttpResponse v2GetCollectionList(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/wallet/nft/getCollectionList";
+    response = v2CreateGetConnect(requestUrl, params);
+    return response;
+  }
+
+  public static HttpResponse v2GetCollectionInfo(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/wallet/nft/getCollectionInfo";
+    response = v2CreateGetConnect(requestUrl, params);
+    return response;
+  }
+
+  public static HttpResponse v2GetCollectionInfos(Map<String, String> params, JSONObject body) {
+    final String requestUrl = HttpNode + "/api/wallet/nft/getCollectionInfos";
+    response = createPostConnectWithHeader(requestUrl, params, body, getV2Header());
     return response;
   }
 
@@ -651,7 +679,10 @@ public static HttpResponse search(Map<String, String> params) {
 
   public static HttpResponse v2AddAsset(Map<String, String> params,JSONObject object) {
     String requestUrl = HttpNode + "/api/wallet/v2/addAsset";
-    response = createPostConnectWithHeader(requestUrl,params, object,getV2Header());
+    Map<String, String> header = getV2Header();
+    header.put("Content-type", "application/json; charset=utf-8");
+    header.put("Connection", "Close");
+    response = createPostConnectWithHeader(requestUrl,params, object,header);
     return response;
   }
 
@@ -754,8 +785,8 @@ public static HttpResponse search(Map<String, String> params) {
         url = stringBuffer.toString();
       }
       httppost = new HttpPost(url);
-      httppost.setHeader("Content-type", "application/json; charset=utf-8");
-      httppost.setHeader("Connection", "Close");
+//      httppost.setHeader("Content-type", "application/json; charset=utf-8");
+//      httppost.setHeader("Connection", "Close");
       if(header != null){
         for(String key: header.keySet()){
           httppost.setHeader(key,header.get(key));
@@ -774,6 +805,50 @@ public static HttpResponse search(Map<String, String> params) {
     } catch (Exception e) {
       e.printStackTrace();
       httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse createGetConnectWithHeader(String url, Map<String, String> params,
+      JSONObject requestBody,Map<String,String> header) {
+    try {
+      httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
+          connectionTimeout);
+      httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+      if (params != null) {
+        StringBuffer stringBuffer = new StringBuffer(url);
+        stringBuffer.append("?");
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+          stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
+        }
+        stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+        url = stringBuffer.toString();
+      }
+      httpget = new HttpGet(url);
+      if(header != null){
+        for(String key: header.keySet()){
+          httpget.setHeader(key,header.get(key));
+          log.info(key+": "+header.get(key));
+        }
+      }
+      if (requestBody != null) {
+        StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
+        entity.setContentEncoding("UTF-8");
+        entity.setContentType("application/json");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
+        log.info("url: "+httpget.toString()+"\nparams: "+requestBody.toString());
+      }
+
+      log.info("" + httpget);
+
+      response = httpClient.execute(httpget);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpget.releaseConnection();
       return null;
     }
     return response;
