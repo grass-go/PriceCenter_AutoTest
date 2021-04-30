@@ -27,6 +27,17 @@ public class Dapp_History extends TronlinkBase {
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         responseArrayContent = responseContent.getJSONArray("data");
         Assert.assertEquals(1,responseArrayContent.size());
+
+        for (int n = 0; n < responseArrayContent.size(); n++){
+            JSONObject history = responseArrayContent.getJSONObject(n);
+            Assert.assertTrue(history.containsKey("name"));
+            Assert.assertTrue(history.containsKey("slogan"));
+            Assert.assertTrue(history.containsKey("createTime"));
+            Assert.assertTrue(history.containsKey("updateTime"));
+            Assert.assertEquals(200, TronlinkApiList.createGetConnect(history.getString("image_url")).getStatusLine().getStatusCode());
+            Assert.assertEquals(200, TronlinkApiList.createGetConnect(history.getString("home_url")).getStatusLine().getStatusCode());
+
+        }
     }
 
 }

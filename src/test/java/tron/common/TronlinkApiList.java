@@ -635,6 +635,13 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse v2AssetList(Map<String, String> params,JSONObject body ) {
+    final String requestUrl = HttpNode + "/api/wallet/v2/assetList";
+    log.info("requestUrl : " + requestUrl);
+    response = createPostConnectWithHeader(requestUrl, params, body, getV2Header());
+    return response;
+  }
+
   public static HttpResponse v2GetAllCollection(Map<String, String> params) {
     final String requestUrl = HttpNode + "/api/wallet/nft/getAllCollection";
     response = v2CreateGetConnect(requestUrl, params);

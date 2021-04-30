@@ -174,8 +174,7 @@ public class GetSign {
 
         String url = "https://testpre.tronlink.org/api/wallet/v2/assetList?nonce=12345&secretId=SFSUIOJBFMLKSJIF&signature=JHQAlW9COUvY7OAFt9Aj0n5qWyg%3D&address=TAYzcfLovWdV83g25Apfd7BA67J44D5z5M";
         url = "https://testpre.tronlink.org/api/wallet/v2/allAssetList?address=410663cda2477d40110d2f4ecfa9b076dd7f9a5570&nonce=7693131370817136548&secretId=A4ADE880F46CA8D4&signature=9iYqjcXFh3fPdiAfS%2FtEn8oW3oM%3D";
-        url = "https://list.tronlink.org/api/wallet/nft/getCollectionInfos?address=4105B49C6271FC5B2B8A8E1E980F6A12D9B66E2914&signature=1A8%2FhWTN%2F8g7qKv7vqUdIYKVjJU%3D&secretId=SFSUIOJBFMLKSJIF&nonce=12345";
-
+        url = "https://list.tronlink.org/api/wallet/v2/assetList?address=4105B49C6271FC5B2B8A8E1E980F6A12D9B66E2914&signature=66f37xLdCz%2FV9geQGc%2FhYd98HR0%3D&secretId=SFSUIOJBFMLKSJIF&nonce=12345";
         String httpHost = url.substring(0,url.indexOf("/api"));
         String path = url.substring(url.indexOf("/api"),url.indexOf("?"));
         Map<String, String> parameter = new HashMap();
@@ -218,8 +217,7 @@ public class GetSign {
         trc10tokenList.add("134");
         requestBody.put("assetIdList",trc10tokenList);
         requestBody.put("tokenAddress", "TPvGT3tWUNakTg23ARKMx46MGLT386nYWD");
-
-        HttpResponse httprespone = TronlinkApiList.createPostConnectWithHeader(httpHost + path, parameter,requestBody,head);
+        HttpResponse httprespone = TronlinkApiList.createPostConnectWithHeader(httpHost + path, parameter,(JSONObject) JSONObject.parse("{\"trc20s\":[\"TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9\"],\"addressType\":\"2\",\"trc10s\":[\"1002000\"]}"),head);
         JSONObject result = TronlinkApiList.parseJsonObResponseContent(httprespone);
 
         String pretty = JSON.toJSONString(result, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
