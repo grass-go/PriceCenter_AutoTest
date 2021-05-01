@@ -47,7 +47,7 @@ public class TransferTrc20 extends TrondataBase {
       Assert.assertEquals("TPqv6RDJj82JmuZ7bQxqzNuosGkB9tTs9r",jsonObject.getString("issue_address"));
       Assert.assertTrue(jsonObject.containsKey("decimals"));
       Assert.assertEquals(6, jsonObject.getIntValue("decimals"));
-      Assert.assertEquals("WINK",jsonObject.getString("token_name"));
+      Assert.assertEquals("WINKLINK",jsonObject.getString("token_name"));
       Assert.assertTrue(jsonObject.containsKey("direction"));
     }
   }
@@ -81,7 +81,7 @@ public class TransferTrc20 extends TrondataBase {
     Assert.assertEquals(1,jsonObject.getIntValue("confirmed"));
     Assert.assertEquals("TriggerSmartContract",jsonObject.getString("contract_type"));
     Assert.assertEquals("TPqv6RDJj82JmuZ7bQxqzNuosGkB9tTs9r",jsonObject.getString("issue_address"));
-    Assert.assertEquals("WINK",jsonObject.getString("token_name"));
+    Assert.assertEquals("WINKLINK",jsonObject.getString("token_name"));
     Assert.assertEquals(6, jsonObject.getIntValue("decimals"));
     Assert.assertEquals(1,jsonObject.getIntValue("direction"));
   }
@@ -115,7 +115,7 @@ public class TransferTrc20 extends TrondataBase {
     Assert.assertEquals(1,jsonObject.getIntValue("confirmed"));
     Assert.assertEquals("TriggerSmartContract",jsonObject.getString("contract_type"));
     Assert.assertEquals("TPqv6RDJj82JmuZ7bQxqzNuosGkB9tTs9r",jsonObject.getString("issue_address"));
-    Assert.assertEquals("WINK",jsonObject.getString("token_name"));
+    Assert.assertEquals("WINKLINK",jsonObject.getString("token_name"));
     Assert.assertEquals(6, jsonObject.getIntValue("decimals"));
     Assert.assertEquals(2,jsonObject.getIntValue("direction"));
   }
