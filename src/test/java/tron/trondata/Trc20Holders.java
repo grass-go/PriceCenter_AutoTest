@@ -38,7 +38,7 @@ public class Trc20Holders extends TrondataBase {
       Assert.assertTrue(jsonObject.containsKey("balance_str"));
       Assert.assertTrue(jsonObject.getDoubleValue("balance") >= 0);
       Assert.assertTrue(jsonObject.containsKey("total_supply"));
-      Assert.assertEquals("WINK",jsonObject.getString("name"));
+      Assert.assertEquals("WINkLink",jsonObject.getString("name"));
       Assert.assertTrue(jsonObject.containsKey("owner_address"));
       Assert.assertEquals("WIN",jsonObject.getString("short_name"));
       Assert.assertEquals("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",jsonObject.getString("contract_address"));
@@ -63,7 +63,7 @@ public class Trc20Holders extends TrondataBase {
     Assert.assertTrue(jsonObject.containsKey("balance_str"));
     Assert.assertTrue(jsonObject.getDoubleValue("balance") >= 0);
     Assert.assertTrue(jsonObject.containsKey("total_supply"));
-    Assert.assertEquals("WINK",jsonObject.getString("name"));
+    Assert.assertEquals("WINkLink",jsonObject.getString("name"));
     Assert.assertTrue(jsonObject.containsKey("owner_address"));
     Assert.assertEquals("WIN",jsonObject.getString("short_name"));
     Assert.assertEquals("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",jsonObject.getString("contract_address"));
