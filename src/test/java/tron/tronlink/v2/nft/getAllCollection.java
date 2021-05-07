@@ -35,7 +35,7 @@ public class getAllCollection extends TronlinkBase {
     Assert.assertEquals(0,(int)responseContent.get("code"));
     Assert.assertEquals("OK",responseContent.get("message"));
     dataContent = responseContent.getJSONArray("data");
-    Assert.assertTrue(dataContent.size() >= 2);
+    Assert.assertTrue(dataContent.size() >= 1);
     for (int n = 0; n < dataContent.size(); n++ ){
       JSONObject nftData = dataContent.getJSONObject(n);
 
