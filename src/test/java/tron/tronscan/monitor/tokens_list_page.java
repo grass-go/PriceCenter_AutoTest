@@ -71,6 +71,7 @@ public class tokens_list_page {
             //isTop
             //Assert.assertTrue(Boolean.valueOf(targetContent.getString("isTop")));
             Assert.assertTrue(!exchangeArray.getJSONObject(i).get("name").toString().isEmpty());
+            System.out.println("Token 名称是：" + exchangeArray.getJSONObject(i).get("name").toString() );
             Assert.assertTrue(!exchangeArray.getJSONObject(i).get("projectSite").toString().isEmpty());
             Assert.assertTrue(!exchangeArray.getJSONObject(i).get("abbr").toString().isEmpty());
             Integer decimals = Integer.valueOf(exchangeArray.getJSONObject(i).get("decimal").toString());
