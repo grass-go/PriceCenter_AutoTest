@@ -107,7 +107,7 @@ public class eventByContractAddress extends V1Base {
   /**
    * constructor.
    */
-  @Test(enabled = true, description = "Get event by contract address from trongrid V1 API with key")
+  @Test(enabled = false, description = "Get event by contract address from trongrid V1 API with key")
   public void test05GetEventByContractAddressFromTrongridV1WithKey() {
     getEventByContractAddressBody = getEventByContractAddressWithKey(usdjContract);
     printJsonContent(getEventByContractAddressBody);
