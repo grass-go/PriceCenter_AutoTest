@@ -90,7 +90,14 @@ public class transactionInfoByContractAddress extends V1Base {
         true,"block_timestamp,asc",200,true,0L,0L);
     printJsonContent(getTransactionInfoByContractAddressBody);
     JSONArray transactionInfoArray = getTransactionInfoByContractAddressBody.getJSONArray("data");
-    Assert.assertEquals(transactionInfoArray.size(),200);
+//    Assert.assertEquals(transactionInfoArray.size(),50);
+    //european: limit <=50,other: 200
+    int num = transactionInfoArray.size();
+    if(num == 50 || num == 200){
+      Assert.assertTrue(true);
+    }else {
+      Assert.assertTrue(false);
+    }
   }
 
 
