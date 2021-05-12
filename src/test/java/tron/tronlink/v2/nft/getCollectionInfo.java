@@ -15,7 +15,7 @@ public class getCollectionInfo extends TronlinkBase {
   private HttpResponse response;
   Map<String, String> params = new HashMap<>();
 
-  @Test
+  @Test(enabled = false)
   public void getCollectionInfoTest001() {
     params.put("nonce","12345");
     params.put("secretId","SFSUIOJBFMLKSJIF");
