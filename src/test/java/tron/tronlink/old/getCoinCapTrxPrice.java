@@ -11,18 +11,17 @@ import tron.tronlink.base.TronlinkBase;
 public class getCoinCapTrxPrice extends TronlinkBase {
 
   private HttpResponse response;
-  @Test(enabled = true, description = "Api /api/v1/wallet/getCoinCapTrxPrice  test")
+  @Test(enabled = true, description = "GetCoinCapTrxPrice test")
   public void test001CoinCapTrxPrice() throws Exception {
     response = api.getCoinCapTrxPrice();
-
-    JSONObject jsonObject = api.parseResponseContent(response);
-    api.printJsonContent(jsonObject);
-
-    String data = jsonObject.getString("data");
-    JSONObject trxData = (JSONObject) JSON.parse(data);
-
-    Assert.assertTrue(!trxData.getString("price_usd").isEmpty());
-    Assert.assertTrue(!trxData.getString("price_cny").isEmpty());
+    JSONObject trxData = api.parseResponseContent(response).getJSONObject("data");
+    api.printJsonContent(trxData);
+    Assert.assertTrue(Double.valueOf(trxData.getString("price_usd")) > 0);
+    Assert.assertTrue(Double.valueOf(trxData.getString("price_cny")) > 0);
+    Assert.assertTrue(Double.valueOf(trxData.getString("price_btc")) > 0);
+    Assert.assertTrue(Double.valueOf(trxData.getString("price_eth")) > 0);
+    Assert.assertTrue(Double.valueOf(trxData.getString("price_gbp")) > 0);
+    Assert.assertTrue(Double.valueOf(trxData.getString("price_eur")) > 0);
   }
 }
 
