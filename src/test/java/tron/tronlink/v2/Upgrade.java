@@ -47,6 +47,27 @@ public class Upgrade extends TronlinkBase {
     newVersion = newVersion.split(" V")[1];
     newVersion = newVersion.replace(".","");
     Assert.assertTrue(Integer.valueOf(newVersion) > 375);
+  }
+
+  @Test(enabled = true)
+  public void test01UpgradeForV1() throws Exception {
+    Map<String, String> params = new HashMap<>();
+    params.put("System","Android");
+    params.put("DeviceID", "1111111111");
+    params.put("Version","3.7.0");
+    //params.put("DownloadPlatform", "appstore");
+    params.put("Lang","1");
+    params.put("channel","official");
+    params.put("packageName", "com.tronlinkpro.wallet");
+    params.put("chain","MainChain");
+    response = TronlinkApiList.v1Upgrade(params);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    JSONObject upgradeObject = responseContent.getJSONObject("data");
+    TronlinkApiList.printJsonContent(responseContent.getJSONObject("data"));
+    String newVersion = upgradeObject.getString("title");
+    newVersion = newVersion.split(" V")[1];
+    newVersion = newVersion.replace(".","");
+    Assert.assertTrue(Integer.valueOf(newVersion) > 375);
 
 
   }

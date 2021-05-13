@@ -23,7 +23,7 @@ public class SearchAsset extends TronlinkBase {
 
 
   @Test(enabled = true)
-  public void searchAssetList01(){
+  public void test01SearchAssetList01(){
     params.put("nonce","12345");
     params.put("secretId","SFSUIOJBFMLKSJIF");
     params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
@@ -45,6 +45,24 @@ public class SearchAsset extends TronlinkBase {
     JSONObject token = array.getJSONObject(0);
     Assert.assertEquals(2,token.getIntValue("type"));
     Assert.assertEquals("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",token.getString("contractAddress"));
+  }
+
+  @Test(enabled = true)
+  public void test02SearchTrc721WasBlock() {
+    params.put("nonce","12345");
+    params.put("secretId","SFSUIOJBFMLKSJIF");
+    params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
+    params.put("address",addressNewAsset41);
+    params.put("keyWord","card");
+    params.put("page","1");
+    params.put("count","10");
+
+    response = TronlinkApiList.v2SearchAsset(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    TronlinkApiList.printJsonContent(responseContent);
+    Assert.assertTrue(!responseContent.toJSONString().contains("TPvGT3tWUNakTg23ARKMx46MGLT386nYWD"));
+
   }
 
 
