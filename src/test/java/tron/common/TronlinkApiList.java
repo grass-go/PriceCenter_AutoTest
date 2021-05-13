@@ -693,6 +693,15 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse v2Upgrade(Map<String, String> params) {
+    String requestUrl = HttpNode + "/api/v1/wallet/v2/upgrade";
+    Map<String, String> header = getV2Header();
+    header.put("Content-type", "application/json; charset=utf-8");
+    header.put("Connection", "Close");
+    response = createGetConnectWithHeader(requestUrl, null,null,params);
+    return response;
+  }
+
 
   public static Map<String, String> getV2Header(){
     Map<String, String> header = new HashMap<>();
