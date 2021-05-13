@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
+//import tron.tronlink.base.GetSign;
 import tron.tronlink.base.TronlinkBase;
 
 public class getCollectionInfo extends TronlinkBase {
@@ -15,14 +17,21 @@ public class getCollectionInfo extends TronlinkBase {
   private HttpResponse response;
   Map<String, String> params = new HashMap<>();
 
-  @Test(enabled = false)
-  public void getCollectionInfoTest001() {
-    params.put("nonce","12345");
-    params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","A2epHTAV5h6STSjMQ9yC%2FReM0RA%3D");
-    params.put("address",addressNewAsset41);
-    params.put("tokenAddress","TPvGT3tWUNakTg23ARKMx46MGLT386nYWD");
-    params.put("assetId","1");
+  @Test(enabled = true)
+  @Parameters({"trc721OwnerAddress","trc721TokenAddress","trc721AssetId"})
+  public void getCollectionInfoTest001(String trc721OwnerAddress,String trc721TokenAddress,String trc721AssetId) throws Exception{
+    HashMap<String,String> signatureMap = new HashMap<>();
+    signatureMap.put("address", trc721OwnerAddress);
+    signatureMap.put("url", "/api/wallet/nft/getCollectionInfo");
+    String signature = getSign(signatureMap);
+
+
+    params.put("nonce",nonce);
+    params.put("secretId",secretId);
+    params.put("signature",signature);
+    params.put("address",trc721OwnerAddress);
+    params.put("tokenAddress",trc721TokenAddress);
+    params.put("assetId",trc721AssetId);
 
     response = TronlinkApiList.v2GetCollectionInfo(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
@@ -40,6 +49,6 @@ public class getCollectionInfo extends TronlinkBase {
     Assert.assertEquals(200, TronlinkApiList.createGetConnect(dataContent.getString("imageUrl")).getStatusLine().getStatusCode());
     Assert.assertEquals(200, TronlinkApiList.createGetConnect(dataContent.getString("logoUrl")).getStatusLine().getStatusCode());
 
-
+//https://list.tronlink.org/api/wallet/nft/getCollectionInfo?tokenAddress=TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG&address=414D103F0043A4ED24B1DC97775E390CBFC2E0C45D&signature=A2epHTAV5h6STSjMQ9yC%2FReM0RA%3D&assetId=3&secretId=SFSUIOJBFMLKSJIF&nonce=12345
   }
 }
