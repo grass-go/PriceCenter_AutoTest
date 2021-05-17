@@ -2,7 +2,9 @@ package tron.tronlink.old;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.http.HttpResponse;
+import org.junit.Assert;
 import org.testng.annotations.Test;
+import tron.common.TronlinkApiList;
 import tron.common.api;
 import tron.tronlink.base.TronlinkBase;
 
@@ -14,10 +16,10 @@ public class getLatestAPK extends TronlinkBase {
     response = api.getLatestAPK();
 
     JSONObject jsonObject = api.parseResponseContent(response);
+    JSONObject jsonData = jsonObject.getJSONObject("data");
     api.printJsonContent(jsonObject);
-
-    String data = jsonObject.getString("data");
-
-    org.testng.Assert.assertTrue(!data.isEmpty());
+    Assert.assertTrue(TronlinkApiList.urlCanVisited(jsonData.getString("testflight"),6000 ));
+    Assert.assertTrue(TronlinkApiList.urlCanVisited(jsonData.getString("url"),6000 ));
+    Assert.assertTrue(TronlinkApiList.urlCanVisited(jsonData.getString("china_url"),6000 ));
   }
 }

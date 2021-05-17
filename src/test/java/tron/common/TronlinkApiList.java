@@ -29,6 +29,8 @@ import org.tron.common.utils.Sha256Hash;
 import org.tron.core.Wallet;
 import org.tron.protos.Protocol;
 import org.tron.protos.contract.BalanceContract;
+import java.net.URL;
+import java.net.URLConnection;
 
 import org.tron.protos.contract.SmartContractOuterClass;
 import tron.common.utils.Configuration;
@@ -674,6 +676,12 @@ public static HttpResponse search(Map<String, String> params) {
 
   public static HttpResponse v2SearchAsset(Map<String, String> params) {
     final String requestUrl = HttpNode + "/api/wallet/v2/search";
+    response = v2CreateGetConnect(requestUrl, params);
+    return response;
+  }
+
+  public static HttpResponse v2GetNoticeRemind(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/v1/wallet/getNoticeRemind";
     response = v2CreateGetConnect(requestUrl, params);
     return response;
   }
@@ -1329,6 +1337,30 @@ public static HttpResponse search(Map<String, String> params) {
     byte[] selector = new byte[4];
     System.arraycopy(Hash.sha3(methodSign.getBytes()), 0, selector, 0, 4);
     return Hex.toHexString(selector);
+  }
+
+
+  public static boolean urlCanVisited(String urlString,int timeOutMillSeconds) throws Exception{
+    long lo = System.currentTimeMillis();
+    URL url;
+    URLConnection co;
+    try {
+      url = new URL(urlString);
+      co =  url.openConnection();
+      co.setConnectTimeout(timeOutMillSeconds);
+      co.connect();
+
+      System.out.println("连接可用");
+
+    } catch (Exception e1) {
+      System.out.println("连接打不开!");
+      url = null;
+      return false;
+    }
+
+    System.out.println(System.currentTimeMillis()-lo);
+    System.out.println(co.getContent().toString());
+    return true;
   }
 
 
