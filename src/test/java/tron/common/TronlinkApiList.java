@@ -686,6 +686,83 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse v2GetDappHistory(JsonObject params) {
+    final String requestUrl = HttpNode + "/api/activity/add";
+    response = createPostConnect(requestUrl, params);
+    return response;
+  }
+
+  public static HttpResponse v2GetAnnouncement() {
+    final String requestUrl = HttpNode + "/api/activity/announcement/reveal_v2";
+    response = v2CreateGetConnect(requestUrl, null);
+    return response;
+  }
+
+
+  public static HttpResponse v2GetNodes(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/v1/wallet/nodes";
+    response = createConnect(requestUrl,null);
+    return response;
+  }
+
+  public static HttpResponse v2GetBlacklist(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/activity/website/blacklist";
+    response = v2CreateGetConnect(requestUrl,null);
+    return response;
+  }
+
+  public static HttpResponse v2PlayScreenInfo(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/activity/play_screen/info";
+    response = v2CreateGetConnect(requestUrl,null);
+    return response;
+  }
+
+  public static HttpResponse v2PlayScreenDeal(String playId) {
+    final String requestUrl = HttpNode + "/api/activity/play_screen/deal";
+    JsonObject body = new JsonObject();
+    body.addProperty("playId",playId );
+    response = createPostConnect(requestUrl,body);
+    return response;
+  }
+
+
+  public static HttpResponse v2GetStartup(Map<String, String> params,Map<String,String> headerMap) {
+    final String requestUrl = HttpNode + "/api/v1/wallet/startup";
+    Map<String, String> header = getV2Header();
+    header.put("Content-type", "application/json; charset=utf-8");
+    header.put("Connection", "Close");
+    for(String key : headerMap.keySet()) {
+      header.put(key,headerMap.get(key) );
+    }
+    response = createGetConnectWithHeader(requestUrl, params,null,header);
+    return response;
+  }
+
+  public static HttpResponse v2UpdateUserCreateBNum(String updataNumber,String userhash,Map<String,String> headerMap) {
+    final String requestUrl = HttpNode + "/api/v1/wallet/updateUserCreateBNum";
+    Map<String, String> header = getV2Header();
+    header.put("Content-type", "application/json; charset=utf-8");
+    header.put("Connection", "Close");
+    for(String key : headerMap.keySet()) {
+      header.put(key,headerMap.get(key) );
+    }
+    response = createPostConnectWithHeader(requestUrl, null,(JSONObject) JSONObject.parse("{\"userhash\":\"" + userhash + "\",\"number\":\"" + updataNumber + "\",\"access\":\"33572\"}"),header);
+    return response;
+  }
+
+  public static HttpResponse v2UserCreateBlockNum(Map<String, String> params,Map<String,String> headerMap) {
+    final String requestUrl = HttpNode + "/api/v1/wallet/userCreateBlockNum";
+    Map<String, String> header = getV2Header();
+    header.put("Content-type", "application/json; charset=utf-8");
+    header.put("Connection", "Close");
+    for(String key : headerMap.keySet()) {
+      header.put(key,headerMap.get(key) );
+    }
+    response = createGetConnectWithHeader(requestUrl, params,null,header);
+    return response;
+  }
+
+
   public static HttpResponse v2Asset(Map<String, String> params) {
     final String requestUrl = HttpNode + "/api/wallet/v2/asset";
     response = v2CreateGetConnect(requestUrl, params);
@@ -866,7 +943,7 @@ public static HttpResponse search(Map<String, String> params) {
       if(header != null){
         for(String key: header.keySet()){
           httpget.setHeader(key,header.get(key));
-          log.info(key+": "+header.get(key));
+          log.info("Add key to header: " + key+": "+header.get(key));
         }
       }
       if (requestBody != null) {
