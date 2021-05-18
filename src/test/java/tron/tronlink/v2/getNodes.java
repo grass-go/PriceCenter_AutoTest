@@ -29,7 +29,7 @@ public class getNodes extends TronlinkBase {
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
-    Assert.assertEquals(responseContent.getString("message"),"OK");
+    Assert.assertEquals(responseContent.getString("msg"),"success");
     JSONObject nodeInfo = responseContent.getJSONObject("data");
     Assert.assertTrue(nodeInfo.getJSONArray("fullnode").size() >= 3);
     Assert.assertTrue(nodeInfo.getJSONArray("solidity_node").size() >= 3);

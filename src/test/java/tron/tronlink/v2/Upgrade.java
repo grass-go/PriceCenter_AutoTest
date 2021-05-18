@@ -29,7 +29,7 @@ public class Upgrade extends TronlinkBase {
 
 
   @Test(enabled = true)
-  public void test01UpgradeForV2() throws Exception {
+  public void test01UpgradeForAndroidByV2() throws Exception {
     Map<String, String> params = new HashMap<>();
     params.put("System","Android");
     params.put("DeviceID", "1111111111");
@@ -44,13 +44,14 @@ public class Upgrade extends TronlinkBase {
     JSONObject upgradeObject = responseContent.getJSONObject("data");
     TronlinkApiList.printJsonContent(responseContent.getJSONObject("data"));
     String newVersion = upgradeObject.getString("title");
-    newVersion = newVersion.split(" V")[1];
+    System.out.println("newVersion:" + newVersion);
+    newVersion = newVersion.split("V")[1];
     newVersion = newVersion.replace(".","");
-    Assert.assertTrue(Integer.valueOf(newVersion) > 375);
+    Assert.assertTrue(Integer.valueOf(newVersion) > 400);
   }
 
   @Test(enabled = true)
-  public void test01UpgradeForV1() throws Exception {
+  public void test02UpgradeForAndroidByV1() throws Exception {
     Map<String, String> params = new HashMap<>();
     params.put("System","Android");
     params.put("DeviceID", "1111111111");
@@ -65,10 +66,54 @@ public class Upgrade extends TronlinkBase {
     JSONObject upgradeObject = responseContent.getJSONObject("data");
     TronlinkApiList.printJsonContent(responseContent.getJSONObject("data"));
     String newVersion = upgradeObject.getString("title");
-    newVersion = newVersion.split(" V")[1];
+    newVersion = newVersion.split("V")[1];
     newVersion = newVersion.replace(".","");
-    Assert.assertTrue(Integer.valueOf(newVersion) > 375);
+    Assert.assertTrue(Integer.valueOf(newVersion) > 400);
 
 
+  }
+
+
+  @Test(enabled = true)
+  public void test03UpgradeForIOSByV2() throws Exception {
+    Map<String, String> params = new HashMap<>();
+    params.put("System","iOS");
+    params.put("DeviceID", "1111111111");
+    params.put("Version","3.7.0");
+    params.put("DownloadPlatform", "appstore");
+    params.put("Lang","1");
+    params.put("channel","official");
+    params.put("packageName", "com.tronlinkpro.wallet");
+    params.put("chain","MainChain");
+    response = TronlinkApiList.v2Upgrade(params);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    JSONObject upgradeObject = responseContent.getJSONObject("data");
+    TronlinkApiList.printJsonContent(responseContent.getJSONObject("data"));
+    String newVersion = upgradeObject.getString("title");
+    System.out.println("newVersion:" + newVersion);
+    newVersion = newVersion.split("V")[1];
+    newVersion = newVersion.replace(".","");
+    Assert.assertTrue(Integer.valueOf(newVersion) > 400);
+  }
+
+  @Test(enabled = true)
+  public void test04UpgradeForIOSByV1() throws Exception {
+    Map<String, String> params = new HashMap<>();
+    params.put("System","iOS");
+    params.put("DeviceID", "1111111111");
+    params.put("Version","3.7.0");
+    params.put("DownloadPlatform", "appstore");
+    params.put("Lang","1");
+    params.put("channel","official");
+    params.put("packageName", "com.tronlinkpro.wallet");
+    params.put("chain","MainChain");
+    response = TronlinkApiList.v1Upgrade(params);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    JSONObject upgradeObject = responseContent.getJSONObject("data");
+    TronlinkApiList.printJsonContent(responseContent.getJSONObject("data"));
+    String newVersion = upgradeObject.getString("title");
+    newVersion = newVersion.split("V")[1];
+    newVersion = newVersion.replace(".","");
+    Assert.assertTrue(Integer.valueOf(newVersion) > 400);
   }
 }

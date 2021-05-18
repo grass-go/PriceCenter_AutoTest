@@ -4,6 +4,7 @@ package tron.common;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -575,6 +576,10 @@ public class api {
         httppost.setEntity(entity);
       }
       System.out.println(httppost.toString());
+      Header[] allHeaders = httppost.getAllHeaders();
+      for (int i = 0; i < allHeaders.length; i++) {
+        System.out.println(""+allHeaders[i]);
+      }
       response = httpClient.execute(httppost);
     } catch (Exception e) {
       e.printStackTrace();

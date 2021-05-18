@@ -54,7 +54,7 @@ public class updateUserCreateBNum extends TronlinkBase {
     Assert.assertTrue(responseContent.getInteger("code") == 0);
     Assert.assertEquals(responseContent.getString("message"),"OK");
     log.info("responseContent.getJSONObject(\"data\").getLong(\"number\")" + responseContent.getJSONObject("data").getLong("number"));
-    Assert.assertEquals(responseContent.getJSONObject("data").getLong("number"),updateBlockNum);
+    Assert.assertTrue(responseContent.getJSONObject("data").getLong("number") == -1L);
   }
 
 
