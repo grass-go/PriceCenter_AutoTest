@@ -686,9 +686,9 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
-  public static HttpResponse v2GetDappHistory(JsonObject params) {
+  public static HttpResponse v2GetDappHistory(JSONObject params) {
     final String requestUrl = HttpNode + "/api/activity/add";
-    response = createPostConnect(requestUrl, params);
+    response = createPostConnectWithHeader(requestUrl, null,params,null);
     return response;
   }
 
