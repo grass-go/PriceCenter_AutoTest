@@ -19,7 +19,7 @@ public class playScreen extends TronlinkBase {
 
   private JSONArray array = new JSONArray();
   Map<String, String> params = new HashMap<>();
-  Map<String, String> headers = new HashMap<>();
+  HashMap<String, String> headers = new HashMap<>();
 
   @Test(enabled = true)
   public void test01PlayScreenInfo(){
@@ -38,17 +38,24 @@ public class playScreen extends TronlinkBase {
 
   @Test(enabled = true)
   public void test02PlayScreenDeal(){
+    headers.put("DeviceID","hhkhkjhkj887");
+    headers.put("System", "Android");
+    headers.put("playId", String.valueOf("1"));
+    headers.put("Lang", "1");
+    headers.put("Version", String.valueOf("4.0.1"));
+    headers.put("chain","MainChain" );
+    headers.put("packageName","com.tronlinkpro.wallet" );
 
-    Integer playId = 3;
-    response = TronlinkApiList.v2PlayScreenDeal(String.valueOf(playId));
+    Integer playId = 11;
+    response = TronlinkApiList.v2PlayScreenDeal(String.valueOf(playId),headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
     Assert.assertEquals(responseContent.getString("message"),"OK");
-    JSONObject screenInfo = responseContent.getJSONArray("data").getJSONObject(0);
+    //JSONObject screenInfo = responseContent.getJSONArray("data").getJSONObject(0);
 
-    Assert.assertTrue(screenInfo.containsKey("playId"));
+    //Assert.assertTrue(screenInfo.containsKey("playId"));
   }
 
 

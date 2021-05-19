@@ -717,11 +717,11 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
-  public static HttpResponse v2PlayScreenDeal(String playId) {
+  public static HttpResponse v2PlayScreenDeal(String playId,HashMap<String,String> header) {
     final String requestUrl = HttpNode + "/api/activity/play_screen/deal";
-    JsonObject body = new JsonObject();
-    body.addProperty("playId",playId );
-    response = createPostConnect(requestUrl,body);
+    JSONObject body = new JSONObject();
+    body.put("playId",playId );
+    response = createPostConnectWithHeader(requestUrl,null,body,header);
     return response;
   }
 
