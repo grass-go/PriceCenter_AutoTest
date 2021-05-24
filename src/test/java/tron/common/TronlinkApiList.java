@@ -711,6 +711,12 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse officialToken(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/wallet/official_token";
+    response = v2CreateGetConnect(requestUrl,null);
+    return response;
+  }
+
   public static HttpResponse v2PlayScreenInfo(Map<String, String> params) {
     final String requestUrl = HttpNode + "/api/activity/play_screen/info";
     response = v2CreateGetConnect(requestUrl,null);
