@@ -42,9 +42,9 @@ public class getNoticeRemind extends TronlinkBase {
   @Test(enabled = true)
   public void test02GetDappHistory(){
     JsonObject body = new JsonObject();
-    body.addProperty("transactionString", "d75c536bb24bd5e5ae461afe00b70ee7df7d4395e1b10f181e1e7fcf2c1b2f67");
-    body.addProperty("dappName","wink");
-    body.addProperty("dappUrl","www.dappurl.com" );
+    body.addProperty("transactionString", "e75c536bb24bd5e5ae461afe00b70ee7df7d4395e1b10f181e1e7fcf2c1b2f67");
+    body.addProperty("dappName","winke");
+    body.addProperty("dappUrl","www.dappurle.com" );
 
     String dataRaw = "{\n"
         + "    \"transactionString\":\"{\\\"ret\\\":[{\\\"contractRet\\\":\\\"SUCCESS\\\"}],\\\"signature\\\":[\\\"5dc7a3337b0f85518a1072f10e3d3c6ee17f6eb0c495127aacf8c9c345a65c4e0515b0ca3554897d2cfabc50d6bd6005f60c496e83542d0a8aac92b270bf6f7300\\\"],\\\"txID\\\":\\\"cbedc3ca60b4716dc1469768e5dc6c93623da4ccf355dc1379284e08fc31336d\\\",\\\"raw_data\\\":{\\\"contract\\\":[{\\\"parameter\\\":{\\\"value\\\":{\\\"data\\\":\\\"a9059cbb000000000000000000000041159bbfd180869cb5c0e9595cf2227b6514710e5a0000000000000000000000000000000000000000000000000000000011e1a300\\\",\\\"owner_address\\\":\\\"4117858d6084980c642165eed70696fb1baa90ddce\\\",\\\"contract_address\\\":\\\"41a614f803b6fd780986a42c78ec9c7f77e6ded13c\\\"},\\\"type_url\\\":\\\"type.googleapis.com/protocol.TriggerSmartContract\\\"},\\\"type\\\":\\\"TriggerSmartContract\\\",\\\"Permission_id\\\":0}],\\\"ref_block_bytes\\\":\\\"aafa\\\",\\\"ref_block_hash\\\":\\\"f81be5b2f1729363\\\",\\\"expiration\\\":1621451779643,\\\"fee_limit\\\":7000000,\\\"timestamp\\\":1621415779643}}\",\n"
