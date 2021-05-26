@@ -34,7 +34,7 @@ public class getStartup extends TronlinkBase {
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
-    Assert.assertEquals(responseContent.getString("message"),"OK");
+    Assert.assertEquals(responseContent.getString("msg"),"success");
     Assert.assertFalse(responseContent.getString("data").isEmpty());
     Assert.assertFalse(responseContent.getJSONObject("data").getString("picType").isEmpty());
     Assert.assertFalse(responseContent.getJSONObject("data").getString("url").isEmpty());
@@ -53,7 +53,7 @@ public class getStartup extends TronlinkBase {
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
-    Assert.assertEquals(responseContent.getString("message"),"OK");
+    Assert.assertEquals(responseContent.getString("msg"),"success");
     Assert.assertFalse(responseContent.getString("data").isEmpty());
     Assert.assertFalse(responseContent.getJSONObject("data").getString("picType").isEmpty());
     Assert.assertFalse(responseContent.getJSONObject("data").getString("url").isEmpty());
@@ -66,7 +66,7 @@ public class getStartup extends TronlinkBase {
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
-    Assert.assertEquals(responseContent.getString("message"),"OK");
+    Assert.assertEquals(responseContent.getString("msg"),"success");
     Assert.assertFalse(responseContent.getString("data").isEmpty());
     Assert.assertFalse(responseContent.getJSONObject("data").getString("picType").isEmpty());
     Assert.assertFalse(responseContent.getJSONObject("data").getString("url").isEmpty());
@@ -78,7 +78,7 @@ public class getStartup extends TronlinkBase {
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
-    Assert.assertEquals(responseContent.getString("message"),"OK");
+    Assert.assertEquals(responseContent.getString("msg"),"success");
     Assert.assertFalse(responseContent.getString("data").isEmpty());
     Assert.assertFalse(responseContent.getJSONObject("data").getString("picType").isEmpty());
     Assert.assertFalse(responseContent.getJSONObject("data").getString("url").isEmpty());
@@ -90,7 +90,7 @@ public class getStartup extends TronlinkBase {
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
-    Assert.assertEquals(responseContent.getString("message"),"OK");
+    Assert.assertEquals(responseContent.getString("msg"),"success");
     Assert.assertFalse(responseContent.getString("data").isEmpty());
     Assert.assertFalse(responseContent.getJSONObject("data").getString("picType").isEmpty());
     Assert.assertFalse(responseContent.getJSONObject("data").getString("url").isEmpty());
@@ -102,7 +102,7 @@ public class getStartup extends TronlinkBase {
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
-    Assert.assertEquals(responseContent.getString("message"),"OK");
+    Assert.assertEquals(responseContent.getString("msg"),"success");
     Assert.assertFalse(responseContent.getString("data").isEmpty());
     Assert.assertFalse(responseContent.getJSONObject("data").getString("picType").isEmpty());
     Assert.assertFalse(responseContent.getJSONObject("data").getString("url").isEmpty());
@@ -114,7 +114,7 @@ public class getStartup extends TronlinkBase {
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
-    Assert.assertEquals(responseContent.getString("message"),"OK");
+    Assert.assertEquals(responseContent.getString("msg"),"success");
     Assert.assertFalse(responseContent.getString("data").isEmpty());
     Assert.assertFalse(responseContent.getJSONObject("data").getString("picType").isEmpty());
     Assert.assertFalse(responseContent.getJSONObject("data").getString("url").isEmpty());
