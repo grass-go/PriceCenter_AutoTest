@@ -55,6 +55,7 @@ public class allasset {
       Assert.assertTrue(jsonObject.containsKey("inMainChain"));
       Assert.assertTrue(jsonObject.containsKey("inSideChain"));
     }
+    System.out.println("TG12:"+ TG12+"  TG18: "+TG18  + "TG4: " + TG4);
     Assert.assertTrue(TG4&&TG12&&TG18);
     System.out.println(responseArrayContent.size());
   }
