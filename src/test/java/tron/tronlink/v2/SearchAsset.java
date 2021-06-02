@@ -28,7 +28,7 @@ public class SearchAsset extends TronlinkBase {
     params.put("secretId","SFSUIOJBFMLKSJIF");
     params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
     params.put("address",addressNewAsset41);
-    params.put("keyWord","TLa2f6V");
+    params.put("keyWord","TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");
     params.put("page","1");
     params.put("count","10");
 
