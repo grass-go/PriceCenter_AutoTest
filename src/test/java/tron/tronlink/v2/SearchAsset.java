@@ -2,6 +2,8 @@ package tron.tronlink.v2;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPath;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
@@ -21,14 +23,14 @@ public class SearchAsset extends TronlinkBase {
   private JSONArray array = new JSONArray();
   Map<String, String> params = new HashMap<>();
 
-
   @Test(enabled = true)
   public void searchAssetList01(){
+    params.clear();
     params.put("nonce","12345");
     params.put("secretId","SFSUIOJBFMLKSJIF");
     params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
     params.put("address",addressNewAsset41);
-    params.put("keyWord","6VPqDgR");
+    params.put("keyWord","TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");
     params.put("page","1");
     params.put("count","10");
 
@@ -47,5 +49,106 @@ public class SearchAsset extends TronlinkBase {
     Assert.assertEquals("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",token.getString("contractAddress"));
   }
 
+  //测试搜索结果中包含预期结果里面的token，预期结果中包括trc10，trc20，trc721的token，并且验证几个主要字段的值正确。
+  @Test(enabled = true)
+  public void searchAssetList02(){
+    Map<String, Token> expTokens = new HashMap<>();
+    {
+      expTokens.put("TGiRb7cYFmU8FTrUAGw996VHtLc2sDtEZH", new Token("BabyToken", "BABY", 2, 0, 2));
+      expTokens.put("TSMfJe8Lot3RKanHE2Z6mv5V5FV2cA7XQw", new Token ("BabyTFG", "BTFG", 5, 0, 1));
+      expTokens.put("1000784", new Token("BabyLeprechaun","BLEP", 1, 0, 1));
+    }
+    params.clear();
+    params.put("nonce","12345");
+    params.put("secretId","SFSUIOJBFMLKSJIF");
+    params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
+    params.put("address",addressNewAsset41);
+    params.put("keyWord","Baby");
+    params.put("page","1");
+    params.put("count","50");
+    params.put("version","v2");
+    response = TronlinkApiList.v2SearchAsset(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    Assert.assertTrue(responseContent.containsKey("code"));
+    Assert.assertTrue(responseContent.containsKey("message"));
+    Assert.assertTrue(responseContent.containsKey("data"));
+    dataContent = responseContent.getJSONObject("data");
+    for (Map.Entry<String, Token> entry : expTokens.entrySet()){
+      String address = entry.getKey();
+      System.out.println("address:"+address);
+      if ( address.length() > 10 ) {
+        Object actualName = JSONPath.eval(responseContent, String.join("","$..data.token[contractAddress='", address, "'].name"));
+        JSONArray actualNameArray=(JSONArray)actualName;
+        Assert.assertEquals(1, actualNameArray.size());
+        Assert.assertEquals(entry.getValue().name, actualNameArray.get(0));
+
+        Object actualSName = JSONPath.eval(responseContent, String.join("","$..data.token[contractAddress='", address, "'].shortName"));
+        JSONArray actualSNameArray=(JSONArray)actualSName;
+        Assert.assertEquals(1, actualSNameArray.size());
+        Assert.assertEquals(entry.getValue().shortName, actualSNameArray.get(0));
+
+        Object actualType = JSONPath.eval(responseContent, String.join("","$..data.token[contractAddress='", address, "'].type"));
+        JSONArray actualTypeArray=(JSONArray)actualType;
+        Assert.assertEquals(1, actualTypeArray.size());
+        Assert.assertEquals(entry.getValue().type, actualTypeArray.get(0));
+
+        Object actualOfficial = JSONPath.eval(responseContent, String.join("","$..data.token[contractAddress='", address, "'].isOfficial"));
+        JSONArray actualOfficialArray=(JSONArray)actualOfficial;
+        Assert.assertEquals(1, actualOfficialArray.size());
+        Assert.assertEquals(entry.getValue().isOfficial, actualOfficialArray.get(0));
+
+        Object actualMF = JSONPath.eval(responseContent, String.join("","$..data.token[contractAddress='", address, "'].matchField"));
+        JSONArray actualMFArray=(JSONArray)actualMF;
+        Assert.assertEquals(1, actualMFArray.size());
+        Assert.assertEquals(entry.getValue().matchField, actualMFArray.get(0));
+
+      }
+      else{
+        Object actualName = JSONPath.eval(responseContent, String.join("","$..data.token[id='", address, "'].name"));
+        JSONArray actualNameArray=(JSONArray)actualName;
+        Assert.assertEquals(1, actualNameArray.size());
+        Assert.assertEquals(entry.getValue().name, actualNameArray.get(0));
+
+        Object actualSName = JSONPath.eval(responseContent, String.join("","$..data.token[id='", address, "'].shortName"));
+        JSONArray actualSNameArray=(JSONArray)actualSName;
+        Assert.assertEquals(1, actualSNameArray.size());
+        Assert.assertEquals(entry.getValue().shortName, actualSNameArray.get(0));
+
+        Object actualType = JSONPath.eval(responseContent, String.join("","$..data.token[id='", address, "'].type"));
+        JSONArray actualTypeArray=(JSONArray)actualType;
+        Assert.assertEquals(1, actualTypeArray.size());
+        Assert.assertEquals(entry.getValue().type, actualTypeArray.get(0));
+
+        Object actualOfficial = JSONPath.eval(responseContent, String.join("","$..data.token[id='", address, "'].isOfficial"));
+        JSONArray actualOfficialArray=(JSONArray)actualOfficial;
+        Assert.assertEquals(1, actualOfficialArray.size());
+        Assert.assertEquals(entry.getValue().isOfficial, actualOfficialArray.get(0));
+
+        Object actualMF = JSONPath.eval(responseContent, String.join("","$..data.token[id='", address, "'].matchField"));
+        JSONArray actualMFArray=(JSONArray)actualMF;
+        Assert.assertEquals(1, actualMFArray.size());
+        Assert.assertEquals(entry.getValue().matchField, actualMFArray.get(0));
+      }
+    }
+
+
+
+  }
+
+  class Token {
+    String name;
+    String shortName;
+    int type;
+    int isOfficial;
+    int matchField;
+    public Token(String name, String shortName, int type, int isOfficial, int matchField) {
+      this.name = name;
+      this.shortName = shortName;
+      this.type = type;
+      this.isOfficial = isOfficial;
+      this.matchField = matchField;
+    }
+  }
 
 }
