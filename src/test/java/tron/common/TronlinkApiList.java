@@ -1029,6 +1029,17 @@ public static HttpResponse search(Map<String, String> params) {
       return null;
     }
   }
+
+  public static String parseResponse2String(HttpResponse response) {
+    try {
+      String result = EntityUtils.toString(response.getEntity());
+      return result;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
   public static JSONObject parseJsonObResponseContent(HttpResponse response) {
     try {
       String result = EntityUtils.toString(response.getEntity());
