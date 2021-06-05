@@ -47,6 +47,7 @@ public class SearchAsset extends TronlinkBase {
     JSONObject token = array.getJSONObject(0);
     Assert.assertEquals(2,token.getIntValue("type"));
     Assert.assertEquals("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",token.getString("contractAddress"));
+    Assert.assertEquals(1,token.getIntValue("isOfficial"));
   }
 
   //测试搜索结果中包含预期结果里面的token，预期结果中包括trc10，trc20，trc721的token，并且验证几个主要字段的值正确。
