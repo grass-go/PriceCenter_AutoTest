@@ -25,7 +25,7 @@ public class TronlinkBase {
     public String secretId = "SFSUIOJBFMLKSJIF";
 
     @Parameters({"tronlinkUrl","tronscanApiUrl"})
-    @BeforeSuite()
+    @BeforeTest
     public void  getMonitorUrl(String tronlinkUrl, String tronscanApiUrl) {
         this.tronlinkUrl = tronlinkUrl;
         this.tronscanApiUrl = tronscanApiUrl;
