@@ -51,7 +51,7 @@ public class SearchAsset extends TronlinkBase {
   }
 
   //测试搜索结果中包含预期结果里面的token，预期结果中包括trc10，trc20，trc721的token，并且验证几个主要字段的值正确。
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void searchAssetList02(){
     Map<String, Token> expTokens = new HashMap<>();
     {
