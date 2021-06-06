@@ -648,6 +648,12 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse v2AllCollections(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/wallet/nft/allCollections";
+    response = v2CreateGetConnect(requestUrl, params);
+    return response;
+  }
+
   public static HttpResponse v2GetCollectionList(Map<String, String> params) {
     final String requestUrl = HttpNode + "/api/wallet/nft/getCollectionList";
     response = v2CreateGetConnect(requestUrl, params);

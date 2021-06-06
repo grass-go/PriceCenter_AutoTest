@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.SneakyThrows;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
@@ -83,6 +82,7 @@ public class getAllCollection extends TronlinkBase {
     //JSONObject getAllCollection_exp = JSONObject.parseObject(text);
 
     // read actual json
+    params.clear();
     params.put("nonce","12345");
     params.put("secretId","SFSUIOJBFMLKSJIF");
     params.put("signature","15sBsg%2B0R9FOdxGVrZr9K6XVpXI%3D");

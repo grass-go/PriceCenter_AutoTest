@@ -1,0 +1,31 @@
+{
+  "code": 0,
+  "message": "OK",
+  "data": {
+    "count": 1,
+    "token": [
+      {
+        "type": 5,
+        "top": 2,
+        "isOfficial": 0,
+        "name": "JustNFT",
+        "shortName": "JNFT",
+        "id": "34",
+        "contractAddress": "TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG",
+        "count": 0,
+        "logoUrl": "https://coin.top/production/logo/TZJEFNe9NpMcrGHsvJadAxwRRJjjPZbxRv.png",
+        "inMainChain": true,
+        "inSideChain": false,
+        "maincontractAddress": "",
+        "homePage": "",
+        "tokenDesc": "This is the Non-fungible token collection of JustNFT Foundation.",
+        "issueTime": "2021-04-27 16:38:48",
+        "issueAddress": "TAYdq7gchY5xuquqpYNL9hmJYhpbCUv4nx",
+        "nrOfTokenHolders": 1,
+        "transferCount": 6,
+        "totalSupply": 3,
+        "marketId": 0
+      }
+    ]
+  }
+}
