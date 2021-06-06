@@ -73,7 +73,7 @@ public class getAllCollection extends TronlinkBase {
   //            2. 相当于对此账户下首页展示的收藏品做全对比。
   //            3. 同时也校验了关注币的排序。
   @SneakyThrows
-  @Test(enabled=false)
+  @Test(enabled=true)
   public void getAllCollectionTest002(){
     // read expected json
     char cbuf[] = new char[2000];
@@ -94,8 +94,8 @@ public class getAllCollection extends TronlinkBase {
     String cmp_result = new CompareJson("contractAddress").compareJson(responseString, expResponse);
     System.out.println("=========actual response==========\n"+responseString+"\n");
     System.out.println("=========expect response==========\n"+expResponse+"\n");
-    System.out.println(cmp_result);
-    Assert.assertNull(cmp_result);
+    System.out.println("=========cmp_result===============\n"+cmp_result);
+    Assert.assertEquals("null",cmp_result);
 
   }
 
