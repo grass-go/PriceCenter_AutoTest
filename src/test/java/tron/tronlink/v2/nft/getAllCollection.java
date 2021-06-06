@@ -87,7 +87,7 @@ public class getAllCollection extends TronlinkBase {
     params.put("secretId","SFSUIOJBFMLKSJIF");
     params.put("signature","15sBsg%2B0R9FOdxGVrZr9K6XVpXI%3D");
     params.put("address",address721_B58);
-
+    params.put("version","v2");
     response = TronlinkApiList.v2GetAllCollection(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseString = TronlinkApiList.parseResponse2String(response);
