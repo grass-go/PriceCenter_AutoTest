@@ -75,11 +75,11 @@ public class getAllCollection extends TronlinkBase {
   @Test(enabled=false)
   public void getAllCollectionTest002(){
     // read expected json
-    char cbuf[] = new char[2000];
+    char cbuf[] = new char[3000];
     InputStreamReader input =new InputStreamReader(new FileInputStream(new File("src/test/resources/TestData/getAllCollection_exp.json")),"UTF-8");
     int len =input.read(cbuf);
     String expResponse =new String(cbuf,0,len);
-    //JSONObject getAllCollection_exp = JSONObject.parseObject(text);
+    //JSONObject getAllCollection_exp = JSONObject.parseObject(expResponse);
 
     // read actual json
     params.clear();
