@@ -72,7 +72,7 @@ public class getAllCollection extends TronlinkBase {
   //            2. 相当于对此账户下首页展示的收藏品做全对比。
   //            3. 同时也校验了关注币的排序。
   @SneakyThrows
-  @Test(enabled=true)
+  @Test(enabled=false)
   public void getAllCollectionTest002(){
     // read expected json
     char cbuf[] = new char[2000];
