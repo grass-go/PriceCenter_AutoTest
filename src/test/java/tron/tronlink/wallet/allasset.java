@@ -18,7 +18,7 @@ public class allasset {
       .getStringList("tronlink.ip.list")
       .get(0);
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void Test000GetAllAsset(){
 
     response = TronlinkApiList.allasset("TAVNk5hkaPNJcTf6TvJVgBWEaRhuiHE5Ab");
