@@ -25,7 +25,7 @@ public class AssetList extends TronlinkBase {
   List<String> trc20tokenList = new ArrayList<>();
 
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void assetList01(){
     params.put("nonce","12345");
     params.put("secretId","SFSUIOJBFMLKSJIF");
