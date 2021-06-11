@@ -29,6 +29,7 @@ public class NodeInfo extends TronlinkBase {
     Assert.assertTrue(responseContent.containsKey("code"));
     Assert.assertTrue(responseContent.containsKey("message"));
     targetData = responseContent.getJSONArray("data");
+    Assert.assertEquals(2, targetData.size());
     for (int i = 0; i < targetData.size(); i++){
         JSONObject ob = targetData.getJSONObject(i);
         if ("MainChain".equals(ob.getString("chainName"))){
