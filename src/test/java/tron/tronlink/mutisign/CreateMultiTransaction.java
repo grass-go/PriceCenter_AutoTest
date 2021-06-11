@@ -44,7 +44,7 @@ public class CreateMultiTransaction {
         blockingStubFull = org.tron.api.WalletGrpc.newBlockingStub(channelFull);
     }
 
-    @Test(enabled = true,description = "nulti sign send coin")
+    @Test(enabled = false,description = "nulti sign send coin")
     public void sendCoin() {
 
         Protocol.Transaction transaction = TronlinkApiList
