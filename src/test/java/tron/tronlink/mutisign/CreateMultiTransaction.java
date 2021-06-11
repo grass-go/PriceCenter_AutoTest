@@ -48,7 +48,7 @@ public class CreateMultiTransaction {
     public void sendCoin() {
 
         Protocol.Transaction transaction = TronlinkApiList
-                .sendcoin(address2, 3000_000, address1, blockingStubFull);
+                .sendcoin(address2, 500_000, address1, blockingStubFull);
 
         log.info("-----111111  "+ JsonFormat.printToString(transaction));
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
