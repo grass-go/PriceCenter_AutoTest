@@ -29,6 +29,8 @@ import org.tron.common.utils.Sha256Hash;
 import org.tron.core.Wallet;
 import org.tron.protos.Protocol;
 import org.tron.protos.contract.BalanceContract;
+import java.net.URL;
+import java.net.URLConnection;
 
 import org.tron.protos.contract.SmartContractOuterClass;
 import tron.common.utils.Configuration;
@@ -684,6 +686,95 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse v2GetNoticeRemind(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/v1/wallet/getNoticeRemind";
+    response = v2CreateGetConnect(requestUrl, params);
+    return response;
+  }
+
+  public static HttpResponse v2GetDappHistory(JSONObject params) {
+    final String requestUrl = HttpNode + "/api/activity/add";
+    response = createPostConnectWithHeader(requestUrl, null,params,null);
+    return response;
+  }
+
+  public static HttpResponse v2GetAnnouncement() {
+    final String requestUrl = HttpNode + "/api/activity/announcement/reveal_v2";
+    response = v2CreateGetConnect(requestUrl, null);
+    return response;
+  }
+
+
+  public static HttpResponse v2GetNodes(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/v1/wallet/nodes";
+    response = createConnect(requestUrl,null);
+    return response;
+  }
+
+  public static HttpResponse v2GetBlacklist(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/activity/website/blacklist";
+    response = v2CreateGetConnect(requestUrl,null);
+    return response;
+  }
+
+  public static HttpResponse officialToken(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/wallet/official_token";
+    response = v2CreateGetConnect(requestUrl,null);
+    return response;
+  }
+
+  public static HttpResponse v2PlayScreenInfo(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/activity/play_screen/info";
+    response = v2CreateGetConnect(requestUrl,null);
+    return response;
+  }
+
+  public static HttpResponse v2PlayScreenDeal(String playId,HashMap<String,String> header) {
+    final String requestUrl = HttpNode + "/api/activity/play_screen/deal";
+    JSONObject body = new JSONObject();
+    body.put("playId",playId );
+    response = createPostConnectWithHeader(requestUrl,null,body,header);
+    return response;
+  }
+
+
+  public static HttpResponse v2GetStartup(Map<String, String> params,Map<String,String> headerMap) {
+    final String requestUrl = HttpNode + "/api/v1/wallet/startup";
+    Map<String, String> header = getV2Header();
+    header.put("Content-type", "application/json; charset=utf-8");
+    header.put("Connection", "Close");
+    for(String key : headerMap.keySet()) {
+      header.put(key,headerMap.get(key) );
+    }
+    response = createGetConnectWithHeader(requestUrl, params,null,header);
+    return response;
+  }
+
+  public static HttpResponse v2UpdateUserCreateBNum(String updataNumber,String userhash,Map<String,String> headerMap) {
+    final String requestUrl = HttpNode + "/api/v1/wallet/updateUserCreateBNum";
+    Map<String, String> header = getV2Header();
+    header.put("Content-type", "application/json; charset=utf-8");
+    header.put("Connection", "Close");
+    for(String key : headerMap.keySet()) {
+      header.put(key,headerMap.get(key) );
+    }
+    response = createPostConnectWithHeader(requestUrl, null,(JSONObject) JSONObject.parse("{\"userhash\":\"" + userhash + "\",\"number\":\"" + updataNumber + "\",\"access\":\"33572\"}"),header);
+    return response;
+  }
+
+  public static HttpResponse v2UserCreateBlockNum(Map<String, String> params,Map<String,String> headerMap) {
+    final String requestUrl = HttpNode + "/api/v1/wallet/userCreateBlockNum";
+    Map<String, String> header = getV2Header();
+    header.put("Content-type", "application/json; charset=utf-8");
+    header.put("Connection", "Close");
+    for(String key : headerMap.keySet()) {
+      header.put(key,headerMap.get(key) );
+    }
+    response = createGetConnectWithHeader(requestUrl, params,null,header);
+    return response;
+  }
+
+
   public static HttpResponse v2Asset(Map<String, String> params) {
     final String requestUrl = HttpNode + "/api/wallet/v2/asset";
     response = v2CreateGetConnect(requestUrl, params);
@@ -698,6 +789,25 @@ public static HttpResponse search(Map<String, String> params) {
     response = createPostConnectWithHeader(requestUrl,params, object,header);
     return response;
   }
+
+  public static HttpResponse v2Upgrade(Map<String, String> params) {
+    String requestUrl = HttpNode + "/api/v1/wallet/v2/upgrade";
+    Map<String, String> header = getV2Header();
+    header.put("Content-type", "application/json; charset=utf-8");
+    header.put("Connection", "Close");
+    response = createGetConnectWithHeader(requestUrl, null,null,params);
+    return response;
+  }
+
+  public static HttpResponse v1Upgrade(Map<String, String> params) {
+    String requestUrl = HttpNode + "/api/v1/wallet/upgrade";
+    Map<String, String> header = getV2Header();
+    header.put("Content-type", "application/json; charset=utf-8");
+    header.put("Connection", "Close");
+    response = createGetConnectWithHeader(requestUrl, null,null,params);
+    return response;
+  }
+
 
 
   public static Map<String, String> getV2Header(){
@@ -845,7 +955,7 @@ public static HttpResponse search(Map<String, String> params) {
       if(header != null){
         for(String key: header.keySet()){
           httpget.setHeader(key,header.get(key));
-          log.info(key+": "+header.get(key));
+          log.info("Add key to header: " + key+": "+header.get(key));
         }
       }
       if (requestBody != null) {
@@ -1327,6 +1437,30 @@ public static HttpResponse search(Map<String, String> params) {
     byte[] selector = new byte[4];
     System.arraycopy(Hash.sha3(methodSign.getBytes()), 0, selector, 0, 4);
     return Hex.toHexString(selector);
+  }
+
+
+  public static boolean urlCanVisited(String urlString,int timeOutMillSeconds) throws Exception{
+    long lo = System.currentTimeMillis();
+    URL url;
+    URLConnection co;
+    try {
+      url = new URL(urlString);
+      co =  url.openConnection();
+      co.setConnectTimeout(timeOutMillSeconds);
+      co.connect();
+
+      System.out.println("连接可用");
+
+    } catch (Exception e1) {
+      System.out.println("连接打不开!");
+      url = null;
+      return false;
+    }
+
+    System.out.println(System.currentTimeMillis()-lo);
+    System.out.println(co.getContent().toString());
+    return true;
   }
 
 

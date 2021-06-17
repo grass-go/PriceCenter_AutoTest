@@ -4,6 +4,7 @@ package tron.common;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -259,7 +260,7 @@ public class api {
   }
 
   public static HttpResponse trxPrice() throws Exception{
-    final String requesturl = HOME_HOST + "/api/v1/wallet/trxPrice";
+    final String requesturl = HttpNode + "/api/v1/wallet/trxPrice";
     URIBuilder builder = new URIBuilder(requesturl);
     URI uri = builder.build();
     System.out.println(uri);
@@ -277,6 +278,18 @@ public class api {
     Assert.assertTrue(api.verificationResult(response));
     return response;
   }
+
+  public static HttpResponse getCryptoCurrency() throws Exception{
+    final String requesturl = "https://c.tronlink.org/v1/cryptocurrency/getprice?symbol=TRX&convert=USD,CNY,BTC,ETH,GBP,EUR";
+    URIBuilder builder = new URIBuilder(requesturl);
+    URI uri = builder.build();
+    System.out.println(uri);
+    response = createGetConnect(uri);
+    Assert.assertTrue(api.verificationResult(response));
+    return response;
+  }
+
+
 
   public static HttpResponse getLatestAPK() throws Exception{
     final String requesturl = HttpNode + "/api/v1/wallet/getLatestAPK";
@@ -563,6 +576,10 @@ public class api {
         httppost.setEntity(entity);
       }
       System.out.println(httppost.toString());
+      Header[] allHeaders = httppost.getAllHeaders();
+      for (int i = 0; i < allHeaders.length; i++) {
+        System.out.println(""+allHeaders[i]);
+      }
       response = httpClient.execute(httppost);
     } catch (Exception e) {
       e.printStackTrace();
