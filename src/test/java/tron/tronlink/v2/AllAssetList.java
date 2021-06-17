@@ -91,7 +91,7 @@ public class AllAssetList extends TronlinkBase {
     //check trx balance
     Object actualTrx = JSONPath.eval(responseContent, "$..data.token[id=''].balanceStr");
     JSONArray actualTrxArray=(JSONArray)actualTrx;
-    Assert.assertEquals("5.000003", actualTrxArray.get(0));
+    Assert.assertEquals("25.000003", actualTrxArray.get(0));
 
     //check BitTorrent balance
     Object actualBT = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent'].balanceStr");
