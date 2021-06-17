@@ -2,8 +2,35 @@
   "code": 0,
   "message": "OK",
   "data": {
-    "count": 2,
+    "count": 3,
     "token": [
+      {
+        "type": 0,
+        "top": 0,
+        "isOfficial": 1,
+        "name": "",
+        "shortName": "",
+        "id": "",
+        "contractAddress": "",
+        "balance": 5.000003,
+        "balanceStr": "5.000003",
+        "totalBalance": 5.000003,
+        "trxCount": 5.000003,
+        "price": 0,
+        "logoUrl": "",
+        "precision": 0,
+        "inMainChain": true,
+        "inSideChain": true,
+        "maincontractAddress": "",
+        "homePage": "",
+        "isInAssets": false,
+        "isShield": false,
+        "tokenDesc": "",
+        "issueTime": "",
+        "issueAddress": "",
+        "totalSupply": 0,
+        "marketId": 0
+      },
       {
         "type": 1,
         "top": 0,
@@ -57,31 +84,6 @@
         "issueAddress": "",
         "totalSupply": 994719859245,
         "marketId": 69
-      }
-    ],
-    "trc721Count": 1,
-    "trc721Token": [
-      {
-        "type": 5,
-        "top": 0,
-        "isOfficial": 0,
-        "name": "NFTT",
-        "shortName": "NFTT",
-        "id": "",
-        "contractAddress": "TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG",
-        "count": 1,
-        "logoUrl": "https://coin.top/production/upload/logo/TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG.png?t=1617102078126",
-        "inMainChain": true,
-        "inSideChain": false,
-        "maincontractAddress": "",
-        "homePage": "",
-        "tokenDesc": "NFTEST TEST",
-        "issueTime": "2021-03-30 11:01:18",
-        "issueAddress": "TFg5bNV5yCDQQSsQWdfMdVahNkULTxZY26",
-        "nrOfTokenHolders": 3,
-        "transferCount": 12,
-        "totalSupply": 10,
-        "marketId": 0
       }
     ]
   }

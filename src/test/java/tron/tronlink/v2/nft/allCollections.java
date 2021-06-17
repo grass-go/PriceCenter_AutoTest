@@ -30,10 +30,10 @@ public class allCollections extends TronlinkBase {
   //        4. 所有token的排序问题，全文对比可覆盖
 
   @SneakyThrows
-  @Test( enabled = false)
+  @Test( enabled = true)
   public void allCollectionsTest001(){
     //read expected json
-    char cbuf[] = new char[2000];
+    char cbuf[] = new char[5000];
     InputStreamReader input =new InputStreamReader(new FileInputStream(new File("src/test/resources/TestData/allCollections_exp.json")),"UTF-8");
     int len = 0;
     try {
@@ -53,7 +53,7 @@ public class allCollections extends TronlinkBase {
     response = TronlinkApiList.v2AllCollections(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseString = TronlinkApiList.parseResponse2String(response);
-    String cmp_result = new CompareJson("contractAddress").compareJson(responseString, expResponse);
+    String cmp_result = new CompareJson("contractAddress,transferCount").compareJson(responseString, expResponse);
     System.out.println("=========actual response========== "+responseString+"\n");
     System.out.println("=========expect response========== "+expResponse+"\n");
     System.out.println("=========cmp_result=============== "+cmp_result);
