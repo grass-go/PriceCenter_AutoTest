@@ -83,10 +83,7 @@ public class AllAssetList extends TronlinkBase {
     response = TronlinkApiList.V2AllAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    //check count
-    Object actualCount = JSONPath.eval(responseContent, "$..data.count");
-    JSONArray actualCountArray=(JSONArray)actualCount;
-    Assert.assertEquals(3, actualCountArray.get(0));
+
 
     //check trx balance
     Object actualTrx = JSONPath.eval(responseContent, "$..data.token[id=''].balanceStr");
