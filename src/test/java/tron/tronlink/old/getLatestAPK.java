@@ -19,7 +19,7 @@ public class getLatestAPK extends TronlinkBase {
     JSONObject jsonData = jsonObject.getJSONObject("data");
     api.printJsonContent(jsonObject);
     Assert.assertTrue(TronlinkApiList.urlCanVisited(jsonData.getString("testflight"),6000 ));
-    Assert.assertTrue(TronlinkApiList.urlCanVisited(jsonData.getString("url"),6000 ));
+    //Assert.assertTrue(TronlinkApiList.urlCanVisited(jsonData.getString("url"),6000 ));
     Assert.assertTrue(TronlinkApiList.urlCanVisited(jsonData.getString("china_url"),6000 ));
   }
 }

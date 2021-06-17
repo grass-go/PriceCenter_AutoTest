@@ -30,9 +30,9 @@ public class playScreen extends TronlinkBase {
     TronlinkApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
     Assert.assertEquals(responseContent.getString("message"),"OK");
-    JSONObject screenInfo = responseContent.getJSONArray("data").getJSONObject(0);
+    //JSONObject screenInfo = responseContent.getJSONArray("data").getJSONObject(0);
 
-    Assert.assertTrue(screenInfo.containsKey("playId"));
+    //Assert.assertTrue(screenInfo.containsKey("playId"));
   }
 
 
