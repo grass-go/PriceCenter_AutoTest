@@ -650,6 +650,12 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse v2AllCollections(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/wallet/nft/allCollections";
+    response = v2CreateGetConnect(requestUrl, params);
+    return response;
+  }
+
   public static HttpResponse v2GetCollectionList(Map<String, String> params) {
     final String requestUrl = HttpNode + "/api/wallet/nft/getCollectionList";
     response = v2CreateGetConnect(requestUrl, params);
@@ -1139,6 +1145,17 @@ public static HttpResponse search(Map<String, String> params) {
       return null;
     }
   }
+
+  public static String parseResponse2String(HttpResponse response) {
+    try {
+      String result = EntityUtils.toString(response.getEntity());
+      return result;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
   public static JSONObject parseJsonObResponseContent(HttpResponse response) {
     try {
       String result = EntityUtils.toString(response.getEntity());

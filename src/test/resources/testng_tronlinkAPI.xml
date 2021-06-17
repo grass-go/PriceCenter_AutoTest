@@ -5,12 +5,11 @@
         <listener class-name="tron.common.utils.SqlTronlinkAPI"/>
         <listener class-name="tron.common.utils.RetryListener"/>
     </listeners>
-    <parameter name="tronlinkUrl" value="https://list.tronlink.org"></parameter>
-    <parameter name="tronscanApiUrl" value="https://apilist.tronscan.org"></parameter>
     <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>
     <test name="tronlinkAPI">
-<!--        <parameter name="tronlinkUrl" value="https://list.tronlink.org"></parameter>
-        <parameter name="tronscanApiUrl" value="https://apilist.tronscan.org"></parameter>-->
+        <parameter name="tronscanApiUrl" value="https://apilist.tronscan.org"></parameter>
+        <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>
+        <parameter name="tronlinkUrl" value="https://list.tronlink.org"></parameter>
         <parameter name="trc721OwnerAddress" value="TGzgVdQszcAHbEd9VELwifASLRdQY9kTcx"></parameter>
         <parameter name="trc721TokenAddress" value="TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG"></parameter>
         <parameter name="trc721AssetId" value="1"></parameter>
@@ -18,9 +17,22 @@
             <package name="tron.tronlink.*"></package>
         </packages>
     </test>
-    <test name="trondataAPI">
-<!--        <parameter name="trondataUrl" value="http://47.252.85.29:8899"></parameter>-->
+<!--    <test name="tronlinkAPI-Singapore">-->
+<!--        <parameter name="trc721OwnerAddress" value="TGzgVdQszcAHbEd9VELwifASLRdQY9kTcx"></parameter>-->
+<!--        <parameter name="trc721TokenAddress" value="TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG"></parameter>-->
+<!--        <parameter name="trc721AssetId" value="1"></parameter>-->
+<!--        <parameter name="tronlinkUrl" value="https://singapitest.tronlink.org"></parameter>-->
+<!--        <parameter name="tronscanApiUrl" value="https://apilist.tronscan.org"></parameter>-->
 <!--        <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>-->
+
+<!--        <packages>-->
+<!--            <package name="tron.tronlink.*">-->
+<!--                <exclude name="tron.tronlink.v2.socket"/>-->
+<!--            </package>-->
+<!--        </packages>-->
+<!--    </test>-->
+    <test name="trondataAPI">
+        <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>
         <packages>
             <package name="tron.trondata.*"></package>
         </packages>

@@ -20,12 +20,15 @@ public class TronlinkBase {
     public  String queryAddressTH48 = Configuration.getByPath("testng.conf").getString("tronlink.queryAddressTH48");
     public  String addressNewAsset = Configuration.getByPath("testng.conf").getString("tronlink.addressNewAsset");
     public  String addressNewAsset41 = Configuration.getByPath("testng.conf").getString("tronlink.addressNewAsset41");
+    public String address721_B58 = Configuration.getByPath("testng.conf").getString("tronlink.address721_B58");
+    public String address721_Hex = Configuration.getByPath("testng.conf").getString("tronlink.address721_Hex");
+
     public static GetSign getSign = new GetSign();
     public String nonce = "12345";
     public String secretId = "SFSUIOJBFMLKSJIF";
 
     @Parameters({"tronlinkUrl","tronscanApiUrl"})
-    @BeforeSuite()
+    @BeforeTest
     public void  getMonitorUrl(String tronlinkUrl, String tronscanApiUrl) {
         this.tronlinkUrl = tronlinkUrl;
         this.tronscanApiUrl = tronscanApiUrl;

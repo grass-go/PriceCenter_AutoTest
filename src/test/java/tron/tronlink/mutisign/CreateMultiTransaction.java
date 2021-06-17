@@ -27,10 +27,12 @@ public class CreateMultiTransaction {
     private ManagedChannel channelFull = null;
     HttpResponse res;
     private JSONObject responseContent;
-    String key1="2eb094fa2b7a83a1a799b6fbee88d6037a39b668d523106d32ff06255b3b9098"; //线上
-    byte[] address1=TronlinkApiList.getFinalAddress(key1);
-    String address158= Base58.encode(address1);
-    String key2 = "7306c6044ad7c03709980aa188b8555288b7e0608f5edbf76ff2381c5a7a15a8";//线上
+//    String key1="c21f0c6fdc467f4ae7dc4c1a0b802234a930bff198ce34fde6850b0afd383cf5"; //线上
+//    byte[] address1=TronlinkApiList.getFinalAddress(key1);
+
+    String address158= "TY9touJknFcezjLiaGTjnH1dUHiqriu6L8";
+    byte[] address1 = Commons.decode58Check(address158);
+    String key2 = "7ef4f6b32643ea063297416f2f0112b562a4b3dac2c960ece00a59c357db3720";//线上
     byte[] address2=TronlinkApiList.getFinalAddress(key2);
     String address258=Base58.encode(address2);
 
@@ -46,13 +48,12 @@ public class CreateMultiTransaction {
 
     @Test(enabled = true,description = "nulti sign send coin")
     public void sendCoin() {
-
         Protocol.Transaction transaction = TronlinkApiList
-                .sendcoin(address2, 3000_000, address1, blockingStubFull);
-
+                .sendcoin(address2, 500_000, address1, blockingStubFull);
         log.info("-----111111  "+ JsonFormat.printToString(transaction));
+
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, key2, 2, blockingStubFull);
+                transaction, key2, 3, blockingStubFull);
         log.info("-----2222  "+JsonFormat.printToString(transaction1));
 
         JSONObject object = new JSONObject();
@@ -126,7 +127,7 @@ public class CreateMultiTransaction {
                 address1,blockingStubFull);
         log.info("-----111111  "+JsonFormat.printToString(transaction));
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, key2, 2, blockingStubFull);
+                transaction, key2, 3, blockingStubFull);
         log.info("-----2222  "+JsonFormat.printToString(transaction1));
 
         JSONObject object = new JSONObject();
