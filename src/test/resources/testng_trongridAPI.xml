@@ -17,7 +17,7 @@
     <test name="trongridAPI-oregon">
         <parameter name="trongridUrl" value="https://api.oregon.trongrid.io/"/>
                 <packages>
-                    <package name="tron.trongrid.trongridCase.*"></package>
+                    <package name="tron.trongrid.trongridCase.fullnodeOrSolidityAPI"></package>
                 </packages>
     </test>
     <test name="trongridAPI-frankfurt">
