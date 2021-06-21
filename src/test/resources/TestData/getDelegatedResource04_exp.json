@@ -1,0 +1,22 @@
+{
+  "code": 0,
+  "message": "OK",
+  "data": [
+    {
+      "ownerAddress": "TLwiP6eaAvjmPcETN99qZMoPZ65EDK74BH",
+      "receiverAddress": "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t",
+      "resource": "BANDWIDTH",
+      "frozenBalance": 2000000,
+      "expireTime": 1624184487000,
+      "resourceValue": "3"
+    },
+    {
+      "ownerAddress": "TLwiP6eaAvjmPcETN99qZMoPZ65EDK74BH",
+      "receiverAddress": "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo",
+      "resource": "BANDWIDTH",
+      "frozenBalance": 1000000,
+      "expireTime": 1624184457000,
+      "resourceValue": "1"
+    }
+  ]
+}

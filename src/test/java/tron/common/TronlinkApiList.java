@@ -674,6 +674,12 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse getDelegatedResource(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/wallet/v2/getDelegatedResource";
+    response = v2CreateGetConnect(requestUrl, params);
+    return response;
+  }
+
   public static HttpResponse v2NewAssetList(Map<String, String> params) {
     final String requestUrl = HttpNode + "/api/wallet/v2/newAssetList";
     response = v2CreateGetConnect(requestUrl, params);
