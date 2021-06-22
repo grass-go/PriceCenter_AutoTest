@@ -31,7 +31,7 @@ public class NewAssetList extends TronlinkBase {
   Map<String, String> params = new HashMap<>();
 
   //因为新资产不稳定的bug ONLIVE-318，所以enabled=false
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void newAssetList01(){
     params.clear();
     params.put("nonce","12345");
