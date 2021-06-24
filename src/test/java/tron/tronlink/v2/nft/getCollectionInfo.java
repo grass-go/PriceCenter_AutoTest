@@ -49,6 +49,5 @@ public class getCollectionInfo extends TronlinkBase {
     Assert.assertEquals(200, TronlinkApiList.createGetConnect(dataContent.getString("imageUrl")).getStatusLine().getStatusCode());
     Assert.assertEquals(200, TronlinkApiList.createGetConnect(dataContent.getString("logoUrl")).getStatusLine().getStatusCode());
 
-//https://list.tronlink.org/api/wallet/nft/getCollectionInfo?tokenAddress=TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG&address=414D103F0043A4ED24B1DC97775E390CBFC2E0C45D&signature=A2epHTAV5h6STSjMQ9yC%2FReM0RA%3D&assetId=3&secretId=SFSUIOJBFMLKSJIF&nonce=12345
   }
 }

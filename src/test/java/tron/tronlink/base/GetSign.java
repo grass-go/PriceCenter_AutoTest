@@ -128,11 +128,9 @@ public class GetSign {
     public void GetResquest() throws Exception {
 
         String url = "https://list.tronlink.org/api/wallet/nft/getCollectionList?tokenAddress=TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG&address=TAVNk5hkaPNJcTf6TvJVgBWEaRhuiHE5Ab&signature=1A8%2FhWTN%2F8g7qKv7vqUdIYKVjJU%3D&pageIndex=0&secretId=SFSUIOJBFMLKSJIF&pageSize=10&nonce=12345";
-        //url = "https://list.tronlink.org/api/wallet/nft/getCollectionInfo?tokenAddress=TPvGT3tWUNakTg23ARKMx46MGLT386nYWD&address=4105B49C6271FC5B2B8A8E1E980F6A12D9B66E2914&signature=1A8%2FhWTN%2F8g7qKv7vqUdIYKVjJU%3D&assetId=1&secretId=SFSUIOJBFMLKSJIF&nonce=12345";
         url = "https://testpre.tronlink.org//api/wallet/v2/search?Lang=1&System=AndroidTest&Version=v1.0.0&address=41E3D741556E595490F656B5E279DA08053A0F77C1&chain=MainChain&channel=official&nonce=12345&&keyWord=btt&page=1&secretId=SFSUIOJBFMLKSJIF&ts=1609302220000"
             + "YXtJLgAygp8AI3FlQH5y2mr1v74%3D";
 
-//        url = "https://testpre.tronlink.org/api/dapp/v2/head";
         String httpHost = url.substring(0,url.indexOf("/api"));
         String path = url.substring(url.indexOf("/api"),url.indexOf("?"));
         Map<String, String> parameter = new HashMap();
@@ -146,8 +144,6 @@ public class GetSign {
         }
 
         Map<String, String> head = getV2Header();
-//        head.put("System","chrome-extension-test");
-//        parameter.put("secretId","8JKSO2PM4M2K45EL");
 
         String signature = URLEncoder.encode(getSignature(
             head.get("channel"),
@@ -178,7 +174,6 @@ public class GetSign {
 
         String url = "https://testpre.tronlink.org/api/wallet/v2/assetList?nonce=12345&secretId=SFSUIOJBFMLKSJIF&signature=JHQAlW9COUvY7OAFt9Aj0n5qWyg%3D&address=TAYzcfLovWdV83g25Apfd7BA67J44D5z5M";
         url = "https://testpre.tronlink.org/api/wallet/v2/allAssetList?address=410663cda2477d40110d2f4ecfa9b076dd7f9a5570&nonce=7693131370817136548&secretId=A4ADE880F46CA8D4&signature=9iYqjcXFh3fPdiAfS%2FtEn8oW3oM%3D";
-        //url = "https://list.tronlink.org/api/wallet/v2/assetList?address=4105B49C6271FC5B2B8A8E1E980F6A12D9B66E2914&signature=66f37xLdCz%2FV9geQGc%2FhYd98HR0%3D&secretId=SFSUIOJBFMLKSJIF&nonce=12345";
        String httpHost = url.substring(0,url.indexOf("/api"));
         String path = url.substring(url.indexOf("/api"),url.indexOf("?"));
         Map<String, String> parameter = new HashMap();
