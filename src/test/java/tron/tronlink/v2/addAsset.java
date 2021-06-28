@@ -136,7 +136,7 @@ public class addAsset extends TronlinkBase {
   }
 
   //关注trc721资产，getAllCollections接口可见，取消关注，getAllCollections不可见
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void addAsset02() throws Exception {
     params.clear();
     trc721tokenList.clear();
@@ -166,6 +166,17 @@ public class addAsset extends TronlinkBase {
     params.put("address", address721_B58);
     params.put("version","v2");
     response = TronlinkApiList.v2GetAllCollection(params);
+    //Retry 2 time
+    for(int i=0;i<2;i++){
+      if (responseContent.getIntValue("code") == 4500){
+        Thread.currentThread().sleep(5000);
+        response = TronlinkApiList.v2GetAllCollection(params);
+      }
+      else{
+        break;
+      }
+    }
+
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     Assert.assertTrue(responseContent.containsKey("code"));

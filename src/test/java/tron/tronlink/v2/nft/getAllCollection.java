@@ -72,7 +72,7 @@ public class getAllCollection extends TronlinkBase {
   //            2. 相当于对此账户下首页展示的收藏品做全对比。
   //            3. 同时也校验了关注币的排序。
   @SneakyThrows
-  @Test(enabled=true)
+  @Test(enabled=false)
   public void getAllCollectionTest002(){
     // read expected json
     char cbuf[] = new char[5000];
@@ -89,6 +89,18 @@ public class getAllCollection extends TronlinkBase {
     params.put("address",address721_B58);
     params.put("version","v2");
     response = TronlinkApiList.v2GetAllCollection(params);
+
+    for(int i=0;i<2;i++){
+      if (responseContent.getIntValue("code") == 4500){
+        Thread.currentThread().sleep(5000);
+        response = TronlinkApiList.v2GetAllCollection(params);
+      }
+      else{
+        break;
+      }
+    }
+
+
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseString = TronlinkApiList.parseResponse2String(response);
     String cmp_result = new CompareJson("contractAddress,transferCount").compareJson(responseString, expResponse);
