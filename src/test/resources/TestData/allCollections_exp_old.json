@@ -2,7 +2,7 @@
   "code": 0,
   "message": "OK",
   "data": {
-    "count": 6,
+    "count": 4,
     "token": [
       {
         "type": 5,
@@ -43,9 +43,9 @@
         "tokenDesc": "ATC",
         "issueTime": "2021-03-31 06:03:46",
         "issueAddress": "TFg5bNV5yCDQQSsQWdfMdVahNkULTxZY26",
-        "nrOfTokenHolders": 5,
-        "transferCount": 37,
-        "totalSupply": 28,
+        "nrOfTokenHolders": 3,
+        "transferCount": 20,
+        "totalSupply": 18,
         "marketId": 0
       },
       {
@@ -65,8 +65,8 @@
         "tokenDesc": "NFTEST TEST",
         "issueTime": "2021-03-30 11:01:18",
         "issueAddress": "TFg5bNV5yCDQQSsQWdfMdVahNkULTxZY26",
-        "nrOfTokenHolders": 4,
-        "transferCount": 14,
+        "nrOfTokenHolders": 3,
+        "transferCount": 12,
         "totalSupply": 10,
         "marketId": 0
       },
@@ -88,52 +88,8 @@
         "issueTime": "2021-03-15 18:53:36",
         "issueAddress": "TXj7yA4gbvDXfk1CWXfzgziqs1kV2xwoiy",
         "nrOfTokenHolders": 10,
-        "transferCount": 44,
+        "transferCount": 38,
         "totalSupply": 10,
-        "marketId": 0
-      },
-      {
-        "type": 5,
-        "top": 0,
-        "isOfficial": 0,
-        "name": "Pitaya",
-        "shortName": "PITAYA",
-        "id": "24",
-        "contractAddress": "TBeAjUWtvsJ1NCouwtk7eCVrPzCc2Kco99",
-        "count": 0,
-        "logoUrl": "https://coin.top/production/upload/logo/TBeAjUWtvsJ1NCouwtk7eCVrPzCc2Kco99.png?t=1618402929823",
-        "inMainChain": true,
-        "inSideChain": false,
-        "maincontractAddress": "",
-        "homePage": "",
-        "tokenDesc": "Pitaya Seed.\nNoleLegends is a decentralized collectibles application running on Tron. It is one of the first gaming  DAPP based on NFTs using TRC721. it has a mystique based on growing trees.",
-        "issueTime": "2021-04-14 12:22:10",
-        "issueAddress": "TDoXSyRfZLXrJVbhbRg9zGFT8ru9iodqvz",
-        "nrOfTokenHolders": 13,
-        "transferCount": 15,
-        "totalSupply": 15,
-        "marketId": 0
-      },
-      {
-        "type": 5,
-        "top": 0,
-        "isOfficial": 0,
-        "name": "TAHIGO KOHINAGI",
-        "shortName": "TAHIGO",
-        "id": "28",
-        "contractAddress": "TPLVhGLc1BWHCHBMnBYakNsqhXQ7v5xp2h",
-        "count": 0,
-        "logoUrl": "https://coin.top/production/upload/logo/TPLVhGLc1BWHCHBMnBYakNsqhXQ7v5xp2h.png?t=1618502925012",
-        "inMainChain": true,
-        "inSideChain": false,
-        "maincontractAddress": "",
-        "homePage": "",
-        "tokenDesc": "The appearance of Tahigo in the Manuris Atlantis universe",
-        "issueTime": "2021-04-15 16:08:45",
-        "issueAddress": "TSX4h7jHDmvVVjnb4fjDDbrnTxBXbYYyAv",
-        "nrOfTokenHolders": 4,
-        "transferCount": 5,
-        "totalSupply": 5,
         "marketId": 0
       }
     ]
