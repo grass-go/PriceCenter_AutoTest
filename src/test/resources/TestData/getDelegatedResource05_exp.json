@@ -1,37 +1,38 @@
 {
   "code": 0,
   "message": "OK",
-  "data": [{
-    "ownerAddress": "TLwiP6eaAvjmPcETN99qZMoPZ65EDK74BH",
-    "receiverAddress": "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t",
-    "resource": "ENERGY",
-    "frozenBalance": 3000000,
-    "expireTime": 1624184406000,
-    "resourceValue": "82"
-  },
+  "data": [
     {
       "ownerAddress": "TLwiP6eaAvjmPcETN99qZMoPZ65EDK74BH",
-      "receiverAddress": "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo",
-      "resource": "BANDWIDTH",
-      "frozenBalance": 1000000,
-      "expireTime": 1624184457000,
-      "resourceValue": "1"
+      "receiverAddress": "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t",
+      "resource": "ENERGY",
+      "frozenBalance": 3000000,
+      "expireTime": 1624184403000,
+      "resourceValue": ""
     },
     {
       "ownerAddress": "TLwiP6eaAvjmPcETN99qZMoPZ65EDK74BH",
       "receiverAddress": "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t",
       "resource": "BANDWIDTH",
       "frozenBalance": 2000000,
-      "expireTime": 1624184487000,
-      "resourceValue": "3"
+      "expireTime": 1624184484000,
+      "resourceValue": ""
     },
     {
       "ownerAddress": "TLwiP6eaAvjmPcETN99qZMoPZ65EDK74BH",
       "receiverAddress": "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo",
       "resource": "ENERGY",
-      "frozenBalance": 5000000,
-      "expireTime": 1624184523000,
-      "resourceValue": "137"
+      "frozenBalance": 6000000,
+      "expireTime": 1625547246000,
+      "resourceValue": ""
+    },
+    {
+      "ownerAddress": "TLwiP6eaAvjmPcETN99qZMoPZ65EDK74BH",
+      "receiverAddress": "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo",
+      "resource": "BANDWIDTH",
+      "frozenBalance": 2000000,
+      "expireTime": 1625547396000,
+      "resourceValue": ""
     }
   ]
 }
