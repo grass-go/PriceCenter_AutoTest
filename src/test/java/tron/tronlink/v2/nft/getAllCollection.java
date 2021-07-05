@@ -24,7 +24,7 @@ public class getAllCollection extends TronlinkBase {
   Map<String, String> params = new HashMap<>();
   Map<String, Nft> NftPointedInV1 = new HashMap<>();
   {
-    NftPointedInV1.put("34", new Nft("JustNFT", "JNFT", "TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG"));
+    NftPointedInV1.put("34", new Nft("APENFT", "JNFT", "TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG"));
   }
   //To do
 
