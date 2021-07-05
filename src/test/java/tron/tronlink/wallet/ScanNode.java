@@ -16,7 +16,7 @@ public class ScanNode {
 
   private HttpResponse response;
 
-  @Test(enabled = false, description = "v1 scan node test")
+  @Test(enabled = true, description = "v1 scan node test")
   public void test000ScanNode() throws Exception{
     JSONObject job = new JSONObject();
     for(int i=0;i<3;i++){
@@ -28,7 +28,7 @@ public class ScanNode {
       double scanNum = dataArray.getJSONObject(0).getDoubleValue("number");
 
 
-      url = "http://13.127.47.162:8090/wallet/getnowblock";
+      url = "http://34.220.77.106:8090:8090/wallet/getnowblock";
       response = TronlinkApiList.createGetConnect(url);
       Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
       responseContent = TronlinkApiList.parseJsonObResponseContent(response);
@@ -60,7 +60,7 @@ public class ScanNode {
       double productNum =responseContent.getDouble("productNum");
       double customerTrc10Num =responseContent.getDouble("customerTrc10Num");
 
-      url = "http://13.127.47.162:8090/wallet/getnowblock";
+      url = "http://34.220.77.106:8090/wallet/getnowblock";
       response = TronlinkApiList.createGetConnect(url);
       Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
       responseContent = TronlinkApiList.parseJsonObResponseContent(response);
