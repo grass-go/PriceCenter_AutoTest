@@ -58,10 +58,12 @@ public class AllAssetList extends TronlinkBase {
           Assert.assertFalse(false);
         }
 
-      }else if (type==2){
-        Assert.assertEquals("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",object.getString("contractAddress"));
+      }else if (type==2) {
+        if (!((object.getString("contractAddress").equals("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t")) || (object.getString("contractAddress").equals("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7")))) {
+          log.info("------wrong token Address");
+          Assert.assertFalse(false);
+        }
       }
-      Assert.assertTrue(object.getLongValue("balance")>0);
     }
 
   }
