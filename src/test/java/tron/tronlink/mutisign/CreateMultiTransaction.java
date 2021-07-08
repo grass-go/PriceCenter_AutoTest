@@ -46,7 +46,7 @@ public class CreateMultiTransaction {
         blockingStubFull = org.tron.api.WalletGrpc.newBlockingStub(channelFull);
     }
 
-    @Test(enabled = false,description = "nulti sign send coin")
+    @Test(enabled = true,description = "nulti sign send coin")
     public void sendCoin() {
         Protocol.Transaction transaction = TronlinkApiList
                 .sendcoin(address2, 500_000, address1, blockingStubFull);
@@ -116,7 +116,7 @@ public class CreateMultiTransaction {
         Assert.assertEquals(0,responseContent.getIntValue("code"));
     }
 
-    @Test(enabled = false,description = "nulti sign transfer trc20")
+    @Test(enabled = true,description = "nulti sign transfer trc20")
     public void transferTrc20() throws Exception{
 
         String contractAddress = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
