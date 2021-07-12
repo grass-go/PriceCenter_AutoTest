@@ -21,7 +21,7 @@ public class multiTrxRecord {
     param.put("state","0");
     param.put("netType","main_net");
     response = TronlinkApiList.multiTrxReword(param);
-    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.size() >= 3);
@@ -30,7 +30,7 @@ public class multiTrxRecord {
     JSONArray array = responseContent.getJSONObject("data").getJSONArray("data");
     for (Object signatureProgress:array) {
       JSONObject info = (JSONObject) signatureProgress;
-      Assert.assertEquals(info.getString("state"),"0");
+      Assert.assertEquals("0",info.getString("state"));
       Assert.assertTrue(!info.getJSONArray("signatureProgress").isEmpty());
       Assert.assertTrue(!info.getString("originatorAddress").isEmpty());
       Assert.assertTrue(!info.getString("currentWeight").isEmpty());
@@ -51,7 +51,7 @@ public class multiTrxRecord {
     param.put("state","1");
     param.put("netType","main_net");
     response = TronlinkApiList.multiTrxReword(param);
-    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.size() >= 3);
@@ -60,7 +60,7 @@ public class multiTrxRecord {
     JSONArray array = responseContent.getJSONObject("data").getJSONArray("data");
     for (Object signatureProgress:array) {
       JSONObject info = (JSONObject) signatureProgress;
-      Assert.assertEquals(info.getString("state"),"1");
+      Assert.assertEquals("1", info.getString("state"));
       Assert.assertTrue(!info.getJSONArray("signatureProgress").isEmpty());
       Assert.assertTrue(!info.getString("originatorAddress").isEmpty());
       Assert.assertTrue(!info.getString("currentWeight").isEmpty());
@@ -81,7 +81,7 @@ public class multiTrxRecord {
     param.put("state","2");
     param.put("netType","main_net");
     response = TronlinkApiList.multiTrxReword(param);
-    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.size() >= 3);
@@ -90,7 +90,7 @@ public class multiTrxRecord {
     JSONArray array = responseContent.getJSONObject("data").getJSONArray("data");
     for (Object signatureProgress:array) {
       JSONObject info = (JSONObject) signatureProgress;
-      Assert.assertEquals(info.getString("state"),"2");
+      Assert.assertEquals("2", info.getString("state"));
       Assert.assertTrue(!info.getJSONArray("signatureProgress").isEmpty());
       Assert.assertTrue(!info.getString("originatorAddress").isEmpty());
       Assert.assertTrue(!info.getString("currentWeight").isEmpty());

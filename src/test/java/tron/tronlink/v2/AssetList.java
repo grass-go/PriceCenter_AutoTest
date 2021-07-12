@@ -2,13 +2,22 @@ package tron.tronlink.v2;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.alibaba.fastjson.JSONPath;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
+import tron.common.utils.CompareJson;
 import tron.tronlink.base.TronlinkBase;
 
 import java.util.HashMap;
@@ -17,7 +26,9 @@ import java.util.Map;
 @Slf4j
 public class AssetList extends TronlinkBase {
   private JSONObject responseContent;
+  private String responseString;
   private JSONObject dataContent;
+  private JSONObject object;
   private HttpResponse response;
   Map<String, String> params = new HashMap<>();
   JSONObject bodyObject = new JSONObject();
@@ -25,52 +36,114 @@ public class AssetList extends TronlinkBase {
   List<String> trc20tokenList = new ArrayList<>();
 
 
-  @Test(enabled = false)
+  //v4.2.1 new user(not even have transfer trx),with parameter version=v1, will return trx only.
+  @SneakyThrows
+  @Test(enabled = true)
   public void assetList01(){
+    char cbuf[] = new char[5000];
+    InputStreamReader input =new InputStreamReader(new FileInputStream(new File("src/test/resources/TestData/new1_assetList_v1_exp.json")),"UTF-8");
+    int len =input.read(cbuf);
+    String expResponse =new String(cbuf,0,len);
+
+
     params.put("nonce","12345");
     params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","66f37xLdCz%2FV9geQGc%2FhYd98HR0%3D");
-    params.put("address",addressNewAsset41);
+    params.put("signature","hq%2B20AfhKD7w%2Fzdi%2FJyUATsiVAM%3D");
+    params.put("address",new1_B58);
+    params.put("version","v1");
 
     response = TronlinkApiList.v2AssetList(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseString = TronlinkApiList.parseResponse2String(response);
+
+    String cmp_result = new CompareJson("data","priceCny,priceUSD").compareJson(responseString, expResponse);
+    System.out.println("=========actual response========== "+responseString+" ");
+    System.out.println("=========expect response========== "+expResponse+" ");
+    System.out.println("=========cmp_result=============== "+cmp_result);
+    Assert.assertEquals("null",cmp_result);
+
+  }
+
+  //v4.2.1 new user(not even have transfer trx),with parameter version=v2, will return trx only.
+  @SneakyThrows
+  @Test(enabled = true)
+  public void assetList02(){
+    char cbuf[] = new char[5000];
+    InputStreamReader input =new InputStreamReader(new FileInputStream(new File("src/test/resources/TestData/new1_assetList_v2_exp.json")),"UTF-8");
+    int len =input.read(cbuf);
+    String expResponse =new String(cbuf,0,len);
+
+    params.put("nonce","12345");
+    params.put("secretId","SFSUIOJBFMLKSJIF");
+    params.put("signature","hq%2B20AfhKD7w%2Fzdi%2FJyUATsiVAM%3D");
+    params.put("address",new1_B58);
+    params.put("version","v2");
+
+    response = TronlinkApiList.v2AssetList(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseString = TronlinkApiList.parseResponse2String(response);
+
+    String cmp_result = new CompareJson("data","priceCny,priceUSD,price").compareJson(responseString, expResponse);
+    System.out.println("=========actual response========== "+responseString+" ");
+    System.out.println("=========expect response========== "+expResponse+" ");
+    System.out.println("=========cmp_result=============== "+cmp_result);
+    Assert.assertEquals("null",cmp_result);
+
+    Object USDTprice = JSONPath.eval(responseContent, "$..data.token[name='Tether USD'].price");
+    JSONArray USDTPriceArray=(JSONArray)USDTprice;
+    BigDecimal actualTUSDPrice = (BigDecimal) USDTPriceArray.get(0);
+    int usdtflag = actualTUSDPrice.compareTo(BigDecimal.ZERO);
+    Assert.assertTrue(usdtflag > 0);
+  }
+
+  //v4.2.1 old user the first token is TRX. Others order by trxCount.
+  @Test(enabled = true)
+  public void assetList03() {
+
+    params.clear();
+    params.put("nonce", "12345");
+    params.put("secretId", "SFSUIOJBFMLKSJIF");
+    params.put("signature", "ySXhRglTOPIhQ%2B%2BQRbSfVcICPlg%3D");
+    params.put("address", quince_B58);
+    params.put("version", "v2");
+    response = TronlinkApiList.v2AssetList(params);
+
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     Assert.assertTrue(responseContent.containsKey("code"));
     Assert.assertTrue(responseContent.containsKey("message"));
     Assert.assertTrue(responseContent.containsKey("data"));
     dataContent = responseContent.getJSONObject("data");
-    JSONArray tokenArray = dataContent.getJSONArray("token");
-    int tokenNum = tokenArray.size();
-    Assert.assertEquals(2,tokenNum);
-    for(int i=0;i<tokenNum;i++){
-      JSONObject token = tokenArray.getJSONObject(0);
-      int type = token.getIntValue("type");
-      String id = token.getString("id");
-      String contractAddress = token.getString("contractAddress");
-      switch (type){
-        case 0:
-          Assert.assertEquals("",id);
-          Assert.assertEquals("",contractAddress);
-          break;
-        case 1:
-          Assert.assertEquals("1002000",id);
-          Assert.assertEquals("",contractAddress);
-          break;
-        case 2:
-          Assert.assertEquals("",id);
-          Assert.assertEquals("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",contractAddress);
-          break;
-        default:
-          break;
+    JSONArray tokenArray = new JSONArray();
+    tokenArray = dataContent.getJSONArray("token");
+    int count = tokenArray.size();
+    Assert.assertEquals(0,tokenArray.getJSONObject(0).getIntValue("type"));
+    Assert.assertEquals(0,tokenArray.getJSONObject(0).getIntValue("top"));
+    Assert.assertEquals("",tokenArray.getJSONObject(0).getString ("name"));
+
+    for (int j = 1; j < count-1; j++) {
+      BigDecimal curTRXCount = tokenArray.getJSONObject(j).getBigDecimal("trxCount");
+      BigDecimal nextTRXCount = tokenArray.getJSONObject(j+1).getBigDecimal("trxCount");
+      log.info("curTRXCount: "+curTRXCount.toString()+"    nextTRXCount: "+nextTRXCount.toString());
+      int curBiggerFlag = curTRXCount.compareTo(nextTRXCount);
+      Assert.assertTrue(curBiggerFlag > 0);
+
+      if (tokenArray.getJSONObject(j).getString("contractAddress")=="TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t")
+      {
+        Assert.assertEquals(1,tokenArray.getJSONObject(j).getIntValue("recommandSortId"));
       }
-      Assert.assertEquals(1,token.getLongValue("isOfficial"));
-      Assert.assertTrue(token.getLongValue("balance")>0);
+      else{
+        Assert.assertEquals(0,tokenArray.getJSONObject(j).getIntValue("recommandSortId"));
+      }
     }
   }
 
 
+  //Use Post method Test old prepared user have 2 tokens.
   @Test(enabled = true)
-  public void assetList02(){
+  public void assetList04(){
     params.clear();
     bodyObject.clear();
     trc10tokenList.clear();
@@ -138,6 +211,5 @@ public class AssetList extends TronlinkBase {
     }
 
   }
-
 
 }

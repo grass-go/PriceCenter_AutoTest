@@ -64,6 +64,14 @@ public class AllAssetList extends TronlinkBase {
           Assert.assertFalse(false);
         }
       }
+
+      if(object.getString("contractAddress").equals("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"))
+      {
+        Assert.assertEquals(1,object.getIntValue("recommandSortId"));
+      }
+      else{
+        Assert.assertEquals(0,object.getIntValue("recommandSortId"));
+      }
     }
 
   }

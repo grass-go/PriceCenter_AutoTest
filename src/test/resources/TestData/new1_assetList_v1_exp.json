@@ -1,0 +1,41 @@
+{
+  "code": 0,
+  "message": "OK",
+  "data": {
+    "totalTRX": 0,
+    "price": {
+      "priceCny": "0.40075509735215715000",
+      "priceUSD": "0.06182731665"
+    },
+    "token": [
+      {
+        "type": 0,
+        "top": 0,
+        "isOfficial": 1,
+        "name": "",
+        "shortName": "",
+        "id": "",
+        "contractAddress": "",
+        "balance": 0,
+        "balanceStr": "0",
+        "totalBalance": 0,
+        "trxCount": 0,
+        "price": 0,
+        "logoUrl": "",
+        "precision": 0,
+        "inMainChain": true,
+        "inSideChain": true,
+        "maincontractAddress": "",
+        "homePage": "",
+        "isInAssets": false,
+        "isShield": false,
+        "tokenDesc": "",
+        "issueTime": "",
+        "issueAddress": "",
+        "totalSupply": 0,
+        "marketId": 0,
+        "recommandSortId": 0
+      }
+    ]
+  }
+}
