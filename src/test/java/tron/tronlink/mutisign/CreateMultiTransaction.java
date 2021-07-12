@@ -61,7 +61,7 @@ public class CreateMultiTransaction {
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
         res = TronlinkApiList.multiTransaction(object);
-        Assert.assertEquals(res.getStatusLine().getStatusCode(), 200);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
     }
@@ -83,7 +83,7 @@ public class CreateMultiTransaction {
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
         res = TronlinkApiList.multiTransaction(object);
-        Assert.assertEquals(res.getStatusLine().getStatusCode(), 200);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
     }
@@ -111,7 +111,7 @@ public class CreateMultiTransaction {
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
         res = TronlinkApiList.multiTransaction(object);
-        Assert.assertEquals(res.getStatusLine().getStatusCode(), 200);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
     }
@@ -135,7 +135,7 @@ public class CreateMultiTransaction {
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
         res = TronlinkApiList.multiTransaction(object);
-        Assert.assertEquals(res.getStatusLine().getStatusCode(), 200);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
 

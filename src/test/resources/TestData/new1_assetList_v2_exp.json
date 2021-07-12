@@ -1,0 +1,69 @@
+{
+  "code": 0,
+  "message": "OK",
+  "data": {
+    "totalTRX": 0.000000,
+    "price": {
+      "priceCny": "0.40109394119905500000",
+      "priceUSD": "0.0618855000"
+    },
+    "token": [
+      {
+        "type": 0,
+        "top": 0,
+        "isOfficial": 1,
+        "name": "",
+        "shortName": "",
+        "id": "",
+        "contractAddress": "",
+        "balance": 0,
+        "balanceStr": "0",
+        "totalBalance": 0,
+        "trxCount": 0,
+        "price": 0,
+        "logoUrl": "",
+        "precision": 0,
+        "inMainChain": true,
+        "inSideChain": true,
+        "maincontractAddress": "",
+        "homePage": "",
+        "isInAssets": false,
+        "isShield": false,
+        "tokenDesc": "",
+        "issueTime": "",
+        "issueAddress": "",
+        "totalSupply": 0,
+        "marketId": 0,
+        "recommandSortId": 0
+      },
+      {
+        "type": 2,
+        "top": 1,
+        "isOfficial": 1,
+        "name": "Tether USD",
+        "shortName": "USDT",
+        "id": "",
+        "contractAddress": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+        "balance": 0,
+        "balanceStr": "0",
+        "totalBalance": 0,
+        "trxCount": 0.000000,
+        "price": 16.1290322580645161,
+        "logoUrl": "https://coin.top/production/logo/usdtlogo.png",
+        "precision": 6,
+        "inMainChain": false,
+        "inSideChain": false,
+        "maincontractAddress": "",
+        "homePage": "https://tron.network/usdt",
+        "isInAssets": false,
+        "isShield": false,
+        "tokenDesc": "USDT is the official stablecoin issued by Tether on the TRON network.",
+        "issueTime": "",
+        "issueAddress": "",
+        "totalSupply": 31993553636,
+        "marketId": 48,
+        "recommandSortId": 1
+      }
+    ]
+  }
+}

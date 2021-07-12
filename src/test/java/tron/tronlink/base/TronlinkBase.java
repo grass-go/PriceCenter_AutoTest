@@ -23,6 +23,11 @@ public class TronlinkBase {
     public String address721_B58 = Configuration.getByPath("testng.conf").getString("tronlink.address721_B58");
     public String address721_Hex = Configuration.getByPath("testng.conf").getString("tronlink.address721_Hex");
 
+    public String new1_B58 = Configuration.getByPath("testng.conf").getString("tronlink.new1_B58");
+    public String new1_Hex = Configuration.getByPath("testng.conf").getString("tronlink.new1_Hex");
+    public String quince_B58 = Configuration.getByPath("testng.conf").getString("tronlink.quince_B58");
+
+
     public static GetSign getSign = new GetSign();
     public String nonce = "12345";
     public String secretId = "SFSUIOJBFMLKSJIF";

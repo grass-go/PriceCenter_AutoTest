@@ -56,10 +56,12 @@ public class NewAssetList extends TronlinkBase {
     Assert.assertEquals("1002962",object.getString("id"));
     Assert.assertTrue(object.getLongValue("balance")>0);
     Assert.assertFalse(object.getBooleanValue("isInAssets"));
+    Assert.assertEquals(0,object.getIntValue("recommandSortId"));
 
   }
 
   //用address721账户测试新资产，使用全文对比，资产排序包含其中。
+  //add v4.2.1 recommandSortId=0
   @SneakyThrows
   @Test(enabled = true)
   public void newAssetList02(){
@@ -94,6 +96,9 @@ public class NewAssetList extends TronlinkBase {
     BigDecimal btPrice = (BigDecimal) actualBTPriceArray.get(0);
     int btflag = btPrice.compareTo(BigDecimal.ZERO);
     Assert.assertTrue(btflag>0);
+    Object actualRSIPrice = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent'].recommandSortId");
+    JSONArray actualRSIArray=(JSONArray)actualRSIPrice;
+    Assert.assertEquals(0,actualRSIArray.get(0));
 
 
     //check WINkLink balance
@@ -105,6 +110,9 @@ public class NewAssetList extends TronlinkBase {
     BigDecimal wlPrice = (BigDecimal) actualWLPriceArray.get(0);
     int wlflag = wlPrice.compareTo(BigDecimal.ZERO);
     Assert.assertTrue(wlflag > 0);
+    actualRSIPrice = JSONPath.eval(responseContent, "$..data.token[name='WINkLink'].recommandSortId");
+    actualRSIArray=(JSONArray)actualRSIPrice;
+    Assert.assertEquals(0,actualRSIArray.get(0));
 
 
     /*

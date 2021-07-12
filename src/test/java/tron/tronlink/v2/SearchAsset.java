@@ -48,6 +48,7 @@ public class SearchAsset extends TronlinkBase {
     Assert.assertEquals(2,token.getIntValue("type"));
     Assert.assertEquals("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",token.getString("contractAddress"));
     Assert.assertEquals(1,token.getIntValue("isOfficial"));
+    Assert.assertEquals(0,token.getIntValue("recommandSortId"));
   }
 
   //测试搜索结果中包含预期结果里面的token，预期结果中包括trc10，trc20，trc721的token，并且验证几个主要字段的值正确。
@@ -104,6 +105,11 @@ public class SearchAsset extends TronlinkBase {
         Assert.assertEquals(1, actualMFArray.size());
         Assert.assertEquals(entry.getValue().matchField, actualMFArray.get(0));
 
+        Object actualRF = JSONPath.eval(responseContent, String.join("","$..data.token[contractAddress='", address, "'].recommandSortId"));
+        JSONArray actualRFArray=(JSONArray)actualRF;
+        Assert.assertEquals(1, actualRFArray.size());
+        Assert.assertEquals(0, actualRFArray.get(0));
+
       }
       else{
         Object actualName = JSONPath.eval(responseContent, String.join("","$..data.token[id='", address, "'].name"));
@@ -130,6 +136,11 @@ public class SearchAsset extends TronlinkBase {
         JSONArray actualMFArray=(JSONArray)actualMF;
         Assert.assertEquals(1, actualMFArray.size());
         Assert.assertEquals(entry.getValue().matchField, actualMFArray.get(0));
+
+        Object actualRF = JSONPath.eval(responseContent, String.join("","$..data.token[id='", address, "'].recommandSortId"));
+        JSONArray actualRFArray=(JSONArray)actualRF;
+        Assert.assertEquals(1, actualRFArray.size());
+        Assert.assertEquals(0, actualRFArray.get(0));
       }
     }
 

@@ -40,6 +40,7 @@ public class Asset extends TronlinkBase {
     Assert.assertEquals("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",dataContent.getString("contractAddress"));
     Assert.assertEquals(2,dataContent.getIntValue("type"));
     Assert.assertEquals(0,dataContent.getIntValue("top"));
+    Assert.assertEquals(0,dataContent.getIntValue("recommandSortId"));
 
   }
 
