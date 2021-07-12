@@ -31,7 +31,7 @@ public class AllAssetList extends TronlinkBase {
   Map<String, String> params = new HashMap<>();
 
 
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void allAssetList01(){
     params.put("nonce","12345");
     params.put("secretId","SFSUIOJBFMLKSJIF");
