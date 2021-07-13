@@ -356,6 +356,7 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+
   public static HttpResponse allasset(String address) {
     try {
       String requestUrl = HttpNode + "/api/wallet/class/allasset";
@@ -779,7 +780,21 @@ public static HttpResponse search(Map<String, String> params) {
     response = createGetConnectWithHeader(requestUrl, params,null,header);
     return response;
   }
-
+  public static HttpResponse v2accountList(Map<String, String> params,JSONArray object) {
+    try {
+      String requestUrl = HttpNode + "/api/wallet/v2/account/list";
+      Map<String, String> header = getV2Header();
+      header.put("Content-type", "application/json; charset=utf-8");
+      header.put("Connection", "Close");
+      response = createPostConnectWithHeader(requestUrl,params, object,header);
+      //response = createPostConnect(requestUrl,body);
+      return response;
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+  }
 
   public static HttpResponse v2Asset(Map<String, String> params) {
     final String requestUrl = HttpNode + "/api/wallet/v2/asset";
@@ -789,6 +804,14 @@ public static HttpResponse search(Map<String, String> params) {
 
   public static HttpResponse v2AddAsset(Map<String, String> params,JSONObject object) {
     String requestUrl = HttpNode + "/api/wallet/v2/addAsset";
+    Map<String, String> header = getV2Header();
+    header.put("Content-type", "application/json; charset=utf-8");
+    header.put("Connection", "Close");
+    response = createPostConnectWithHeader(requestUrl,params, object,header);
+    return response;
+  }
+  public static HttpResponse v2DelAsset(Map<String, String> params,JSONObject object) {
+    String requestUrl = HttpNode + "/api/wallet/v2/delAsset";
     Map<String, String> header = getV2Header();
     header.put("Content-type", "application/json; charset=utf-8");
     header.put("Connection", "Close");
@@ -898,6 +921,48 @@ public static HttpResponse search(Map<String, String> params) {
   /**
    * constructor.
    */
+
+  public static HttpResponse createPostConnectWithHeader(String url, Map<String, String> params,
+                                                         JSONArray requestBody,Map<String,String> header){
+    try {
+      httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
+              connectionTimeout);
+      httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+      if (params != null) {
+        StringBuffer stringBuffer = new StringBuffer(url);
+        stringBuffer.append("?");
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+          stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
+        }
+        stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+        url = stringBuffer.toString();
+      }
+      httppost = new HttpPost(url);
+      if(header != null){
+        for(String key: header.keySet()){
+          httppost.setHeader(key,header.get(key));
+          log.info(key+": "+header.get(key));
+        }
+      }
+      if (requestBody != null) {
+        StringEntity entity = new StringEntity(requestBody.toJSONString(), Charset.forName("UTF-8"));
+        entity.setContentEncoding("UTF-8");
+        entity.setContentType("application/json");
+        httppost.setEntity(entity);
+      }
+      SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
+      log.info("url: "+httppost.toString()+"\nparams: "+requestBody.toString());
+      response = httpClient.execute(httppost);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+
+  }
+
   public static HttpResponse createPostConnectWithHeader(String url, Map<String, String> params,
                                                          JSONObject requestBody,Map<String,String> header) {
     try {
