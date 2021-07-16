@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,7 +85,7 @@ public class AllAssetList extends TronlinkBase {
     InputStreamReader input =new InputStreamReader(new FileInputStream(new File("src/test/resources/TestData/allAssetList_exp.json")),"UTF-8");
     int len =input.read(cbuf);
     String expResponse =new String(cbuf,0,len);
-
+    params.clear();
     params.put("nonce","12345");
     params.put("secretId","SFSUIOJBFMLKSJIF");
     params.put("signature","7Z0jHVm7ifg%2BYZqvkkOxqa%2Bcdh0%3D");
@@ -131,6 +132,54 @@ public class AllAssetList extends TronlinkBase {
     System.out.println("=========cmp_result=============== "+cmp_result);
     Assert.assertEquals("null",cmp_result);
      */
+  }
+
+  @Test(enabled = true, description = "Test jToken price")
+  public void allAssetList03(){
+    params.clear();
+    params.put("nonce","12345");
+    params.put("secretId","SFSUIOJBFMLKSJIF");
+    params.put("signature","38ljR2%2BTk8YRkub7SJ58qiOolgE%3D");
+    params.put("address",quince_B58);
+
+    response = TronlinkApiList.V2AllAssetList(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+
+
+
+
+    Map<String, String> jTokens = new HashMap<>();
+    jTokens.put("jTRX","TE2RzoSV3wFK99w6J9UnnZ4vLfXYoxvRwP");
+    jTokens.put("jUSDJ","TL5x9MtSnDy537FXKx53yAaHRRNdg9TkkA");
+    jTokens.put("jWBTT","TUY54PVeH6WCcYCd6ZXXoBDsHytN9V5PXt");
+    jTokens.put("jWIN","TRg6MnpsFXc82ymUPgf5qbj59ibxiEDWvv");
+
+
+    for(Map.Entry<String, String> entry : jTokens.entrySet()){
+      String shortName= entry.getKey();
+      String contractAddr = entry.getValue();
+      Object Price = JSONPath.eval(responseContent, String.join("","$..data.token[shortName='",shortName,"'].price"));
+      JSONArray priceArray=(JSONArray)Price;
+      BigDecimal actualPrice = new BigDecimal(priceArray.get(0).toString());
+
+      //get transcan price
+      String reqestUrl= TronlinkBase.tronscanApiUrl+"/api/token_trc20?contract="+contractAddr+"&showAll=1";
+      HttpResponse transcanRsp = TronlinkApiList.createGetConnect(reqestUrl);
+      JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
+      log.info(String.join("","$..trc20_tokens[contract_address='",contractAddr,"'].contract_name"));
+      Object expPrice = JSONPath.eval(transcanRspContent, String.join("","$..trc20_tokens[contract_address='",contractAddr,"'].market_info.priceInTrx"));
+      JSONArray expectPriceArray=(JSONArray)expPrice;
+      BigDecimal expectPrice = new BigDecimal(expectPriceArray.get(0).toString());
+
+      BigDecimal absgap = expectPrice.subtract(actualPrice).abs();
+      BigDecimal FIVE = new BigDecimal("5");
+      BigDecimal tolerance = actualPrice.divide(FIVE,6,1);
+      log.info("TranscanPrice:"+expectPrice.toString()+", TronlinkServer Price:"+actualPrice.toString()+", Tolerance: "+tolerance.toString()+", absgap:"+absgap.toString());
+      //decide if absgap less than tolerance.
+      Assert.assertTrue(absgap.compareTo(tolerance) == -1);
+
+    }
   }
 
 }

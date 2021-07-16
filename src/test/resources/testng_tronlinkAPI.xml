@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="tronlinkAPI" parallel="tests" thread-count="1">
+<suite name="tronlinkAPI" parallel="tests" thread-count="0">
     <listeners>
         <listener class-name="tron.common.utils.SqlTronlinkAPI"/>
         <listener class-name="tron.common.utils.RetryListener"/>
@@ -35,6 +35,13 @@
         <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>
         <packages>
             <package name="tron.trondata.*"></package>
+        </packages>
+    </test>
+    <test name="priceAPI">
+        <parameter name="tronscanApiUrl" value="https://apilist.tronscan.org"></parameter>
+        <parameter name="priceUrl" value="https://c.tronlink.org/"></parameter>
+        <packages>
+            <package name="tron.priceCenter.*"></package>
         </packages>
     </test>
 </suite>
