@@ -98,8 +98,7 @@ public class SearchAsset extends TronlinkBase {
         Object actualOfficial = JSONPath.eval(responseContent, String.join("","$..data.token[contractAddress='", address, "'].isOfficial"));
         JSONArray actualOfficialArray=(JSONArray)actualOfficial;
         Assert.assertEquals(1, actualOfficialArray.size());
-        //isOfficial are changes with coin. so not test the value. value will test in special cases.
-        //Assert.assertEquals(entry.getValue().isOfficial, actualOfficialArray.get(0));
+        Assert.assertEquals(entry.getValue().isOfficial, actualOfficialArray.get(0));
 
         Object actualMF = JSONPath.eval(responseContent, String.join("","$..data.token[contractAddress='", address, "'].matchField"));
         JSONArray actualMFArray=(JSONArray)actualMF;
