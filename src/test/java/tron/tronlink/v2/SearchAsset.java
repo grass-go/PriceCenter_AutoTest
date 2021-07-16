@@ -56,9 +56,9 @@ public class SearchAsset extends TronlinkBase {
   public void searchAssetList02(){
     Map<String, Token> expTokens = new HashMap<>();
     {
-      expTokens.put("TGiRb7cYFmU8FTrUAGw996VHtLc2sDtEZH", new Token("BabyToken", "BABY", 2, 0, 2));
+      expTokens.put("TGiRb7cYFmU8FTrUAGw996VHtLc2sDtEZH", new Token("BabyToken", "BABY", 2, -1, 2));
       expTokens.put("TSMfJe8Lot3RKanHE2Z6mv5V5FV2cA7XQw", new Token ("BabyTFG", "BTFG", 5, 0, 1));
-      expTokens.put("1000784", new Token("BabyLeprechaun","BLEP", 1, 0, 1));
+      expTokens.put("1000784", new Token("BabyLeprechaun","BLEP", 1, -1, 1));
     }
     params.clear();
     params.put("nonce","12345");

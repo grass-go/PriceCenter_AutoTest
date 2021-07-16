@@ -153,7 +153,7 @@ public class delAsset extends TronlinkBase {
         params.clear();
         params.put("nonce","12345");
         params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","hgo5H0FFWsCGHyxNZ7JehNYShL0%3D");
+        params.put("signature","jbcAnE2zojRRewzq84eS8skMaTM%3D");
         token10List.add("1002000");
         token20List.add("TKkeiboTkxXKJpbmVFbv4a8ov5rAfRDMf9");
         token721List.add("TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG");
