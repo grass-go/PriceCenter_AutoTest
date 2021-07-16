@@ -35,7 +35,7 @@ public class getallprice {
         JSONArray tokensArray = object.getJSONArray("rows");
         int rowCount = tokensArray.size();
         log.info("rowCount:"+ rowCount);
-        Assert.assertTrue(rowCount > 200);
+        Assert.assertTrue(rowCount > 500);
         object = (JSONObject) tokensArray.get(0);
         Assert.assertTrue(object.containsKey("fShortName"));
         Assert.assertTrue(object.containsKey("fTokenAddr"));

@@ -114,7 +114,7 @@ public class delAsset extends TronlinkBase {
         //check allCollections page
         params.remove("version");
         params.put("signature","0SX%2Fzp3x7kE%2FGrfAyj3F9%2BBSrp8%3D");
-        response = TronlinkApiList.v2GetAllCollection(params);
+        response = TronlinkApiList.v2AllCollections(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         shortNames = JSONPath.eval(responseContent, String.join("","$..data.token[*].contractAddress"));
@@ -327,7 +327,7 @@ public class delAsset extends TronlinkBase {
         //check allCollections page
         params.remove("version");
         params.put("signature","0SX%2Fzp3x7kE%2FGrfAyj3F9%2BBSrp8%3D");
-        response = TronlinkApiList.v2GetAllCollection(params);
+        response = TronlinkApiList.v2AllCollections(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         shortNames = JSONPath.eval(responseContent, String.join("","$..data.token[*].contractAddress"));
