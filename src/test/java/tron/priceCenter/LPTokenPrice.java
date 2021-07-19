@@ -68,7 +68,7 @@ public class LPTokenPrice extends priceBase{
                 String lpprice = priceArray.get(0).toString();
                 BigDecimal lpPrice = new BigDecimal(lpprice);
                 BigDecimal absgap = expPrice.subtract(lpPrice).abs();
-                BigDecimal one = new BigDecimal("0.01");
+                BigDecimal one = new BigDecimal("0.1");
                 log.info("TranscanPrice:"+expPrice.toString()+", PriceCenter Price:"+lpPrice.toString()+", absgap:"+absgap.toString());
                 Assert.assertTrue(absgap.compareTo(one) == -1);
             } catch (Exception e){
