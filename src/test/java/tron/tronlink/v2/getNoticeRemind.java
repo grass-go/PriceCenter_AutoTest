@@ -39,7 +39,7 @@ public class getNoticeRemind extends TronlinkBase {
   }
 
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void test02GetDappHistory(){
     JsonObject body = new JsonObject();
     body.addProperty("transactionString", "e75c536bb24bd5e5ae461afe00b70ee7df7d4395e1b10f181e1e7fcf2c1b2f67");
