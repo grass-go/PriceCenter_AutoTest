@@ -231,7 +231,7 @@ public class AllAssetList extends TronlinkBase {
         Integer scan_level = Integer.valueOf(scan_levelObject.toString());
         log.info("curId:"+curId+", cur_isOfficial:"+cur_isOfficial.toString()+", transcan level:"+scan_levelObject.toString());
         log.info("======");
-        //Assert.assertEquals(Math.abs(Integer.parseInt(cur_isOfficial.toString())), scan_level+1);
+        Assert.assertEquals(Math.abs(Integer.parseInt(cur_isOfficial.toString())), scan_level+1);
 
 
       }
@@ -251,7 +251,7 @@ public class AllAssetList extends TronlinkBase {
         Integer scan_level = Integer.valueOf(scan_levelObject.toString());
         log.info("curAddress:"+curAddress+", cur_isOfficial:"+cur_isOfficial.toString()+", transcan level:"+scan_levelObject.toString());
         log.info("======");
-        //Assert.assertEquals(Math.abs(Integer.parseInt(cur_isOfficial.toString())), scan_level+1);
+        Assert.assertEquals(Math.abs(Integer.parseInt(cur_isOfficial.toString())), scan_level+1);
       }
     }
 
