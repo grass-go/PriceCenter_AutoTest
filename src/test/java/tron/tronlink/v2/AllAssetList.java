@@ -18,7 +18,9 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -181,5 +183,78 @@ public class AllAssetList extends TronlinkBase {
 
     }
   }
+  @Test(enabled = true, description = "Test each coin level equals to transcan api")
+  public void allAssetList04(){
+    params.clear();
+    params.put("nonce","12345");
+    params.put("secretId","SFSUIOJBFMLKSJIF");
+    params.put("signature","38ljR2%2BTk8YRkub7SJ58qiOolgE%3D");
+    params.put("address",quince_B58);
 
+    response = TronlinkApiList.V2AllAssetList(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+
+    Object token10s = JSONPath.eval(responseContent, "$..id");
+    Object token20s = JSONPath.eval(responseContent, "$..contractAddress");
+    List token10sArray = (List) token10s;
+    List token20sArray = (List) token20s;
+    log.info(token10s.toString());
+    log.info(token20s.toString());
+    //To do : exclude isOfficial=1
+    //isOfficial=1
+    ArrayList<String> officialCoin10 = new ArrayList<String>();
+    ArrayList<String> officialCoin20 = new ArrayList<String>();
+
+    officialCoin10.add("1002000"); //BitTorrent, BTT
+    officialCoin20.add("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"); //USDT
+    officialCoin20.add("TKkeiboTkxXKJpbmVFbv4a8ov5rAfRDMf9"); //SUNOLD
+    officialCoin20.add("TFczxzPhnThNSqr5by8tvxsdCFRRz6cPNq"); //APENFT
+    officialCoin20.add("TSSMHYeV2uE9qYH95DqyoCuNCzEL1NvU3S"); //SUN
+    officialCoin20.add("TKfjV9RNKJJCqPvBtK8L7Knykh7DNWvnYt"); //WBTT
+    officialCoin20.add("TUpMhErZL2fhh4sVNULAbNKLokS4GjC1F4"); //TUSD
+    officialCoin20.add("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7"); //WINkLink, WIN
+
+
+    for (int i = 0; i<token10sArray.size(); i++) {
+      if (!token10sArray.get(i).equals("")) {
+
+        String curId = token10sArray.get(i).toString();
+        if (officialCoin10.contains(curId)) {
+          continue;
+        }
+        Object cur_isOfficial = JSONPath.eval(responseContent, String.join("","$..data.token[id='",curId,"'].isOfficial[0]"));
+        String requestUrl= TronlinkBase.tronscanApiUrl+"/api/token?id="+curId+"&showAll=1";
+        HttpResponse transcanRsp = TronlinkApiList.createGetConnect(requestUrl);
+        JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
+        Object scan_levelObject = JSONPath.eval(transcanRspContent, String.join("","$..data[0].level"));
+        Integer scan_level = Integer.valueOf(scan_levelObject.toString());
+        log.info("curId:"+curId+", cur_isOfficial:"+cur_isOfficial.toString()+", transcan level:"+scan_levelObject.toString());
+        log.info("======");
+        //Assert.assertEquals(Math.abs(Integer.parseInt(cur_isOfficial.toString())), scan_level+1);
+
+
+      }
+    }
+
+    for (int i=0; i<token20sArray.size();i++){
+      if (!token20sArray.get(i).equals("")) {
+        String curAddress = token20sArray.get(i).toString();
+        if (officialCoin20.contains(curAddress)) {
+          continue;
+        }
+        Object cur_isOfficial = JSONPath.eval(responseContent, String.join("","$..data.token[contractAddress='",curAddress,"'].isOfficial[0]"));
+        String requestUrl= TronlinkBase.tronscanApiUrl+"/api/token_trc20?contract="+curAddress+"&showAll=1&source=true";
+        HttpResponse transcanRsp = TronlinkApiList.createGetConnect(requestUrl);
+        JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
+        Object scan_levelObject = JSONPath.eval(transcanRspContent, String.join("","$..trc20_tokens[0].level"));
+        Integer scan_level = Integer.valueOf(scan_levelObject.toString());
+        log.info("curAddress:"+curAddress+", cur_isOfficial:"+cur_isOfficial.toString()+", transcan level:"+scan_levelObject.toString());
+        log.info("======");
+        //Assert.assertEquals(Math.abs(Integer.parseInt(cur_isOfficial.toString())), scan_level+1);
+      }
+    }
+
+
+  }
 }

@@ -1,5 +1,6 @@
 package tron.tronlink.v2;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
@@ -11,6 +12,7 @@ import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.tronlink.base.TronlinkBase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -150,8 +152,89 @@ public class SearchAsset extends TronlinkBase {
       }
     }
 
+  }
+  @Test(enabled = true, description = "TRC10: Coin isOfficial=-5(transcan level=4,诈骗币) only can search by contract address, can't name and symbol" )
+  public void searchAssetList03(){
+    //trc10 blacklist coin: 1004092:NAPCoin:NAP
+    //blackTokens.put("1004092", new Token("NAPCoin", "NAP", 1, -5, 1));
 
+    params.clear();
+    params.put("nonce","12345");
+    params.put("secretId","SFSUIOJBFMLKSJIF");
+    params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
+    params.put("address",addressNewAsset41);
+    params.put("page","1");
+    params.put("count","10");
 
+    //search by id:
+    params.put("keyWord","1004092");
+    response = TronlinkApiList.v2SearchAsset(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    Object count = JSONPath.eval(responseContent, "$..data.count[0]");
+    Assert.assertEquals("1", count.toString());
+    Object name = JSONPath.eval(responseContent, "$..data.token[*].name[0]");
+    Assert.assertEquals("NAPCoin", name.toString());
+
+    //search by name:
+    params.put("keyWord","NAPCoin");
+    response = TronlinkApiList.v2SearchAsset(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    Object tokenid = JSONPath.eval(responseContent, "$..data.token[*].id");
+    JSONArray tokenidArray = (JSONArray) tokenid;
+    Assert.assertFalse(tokenidArray.contains("1004092"));
+
+    //search by symbol/shortname(有其他搜索结果，所以仅判断list不包含此ID即可。)
+    params.put("keyWord","NAP");
+    response = TronlinkApiList.v2SearchAsset(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    tokenid = JSONPath.eval(responseContent, "$..data.token[*].id");
+    tokenidArray = (JSONArray) tokenid;
+    Assert.assertFalse(tokenidArray.contains("1004092"));
+  }
+
+  @Test(enabled = true, description = "TRC20: Coin isOfficial=-5(transcan level=4,诈骗币) only can search by contract address, can't name and symbol" )
+  public void searchAssetList04() {
+    //trc20 blacklist coin: TET8rVqicX1Zu93W3LHQGg7sFX2vEGktUR: EthLend:LEND
+    //blackTokens.put("TET8rVqicX1Zu93W3LHQGg7sFX2vEGktUR", new Token ("EthLend", "LEND", 2, -5, 1));
+
+    params.clear();
+    params.put("nonce","12345");
+    params.put("secretId","SFSUIOJBFMLKSJIF");
+    params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
+    params.put("address",addressNewAsset41);
+    params.put("page","1");
+    params.put("count","10");
+
+    //search by id:
+    params.put("keyWord","TET8rVqicX1Zu93W3LHQGg7sFX2vEGktUR");
+    response = TronlinkApiList.v2SearchAsset(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    Object count = JSONPath.eval(responseContent, "$..data.count[0]");
+    Assert.assertEquals("1", count.toString());
+    Object name = JSONPath.eval(responseContent, "$..data.token[*].name[0]");
+    Assert.assertEquals("EthLend", name.toString());
+
+    //search by name:
+    params.put("keyWord","EthLend");
+    response = TronlinkApiList.v2SearchAsset(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    Object tokenid = JSONPath.eval(responseContent, "$..data.token[*].contractAddress");
+    JSONArray tokenidArray = (JSONArray) tokenid;
+    Assert.assertFalse(tokenidArray.contains("TET8rVqicX1Zu93W3LHQGg7sFX2vEGktUR"));
+
+    //search by symbol/shortname(有其他搜索结果，所以仅判断list不包含此ID即可。)
+    params.put("keyWord","LEND");
+    response = TronlinkApiList.v2SearchAsset(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    tokenid = JSONPath.eval(responseContent, "$..data.token[*].contractAddress");
+    tokenidArray = (JSONArray) tokenid;
+    Assert.assertFalse(tokenidArray.contains("TET8rVqicX1Zu93W3LHQGg7sFX2vEGktUR"));
   }
 
   class Token {
@@ -168,5 +251,6 @@ public class SearchAsset extends TronlinkBase {
       this.matchField = matchField;
     }
   }
+
 
 }
