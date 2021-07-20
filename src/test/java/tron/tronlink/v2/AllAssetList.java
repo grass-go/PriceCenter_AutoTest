@@ -214,6 +214,7 @@ public class AllAssetList extends TronlinkBase {
     officialCoin20.add("TKfjV9RNKJJCqPvBtK8L7Knykh7DNWvnYt"); //WBTT
     officialCoin20.add("TUpMhErZL2fhh4sVNULAbNKLokS4GjC1F4"); //TUSD
     officialCoin20.add("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7"); //WINkLink, WIN
+    officialCoin20.add("TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9"); //JST Token
 
 
     for (int i = 0; i<token10sArray.size(); i++) {
