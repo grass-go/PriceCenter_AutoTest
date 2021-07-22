@@ -147,7 +147,7 @@ public class delAsset extends TronlinkBase {
 
     }
 
-    @Test(enabled = true, description = "add deleted coin to assetList, related api should see.")
+    @Test(enabled = false, description = "add deleted coin to assetList, related api should see.")
     public void delAsset02() {
         //addAsset for these del coin.
         params.clear();
