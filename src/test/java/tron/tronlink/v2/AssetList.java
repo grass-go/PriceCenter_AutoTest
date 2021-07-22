@@ -128,7 +128,7 @@ public class AssetList extends TronlinkBase {
       BigDecimal nextTRXCount = tokenArray.getJSONObject(j+1).getBigDecimal("trxCount");
       log.info("curTRXCount: "+curTRXCount.toString()+"    nextTRXCount: "+nextTRXCount.toString());
       int curBiggerFlag = curTRXCount.compareTo(nextTRXCount);
-      Assert.assertTrue(curBiggerFlag > 0);
+      Assert.assertTrue(curBiggerFlag >= 0);
 
       if (tokenArray.getJSONObject(j).getString("contractAddress")=="TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t")
       {
