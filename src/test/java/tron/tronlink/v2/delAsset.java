@@ -245,8 +245,13 @@ public class delAsset extends TronlinkBase {
 
         balanceObject = JSONPath.eval(responseContent, "$..data.balanceList[0].balance");
         balance = new BigDecimal(balanceObject.toString());
+        log.info("===============########debug##########============");
+        log.info("balance:"+balance.toString());
         fullbalance = new BigDecimal("6.792603");
-        Assert.assertTrue(balance.compareTo(fullbalance) == 1);
+        absgap = fullbalance.subtract(balance).abs();
+        log.info("absgap:"+absgap.toString());
+        tolerance = new BigDecimal("1");
+        Assert.assertTrue(absgap.compareTo(fullbalance) == -1);
     }
 
     @Test(enabled = true, description = "Del \"cancel focus\" coin, check all apis.")
