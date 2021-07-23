@@ -147,7 +147,7 @@ public class delAsset extends TronlinkBase {
 
     }
 
-    @Test(enabled = false, description = "add deleted coin to assetList, related api should see.")
+    @Test(enabled = true, description = "add deleted coin to assetList, related api should see.")
     public void delAsset02() {
         //addAsset for these del coin.
         params.clear();
@@ -230,8 +230,13 @@ public class delAsset extends TronlinkBase {
 
         Object balanceObject = JSONPath.eval(responseContent, "$..data.balanceList[0].balance");
         BigDecimal balance = new BigDecimal(balanceObject.toString());
+        log.info("===============########debug##########============");
+        log.info("balance:"+balance.toString());
         BigDecimal fullbalance = new BigDecimal("6.792603");
-        Assert.assertTrue(balance.compareTo(fullbalance) == 1);
+        BigDecimal absgap = fullbalance.subtract(balance).abs();
+        log.info("absgap:"+absgap.toString());
+        BigDecimal tolerance = new BigDecimal("1");
+        Assert.assertTrue(absgap.compareTo(tolerance) == -1);
 
         //check account/list v1 page
         response = TronlinkApiList.accountList(array);
