@@ -2,7 +2,10 @@ package tron.common;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.protobuf.ByteString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Header;
@@ -29,6 +32,8 @@ import org.tron.common.utils.Sha256Hash;
 import org.tron.core.Wallet;
 import org.tron.protos.Protocol;
 import org.tron.protos.contract.BalanceContract;
+
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -44,6 +49,8 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
+
+import static org.tron.common.crypto.Hash.sha3omit12;
 
 @Slf4j
 public class TronlinkApiList {
@@ -537,7 +544,8 @@ public static HttpResponse search(Map<String, String> params) {
 
   public static HttpResponse multiTransaction(JSONObject body) {
     try {
-      String requestUrl = HttpNode + "/api/wallet/multi/transaction";
+      //String requestUrl = "HttpNode" + "/api/wallet/multi/transaction";
+      String requestUrl = "http://101.201.66.150:8885" + "/api/wallet/multi/transaction";
       response = createConnect(requestUrl,body);
     } catch (Exception e) {
       e.printStackTrace();
@@ -1410,7 +1418,9 @@ public static HttpResponse search(Map<String, String> params) {
     }
 
     //transaction = setPermissionId(transaction, permissionId);
-    Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder();
+    long now = System.currentTimeMillis();
+    Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder().setExpiration(now+86400000L);
+    //Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder();
     Protocol.Transaction.Contract.Builder contract = raw.getContract(0).toBuilder()
             .setPermissionId(permissionId);
     raw.clearContract();
@@ -1534,5 +1544,358 @@ public static HttpResponse search(Map<String, String> params) {
     return true;
   }
 
+  public static HashMap<String, String> getBycodeAbi(String solFile, String contractName) {
+    final String compile = Configuration.getByPath("testng.conf")
+            .getString("defaultParameter.solidityCompile");
 
+    String dirPath = solFile.substring(solFile.lastIndexOf("/"), solFile.lastIndexOf("."));
+    String outputPath = "src/test/resources/soliditycode" + dirPath;
+
+    File binFile = new File(outputPath + "/" + contractName + ".bin");
+    File abiFile = new File(outputPath + "/" + contractName + ".abi");
+    if (binFile.exists()) {
+      binFile.delete();
+    }
+    if (abiFile.exists()) {
+      abiFile.delete();
+    }
+
+    HashMap<String, String> retMap = new HashMap<>();
+    String absolutePath = System.getProperty("user.dir");
+    log.debug("absolutePath: " + absolutePath);
+    log.debug("solFile: " + solFile);
+    log.debug("outputPath: " + outputPath);
+    String cmd =
+            compile + " --optimize --bin --abi --overwrite " + absolutePath + "/"
+                    + solFile + " -o "
+                    + absolutePath + "/" + outputPath;
+    log.info("cmd: " + cmd);
+
+    String byteCode = null;
+    String abI = null;
+
+    // compile solidity file
+    try {
+      exec(cmd);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    // get byteCode and ABI
+    try {
+      byteCode = fileRead(outputPath + "/" + contractName + ".bin", false);
+      retMap.put("byteCode", byteCode);
+      log.debug("byteCode: " + byteCode);
+      abI = fileRead(outputPath + "/" + contractName + ".abi", false);
+      retMap.put("abI", abI);
+      log.debug("abI: " + abI);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return retMap;
+  }
+
+  public static String exec(String command) throws InterruptedException {
+    String returnString = "";
+    Process pro = null;
+    Runtime runTime = Runtime.getRuntime();
+    if (runTime == null) {
+      log.error("Create runtime false!");
+    }
+    try {
+      pro = runTime.exec(command);
+      BufferedReader input = new BufferedReader(new InputStreamReader(pro.getInputStream()));
+      PrintWriter output = new PrintWriter(new OutputStreamWriter(pro.getOutputStream()));
+      String line;
+      while ((line = input.readLine()) != null) {
+        returnString = returnString + line + "\n";
+      }
+      input.close();
+      output.close();
+      pro.destroy();
+    } catch (IOException ex) {
+      log.error(null, ex);
+    }
+    return returnString;
+  }
+
+  public static String fileRead(String filePath, boolean isLibrary) throws Exception {
+    File file = new File(filePath);
+    FileReader reader = new FileReader(file);
+    BufferedReader breader = new BufferedReader(reader);
+    StringBuilder sb = new StringBuilder();
+    String s = "";
+    if (!isLibrary) {
+      if ((s = breader.readLine()) != null) {
+        sb.append(s);
+      }
+      breader.close();
+    } else {
+      String fistLine = breader.readLine();
+      breader.readLine();
+      if ((s = breader.readLine()) != null && !s.equals("")) {
+        s = s.substring(s.indexOf("-> ") + 3);
+        sb.append(s + ":");
+      } else {
+        s = fistLine.substring(fistLine.indexOf("__") + 2, fistLine.lastIndexOf("__"));
+        sb.append(s + ":");
+      }
+      breader.close();
+    }
+    return sb.toString();
+  }
+  public static SmartContractOuterClass.SmartContract.ABI jsonStr2Abi(String jsonStr) {
+    if (jsonStr == null) {
+      return null;
+    }
+
+    JsonParser jsonParser = new JsonParser();
+    JsonElement jsonElementRoot = jsonParser.parse(jsonStr);
+    JsonArray jsonRoot = jsonElementRoot.getAsJsonArray();
+    SmartContractOuterClass.SmartContract.ABI.Builder abiBuilder = SmartContractOuterClass.SmartContract.ABI.newBuilder();
+    for (int index = 0; index < jsonRoot.size(); index++) {
+      JsonElement abiItem = jsonRoot.get(index);
+      boolean anonymous =
+              abiItem.getAsJsonObject().get("anonymous") != null ? abiItem.getAsJsonObject()
+                      .get("anonymous").getAsBoolean() : false;
+      final boolean constant =
+              abiItem.getAsJsonObject().get("constant") != null ? abiItem.getAsJsonObject()
+                      .get("constant").getAsBoolean() : false;
+      final String name =
+              abiItem.getAsJsonObject().get("name") != null ? abiItem.getAsJsonObject().get("name")
+                      .getAsString() : null;
+      JsonArray inputs =
+              abiItem.getAsJsonObject().get("inputs") != null ? abiItem.getAsJsonObject().get("inputs")
+                      .getAsJsonArray() : null;
+      final JsonArray outputs =
+              abiItem.getAsJsonObject().get("outputs") != null ? abiItem.getAsJsonObject()
+                      .get("outputs").getAsJsonArray() : null;
+      String type =
+              abiItem.getAsJsonObject().get("type") != null ? abiItem.getAsJsonObject().get("type")
+                      .getAsString() : null;
+      final boolean payable =
+              abiItem.getAsJsonObject().get("payable") != null ? abiItem.getAsJsonObject()
+                      .get("payable").getAsBoolean() : false;
+      final String stateMutability =
+              abiItem.getAsJsonObject().get("stateMutability") != null ? abiItem.getAsJsonObject()
+                      .get("stateMutability").getAsString() : null;
+      if (type == null) {
+        log.error("No type!");
+        return null;
+      }
+      if (!type.equalsIgnoreCase("fallback") && null == inputs) {
+        log.error("No inputs!");
+        continue;
+      }
+
+      SmartContractOuterClass.SmartContract.ABI.Entry.Builder entryBuilder = SmartContractOuterClass.SmartContract.ABI.Entry.newBuilder();
+      entryBuilder.setAnonymous(anonymous);
+      entryBuilder.setConstant(constant);
+      if (name != null) {
+        entryBuilder.setName(name);
+      }
+
+      /* { inputs : optional } since fallback function not requires inputs*/
+      if (inputs != null) {
+        for (int j = 0; j < inputs.size(); j++) {
+          JsonElement inputItem = inputs.get(j);
+          if (inputItem.getAsJsonObject().get("name") == null
+                  || inputItem.getAsJsonObject().get("type") == null) {
+            log.error("Input argument invalid due to no name or no type!");
+            return null;
+          }
+          String inputName = inputItem.getAsJsonObject().get("name").getAsString();
+          String inputType = inputItem.getAsJsonObject().get("type").getAsString();
+          SmartContractOuterClass.SmartContract.ABI.Entry.Param.Builder paramBuilder = SmartContractOuterClass.SmartContract.ABI.Entry.Param
+                  .newBuilder();
+          paramBuilder.setIndexed(false);
+          paramBuilder.setName(inputName);
+          paramBuilder.setType(inputType);
+          entryBuilder.addInputs(paramBuilder.build());
+        }
+      }
+
+      /* { outputs : optional } */
+      if (outputs != null) {
+        for (int k = 0; k < outputs.size(); k++) {
+          JsonElement outputItem = outputs.get(k);
+
+          SmartContractOuterClass.SmartContract.ABI.Entry.Param.Builder paramBuilder = SmartContractOuterClass.SmartContract.ABI.Entry.Param
+                  .newBuilder();
+          if (outputItem.getAsJsonObject().get("name") != null) {
+            String outputName = outputItem.getAsJsonObject().get("name").getAsString();
+
+            paramBuilder.setName(outputName);
+          }
+          if (outputItem.getAsJsonObject().get("type") == null) {
+
+            String outputType = outputItem.getAsJsonObject().get("type").getAsString();
+            paramBuilder.setType(outputType);
+          }
+          paramBuilder.setIndexed(false);
+          entryBuilder.addOutputs(paramBuilder.build());
+        }
+      }
+
+      entryBuilder.setType(getEntryType(type.toLowerCase(Locale.ROOT)));
+      entryBuilder.setPayable(payable);
+      if (stateMutability != null) {
+        entryBuilder.setStateMutability(getStateMutability(stateMutability.toLowerCase(Locale.ROOT)));
+      }
+
+      abiBuilder.addEntrys(entryBuilder.build());
+    }
+
+    return abiBuilder.build();
+  }
+
+  public static SmartContractOuterClass.SmartContract.ABI.Entry.EntryType getEntryType(String type) {
+    switch (type) {
+      case "constructor":
+        return SmartContractOuterClass.SmartContract.ABI.Entry.EntryType.Constructor;
+      case "function":
+        return SmartContractOuterClass.SmartContract.ABI.Entry.EntryType.Function;
+      case "event":
+        return SmartContractOuterClass.SmartContract.ABI.Entry.EntryType.Event;
+      case "fallback":
+        return SmartContractOuterClass.SmartContract.ABI.Entry.EntryType.Fallback;
+      default:
+        return SmartContractOuterClass.SmartContract.ABI.Entry.EntryType.UNRECOGNIZED;
+    }
+  }
+
+  public static SmartContractOuterClass.SmartContract.ABI.Entry.StateMutabilityType getStateMutability(
+          String stateMutability) {
+    switch (stateMutability.toLowerCase(Locale.ROOT)) {
+      case "pure":
+        return SmartContractOuterClass.SmartContract.ABI.Entry.StateMutabilityType.Pure;
+      case "view":
+        return SmartContractOuterClass.SmartContract.ABI.Entry.StateMutabilityType.View;
+      case "nonpayable":
+        return SmartContractOuterClass.SmartContract.ABI.Entry.StateMutabilityType.Nonpayable;
+      case "payable":
+        return SmartContractOuterClass.SmartContract.ABI.Entry.StateMutabilityType.Payable;
+      default:
+        return SmartContractOuterClass.SmartContract.ABI.Entry.StateMutabilityType.UNRECOGNIZED;
+    }
+  }
+
+  public static byte[] decode58Check(String input) {
+    byte[] decodeCheck = org.tron.common.utils.Base58.decode(input);
+    if (decodeCheck.length <= 4) {
+      return null;
+    }
+    byte[] decodeData = new byte[decodeCheck.length - 4];
+    System.arraycopy(decodeCheck, 0, decodeData, 0, decodeData.length);
+    byte[] hash0 = Sha256Hash.hash(CommonParameter.getInstance().isECKeyCryptoEngine(), decodeData);
+    byte[] hash1 = Sha256Hash.hash(CommonParameter.getInstance().isECKeyCryptoEngine(), hash0);
+    if (hash1[0] == decodeCheck[decodeData.length] && hash1[1] == decodeCheck[decodeData.length + 1]
+            && hash1[2] == decodeCheck[decodeData.length + 2] && hash1[3] == decodeCheck[
+            decodeData.length + 3]) {
+      return decodeData;
+    }
+    return null;
+  }
+
+  public static GrpcAPI.Return broadcastTransaction(Protocol.Transaction transaction,
+                                                    WalletGrpc.WalletBlockingStub blockingStubFull) {
+    int i = 10;
+    GrpcAPI.Return response = blockingStubFull.broadcastTransaction(transaction);
+    while (!response.getResult() && response.getCode() == GrpcAPI.Return.response_code.SERVER_BUSY
+            && i > 0) {
+      try {
+        Thread.sleep(300);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      i--;
+      response = blockingStubFull.broadcastTransaction(transaction);
+      log.info("repeate times = " + (10 - i));
+    }
+
+    if (response.getResult() == false) {
+      log.info("Code = " + response.getCode());
+      log.info("Message = " + response.getMessage().toStringUtf8());
+    }
+    return response;
+  }
+
+  public static Boolean sendcoinDirectely(byte[] to, long amount, byte[] owner, String priKey,
+                                 WalletGrpc.WalletBlockingStub blockingStubFull) {
+    log.info("in PublicMethod: priKey is "+priKey.toString());
+    Wallet.setAddressPreFixByte(ADD_PRE_FIX_BYTE_MAINNET);
+    //String priKey = testKey002;
+    ECKey temKey = null;
+    try {
+      BigInteger priK = new BigInteger(priKey, 16);
+      temKey = ECKey.fromPrivate(priK);
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+    final ECKey ecKey = temKey;
+//    ecKey.getAddress();
+//    log.info("-------key: "+ByteArray.toHexString(ecKey.getPrivateKey()));
+
+
+
+    Integer times = 0;
+    while (times++ <= 2) {
+
+      BalanceContract.TransferContract.Builder builder = BalanceContract.TransferContract.newBuilder();
+      ByteString bsTo = ByteString.copyFrom(to);
+      ByteString bsOwner = ByteString.copyFrom(owner);
+      builder.setToAddress(bsTo);
+      builder.setOwnerAddress(bsOwner);
+      builder.setAmount(amount);
+
+      BalanceContract.TransferContract contract = builder.build();
+      Protocol.Transaction transaction = blockingStubFull.createTransaction(contract);
+      if (transaction == null || transaction.getRawData().getContractCount() == 0) {
+        log.info("transaction ==null");
+        continue;
+      }
+      transaction = signTransaction(ecKey, transaction);
+      GrpcAPI.Return response = broadcastTransaction(transaction, blockingStubFull);
+      return response.getResult();
+    }
+    return false;
+  }
+  public static Protocol.Transaction signTransaction(ECKey ecKey,
+                                                     Protocol.Transaction transaction) {
+    Wallet.setAddressPreFixByte(ADD_PRE_FIX_BYTE_MAINNET);
+    if (ecKey == null || ecKey.getPrivKey() == null) {
+      //logger.warn("Warning: Can't sign,there is no private key !!");
+      return null;
+    }
+    transaction = setTimestamp(transaction);
+    log.info("Txid in sign is " + ByteArray.toHexString(Sha256Hash
+            .hash(CommonParameter.getInstance().isECKeyCryptoEngine(),
+                    transaction.getRawData().toByteArray())));
+    return sign(transaction, ecKey);
+  }
+  public static Protocol.Transaction setTimestamp(Protocol.Transaction transaction) {
+    long currentTime = System.currentTimeMillis();//*1000000 + System.nanoTime()%1000000;
+    Protocol.Transaction.Builder builder = transaction.toBuilder();
+    org.tron.protos.Protocol.Transaction.raw.Builder rowBuilder = transaction.getRawData()
+            .toBuilder();
+    rowBuilder.setTimestamp(currentTime);
+    builder.setRawData(rowBuilder.build());
+    return builder.build();
+  }
+  public static Protocol.Transaction sign(Protocol.Transaction transaction, ECKey myKey) {
+    ByteString lockSript = ByteString.copyFrom(myKey.getAddress());
+    Protocol.Transaction.Builder transactionBuilderSigned = transaction.toBuilder();
+
+    byte[] hash = Sha256Hash.hash(CommonParameter
+            .getInstance().isECKeyCryptoEngine(), transaction.getRawData().toByteArray());
+    List<Protocol.Transaction.Contract> listContract = transaction.getRawData().getContractList();
+    for (int i = 0; i < listContract.size(); i++) {
+      ECKey.ECDSASignature signature = myKey.sign(hash);
+      ByteString bsSign = ByteString.copyFrom(signature.toByteArray());
+      transactionBuilderSigned.addSignature(
+              bsSign);//Each contract may be signed with a different private key in the future.
+    }
+
+    transaction = transactionBuilderSigned.build();
+    return transaction;
+  }
 }
