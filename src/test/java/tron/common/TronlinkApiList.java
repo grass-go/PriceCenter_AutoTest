@@ -828,6 +828,17 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse v2UpgradeForHarmony(Map<String, String> params) {
+    String requestUrl = HttpNode + "/api/v1/wallet/v2/upgrade";
+    Map<String, String> header = getV2Header();
+    header.put("Content-type", "application/json; charset=utf-8");
+    header.put("Connection", "Close");
+    Map<String, String> urlParam = null;
+    urlParam.put("channel","official");
+    response = createGetConnectWithHeader(requestUrl, urlParam,null,params);
+    return response;
+  }
+
   public static HttpResponse v1Upgrade(Map<String, String> params) {
     String requestUrl = HttpNode + "/api/v1/wallet/upgrade";
     Map<String, String> header = getV2Header();
