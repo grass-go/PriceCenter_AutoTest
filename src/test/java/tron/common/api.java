@@ -284,6 +284,15 @@ public class api {
     Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     return response;
   }
+  public static HttpResponse tronweb() throws Exception{
+    final String requesturl = HttpNode + "/api/web/v1/tronweb";
+    URIBuilder builder = new URIBuilder(requesturl);
+    URI uri = builder.build();
+    System.out.println(uri);
+    response = createGetConnect(uri);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
+    return response;
+  }
 
   public static HttpResponse getCoinCapTrxPrice() throws Exception{
     final String requesturl = HttpNode + "/api/v1/wallet/getCoinCapTrxPrice";
