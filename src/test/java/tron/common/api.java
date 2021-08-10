@@ -244,6 +244,22 @@ public class api {
     return response;
   }
 
+  public static HttpResponse getVersionLog(HashMap<String,String> param, HashMap<String,String> header) throws Exception{
+    final String requesturl = HttpNode + "/api/v1/wallet/version_log";
+    URIBuilder builder = new URIBuilder(requesturl);
+    if (param != null) {
+      for (String key : param.keySet()) {
+        builder.addParameter(key, param.get(key));
+      }
+    }
+
+    URI uri = builder.build();
+    System.out.println(uri);
+    response = createGetConnect(uri,header);
+    Assert.assertTrue(api.verificationResult(response));
+    return response;
+  }
+
   public static HttpResponse transactionHistory(HashMap<String,String> param) throws Exception{
     final String requesturl = HttpNode + "/api/simple-transaction";
     URIBuilder builder = new URIBuilder(requesturl);
