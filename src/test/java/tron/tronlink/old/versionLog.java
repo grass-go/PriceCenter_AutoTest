@@ -87,6 +87,7 @@ public class versionLog extends TronlinkBase {
 
   @Test(enabled = true, description = "Api GET /api/v1/wallet/version_log test")
   public void test02VersionLogForIos() throws Exception {
+    parameter.clear();
     parameter.put("lang", "2");
     parameter.put("system","iOS");
     parameter.put("download_platform", "appstore");
