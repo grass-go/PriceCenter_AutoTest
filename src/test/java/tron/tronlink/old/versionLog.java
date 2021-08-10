@@ -45,6 +45,7 @@ public class versionLog extends TronlinkBase {
   }
   @Test(enabled = true, description = "Api GET /api/v1/wallet/version_log test")
   public void test01VersionLogForHarmony() throws Exception {
+    parameter.clear();
     parameter.put("lang", "2");
     parameter.put("system","Android");
     parameter.put("channel","harmony");
