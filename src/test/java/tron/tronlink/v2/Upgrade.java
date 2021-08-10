@@ -116,4 +116,24 @@ public class Upgrade extends TronlinkBase {
     newVersion = newVersion.replace(".","");
     Assert.assertTrue(Integer.valueOf(newVersion) > 400);
   }
+
+  @Test(enabled = true)
+  public void test05UpgradeForHarmonyByV2() throws Exception {
+    Map<String, String> params = new HashMap<>();
+    params.put("System","Android");
+    params.put("DeviceID", "1111111111");
+    params.put("Version","3.7.0");
+    params.put("Lang","1");
+    params.put("packageName", "wallet.tronlink.harmony");
+    params.put("chain","MainChain");
+    response = TronlinkApiList.v2Upgrade(params);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    JSONObject upgradeObject = responseContent.getJSONObject("data");
+    TronlinkApiList.printJsonContent(responseContent.getJSONObject("data"));
+    String newVersion = upgradeObject.getString("title");
+    System.out.println("newVersion:" + newVersion);
+    newVersion = newVersion.split("V")[1];
+    newVersion = newVersion.replace(".","");
+    Assert.assertTrue(Integer.valueOf(newVersion) > 400);
+  }
 }
