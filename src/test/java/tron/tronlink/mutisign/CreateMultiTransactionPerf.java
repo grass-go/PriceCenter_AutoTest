@@ -57,12 +57,12 @@ public class CreateMultiTransactionPerf {
         blockingStubFull = org.tron.api.WalletGrpc.newBlockingStub(channelFull);
     }
 
-    @Test(enabled = true,invocationCount = 110, description = "send coin 100 times")
+    @Test(enabled = true,invocationCount = 300, description = "send coin 100 times")
     public void sendCoinDirectely() {
         channelFull = ManagedChannelBuilder.forTarget(fullnode).usePlaintext(true).build();
         blockingStubFull = WalletGrpc.newBlockingStub(channelFull);
 
-        TronlinkApiList.sendcoinDirectely(liuyue, 33L, quince, quincekey,
+        TronlinkApiList.sendcoinDirectely(wqq1, 33L, quince, quincekey,
                         blockingStubFull);
     }
 
