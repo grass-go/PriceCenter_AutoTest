@@ -1,10 +1,12 @@
 package tron.trongrid.base;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -53,6 +55,7 @@ public class V1Base {
   public static  String tronGridUrl = Configuration.getByPath("testng.conf").getString("tronGrid.tronGridUrl");
   static HttpClient httpClient;
   static HttpGet httpget;
+  static HttpPost httpPost;
   static Integer connectionTimeout = Configuration.getByPath("testng.conf")
       .getInt("defaultParameter.httpConnectionTimeout");
   static Integer soTimeout = Configuration.getByPath("testng.conf")
@@ -101,6 +104,45 @@ public class V1Base {
   public static JSONObject getAccountInfoByAddress(String queryAddress) {
     return getAccountInfoByAddress(queryAddress,true);
   }
+
+  /**
+   * constructor.
+   */
+  public static JSONObject getEthApi(JsonObject userBaseObj2) {
+    try {
+      String requestUrl = "http://182.92.158.141:8080/jsonrpc";
+      response = createPostConnect(requestUrl, userBaseObj2);
+      Assert.assertEquals(200,response.getStatusLine().getStatusCode());
+      return convertStringToJSONObject(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8));
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpget.releaseConnection();
+      return null;
+    }
+  }
+
+  /**
+   * constructor.
+   */
+  public static HttpResponse getNowBlock(Boolean isFullNode) {
+    try {
+      String requestUrl;
+      if(isFullNode) {
+        requestUrl = tronGridUrl + "wallet/getnowblock";
+      } else {
+        requestUrl = tronGridUrl + "walletsolidity/getnowblock";
+      }
+      JsonObject userBaseObj2 = new JsonObject();
+      //userBaseObj2.addProperty("visible", true);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpPost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
 
 
   /**
@@ -495,7 +537,33 @@ public class V1Base {
 
 
 
+  /**
+   * constructor.
+   */
+  public static HttpResponse createPostConnect(String url, JsonObject requestBody) {
+    try {
+      httpClient.getParams()
+          .setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, connectionTimeout);
+      httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+      httpPost = new HttpPost(url);
+      httpPost.setHeader("Content-type", "application/json; charset=utf-8");
+      httpPost.setHeader("Connection", "Close");
+      if (requestBody != null) {
+        StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
+        entity.setContentEncoding("UTF-8");
+        entity.setContentType("application/json");
+        httpPost.setEntity(entity);
+      }
 
+      //logger.info(httppost.toString());
+      response = httpClient.execute(httpPost);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpPost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
 
 
   /**
