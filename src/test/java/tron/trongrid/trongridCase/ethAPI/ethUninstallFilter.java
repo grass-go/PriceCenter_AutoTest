@@ -45,8 +45,7 @@ public class ethUninstallFilter extends V1Base {
         params1.add(getEthNewFilterBody.get("result").toString());
         ethJsonObj1.add("params", params1);
         ethJsonObj1.addProperty("id", 2);
-        System.out.println("-------4545454545454545454--------");
-        System.out.println(ethJsonObj1);
+       // System.out.println(ethJsonObj1);
         //第一次eth_uninstallFilter返回true
         uninstallFilterBody = getEthApi(ethJsonObj1);
         printJsonContent(uninstallFilterBody);
@@ -64,8 +63,7 @@ public class ethUninstallFilter extends V1Base {
         params2.add(getEthNewFilterBody.get("result").toString());
         ethJsonObj2.add("params", params2);
         ethJsonObj2.addProperty("id", 2);
-        System.out.println("-------333333333333--------");
-        System.out.println(ethJsonObj2);
+       // System.out.println(ethJsonObj2);
         getFilterChanges=getEthApi(ethJsonObj2);
         printJsonContent(getFilterChanges);
         String expect_result = "{\"code\":-32602,\"data\":\"{}\",\"message\":\"filter not found\"}";
@@ -96,8 +94,7 @@ public class ethUninstallFilter extends V1Base {
         params1.add(getEthNewBlockFilter.get("result").toString());
         ethJsonObj2.add("params", params1);
         ethJsonObj2.addProperty("id", 2);
-        System.out.println("-------4545454545454545454--------");
-        System.out.println(ethJsonObj2);
+        //System.out.println(ethJsonObj2);
         //第一次eth_uninstallFilter返回true
         uninstallFilterBody = getEthApi(ethJsonObj2);
         printJsonContent(uninstallFilterBody);
@@ -115,8 +112,7 @@ public class ethUninstallFilter extends V1Base {
         params2.add(getEthNewFilterBody.get("result").toString());
         ethJsonObj3.add("params", params2);
         ethJsonObj3.addProperty("id", 2);
-        System.out.println("-------333333333333--------");
-        System.out.println(ethJsonObj3);
+        //System.out.println(ethJsonObj3);
         getFilterChanges=getEthApi(ethJsonObj3);
         printJsonContent(getFilterChanges);
         String expect_result = "{\"code\":-32602,\"data\":\"{}\",\"message\":\"filter not found\"}";

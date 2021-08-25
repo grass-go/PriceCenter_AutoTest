@@ -69,7 +69,7 @@ public class ethGetLogs extends V1Base {
         System.out.println(getEthLogsBody);
         printJsonContent(getEthLogsBody);
         List<String> topics = JsonPath.read(getEthLogsBody, "$.result[*].topics[0]");
-        //System.out.println(Arrays.toString(topic.toArray()));
+        System.out.println(Arrays.toString(topics.toArray()));
         Assert.assertEquals(topics.size(), 20);
         for (String topic : topics) {
             Assert.assertEquals("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef", topic);
@@ -106,6 +106,7 @@ public class ethGetLogs extends V1Base {
         List<String> topics = JsonPath.read(getEthLogsBody, "$.result[*].topics[0]");
         //System.out.println(Arrays.toString(topic.toArray()));
         Assert.assertEquals(topics.size(), 20);
+        Assert.assertEquals(getEthLogsBody.get("id"), 2);
         for (String topic : topics) {
             Assert.assertEquals("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef", topic);
         }
@@ -113,9 +114,9 @@ public class ethGetLogs extends V1Base {
 
     }
 
-    @Test(enabled = true, description = "Eth api of eth_getLogs check new block.")
-    public void test04GetLogsCheckNewBLOCK() throws InterruptedException {
-        Boolean flag ;
+    @Test(enabled = true, description = "Eth api of eth_getLogs check current block.")
+    public void test04GetLogsCheckCurrentBlock() throws InterruptedException {
+        Boolean flag = false;
         for (int i = 0; i < 10; i++) {
             flag = true;
             JsonObject ethJsonObj = new JsonObject();
@@ -133,20 +134,18 @@ public class ethGetLogs extends V1Base {
             getEthLogsBody = getEthApi(ethJsonObj);
             printJsonContent(getEthLogsBody);
             List<String> topics = JsonPath.read(getEthLogsBody, "$.result[*].topics[0]");
-
             for (String topic : topics) {
                 if (!("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef".equals(topic))) {
                     flag = false;
                     break;
                 }
             }
-            if(flag == true){
-                Assert.assertTrue(true);
+            if(flag){
                 break;
             }else{
                 Thread.sleep(3000);
             }
         }
-
+        Assert.assertTrue(flag);
     }
 }
