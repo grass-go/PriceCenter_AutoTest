@@ -7,6 +7,7 @@
     <test name="chromExtensionUi">
         <classes>
             <class name="tron.chromeExtension.chromeCase.sendBtt"></class>
+            <class name="tron.chromeExtension.chromeCase.test"></class>
         </classes>
     </test>
 </suite>
