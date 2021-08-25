@@ -66,7 +66,7 @@ public class CreateMultiTransactionPerf {
                         blockingStubFull);
     }
 
-    @Test(enabled = true,invocationCount = 4, description = "nulti sign send coin")
+    @Test(enabled = true,invocationCount = 4, description = "multi sign send coin")
     public void sendCoin() {
         Protocol.Transaction transaction = TronlinkApiList
                 .sendcoin(wqq1, 500_000, quince, blockingStubFull);
