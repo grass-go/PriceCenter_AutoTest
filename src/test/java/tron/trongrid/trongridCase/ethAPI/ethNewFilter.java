@@ -87,8 +87,29 @@ public class ethNewFilter extends V1Base {
 
     }
 
+    @Test(enabled = true, description = "Eth api of eth_newFilter only contain topic and blockHash.")
+    public void test04GetNewFilterOnlyContainTopic() {
+        JsonObject ethJsonObj = new JsonObject();
+        ethJsonObj.addProperty("jsonrpc", "2.0");
+        ethJsonObj.addProperty("method", "eth_newFilter");
+        JsonArray params = new JsonArray();
+        JsonObject paramBody = new JsonObject();
+        paramBody.addProperty("blockHash", "0x0000000001f8b6a791bc25560940f2fa1d10bd11b949d1aebe01e41cde500f17");
+        JsonArray topicArray = new JsonArray();
+        topicArray.add("0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef");
+        paramBody.add("topics", topicArray);
+        params.add(paramBody);
+        ethJsonObj.add("params", params);
+        ethJsonObj.addProperty("id", 2);
+        System.out.println(ethJsonObj);
+        getEthNewFilterBody = getEthApi(ethJsonObj);
+        printJsonContent(getEthNewFilterBody);
+        Assert.assertNotNull(getEthNewFilterBody.get("result"));
+
+    }
+
     @Test(enabled = true, description = "Eth api of eth_newFilter check new block.")
-    public void test04GetNewFilterCheckNewBLOCK() {
+    public void test05GetNewFilterCheckNewBLOCK() {
         JsonObject ethJsonObj = new JsonObject();
         ethJsonObj.addProperty("jsonrpc", "2.0");
         ethJsonObj.addProperty("method", "eth_newFilter");
@@ -105,4 +126,7 @@ public class ethNewFilter extends V1Base {
         printJsonContent(getEthNewFilterBody);
         Assert.assertNotNull(getEthNewFilterBody.get("result"));
     }
+
+
+
 }
