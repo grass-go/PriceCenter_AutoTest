@@ -2,6 +2,7 @@ package tron.tronlink.mutisign;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.protobuf.ByteString;
+import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -13,8 +14,11 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.tron.api.GrpcAPI;
 import org.tron.api.WalletGrpc;
+import org.tron.common.parameter.CommonParameter;
 import org.tron.common.utils.Base58;
+import org.tron.common.utils.ByteArray;
 import org.tron.common.utils.Commons;
+import org.tron.common.utils.Sha256Hash;
 import org.tron.core.services.http.JsonFormat;
 import org.tron.protos.Protocol;
 import org.tron.protos.contract.*;
@@ -44,6 +48,7 @@ public class CreateMultiTransactionPerf {
     String wqq1key = "8d5c18030466b6ab0e5367154d15c4f6cb46d2fb56a0b552e017d183abd8c255";
     byte[] wqq1 = TronlinkApiList.getFinalAddress(wqq1key);
     String wqq158 =Base58.encode(wqq1);
+    String wqq158_2 = encode58Check(wqq1);
     String liuyue58 = "TFDP1vFeSYPT6FUznL7zUjhg5X7p2AA8vw";
     byte[] liuyue = Commons.decode58Check(liuyue58);
 
@@ -66,17 +71,24 @@ public class CreateMultiTransactionPerf {
                         blockingStubFull);
     }
 
-    @Test(enabled = true,invocationCount = 4, description = "multi sign send coin")
-    public void sendCoin() {
+    @Test(enabled = true,invocationCount = 1, description = "multi sign send coin")
+    public void sendCoin() throws InvalidProtocolBufferException {
         Protocol.Transaction transaction = TronlinkApiList
                 .sendcoin(wqq1, 500_000, quince, blockingStubFull);
         log.info("-----111111  "+ JsonFormat.printToString(transaction));
+        String transactionHex = ByteArray.toHexString(transaction.toByteArray());
+        log.info("-----111111 wqq----"+transactionHex);
+        Protocol.Transaction transaction_cov = Protocol.Transaction.parseFrom(ByteString.copyFrom(ByteArray.fromHexString(transactionHex)));
+
 
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, wqq1key, 4, blockingStubFull);
+                transaction_cov, wqq1key, 4, blockingStubFull);
         log.info("-----2222  "+JsonFormat.printToString(transaction1));
 
         JSONObject object = new JSONObject();
+
+        log.info("--wqq debug--: wqq158: "+wqq158);
+        log.info("--wqq debug--: wqq158_2: " + wqq158_2 );
         object.put("address",address258);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
@@ -176,5 +188,36 @@ public class CreateMultiTransactionPerf {
                 channelFull.shutdown().awaitTermination(5, TimeUnit.SECONDS);
             }
         }
+
+    public static String encode58Check(byte[] input) {
+        byte[] hash0 = Sha256Hash.hash(CommonParameter
+                .getInstance().isECKeyCryptoEngine(), input);
+        byte[] hash1 = Sha256Hash.hash(CommonParameter
+                .getInstance().isECKeyCryptoEngine(), hash0);
+        byte[] inputCheck = new byte[input.length + 4];
+        System.arraycopy(input, 0, inputCheck, 0, input.length);
+        System.arraycopy(hash1, 0, inputCheck, input.length, 4);
+        return Base58.encode(inputCheck);
+    }
+
+    private static byte[] decode58Check(String input) {
+        byte[] decodeCheck = Base58.decode(input);
+        if (decodeCheck.length <= 4) {
+            return null;
+        }
+        byte[] decodeData = new byte[decodeCheck.length - 4];
+        System.arraycopy(decodeCheck, 0, decodeData, 0, decodeData.length);
+        byte[] hash0 = Sha256Hash.hash(CommonParameter.getInstance()
+                .isECKeyCryptoEngine(), decodeData);
+        byte[] hash1 = Sha256Hash.hash(CommonParameter.getInstance()
+                .isECKeyCryptoEngine(), hash0);
+        if (hash1[0] == decodeCheck[decodeData.length]
+                && hash1[1] == decodeCheck[decodeData.length + 1]
+                && hash1[2] == decodeCheck[decodeData.length + 2]
+                && hash1[3] == decodeCheck[decodeData.length + 3]) {
+            return decodeData;
+        }
+        return null;
+    }
 
     }
