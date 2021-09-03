@@ -17,7 +17,7 @@ public class getAccountResource extends fullOrSolidityBase {
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     Assert.assertTrue(responseContent.size() > 3);
-    Assert.assertEquals(responseContent.getString("freeNetLimit"),"5000");
+    Assert.assertEquals(responseContent.getString("freeNetLimit"),"1500");
     Assert.assertEquals(responseContent.getString("TotalNetLimit"),"43200000000");
   }
 
