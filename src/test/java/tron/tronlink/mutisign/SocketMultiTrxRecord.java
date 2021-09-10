@@ -14,11 +14,11 @@ import java.net.URI;
 @Slf4j
 public class SocketMultiTrxRecord {
     boolean flag = false;
-    @Test(enabled = false,description = "create socket connection to get multi sign record")
+    @Test(enabled = true,description = "create socket connection to get multi sign record")
     public void test00GetNotSignRecord() {
         String host = TronlinkBase.tronlinkUrl.substring(8);
         try {
-            String url = "wss://" + host +"/api/wallet/multi/socket?address=TRqgwhHbfscXq3Ym3FJSFwxprpto1S4nSW&start=0&limit=20&netType=main_net&state=0";
+            String url = "wss://" + host +"/api/wallet/multi/socket?address=TY9touJknFcezjLiaGTjnH1dUHiqriu6L8&start=0&limit=20&netType=main_net&state=0";
             System.out.println(url);
             URI uri = new URI(url);
             WebSocketClient mWs = new WebSocketClient(uri){
