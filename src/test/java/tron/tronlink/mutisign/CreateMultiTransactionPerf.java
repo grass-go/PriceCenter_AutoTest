@@ -89,16 +89,45 @@ public class CreateMultiTransactionPerf {
 
         log.info("--wqq debug--: wqq158: "+wqq158);
         log.info("--wqq debug--: wqq158_2: " + wqq158_2 );
-        object.put("address",address258);
+        object.put("address",wqq158_2);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
         res = TronlinkApiList.multiTransaction(object);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
+
+    }
+    @Test(enabled = true,invocationCount = 1, description = "multi sign send coin")
+    public void sendCoin2() throws InvalidProtocolBufferException {
+        Protocol.Transaction transaction = TronlinkApiList
+                .sendcoin(wqq1, 500_000, quince, blockingStubFull);
+        log.info("-----111111  "+ JsonFormat.printToString(transaction));
+        String transactionHex = ByteArray.toHexString(transaction.toByteArray());
+        log.info("-----111111 wqq----"+transactionHex);
+        Protocol.Transaction transaction_cov = Protocol.Transaction.parseFrom(ByteString.copyFrom(ByteArray.fromHexString(transactionHex)));
+
+
+        Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
+                transaction_cov, quincekey, 3, blockingStubFull);
+
+        log.info("-----2222  "+JsonFormat.printToString(transaction1));
+
+        JSONObject object = new JSONObject();
+
+        log.info("--wqq debug--: wqq158: "+wqq158);
+        log.info("--wqq debug--: wqq158_2: " + wqq158_2 );
+        object.put("address",quince58);
+        object.put("netType","shasta");
+        object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
+        res = TronlinkApiList.multiTransaction(object);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseJsonObResponseContent(res);
+        Assert.assertEquals(0,responseContent.getIntValue("code"));
+
     }
 
-    @Test(enabled = true,invocationCount = 5,description = "multi sign freeze balandce")
+    @Test(enabled = true,invocationCount = 1,description = "multi sign freeze balandce")
     public void freezeBalandce() throws Exception{
         BalanceContract.FreezeBalanceContract.Builder builder = BalanceContract.FreezeBalanceContract.newBuilder();
         ByteString byteAddreess = ByteString.copyFrom(quince);
@@ -111,7 +140,7 @@ public class CreateMultiTransactionPerf {
                 transaction, wqq1key, 4, blockingStubFull);
         log.info("-----111  "+JsonFormat.printToString(transaction1));
         JSONObject object = new JSONObject();
-        object.put("address",wqq158);
+        object.put("address",wqq158_2);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
         res = TronlinkApiList.multiTransaction(object);
