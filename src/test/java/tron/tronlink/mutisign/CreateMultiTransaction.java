@@ -10,8 +10,10 @@ import org.junit.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.tron.common.parameter.CommonParameter;
 import org.tron.common.utils.Base58;
 import org.tron.common.utils.Commons;
+import org.tron.common.utils.Sha256Hash;
 import org.tron.core.services.http.JsonFormat;
 import org.tron.protos.Protocol;
 import org.tron.protos.contract.AssetIssueContractOuterClass;
@@ -35,6 +37,7 @@ public class CreateMultiTransaction {
     String key2 = "7ef4f6b32643ea063297416f2f0112b562a4b3dac2c960ece00a59c357db3720";//线上
     byte[] address2=TronlinkApiList.getFinalAddress(key2);
     String address258=Base58.encode(address2);
+    String getAddress258_2=encode58Check(address2);
 
     /**
      * constructor.
@@ -46,7 +49,7 @@ public class CreateMultiTransaction {
         blockingStubFull = org.tron.api.WalletGrpc.newBlockingStub(channelFull);
     }
 
-    @Test(enabled = false,description = "nulti sign send coin")
+    @Test(enabled = true,description = "nulti sign send coin")
     public void sendCoin() {
         Protocol.Transaction transaction = TronlinkApiList
                 .sendcoin(address2, 500_000, address1, blockingStubFull);
@@ -57,7 +60,7 @@ public class CreateMultiTransaction {
         log.info("-----2222  "+JsonFormat.printToString(transaction1));
 
         JSONObject object = new JSONObject();
-        object.put("address",address258);
+        object.put("address",getAddress258_2);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
         res = TronlinkApiList.multiTransaction(object);
@@ -66,7 +69,7 @@ public class CreateMultiTransaction {
         Assert.assertEquals(0,responseContent.getIntValue("code"));
     }
 
-    @Test(enabled = false,description = "multi sign freeze balandce")
+    @Test(enabled = true,description = "multi sign freeze balandce")
     public void freezeBalandce() throws Exception{
         BalanceContract.FreezeBalanceContract.Builder builder = BalanceContract.FreezeBalanceContract.newBuilder();
         ByteString byteAddreess = ByteString.copyFrom(address1);
@@ -76,10 +79,10 @@ public class CreateMultiTransaction {
         Protocol.Transaction transaction = blockingStubFull.freezeBalance(contract);
         log.info("0000 "+JsonFormat.printToString(transaction));
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, key2, 2, blockingStubFull);
+                transaction, key2, 3, blockingStubFull);
         log.info("-----111  "+JsonFormat.printToString(transaction1));
         JSONObject object = new JSONObject();
-        object.put("address",address258);
+        object.put("address",getAddress258_2);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
         res = TronlinkApiList.multiTransaction(object);
@@ -88,11 +91,11 @@ public class CreateMultiTransaction {
         Assert.assertEquals(0,responseContent.getIntValue("code"));
     }
 
-    @Test(enabled = false,description = "multi sign transfer asset")
+    @Test(enabled = true,description = "multi sign transfer asset")
     public void transferTrc10() throws Exception{
         AssetIssueContractOuterClass.TransferAssetContract.Builder builder = AssetIssueContractOuterClass.TransferAssetContract.newBuilder();
         ByteString bsTo = ByteString.copyFrom(address2);
-        ByteString bsName = ByteString.copyFrom("1002000".getBytes());
+        ByteString bsName = ByteString.copyFrom("1004031".getBytes());
         ByteString bsOwner = ByteString.copyFrom(address1);
         builder.setToAddress(bsTo);
         builder.setAssetName(bsName);
@@ -104,7 +107,7 @@ public class CreateMultiTransaction {
         Protocol.Transaction transaction = blockingStubFull.transferAsset(contract);
         log.info("-----111111  "+JsonFormat.printToString(transaction));
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, key2, 2, blockingStubFull);
+                transaction, key2, 3, blockingStubFull);
         log.info("-----2222  "+JsonFormat.printToString(transaction1));
         JSONObject object = new JSONObject();
         object.put("address",address258);
@@ -116,7 +119,7 @@ public class CreateMultiTransaction {
         Assert.assertEquals(0,responseContent.getIntValue("code"));
     }
 
-    @Test(enabled = false,description = "nulti sign transfer trc20")
+    @Test(enabled = false,description = "nulti sign transfer trc20,disable because no permission")
     public void transferTrc20() throws Exception{
 
         String contractAddress = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
@@ -141,7 +144,16 @@ public class CreateMultiTransaction {
 
 
     }
-
+    public static String encode58Check(byte[] input) {
+        byte[] hash0 = Sha256Hash.hash(CommonParameter
+                .getInstance().isECKeyCryptoEngine(), input);
+        byte[] hash1 = Sha256Hash.hash(CommonParameter
+                .getInstance().isECKeyCryptoEngine(), hash0);
+        byte[] inputCheck = new byte[input.length + 4];
+        System.arraycopy(input, 0, inputCheck, 0, input.length);
+        System.arraycopy(hash1, 0, inputCheck, input.length, 4);
+        return Base58.encode(inputCheck);
+    }
     /**
      * constructor.
      */
