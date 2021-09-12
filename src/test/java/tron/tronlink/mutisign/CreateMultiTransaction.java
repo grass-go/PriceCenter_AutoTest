@@ -49,7 +49,7 @@ public class CreateMultiTransaction {
         blockingStubFull = org.tron.api.WalletGrpc.newBlockingStub(channelFull);
     }
 
-    @Test(enabled = true,description = "nulti sign send coin")
+    @Test(enabled = false, description = "nulti sign send coin")
     public void sendCoin() {
         Protocol.Transaction transaction = TronlinkApiList
                 .sendcoin(address2, 500_000, address1, blockingStubFull);
@@ -69,7 +69,7 @@ public class CreateMultiTransaction {
         Assert.assertEquals(0,responseContent.getIntValue("code"));
     }
 
-    @Test(enabled = true,description = "multi sign freeze balandce")
+    @Test(enabled = false,description = "multi sign freeze balandce")
     public void freezeBalandce() throws Exception{
         BalanceContract.FreezeBalanceContract.Builder builder = BalanceContract.FreezeBalanceContract.newBuilder();
         ByteString byteAddreess = ByteString.copyFrom(address1);
@@ -91,7 +91,7 @@ public class CreateMultiTransaction {
         Assert.assertEquals(0,responseContent.getIntValue("code"));
     }
 
-    @Test(enabled = true,description = "multi sign transfer asset")
+    @Test(enabled = false,description = "multi sign transfer asset")
     public void transferTrc10() throws Exception{
         AssetIssueContractOuterClass.TransferAssetContract.Builder builder = AssetIssueContractOuterClass.TransferAssetContract.newBuilder();
         ByteString bsTo = ByteString.copyFrom(address2);
