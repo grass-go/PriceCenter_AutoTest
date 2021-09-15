@@ -2312,7 +2312,7 @@ public class TronscanApiList {
      */
     public static HttpResponse getPrice(String tronscanNode) {
         try {
-            String requestUrl = "http://" + tronscanNode + "api/token/price";
+            String requestUrl = "http://" + tronscanNode + "api/token/price?token=trx";
             response = createGetConnect(requestUrl);
         } catch (Exception e) {
             e.printStackTrace();

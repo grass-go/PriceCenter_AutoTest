@@ -26,142 +26,41 @@ public class home_page {
             .getStringList("tronscan.ip.list").get(0);
     private String tronScanNodeDapp = "dappchainapi.tronscan.org/";
 
-    /**
-     * constructor.
-     * 功能: trx市值及流通量
-     * 		请求方法: get
-     * 		入参:
-     * 			source: 数据源，可填两个参数，coingecko，coinmarketcap
-     * 		返回:
-     * 			trx_price_graph: 24小时trx价格变化
-     *          total_turnover: 总流通量
-     *
-     */
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "trx市值及流通量")
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "首页展开图表")
     public void getSystemHomepage() {
         //Get response
         Map<String, String> Params = new HashMap<>();
-        Params.put("source", "coinmarketcap");
         response = TronscanApiList.getSystemHomepage(tronScanNode,Params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronscanApiList.parseResponseContent(response);
         TronscanApiList.printJsonContent(responseContent);
+        //账户总数
+        Assert.assertTrue(responseContent.getJSONObject("accountList").getLong("rangeTotal")>53872441);
 
-        //Five object
-        Assert.assertTrue(responseContent.size() == 4);
-        Assert.assertTrue(!responseContent.get("node").toString().isEmpty());
-        Assert.assertTrue(Double.valueOf(responseContent.get("trx_volume_24h").toString()) > 0);
+        //TVL数据
+        Assert.assertTrue(!responseContent.getJSONObject("tvl").isEmpty());
 
-        Assert.assertTrue(!responseContent.get("tps").toString().isEmpty());
-        //yesterdayStat
-        targetContent = responseContent.getJSONObject("yesterdayStat");
-        Assert.assertTrue(!targetContent.get("data").toString().isEmpty());
-        Assert.assertTrue(Boolean.valueOf(targetContent.getString("success")));
+        //trx_volume_24h
+        Assert.assertTrue(!responseContent.getString("trx_volume_24h").isEmpty());
+
     }
 
 
-    /**
-     * constructor.
-     * 功能: 每日交易数，账户增长
-     * 		请求方法: get
-     * 		入参:可无参，默认返回14天的数据
-     * 			limit: 0-20
-     * 		返回:
-     * 			energy_usage: 能量消耗
-     *          net_usage: 带宽消耗
-     *
-     */
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "账户增长(14天) 主网")
-    public void getOverView_usage() {
+    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "Trx价格")
+    public void getTrxPrice() {
         //Get response
-        Map<String, String> Params = new HashMap<>();
-        Params.put("limit", "20");
-        response = TronscanApiList.getOverView_usage(tronScanNode,Params);
+        response = TronscanApiList.getPrice(tronScanNode);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronscanApiList.parseResponseContent(response);
         TronscanApiList.printJsonContent(responseContent);
 
-        //Five object
-        Assert.assertTrue(responseContent.size() == 2);
-        //two object "success" and "data"
-        Assert.assertTrue(Boolean.valueOf(responseContent.getString("success")));
-        JSONArray exchangeArray = responseContent.getJSONArray("data");
-        targetContent = exchangeArray.getJSONObject(0);
-        //data
-        Assert.assertTrue(targetContent.containsKey("date"));
-        //avgBlockTime
-        Assert.assertTrue(Long.valueOf(targetContent.get("avgBlockTime").toString()) > 0);
-        //totalBlockCount 区块数
-        Assert.assertTrue(Long.valueOf(targetContent.get("totalBlockCount").toString()) > 1000);
-        //totalTransaction 交易数
-        Assert.assertTrue(Long.valueOf(targetContent.get("totalTransaction").toString()) > 0);
-        //blockchainSize
-        Assert.assertTrue(Long.valueOf(targetContent.get("blockchainSize").toString()) > 1000);
-        //avgBlockSize
-        Assert.assertTrue(Long.valueOf(targetContent.get("avgBlockSize").toString()) > 10);
-        //
-        Assert.assertFalse(targetContent.get("newTransactionSeen").toString().isEmpty());
-        Assert.assertFalse(targetContent.get("newAddressSeen").toString().isEmpty());
-        Assert.assertFalse(targetContent.get("totalAddress").toString().isEmpty());
-        Assert.assertFalse(targetContent.get("newBlockSeen").toString().isEmpty());
-        //energy_usage
-        Assert.assertTrue(Long.valueOf(targetContent.get("energy_usage").toString()) >= 0);
-        //net_usage
-        Assert.assertTrue(Long.valueOf(targetContent.get("net_usage").toString()) >= 0);
+        Assert.assertTrue(!(responseContent.getString("price_in_usd")).isEmpty());
+        Assert.assertEquals(responseContent.getString("from") , "coinmarketcap");
+        Assert.assertEquals(responseContent.getString("token")  , "trx");
 
     }
 
-    @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "账户增长(14天) 侧链")
-    public void getOverView_usage_dapp() {
-        //Get response
-        Map<String, String> Params = new HashMap<>();
-        Params.put("limit", "20");
-        response = TronscanApiList.getOverView_usage(tronScanNodeDapp,Params);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronscanApiList.parseResponseContent(response);
-        TronscanApiList.printJsonContent(responseContent);
 
-        //Five object
-        Assert.assertTrue(responseContent.size() == 2);
-        //two object "success" and "data"
-        Assert.assertTrue(Boolean.valueOf(responseContent.getString("success")));
-        JSONArray exchangeArray = responseContent.getJSONArray("data");
-        targetContent = exchangeArray.getJSONObject(0);
-        //data
-        Assert.assertTrue(targetContent.containsKey("date"));
-        //avgBlockTime
-        Assert.assertTrue(Long.valueOf(targetContent.get("avgBlockTime").toString()) > 0);
-        //totalBlockCount 区块数
-        Assert.assertTrue(Long.valueOf(targetContent.get("totalBlockCount").toString()) > 1000);
-        //totalTransaction 交易数
-        Assert.assertTrue(Long.valueOf(targetContent.get("totalTransaction").toString()) > 0);
-        //blockchainSize
-        Assert.assertTrue(Long.valueOf(targetContent.get("blockchainSize").toString()) > 1000);
-        //avgBlockSize
-        Assert.assertTrue(Long.valueOf(targetContent.get("avgBlockSize").toString()) > 10);
-        //
-        Assert.assertFalse(targetContent.get("newTransactionSeen").toString().isEmpty());
-        Assert.assertFalse(targetContent.get("newAddressSeen").toString().isEmpty());
-        Assert.assertFalse(targetContent.get("totalAddress").toString().isEmpty());
-        Assert.assertFalse(targetContent.get("newBlockSeen").toString().isEmpty());
-        //energy_usage
-        Assert.assertTrue(Long.valueOf(targetContent.get("energy_usage").toString()) >= 0);
-        //net_usage
-        Assert.assertTrue(Long.valueOf(targetContent.get("net_usage").toString()) >= 0);
-
-    }
-
-    /**
-     * constructor.
-     * 功能: trx交易量
-     * 		请求方法: get
-     * 		入参:
-     * 			start_day : 开始日期，例如 2020-06-07
-     *          end_day   : 结束日期，例如 2020-06-20
-     * 		返回:
-     * 			返回数据中，total_freeze_weight为trx冻结量
-     *
-     */
     @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class, description = "trx每日冻结量(14天)")
     public void getFreezeresource() {
         //Get response
