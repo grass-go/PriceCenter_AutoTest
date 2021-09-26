@@ -712,6 +712,25 @@ public class fullOrSolidityBase {
   }
 
 
+  /**
+   * constructor.
+   */
+  public static HttpResponse getTransactionInfoById(String url,String txid) {
+    try {
+      final String requestUrl = url + "/gettransactioninfobyid";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("visible", true);
+      userBaseObj2.addProperty("value", txid);
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+
 
   /**
    * constructor.

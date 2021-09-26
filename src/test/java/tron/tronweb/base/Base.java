@@ -12,6 +12,7 @@ public class Base {
   public String addressConvertDir = "src/test/java/tron/tronweb/jsDir/addressConvert.js ";
   public String contractDir = "src/test/java/tron/tronweb/jsDir/contract.js ";
   public String accountDir = "src/test/java/tron/tronweb/jsDir/account.js ";
+  public String ethSdkDir = "src/test/java/tron/tronweb/jsDir/ethsdk.js ";
   public String convertDir = "src/test/java/tron/tronweb/jsDir/convertTool.js ";
   public String blockDir = "src/test/java/tron/tronweb/jsDir/block.js ";
   public String chainDir = "src/test/java/tron/tronweb/jsDir/chain.js ";
@@ -19,12 +20,16 @@ public class Base {
   public String transactionDir = "src/test/java/tron/tronweb/jsDir/transaction.js ";
   public String usdjContractAddress = "TCkkpmnY38nsXAtideWzHTybvbMozzXUot";
   public String usdjContractBase64Address = "411E8D88B8516ED59B8DBEF73B286D562C51D486AA";
+  public String usdtEthAddress = "0xA614F803B6FD780986A42C78EC9C7F77E6DED13C";
   public String queryAddress = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddress");
   public String queryAddress41 = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddressBase64With41Start");
   public String querySrAddress = Configuration.getByPath("testng.conf").getString("tronWeb.querySrAddress");
   public String querySrAddress41 = Configuration.getByPath("testng.conf").getString("tronWeb.querySrAddressWith41Start");
+  public String queryEthAddress = Configuration.getByPath("testng.conf").getString("tronWeb.ethQueryAddress");
   public String queryTractionId = Configuration.getByPath("testng.conf").getString("tronWeb.queryQractionId");
   public String queryAddressSophia = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddressSophia");
+  public String jsonRpcMainnetNode = Configuration.getByPath("testng.conf").getString("ethJsonRpc.mainnetNode");
+  public String jsonRpcNilenetNode = Configuration.getByPath("testng.conf").getString("ethJsonRpc.nilenetNode");
 
 
   public  String executeJavaScript(String cmd) throws IOException {
