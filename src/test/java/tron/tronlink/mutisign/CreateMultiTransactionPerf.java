@@ -24,6 +24,7 @@ import org.tron.protos.Protocol;
 import org.tron.protos.contract.*;
 import tron.common.TronlinkApiList;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -62,6 +63,83 @@ public class CreateMultiTransactionPerf {
         blockingStubFull = org.tron.api.WalletGrpc.newBlockingStub(channelFull);
     }
 
+    @Test(enabled = true, description = "Test in eth: checkpoint can proposed to rootChainProxy contract normally")
+    public void testlog() throws IOException {
+        log.info("wqq");
+
+    }
+
+    @Test(enabled = true,description = "Set quince Permission")
+    public void setPermissionTest() {
+        String accountPermissionJson = "{\"owner_permission\":{\"type\":0,\"permission_name\":\"\","
+                + "\"threshold\": 1,\"keys\":["
+                + "{\"address\":\""+quince58+"\",\"weight\":1}]},"
+                + "\"witness_permission\":{\"type\":1,\"permission_name\":\"\","
+                + "\"threshold\": 1,\"keys\":["
+                + "{\"address\":\""+quince58+"\",\"weight\":1}]},"
+                + "\"active_permissions\":["
+                + "{\"type\":2,\"permission_name\":\"active1\",\"threshold\":1,"
+                + "\"operations\":\"7fff1fc0033e3b00000000000000000000000000000000000000000000000000\","
+                + "\"keys\":["
+                + "{\"address\":\"" + quince58 + "\",\"weight\":1}]},"
+                + "{\"type\":2,\"permission_name\":\"AAmodified2\",\"threshold\":60,"
+                + "\"operations\":\"77ff07c0027e0300000000000000000000000000000000000000000000000000\","
+                + "\"keys\":["
+                + "{\"address\":\"" + "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo" + "\",\"weight\":30},"
+                + "{\"address\":\"" + "TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ" + "\",\"weight\":20},"
+                + "{\"address\":\"" + "TPbpoVgFDzkE7Sio9mZWKEC4rv3xWRL22C" + "\",\"weight\":20}"
+                +"]},"
+                + "{\"type\":2,\"permission_name\":\"all3\",\"threshold\":50,"
+                + "\"operations\":\"77ff07c0027e0300000000000000000000000000000000000000000000000000\","
+                + "\"keys\":["
+                + "{\"address\":\"" + "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo" + "\",\"weight\":1},"
+                + "{\"address\":\"" + "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t" + "\",\"weight\":49}"
+                +"]},"
+                + "{\"type\":2,\"permission_name\":\"all4\",\"threshold\":50,"
+                + "\"operations\":\"77ff07c0027e0300000000000000000000000000000000000000000000000000\","
+                + "\"keys\":["
+                + "{\"address\":\"" + "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo" + "\",\"weight\":1},"
+                + "{\"address\":\"" + "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t" + "\",\"weight\":49},"
+                + "{\"address\":\"" + "TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ" + "\",\"weight\":20}"
+                +"]},"
+                + "{\"type\":2,\"permission_name\":\"all5\",\"threshold\":120,"
+                + "\"operations\":\"77ff07c0027e0300000000000000000000000000000000000000000000000000\","
+                + "\"keys\":["
+                + "{\"address\":\"" + "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo" + "\",\"weight\":2},"
+                + "{\"address\":\"" + "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t" + "\",\"weight\":28},"
+                + "{\"address\":\"" + "TPmQw8dDLdrH8bTN3u9H1A2XCanbqyE533" + "\",\"weight\":30},"
+                + "{\"address\":\"" + "TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ" + "\",\"weight\":60}"
+                +"]},"
+                + "{\"type\":2,\"permission_name\":\"all6\",\"threshold\":50,"
+                + "\"operations\":\"77ff07c0027e0300000000000000000000000000000000000000000000000000\","
+                + "\"keys\":["
+                + "{\"address\":\"" + "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo" + "\",\"weight\":3},"
+                + "{\"address\":\"" + "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t" + "\",\"weight\":47}"
+                +"]},"
+                + "{\"type\":2,\"permission_name\":\"all7\",\"threshold\":50,"
+                + "\"operations\":\"77ff07c0027e0300000000000000000000000000000000000000000000000000\","
+                + "\"keys\":["
+                + "{\"address\":\"" + "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo" + "\",\"weight\":4},"
+                + "{\"address\":\"" + "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t" + "\",\"weight\":46}"
+                +"]},"
+                + "{\"type\":2,\"permission_name\":\"all8\",\"threshold\":200,"
+                + "\"operations\":\"77ff07c0027e0300000000000000000000000000000000000000000000000000\","
+                + "\"keys\":["
+                + "{\"address\":\"" + "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo" + "\",\"weight\":41},"
+                + "{\"address\":\"" + "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t" + "\",\"weight\":39},"
+                + "{\"address\":\"" + "TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ" + "\",\"weight\":40},"
+                + "{\"address\":\"" + "TPbpoVgFDzkE7Sio9mZWKEC4rv3xWRL22C" + "\",\"weight\":40},"
+                + "{\"address\":\"" + "TPmQw8dDLdrH8bTN3u9H1A2XCanbqyE533" + "\",\"weight\":40}"
+                +"]}"
+                + "]}";
+        log.info(accountPermissionJson);
+        GrpcAPI.Return response = TronlinkApiList.accountPermissionUpdateForResponse(
+                accountPermissionJson, quince, quincekey, blockingStubFull);
+        Assert.assertTrue(response.getResult());
+
+    }
+
+
     @Test(enabled = true,invocationCount = 300, description = "send coin 100 times")
     public void sendCoinDirectely() {
         channelFull = ManagedChannelBuilder.forTarget(fullnode).usePlaintext(true).build();
@@ -82,7 +160,7 @@ public class CreateMultiTransactionPerf {
 
 
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction_cov, wqq1key, 4, blockingStubFull);
+                transaction_cov, wqq1key, 9, blockingStubFull);
         log.info("-----2222  "+JsonFormat.printToString(transaction1));
 
         JSONObject object = new JSONObject();

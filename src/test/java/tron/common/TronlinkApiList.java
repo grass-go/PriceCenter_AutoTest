@@ -31,6 +31,7 @@ import org.tron.common.utils.ByteArray;
 import org.tron.common.utils.Sha256Hash;
 import org.tron.core.Wallet;
 import org.tron.protos.Protocol;
+import org.tron.protos.contract.AccountContract;
 import org.tron.protos.contract.BalanceContract;
 
 import java.io.*;
@@ -545,7 +546,7 @@ public static HttpResponse search(Map<String, String> params) {
   public static HttpResponse multiTransaction(JSONObject body) {
     try {
       //String requestUrl = "HttpNode" + "/api/wallet/multi/transaction";
-      String requestUrl = "http://101.201.66.150:8885" + "/api/wallet/multi/transaction";
+      String requestUrl = "https://niletest.tronlink.org" + "/api/wallet/multi/transaction";
       response = createConnect(requestUrl,body);
     } catch (Exception e) {
       e.printStackTrace();
@@ -1404,6 +1405,109 @@ public static HttpResponse search(Map<String, String> params) {
       ex.printStackTrace();
     }
     return temKey.getAddress();
+  }
+
+  public static GrpcAPI.Return accountPermissionUpdateForResponse(String permissionJson,
+                                                                  byte[] owner, String priKey, WalletGrpc.WalletBlockingStub blockingStubFull) {
+    Wallet.setAddressPreFixByte((byte) 0x41);
+    ECKey temKey = null;
+    try {
+      BigInteger priK = new BigInteger(priKey, 16);
+      temKey = ECKey.fromPrivate(priK);
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+    final ECKey ecKey = temKey;
+
+    AccountContract.AccountPermissionUpdateContract.Builder builder = AccountContract.AccountPermissionUpdateContract.newBuilder();
+
+    JSONObject permissions = JSONObject.parseObject(permissionJson);
+    JSONObject ownerpermission = permissions.getJSONObject("owner_permission");
+    JSONObject witnesspermission = permissions.getJSONObject("witness_permission");
+    JSONArray activepermissions = permissions.getJSONArray("active_permissions");
+
+    if (ownerpermission != null) {
+      Protocol.Permission ownerPermission = json2Permission(ownerpermission);
+      builder.setOwner(ownerPermission);
+    }
+    if (witnesspermission != null) {
+      Protocol.Permission witnessPermission = json2Permission(witnesspermission);
+      builder.setWitness(witnessPermission);
+    }
+    if (activepermissions != null) {
+      List<Protocol.Permission> activePermissionList = new ArrayList<>();
+      for (int j = 0; j < activepermissions.size(); j++) {
+        JSONObject permission = activepermissions.getJSONObject(j);
+        activePermissionList.add(json2Permission(permission));
+      }
+      builder.addAllActives(activePermissionList);
+    }
+    builder.setOwnerAddress(ByteString.copyFrom(owner));
+
+    AccountContract.AccountPermissionUpdateContract contract = builder.build();
+
+    GrpcAPI.TransactionExtention transactionExtention = blockingStubFull.accountPermissionUpdate(contract);
+    if (transactionExtention == null) {
+      return null;
+    }
+    GrpcAPI.Return ret = transactionExtention.getResult();
+    if (!ret.getResult()) {
+      System.out.println("Code = " + ret.getCode());
+      System.out.println("Message = " + ret.getMessage().toStringUtf8());
+      return ret;
+    }
+    Protocol.Transaction transaction = transactionExtention.getTransaction();
+    if (transaction == null || transaction.getRawData().getContractCount() == 0) {
+      System.out.println("Transaction is empty");
+      return ret;
+    }
+    System.out.println(
+            "Receive txid = " + ByteArray.toHexString(transactionExtention.getTxid().toByteArray()));
+    transaction = signTransaction(ecKey, transaction);
+    GrpcAPI.Return response = broadcastTransaction(transaction, blockingStubFull);
+
+    return response;
+  }
+  private static Protocol.Permission json2Permission(JSONObject json) {
+    Protocol.Permission.Builder permissionBuilder = Protocol.Permission.newBuilder();
+    if (json.containsKey("type")) {
+      int type = json.getInteger("type");
+      permissionBuilder.setTypeValue(type);
+    }
+    if (json.containsKey("permission_name")) {
+      String permissionName = json.getString("permission_name");
+      permissionBuilder.setPermissionName(permissionName);
+    }
+    if (json.containsKey("threshold")) {
+      //long threshold = json.getLong("threshold");
+      long threshold = Long.parseLong(json.getString("threshold"));
+      permissionBuilder.setThreshold(threshold);
+    }
+    if (json.containsKey("parent_id")) {
+      int parentId = json.getInteger("parent_id");
+      permissionBuilder.setParentId(parentId);
+    }
+    if (json.containsKey("operations")) {
+      byte[] operations = ByteArray.fromHexString(json.getString("operations"));
+      permissionBuilder.setOperations(ByteString.copyFrom(operations));
+    }
+    if (json.containsKey("keys")) {
+      JSONArray keys = json.getJSONArray("keys");
+      List<Protocol.Key> keyList = new ArrayList<>();
+      for (int i = 0; i < keys.size(); i++) {
+        Protocol.Key.Builder keyBuilder = Protocol.Key.newBuilder();
+        JSONObject key = keys.getJSONObject(i);
+        String address = key.getString("address");
+        long weight = Long.parseLong(key.getString("weight"));
+        //long weight = key.getLong("weight");
+        //keyBuilder.setAddress(ByteString.copyFrom(address.getBytes()));
+        keyBuilder.setAddress(ByteString.copyFrom(decode58Check(address)));
+        keyBuilder.setWeight(weight);
+        keyList.add(keyBuilder.build());
+      }
+      permissionBuilder.addAllKeys(keyList);
+    }
+    return permissionBuilder.build();
   }
 
   public static Protocol.Transaction addTransactionSignWithPermissionId(Protocol.Transaction transaction,

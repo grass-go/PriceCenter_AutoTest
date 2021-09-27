@@ -47,6 +47,7 @@ public class CreateMultiTransaction {
     String wqq1key = "8d5c18030466b6ab0e5367154d15c4f6cb46d2fb56a0b552e017d183abd8c255";
     byte[] wqq1 = TronlinkApiList.getFinalAddress(key2);
     String wqq158 =Base58.encode(wqq1);
+    private byte[] byteCode;
 
     /**
      * constructor.
