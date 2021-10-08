@@ -26,7 +26,8 @@ public class Base {
   public String querySrAddress = Configuration.getByPath("testng.conf").getString("tronWeb.querySrAddress");
   public String querySrAddress41 = Configuration.getByPath("testng.conf").getString("tronWeb.querySrAddressWith41Start");
   public String queryEthAddress = Configuration.getByPath("testng.conf").getString("tronWeb.ethQueryAddress");
-  public String queryTractionId = Configuration.getByPath("testng.conf").getString("tronWeb.queryQractionId");
+  public String queryTractionId = Configuration.getByPath("testng.conf").getString("tronWeb.queryTransactionId");
+  public String ethQueryTriggerContractId = Configuration.getByPath("testng.conf").getString("tronWeb.ethQueryTriggerContractId");
   public String queryAddressSophia = Configuration.getByPath("testng.conf").getString("tronGrid.queryAddressSophia");
   public String jsonRpcMainnetNode = Configuration.getByPath("testng.conf").getString("ethJsonRpc.mainnetNode");
   public String jsonRpcNilenetNode = Configuration.getByPath("testng.conf").getString("ethJsonRpc.nilenetNode");

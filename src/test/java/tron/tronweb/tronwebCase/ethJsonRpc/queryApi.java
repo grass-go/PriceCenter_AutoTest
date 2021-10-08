@@ -45,14 +45,94 @@ public class queryApi extends Base{
   }
 
 
+  public Integer blockNum;
+  public String blockHash;
+  String block;
   @Test(enabled = true,description = "Test get block from eth jsonRpc")
-  public void test07GetBlockFromJsonRpc() throws IOException{
+  public void test05GetBlockFromJsonRpc() throws Exception{
     functionName = "getBlock ";
-    String block = executeJavaScript("src/test/java/tron/tronweb/jsDir/ethsdk.js " + functionName);
-    System.out.println(block);
-    JSONObject blockObject = JSONObject.parseObject(block);
-    int i = 1;
+    block = executeJavaScript(ethSdkDir + functionName);
+
+    blockNum = Integer.valueOf(block.substring(block.indexOf("number:")+7,block.indexOf("number:") + 15));
+
+    blockHash = block.substring(7,7+66);
+
+    System.out.println("blockNum:" + blockNum);
+    Assert.assertTrue(block.contains("hash"));
+    Assert.assertTrue(block.contains("parentHash"));
+    Assert.assertTrue(block.contains("number"));
+    Assert.assertTrue(block.contains("timestamp"));
+    Assert.assertTrue(block.contains("difficulty"));
+    Assert.assertTrue(block.contains("gasLimit"));
+    Assert.assertTrue(block.contains("gasUsed"));
+    Assert.assertTrue(block.contains("miner"));
+    Assert.assertTrue(block.contains("extraData"));
+    Assert.assertTrue(block.contains("transactions"));
+
   }
+
+
+  @Test(enabled = true,description = "Test get block from eth jsonRpc")
+  public void test06GetBlockNumberFromJsonRpc() throws IOException{
+    functionName = "getBlockNumber ";
+    String getBlockNumberString = executeJavaScript(ethSdkDir + functionName + blockNum);
+    Assert.assertTrue(Integer.valueOf(getBlockNumberString) >= blockNum);
+
+  }
+
+
+
+  @Test(enabled = true,description = "Test get block from eth jsonRpc")
+  public void test07GetBlockWithTransactionFromJsonRpc() throws IOException{
+    functionName = "getBlockWithTransactions ";
+    String getBlockWithTransactionsByNumber = executeJavaScript(ethSdkDir + functionName + blockNum);
+    String getBlockWithTransactionsByHash = executeJavaScript(ethSdkDir + functionName + blockHash);
+    Assert.assertTrue(getBlockWithTransactionsByHash.contains("hash"));
+    Assert.assertTrue(getBlockWithTransactionsByHash.contains("parentHash"));
+    Assert.assertTrue(getBlockWithTransactionsByHash.contains("number"));
+    Assert.assertTrue(getBlockWithTransactionsByHash.contains("timestamp"));
+    Assert.assertTrue(getBlockWithTransactionsByHash.contains("difficulty"));
+    Assert.assertTrue(getBlockWithTransactionsByHash.contains("gasLimit"));
+    Assert.assertTrue(getBlockWithTransactionsByHash.contains("gasUsed"));
+    Assert.assertTrue(getBlockWithTransactionsByHash.contains("miner"));
+    Assert.assertTrue(getBlockWithTransactionsByHash.contains("extraData"));
+    Assert.assertTrue(getBlockWithTransactionsByHash.contains("transactions"));
+    Assert.assertTrue(getBlockWithTransactionsByHash.contains("confirmations"));
+
+    Assert.assertEquals(getBlockWithTransactionsByHash, getBlockWithTransactionsByNumber);
+  }
+
+
+  @Test(enabled = true,description = "Test estimateGas from eth jsonRpc")
+  public void test08EstimateGasFromJsonRpc() throws IOException{
+    functionName = "getGasPrice ";
+    String getGasPrice = executeJavaScript(ethSdkDir + functionName);
+
+    Assert.assertTrue(getGasPrice.contains("0x8c"));
+  }
+
+
+  @Test(enabled = true,description = "Test getNetwork from eth jsonRpc")
+  public void test09GetNetworkFromJsonRpc() throws IOException{
+    functionName = "getNetwork ";
+    String getNetwork = executeJavaScript(ethSdkDir + functionName);
+
+    Assert.assertTrue(getNetwork.contains("0x00000000000000001ebf88508a03865c71d452e25f4d51194196a1d22b6653dc"));
+    Assert.assertTrue(getNetwork.contains("chainId"));
+    Assert.assertTrue(getNetwork.contains("name"));
+  }
+
+  @Test(enabled = true,description = "Test getTransactionReceipt from eth jsonRpc")
+  public void test10GetTransactionReceiptFromJsonRpc() throws IOException{
+    functionName = "getTransactionReceipt ";
+    String getTransactionReceipt = executeJavaScript(ethSdkDir + functionName + ethQueryTriggerContractId);
+
+    Assert.assertTrue();
+
+    int p = 1;
+  }
+
+
 
 
 }

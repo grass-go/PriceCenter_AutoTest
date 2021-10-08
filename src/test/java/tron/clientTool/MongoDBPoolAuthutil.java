@@ -59,6 +59,7 @@ public class MongoDBPoolAuthutil {
   public void testMongo() {
 
     MongoCursor<Document> cursorContractlog = documentsContractlog.iterator();
+    int times = 0;
     while (cursorContractlog.hasNext()){
       Document document = cursorContractlog.next();
       String txid = document.getString("transactionId");
@@ -67,9 +68,11 @@ public class MongoDBPoolAuthutil {
       }
       passedTxid.add(txid);
       long count = 0;
+
       count = getCollection("online","contractlog").countDocuments(new BasicDBObject("transactionId",txid));
       System.out.println("count:" + count);
       System.out.println("txid:" + txid);
+      System.out.println("Times:" + times++);
       response = fullOrSolidityBase.getTransactionInfoById("https://api.trongrid.io/wallet/",txid);
       Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
       Assert.assertEquals(fullOrSolidityBase.parseResponseContent(response).getJSONArray("log").size(), count);

@@ -39,6 +39,57 @@ async function getBlock() {
 }
 
 
+async function getBlockNumber(input) {
+  const block = await provider.getBlockNumber(input);
+  console.log(block);
+}
+
+
+async function getBlockWithTransactions(input) {
+  const block = await provider.getBlockWithTransactions(input);
+  console.log(block);
+}
+
+
+async function estimateGas(input1,input2,input3) {
+  const t = await provider.estimateGas({
+    // Wrapped ETH address
+    to: input1,
+
+    // `function deposit() payable`
+    data: input2,
+
+    // 1 ether
+    value: input3,
+  });
+  console.log("====> estimateGas");
+  console.log(t);
+}
+
+async function getGasPrice() {
+  const price = await provider.getGasPrice();
+  console.log("====> getGasPrice");
+  console.log(price);
+}
+
+
+async function getNetworkWithEmpty() {
+  const network = await provider.getNetwork();
+  console.log(network);
+}
+
+async function getNetwork(input) {
+  const network = await provider.getNetwork(input);
+  console.log(network);
+}
+
+
+
+async function getTransactionReceipt(input) {
+  const receipt = await provider.getTransactionReceipt(input);
+  console.log(receipt);
+}
+
 
 
 
@@ -62,6 +113,27 @@ switch(arguments[0]) {
         break;
     case "getBlock":
         getBlock()
+        break;
+    case "getBlockNumber":
+        getBlockNumber(arguments[1])
+        break;
+    case "getBlockWithTransactions":
+        getBlockWithTransactions(arguments[1])
+        break;
+    case "estimateGas":
+        estimateGas(arguments[1],arguments[2])
+        break;
+    case "getGasPrice":
+        getGasPrice()
+        break;
+    case "getNetworkWithEmpty":
+        getNetworkWithEmpty()
+        break;
+    case "getNetwork":
+        getNetwork(arguments[1])
+        break;
+    case "getTransactionReceipt":
+        getTransactionReceipt(arguments[1])
         break;
      default:
         break;

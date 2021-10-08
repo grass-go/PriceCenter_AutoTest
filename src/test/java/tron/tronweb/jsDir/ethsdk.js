@@ -41,6 +41,49 @@ async function getBlock() {
 
 
 
+async function getBlockNumber() {
+  const block = await providerMainnet.getBlockNumber();
+  console.log(block);
+}
+
+
+async function getBlockWithTransactions(input) {
+  const block = await providerMainnet.getBlockWithTransactions(input);
+  console.log(block);
+}
+
+
+async function estimateGas(input1,input2) {
+  const t = await providerMainnet.estimateGas({
+    // Wrapped ETH address
+    to: input1,
+
+    // `function deposit() payable`
+    data: input2,
+
+    // 1 ether
+    value: 0,
+  });
+  console.log("====> estimateGas");
+  console.log(t);
+}
+
+
+async function getGasPrice() {
+  const price = await providerMainnet.getGasPrice();
+  console.log(price);
+}
+
+async function getNetwork() {
+  const network = await providerMainnet.getNetwork();
+  console.log(network);
+}
+
+async function getTransactionReceipt(input) {
+  const receipt = await providerMainnet.getTransactionReceipt(input);
+  console.log(receipt);
+}
+
 
 
 
@@ -62,6 +105,24 @@ switch(arguments[0]) {
         break;
     case "getBlock":
         getBlock()
+        break;
+    case "getBlockNumber":
+        getBlockNumber()
+        break;
+    case "getBlockWithTransactions":
+        getBlockWithTransactions(arguments[1])
+        break;
+    case "estimateGas":
+        estimateGas(arguments[1],arguments[2])
+        break;
+    case "getGasPrice":
+        getGasPrice()
+        break;
+    case "getNetwork":
+        getNetwork()
+        break;
+    case "getTransactionReceipt":
+        getTransactionReceipt(arguments[1])
         break;
      default:
         break;
