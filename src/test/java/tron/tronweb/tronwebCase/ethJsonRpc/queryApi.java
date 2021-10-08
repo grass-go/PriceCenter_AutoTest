@@ -127,9 +127,7 @@ public class queryApi extends Base{
     functionName = "getTransactionReceipt ";
     String getTransactionReceipt = executeJavaScript(ethSdkDir + functionName + ethQueryTriggerContractId);
 
-    Assert.assertTrue();
 
-    int p = 1;
   }
 
 
