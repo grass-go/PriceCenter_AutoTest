@@ -183,7 +183,7 @@ public class AllAssetList extends TronlinkBase {
 
     }
   }
-  @Test(enabled = true, description = "Test each coin level equals to transcan api")
+  @Test(enabled = true, description = "Test each coin level equals to tronscan api")
   public void allAssetList04(){
     params.clear();
     params.put("nonce","12345");

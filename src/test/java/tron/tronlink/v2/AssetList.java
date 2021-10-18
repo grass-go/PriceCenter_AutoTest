@@ -135,6 +135,7 @@ public class AssetList extends TronlinkBase {
         Assert.assertEquals(1,tokenArray.getJSONObject(j).getIntValue("recommandSortId"));
       }
       else{
+        log.info("current contractAddress is:"+tokenArray.getJSONObject(j).getString("contractAddress"));
         Assert.assertEquals(0,tokenArray.getJSONObject(j).getIntValue("recommandSortId"));
       }
     }
