@@ -1533,6 +1533,30 @@ public static HttpResponse search(Map<String, String> params) {
     System.out.println(co.getContent().toString());
     return true;
   }
+  public static HttpResponse v2TokenQuery(Map<String, String> params,JSONObject object) {
+    String requestUrl = HttpNode + "/api/wallet/v2/token/query";
+    Map<String, String> header = getV2Header();
+    header.put("Content-type", "application/json; charset=utf-8");
+    header.put("Connection", "Close");
+    response = createPostConnectWithHeader(requestUrl,params, object,header);
+    return response;
+  }
+  public static HttpResponse v2TokenAdd(Map<String, String> params,JSONObject object) {
+    String requestUrl = HttpNode + "/api/wallet/v2/token/add";
+    Map<String, String> header = getV2Header();
+    header.put("Content-type", "application/json; charset=utf-8");
+    header.put("Connection", "Close");
+    response = createPostConnectWithHeader(requestUrl,params, object,header);
+    return response;
+  }
+  public static HttpResponse v2TokenSync(Map<String, String> params,JSONObject object) {
+    String requestUrl = HttpNode + "/api/wallet/v2/token/sync";
+    Map<String, String> header = getV2Header();
+    header.put("Content-type", "application/json; charset=utf-8");
+    header.put("Connection", "Close");
+    response = createPostConnectWithHeader(requestUrl,params, object,header);
+    return response;
+  }
 
 
 }
