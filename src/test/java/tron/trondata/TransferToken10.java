@@ -26,29 +26,39 @@ public class TransferToken10 extends TrondataBase {
     params.put("trc10Id","1002881");
     params.put("direction","0");
     params.put("db_version","1");
-    response = TronlinkApiList.getTransferToken10(params);
-    Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    Assert.assertTrue(responseContent.containsKey("page_size"));
-    Assert.assertTrue(responseContent.getIntValue("page_size") > 0);
-    Assert.assertTrue(responseContent.containsKey("data"));
-    responseArrayContent = responseContent.getJSONArray("data");
-    for (Object json:responseArrayContent) {
-      JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
-      Assert.assertTrue(jsonObject.containsKey("amount"));
-      Assert.assertTrue(jsonObject.getLongValue("amount") > 0);
-      Assert.assertTrue(jsonObject.containsKey("block_timestamp"));
-      Assert.assertTrue(jsonObject.containsKey("from"));
-      Assert.assertTrue(jsonObject.containsKey("to"));
-      Assert.assertTrue(jsonObject.containsKey("hash"));
-      Assert.assertTrue(jsonObject.containsKey("confirmed"));
-      Assert.assertTrue(jsonObject.containsKey("contract_type"));
-      Assert.assertEquals("ANC",jsonObject.getString("symbol"));
-      Assert.assertEquals("TWpKN6y3NVXm5mMjGmPEtLpS6boGM4q8T4",jsonObject.getString("issue_address"));
-      Assert.assertEquals(6, jsonObject.getIntValue("decimals"));
-      Assert.assertEquals("ANC",jsonObject.getString("token_name"));
-      Assert.assertTrue(jsonObject.containsKey("direction"));
+
+    for(int index=0; index<5;index++)
+    {
+      try {
+        response = TronlinkApiList.getTransferToken10(params);
+        Assert.assertEquals(200, response.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        Assert.assertTrue(responseContent.containsKey("page_size"));
+        Assert.assertTrue(responseContent.getIntValue("page_size") > 0);
+        Assert.assertTrue(responseContent.containsKey("data"));
+        responseArrayContent = responseContent.getJSONArray("data");
+        for (Object json:responseArrayContent) {
+          JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
+          Assert.assertTrue(jsonObject.containsKey("amount"));
+          Assert.assertTrue(jsonObject.getLongValue("amount") > 0);
+          Assert.assertTrue(jsonObject.containsKey("block_timestamp"));
+          Assert.assertTrue(jsonObject.containsKey("from"));
+          Assert.assertTrue(jsonObject.containsKey("to"));
+          Assert.assertTrue(jsonObject.containsKey("hash"));
+          Assert.assertTrue(jsonObject.containsKey("confirmed"));
+          Assert.assertTrue(jsonObject.containsKey("contract_type"));
+          Assert.assertEquals("ANC",jsonObject.getString("symbol"));
+          Assert.assertEquals("TWpKN6y3NVXm5mMjGmPEtLpS6boGM4q8T4",jsonObject.getString("issue_address"));
+          Assert.assertEquals(6, jsonObject.getIntValue("decimals"));
+          Assert.assertEquals("ANC",jsonObject.getString("token_name"));
+          Assert.assertTrue(jsonObject.containsKey("direction"));
+        }
+      } catch (Exception e){
+        continue;
+      }
+
     }
+
   }
 
   @Test(enabled = true,description = "getTransferToken only from")
