@@ -30,13 +30,17 @@ public class TransferToken10 extends TrondataBase {
     int index;
     for(index=0; index<5;index++)
     {
-      try {
         log.info("cur index is: "+ index);
         response = TronlinkApiList.getTransferToken10(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         Assert.assertTrue(responseContent.containsKey("page_size"));
-        Assert.assertTrue(responseContent.getIntValue("page_size") > 0);
+        if (responseContent.getIntValue("page_size") > 0) {
+          index = 6;
+        }
+        else {
+          continue;
+        }
         Assert.assertTrue(responseContent.containsKey("data"));
         responseArrayContent = responseContent.getJSONArray("data");
         for (Object json:responseArrayContent) {
@@ -55,12 +59,9 @@ public class TransferToken10 extends TrondataBase {
           Assert.assertEquals("ANC",jsonObject.getString("token_name"));
           Assert.assertTrue(jsonObject.containsKey("direction"));
         }
-        index = 5;
-      } catch (Exception e){
-        continue;
-      }
+
     }
-    Assert.assertEquals(6,index);
+    Assert.assertEquals(7,index);
 
   }
 
