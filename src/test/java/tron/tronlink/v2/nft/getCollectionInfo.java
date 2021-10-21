@@ -51,6 +51,7 @@ public class getCollectionInfo extends TronlinkBase {
     Assert.assertEquals(params.get("tokenAddress"), dataContent.get("tokenAddress"));
     int index;
     for ( index = 0; index < 5; index++) {
+      log.info("cur index is: "+index);
       try {
         Assert.assertEquals(200, TronlinkApiList.createGetConnect(dataContent.getString("imageUrl")).getStatusLine().getStatusCode());
         Assert.assertEquals(200, TronlinkApiList.createGetConnect(dataContent.getString("logoUrl")).getStatusLine().getStatusCode());
