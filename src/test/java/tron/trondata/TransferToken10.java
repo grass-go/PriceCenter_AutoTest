@@ -35,6 +35,7 @@ public class TransferToken10 extends TrondataBase {
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         Assert.assertTrue(responseContent.containsKey("page_size"));
+        // 如果page_size<=0,那么不执行下面的，直接进入循环重试。
         if (responseContent.getIntValue("page_size") > 0) {
           index = 6;
         }
