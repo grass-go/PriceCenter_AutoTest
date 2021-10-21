@@ -3,6 +3,7 @@ package tron.trondata;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
@@ -12,7 +13,7 @@ import tron.trondata.base.TrondataBase;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@Slf4j
 public class TransferToken10 extends TrondataBase {
   private JSONObject responseContent;
   private JSONArray responseArrayContent;
@@ -26,10 +27,11 @@ public class TransferToken10 extends TrondataBase {
     params.put("trc10Id","1002881");
     params.put("direction","0");
     params.put("db_version","1");
-
-    for(int index=0; index<5;index++)
+    int index;
+    for(index=0; index<5;index++)
     {
       try {
+        log.info("cur index is: "+ index);
         response = TronlinkApiList.getTransferToken10(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
@@ -53,11 +55,12 @@ public class TransferToken10 extends TrondataBase {
           Assert.assertEquals("ANC",jsonObject.getString("token_name"));
           Assert.assertTrue(jsonObject.containsKey("direction"));
         }
+        index = 5;
       } catch (Exception e){
         continue;
       }
-
     }
+    Assert.assertEquals(6,index);
 
   }
 

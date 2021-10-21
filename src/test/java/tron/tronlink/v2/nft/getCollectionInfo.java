@@ -3,6 +3,8 @@ package tron.tronlink.v2.nft;
 import com.alibaba.fastjson.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
+
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Parameters;
@@ -11,6 +13,7 @@ import tron.common.TronlinkApiList;
 //import tron.tronlink.base.GetSign;
 import tron.tronlink.base.TronlinkBase;
 
+@Slf4j
 public class getCollectionInfo extends TronlinkBase {
   private JSONObject responseContent;
   private JSONObject dataContent;
@@ -19,26 +22,26 @@ public class getCollectionInfo extends TronlinkBase {
 
   @Test(enabled = true)
   @Parameters({"trc721OwnerAddress","trc721TokenAddress","trc721AssetId"})
-  public void getCollectionInfoTest001(String trc721OwnerAddress,String trc721TokenAddress,String trc721AssetId) throws Exception{
-    HashMap<String,String> signatureMap = new HashMap<>();
+  public void getCollectionInfoTest001(String trc721OwnerAddress,String trc721TokenAddress,String trc721AssetId) throws Exception {
+    HashMap<String, String> signatureMap = new HashMap<>();
     signatureMap.put("address", trc721OwnerAddress);
     signatureMap.put("url", "/api/wallet/nft/getCollectionInfo");
     String signature = getSign(signatureMap);
 
 
-    params.put("nonce",nonce);
-    params.put("secretId",secretId);
-    params.put("signature",signature);
-    params.put("address",trc721OwnerAddress);
-    params.put("tokenAddress",trc721TokenAddress);
-    params.put("assetId",trc721AssetId);
+    params.put("nonce", nonce);
+    params.put("secretId", secretId);
+    params.put("signature", signature);
+    params.put("address", trc721OwnerAddress);
+    params.put("tokenAddress", trc721TokenAddress);
+    params.put("assetId", trc721AssetId);
 
     response = TronlinkApiList.v2GetCollectionInfo(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
 
-    Assert.assertEquals(0,(int)responseContent.get("code"));
-    Assert.assertEquals("OK",responseContent.get("message"));
+    Assert.assertEquals(0, (int) responseContent.get("code"));
+    Assert.assertEquals("OK", responseContent.get("message"));
     dataContent = responseContent.getJSONObject("data");
 
     Assert.assertTrue(dataContent.containsKey("assetId"));
@@ -46,8 +49,16 @@ public class getCollectionInfo extends TronlinkBase {
     Assert.assertTrue(dataContent.containsKey("name"));
 
     Assert.assertEquals(params.get("tokenAddress"), dataContent.get("tokenAddress"));
-    Assert.assertEquals(200, TronlinkApiList.createGetConnect(dataContent.getString("imageUrl")).getStatusLine().getStatusCode());
-    Assert.assertEquals(200, TronlinkApiList.createGetConnect(dataContent.getString("logoUrl")).getStatusLine().getStatusCode());
-
+    int index;
+    for ( index = 0; index < 5; index++) {
+      try {
+        Assert.assertEquals(200, TronlinkApiList.createGetConnect(dataContent.getString("imageUrl")).getStatusLine().getStatusCode());
+        Assert.assertEquals(200, TronlinkApiList.createGetConnect(dataContent.getString("logoUrl")).getStatusLine().getStatusCode());
+        index = 5;
+      } catch (Exception e) {
+        continue;
+      }
+    }
+    Assert.assertEquals(6,index);
   }
 }
