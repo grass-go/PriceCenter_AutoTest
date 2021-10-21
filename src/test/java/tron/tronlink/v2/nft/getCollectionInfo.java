@@ -60,6 +60,7 @@ public class getCollectionInfo extends TronlinkBase {
         continue;
       }
     }
+    log.info("At last, index value:" +index);
     Assert.assertEquals(6,index);
   }
 }
