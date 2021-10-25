@@ -13,89 +13,99 @@ const provider = new ethers.providers.JsonRpcProvider('https://mainnet.infura.io
 
 
 async function ethGetBalance(input) {
-  const balance = await provider.getBalance(input);
-  console.log(balance);
+    const balance = await provider.getBalance(input);
+    console.log(balance);
 }
 
 
 async function getCode(input) {
-  const code = await provider.getCode(input);
-  console.log(code);
+    const code = await provider.getCode(input);
+    console.log(code);
 }
 
 
-
-async function getStorageAt(input1,input2) {
-  const code = await provider.getStorageAt(
-    input1,
-    input2
-  );
-  console.log(code);
+async function getStorageAt(input1, input2) {
+    const code = await provider.getStorageAt(
+        input1,
+        input2
+    );
+    console.log(code);
 }
 
-async function getBlock() {
-  const block = await provider.getBlock();
-  console.log(block);
+async function getBlock(input) {
+    let num;
+    if (input != null) {
+        if (!input.startsWith('0x')) {
+            num = Number(input)
+        } else {
+            num = input
+        }
+    }
+    const block = await provider.getBlock(num);
+    console.log(block);
 }
 
 
 async function getBlockNumber(input) {
-  const block = await provider.getBlockNumber(input);
-  console.log(block);
+    const block = await provider.getBlockNumber(input);
+    console.log(block);
 }
 
 
 async function getBlockWithTransactions(input) {
-  const block = await provider.getBlockWithTransactions(input);
-  console.log(block);
+    let num;
+    if (input != null) {
+        if (!input.startsWith('0x')) {
+            num = Number(input)
+        } else {
+            num = input
+        }
+    }
+    const block = await provider.getBlockWithTransactions(num);
+    console.log(block);
 }
 
 
-async function estimateGas(input1,input2,input3) {
-  const t = await provider.estimateGas({
-    // Wrapped ETH address
-    to: input1,
+async function estimateGas(input1, input2, input3) {
+    const t = await provider.estimateGas({
+        // Wrapped ETH address
+        to: input1,
 
-    // `function deposit() payable`
-    data: input2,
+        // `function deposit() payable`
+        data: input2,
 
-    // 1 ether
-    value: input3,
-  });
-  console.log("====> estimateGas");
-  console.log(t);
+        // 1 ether
+        value: input3,
+    });
+    console.log("====> estimateGas");
+    console.log(t);
 }
 
 async function getGasPrice() {
-  const price = await provider.getGasPrice();
-  console.log("====> getGasPrice");
-  console.log(price);
+    const price = await provider.getGasPrice();
+    console.log("====> getGasPrice");
+    console.log(price);
 }
 
 
 async function getNetworkWithEmpty() {
-  const network = await provider.getNetwork();
-  console.log(network);
+    const network = await provider.getNetwork();
+    console.log(network);
 }
 
 async function getNetwork(input) {
-  const network = await provider.getNetwork(input);
-  console.log(network);
+    const network = await provider.getNetwork(input);
+    console.log(network);
 }
-
 
 
 async function getTransactionReceipt(input) {
-  const receipt = await provider.getTransactionReceipt(input);
-  console.log(receipt);
+    const receipt = await provider.getTransactionReceipt(input);
+    console.log(receipt);
 }
 
 
-
-
-
-
-switch(arguments[0]) {
+switch (arguments[0]) {
     case "ethGetBalance":
         ethGetBalance(arguments[1])
         break;
@@ -109,10 +119,10 @@ switch(arguments[0]) {
         getCode(arguments[1])
         break;
     case "getStorageAt":
-        getStorageAt(arguments[1],arguments[2])
+        getStorageAt(arguments[1], arguments[2])
         break;
     case "getBlock":
-        getBlock()
+        getBlock(arguments[1])
         break;
     case "getBlockNumber":
         getBlockNumber(arguments[1])
@@ -121,7 +131,7 @@ switch(arguments[0]) {
         getBlockWithTransactions(arguments[1])
         break;
     case "estimateGas":
-        estimateGas(arguments[1],arguments[2])
+        estimateGas(arguments[1], arguments[2])
         break;
     case "getGasPrice":
         getGasPrice()
@@ -135,6 +145,6 @@ switch(arguments[0]) {
     case "getTransactionReceipt":
         getTransactionReceipt(arguments[1])
         break;
-     default:
+    default:
         break;
 }
