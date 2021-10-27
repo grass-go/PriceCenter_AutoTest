@@ -158,29 +158,38 @@ public class AllAssetList extends TronlinkBase {
     jTokens.put("jWIN","TRg6MnpsFXc82ymUPgf5qbj59ibxiEDWvv");
 
 
-    for(Map.Entry<String, String> entry : jTokens.entrySet()){
-      String shortName= entry.getKey();
+    for(Map.Entry<String, String> entry : jTokens.entrySet()) {
+      String shortName = entry.getKey();
       String contractAddr = entry.getValue();
-      Object Price = JSONPath.eval(responseContent, String.join("","$..data.token[shortName='",shortName,"'].price"));
-      JSONArray priceArray=(JSONArray)Price;
+      Object Price = JSONPath.eval(responseContent, String.join("", "$..data.token[shortName='", shortName, "'].price"));
+      JSONArray priceArray = (JSONArray) Price;
       BigDecimal actualPrice = new BigDecimal(priceArray.get(0).toString());
-
       //get transcan price
-      String reqestUrl= TronlinkBase.tronscanApiUrl+"/api/token_trc20?contract="+contractAddr+"&showAll=1";
-      HttpResponse transcanRsp = TronlinkApiList.createGetConnect(reqestUrl);
-      JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
-      log.info(String.join("","$..trc20_tokens[contract_address='",contractAddr,"'].contract_name"));
-      Object expPrice = JSONPath.eval(transcanRspContent, String.join("","$..trc20_tokens[contract_address='",contractAddr,"'].market_info.priceInTrx"));
-      JSONArray expectPriceArray=(JSONArray)expPrice;
-      BigDecimal expectPrice = new BigDecimal(expectPriceArray.get(0).toString());
+      int index;
+      for (index = 0; index < 5; index++) {
+        log.info("cur index is" + index);
+        String reqestUrl = TronlinkBase.tronscanApiUrl + "/api/token_trc20?contract=" + contractAddr + "&showAll=1";
+        HttpResponse transcanRsp = TronlinkApiList.createGetConnect(reqestUrl);
+        JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
+        int total = transcanRspContent.getIntValue("total");
+        if (total == 0) {
+          continue;
+        } else {
+          log.info(String.join("", "$..trc20_tokens[contract_address='", contractAddr, "'].contract_name"));
+          Object expPrice = JSONPath.eval(transcanRspContent, String.join("", "$..trc20_tokens[contract_address='", contractAddr, "'].market_info.priceInTrx"));
+          JSONArray expectPriceArray = (JSONArray) expPrice;
+          BigDecimal expectPrice = new BigDecimal(expectPriceArray.get(0).toString());
 
-      BigDecimal absgap = expectPrice.subtract(actualPrice).abs();
-      BigDecimal FIVE = new BigDecimal("5");
-      BigDecimal tolerance = actualPrice.divide(FIVE,6,1);
-      log.info("TranscanPrice:"+expectPrice.toString()+", TronlinkServer Price:"+actualPrice.toString()+", Tolerance: "+tolerance.toString()+", absgap:"+absgap.toString());
-      //decide if absgap less than tolerance.
-      Assert.assertTrue(absgap.compareTo(tolerance) == -1);
-
+          BigDecimal absgap = expectPrice.subtract(actualPrice).abs();
+          BigDecimal FIVE = new BigDecimal("5");
+          BigDecimal tolerance = actualPrice.divide(FIVE, 6, 1);
+          log.info("TranscanPrice:" + expectPrice.toString() + ", TronlinkServer Price:" + actualPrice.toString() + ", Tolerance: " + tolerance.toString() + ", absgap:" + absgap.toString());
+          //decide if absgap less than tolerance.
+          Assert.assertTrue(absgap.compareTo(tolerance) == -1);
+          index = 6;
+        }
+      }
+      Assert.assertEquals(7, index);
     }
   }
   @Test(enabled = true, description = "Test each coin level equals to tronscan api")
