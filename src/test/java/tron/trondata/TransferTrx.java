@@ -3,6 +3,7 @@ package tron.trondata;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
@@ -12,7 +13,7 @@ import tron.trondata.base.TrondataBase;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@Slf4j
 public class TransferTrx extends TrondataBase {
   private JSONObject responseContent;
   private JSONArray responseArrayContent;
@@ -25,31 +26,42 @@ public class TransferTrx extends TrondataBase {
     params.put("address",queryAddress);
     params.put("direction","0");
     params.put("db_version","1");
-    response = TronlinkApiList.getTransferTrx(params);
-    Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    Assert.assertTrue(responseContent.containsKey("page_size"));
-    Assert.assertEquals(20, responseContent.getIntValue("page_size"));
-    Assert.assertTrue(responseContent.containsKey("data"));
-    responseArrayContent = responseContent.getJSONArray("data");
+    int index;
+    for(index=0; index<5;index++){
+      log.info("cur index is" + index);
 
-    for (Object json:responseArrayContent) {
-      JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
-      Assert.assertTrue(jsonObject.containsKey("amount"));
-      Assert.assertTrue(jsonObject.getLongValue("amount") > 0);
-      Assert.assertTrue(jsonObject.containsKey("block_timestamp"));
-      Assert.assertTrue(jsonObject.containsKey("from"));
-      Assert.assertTrue(jsonObject.containsKey("to"));
-      Assert.assertTrue(jsonObject.containsKey("hash"));
-      Assert.assertTrue(jsonObject.containsKey("confirmed"));
-      Assert.assertTrue(jsonObject.containsKey("contract_type"));
-      Assert.assertTrue(jsonObject.containsKey("symbol"));
-      Assert.assertTrue(jsonObject.containsKey("issue_address"));
-      Assert.assertTrue(jsonObject.containsKey("decimals"));
-      Assert.assertEquals(6, jsonObject.getIntValue("decimals"));
-      Assert.assertTrue(jsonObject.containsKey("token_name"));
-      Assert.assertTrue(jsonObject.containsKey("direction"));
+      response = TronlinkApiList.getTransferTrx(params);
+      Assert.assertEquals(200, response.getStatusLine().getStatusCode());
+      responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+      Assert.assertTrue(responseContent.containsKey("page_size"));
+      if (responseContent.getIntValue("page_size") > 0) {
+        index = 6;
+      }
+      else {
+        continue;
+      }
+      Assert.assertEquals(20, responseContent.getIntValue("page_size"));
+      Assert.assertTrue(responseContent.containsKey("data"));
+      responseArrayContent = responseContent.getJSONArray("data");
+      for (Object json:responseArrayContent) {
+        JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
+        Assert.assertTrue(jsonObject.containsKey("amount"));
+        Assert.assertTrue(jsonObject.getLongValue("amount") > 0);
+        Assert.assertTrue(jsonObject.containsKey("block_timestamp"));
+        Assert.assertTrue(jsonObject.containsKey("from"));
+        Assert.assertTrue(jsonObject.containsKey("to"));
+        Assert.assertTrue(jsonObject.containsKey("hash"));
+        Assert.assertTrue(jsonObject.containsKey("confirmed"));
+        Assert.assertTrue(jsonObject.containsKey("contract_type"));
+        Assert.assertTrue(jsonObject.containsKey("symbol"));
+        Assert.assertTrue(jsonObject.containsKey("issue_address"));
+        Assert.assertTrue(jsonObject.containsKey("decimals"));
+        Assert.assertEquals(6, jsonObject.getIntValue("decimals"));
+        Assert.assertTrue(jsonObject.containsKey("token_name"));
+        Assert.assertTrue(jsonObject.containsKey("direction"));
+      }
     }
+    Assert.assertEquals(7,index);
   }
 
   @Test(enabled = true,description = "getTransferTrx only from")
