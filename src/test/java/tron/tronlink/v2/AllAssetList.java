@@ -226,7 +226,16 @@ public class AllAssetList extends TronlinkBase {
     officialCoin20.add("TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9"); //JST Token
     officialCoin20.add("TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR"); //WTRX Token
     officialCoin20.add("TMwFHYXLJaRUPeW6421aqXL4ZEzPRFGkGT"); //USDJ
-
+    officialCoin20.add("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");
+    officialCoin20.add("TDyvndWuvX5xTBwHPYJi7J3Yq8pq8yh62h");
+    officialCoin20.add("TB95FFYRJMLY6mWZqv4JUMqAqsHF4JCXga");
+    officialCoin20.add("TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9");
+    officialCoin20.add("THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF");
+    officialCoin20.add("TXWkP3jLBqRGojUih1ShzNyDaN5Csnebok");
+    officialCoin20.add("TXpw8XeWYeTUd4quDskoUqeQPowRh4jY65");
+    officialCoin20.add("TR3DLthpnDdCGabhVDbD3VMsiJoCXY3bZd");
+    officialCoin20.add("THbVQp8kMjStKNnf2iCY6NEzThKMK5aBHg");
+    officialCoin20.add("TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8");
 
     for (int i = 0; i<token10sArray.size(); i++) {
       if (!token10sArray.get(i).equals("")) {
