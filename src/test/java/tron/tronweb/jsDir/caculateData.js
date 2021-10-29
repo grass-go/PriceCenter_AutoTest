@@ -7,5 +7,10 @@ const interface1 = new ethers.utils.Interface(abi);
 //const data = interface1.encodeFunctionData('transfer', ['0x69319eA845B1c35A1f7b0E1429f4F303e8F79133',1]);
 const data = interface1.encodeFunctionData('transfer', ['0x69319eA845B1c35A1f7b0E1429f4F303e8F79133',1]);
 
+/*const data1 =ethers.utils.solidityKeccak256(['string'], ['transfer(address,uint)']);
 
+const data2 =ethers.utils.solidityKeccak256(['string'], ['transferFrom(address , address , uint )']);*/
 console.log(data);
+/*
+console.log(data1);
+console.log(data2);*/

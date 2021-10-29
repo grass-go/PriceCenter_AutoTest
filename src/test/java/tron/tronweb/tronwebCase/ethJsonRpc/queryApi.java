@@ -142,8 +142,8 @@ public class queryApi extends Base {
     public void test09GetGasPriceFromJsonRpc() throws IOException {
         functionName = "getGasPrice ";
         String getGasPrice = executeJavaScript(ethSdkDir + functionName);
-
-        Assert.assertTrue(getGasPrice.contains("0x8c"));
+        System.out.println("getGasPrice:"+getGasPrice);
+        Assert.assertTrue(getGasPrice.contains("0x0118"));
     }
 
     @Test(enabled = true, description = "Test getNetwork from eth jsonRpc")
@@ -183,10 +183,11 @@ public class queryApi extends Base {
         functionName = "estimateGas01 ";
         String getTransactionReceipt = executeJavaScript(ethSdkDir + functionName + test);
         System.out.println("estimateGas01_request：" + ethSdkDir + functionName + test);
+        System.out.println("getTransactionReceipt：" + getTransactionReceipt);
         JSONObject balanceObject = JSONObject.parseObject(getTransactionReceipt.substring(25));
         String result = balanceObject.getString("_hex");
-        System.out.println("estimateGas01：" );
-        Assert.assertEquals("0x318", result);
+        System.out.println("estimateGas01：" + result);
+        Assert.assertEquals("0x73bf", result);
     }
 
     @Test(enabled = true, description = "Test EstimateGas from eth jsonRpc")
@@ -196,7 +197,7 @@ public class queryApi extends Base {
         String getTransactionReceipt = executeJavaScript(ethSdkDir + functionName + test1);
 
         System.out.println("test13_request:" + ethSdkDir + functionName + test1);
-
+        System.out.println("getTransactionReceipt:" + getTransactionReceipt);
         JSONObject balanceObject = JSONObject.parseObject(getTransactionReceipt.substring(25));
         String result = balanceObject.getString("_hex");
         System.out.println("getTransactionReceipt：" + getTransactionReceipt.substring(25));
@@ -208,7 +209,7 @@ public class queryApi extends Base {
     @Test(enabled = true, description = "Test GetTransaction from eth jsonRpc")
     public void test14GetTransactionFromJsonRpc() throws IOException {
         functionName = "getTransaction ";
-        String getTransaction = executeJavaScript(ethSdkDir + functionName + "0x0ec19a0bc2ced93cebe5951010d9ee59abc6025881870b961829103ca68ae122");
+        String getTransaction = executeJavaScript(ethSdkDir + functionName + transactionId);
 
         System.out.println("test14_request:" + ethSdkDir + functionName + transactionId);
         System.out.println("getTransaction：" + getTransaction);
@@ -245,29 +246,32 @@ public class queryApi extends Base {
         Assert.assertNotNull(result.contains("txid"));
 
     }
+
     @Test(enabled = false, description = "Test EstimateGas from eth jsonRpc")
     public void test16DeployContractFromJsonRpc() throws IOException {
         functionName = "deployContract ";
-        String result = executeJavaScript(ethSdkDir + functionName + privateKey );
-        System.out.println("test16_request:" + ethSdkDir + functionName + privateKey );
+        String result = executeJavaScript(ethSdkDir + functionName + privateKey);
+        System.out.println("test16_request:" + ethSdkDir + functionName + privateKey);
         System.out.println("result：" + result);
         Assert.assertNotNull(result.contains("txid"));
 
     }
+
     @Test(enabled = false, description = "Test EstimateGas from eth jsonRpc")
     public void test17TriggerContractFromJsonRpc() throws IOException {
         functionName = "triggerContract ";
-        String result = executeJavaScript(ethSdkDir + functionName + privateKey );
-        System.out.println("test17_request:" + ethSdkDir + functionName + privateKey );
+        String result = executeJavaScript(ethSdkDir + functionName + privateKey);
+        System.out.println("test17_request:" + ethSdkDir + functionName + privateKey);
         System.out.println("result：" + result);
         Assert.assertNotNull(result.contains("txid"));
 
     }
+
     @Test(enabled = false, description = "Test EstimateGas from eth jsonRpc")
     public void test18CallContractFromJsonRpc() throws IOException {
         functionName = "callContract ";
-        String result = executeJavaScript(ethSdkDir + functionName + privateKey );
-        System.out.println("test18_request:" + ethSdkDir + functionName + privateKey );
+        String result = executeJavaScript(ethSdkDir + functionName + privateKey);
+        System.out.println("test18_request:" + ethSdkDir + functionName + privateKey);
         System.out.println("result：" + result);
         Assert.assertNotNull(result.contains("txid"));
 

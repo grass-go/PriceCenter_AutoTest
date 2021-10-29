@@ -11,7 +11,8 @@ const tronWeb = new TronWeb(fullNode,solidityNode,eventServer,privateKey);*/
 const ethers = require('tronethers')
 //const providerMainnet = new ethers.providers.JsonRpcProvider('http://101.200.46.37:50545');
 
-const providerMainnet = new ethers.providers.JsonRpcProvider('http://47.95.206.44:50545');
+const providerMainnet = new ethers.providers.JsonRpcProvider({url:'http://47.95.206.44:50545',fullHost: 'http://47.95.206.44:50090'});
+
 /*const providerMainnet = new ethers.providers.JsonRpcProvider({ url: 'http://47.252.3.238:50546',
     fullHost: 'http://47.252.3.238:8090',});*/
 //const providerNilenet = new ethers.providers.JsonRpcProvider('http://123.56.166.152:30080');
