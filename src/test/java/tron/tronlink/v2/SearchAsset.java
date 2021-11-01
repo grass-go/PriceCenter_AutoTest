@@ -195,7 +195,7 @@ public class SearchAsset extends TronlinkBase {
     Assert.assertFalse(tokenidArray.contains("1004092"));
   }
 
-  @Test(enabled = true, description = "TRC20: Coin isOfficial=-5(transcan level=4,诈骗币) only can search by contract address, can't name and symbol" )
+  @Test(enabled = false, description = "TRC20: Coin isOfficial=-5(transcan level=4,诈骗币) only can search by contract address, can't name and symbol" )
   public void searchAssetList04() {
     //trc20 blacklist coin: TET8rVqicX1Zu93W3LHQGg7sFX2vEGktUR: EthLend:LEND
     //blackTokens.put("TET8rVqicX1Zu93W3LHQGg7sFX2vEGktUR", new Token ("EthLend", "LEND", 2, -5, 1));
