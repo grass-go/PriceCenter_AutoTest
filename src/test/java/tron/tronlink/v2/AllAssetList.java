@@ -179,7 +179,7 @@ public class AllAssetList extends TronlinkBase {
           Object expPrice = JSONPath.eval(transcanRspContent, String.join("", "$..trc20_tokens[contract_address='", contractAddr, "'].market_info.priceInTrx"));
           JSONArray expectPriceArray = (JSONArray) expPrice;
           BigDecimal expectPrice = new BigDecimal(expectPriceArray.get(0).toString());
-
+          // assert the gap less than 20% of actual pirce
           BigDecimal absgap = expectPrice.subtract(actualPrice).abs();
           BigDecimal FIVE = new BigDecimal("5");
           BigDecimal tolerance = actualPrice.divide(FIVE, 6, 1);

@@ -232,7 +232,8 @@ public class delAsset extends TronlinkBase {
         BigDecimal balance = new BigDecimal(balanceObject.toString());
         log.info("===============########debug##########============");
         log.info("balance:"+balance.toString());
-        BigDecimal fullbalance = new BigDecimal("6.792603");
+        //BigDecimal fullbalance = new BigDecimal("6.792603");
+        BigDecimal fullbalance = new BigDecimal("5.079483");
         BigDecimal absgap = fullbalance.subtract(balance).abs();
         log.info("absgap:"+absgap.toString());
         BigDecimal tolerance = new BigDecimal("1");
