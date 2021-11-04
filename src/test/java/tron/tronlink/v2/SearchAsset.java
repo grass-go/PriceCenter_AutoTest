@@ -153,7 +153,7 @@ public class SearchAsset extends TronlinkBase {
     }
 
   }
-  @Test(enabled = false, description = "TRC10: Coin isOfficial=-5(transcan level=4,诈骗币) only can search by contract address, can't name and symbol" )
+  @Test(enabled = true, description = "TRC10: Coin isOfficial=-5(transcan level=4,诈骗币) only can search by contract address, can't name and symbol" )
   public void searchAssetList03(){
     //trc10 blacklist coin: 1004092:NAPCoin:NAP
     //blackTokens.put("1004092", new Token("NAPCoin", "NAP", 1, -5, 1));
