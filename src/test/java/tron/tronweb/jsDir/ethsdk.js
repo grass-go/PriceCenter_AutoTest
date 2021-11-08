@@ -16,12 +16,14 @@ const ethers = require('tronethers')
 });*/
 
 //021
-//const providerMainnet = new ethers.providers.JsonRpcProvider({url:'http://47.95.206.44:50545',fullHost: 'http://47.95.206.44:50090'});
+const providerMainnet = new ethers.providers.JsonRpcProvider({url:'http://47.95.206.44:50545',fullHost: 'http://47.95.206.44:50090'});
 
 
 //nile
+/*
 const providerMainnet = new ethers.providers.JsonRpcProvider({ url: 'http://47.252.3.238:50546',
     fullHost: 'http://47.252.3.238:8090',});
+*/
 
 
 
@@ -162,21 +164,6 @@ async function call(input1, input2, input3) {
     console.log(t);
 }
 
-
-
-/*async function connect(privateKey,toAccount){
-
-    const wallet = new ethers.Wallet(privateKey);
-    const signer = wallet.connect(providerMainnet)
-
-    const txResp = await signer.sendTransaction({
-        to: toAccount,
-        value: BigInt(5678),
-    });
-    console.log(txResp);
-
-}*/
-
 async function fromMnemonic(toAccount) {
 
     const wallet = await new ethers.Wallet.fromMnemonic(
@@ -190,6 +177,18 @@ async function fromMnemonic(toAccount) {
         value: BigInt(5678),
     });
     console.log(txResp);
+}
+
+
+async function fromMnemonic1(toAccount) {
+
+
+    console.log(ethers.utils.getAddress(ethers.Wallet.fromMnemonic( 'office vicious language order rival physical custom anger receive youth crystal wish',"m/44'/195'/0'/0/0" ).address,3))
+    console.log(ethers.utils.getAddress(ethers.Wallet.fromMnemonic( 'office vicious language order rival physical custom anger receive youth crystal wish',"m/44'/195'/1'/0/0" ).address,3))
+    console.log(ethers.utils.getAddress(ethers.Wallet.fromMnemonic( 'office vicious language order rival physical custom anger receive youth crystal wish',"m/44'/195'/2'/0/0" ).address,3))
+    console.log(ethers.utils.getAddress(ethers.Wallet.fromMnemonic( 'office vicious language order rival physical custom anger receive youth crystal wish',"m/44'/195'/3'/0/0" ).address,3))
+    console.log(ethers.utils.getAddress(ethers.Wallet.fromMnemonic( 'office vicious language order rival physical custom anger receive youth crystal wish',"m/44'/195'/4'/0/0" ).address,3))
+
 }
 
 
@@ -641,6 +640,10 @@ switch (arguments[0]) {
     case "fromMnemonic":
         fromMnemonic(arguments[1])
         break;
+
+    case "fromMnemonic1":
+        fromMnemonic1(arguments[1])
+        break;
     case "createRandom":
         createRandom(arguments[1])
         break;
@@ -663,10 +666,3 @@ switch (arguments[0]) {
         break;
 }
 
-
-//console.log(ethers.utils.getAddress(ethers.Wallet.fromMnemonic( 'office vicious language order rival physical custom anger receive youth crystal wish',"m/44'/195'/0'/0/0" ).address,3))
-//console.log(ethers.utils.getAddress(ethers.Wallet.fromMnemonic( 'office vicious language order rival physical custom anger receive youth crystal wish',"m/44'/195'/1'/0/0" ).address,3))
-//console.log(ethers.utils.getAddress(ethers.Wallet.fromMnemonic( 'office vicious language order rival physical custom anger receive youth crystal wish',"m/44'/195'/2'/0/0" ).address,3))
-//console.log(ethers.utils.getAddress(ethers.Wallet.fromMnemonic( 'office vicious language order rival physical custom anger receive youth crystal wish',"m/44'/195'/3'/0/0" ).address,3))
-//console.log(ethers.utils.getAddress(ethers.Wallet.fromMnemonic( 'office vicious language order rival physical custom anger receive youth crystal wish',"m/44'/195'/4'/0/0" ).address,3))
-//console.log(ethers.utils.getAddress(ethers.Wallet.fromMnemonic( 'office vicious language order rival physical custom anger receive youth crystal wish',"m/44'/195'/5'/0/0" ).address,3))

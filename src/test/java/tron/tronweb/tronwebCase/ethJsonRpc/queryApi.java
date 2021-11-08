@@ -345,8 +345,17 @@ public class queryApi extends Base {
     Assert.assertTrue(getTransaction.contains("wait"));
   }
 
+  @Test(enabled = true, description = "Test fromMnemonic from eth jsonRpc")
+  public void test22testFromMnemonic1() throws IOException {
+    functionName = "fromMnemonic1 ";
+    String result = executeJavaScript(ethSdkDir + functionName);
+    System.out.println("request:" + ethSdkDir + functionName);
+    System.out.println("result：" + result);
+    Assert.assertNotNull(result);
+  }
+
   @Test(enabled = false, description = "Test SendTrxFromJsonRp from eth jsonRpc")
-  public void test22SendTrxFromJsonRpc() throws IOException {
+  public void test23SendTrxFromJsonRpc() throws IOException {
     functionName = "sendTrx ";
     String result = executeJavaScript(ethSdkDir + functionName + privateKey + to);
     System.out.println("request:" + ethSdkDir + functionName + privateKey + to);
@@ -355,7 +364,7 @@ public class queryApi extends Base {
   }
 
   @Test(enabled = false, description = "Test deployWithSendTransaction from eth jsonRpc")
-  public void test23deployWithSendTransaction() throws IOException {
+  public void test24deployWithSendTransaction() throws IOException {
     functionName = "deployWithSendTransaction ";
     String result = executeJavaScript(ethSdkDir + functionName);
     System.out.println("request:" + ethSdkDir + functionName);
@@ -364,7 +373,7 @@ public class queryApi extends Base {
   }
 
   @Test(enabled = false, description = "Test connect from eth jsonRpc")
-  public void test24ConnectFromJsonRpc() throws IOException {
+  public void test25ConnectFromJsonRpc() throws IOException {
     functionName = "connect ";
     String result = executeJavaScript(ethSdkDir + functionName + privateKey + to);
     System.out.println("request:" + ethSdkDir + functionName + privateKey + to);
@@ -373,7 +382,7 @@ public class queryApi extends Base {
   }
 
   @Test(enabled = false, description = "Test triggerWithSendTransaction from eth jsonRpc")
-  public void test25triggerWithSendTransaction() throws IOException {
+  public void test26triggerWithSendTransaction() throws IOException {
     functionName = "triggerWithSendTransaction ";
     String result = executeJavaScript(ethSdkDir + functionName);
     System.out.println("request:" + ethSdkDir + functionName);
@@ -382,7 +391,7 @@ public class queryApi extends Base {
   }
 
   @Test(enabled = false, description = "Test fromMnemonic from eth jsonRpc")
-  public void test26testFromMnemonic() throws IOException {
+  public void test27testFromMnemonic() throws IOException {
     functionName = "fromMnemonic ";
     String result = executeJavaScript(ethSdkDir + functionName + to);
     System.out.println("request:" + ethSdkDir + functionName + to);
@@ -391,7 +400,7 @@ public class queryApi extends Base {
   }
 
   @Test(enabled = false, description = "Test createRandom from eth jsonRpc")
-  public void test27testCreateRandom() throws IOException {
+  public void test28testCreateRandom() throws IOException {
     functionName = "createRandom ";
     String result = executeJavaScript(ethSdkDir + functionName + to);
     System.out.println("request:" + ethSdkDir + functionName + to);
@@ -400,7 +409,7 @@ public class queryApi extends Base {
   }
 
   @Test(enabled = false, description = "Test mnemonic from eth jsonRpc")
-  public void test28testMnemonic() throws IOException {
+  public void test29testMnemonic() throws IOException {
     functionName = "mnemonic ";
     String result = executeJavaScript(ethSdkDir + functionName);
     System.out.println(result);
@@ -408,7 +417,7 @@ public class queryApi extends Base {
   }
 
   @Test(enabled = false, description = "Test createWalletByPrivate from eth jsonRpc")
-  public void test29testCreateWalletByPrivate() throws IOException {
+  public void test30testCreateWalletByPrivate() throws IOException {
     functionName = "createWalletByPrivate ";
     String result = executeJavaScript(ethSdkDir + functionName + privateKey + to);
     System.out.println("request:" + ethSdkDir + functionName + privateKey + to);
@@ -417,7 +426,7 @@ public class queryApi extends Base {
   }
 
   @Test(enabled = false, description = "Test fromEncryptedJson from eth jsonRpc")
-  public void test30testFromEncryptedJson() throws IOException {
+  public void test31testFromEncryptedJson() throws IOException {
     functionName = "fromEncryptedJson ";
     String result = executeJavaScript(ethSdkDir + functionName + to);
     System.out.println("request:" + ethSdkDir + functionName + to);
@@ -426,7 +435,7 @@ public class queryApi extends Base {
   }
 
   @Test(enabled = false, description = "Test fromEncryptedJsonSync from eth jsonRpc")
-  public void test31testFromEncryptedJsonSync() throws IOException {
+  public void test32testFromEncryptedJsonSync() throws IOException {
     functionName = "fromEncryptedJsonSync ";
     String result = executeJavaScript(ethSdkDir + functionName + to);
     System.out.println(result);
@@ -436,7 +445,7 @@ public class queryApi extends Base {
   }
 
   @Test(enabled = false, description = "Test deployContract from eth jsonRpc")
-  public void test32DeployContractFromJsonRpc() throws IOException {
+  public void test33DeployContractFromJsonRpc() throws IOException {
     functionName = "deployContract ";
     String result = executeJavaScript(ethSdkDir + functionName + privateKey);
     System.out.println("request:" + ethSdkDir + functionName + privateKey);
@@ -445,7 +454,7 @@ public class queryApi extends Base {
   }
 
   @Test(enabled = false, description = "Test triggerContract from eth jsonRpc")
-  public void test33TriggerContractFromJsonRpc() throws IOException {
+  public void test34TriggerContractFromJsonRpc() throws IOException {
     functionName = "triggerContract ";
     String result = executeJavaScript(ethSdkDir + functionName + privateKey);
     System.out.println("request:" + ethSdkDir + functionName + privateKey);
@@ -454,7 +463,7 @@ public class queryApi extends Base {
   }
 
   @Test(enabled = false, description = "Test callContract from eth jsonRpc")
-  public void test34CallContractFromJsonRpc() throws IOException {
+  public void test35CallContractFromJsonRpc() throws IOException {
     functionName = "callContract ";
     String result = executeJavaScript(ethSdkDir + functionName + privateKey);
     System.out.println("request:" + ethSdkDir + functionName + privateKey);
@@ -463,7 +472,7 @@ public class queryApi extends Base {
   }
 
   @Test(enabled = false, description = "Test get balance from eth jsonRpc")
-  public void test35GetBalanceFromJsonRpcWithEthAddressUseSigner() throws IOException {
+  public void test36GetBalanceFromJsonRpcWithEthAddressUseSigner() throws IOException {
     functionName = "ethGetBalanceUseSigner ";
     String balanceInfo = executeJavaScript(ethSdkDir + functionName + privateKey + usdtEthAddress);
     System.out.println(ethSdkDir + functionName + usdtEthAddress);
@@ -474,7 +483,7 @@ public class queryApi extends Base {
   }
 
   @Test(enabled = false, description = "Test get balance from eth jsonRpc")
-  public void test36GetBalanceFromJsonRpcWithTronAddressUseSigner() throws IOException {
+  public void test37GetBalanceFromJsonRpcWithTronAddressUseSigner() throws IOException {
     functionName = "ethGetBalanceUseSigner ";
     String balanceInfo =
         executeJavaScript(
