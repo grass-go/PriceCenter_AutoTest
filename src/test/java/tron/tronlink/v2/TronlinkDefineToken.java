@@ -26,7 +26,7 @@ public class TronlinkDefineToken extends TronlinkBase {
     JSONObject jsonObject = new JSONObject();
     Map<String, String> params = new HashMap<>();
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void Case001SearchBeforeAdd(){
         //sync,like delete self token
         params.clear();
@@ -62,7 +62,7 @@ public class TronlinkDefineToken extends TronlinkBase {
         Assert.assertEquals("[]",tokenContent.toString());
 
     }
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void Case002QueryBeforeAdd(){
         //sync at first
         params.clear();
@@ -111,7 +111,7 @@ public class TronlinkDefineToken extends TronlinkBase {
         Assert.assertEquals("2", type);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void Case003Add(){
         //sync
         params.clear();
@@ -152,7 +152,7 @@ public class TronlinkDefineToken extends TronlinkBase {
         Assert.assertTrue(data);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void Case004QueryAfterAdd(){
         //first add, no matter add before or not.
         //add
@@ -208,7 +208,7 @@ public class TronlinkDefineToken extends TronlinkBase {
 
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void Case005SearchAfterAdd(){
         //query contract address can get result.
         params.clear();
@@ -257,7 +257,7 @@ public class TronlinkDefineToken extends TronlinkBase {
         dataContent = responseContent.getJSONObject("data");
         Assert.assertEquals("0",dataContent.get("count").toString());
     }
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void Case006assetListAfterAdd(){
         params.clear();
         params.put("nonce","12345");
@@ -279,7 +279,7 @@ public class TronlinkDefineToken extends TronlinkBase {
         Assert.assertEquals("TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t",issueAddress.toString());
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void Case007allAssetAfterAdd(){
         params.clear();
         params.put("nonce","12345");
@@ -301,7 +301,7 @@ public class TronlinkDefineToken extends TronlinkBase {
         Assert.assertEquals("TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t",issueAddress.toString());
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void Case008delAssetAfterAdd(){
         // del self token
         List<String> tokenDelList = new ArrayList<>();
