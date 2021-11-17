@@ -10,13 +10,13 @@ const tronWeb = new TronWeb(fullNode,solidityNode,efventServer,privateKey);*/
 
 const ethers = require('tronethers')
 //010
-const providerMainnet = new ethers.providers.JsonRpcProvider({
+/*const providerMainnet = new ethers.providers.JsonRpcProvider({
     url: 'http://101.200.46.37:50545',
     fullHost: 'http://101.200.46.37:50091'
-});
+});*/
 
 //021
-//const providerMainnet = new ethers.providers.JsonRpcProvider({url:'http://47.95.206.44:50545',fullHost: 'http://47.95.206.44:50090'});
+const providerMainnet = new ethers.providers.JsonRpcProvider({url:'http://47.95.206.44:50545',fullHost: 'http://47.95.206.44:50090'});
 
 
 //nile
