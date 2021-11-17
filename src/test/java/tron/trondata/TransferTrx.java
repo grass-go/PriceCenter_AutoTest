@@ -28,7 +28,7 @@ public class TransferTrx extends TrondataBase {
     params.put("db_version","1");
     int index;
     for(index=0; index<5;index++){
-      log.info("cur index is" + index);
+      log.info("cur index is " + index);
 
       response = TronlinkApiList.getTransferTrx(params);
       Assert.assertEquals(200, response.getStatusLine().getStatusCode());

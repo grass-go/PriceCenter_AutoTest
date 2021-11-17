@@ -113,10 +113,21 @@ public class CreateMultiTransaction {
         object.put("address",address258);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
-        res = TronlinkApiList.multiTransaction(object);
-        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(res);
-        Assert.assertEquals(0,responseContent.getIntValue("code"));
+
+        int index;
+        for (index=0; index<5;index++){
+            log.info("cur index is " + index);
+            res = TronlinkApiList.multiTransaction(object);
+            if(res.getStatusLine().getStatusCode() == 200){
+                index=6;
+            }
+            else {
+                continue;
+            }
+            responseContent = TronlinkApiList.parseJsonObResponseContent(res);
+            Assert.assertEquals(0,responseContent.getIntValue("code"));
+        }
+        Assert.assertEquals(7, index);
     }
 
     @Test(enabled = false,description = "nulti sign transfer trc20,disable because no permission")
