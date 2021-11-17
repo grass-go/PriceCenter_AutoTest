@@ -87,6 +87,16 @@ async function getGasPrice() {
     console.log(price);
 }
 
+async function createRandom(toAccount) {
+
+    const wallet = await new ethers.Wallet.createRandom();
+//    console.log(wallet);
+    console.log( wallet.address)
+    const signer = wallet.connect(provider)
+    console.log(signer.provider)
+
+
+}
 
 async function getNetworkWithEmpty() {
     const network = await provider.getNetwork();
@@ -144,6 +154,9 @@ switch (arguments[0]) {
         break;
     case "getTransactionReceipt":
         getTransactionReceipt(arguments[1])
+        break;
+    case "createRandom":
+        createRandom(arguments[1])
         break;
     default:
         break;

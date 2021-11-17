@@ -10,20 +10,18 @@ const tronWeb = new TronWeb(fullNode,solidityNode,efventServer,privateKey);*/
 
 const ethers = require('tronethers')
 //010
-/*const providerMainnet = new ethers.providers.JsonRpcProvider({
+const providerMainnet = new ethers.providers.JsonRpcProvider({
     url: 'http://101.200.46.37:50545',
     fullHost: 'http://101.200.46.37:50091'
-});*/
+});
 
 //021
-const providerMainnet = new ethers.providers.JsonRpcProvider({url:'http://47.95.206.44:50545',fullHost: 'http://47.95.206.44:50090'});
+//const providerMainnet = new ethers.providers.JsonRpcProvider({url:'http://47.95.206.44:50545',fullHost: 'http://47.95.206.44:50090'});
 
 
 //nile
-/*
-const providerMainnet = new ethers.providers.JsonRpcProvider({ url: 'http://47.252.3.238:50546',
-    fullHost: 'http://47.252.3.238:8090',});
-*/
+/*const providerMainnet = new ethers.providers.JsonRpcProvider({ url: 'http://47.252.3.238:50546',
+    fullHost: 'http://47.252.3.238:8090',});*/
 
 
 
@@ -197,6 +195,8 @@ async function createRandom(toAccount) {
     const wallet = await new ethers.Wallet.createRandom();
 //    console.log(wallet);
     console.log( wallet.address)
+    const signer = wallet.connect(providerMainnet)
+    console.log(signer.provider)
 
 
 }
@@ -475,6 +475,335 @@ async function triggerContract(privateKey) {
 
 }
 
+
+
+
+
+async function triggerContract1(privateKey) {
+
+    const abi1 = [{
+        "outputs": [{
+            "type": "uint256"
+        }],
+        "name": "getUint",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "bytes"
+        }],
+        "name": "getBytes",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "bool"
+        }],
+        "name": "getBool",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "int256[2][2]"
+        }],
+        "inputs": [{
+            "name": "param",
+            "type": "int256[2][2]"
+        }],
+        "name": "changeInt256Array",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "bytes32"
+        }],
+        "name": "getBytes32",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "uint8"
+        }],
+        "name": "getActionChoices",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "address"
+        }],
+        "name": "getAddress",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "bytes32"
+        }],
+        "inputs": [{
+            "name": "param",
+            "type": "bytes32"
+        }],
+        "name": "changeBytes32",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "int64[]"
+        }],
+        "name": "getInt64NegativeArray",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "int256"
+        }],
+        "name": "getNegativeInt",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "string"
+        }],
+        "inputs": [{
+            "name": "param",
+            "type": "string"
+        }],
+        "name": "changeString",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "int256"
+        }],
+        "name": "getInt",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "bool"
+        }],
+        "inputs": [{
+            "name": "param",
+            "type": "bool"
+        }],
+        "name": "changeBool",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "int256[2][2]"
+        }],
+        "name": "getInt256Array",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "string"
+        }],
+        "name": "getString",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "uint8"
+        }],
+        "inputs": [{
+            "name": "param",
+            "type": "uint8"
+        }],
+        "name": "changeActionChoices",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "uint256"
+        }],
+        "inputs": [{
+            "name": "param",
+            "type": "uint256"
+        }],
+        "name": "changeUint",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "int32[2][]"
+        }],
+        "inputs": [{
+            "name": "param",
+            "type": "int32[2][]"
+        }],
+        "name": "changeInt32Array",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "int64[]"
+        }],
+        "inputs": [{
+            "name": "param",
+            "type": "int64[]"
+        }],
+        "name": "changeInt64NegativeArray",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "uint256"
+        }],
+        "constant": true,
+        "inputs": [{
+            "type": "address"
+        }],
+        "name": "mapa",
+        "stateMutability": "view",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "uint256"
+        }],
+        "inputs": [{
+            "name": "param",
+            "type": "uint256"
+        }],
+        "name": "setMapping",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "int256"
+        }],
+        "inputs": [{
+            "name": "param",
+            "type": "int256"
+        }],
+        "name": "changeNegativeInt",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "int32[2][]"
+        }],
+        "name": "getInt32Array",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "int256"
+        }],
+        "inputs": [{
+            "name": "param",
+            "type": "int256"
+        }],
+        "name": "changeInt",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "bytes"
+        }],
+        "inputs": [{
+            "name": "param",
+            "type": "bytes"
+        }],
+        "name": "changeBytes",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "outputs": [{
+            "type": "address"
+        }],
+        "inputs": [{
+            "name": "param",
+            "type": "address"
+        }],
+        "name": "changeAddress",
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }, {
+        "payable": true,
+        "stateMutability": "payable",
+        "type": "constructor"
+    }, {
+        "inputs": [{
+            "type": "int256"
+        }],
+        "name": "log",
+        "type": "event"
+    }, {
+        "inputs": [{
+            "type": "uint256"
+        }],
+        "name": "log",
+        "type": "event"
+    }, {
+        "inputs": [{
+            "type": "bool"
+        }],
+        "name": "log",
+        "type": "event"
+    }, {
+        "inputs": [{
+            "type": "address"
+        }],
+        "name": "log",
+        "type": "event"
+    }, {
+        "inputs": [{
+            "type": "bytes32"
+        }],
+        "name": "log",
+        "type": "event"
+    }, {
+        "inputs": [{
+            "type": "bytes"
+        }],
+        "name": "log",
+        "type": "event"
+    }, {
+        "inputs": [{
+            "type": "string"
+        }],
+        "name": "log",
+        "type": "event"
+    }, {
+        "inputs": [{
+            "type": "uint8"
+        }],
+        "name": "log",
+        "type": "event"
+    }, {
+        "inputs": [{
+            "type": "int64[]"
+        }],
+        "name": "log",
+        "type": "event"
+    }, {
+        "inputs": [{
+            "type": "int32[2][]"
+        }],
+        "name": "log",
+        "type": "event"
+    }, {
+        "inputs": [{
+            "type": "int256[2][2]"
+        }],
+        "name": "log",
+        "type": "event"
+    }];
+
+
+    const signer = new ethers.Wallet(privateKey, providerMainnet);
+    const contractAddress = '0xC0B18081916B857FBDC9F2B330FD2711BF9FD729';
+
+
+    const contract = new ethers.Contract(contractAddress, abi1, signer);
+
+    const txResp = await contract.changeInt32Array([[3,3],[3,4],[5,6]],{ gas: 1000000 });
+    console.log(txResp);
+
+}
+
+
 async function connect(privateKey,toAccount){
 
     const wallet = new ethers.Wallet(privateKey);
@@ -529,6 +858,7 @@ async function callContract(privateKey) {
         },
         {
             inputs: [
+
                 {
                     internalType: 'uint256',
                     name: '_name',
@@ -614,6 +944,9 @@ switch (arguments[0]) {
         break;
     case "triggerContract":
         triggerContract(arguments[1])
+        break;
+    case "triggerContract1":
+        triggerContract1(arguments[1])
         break;
 
     case "callContract":
