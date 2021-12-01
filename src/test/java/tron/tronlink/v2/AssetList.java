@@ -130,7 +130,7 @@ public class AssetList extends TronlinkBase {
       int curBiggerFlag = curTRXCount.compareTo(nextTRXCount);
       Assert.assertTrue(curBiggerFlag >= 0);
 
-      if (tokenArray.getJSONObject(j).getString("contractAddress")=="TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t")
+      if (tokenArray.getJSONObject(j).getString("contractAddress").equals("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"))
       {
         Assert.assertEquals(1,tokenArray.getJSONObject(j).getIntValue("recommandSortId"));
       }
