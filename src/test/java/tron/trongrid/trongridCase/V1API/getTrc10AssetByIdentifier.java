@@ -29,12 +29,12 @@ public class getTrc10AssetByIdentifier extends V1Base {
     Assert.assertTrue(assetData.getLong("num") == 1);
     Assert.assertTrue(assetData.getLong("precision") == 6);
     Assert.assertTrue(assetData.getLong("end_time") == 1548000001000L);
-    Assert.assertTrue(assetData.getString("description").equals("Official Token of BitTorrent Protocol"));
+    Assert.assertTrue(assetData.getString("description").contains("Official Token of BitTorrent Protocol"));
     Assert.assertEquals(assetData.getString("owner_address").substring(0,2),"41");
     Assert.assertTrue(assetData.getLong("start_time")== 1548000000000L);
-    Assert.assertEquals(assetData.getString("name"), "BitTorrent");
+    Assert.assertEquals(assetData.getString("name"), "BitTorrent Old");
     Assert.assertTrue(assetData.getInteger("id") == 1002000);
-    Assert.assertEquals(assetData.getString("abbr"),"BTT");
+    Assert.assertEquals(assetData.getString("abbr"),"BTTOLD");
   }
 
   /**
