@@ -177,7 +177,7 @@ public class delAsset extends TronlinkBase {
         Assert.assertTrue(responseContent.containsKey("data"));
         Object shortNames = JSONPath.eval(responseContent, String.join("","$..data.token[*].shortName"));
         JSONArray shortNameArray=(JSONArray)shortNames;
-        Assert.assertTrue(shortNameArray.contains("BTT"));
+        Assert.assertTrue(shortNameArray.contains("BTTOLD"));
         Assert.assertTrue(shortNameArray.contains("SUNOLD"));
 
         //Check assetList V1 page
@@ -185,7 +185,7 @@ public class delAsset extends TronlinkBase {
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         Object shortNamesV1 = JSONPath.eval(responseContent, String.join("","$..data.token[*].shortName"));
         JSONArray shortNameArrayV1=(JSONArray)shortNames;
-        Assert.assertTrue(shortNameArrayV1.contains("BTT"));
+        Assert.assertTrue(shortNameArrayV1.contains("BTTOLD"));
         Assert.assertTrue(shortNameArrayV1.contains("SUNOLD"));
 
         //check allAssetList page
@@ -196,7 +196,7 @@ public class delAsset extends TronlinkBase {
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         shortNames = JSONPath.eval(responseContent, String.join("","$..data.token[*].shortName"));
         shortNameArray = (JSONArray)shortNames;
-        Assert.assertTrue(shortNameArray.contains("BTT"));
+        Assert.assertTrue(shortNameArray.contains("BTTOLD"));
         Assert.assertTrue(shortNameArray.contains("SUNOLD"));
 
         //check getAllCollection page

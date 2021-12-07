@@ -88,15 +88,15 @@ public class NewAssetList extends TronlinkBase {
     */
 
     //check BitTorrent balance
-    Object actualBT = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent'].balanceStr");
+    Object actualBT = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].balanceStr");
     JSONArray actualBTArray=(JSONArray)actualBT;
     Assert.assertEquals("9", actualBTArray.get(0));
-    Object actualBTPrice = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent'].price");
+    Object actualBTPrice = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].price");
     JSONArray actualBTPriceArray=(JSONArray)actualBTPrice;
     BigDecimal btPrice = (BigDecimal) actualBTPriceArray.get(0);
     int btflag = btPrice.compareTo(BigDecimal.ZERO);
     Assert.assertTrue(btflag>0);
-    Object actualRSIPrice = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent'].recommandSortId");
+    Object actualRSIPrice = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].recommandSortId");
     JSONArray actualRSIArray=(JSONArray)actualRSIPrice;
     Assert.assertEquals(0,actualRSIArray.get(0));
 
