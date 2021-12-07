@@ -6,6 +6,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.spongycastle.util.encoders.Hex;
@@ -14,18 +15,21 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.tron.api.GrpcAPI;
 import org.tron.api.WalletGrpc;
+import org.tron.common.crypto.ECKey;
 import org.tron.common.parameter.CommonParameter;
-import org.tron.common.utils.Base58;
-import org.tron.common.utils.ByteArray;
-import org.tron.common.utils.Commons;
-import org.tron.common.utils.Sha256Hash;
+import org.tron.common.utils.*;
+import org.tron.core.Wallet;
 import org.tron.core.services.http.JsonFormat;
 import org.tron.protos.Protocol;
 import org.tron.protos.contract.*;
 import tron.common.TronlinkApiList;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.concurrent.TimeUnit;
+import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 @Slf4j
 public class CreateMultiTransactionPerf {
@@ -140,7 +144,182 @@ public class CreateMultiTransactionPerf {
     }
 
 
-    @Test(enabled = true,invocationCount = 300, description = "send coin 100 times")
+    @Test(enabled = true, description = "generate 4000 users")
+    public void GenerateUsers() {
+        for(int i=0; i<4000; i++) {
+            ECKey curECKey = new ECKey(Utils.getRandom());
+            byte[] curAddress_byte = curECKey.getAddress();
+            String curKey = ByteArray.toHexString(curECKey.getPrivKeyBytes());
+            String address_base58 = encode58Check(curAddress_byte);
+            String address_hex = ByteArray.toHexString(curAddress_byte);
+            log.info(address_base58+" : "+curKey+" : "+address_hex);
+        }
+    }
+
+    @Test(enabled = true, description = "generate 3950 users")
+    public void sendCoinsBetweenUsers() {
+        File file = new File("/Users/wqq/Perf/perf-msg/data/accountInfo.txt");
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            String tempString = null;
+            int line = 1;
+            while ((tempString = reader.readLine()) != null) {
+                // 显示行号
+                System.out.println("line " + line + ": " + tempString);
+                String[] accounts = tempString.split("\t");
+                String fromAddress = accounts[0];
+                byte[] fromAddress_byte = Commons.decode58Check(fromAddress);
+                String fromKey = accounts[1];
+                String toAddress = accounts[2];
+                byte[] toAddress_byte = Commons.decode58Check(toAddress);
+
+                //channelFull = ManagedChannelBuilder.forTarget(fullnode).usePlaintext(true).build();
+                //blockingStubFull = WalletGrpc.newBlockingStub(channelFull);
+
+                TronlinkApiList.sendcoinDirectely(toAddress_byte, 33L, fromAddress_byte, fromKey,
+                        blockingStubFull);
+                line++;
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                }
+            }
+        }
+
+    }
+
+    @Test(enabled = true, description = "active 4000 users")
+    public void active4000Users() {
+        File file = new File("/Users/wqq/Perf/perf-msg/data/accountInfo2.txt");
+        String fromAddress = "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t";
+        byte[] fromAddress_byte = Commons.decode58Check(fromAddress);
+        String fromKey = "b47e686119f2236f38cd0e8a4fe20f8a7fc5cb4284d36131f447c63857e3dac9";
+                BufferedReader reader = null;
+        try {
+
+            reader = new BufferedReader(new FileReader(file));
+            String tempString = null;
+            int line = 1;
+            while ((tempString = reader.readLine()) != null) {
+                Thread.sleep(500);
+                // 显示行号
+                System.out.println("line " + line + ": " + tempString);
+                String[] accounts = tempString.split("\t");
+                String curAddress = accounts[0];
+                byte[] curAddress_byte = Commons.decode58Check(curAddress);
+
+                channelFull = ManagedChannelBuilder.forTarget(fullnode).usePlaintext(true).build();
+                blockingStubFull = WalletGrpc.newBlockingStub(channelFull);
+
+                TronlinkApiList.sendcoinDirectely(curAddress_byte, 1L, fromAddress_byte, fromKey,
+                        blockingStubFull);
+                line++;
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                }
+            }
+        }
+
+    }
+
+    @Test(enabled = true, description = "get 4000 users account")
+    public void get4000UsersAccount() {
+        File file = new File("/Users/wqq/Perf/perf-msg/data/accountInfo.txt");
+        BufferedReader reader = null;
+        try {
+
+            reader = new BufferedReader(new FileReader(file));
+            String tempString = null;
+            int line = 1;
+            while ((tempString = reader.readLine()) != null) {
+                Thread.sleep(500);
+                // 显示行号
+                System.out.println("line " + line + ": " + tempString);
+                String[] accounts = tempString.split("\t");
+                String curAddress = accounts[0];
+                byte[] curAddress_byte = Commons.decode58Check(curAddress);
+                String curAddressKey = accounts[1];
+
+                //channelFull = ManagedChannelBuilder.forTarget(fullnode).usePlaintext(true).build();
+                //blockingStubFull = WalletGrpc.newBlockingStub(channelFull);
+
+                Protocol.Account accountinfo = queryAccount(curAddressKey, blockingStubFull);
+                Long curBalance = accountinfo.getBalance();
+                log.info("curAddress:"+curAddress+" curbalance:"+curBalance);
+                //TronlinkApiList.sendcoinDirectely(curAddress_byte, 1L, fromAddress_byte, fromKey,
+                //        blockingStubFull);
+                line++;
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                }
+            }
+        }
+
+    }
+
+    public static Protocol.Account queryAccount(String priKey,
+                                                WalletGrpc.WalletBlockingStub blockingStubFull) {
+        Wallet.setAddressPreFixByte((byte) 0x41);
+        byte[] address;
+        ECKey temKey = null;
+        try {
+            BigInteger priK = new BigInteger(priKey, 16);
+            temKey = ECKey.fromPrivate(priK);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        ECKey ecKey = temKey;
+        if (ecKey == null) {
+            String pubKey = loadPubKey(); //04 PubKey[128]
+            if (StringUtils.isEmpty(pubKey)) {
+                log.warn("Warning: QueryAccount failed, no wallet address !!");
+                return null;
+            }
+            byte[] pubKeyAsc = pubKey.getBytes();
+            byte[] pubKeyHex = Hex.decode(pubKeyAsc);
+            ecKey = ECKey.fromPublicOnly(pubKeyHex);
+        }
+        return grpcQueryAccount(ecKey.getAddress(), blockingStubFull);
+    }
+    public static String loadPubKey() {
+        Wallet.setAddressPreFixByte((byte) 0x41);
+        char[] buf = new char[0x100];
+        return String.valueOf(buf, 32, 130);
+    }
+    public static Protocol.Account grpcQueryAccount(byte[] address,
+                                                    WalletGrpc.WalletBlockingStub blockingStubFull) {
+        Wallet.setAddressPreFixByte((byte) 0x41);
+        ByteString addressBs = ByteString.copyFrom(address);
+        Protocol.Account request = Protocol.Account.newBuilder().setAddress(addressBs).build();
+        return blockingStubFull.getAccount(request);
+    }
+
+    @Test(enabled = true,invocationCount = 1, description = "send coin 100 times")
     public void sendCoinDirectely() {
         channelFull = ManagedChannelBuilder.forTarget(fullnode).usePlaintext(true).build();
         blockingStubFull = WalletGrpc.newBlockingStub(channelFull);
