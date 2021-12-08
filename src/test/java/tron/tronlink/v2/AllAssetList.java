@@ -181,10 +181,10 @@ public class AllAssetList extends TronlinkBase {
           BigDecimal expectPrice = new BigDecimal(expectPriceArray.get(0).toString());
           // assert the gap less than 20% of actual pirce
           BigDecimal absgap = expectPrice.subtract(actualPrice).abs();
-          BigDecimal FIVE = new BigDecimal("5");
-          BigDecimal tolerance = actualPrice.divide(FIVE, 6, 1);
+          BigDecimal Four = new BigDecimal("4");
+          BigDecimal tolerance = actualPrice.divide(Four, 6, 1);
           log.info("TranscanPrice:" + expectPrice.toString() + ", TronlinkServer Price:" + actualPrice.toString() + ", Tolerance: " + tolerance.toString() + ", absgap:" + absgap.toString());
-          //decide if absgap less than tolerance.
+          //decide if absgap less than tolerance. actual's 25%.
           Assert.assertTrue(absgap.compareTo(tolerance) == -1);
           index = 6;
         }
