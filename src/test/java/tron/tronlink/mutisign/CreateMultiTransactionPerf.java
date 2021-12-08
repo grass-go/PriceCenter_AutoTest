@@ -156,48 +156,11 @@ public class CreateMultiTransactionPerf {
         }
     }
 
-    @Test(enabled = true, description = "generate 3950 users")
-    public void sendCoinsBetweenUsers() {
-        File file = new File("/Users/wqq/Perf/perf-msg/data/accountInfo.txt");
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(file));
-            String tempString = null;
-            int line = 1;
-            while ((tempString = reader.readLine()) != null) {
-                // 显示行号
-                System.out.println("line " + line + ": " + tempString);
-                String[] accounts = tempString.split("\t");
-                String fromAddress = accounts[0];
-                byte[] fromAddress_byte = Commons.decode58Check(fromAddress);
-                String fromKey = accounts[1];
-                String toAddress = accounts[2];
-                byte[] toAddress_byte = Commons.decode58Check(toAddress);
 
-                //channelFull = ManagedChannelBuilder.forTarget(fullnode).usePlaintext(true).build();
-                //blockingStubFull = WalletGrpc.newBlockingStub(channelFull);
 
-                TronlinkApiList.sendcoinDirectely(toAddress_byte, 33L, fromAddress_byte, fromKey,
-                        blockingStubFull);
-                line++;
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e1) {
-                }
-            }
-        }
-
-    }
-
-    @Test(enabled = true, description = "active 4000 users")
-    public void active4000Users() {
-        File file = new File("/Users/wqq/Perf/perf-msg/data/accountInfo2.txt");
+    @Test(enabled = true, threadPoolSize = 1,invocationCount = 1, description = "send coins to perf users")
+    public void sendCoinToPerfUsers() {
+        File file = new File("/Users/wqq/Perf/perf-msg/data/AccountActive.txt");
         String fromAddress = "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t";
         byte[] fromAddress_byte = Commons.decode58Check(fromAddress);
         String fromKey = "b47e686119f2236f38cd0e8a4fe20f8a7fc5cb4284d36131f447c63857e3dac9";
@@ -208,15 +171,11 @@ public class CreateMultiTransactionPerf {
             String tempString = null;
             int line = 1;
             while ((tempString = reader.readLine()) != null) {
-                Thread.sleep(500);
                 // 显示行号
                 System.out.println("line " + line + ": " + tempString);
                 String[] accounts = tempString.split("\t");
                 String curAddress = accounts[0];
                 byte[] curAddress_byte = Commons.decode58Check(curAddress);
-
-                channelFull = ManagedChannelBuilder.forTarget(fullnode).usePlaintext(true).build();
-                blockingStubFull = WalletGrpc.newBlockingStub(channelFull);
 
                 TronlinkApiList.sendcoinDirectely(curAddress_byte, 1L, fromAddress_byte, fromKey,
                         blockingStubFull);
@@ -224,8 +183,6 @@ public class CreateMultiTransactionPerf {
             }
             reader.close();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
             if (reader != null) {
