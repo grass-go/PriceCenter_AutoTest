@@ -30,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 import java.io.File;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Date;
 
 @Slf4j
 public class CreateMultiTransactionPerf {
@@ -169,6 +170,8 @@ public class CreateMultiTransactionPerf {
 
             reader = new BufferedReader(new FileReader(file));
             String tempString = null;
+            Date date = new Date();
+            log.info("start date:" + date);
             int line = 1;
             while ((tempString = reader.readLine()) != null) {
                 // 显示行号
@@ -179,10 +182,14 @@ public class CreateMultiTransactionPerf {
 
                 TronlinkApiList.sendcoinDirectely(curAddress_byte, 1L, fromAddress_byte, fromKey,
                         blockingStubFull);
+                Thread.sleep(450);
                 line++;
             }
+            log.info("Total transfer times:"+line);
+            Date enddate = new Date();
+            log.info("end date:" + enddate);
             reader.close();
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         } finally {
             if (reader != null) {
