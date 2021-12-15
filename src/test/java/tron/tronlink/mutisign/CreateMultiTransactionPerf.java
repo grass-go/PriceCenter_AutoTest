@@ -182,7 +182,7 @@ public class CreateMultiTransactionPerf {
 
                 TronlinkApiList.sendcoinDirectely(curAddress_byte, 1L, fromAddress_byte, fromKey,
                         blockingStubFull);
-                Thread.sleep(450);
+                Thread.sleep(100);
                 line++;
             }
             log.info("Total transfer times:"+line);
