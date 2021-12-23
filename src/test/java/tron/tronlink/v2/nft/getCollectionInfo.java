@@ -51,18 +51,19 @@ public class getCollectionInfo extends TronlinkBase {
 
     Assert.assertEquals(params.get("tokenAddress"), dataContent.get("tokenAddress"));
     int index;
-    for ( index = 0; index < 5; index++) {
+    for ( index = 0; index < 10; index++) {
       log.info("cur index is: "+index);
       try {
         if (200 == TronlinkApiList.createGetConnect(dataContent.getString("imageUrl")).getStatusLine().getStatusCode() && 200 == TronlinkApiList.createGetConnect(dataContent.getString("logoUrl")).getStatusLine().getStatusCode()){
-          index = 6;
+          index = 11;
         }
       } catch (Exception e) {
         log.info("Enter Exception, continue");
+        Thread.sleep(1000);
         continue;
       }
     }
     log.info("At last, index value:" +index);
-    Assert.assertEquals(7,index);
+    Assert.assertEquals(12,index);
   }
 }
