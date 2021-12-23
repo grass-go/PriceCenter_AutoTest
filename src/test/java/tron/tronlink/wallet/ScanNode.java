@@ -48,7 +48,7 @@ public class ScanNode {
     System.out.println(job.toJSONString());
   }
 
-  @Test(enabled = false, description = "v2 scan node test")
+  @Test(enabled = true, description = "v2 scan node test")
   public void test001ScanNode() throws Exception{
     JSONObject job = new JSONObject();
     for(int i=0;i<3;i++){
