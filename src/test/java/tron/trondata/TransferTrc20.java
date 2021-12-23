@@ -21,7 +21,7 @@ public class TransferTrc20 extends TrondataBase {
 
 
   @Test(enabled = true,description = "getTransferTrc20 contain all from and to")
-  public void Test001getTransferTrc20All() {
+  public void Test001getTransferTrc20All() throws InterruptedException {
     Map<String, String> params = new HashMap<>();
     params.put("address",queryAddress);
     params.put("trc20Id","TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");
@@ -29,7 +29,7 @@ public class TransferTrc20 extends TrondataBase {
     params.put("db_version","1");
 
     int index;
-    for (index=0; index<5; index++) {
+    for (index=0; index<10; index++) {
       log.info("cur index is " + index);
       response = TronlinkApiList.getTransferTrc20(params);
       Assert.assertEquals(200, response.getStatusLine().getStatusCode());
@@ -37,9 +37,10 @@ public class TransferTrc20 extends TrondataBase {
       Assert.assertTrue(responseContent.containsKey("page_size"));
 
       if (responseContent.getIntValue("page_size") > 0){
-        index=6;
+        index=11;
       }
       else{
+        Thread.sleep(1000);
         continue;
       }
       Assert.assertTrue(responseContent.containsKey("data"));
@@ -62,7 +63,7 @@ public class TransferTrc20 extends TrondataBase {
         Assert.assertTrue(jsonObject.containsKey("direction"));
       }
     }
-    Assert.assertEquals(7,index);
+    Assert.assertEquals(12,index);
   }
 
   @Test(enabled = true,description = "getTransferTrc20 only from")
