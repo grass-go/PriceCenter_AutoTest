@@ -12,7 +12,7 @@ import java.net.URI;
 
 
 @Slf4j
-public class SocketMultiTrxRecord {
+public class SocketMsgCenter {
     boolean flag = false;
     @Test(enabled = false,description = "create socket connection to get multi sign record")
     public void test00GetNotSignRecord() {
