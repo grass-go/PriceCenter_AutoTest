@@ -7,7 +7,9 @@ import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.common.api;
 import tron.tronlink.base.TronlinkBase;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class getLatestAPK extends TronlinkBase {
 
   private HttpResponse response;
@@ -18,8 +20,32 @@ public class getLatestAPK extends TronlinkBase {
     JSONObject jsonObject = api.parseResponseContent(response);
     JSONObject jsonData = jsonObject.getJSONObject("data");
     api.printJsonContent(jsonObject);
-    Assert.assertTrue(TronlinkApiList.urlCanVisited(jsonData.getString("testflight"),6000 ));
-    //Assert.assertTrue(TronlinkApiList.urlCanVisited(jsonData.getString("url"),6000 ));
-    Assert.assertTrue(TronlinkApiList.urlCanVisited(jsonData.getString("china_url"),6000 ));
+    int index=0;
+    for(index=0;index<10;index++)
+    {
+      log.info("cur index for tesetflight is " + index);
+      if(TronlinkApiList.urlCanVisited(jsonData.getString("testflight"),6000 ))
+      {
+        index=11;
+      }
+      else{
+        Thread.sleep(1000);
+        continue;
+      }
+    }
+    Assert.assertEquals(12,index);
+    for(index=0;index<10;index++)
+    {
+      log.info("cur index for china_url is " + index);
+      if(TronlinkApiList.urlCanVisited(jsonData.getString("china_url"),6000 ))
+      {
+        index=11;
+      }
+      else{
+        Thread.sleep(1000);
+        continue;
+      }
+    }
+    Assert.assertEquals(12,index);
   }
 }
