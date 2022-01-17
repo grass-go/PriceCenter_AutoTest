@@ -51,7 +51,14 @@ public class Dapp_Head extends TronlinkBase {
             int retryIdx=0;
             for (retryIdx=0;retryIdx<10;retryIdx++){
                 log.info("In roll_data #"+n+", cur retry index for image_url is " + retryIdx);
-                if(200==TronlinkApiList.createGetConnect(roll_data.getJSONObject(n).getString("image_url")).getStatusLine().getStatusCode())
+                int responseCode;
+                try {
+                    responseCode = TronlinkApiList.createGetConnect(roll_data.getJSONObject(n).getString("image_url")).getStatusLine().getStatusCode();
+                } catch (Exception e) {
+                    Thread.sleep(1000);
+                    continue;
+                }
+                if(200==responseCode)
                 {
                     retryIdx = 11;
                 }
