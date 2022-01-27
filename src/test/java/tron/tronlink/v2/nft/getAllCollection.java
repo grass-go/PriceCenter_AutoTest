@@ -24,7 +24,7 @@ public class getAllCollection extends TronlinkBase {
   Map<String, String> params = new HashMap<>();
   Map<String, Nft> NftPointedInV1 = new HashMap<>();
   {
-    NftPointedInV1.put("34", new Nft("APENFT", "NFT", "TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG"));
+    NftPointedInV1.put("TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG", new Nft("APENFT", "NFT", "TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG"));
   }
   //To do
 
@@ -51,8 +51,6 @@ public class getAllCollection extends TronlinkBase {
       Assert.assertTrue(nftData.containsKey("transferCount"));
       Assert.assertTrue(nftData.containsKey("nrOfTokenHolders"));
       Nft Expect = NftPointedInV1.get(nftData.getString("id"));
-
-
       Assert.assertNotNull(Expect);
       Assert.assertEquals(Expect.name, nftData.getString("name"));
       Assert.assertEquals(Expect.shortName, nftData.getString("shortName"));
