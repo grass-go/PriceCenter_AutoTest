@@ -24,7 +24,14 @@ public class transactionHistory extends TronlinkBase {
     int index;
     for(index=0; index<10; index++) {
       log.info("test001TransactionTo cur index is "+ index);
-      response = api.transactionHistory(parameter);
+
+      try {
+        response = api.transactionHistory(parameter);
+      }catch (Exception e){
+        Thread.sleep(1000);
+        continue;
+      }
+
       JSONObject jsonObject = api.parseResponseContent(response);
       api.printJsonContent(jsonObject);
 
@@ -68,7 +75,13 @@ public class transactionHistory extends TronlinkBase {
         int index;
         for(index=0; index<10; index++) {
           log.info("test002TransactionFrom cur index is "+ index);
-          response = api.transactionHistory(parameter);
+
+          try {
+            response = api.transactionHistory(parameter);
+          }catch (Exception e){
+            Thread.sleep(1000);
+            continue;
+          }
           JSONObject jsonObject = api.parseResponseContent(response);
           api.printJsonContent(jsonObject);
           if (jsonObject.toString().equals("{}") ) {
@@ -98,11 +111,18 @@ public class transactionHistory extends TronlinkBase {
     parameter.put("address", "TMNQnpTsNHuK1NwqMf6WTBydXvNsv9p6of");
 
     int index;
+    JSONObject jsonObject;
     for(index=0; index<10; index++) {
       log.info("test003TransactionAll cur index is "+ index);
-      response = api.transactionHistory(parameter);
-      JSONObject jsonObject = api.parseResponseContent(response);
-
+      try {
+        response = api.transactionHistory(parameter);
+      }catch (Exception e){
+        Thread.sleep(1000);
+        continue;
+      }
+      index = 11;
+      jsonObject = api.parseResponseContent(response);
+      api.printJsonContent(jsonObject);
       if (jsonObject.toString().equals("{}") ) {
         Thread.sleep(1000);
         continue;
@@ -110,9 +130,7 @@ public class transactionHistory extends TronlinkBase {
       else {
         index=11;
       }
-      api.printJsonContent(jsonObject);
       JSONArray data = jsonObject.getJSONArray("data");
-
 
       for (Object object : data) {
         JSONObject history = (JSONObject) JSON.toJSON(object);
