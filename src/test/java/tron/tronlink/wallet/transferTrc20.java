@@ -7,9 +7,11 @@ import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 
+@Slf4j
 public class transferTrc20 {
   private JSONObject responseContent;
   private JSONArray responseArrayContent;
@@ -25,8 +27,24 @@ public class transferTrc20 {
     param.put("direction","2");
     param.put("reverse","true");
     param.put("trc20Id","TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
-    response = TronlinkApiList.apiTransferTrc20(param);
-    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    int index;
+
+
+    for(index=0; index<5; index++){
+      log.info("Test000getTrc20Transfer cur index is " + index);
+      response = TronlinkApiList.apiTransferTrc20(param);
+      if(response.getStatusLine().getStatusCode() == 200)
+      {
+        index = 6;
+      }
+      else {
+        Thread.sleep(1000);
+        continue;
+      }
+    }
+
+    Assert.assertEquals(7,index);
+
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     responseArrayContent = responseContent.getJSONArray("data");
 
