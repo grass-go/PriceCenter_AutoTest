@@ -24,12 +24,9 @@ import org.tron.protos.Protocol;
 import org.tron.protos.contract.*;
 import tron.common.TronlinkApiList;
 
-import java.io.IOException;
+import java.io.*;
 import java.math.BigInteger;
 import java.util.concurrent.TimeUnit;
-import java.io.File;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.util.Date;
 
 @Slf4j
@@ -39,6 +36,7 @@ public class CreateMultiTransactionPerf {
     private ManagedChannel channelFull = null;
     HttpResponse res;
     private JSONObject responseContent;
+
     String key1="c21f0c6fdc467f4ae7dc4c1a0b802234a930bff198ce34fde6850b0afd383cf5"; //线上
 //    byte[] address1=TronlinkApiList.getFinalAddress(key1);
 
@@ -72,6 +70,82 @@ public class CreateMultiTransactionPerf {
     public void testlog() throws IOException {
         log.info("wqq");
 
+    }
+
+    @Test(enabled = true,description = "Set Permission ForMultiUser")
+    public void setPermissionForMultiUserTest() throws IOException {
+
+        File file = new File("/Users/wqq/Text/test_mulSign_v4.6.0/testAccount2.txt");
+        BufferedReader reader = null;
+        reader = new BufferedReader(new FileReader(file));
+        String tempString = null;
+        String curUser = null;
+        String curUserKey = null;
+        String accountPermissionJson = null;
+        int line = 1;
+        //while ((tempString = reader.readLine()) != null) {
+        while (line<2)  {
+            tempString = reader.readLine();
+            log.info("line"+line+":"+tempString);
+            String[] userinfo = tempString.split("\t");
+            curUser = userinfo[0];
+            byte[] curUserBytes = Commons.decode58Check(curUser);
+            curUserKey = userinfo[1];
+
+            TronlinkApiList.sendcoinDirectely(curUserBytes, 150000000L, quince, quincekey,
+                    blockingStubFull);
+            waitProduceNextBlock(blockingStubFull);
+
+            //accountPermissionJson = "{\"owner_permission\":{\"type\":0,\"permission_name\":\"\",\"threshold\":1,\"keys\":[{\"address\":\"" + curUser + "\",\"weight\":1}]},"
+            //        + "\"active_permissions\":[{\"type\":2,\"permission_name\":\"active1\",\"threshold\":1,\"operations\":\"7fff1fc0033e3b00000000000000000000000000000000000000000000000000\",\"keys\":[{\"address\":\"TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo\",\"weight\":1}]},{\"type\":2,\"permission_name\":\"AAmodified2\",\"threshold\":60,\"operations\":\"77ff07c0027e0300000000000000000000000000000000000000000000000000\",\"keys\":[{\"address\":\"TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo\",\"weight\":30},{\"address\":\"TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t\",\"weight\":20},{\"address\":\"TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ\",\"weight\":20}]}]}";
+
+            accountPermissionJson = "{\"owner_permission\":{\"type\":0,\"permission_name\":\"\",\"threshold\":1,\"keys\":[{\"address\":\"" + curUser + "\",\"weight\":1}]},"
+                    + "\"active_permissions\":[{\"type\":2,\"permission_name\":\"active1\",\"threshold\":1,\"operations\":\"7fff1fc0033e3b00000000000000000000000000000000000000000000000000\",\"keys\":[{\"address\":\"TQWnq5DpQ87LmE2BBAcia1fJ1Z2hP1d3cg\",\"weight\":1}]},{\"type\":2,\"permission_name\":\"AAmodified2\",\"threshold\":41,\"operations\":\"77ff07c0027e0300000000000000000000000000000000000000000000000000\",\"keys\":[{\"address\":\"TQWnq5DpQ87LmE2BBAcia1fJ1Z2hP1d3cg\",\"weight\":11},{\"address\":\"TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ\",\"weight\":30}]}]}";
+
+
+
+            log.info(accountPermissionJson);
+            GrpcAPI.Return response = TronlinkApiList.accountPermissionUpdateForResponse(
+                    accountPermissionJson, curUserBytes, curUserKey, blockingStubFull);
+            Assert.assertTrue(response.getResult());
+
+
+            line++;
+        }
+       reader.close();
+
+
+    }
+
+
+    public static boolean waitProduceNextBlock(WalletGrpc.WalletBlockingStub blockingStubFull) {
+        Wallet.setAddressPreFixByte((byte)0x41);
+        Protocol.Block currentBlock = blockingStubFull.getNowBlock(GrpcAPI.EmptyMessage.newBuilder().build());
+        final Long currentNum = currentBlock.getBlockHeader().getRawData().getNumber();
+
+        Protocol.Block nextBlock = blockingStubFull.getNowBlock(GrpcAPI.EmptyMessage.newBuilder().build());
+        Long nextNum = nextBlock.getBlockHeader().getRawData().getNumber();
+
+        Integer wait = 0;
+        log.info(
+                "Block num is " + currentBlock.getBlockHeader().getRawData().getNumber());
+        while (nextNum <= currentNum + 1 && wait <= 45) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            //logger.info("Wait to produce next block");
+            nextBlock = blockingStubFull.getNowBlock(GrpcAPI.EmptyMessage.newBuilder().build());
+            nextNum = nextBlock.getBlockHeader().getRawData().getNumber();
+            if (wait == 45) {
+                log.info("These 45 second didn't produce a block,please check.");
+                return false;
+            }
+            wait++;
+        }
+        log.info("quit normally");
+        return true;
     }
 
     @Test(enabled = true,description = "Set quince Permission")
