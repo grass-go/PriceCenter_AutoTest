@@ -801,6 +801,18 @@ public static HttpResponse search(Map<String, String> params) {
     response = v2CreateGetConnect(requestUrl, params);
     return response;
   }
+  public static HttpResponse v2Auth(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/wallet/v2/auth";
+    response = v2CreateGetConnect(requestUrl, params);
+    return response;
+  }
+
+  public static HttpResponse v2NftSearch(Map<String, String> params) {
+    final String requestUrl = HttpNode + "/api/wallet/nft/search";
+    response = v2CreateGetConnect(requestUrl, params);
+    return response;
+  }
+
 
   public static HttpResponse v2AddAsset(Map<String, String> params,JSONObject object) {
     String requestUrl = HttpNode + "/api/wallet/v2/addAsset";
