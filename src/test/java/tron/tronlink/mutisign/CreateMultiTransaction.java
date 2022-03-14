@@ -70,7 +70,7 @@ public class CreateMultiTransaction {
     }
 
     @Test(enabled = true,description = "multi sign freeze balandce")
-    public void freezeBalandce() throws Exception{
+    public void freezeBalance() throws Exception{
         BalanceContract.FreezeBalanceContract.Builder builder = BalanceContract.FreezeBalanceContract.newBuilder();
         ByteString byteAddreess = ByteString.copyFrom(address1);
         builder.setOwnerAddress(byteAddreess).setFrozenBalance(1000000)
