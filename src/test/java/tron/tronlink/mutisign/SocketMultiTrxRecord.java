@@ -5,6 +5,7 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.junit.Assert;
 import org.testng.annotations.Test;
+import tron.common.TronlinkApiList;
 import tron.tronlink.base.TronlinkBase;
 
 import java.net.URI;
@@ -16,7 +17,7 @@ public class SocketMultiTrxRecord {
     boolean flag = false;
     @Test(enabled = true,description = "create socket connection to get multi sign record")
     public void test00GetNotSignRecord() {
-        String host = TronlinkBase.tronlinkUrl.substring(8);
+        String host = TronlinkApiList.HttpNode.substring(8);
         try {
             String url = "wss://" + host +"/api/wallet/multi/socket?address=TY9touJknFcezjLiaGTjnH1dUHiqriu6L8&start=0&limit=20&netType=main_net&state=0";
             System.out.println(url);
