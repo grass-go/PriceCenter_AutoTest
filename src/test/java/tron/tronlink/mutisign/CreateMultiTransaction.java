@@ -85,6 +85,7 @@ public class CreateMultiTransaction {
         object.put("address",getAddress258_2);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
+        log.info("freezeBalandce multiSign post body: "+object.toString());
         res = TronlinkApiList.multiTransaction(object);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(res);
