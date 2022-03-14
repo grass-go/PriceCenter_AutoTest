@@ -54,7 +54,7 @@ public class TronlinkApiList {
 
   static HttpGet httpGet;
   public static String HttpTronDataNode = TrondataBase.trondataUrl;
-  public static String HttpNode = TronlinkBase.tronlinkUrl;
+  public static String HttpNode = "https://list.tronlink.org";
   static HttpResponse response;
   static Integer connectionTimeout = Configuration.getByPath("testng.conf")
       .getInt("defaultParameter.httpConnectionTimeout");
