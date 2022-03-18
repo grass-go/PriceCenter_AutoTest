@@ -619,6 +619,29 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse V2UnfollowCollections(Map<String, String> params){
+    try {
+      String requestUrl = HttpNode +"/api/wallet/nft/unfollowCollections";
+      response = v2CreateGetConnect(requestUrl,params);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  public static HttpResponse V2UnfollowAssetList(Map<String, String> params){
+    try {
+      String requestUrl = HttpNode +"/api/wallet/v2/unfollowAssetList";
+      response = v2CreateGetConnect(requestUrl,params);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
   public static HttpResponse V2AllAssetList(Map<String, String> params) {
     try {
       String requestUrl = HttpNode +"/api/wallet/v2/allAssetList";
