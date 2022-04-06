@@ -44,6 +44,10 @@ public class CreateMultiTransaction {
 
     String quince58 = "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t";
     byte[] quince = Commons.decode58Check(quince58);
+    String quincekey = "b47e686119f2236f38cd0e8a4fe20f8a7fc5cb4284d36131f447c63857e3dac9";
+    String yunli58 = "TYyptUzArG7hUprUCUk2kzBrY4faKD4ioz";
+    byte[] yunli = Commons.decode58Check(yunli58);
+    String yunlikey = "cafcc392b9b5518324728a9c43c7d857d6d2766669177ea7515e92f8918ab106";
     String wqq1key = "8d5c18030466b6ab0e5367154d15c4f6cb46d2fb56a0b552e017d183abd8c255";
     byte[] wqq1 = TronlinkApiList.getFinalAddress(key2);
     String wqq158 =Base58.encode(wqq1);
@@ -192,8 +196,8 @@ public class CreateMultiTransaction {
         Long start = System.currentTimeMillis() + 300000;
         Long end = System.currentTimeMillis() + 1000000000;
         AssetIssueContractOuterClass.AssetIssueContract.Builder builder = AssetIssueContractOuterClass.AssetIssueContract.newBuilder();
-        builder.setOwnerAddress(ByteString.copyFrom(address1));
-        String token10Name = "multiGen10";
+        builder.setOwnerAddress(ByteString.copyFrom(yunli));
+        String token10Name = "multiGen10qwer221";
         builder.setName(ByteString.copyFrom(token10Name.getBytes()));
         builder.setTotalSupply(totalSupply);
         builder.setTrxNum(1);
@@ -210,10 +214,11 @@ public class CreateMultiTransaction {
         AssetIssueContractOuterClass.AssetIssueContract.FrozenSupply.Builder frozenBuilder = AssetIssueContractOuterClass.AssetIssueContract.FrozenSupply
                 .newBuilder();
         frozenBuilder.setFrozenAmount(1L);
-        frozenBuilder.setFrozenDays(1L);
+        frozenBuilder.setFrozenDays(111L);
         builder.addFrozenSupply(0, frozenBuilder);
 
         GrpcAPI.TransactionExtention assetIssue2 = blockingStubFull.createAssetIssue2(builder.build());
+        log.info(assetIssue2.toString());
         Protocol.Transaction transaction = assetIssue2.getTransaction();
         if (transaction == null || transaction.getRawData().getContractCount() == 0) {
             log.info("transaction == null");
@@ -222,10 +227,10 @@ public class CreateMultiTransaction {
         }
         log.info("-----111111  "+JsonFormat.printToString(transaction));
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, key2, 3, blockingStubFull);
+                transaction, quincekey, 3, blockingStubFull);
         log.info("-----2222  "+JsonFormat.printToString(transaction1));
         JSONObject object = new JSONObject();
-        object.put("address",address258);
+        object.put("address",quince58);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
 
