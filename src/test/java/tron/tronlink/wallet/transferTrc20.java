@@ -19,7 +19,7 @@ public class transferTrc20 {
   private HttpResponse response;
   private HashMap<String,String> param = new HashMap<>();
 
-  @Test(enabled = true,description = "get trx20 transaction")
+  @Test(enabled = false,description = "get trx20 transaction")
   public void Test000getTrc20Transfer() throws Exception {
     param.put("address","TH48niZfbwHMyqZwEB8wmHfzcvR8ZzJKC6"); //sophia's address
     param.put("limit","20");
