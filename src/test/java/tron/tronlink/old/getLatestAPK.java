@@ -21,7 +21,7 @@ public class getLatestAPK extends TronlinkBase {
     JSONObject jsonData = jsonObject.getJSONObject("data");
     api.printJsonContent(jsonObject);
     int index=0;
-    for(index=0;index<10;index++)
+    for(index=0;index<12;index++)
     {
       log.info("cur index for tesetflight is " + index);
       if(TronlinkApiList.urlCanVisited(jsonData.getString("testflight"),6000 ))
@@ -34,7 +34,7 @@ public class getLatestAPK extends TronlinkBase {
       }
     }
     Assert.assertEquals(12,index);
-    for(index=0;index<10;index++)
+    for(index=0;index<12;index++)
     {
       log.info("cur index for china_url is " + index);
       if(TronlinkApiList.urlCanVisited(jsonData.getString("china_url"),6000 ))
