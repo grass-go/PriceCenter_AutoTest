@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="chromeExtensionUI" parallel="tests" thread-count="1">
-<!--    <listeners>
-        <listener class-name="tron.common.utils.SqlTronscanUI"/>
-    </listeners>-->
-    <test name="chromeExtensionUi">
+    <test name="chromeExtensionUI">
         <packages>
-            <package name="tron.chromeExtension.chromeCase">
+            <package name="tron.chromeExtension.chromeCase.*">
                 <exclude name="tron.chromeExtension.chromeCase.sendPageCase"></exclude>
             </package>
         </packages>
     </test>
 </suite>
+

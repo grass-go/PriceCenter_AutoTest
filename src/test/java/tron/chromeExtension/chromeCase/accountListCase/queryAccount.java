@@ -1,4 +1,4 @@
-package tron.chromeExtension.chromeCase.accountListPage;
+package tron.chromeExtension.chromeCase.accountListCase;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
 import tron.chromeExtension.pages.AccountlistPage;
 import tron.chromeExtension.pages.MainPage;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,7 +23,7 @@ public class queryAccount extends Base {
       groups = {"P0"},
       description = "Query the balance of all accounts",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test001listAccountsTest() throws Exception {
 
     try {

@@ -34,6 +34,23 @@ test {
     useTestNG()
     systemProperties 'property': 'value'
 }
+
+task chromeExtensionUI(type: Test) {
+
+    useTestNG {
+        suites(file('src/test/resources/testng_chromeExtensionUI.xml'))
+        parallel 'tests'
+        threadCount 1
+
+    }
+    testLogging {
+        exceptionFormat = 'full'
+        showStackTraces = "true"
+    }
+
+}
+
+
 task tronscan(type: Test) {
 
     useTestNG {
@@ -48,6 +65,8 @@ task tronscan(type: Test) {
     }
 
 }
+
+
 task tronscanApi(type: Test) {
 
     useTestNG {

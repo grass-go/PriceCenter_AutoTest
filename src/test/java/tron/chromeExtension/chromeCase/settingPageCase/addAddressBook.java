@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
 import tron.chromeExtension.pages.MainPage;
 import tron.chromeExtension.pages.SettingPage;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import java.util.concurrent.TimeUnit;
 
@@ -47,7 +48,7 @@ public class addAddressBook extends Base {
       groups = {"P0"},
       description = "Add the same account to address book",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test002addAccountToAddressBookTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);

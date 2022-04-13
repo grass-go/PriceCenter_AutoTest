@@ -38,7 +38,7 @@ public class modifyAccountName extends Base {
     click(mainPage.modifyAccountNameConfirm_btn);
     waitingTime(5);
     String accountNowName = getText(mainPage.accountName_content);
-    System.out.println("accountNowName:" + accountNowName);
+    log("accountNowName:" + accountNowName);
     Assert.assertEquals(accountNowName, accountNewName);
   }
 

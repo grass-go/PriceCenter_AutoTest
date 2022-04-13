@@ -7,6 +7,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
 import tron.chromeExtension.pages.MainPage;
+import tron.chromeExtension.utils.Helper;
+import tron.common.utils.MyIRetryAnalyzer;
 
 public class queryToken extends Base {
   @BeforeMethod
@@ -28,7 +30,7 @@ public class queryToken extends Base {
     String trxBalanceStr = getText(mainPage.trxBalance);
     waitingTime(5);
     double trxBalance = getBalanceFromSelectionBtn(trxBalanceStr);
-    System.out.println("trxBalance:" + trxBalance);
+    log("trxBalance:" + trxBalance);
     Assert.assertTrue(trxBalance > 0);
   }
 
@@ -43,7 +45,7 @@ public class queryToken extends Base {
     String trc20BalanceStr = getText(mainPage.trc20Balance);
     waitingTime(5);
     double trc20Balance = getBalanceFromSelectionBtn(trc20BalanceStr);
-    System.out.println("trc20Balance:" + trc20Balance);
+    log("trc20Balance:" + trc20Balance);
     Assert.assertTrue(trc20Balance > 0);
   }
 
@@ -58,7 +60,7 @@ public class queryToken extends Base {
     String trc10BalanceStr = getText(mainPage.trc10Balance);
     waitingTime(5);
     double trc10Balance = getBalanceFromSelectionBtn(trc10BalanceStr);
-    System.out.println("trc10Balance:" + trc10Balance);
+    log("trc10Balance:" + trc10Balance);
     Assert.assertTrue(trc10Balance > 0);
   }
 
@@ -71,11 +73,12 @@ public class queryToken extends Base {
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);
     click(mainPage.collectibles_btn);
+    waitingTime(10);
+    // String trc721BalanceStr = getText(mainPage.trc721Balance);
+    String trc721Name = "Your Token Name";
+    long trc721Balance = Helper.get721TokenAmountByName(mainPage.trc721Balance_list, trc721Name);
     waitingTime(5);
-    String trc721BalanceStr = getText(mainPage.trc721Balance);
-    waitingTime(5);
-    double trc721Balance = getBalanceFromSelectionBtn(trc721BalanceStr);
-    System.out.println("trc721Balance:" + trc721Balance);
+    log("trc721Balance:" + trc721Balance);
     Assert.assertTrue(trc721Balance > 0);
     click(mainPage.assets_btn);
   }

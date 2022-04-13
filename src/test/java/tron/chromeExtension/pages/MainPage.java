@@ -2,6 +2,7 @@ package tron.chromeExtension.pages;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -52,8 +53,16 @@ public class MainPage extends AbstractPage {
   public WebElement trc10Balance;
   // 当前账户721币金额
   @FindBy(
-      xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div/div[2]/div[3]")
+      xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div/div[3]/div[3]")
   public WebElement trc721Balance;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div")
+  public List<WebElement> trc721Balance_list;
+
+
+
+
+
   // 切换收藏品tab按钮
   @FindBy(
       xpath =
@@ -139,6 +148,8 @@ public class MainPage extends AbstractPage {
   public WebElement manageConnectionsClose_btn;
 
   // 刷新按钮
+
+
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[1]/div/div[2]/div[2]/div[3]")
   public WebElement renew_btn;
   // 设置按钮

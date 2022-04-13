@@ -8,6 +8,7 @@ import tron.chromeExtension.base.Base;
 import tron.chromeExtension.pages.LoginPage;
 import tron.chromeExtension.pages.MainPage;
 import tron.chromeExtension.pages.SettingPage;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,7 +24,7 @@ public class automaticLocking extends Base {
       groups = {"P0"},
       description = "Automatic locking after 1 minute",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test001automaticLockingTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);

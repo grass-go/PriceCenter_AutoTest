@@ -28,7 +28,7 @@ public class renew extends Base {
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);
     click(mainPage.renew_btn);
-      waitingTime(5);
+    waitingTime(5);
     // todo:如何验证刷新成功？？？
     Assert.assertTrue(onTheHomepageOrNot(loginAddress));
   }

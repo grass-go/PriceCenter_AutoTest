@@ -35,7 +35,7 @@ public class manageConnections extends Base {
     click(mainPage.manageConnections_btn);
     waitingTime();
     String content = getText(mainPage.manageConnections_content);
-    System.out.println("content:" + content);
+    log("content:" + content);
     Assert.assertEquals("已连接的网站", content);
     click(mainPage.manageConnectionsClose_btn);
     // 验证回到首页

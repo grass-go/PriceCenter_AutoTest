@@ -114,7 +114,7 @@ public class Base {
         if (totalBalance > 0) {
           return true;
         }
-        // DRIVER.quit();
+       // DRIVER.quit();
       } catch (Exception e) {
         e.printStackTrace();
         DRIVER.quit();
@@ -156,11 +156,11 @@ public class Base {
     return webElement;
   }
 
-  public void waitingTime(long time) {
-    DRIVER.manage().timeouts().implicitlyWait(time, TimeUnit.SECONDS);
+  public void waitingTime(long time) throws InterruptedException {
+      TimeUnit.SECONDS.sleep(time);
   }
 
-  public void waitingTime() {
+  public void waitingTime() throws InterruptedException {
       waitingTime(2);
   }
 

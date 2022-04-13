@@ -1,5 +1,6 @@
 package tron.chromeExtension.utils;
 
+import javafx.geometry.Dimension2DBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -8,6 +9,7 @@ import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static org.testng.internal.Utils.log;
 import static tron.chromeExtension.base.Base.DRIVER;
 
 public class Helper {
@@ -37,6 +39,23 @@ public class Helper {
   public void importUsePrivateKey(String privatekey, String name, String pass) {}
 
   public void findAcceptAndClick() {}
+
+  public static long get721TokenAmountByName(List<WebElement> list, String name) {
+    try {
+        int rr = list.size();
+      for (int i = 0; i < list.size(); i++) {
+        WebElement temp = list.get(i).findElement(By.className("nameCollection"));
+        String fullName = temp.findElement(new By.ByClassName("fullName")).getText();
+        if (fullName.equals(name)) {
+          return Long.parseLong(list.get(i).findElement(By.className("worthCollection")).getText());
+        }
+      }
+    } catch (Exception e) {
+      log("找不到token:" + name);
+    }
+
+    return 0;
+  }
 
   public static boolean containElement(WebElement wl, String name) {
     try {

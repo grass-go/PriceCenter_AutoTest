@@ -32,7 +32,7 @@ public class copyAccountAddress extends Base {
     waitingTime(5);
     Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
     String accountAddress = fetchClipboardContents(clip);
-    System.out.println("accountAddress: " + accountAddress);
+    log("accountAddress: " + accountAddress);
     Assert.assertNotNull(accountAddress);
     Assert.assertEquals(loginAddress, accountAddress);
   }

@@ -1,4 +1,4 @@
-package tron.chromeExtension.chromeCase.exportAccountPage;
+package tron.chromeExtension.chromeCase.exportAccountCase;
 
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -7,10 +7,10 @@ import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
 import tron.chromeExtension.pages.ExportAccountPage;
 import tron.chromeExtension.pages.MainPage;
+import tron.common.utils.MyIRetryAnalyzer;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
-import java.util.concurrent.TimeUnit;
 
 public class exportAccount extends Base {
 
@@ -24,7 +24,7 @@ public class exportAccount extends Base {
       groups = {"P0"},
       description = "Export  mnemonic words",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test001exportMnemonicWordsTest() throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     ExportAccountPage exportAccountPage = new ExportAccountPage(DRIVER);
@@ -47,7 +47,7 @@ public class exportAccount extends Base {
       groups = {"P0"},
       description = "Export  private key",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test002exportPrivateKeyTest() throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     ExportAccountPage exportAccountPage = new ExportAccountPage(DRIVER);
@@ -73,7 +73,7 @@ public class exportAccount extends Base {
       groups = {"P0"},
       description = "Export  keystore",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
   public void test003exportKeystoreTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
