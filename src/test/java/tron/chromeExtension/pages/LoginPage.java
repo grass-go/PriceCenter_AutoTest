@@ -19,9 +19,17 @@ public class LoginPage extends AbstractPage {
     @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div/input")
     public WebElement password_input;
 
+
+
+    @FindBy(id = "input" )
+    public WebElement password_input1;
+
     @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/button")
+
     public WebElement login_btn;
 
-    @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[2]/div/div[1]/div[2]/span[1]")
-    public WebElement trxBalance;
+
+    @FindBy(name = "继续" )
+    public WebElement password_input2;
+
 }

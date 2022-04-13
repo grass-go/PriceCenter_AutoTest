@@ -6,7 +6,9 @@
     </listeners>-->
     <test name="chromExtensionUi">
         <packages>
-            <package name="tron.chromeExtension.chromeCase"></package>
+            <package name="tron.chromeExtension.chromeCase">
+                <exclude name="tron.chromeExtension.chromeCase.sendPageCase"></exclude>
+            </package>
         </packages>
     </test>
 </suite>
