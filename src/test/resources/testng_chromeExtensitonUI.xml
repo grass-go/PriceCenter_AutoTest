@@ -4,7 +4,7 @@
 <!--    <listeners>
         <listener class-name="tron.common.utils.SqlTronscanUI"/>
     </listeners>-->
-    <test name="chromExtensionUi">
+    <test name="chromeExtensionUi">
         <packages>
             <package name="tron.chromeExtension.chromeCase">
                 <exclude name="tron.chromeExtension.chromeCase.sendPageCase"></exclude>

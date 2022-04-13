@@ -38,7 +38,7 @@ public class exportAccount extends Base {
     // String QRCode_content = getText(exportAccountPage.QRCode_content);
     // System.out.println("QRCode_content:" + QRCode_content);
     click(exportAccountPage.close_btn);
-    waiteTime(5);
+    waitingTime(5);
     click(mainPage.backedUp_btn);
     // todo:后续：点击验证助记词，4.0补充该逻辑
   }
@@ -62,10 +62,10 @@ public class exportAccount extends Base {
     // String QRCode_content = getText(exportAccountPage.QRCode_content);
     // System.out.println("QRCode_content:" + QRCode_content);
     click(exportAccountPage.close_btn);
-    waiteTime(5);
+    waitingTime(5);
     click(mainPage.backedUp_btn);
     // 验证回到首页
-    waiteTime(5);
+    waitingTime(5);
     Assert.assertTrue(onTheHomepageOrNot(loginAddress));
   }
 
@@ -79,7 +79,7 @@ public class exportAccount extends Base {
     MainPage mainPage = new MainPage(DRIVER);
     ExportAccountPage exportAccountPage = new ExportAccountPage(DRIVER);
     exportAccountPage.exportAccount(mainPage, exportAccountPage.exportKeystore_btn);
-    waiteTime(5);
+    waitingTime(5);
     // Click copy button.
     click(exportAccountPage.copy_btn);
     Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -94,10 +94,10 @@ public class exportAccount extends Base {
     // String QRCode_content = getText(exportAccountPage.QRCode_content);
     // System.out.println("QRCode_content:" + QRCode_content);
     click(exportAccountPage.close_btn);
-    waiteTime(5);
+    waitingTime(5);
     click(mainPage.backedUp_btn);
     // 验证回到首页
-    waiteTime(5);
+    waitingTime(5);
     Assert.assertTrue(onTheHomepageOrNot(loginAddress));
   }
 

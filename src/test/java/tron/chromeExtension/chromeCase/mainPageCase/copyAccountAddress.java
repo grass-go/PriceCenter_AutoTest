@@ -27,9 +27,9 @@ public class copyAccountAddress extends Base {
   public void test001copyAccountAddressTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
-    waiteTime(5);
+    waitingTime(5);
     click(mainPage.copy_btn);
-    waiteTime(5);
+    waitingTime(5);
     Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
     String accountAddress = fetchClipboardContents(clip);
     System.out.println("accountAddress: " + accountAddress);

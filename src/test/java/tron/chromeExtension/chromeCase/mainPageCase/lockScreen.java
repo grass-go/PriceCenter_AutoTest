@@ -29,10 +29,10 @@ public class lockScreen extends Base {
   public void test001lockScreeTest() throws Exception {
 
     LockPage lockPage = new MainPage(DRIVER).enterLockPage();
-    waiteTime(5);
+    waitingTime(5);
     sendKeys(lockPage.password_input, password);
     click(lockPage.login_btn);
-    waiteTime(5);
+    waitingTime(5);
     // 验证解锁成功
     Assert.assertTrue(onTheHomepageOrNot(loginAddress));
   }
@@ -45,10 +45,10 @@ public class lockScreen extends Base {
   public void test002lockScreeTest() throws Exception {
 
     LockPage lockPage = new MainPage(DRIVER).enterLockPage();
-    waiteTime(5);
+    waitingTime(5);
     sendKeys(lockPage.password_input, passwordWrong);
     click(lockPage.login_btn);
-    waiteTime(5);
+    waitingTime(5);
     // 验证解锁失败
     Assert.assertEquals(lockPageTips1, getText(lockPage.tips1));
     Assert.assertEquals(lockPageTips2, getText(lockPage.tips2));

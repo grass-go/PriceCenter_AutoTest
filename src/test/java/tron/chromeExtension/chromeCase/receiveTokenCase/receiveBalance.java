@@ -27,9 +27,9 @@ public class receiveBalance extends Base {
 
     MainPage mainPage = new MainPage(DRIVER);
     ReceiveTokenPage receiveTokenPage = new ReceiveTokenPage(DRIVER);
-    waiteTime(5);
+    waitingTime(5);
     click(mainPage.receive_btn);
-    waiteTime(5);
+    waitingTime(5);
     String receivePageAddressStr = getText(receiveTokenPage.accountAddress);
     System.out.println("receivePageAddressStr:" + receivePageAddressStr);
     Assert.assertEquals(loginAddress, receivePageAddressStr);

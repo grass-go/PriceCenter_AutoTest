@@ -28,7 +28,7 @@ public class listDapp extends Base {
   public void test001listDappHotTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
-    waiteTime(5);
+    waitingTime(5);
     click(mainPage.dApp_btn);
     // 获取dapp列表中第一个元素
     String str = getText(mainPage.dAppHot_content);
@@ -43,13 +43,13 @@ public class listDapp extends Base {
   public void test002listDappUsedTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
-    waiteTime(5);
+    waitingTime(5);
     click(mainPage.dApp_btn);
-    waiteTime(5);
+    waitingTime(5);
     click(mainPage.used_btn);
-    waiteTime(5);
+    waitingTime(5);
     click(mainPage.back_btn);
-    waiteTime(5);
+    waitingTime(5);
     // 验证回到首页
     Assert.assertTrue(onTheHomepageOrNot(loginAddress));
   }

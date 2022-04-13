@@ -53,12 +53,12 @@ public class queryAccount extends Base {
     try {
       MainPage mainPage = new MainPage(DRIVER);
       AccountlistPage accountlistPage = new AccountlistPage(DRIVER);
-      waiteTime(5);
+      waitingTime(5);
 
       click(mainPage.switchAccount_btn);
-      waiteTime(5);
+      waitingTime(5);
       click(accountlistPage.searchAccount_btn);
-      waiteTime(5);
+      waitingTime(5);
       String searchStr = "自动化测试账户1";
       // todo: 无法输入内容，xpath路径给的不对
       sendKeys(accountlistPage.searchAccount_input, searchStr);
@@ -68,7 +68,7 @@ public class queryAccount extends Base {
       click(accountlistPage.close_btn);
     } catch (Exception e) {
       AccountlistPage accountlistPage = new AccountlistPage(DRIVER);
-      waiteTime(5);
+      waitingTime(5);
       click(accountlistPage.close_btn);
     }
   }
@@ -82,22 +82,22 @@ public class queryAccount extends Base {
     try {
       MainPage mainPage = new MainPage(DRIVER);
       AccountlistPage accountlistPage = new AccountlistPage(DRIVER);
-      waiteTime(5);
+      waitingTime(5);
       click(mainPage.switchAccount_btn);
-      waiteTime(5);
+      waitingTime(5);
       click(accountlistPage.testAccount2_btn);
-      waiteTime(5);
+      waitingTime(5);
       String address = getText(mainPage.address_content);
       System.out.println("address:" + address);
       Assert.assertEquals(testAddress, address);
       click(mainPage.switchAccount_btn);
-      waiteTime(5);
+      waitingTime(5);
       click(accountlistPage.testAccount1_btn);
-      waiteTime(5);
+      waitingTime(5);
       Assert.assertTrue(onTheHomepageOrNot(loginAddress));
     } catch (Exception e) {
       AccountlistPage accountlistPage = new AccountlistPage(DRIVER);
-      waiteTime(5);
+      waitingTime(5);
       click(accountlistPage.close_btn);
     }
   }
@@ -111,9 +111,9 @@ public class queryAccount extends Base {
     // todo:4.0改版后再完善
     MainPage mainPage = new MainPage(DRIVER);
     AccountlistPage accountlistPage = new AccountlistPage(DRIVER);
-    waiteTime(5);
+    waitingTime(5);
     click(accountlistPage.addWallet_btn);
-    waiteTime(5);
+    waitingTime(5);
   }
 
   @AfterMethod(enabled = true)

@@ -29,11 +29,11 @@ public class manageConnections extends Base {
   public void test001manageConnectionsTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
-    waiteTime(5);
+    waitingTime(5);
     click(mainPage.more_btn);
-    waiteTime();
+    waitingTime();
     click(mainPage.manageConnections_btn);
-    waiteTime();
+    waitingTime();
     String content = getText(mainPage.manageConnections_content);
     System.out.println("content:" + content);
     Assert.assertEquals("已连接的网站", content);

@@ -1,6 +1,5 @@
 package tron.chromeExtension.utils;
 
-import com.sun.tools.internal.xjc.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
