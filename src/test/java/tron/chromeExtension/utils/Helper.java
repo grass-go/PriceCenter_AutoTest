@@ -42,8 +42,8 @@ public class Helper {
 
   public static long get721TokenAmountByName(List<WebElement> list, String name) {
     try {
-        int rr = list.size();
-      for (int i = 0; i < list.size(); i++) {
+      int rr = list.size();
+      for (int i = 0; i < 3; i++) {
         WebElement temp = list.get(i).findElement(By.className("nameCollection"));
         String fullName = temp.findElement(new By.ByClassName("fullName")).getText();
         if (fullName.equals(name)) {

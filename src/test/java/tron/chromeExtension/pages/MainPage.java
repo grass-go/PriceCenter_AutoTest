@@ -56,8 +56,11 @@ public class MainPage extends AbstractPage {
       xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div/div[3]/div[3]")
   public WebElement trc721Balance;
 
-  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div")
-  public List<WebElement> trc721Balance_list;
+/*  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div")
+  public List<WebElement> trc721Token_list;*/
+
+  @FindBy(className = "tokens")
+  public List<WebElement> trc721Token_list;
 
 
 

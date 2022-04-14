@@ -114,7 +114,7 @@ public class Base {
         if (totalBalance > 0) {
           return true;
         }
-       // DRIVER.quit();
+        // DRIVER.quit();
       } catch (Exception e) {
         e.printStackTrace();
         DRIVER.quit();
@@ -157,11 +157,11 @@ public class Base {
   }
 
   public void waitingTime(long time) throws InterruptedException {
-      TimeUnit.SECONDS.sleep(time);
+    TimeUnit.SECONDS.sleep(time);
   }
 
   public void waitingTime() throws InterruptedException {
-      waitingTime(2);
+    waitingTime(2);
   }
 
   public void log(String log) {

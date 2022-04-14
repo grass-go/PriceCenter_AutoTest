@@ -76,7 +76,7 @@ public class queryToken extends Base {
     waitingTime(10);
     // String trc721BalanceStr = getText(mainPage.trc721Balance);
     String trc721Name = "Your Token Name";
-    long trc721Balance = Helper.get721TokenAmountByName(mainPage.trc721Balance_list, trc721Name);
+    long trc721Balance = Helper.get721TokenAmountByName(mainPage.trc721Token_list, trc721Name);
     waitingTime(5);
     log("trc721Balance:" + trc721Balance);
     Assert.assertTrue(trc721Balance > 0);
