@@ -19,7 +19,7 @@ public class transferTrc20 {
   private HttpResponse response;
   private HashMap<String,String> param = new HashMap<>();
 
-  @Test(enabled = false,description = "get trx20 transaction")
+  @Test(enabled = true,description = "get trx20 transaction")
   public void Test000getTrc20Transfer() throws Exception {
     param.put("address","TH48niZfbwHMyqZwEB8wmHfzcvR8ZzJKC6"); //sophia's address
     param.put("limit","20");
@@ -60,7 +60,6 @@ public class transferTrc20 {
       Assert.assertTrue(jsonObject.containsKey("hash"));
       Assert.assertTrue(jsonObject.containsKey("confirmed"));
       Assert.assertTrue(jsonObject.containsKey("contract_type"));
-      Assert.assertTrue(jsonObject.containsKey("symbol"));
       Assert.assertTrue(jsonObject.containsKey("issue_address"));
       Assert.assertTrue(jsonObject.containsKey("decimals"));
       Assert.assertTrue(jsonObject.containsKey("token_name"));
