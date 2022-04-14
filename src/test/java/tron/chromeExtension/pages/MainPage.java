@@ -56,15 +56,11 @@ public class MainPage extends AbstractPage {
       xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div/div[3]/div[3]")
   public WebElement trc721Balance;
 
-/*  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div")
+  /* @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div/div[3]")
   public List<WebElement> trc721Token_list;*/
 
-  @FindBy(className = "tokens")
+  @FindBy(className = "tokenItem")
   public List<WebElement> trc721Token_list;
-
-
-
-
 
   // 切换收藏品tab按钮
   @FindBy(
@@ -151,7 +147,6 @@ public class MainPage extends AbstractPage {
   public WebElement manageConnectionsClose_btn;
 
   // 刷新按钮
-
 
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[1]/div/div[2]/div[2]/div[3]")
   public WebElement renew_btn;
