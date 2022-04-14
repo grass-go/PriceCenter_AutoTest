@@ -80,6 +80,7 @@ public class Base {
       OPTION.addArguments("--verbose");
       DRIVER = new ChromeDriver(OPTION);
     } catch (Exception e) {
+      log("setUpChromeDriver异常");
       e.printStackTrace();
     }
   }
@@ -117,7 +118,7 @@ public class Base {
         // DRIVER.quit();
       } catch (Exception e) {
         e.printStackTrace();
-        //DRIVER.quit();
+        DRIVER.quit();
         setUpChromeDriver();
       }
     }
