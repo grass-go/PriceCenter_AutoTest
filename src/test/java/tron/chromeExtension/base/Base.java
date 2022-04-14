@@ -78,6 +78,7 @@ public class Base {
       OPTION.setExperimentalOption("excludeSwitches", new String[] {"enable-automation"});
       OPTION.addArguments("--enable-extensions");
       OPTION.addArguments("--verbose");
+      log("OPTION:"+OPTION.toString());
       DRIVER = new ChromeDriver(OPTION);
     } catch (Exception e) {
       log("setUpChromeDriver异常");
