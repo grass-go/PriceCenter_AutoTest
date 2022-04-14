@@ -117,7 +117,7 @@ public class Base {
         // DRIVER.quit();
       } catch (Exception e) {
         e.printStackTrace();
-        DRIVER.quit();
+        //DRIVER.quit();
         setUpChromeDriver();
       }
     }
