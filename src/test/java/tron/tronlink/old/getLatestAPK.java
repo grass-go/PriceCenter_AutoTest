@@ -29,7 +29,7 @@ public class getLatestAPK extends TronlinkBase {
         index=11;
       }
       else{
-        Thread.sleep(1000);
+        Thread.sleep(1500);
         continue;
       }
     }
@@ -42,7 +42,7 @@ public class getLatestAPK extends TronlinkBase {
         index=11;
       }
       else{
-        Thread.sleep(1000);
+        Thread.sleep(1500);
         continue;
       }
     }
