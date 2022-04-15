@@ -14,13 +14,14 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 import tron.common.utils.Configuration;
 import tron.chromeExtension.pages.*;
 
@@ -59,6 +60,11 @@ public class Base {
       Configuration.getByPath("testng.conf").getString("chromeExtension.mnemonicWords");
   public static String loginPrivateKey =
       Configuration.getByPath("testng.conf").getString("chromeExtension.loginPrivateKey");
+  public static String testAccountOneIndex =
+      Configuration.getByPath("testng.conf").getString("chromeExtension.testAccountOneIndex");
+  public static String testAccountTwoIndex =
+      Configuration.getByPath("testng.conf").getString("chromeExtension.testAccountTwoIndex");
+
   public String accountAddress001 =
       Configuration.getByPath("testng.conf").getString("chromeExtension.accountAddress001");
   public String accountKey001 =
@@ -76,6 +82,8 @@ public class Base {
   public void setUpChromeDriver() throws Exception {
     killChromePid();
     try {
+      // 设置为 headless 模式 （必须）
+      // OPTION.addArguments("--headless");
       OPTION.addArguments("--user-data-dir=" + userDataDir);
       OPTION.addArguments("load-extension=" + extensionDir);
       OPTION.setExperimentalOption("excludeSwitches", new String[] {"enable-automation"});
@@ -112,10 +120,17 @@ public class Base {
           if (chain.contains("Nile")) {
             mainPage.selectedChain_btn.click();
             DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-            int n = mainPage.chainList.size();
+            // int n = mainPage.chainList.size();
+            // Change chain.
+            AccountListPage accountlistPage = new AccountListPage(DRIVER);
+            waitingTime(2);
             mainPage.chainList.get(3).click();
-            // mainPage.nile.click();
-            DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+            waitingTime(5);
+            // Change account to testAccountOne.
+            click(mainPage.switchAccount_btn);
+            waitingTime(5);
+            click(accountlistPage.account_list.get(Integer.parseInt(testAccountOneIndex)));
+            waitingTime(5);
           }
         } catch (Exception e) {
           log("Change chain Failed!");
