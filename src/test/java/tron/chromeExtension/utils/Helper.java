@@ -4,6 +4,7 @@ import javafx.geometry.Dimension2DBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import tron.chromeExtension.pages.MainPage;
 
 import java.time.Duration;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import static org.testng.internal.Utils.log;
 import static tron.chromeExtension.base.Base.DRIVER;
+import static tron.chromeExtension.base.Base.chain;
 
 public class Helper {
 
@@ -71,7 +73,7 @@ public class Helper {
       log("找不到token:" + name);
     }
 
-    return "";
+    return "找不到token:" + name;
   }
 
   public static boolean containElement(WebElement wl, String name) {

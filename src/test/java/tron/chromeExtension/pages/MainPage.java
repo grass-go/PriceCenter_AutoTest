@@ -25,6 +25,10 @@ public class MainPage extends AbstractPage {
   // 尼罗河网络
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[1]/div/div[1]/div/div[4]")
   public WebElement nile;
+  // 网络列表
+  @FindBy(className = "item")
+  public List<WebElement> chainList;
+
   // 当前账户总资产
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[3]")
   public WebElement accountTotalBalance;

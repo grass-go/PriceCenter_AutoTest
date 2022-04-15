@@ -23,7 +23,8 @@ public class queryAccount extends Base {
       groups = {"P0"},
       description = "Query the balance of all accounts",
       alwaysRun = true,
-      enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test001listAccountsTest() throws Exception {
 
     try {

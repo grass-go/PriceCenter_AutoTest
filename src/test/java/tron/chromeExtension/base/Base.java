@@ -10,10 +10,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -66,7 +68,8 @@ public class Base {
   public String accountKey002 =
       Configuration.getByPath("testng.conf").getString("chromeExtension.accountKey002");
   public String URL = "chrome-extension://" + UNIQUEID + PAGEPATH;
-  public String chain = Configuration.getByPath("test.conf").getString("chromeExtension.chain");
+  public static String chain =
+      Configuration.getByPath("test.conf").getString("chromeExtension.chain");
   ChromeOptions OPTION = new ChromeOptions();
   private SimpleDateFormat timeStamp = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss ");
 
@@ -78,7 +81,7 @@ public class Base {
       OPTION.setExperimentalOption("excludeSwitches", new String[] {"enable-automation"});
       OPTION.addArguments("--enable-extensions");
       OPTION.addArguments("--verbose");
-      log("OPTION:"+OPTION.toString());
+      log("OPTION:" + OPTION.toString());
       DRIVER = new ChromeDriver(OPTION);
     } catch (Exception e) {
       log("setUpChromeDriver异常");
@@ -105,12 +108,19 @@ public class Base {
         DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         loginPage.login_btn.click();
         DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        if (chain.equals("nile")) {
-          mainPage.selectedChain_btn.click();
-          DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-          mainPage.nile.click();
-          DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        try {
+          if (chain.contains("Nile")) {
+            mainPage.selectedChain_btn.click();
+            DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+            int n = mainPage.chainList.size();
+            mainPage.chainList.get(3).click();
+            // mainPage.nile.click();
+            DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+          }
+        } catch (Exception e) {
+          log("Change chain Failed!");
         }
+
         String totalBalanceStr = mainPage.accountTotalBalance.getText().substring(1);
         double totalBalance = getBalanceFromSelectionBtn(totalBalanceStr);
         if (totalBalance > 0) {
@@ -124,6 +134,27 @@ public class Base {
       }
     }
     return false;
+  }
+
+  public void changeChain() throws InterruptedException {
+    MainPage mainPage = new MainPage(DRIVER);
+    mainPage.selectedChain_btn.click();
+    waitingTime();
+    if (chain.equals("nile")) {
+      try {
+        for (int i = 0; i < mainPage.chainList.size(); i++) {
+          WebElement temp = mainPage.chainList.get(i).findElement(By.className("content"));
+          String chainName = temp.findElement(new By.ByTagName("span")).getText();
+          if (chain.equals(chainName)) {
+            mainPage.chainList.get(i).click();
+            waitingTime();
+            break;
+          }
+        }
+      } catch (Exception e) {
+        log("Change chain failed");
+      }
+    }
   }
 
   public void logoutAccount() throws Exception {
