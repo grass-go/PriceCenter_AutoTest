@@ -16,6 +16,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import tron.chromeExtension.base.Base;
 
 import static tron.chromeExtension.base.Base.DRIVER;
 import static tron.chromeExtension.base.Base.loginAddress;
@@ -58,7 +59,7 @@ public abstract class AbstractPage {
     TimeUnit.SECONDS.sleep(5);
     Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
     String accountAddress = fetchClipboardContents(clip);
-    System.out.println("accountAddress: " + accountAddress);
+    Base.log("accountAddress: " + accountAddress);
     Assert.assertNotNull(accountAddress);
     if (loginAddress.equals(accountAddress)) {
       return true;

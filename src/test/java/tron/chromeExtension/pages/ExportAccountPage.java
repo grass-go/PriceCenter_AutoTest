@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
+import tron.chromeExtension.base.Base;
+import tron.chromeExtension.utils.Helper;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -105,8 +107,8 @@ public class ExportAccountPage extends AbstractPage {
       copy_btn.click();
       Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
       result = fetchClipboardContents(clip);
-      System.out.println("result:" + result);
-      System.out.println("actual:" + actual);
+      Base.log("result:" + result);
+      Base.log("actual:" + actual);
       Assert.assertNotNull(result);
       Assert.assertEquals(actual, result);
     } catch (Exception e) {
@@ -130,8 +132,8 @@ public class ExportAccountPage extends AbstractPage {
       password_input.sendKeys(passwordWrong);
       confirmExport_btn.click();
       TimeUnit.SECONDS.sleep(5);
-      System.out.println("exportAccountTips:" + exportAccountTips);
-      System.out.println("tips:" + tips.getText());
+      Base.log("exportAccountTips:" + exportAccountTips);
+      Base.log("tips:" + tips.getText());
       Assert.assertEquals(exportAccountTips, tips.getText());
       cancel_btn.click();
       TimeUnit.SECONDS.sleep(5);

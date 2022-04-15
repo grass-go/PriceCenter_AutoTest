@@ -76,7 +76,7 @@ public class Base {
   public static String chain =
       Configuration.getByPath("test.conf").getString("chromeExtension.chain");
   ChromeOptions OPTION = new ChromeOptions();
-  private SimpleDateFormat timeStamp = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss ");
+  public static SimpleDateFormat timeStamp = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss ");
 
   public void setUpChromeDriver() throws Exception {
     killChromePid();
@@ -223,9 +223,9 @@ public class Base {
     waitingTime(2);
   }
 
-  public void log(String log) {
+  public static void log(String log) {
     String time = timeStamp.format(new Date()).toString();
-    System.out.println(time + ": " + log);
+    log(time + ": " + log);
   }
 
   public void sendKeys(WebElement webElement, String str) {
@@ -261,7 +261,7 @@ public class Base {
     TimeUnit.SECONDS.sleep(5);
     Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
     String accountAddress = fetchClipboardContents(clip);
-    System.out.println("accountAddress: " + accountAddress);
+    log("accountAddress: " + accountAddress);
     Assert.assertNotNull(accountAddress);
     if (address.equals(accountAddress)) {
       return true;
