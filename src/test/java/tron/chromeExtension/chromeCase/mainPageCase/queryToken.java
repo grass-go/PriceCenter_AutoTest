@@ -1,16 +1,21 @@
 package tron.chromeExtension.chromeCase.mainPageCase;
 
 import java.util.concurrent.TimeUnit;
+
+import org.junit.BeforeClass;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
+import tron.chromeExtension.pages.AccountListPage;
 import tron.chromeExtension.pages.MainPage;
 import tron.chromeExtension.utils.Helper;
 import tron.common.utils.MyIRetryAnalyzer;
 
 public class queryToken extends Base {
+
   @BeforeMethod
   public void before() throws Exception {
     setUpChromeDriver();

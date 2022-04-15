@@ -64,7 +64,6 @@ public class Base {
       Configuration.getByPath("testng.conf").getString("chromeExtension.testAccountOneIndex");
   public static String testAccountTwoIndex =
       Configuration.getByPath("testng.conf").getString("chromeExtension.testAccountTwoIndex");
-
   public String accountAddress001 =
       Configuration.getByPath("testng.conf").getString("chromeExtension.accountAddress001");
   public String accountKey001 =
@@ -97,6 +96,16 @@ public class Base {
     }
   }
 
+  public void switchToTestAccount() throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    waitingTime(5);
+    AccountListPage accountlistPage = new AccountListPage(DRIVER);
+    click(mainPage.switchAccount_btn);
+    waitingTime(5);
+    click(accountlistPage.account_list.get(Integer.parseInt(testAccountOneIndex)));
+    waitingTime(5);
+  }
+
   public boolean loginAccount() throws Exception {
     Integer retryLoginTimes = 1;
     while (retryLoginTimes > 0) {
@@ -116,20 +125,22 @@ public class Base {
         DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         loginPage.login_btn.click();
         DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        switchToTestAccount();
         try {
           if (chain.contains("Nile")) {
             mainPage.selectedChain_btn.click();
             DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             // int n = mainPage.chainList.size();
             // Change chain.
-            AccountListPage accountlistPage = new AccountListPage(DRIVER);
+            // 1----
+            //  AccountListPage accountlistPage = new AccountListPage(DRIVER);
             waitingTime(2);
             mainPage.chainList.get(3).click();
             waitingTime(5);
             // Change account to testAccountOne.
-            click(mainPage.switchAccount_btn);
-            waitingTime(5);
-            click(accountlistPage.account_list.get(Integer.parseInt(testAccountOneIndex)));
+            // click(mainPage.switchAccount_btn);
+            //  waitingTime(5);
+            //  click(accountlistPage.account_list.get(Integer.parseInt(testAccountOneIndex)));
             waitingTime(5);
           }
         } catch (Exception e) {
