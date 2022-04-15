@@ -62,6 +62,9 @@ public class MainPage extends AbstractPage {
   @FindBy(className = "tokenItem")
   public List<WebElement> trc721Token_list;
 
+  @FindBy(className = "tokenItem")
+  public List<WebElement> token_list;
+
   // 切换收藏品tab按钮
   @FindBy(
       xpath =

@@ -26,8 +26,8 @@ public class queryToken extends Base {
 
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);
-
-    String trxBalanceStr = getText(mainPage.trxBalance);
+    String trxName = "TRX";
+    String trxBalanceStr = Helper.getTokenAmountByName(mainPage.token_list, trxName);
     waitingTime(5);
     double trxBalance = getBalanceFromSelectionBtn(trxBalanceStr);
     log("trxBalance:" + trxBalance);
@@ -42,10 +42,12 @@ public class queryToken extends Base {
   public void test002QueryToken20Test() throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);
-    String trc20BalanceStr = getText(mainPage.trc20Balance);
+    String trc20Name = "JST";
+    String trc20BalanceStr = Helper.getTokenAmountByName(mainPage.token_list, trc20Name);
     waitingTime(5);
     double trc20Balance = getBalanceFromSelectionBtn(trc20BalanceStr);
     log("trc20Balance:" + trc20Balance);
+
     Assert.assertTrue(trc20Balance > 0);
   }
 
@@ -57,10 +59,12 @@ public class queryToken extends Base {
   public void test003QueryToken10Test() throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);
-    String trc10BalanceStr = getText(mainPage.trc10Balance);
+    String trc10Name = "AK";
+    String trc10BalanceStr = Helper.getTokenAmountByName(mainPage.token_list, trc10Name);
     waitingTime(5);
     double trc10Balance = getBalanceFromSelectionBtn(trc10BalanceStr);
     log("trc10Balance:" + trc10Balance);
+
     Assert.assertTrue(trc10Balance > 0);
   }
 

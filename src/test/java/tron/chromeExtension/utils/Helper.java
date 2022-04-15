@@ -42,7 +42,6 @@ public class Helper {
 
   public static long get721TokenAmountByName(List<WebElement> list, String name) {
     try {
-      int rr = list.size();
       for (int i = 0; i < list.size(); i++) {
         WebElement temp = list.get(i).findElement(By.className("nameCollection"));
         String fullName = temp.findElement(new By.ByClassName("fullName")).getText();
@@ -55,6 +54,24 @@ public class Helper {
     }
 
     return 0;
+  }
+
+  public static String getTokenAmountByName(List<WebElement> list, String name) {
+    try {
+      for (int i = 0; i < list.size(); i++) {
+        WebElement temp = list.get(i).findElement(By.className("name"));
+        String tokenName = temp.findElement(new By.ByTagName("span")).getText();
+        if (tokenName.equals(name)) {
+          WebElement worth = list.get(i).findElement(By.className("worth"));
+          List<WebElement> spanList = worth.findElements(new By.ByTagName("span"));
+          return spanList.get(0).getText();
+        }
+      }
+    } catch (Exception e) {
+      log("找不到token:" + name);
+    }
+
+    return "";
   }
 
   public static boolean containElement(WebElement wl, String name) {
