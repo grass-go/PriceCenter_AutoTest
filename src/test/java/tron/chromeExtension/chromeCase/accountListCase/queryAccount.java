@@ -35,7 +35,7 @@ public class queryAccount extends Base {
       TimeUnit.SECONDS.sleep(5);
       String totalBalanceOfAllAccountsStr = getText(mainPage.totalBalanceOfAllAccounts);
       double totalBalanceOfAllAccounts = getBalanceFromSelectionBtn(totalBalanceOfAllAccountsStr);
-      System.out.println("totalBalanceOfAllAccounts:" + totalBalanceOfAllAccounts);
+      log("totalBalanceOfAllAccounts:" + totalBalanceOfAllAccounts);
       Assert.assertTrue(totalBalanceOfAllAccounts > 0);
       TimeUnit.SECONDS.sleep(5);
       click(accountlistPage.close_btn);
@@ -65,7 +65,7 @@ public class queryAccount extends Base {
       // todo: 无法输入内容，xpath路径给的不对
       sendKeys(accountlistPage.searchAccount_input, searchStr);
       String address = getText(mainPage.address_content);
-      System.out.println("address:" + address);
+      log("address:" + address);
       Assert.assertEquals(loginAddress, address);
       click(accountlistPage.close_btn);
     } catch (Exception e) {
@@ -91,7 +91,7 @@ public class queryAccount extends Base {
       click(accountlistPage.account_list.get(Integer.parseInt(testAccountOneIndex)));
       waitingTime(5);
       String address = getText(mainPage.address_content);
-      System.out.println("address:" + address);
+      log("address:" + address);
       Assert.assertEquals(testAddress, address);
       click(mainPage.switchAccount_btn);
       waitingTime(5);

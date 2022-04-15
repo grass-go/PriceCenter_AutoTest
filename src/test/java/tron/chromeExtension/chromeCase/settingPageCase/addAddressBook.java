@@ -48,7 +48,8 @@ public class addAddressBook extends Base {
       groups = {"P0"},
       description = "Add the same account to address book",
       alwaysRun = true,
-      enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test002addAccountToAddressBookTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
@@ -62,7 +63,7 @@ public class addAddressBook extends Base {
     waitingTime();
     sendKeys(settingPage.address_input, loginAddress);
     String tips = getText(settingPage.duplicateAddressTips);
-    System.out.println("tips:" + tips);
+    log("tips:" + tips);
     Assert.assertEquals(duplicateAddressTips, tips);
     click(settingPage.close_btn);
     waitingTime(5);

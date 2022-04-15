@@ -24,19 +24,20 @@ public class exportAccount extends Base {
       groups = {"P0"},
       description = "Export  mnemonic words",
       alwaysRun = true,
-      enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test001exportMnemonicWordsTest() throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     ExportAccountPage exportAccountPage = new ExportAccountPage(DRIVER);
     String result =
         exportAccountPage.exportAccount(
             mainPage, exportAccountPage.exportMnemonicWords_btn, mnemonicWords);
-    System.out.println("result:" + result);
+    log("result:" + result);
     // Click  QR code button.
     click(exportAccountPage.QRCode_btn);
     // todo:QRCode_content 路径不对
     // String QRCode_content = getText(exportAccountPage.QRCode_content);
-    // System.out.println("QRCode_content:" + QRCode_content);
+    // log("QRCode_content:" + QRCode_content);
     click(exportAccountPage.close_btn);
     waitingTime(5);
     click(mainPage.backedUp_btn);
@@ -47,20 +48,21 @@ public class exportAccount extends Base {
       groups = {"P0"},
       description = "Export  private key",
       alwaysRun = true,
-      enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test002exportPrivateKeyTest() throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     ExportAccountPage exportAccountPage = new ExportAccountPage(DRIVER);
     String result =
         exportAccountPage.exportAccount(
             mainPage, exportAccountPage.exportPrivateKeys_btn, loginPrivateKey);
-    System.out.println("result" + result);
+    log("result" + result);
 
     // Click  QR code button.
     click(exportAccountPage.QRCode_btn);
     // todo:QRCode_content 路径不对
     // String QRCode_content = getText(exportAccountPage.QRCode_content);
-    // System.out.println("QRCode_content:" + QRCode_content);
+    // log("QRCode_content:" + QRCode_content);
     click(exportAccountPage.close_btn);
     waitingTime(5);
     click(mainPage.backedUp_btn);
@@ -73,7 +75,8 @@ public class exportAccount extends Base {
       groups = {"P0"},
       description = "Export  keystore",
       alwaysRun = true,
-      enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test003exportKeystoreTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
@@ -84,15 +87,15 @@ public class exportAccount extends Base {
     click(exportAccountPage.copy_btn);
     Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
     String keyStore = fetchClipboardContents(clip);
-    System.out.println("keyStore :" + keyStore);
-    System.out.println("loginKeyStore:" + loginKeyStore);
+    log("keyStore :" + keyStore);
+    log("loginKeyStore:" + loginKeyStore);
     Assert.assertNotNull(keyStore);
     Assert.assertTrue(keyStore.contains(testAddressBase58));
     // Click  QR code button.
     click(exportAccountPage.QRCode_btn);
     // todo:QRCode_content 路径不对
     // String QRCode_content = getText(exportAccountPage.QRCode_content);
-    // System.out.println("QRCode_content:" + QRCode_content);
+    // log("QRCode_content:" + QRCode_content);
     click(exportAccountPage.close_btn);
     waitingTime(5);
     click(mainPage.backedUp_btn);

@@ -26,7 +26,7 @@ public class sendWin extends Base {
   @Test(enabled = true)
   public void test001SendWinTest() throws Exception {
     SendPage sendPage = new MainPage(DRIVER).enterSendPage();
-    System.out.println(sendPage.balanceInSendPage_text.getText());
+    log(sendPage.balanceInSendPage_text.getText());
     sendPage.receiverAddress_input.sendKeys(accountAddress002);
     TimeUnit.SECONDS.sleep(2);
     sendPage.select_coin_type_btn.click();
@@ -36,7 +36,7 @@ public class sendWin extends Base {
     sendPage.amount_input.sendKeys(String.valueOf(sendAmount));
     TimeUnit.SECONDS.sleep(2);
     beforeBalance = getBalanceFromSelectionBtn(sendPage.select_coin_type_btn.getText());
-    System.out.println("beforebalance:" + beforeBalance);
+    log("beforebalance:" + beforeBalance);
     sendPage.send_btn.click();
     TimeUnit.SECONDS.sleep(30);
   }
@@ -51,8 +51,8 @@ public class sendWin extends Base {
     sendPage.win_in_selection_btn.click();
     DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     afterBalance = getBalanceFromSelectionBtn(sendPage.select_coin_type_btn.getText());
-    System.out.println("win beforeBalance:" + beforeBalance);
-    System.out.println("win afterbalance:" + afterBalance);
+    log("win beforeBalance:" + beforeBalance);
+    log("win afterbalance:" + afterBalance);
     Assert.assertNotEquals(beforeBalance, afterBalance);
     // Assert.assertTrue(beforeBalance - sendAmount == afterBalance);
 

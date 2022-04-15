@@ -31,10 +31,10 @@ public class receiveBalance extends Base {
     click(mainPage.receive_btn);
     waitingTime(5);
     String receivePageAddressStr = getText(receiveTokenPage.accountAddress);
-    System.out.println("receivePageAddressStr:" + receivePageAddressStr);
+    log("receivePageAddressStr:" + receivePageAddressStr);
     Assert.assertEquals(loginAddress, receivePageAddressStr);
     String accountName = getText(receiveTokenPage.accountName);
-    System.out.println("accountName:" + accountName);
+    log("accountName:" + accountName);
     Assert.assertEquals("自动化测试账户1", accountName.split("\\+")[0]);
     // todo:二维码是图片，与导出的二维码的区别
     getText(receiveTokenPage.qRCode);
