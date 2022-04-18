@@ -22,7 +22,7 @@ public class AccountListPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[1]/div/div[1]/div[1]/img")
   public WebElement searchAccount_btn;
   // Search Account input box.
-  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[1]/div/div[1]/div[1]")
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[1]/div/div[1]/div[1]/span/input")
   public WebElement searchAccount_input;
 
   // Address of search result account.
