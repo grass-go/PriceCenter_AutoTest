@@ -87,15 +87,11 @@ public class queryAccount extends Base {
       waitingTime(5);
       click(mainPage.switchAccount_btn);
       waitingTime(5);
-      // click(accountlistPage.testAccount2_btn);
-      click(accountlistPage.account_list.get(Integer.parseInt(testAccountOneIndex)));
+      click(accountlistPage.account_list.get(Integer.parseInt(testAccountTwoIndex)));
       waitingTime(5);
-      String address = getText(mainPage.address_content);
-      log("address:" + address);
-      Assert.assertEquals(testAddress, address);
+      Assert.assertTrue(onTheHomepageOrNot(testAddress));
       click(mainPage.switchAccount_btn);
       waitingTime(5);
-      // click(accountlistPage.testAccount1_btn);
       click(accountlistPage.account_list.get(Integer.parseInt(testAccountOneIndex)));
       waitingTime(5);
       Assert.assertTrue(onTheHomepageOrNot(loginAddress));
