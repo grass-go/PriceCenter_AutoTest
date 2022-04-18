@@ -81,7 +81,7 @@ public class Base {
   public void setUpChromeDriver() throws Exception {
     killChromePid();
     try {
-      // 设置为 headless 模式 （必须）
+      // Set to headless mode (required)
       // OPTION.addArguments("--headless");
       OPTION.addArguments("--user-data-dir=" + userDataDir);
       OPTION.addArguments("load-extension=" + extensionDir);
@@ -91,7 +91,7 @@ public class Base {
       log("OPTION:" + OPTION.toString());
       DRIVER = new ChromeDriver(OPTION);
     } catch (Exception e) {
-      log("setUpChromeDriver异常");
+      log("Setup Chromedriver exception!");
       e.printStackTrace();
     }
   }
@@ -130,17 +130,8 @@ public class Base {
           if (chain.contains("Nile")) {
             mainPage.selectedChain_btn.click();
             DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-            // int n = mainPage.chainList.size();
-            // Change chain.
-            // 1----
-            //  AccountListPage accountlistPage = new AccountListPage(DRIVER);
             waitingTime(2);
             mainPage.chainList.get(3).click();
-            waitingTime(5);
-            // Change account to testAccountOne.
-            // click(mainPage.switchAccount_btn);
-            //  waitingTime(5);
-            //  click(accountlistPage.account_list.get(Integer.parseInt(testAccountOneIndex)));
             waitingTime(5);
           }
         } catch (Exception e) {
@@ -225,7 +216,7 @@ public class Base {
 
   public static void log(String log) {
     String time = timeStamp.format(new Date()).toString();
-    log(time + ": " + log);
+    System.out.println(time + ": " + log);
   }
 
   public void sendKeys(WebElement webElement, String str) {
@@ -240,20 +231,22 @@ public class Base {
     return Double.parseDouble(value);
   }
 
-  //  复制剪切板内容返回字符串
+  //  Copy clipboard contents and return string
   public String fetchClipboardContents(Clipboard clip)
       throws IOException, UnsupportedFlavorException {
-    // 获取剪切板中的内容
+    // Get the contents of the clipboard
     Transferable clipT = clip.getContents(null);
     if (clipT != null) {
-      // 检查内容是否是文本类型
+      // Check whether the content is of text type
       if (clipT.isDataFlavorSupported(DataFlavor.stringFlavor))
         return (String) clipT.getTransferData(DataFlavor.stringFlavor);
+    } else {
+      log("Clipboard content is empty!");
     }
     return null;
   }
 
-  // 验证回到首页
+  // Verify back to home page
   public Boolean onTheHomepageOrNot(String address) throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     TimeUnit.SECONDS.sleep(5);

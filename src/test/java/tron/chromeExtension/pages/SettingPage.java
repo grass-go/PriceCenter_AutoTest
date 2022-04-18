@@ -11,58 +11,58 @@ public class SettingPage extends AbstractPage {
     super(driver);
     this.driver = driver;
   }
-  // 地址本按钮
+  // Address book button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[1]/div/div/span")
   public WebElement addressBook_btn;
 
-  // 添加地址本按钮
+  // Add address book button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div[2]")
   public WebElement addAddressBook_btn;
 
-  // 地址本中已存在
+  // Address book already exists.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[4]/span")
   public WebElement duplicateAddressTips;
-  // 名称输入框
+  // Name input box.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[2]/input")
   public WebElement name_input;
-  // 地址输入框
+  // Address input box.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[3]/div/input")
   public WebElement address_input;
-  // 备注输入框
+  // Note input box.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[4]/input")
   public WebElement remarks_input;
-  // 保存按钮
+  // Save button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/button[1]")
   public WebElement save_btn;
-  // 关闭按钮
+  // Close button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/button[2]/span")
   public WebElement close_btn;
-  // 地址本三个字位置
+  // Address book three word position.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/span")
   public WebElement addressBook_content;
 
-  // 搜索输入框
+  // Search input box.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/input")
   public WebElement search_input;
-  // 搜索结果的名称
+  // The name of the search result.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[2]/div/div/div[1]/span/span")
   public WebElement searchResultName_content;
 
-  // 搜索结果的地址
+  // Address of search results.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[2]/div/div/div[2]/span")
   public WebElement searchResultAddress_content;
-  // 搜索结果的备注
+  // Comments for search results.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[2]/div/div/div[3]")
   public WebElement searchResultRemarks_content;
-  // 删除地址按钮
+  // Delete address button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div[1]/div/img")
   public WebElement delete_btn;
 
-  // 确认删除按钮
+  // Confirm delete button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[4]/button[2]")
   public WebElement confirm_btn;
 
-  // 搜索无结果提示：未找到该地址
+  // No search results prompt: the address was not found.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[2]/span")
   public WebElement tips_content;
 
@@ -78,15 +78,14 @@ public class SettingPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[5]/div/div[1]/span")
   public WebElement language_btn;
 
-
-  // 自动锁定按钮
+  // Auto lock button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[6]/div/div[1]/span")
   public WebElement automaticLocking_btn;
-  // 一分钟后自动锁定
+  // Automatic locking after one minute.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[6]/div/div[2]/div[1]/span")
-  public  WebElement oneMinute_btn;
+  public WebElement oneMinute_btn;
 
-  // 永不自动锁定
+  // Never auto lock.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[6]/div/div[2]/div[6]/span")
   public WebElement neverAutomaticLocking_btn;
 

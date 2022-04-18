@@ -38,7 +38,7 @@ public class logoutCase extends Base {
     sendKeys(loginPage.password_input, password);
     waitingTime();
     click(loginPage.login_btn);
-    // 验证登陆成功
+    // Login verification succeeded.
     waitingTime(5);
     Assert.assertTrue(onTheHomepageOrNot(loginAddress));
   }

@@ -14,31 +14,31 @@ public class AccountListPage extends AbstractPage {
     this.driver = driver;
   }
 
-  // 账户列表
+  // Account list.
   @FindBy(className = "cell")
   public List<WebElement> account_list;
 
-  // 搜索账户按钮
+  // Search Account button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[1]/div/div[1]/div[1]/img")
   public WebElement searchAccount_btn;
-  // 搜索账户输入框
+  // Search Account input box.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[1]/div/div[1]/div[1]")
   public WebElement searchAccount_input;
 
-  // 搜索结果账户的地址
+  // Address of search result account.
   @FindBy(
       xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[1]/div/div[1]/div[2]/div/div[2]/span")
   public WebElement searchAccount_address;
 
-  // 添加钱包
+  // Add Wallet.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[1]/div/div[1]/div[3]/div/span")
   public WebElement addWallet_btn;
 
-  // 关闭按钮
+  // Close button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[1]/div/div[2]")
   public WebElement close_btn;
 
-  // 热钱包列表
+  // Hot wallet list.
   @FindBy(id = "hotWallet")
   public List<WebElement> hotWalletArray;
 }

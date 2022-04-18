@@ -33,7 +33,7 @@ public class lockScreen extends Base {
     sendKeys(lockPage.password_input, password);
     click(lockPage.login_btn);
     waitingTime(5);
-    // 验证解锁成功
+    // Verify successful unlocking.
     Assert.assertTrue(onTheHomepageOrNot(loginAddress));
   }
 
@@ -49,7 +49,7 @@ public class lockScreen extends Base {
     sendKeys(lockPage.password_input, passwordWrong);
     click(lockPage.login_btn);
     waitingTime(5);
-    // 验证解锁失败
+    // Verify  unlocking failed.
     Assert.assertEquals(lockPageTips1, getText(lockPage.tips1));
     Assert.assertEquals(lockPageTips2, getText(lockPage.tips2));
   }

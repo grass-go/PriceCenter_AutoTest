@@ -22,61 +22,61 @@ public class ExportAccountPage extends AbstractPage {
     this.driver = driver;
   }
 
-  // 密码输入框
+  // Password input box.
   @FindBy(xpath = "//*[@id=\"input\"]")
   public WebElement password_input;
-  // 密码错误提示
+  // Password error prompt.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div[2]/div[2]")
   public WebElement tips;
 
-  // 取消键
+  // Cancel key.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div[3]/button[1]/span")
   public WebElement cancel_btn;
-  //  确认键
+  //  Confirm key.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div[3]/button[2]/span")
   public WebElement confirmExport_btn;
 
-  // 复制按钮
+  // Copy button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div/div/div/div[2]/div[1]/span")
   public WebElement copy_btn;
-  // 二维码按钮
+  // QR code button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div/div/div/div[2]/div[2]/span")
   public WebElement QRCode_btn;
 
-  // 助记词二维码内容
+  // Mnemonic QR code content.
   @FindBy(xpath = "/html/body/div[2]/div/div[2]/div/div/div[2]/svg")
   public WebElement QRCode_content;
 
-  // 助记词关闭二维码按钮
+  // Mnemonic close QR code button.
   @FindBy(xpath = "/html/body/div[2]/div/div[2]/div/div/div[2]/div/button")
   public WebElement close_btn;
 
-  // 导出账户按钮
+  // Export account button.
   @FindBy(
       xpath =
           "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[1]/div[2]/div[2]/div/div[2]/span[2]")
   public WebElement exportAccount_btn;
-  // 导出助记词按钮
+  // Export mnemonic button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/span")
   public WebElement exportMnemonicWords_btn;
 
-  // 导出私钥按钮
+  // Export private key button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[2]/span")
   public WebElement exportPrivateKeys_btn;
 
-  // 导出Keystore按钮
+  // Export keystore button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[3]/span")
   public WebElement exportKeystore_btn;
 
-  // 开始备份按钮
+  // Start Backup button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div/button/span")
   public WebElement startBackup_btn;
 
-  // 查看助记词/私钥按钮
+  // View mnemonic / private key button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div/div/div/div/button/span")
   public WebElement view_btn;
 
-  // 我已安全备份按钮
+  // I have the secure backup button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div/button/span")
   public WebElement backedUp_btn;
 
@@ -90,7 +90,7 @@ public class ExportAccountPage extends AbstractPage {
       TimeUnit.SECONDS.sleep(5);
       mainPage.exportAccount_btn.click();
       TimeUnit.SECONDS.sleep(5);
-      // 点击导出助记词/私钥/keystone
+      // Click export mnemonic / private key / keystone.
       webElement.click();
       TimeUnit.SECONDS.sleep(5);
       password_input.sendKeys(passwordWrong);
@@ -126,7 +126,7 @@ public class ExportAccountPage extends AbstractPage {
       TimeUnit.SECONDS.sleep(5);
       mainPage.exportAccount_btn.click();
       TimeUnit.SECONDS.sleep(5);
-      // 点击导出助记词/私钥/keystone
+      // Click export mnemonic / private key / keystone.
       webElement.click();
       TimeUnit.SECONDS.sleep(5);
       password_input.sendKeys(passwordWrong);

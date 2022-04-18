@@ -11,16 +11,16 @@ public class LockPage extends AbstractPage {
     super(driver);
     this.driver = driver;
   }
-  // 密码输入框
+  // Password input box.
   @FindBy(xpath = "//*[@id=\"input\"]")
   public WebElement password_input;
-  // 确认框
+  // Confirmation box.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/button/span")
   public WebElement login_btn;
-  // 错误提示1
+  // Error prompt 1.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/span[1]")
   public WebElement tips1;
-  // 错误提示2
+  // Error prompt 2.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/span[2]")
   public WebElement tips2;
 }

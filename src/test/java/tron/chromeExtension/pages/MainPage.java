@@ -19,49 +19,46 @@ public class MainPage extends AbstractPage {
     super(driver);
     this.driver = driver;
   }
-  // 切换链的按钮
+  // Button for switching chains.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[1]/div/div[1]")
   public WebElement selectedChain_btn;
-  // 尼罗河网络
+  // Nile network.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[1]/div/div[1]/div/div[4]")
   public WebElement nile;
-  // 网络列表
+  // Network list.
   @FindBy(className = "item")
   public List<WebElement> chainList;
 
-  // 当前账户总资产
+  // Total assets of current account.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[3]")
   public WebElement accountTotalBalance;
-  // 当前账户地址
+  // Current account address.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[2]/span[1]")
   public WebElement address_content;
-  // 当前账户名称
+  // Current account name.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[1]/div[1]/span")
   public WebElement accountName_content;
 
-  // 当前账户trx金额
+  // Current account TRX amount.
   @FindBy(
       xpath =
           "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div/div[1]/div[3]/span[1]")
   public WebElement trxBalance;
 
-  // 当前账户20币金额
+  // Current account amount of 20 token.
   @FindBy(
       xpath =
           " //*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div/div[2]/div[3]/span[1]")
   public WebElement trc20Balance;
-  // 当前账户10币金额
+  // Current account amount of 10 token.
   @FindBy(
       xpath =
           "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div/div[2]/div[3]/span[1]")
   public WebElement trc10Balance;
-  // 当前账户721币金额
+  // Current account amount of 721 token.
   @FindBy(
       xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div/div[3]/div[3]")
   public WebElement trc721Balance;
-
-  /* @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div/div[3]")
-  public List<WebElement> trc721Token_list;*/
 
   @FindBy(className = "tokenItem")
   public List<WebElement> trc721Token_list;
@@ -69,107 +66,107 @@ public class MainPage extends AbstractPage {
   @FindBy(className = "tokenItem")
   public List<WebElement> token_list;
 
-  // 切换收藏品tab按钮
+  // Toggle Collectibles tab button.
   @FindBy(
       xpath =
           "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[1]/div[1]/div[2]/span")
   public WebElement collectibles_btn;
 
-  // 切换资产
+  // Switch assets.
   @FindBy(
       xpath =
           "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[1]/div[1]/div[1]/span")
   public WebElement assets_btn;
-  // 切换账户按钮
+  // Switch account button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[1]/div[1]/span")
   public WebElement switchAccount_btn;
-  // 所有账户总资产金额
+  // Total assets of all accounts.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[1]/div/div[1]/div[1]/div/span[2]")
   public WebElement totalBalanceOfAllAccounts;
-  // 添加钱包
+  // Add Wallet.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[1]/div/div[2]/div[1]/a[1]")
   public WebElement addWallet_btn;
 
-  // Dapp按钮
+  // Dapp button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[1]/div/div[2]/div[1]/a[2]")
   public WebElement dApp_btn;
 
-  // 热门列表页第一个元素
+  // Top list page first element.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[2]")
   public WebElement dAppHot_content;
-  // 使用过按钮
+  // Used button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[2]/span")
   public WebElement used_btn;
-  // 返回按钮
+  // Return button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div")
   public WebElement back_btn;
 
-  // 锁屏按钮
+  // Lock screen button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[1]/div/div[2]/div[2]/div[1]")
   public WebElement lock_btn;
 
-  // 主页接收按钮
+  // Home receive button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[1]/div[2]/span")
   public WebElement receive_btn;
 
-  // 主页复制按钮
+  // Home page copy button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[2]/span[2]")
   public WebElement copy_btn;
 
-  // 主页更多按钮
+  // Home page more buttons.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[1]/div[2]/div[2]")
   public WebElement more_btn;
 
-  // 修改账户名按钮
+  // Modify account name button.
   @FindBy(
       xpath =
           "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[1]/div[2]/div[2]/div/div[1]/span[2]")
   public WebElement modifyAccountName_btn;
 
-  // 修改账户名输入框
+  // Modify account name input box.
   @FindBy(xpath = "//*[@id=\"input\"]")
   public WebElement modifyAccountName_input;
 
-  // 确认修改账户名称确认按钮
+  // Confirm to modify account name.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[1]/div/div[3]/button[2]/span")
   public WebElement modifyAccountNameConfirm_btn;
 
-  // 导出账户按钮
+  // Export Account button.
   @FindBy(
       xpath =
           "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[1]/div[2]/div[2]/div/div[2]/span[2]")
   public WebElement exportAccount_btn;
-  // 链接管理按钮
+  // Link management button
   @FindBy(
       xpath =
           "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[1]/div[2]/div[2]/div/div[3]/span[2]")
   public WebElement manageConnections_btn;
 
-  // 链接管理页面文案
+  // Link management page copywriting.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[1]/div/div/div[2]/span")
   public WebElement manageConnections_content;
 
-  // 连接管理页面关闭按钮
+  // Connection management page close button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[1]/div/div/div[1]")
   public WebElement manageConnectionsClose_btn;
 
-  // 刷新按钮
+  // Refresh button.
 
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[1]/div/div[2]/div[2]/div[3]")
   public WebElement renew_btn;
-  // 设置按钮
+  // Set button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[1]/div/div[2]/div[2]/div[5]")
   public WebElement set_btn;
 
-  // 我已安全备份按钮
+  // I have the secure backup button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div/button/span")
   public WebElement backedUp_btn;
 
-  // 主页发送按钮
+  // Home send button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[4]/div[2]/span[2]")
   public WebElement send_btn;
 
-  // 输入
+  // input.
   @FindBy(xpath = "//*[@id=\"input\"]")
   public WebElement password_input;
 

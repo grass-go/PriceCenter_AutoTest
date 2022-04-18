@@ -99,7 +99,6 @@ public class exportAccount extends Base {
     click(exportAccountPage.close_btn);
     waitingTime(5);
     click(mainPage.backedUp_btn);
-    // 验证回到首页
     waitingTime(5);
     Assert.assertTrue(onTheHomepageOrNot(loginAddress));
   }

@@ -50,7 +50,6 @@ public class listDapp extends Base {
     waitingTime(5);
     click(mainPage.back_btn);
     waitingTime(5);
-    // 验证回到首页
     Assert.assertTrue(onTheHomepageOrNot(loginAddress));
   }
 

@@ -89,7 +89,7 @@ public class addAddressBook extends Base {
     waitingTime();
     Assert.assertEquals("自动化测试账户1", getText(settingPage.searchResultName_content));
     Assert.assertEquals(
-        "TG46VehcrBnw5mDPRvcSWFd1sRV85vKDDJ", getText(settingPage.searchResultAddress_content));
+        loginAddress, getText(settingPage.searchResultAddress_content));
     Assert.assertEquals("备注：自动化测试账户1的地址", getText(settingPage.searchResultRemarks_content));
   }
 

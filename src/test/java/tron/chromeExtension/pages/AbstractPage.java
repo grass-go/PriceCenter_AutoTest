@@ -32,26 +32,26 @@ public abstract class AbstractPage {
     driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
   }
 
-  public WebElement WaitforElement(By element) {
+  public WebElement waitForElement(By element) {
     PageFactory.initElements(driver, this);
     new WebDriverWait(driver, 30).until(ExpectedConditions.elementToBeClickable(element));
     return driver.findElement(element);
   }
 
-  //  复制剪切板内容返回字符串
+  //  Copy clipboard contents and return string.
   public String fetchClipboardContents(Clipboard clip)
       throws IOException, UnsupportedFlavorException {
-    // 获取剪切板中的内容
+    // Get the contents of the clipboard.
     Transferable clipT = clip.getContents(null);
     if (clipT != null) {
-      // 检查内容是否是文本类型
+      // Check whether the content is of text type.
       if (clipT.isDataFlavorSupported(DataFlavor.stringFlavor))
         return (String) clipT.getTransferData(DataFlavor.stringFlavor);
     }
     return null;
   }
 
-  // 验证回到首页
+  // Verify back to home page.
   public Boolean onTheHomepageOrNot() throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     TimeUnit.SECONDS.sleep(5);
