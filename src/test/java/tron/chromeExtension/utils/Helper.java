@@ -1,11 +1,12 @@
 package tron.chromeExtension.utils;
 
 import javafx.geometry.Dimension2DBuilder;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import tron.chromeExtension.pages.MainPage;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -124,6 +125,22 @@ public class Helper {
         }
       }
     }
+  }
+
+  // Screenshot method.
+  public void screenShotByTakesScreenshot() {
+    // 执行屏幕截图操作
+    File srcFile = ((TakesScreenshot) DRIVER).getScreenshotAs(OutputType.FILE);
+    // 通过FileUtils中的copyFile()方法保存getScreenshotAs()返回的文件;"屏幕截图"即时保存截图的文件夹
+    try {
+      FileUtils.copyFile(srcFile, new File("D:\\screenshot\\通过TakesScreenshot截图.jpg"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+  // Compare whether the two pictures are the same
+  public void screenShotByTakesScreenshot1() {
+
   }
 
   public static boolean contentTexts(List<WebElement> list, String name) {
