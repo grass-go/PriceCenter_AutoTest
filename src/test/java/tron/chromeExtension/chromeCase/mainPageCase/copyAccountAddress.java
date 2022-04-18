@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;

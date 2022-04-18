@@ -121,10 +121,12 @@ public class Base {
         DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         LoginPage loginPage = new LoginPage(DRIVER);
         MainPage mainPage = new MainPage(DRIVER);
+
         loginPage.password_input.sendKeys(password);
         DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         loginPage.login_btn.click();
         DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        closeWindow(new AccountListPage(DRIVER).close_btn);
         switchToTestAccount();
         try {
           if (chain.contains("Nile")) {
@@ -176,6 +178,16 @@ public class Base {
 
   public void logoutAccount() throws Exception {
     DRIVER.quit();
+  }
+
+  public void closeWindow(WebElement webElement) throws Exception {
+    try {
+      if (webElement.isDisplayed()) {
+        webElement.click();
+      }
+    } catch (org.openqa.selenium.NoSuchElementException ex) {
+      log("No Such Element!");
+    }
   }
 
   public String getText(WebElement webElement) throws Exception {
