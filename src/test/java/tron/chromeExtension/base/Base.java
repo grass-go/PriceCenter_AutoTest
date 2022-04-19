@@ -15,6 +15,7 @@ import java.util.Properties;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -77,6 +78,7 @@ public class Base {
       Configuration.getByPath("test.conf").getString("chromeExtension.chain");
   ChromeOptions OPTION = new ChromeOptions();
   public static SimpleDateFormat timeStamp = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss ");
+  public static String addressBookName = "自动化测试账户1";
 
   public void setUpChromeDriver() throws Exception {
     killChromePid();
@@ -194,8 +196,17 @@ public class Base {
     return webElement.getText();
   }
 
-  public void click(WebElement webElement) throws Exception {
+  public static void clear(WebElement webElement) throws Exception {
+    webElement.sendKeys(Keys.chord(Keys.COMMAND, "a"));
+    webElement.sendKeys(Keys.DELETE);
+  }
+
+  public static void click(WebElement webElement) throws Exception {
     webElement.click();
+  }
+
+  public static Boolean isSelected(WebElement webElement) throws Exception {
+    return webElement.isSelected();
   }
 
   public WebElement findElementByName(String name) throws Exception {
@@ -218,11 +229,11 @@ public class Base {
     return webElement;
   }
 
-  public void waitingTime(long time) throws InterruptedException {
+  public static void waitingTime(long time) throws InterruptedException {
     TimeUnit.SECONDS.sleep(time);
   }
 
-  public void waitingTime() throws InterruptedException {
+  public static void waitingTime() throws InterruptedException {
     waitingTime(2);
   }
 
@@ -231,7 +242,7 @@ public class Base {
     System.out.println(time + ": " + log);
   }
 
-  public void sendKeys(WebElement webElement, String str) {
+  public static void sendKeys(WebElement webElement, String str) {
     webElement.sendKeys(str);
   }
 

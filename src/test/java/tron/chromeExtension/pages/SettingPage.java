@@ -4,6 +4,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+
 /** mine page */
 public class SettingPage extends AbstractPage {
 
@@ -19,9 +21,12 @@ public class SettingPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div[2]")
   public WebElement addAddressBook_btn;
 
-  // Address book already exists.
+  // Address  already exists.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[4]/span")
   public WebElement duplicateAddressTips;
+  // Name  already exists.
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[3]/span")
+  public WebElement duplicateNameTips;
   // Name input box.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[2]/input")
   public WebElement name_input;
@@ -71,6 +76,48 @@ public class SettingPage extends AbstractPage {
 
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[3]/div/div/span")
   public WebElement nodeManagement_btn;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[2]/span")
+  public WebElement addNode_btn;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[1]/input")
+  public WebElement nodeName_input;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[2]/span")
+  public WebElement nodeName_tips;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[3]/input")
+  public WebElement wrongFullNode_input;
+
+  @FindBy(xpath = " //*[@id=\"root\"]/div/div[1]/div/div[2]/input")
+  public WebElement fullNode_input;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[4]/span")
+  public WebElement fullNode_tips;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[5]/input")
+  public WebElement wrongEventServer_input;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[3]/input")
+  public WebElement eventServer_input;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[6]/span")
+  public WebElement eventServer_tips;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]")
+  public WebElement loseFocus;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div")
+  public WebElement back;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/button/span")
+  public WebElement addCustomNode_btn;
+
+  @FindBy(className = "item")
+  public List<WebElement> node_list;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[3]/button[2]/span")
+  public WebElement deleteConfirm_btn;
 
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[4]/div/div[1]/span")
   public WebElement valuationCurrency_btn;

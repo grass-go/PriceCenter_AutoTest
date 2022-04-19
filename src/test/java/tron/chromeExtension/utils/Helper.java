@@ -3,11 +3,22 @@ package tron.chromeExtension.utils;
 import javafx.geometry.Dimension2DBuilder;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
+import org.testng.Assert;
+import tron.chromeExtension.base.Base;
+import tron.chromeExtension.pages.AbstractPage;
 import tron.chromeExtension.pages.MainPage;
+import tron.chromeExtension.pages.SettingPage;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -15,7 +26,9 @@ import static org.testng.internal.Utils.log;
 import static tron.chromeExtension.base.Base.DRIVER;
 import static tron.chromeExtension.base.Base.chain;
 
-public class Helper {
+public class Helper extends Base {
+
+  public static SimpleDateFormat timeStamp = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss ");
 
   public WebElement findWebElement(String element) throws Exception {
     int tries = 0;
@@ -55,8 +68,60 @@ public class Helper {
     } catch (Exception e) {
       log("找不到token:" + name);
     }
-
     return 0;
+  }
+
+  // Verify back to home page
+  public Boolean onTheHomepageOrNot(String address) throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    TimeUnit.SECONDS.sleep(5);
+    click(mainPage.copy_btn);
+    TimeUnit.SECONDS.sleep(5);
+    Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
+    String accountAddress = fetchClipboardContents(clip);
+    log("accountAddress: " + accountAddress);
+    Assert.assertNotNull(accountAddress);
+    if (address.equals(accountAddress)) {
+      return true;
+    }
+    return false;
+  }
+
+  public static void clickAndClearAndInput(WebElement webElement, String input) throws Exception {
+    click(webElement);
+    waitingTime();
+    clear(webElement);
+    waitingTime();
+    sendKeys(webElement, input);
+    waitingTime();
+  }
+
+  public static String getNodeName(List<WebElement> list) {
+    int size = list.size();
+    WebElement r1 = list.get(size - 1).findElement(By.className("r1"));
+    String nodeName = r1.getText().substring(0, 6);
+    log("nodeName:" + nodeName);
+    return nodeName;
+  }
+
+  public static String getFullNodeStr(List<WebElement> list) {
+    int size = list.size();
+    WebElement r2 = list.get(size - 1).findElement(By.className("r2"));
+    List<WebElement> cellList = r2.findElements(By.className("cell"));
+    List<WebElement> cell1SpanList = cellList.get(0).findElements(By.tagName("span"));
+    String fullNodeStr = cell1SpanList.get(1).getText();
+    log("fullNodeStr:" + fullNodeStr);
+    return fullNodeStr;
+  }
+
+  public static String getEventServerStr(List<WebElement> list) {
+    int size = list.size();
+    WebElement r2 = list.get(size - 1).findElement(By.className("r2"));
+    List<WebElement> cellList = r2.findElements(By.className("cell"));
+    List<WebElement> cell2SpanList = cellList.get(1).findElements(By.tagName("span"));
+    String eventServerStr = cell2SpanList.get(1).getText();
+    log("eventServerStr:" + eventServerStr);
+    return eventServerStr;
   }
 
   public static String getTokenAmountByName(List<WebElement> list, String name) {
@@ -138,10 +203,9 @@ public class Helper {
       e.printStackTrace();
     }
   }
-  // Compare whether the two pictures are the same
-  public void screenShotByTakesScreenshot1() {
 
-  }
+  // Compare whether the two pictures are the same
+  public void screenShotByTakesScreenshot1() {}
 
   public static boolean contentTexts(List<WebElement> list, String name) {
     if (list.size() < 1) return false;
