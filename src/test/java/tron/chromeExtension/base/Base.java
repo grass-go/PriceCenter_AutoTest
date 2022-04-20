@@ -9,10 +9,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
-import java.util.Properties;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -209,6 +207,17 @@ public class Base {
     return webElement.isSelected();
   }
 
+  public static Boolean isElementChecked(WebElement webElement, String eleKey, String eleValue)
+      throws Exception {
+    Boolean isSelectOrNot = null;
+    try {
+      isSelectOrNot = webElement.getAttribute(eleKey).contains(eleValue);
+    } catch (org.openqa.selenium.NoSuchElementException e) {
+      log("No such element!");
+    }
+    return isSelectOrNot;
+  }
+
   public WebElement findElementByName(String name) throws Exception {
     WebElement webElement = DRIVER.findElementByName(name);
     return webElement;
@@ -252,6 +261,19 @@ public class Base {
       value = str.replace(",", "");
     }
     return Double.parseDouble(value);
+  }
+
+  public static void switchWindows() throws InterruptedException {
+    Set<String> handles = DRIVER.getWindowHandles();
+    String searchHand = DRIVER.getWindowHandle();
+    for (String i : handles) {
+      if (!searchHand.equals(i)) {
+        DRIVER.switchTo().window(i);
+        waitingTime(5);
+        DRIVER.close();
+        DRIVER.switchTo().window(i);
+      }
+    }
   }
 
   //  Copy clipboard contents and return string

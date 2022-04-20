@@ -159,8 +159,10 @@ public class nodeManagement extends Base {
     click(mainPage.back_btn);
     mainPage.selectedChain_btn.click();
     waitingTime(2);
-    // mainPage.chainList.get(6);
-    Assert.assertTrue(isSelected(mainPage.chainList.get(6)));
+    // boolean isSelected = mainPage.chainList.get(6).getAttribute("class").contains("checked");
+    boolean isSelected = isElementChecked(mainPage.chainList.get(6), "class", "checked");
+    log("log:" + isSelected);
+    Assert.assertTrue(isSelected);
   }
 
   @AfterMethod(enabled = true)
