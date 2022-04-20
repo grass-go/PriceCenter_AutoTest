@@ -9,7 +9,6 @@ import tron.chromeExtension.pages.MainPage;
 import tron.chromeExtension.pages.SettingPage;
 import tron.common.utils.MyIRetryAnalyzer;
 
-import java.util.concurrent.TimeUnit;
 
 public class addAddressBook extends Base {
 
@@ -31,7 +30,8 @@ public class addAddressBook extends Base {
     waitingTime(5);
     click(mainPage.set_btn);
     waitingTime();
-    click(settingPage.addressBook_btn);
+    // addressBook_btn
+    click(settingPage.settingList.get(0));
     waitingTime();
     click(settingPage.addAddressBook_btn);
     waitingTime();
@@ -56,7 +56,8 @@ public class addAddressBook extends Base {
     waitingTime(5);
     click(mainPage.set_btn);
     waitingTime();
-    click(settingPage.addressBook_btn);
+    // addressBook_btn
+    click(settingPage.settingList.get(0));
     waitingTime();
     click(settingPage.addAddressBook_btn);
     waitingTime();
@@ -82,7 +83,8 @@ public class addAddressBook extends Base {
     waitingTime(5);
     click(mainPage.set_btn);
     waitingTime();
-    click(settingPage.addressBook_btn);
+    // settingPage.addressBook_btn
+    click(settingPage.settingList.get(0));
     waitingTime();
     click(settingPage.addAddressBook_btn);
     waitingTime();
@@ -107,7 +109,8 @@ public class addAddressBook extends Base {
     waitingTime(5);
     click(mainPage.set_btn);
     waitingTime();
-    click(settingPage.addressBook_btn);
+    // settingPage.addressBook_btn
+    click(settingPage.settingList.get(0));
     waitingTime();
     sendKeys(settingPage.search_input, "自动化测试账户1");
     waitingTime();
@@ -128,7 +131,8 @@ public class addAddressBook extends Base {
     waitingTime(5);
     click(mainPage.set_btn);
     waitingTime();
-    click(settingPage.addressBook_btn);
+    // settingPage.addressBook_btn
+    click(settingPage.settingList.get(0));
     waitingTime();
     sendKeys(settingPage.search_input, "自动化测试账户1");
     waitingTime();

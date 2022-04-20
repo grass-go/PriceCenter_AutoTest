@@ -92,7 +92,7 @@ public class Helper extends Base {
     waitingTime(5);
     click(mainPage.set_btn);
     waitingTime();
-    click(settingPage.aboutUs_btn);
+    click(settingPage.settingList.get(7));
     waitingTime();
     click(settingPage.aboutUsList.get(i));
     String minorHandle = DRIVER.getWindowHandle();

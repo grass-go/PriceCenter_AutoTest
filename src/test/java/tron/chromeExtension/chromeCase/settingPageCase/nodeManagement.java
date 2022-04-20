@@ -35,7 +35,7 @@ public class nodeManagement extends Base {
     waitingTime(5);
     click(mainPage.set_btn);
     waitingTime();
-    click(settingPage.nodeManagement_btn);
+    click(settingPage.settingList.get(2));
     waitingTime();
     click(settingPage.addNode_btn);
     String nodeNameStr = "测试添加";
@@ -66,7 +66,7 @@ public class nodeManagement extends Base {
     waitingTime(5);
     click(mainPage.set_btn);
     waitingTime();
-    click(settingPage.nodeManagement_btn);
+    click(settingPage.settingList.get(2));
     waitingTime();
     click(settingPage.addNode_btn);
     waitingTime();
@@ -97,7 +97,7 @@ public class nodeManagement extends Base {
     waitingTime(5);
     click(mainPage.set_btn);
     waitingTime();
-    click(settingPage.nodeManagement_btn);
+    click(settingPage.settingList.get(2));
     waitingTime();
     click(settingPage.addNode_btn);
     String nodeNameStr = "测试添加节点";
@@ -136,7 +136,7 @@ public class nodeManagement extends Base {
     waitingTime(5);
     click(mainPage.set_btn);
     waitingTime();
-    click(settingPage.nodeManagement_btn);
+    click(settingPage.settingList.get(2));
     waitingTime();
     click(settingPage.addNode_btn);
     String nodeNameStr = "测试添加节点";

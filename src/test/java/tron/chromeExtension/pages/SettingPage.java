@@ -13,6 +13,12 @@ public class SettingPage extends AbstractPage {
     super(driver);
     this.driver = driver;
   }
+
+    @FindBy(className = "option")
+    public List<WebElement> settingList;
+
+
+
   // Address book button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[1]/div/div/span")
   public WebElement addressBook_btn;
@@ -74,8 +80,8 @@ public class SettingPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[2]/div/div/span")
   public WebElement dAPPWhiteList_btn;
 
-  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[3]/div/div/span")
-  public WebElement nodeManagement_btn;
+ /* @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[3]/div/div/span")
+  public WebElement nodeManagement_btn;*/
 
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[2]/span")
   public WebElement addNode_btn;
@@ -126,8 +132,8 @@ public class SettingPage extends AbstractPage {
   public WebElement language_btn;
 
   // Auto lock button.
-  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[6]/div/div[1]/span")
-  public WebElement automaticLocking_btn;
+ /* @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[6]/div/div[1]/span")
+  public WebElement automaticLocking_btn;*/
   // Automatic locking after one minute.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[6]/div/div[2]/div[1]/span")
   public WebElement oneMinute_btn;
@@ -139,12 +145,12 @@ public class SettingPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[7]/div/div[1]/span")
   public WebElement ledgerConnection_btn;
 
-  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[8]/div/div/span")
-  public WebElement aboutUs_btn;
+ /* @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[8]/div/div/span")
+  public WebElement aboutUs_btn;*/
 
   @FindBy(className = "item")
   public List<WebElement> aboutUsList;
 
-  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[9]/div/div/span")
-  public WebElement logout_btn;
+  /*@FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[9]/div/div/span")
+  public WebElement logout_btn;*/
 }

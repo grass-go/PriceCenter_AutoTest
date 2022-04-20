@@ -33,7 +33,7 @@ public class automaticLocking extends Base {
     waitingTime(5);
     click(mainPage.set_btn);
     waitingTime();
-    click(settingPage.automaticLocking_btn);
+    click(settingPage.settingList.get(5));
     waitingTime();
     click(settingPage.oneMinute_btn);
     waitingTime(65);
@@ -46,7 +46,7 @@ public class automaticLocking extends Base {
     waitingTime();
     click(mainPage.set_btn);
     waitingTime();
-    click(settingPage.automaticLocking_btn);
+    click(settingPage.settingList.get(5));
     waitingTime();
     click(settingPage.neverAutomaticLocking_btn);
   }

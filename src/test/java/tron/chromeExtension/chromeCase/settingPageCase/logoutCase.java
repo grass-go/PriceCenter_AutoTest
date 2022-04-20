@@ -33,7 +33,7 @@ public class logoutCase extends Base {
     waitingTime(5);
     click(mainPage.set_btn);
     waitingTime();
-    click(settingPage.logout_btn);
+    click(settingPage.settingList.get(8));
     waitingTime();
     sendKeys(loginPage.password_input, password);
     waitingTime();
