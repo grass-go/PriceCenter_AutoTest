@@ -87,6 +87,22 @@ public class Helper extends Base {
     return false;
   }
 
+  public static String getAboutUsLink(SettingPage settingPage, Integer i) throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    waitingTime(5);
+    click(mainPage.set_btn);
+    waitingTime();
+    click(settingPage.aboutUs_btn);
+    waitingTime();
+    click(settingPage.aboutUsList.get(i));
+    String minorHandle = DRIVER.getWindowHandle();
+    switchWindows(minorHandle);
+    String url = DRIVER.getCurrentUrl();
+    log("privacyPolicy:" + url);
+    DRIVER.close();
+    return url;
+  }
+
   public static void clickAndClearAndInput(WebElement webElement, String input) throws Exception {
     click(webElement);
     waitingTime();

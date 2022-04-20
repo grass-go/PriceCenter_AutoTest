@@ -142,8 +142,8 @@ public class SettingPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[8]/div/div/span")
   public WebElement aboutUs_btn;
 
-  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[2]/div[1]/span")
-  public WebElement privacyPolicy_btn;
+  @FindBy(className = "item")
+  public List<WebElement> aboutUsList;
 
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[9]/div/div/span")
   public WebElement logout_btn;

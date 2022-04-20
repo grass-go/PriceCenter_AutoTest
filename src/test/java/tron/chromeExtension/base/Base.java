@@ -72,6 +72,26 @@ public class Base {
   public String accountKey002 =
       Configuration.getByPath("testng.conf").getString("chromeExtension.accountKey002");
   public String URL = "chrome-extension://" + UNIQUEID + PAGEPATH;
+  public static String privacyReportUrlCn =
+      Configuration.getByPath("testng.conf").getString("link.privacyReportUrlCn");
+
+  public static String privacyReportUrlEn =
+      Configuration.getByPath("testng.conf").getString("link.privacyReportUrlEn");
+  public static String privacyReportUrlJp =
+      Configuration.getByPath("testng.conf").getString("link.privacyReportUrlJp");
+  public static String auditReport =
+      Configuration.getByPath("testng.conf").getString("link.auditReport");
+  public static String websiteCn =
+      Configuration.getByPath("testng.conf").getString("link.websiteCn");
+  public static String website = Configuration.getByPath("testng.conf").getString("link.website");
+  public static String supportCenterCn =
+      Configuration.getByPath("testng.conf").getString("link.supportCenterCn");
+  public static String supportCenter =
+      Configuration.getByPath("testng.conf").getString("link.supportCenter");
+  public static String contactUsCn =
+      Configuration.getByPath("testng.conf").getString("link.contactUsCn");
+  public static String contactUs =
+      Configuration.getByPath("testng.conf").getString("link.contactUs");
   public static String chain =
       Configuration.getByPath("test.conf").getString("chromeExtension.chain");
   ChromeOptions OPTION = new ChromeOptions();
@@ -263,15 +283,13 @@ public class Base {
     return Double.parseDouble(value);
   }
 
-  public static void switchWindows() throws InterruptedException {
+  public static void switchWindows(String targetHandle) throws InterruptedException {
     Set<String> handles = DRIVER.getWindowHandles();
-    String searchHand = DRIVER.getWindowHandle();
+    // String searchHand = DRIVER.getWindowHandle();
     for (String i : handles) {
-      if (!searchHand.equals(i)) {
+      if (!targetHandle.equals(i)) {
         DRIVER.switchTo().window(i);
         waitingTime(5);
-        DRIVER.close();
-        DRIVER.switchTo().window(i);
       }
     }
   }
