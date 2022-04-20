@@ -7,12 +7,9 @@ import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
 import tron.chromeExtension.pages.LoginPage;
 import tron.chromeExtension.pages.MainPage;
-import tron.chromeExtension.pages.ReceiveTokenPage;
 import tron.chromeExtension.pages.SettingPage;
 
-import java.util.concurrent.TimeUnit;
-
-public class logoutCase extends Base {
+public class aboutUs extends Base {
 
   @BeforeMethod
   public void before() throws Exception {
@@ -21,26 +18,22 @@ public class logoutCase extends Base {
   }
 
   @Test(
-      groups = {"P0"},
-      description = "Receive balance page",
-      alwaysRun = true,
-      enabled = true)
-  public void test001logoutCaseTest() throws Exception {
+      groups = {"P1"},
+      description = "Privacy policy",
+      alwaysRun = false,
+      enabled = false)
+  public void test001privacyPolicyCaseTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
     SettingPage settingPage = new SettingPage(DRIVER);
-    LoginPage loginPage = new LoginPage(DRIVER);
     waitingTime(5);
     click(mainPage.set_btn);
     waitingTime();
-    click(settingPage.logout_btn);
+    click(settingPage.aboutUs_btn);
     waitingTime();
-    sendKeys(loginPage.password_input, password);
-    waitingTime();
-    click(loginPage.login_btn);
-    // Login verification succeeded.
-    waitingTime(5);
-    Assert.assertTrue(onTheHomepageOrNot(loginAddress));
+    click(settingPage.privacyPolicy_btn);
+
+    // switchWindows();
   }
 
   @AfterMethod(enabled = true)
