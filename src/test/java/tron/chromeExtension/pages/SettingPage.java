@@ -14,14 +14,8 @@ public class SettingPage extends AbstractPage {
     this.driver = driver;
   }
 
-    @FindBy(className = "option")
-    public List<WebElement> settingList;
-
-
-
-  // Address book button.
-  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[1]/div/div/span")
-  public WebElement addressBook_btn;
+  @FindBy(className = "option")
+  public List<WebElement> settingList;
 
   // Add address book button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div[2]")
@@ -80,9 +74,6 @@ public class SettingPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[2]/div/div/span")
   public WebElement dAPPWhiteList_btn;
 
- /* @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[3]/div/div/span")
-  public WebElement nodeManagement_btn;*/
-
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[2]/span")
   public WebElement addNode_btn;
 
@@ -125,16 +116,15 @@ public class SettingPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[3]/button[2]/span")
   public WebElement deleteConfirm_btn;
 
-  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[4]/div/div[1]/span")
-  public WebElement valuationCurrency_btn;
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[4]/div/div[2]/div[1]")
+  public WebElement RMB_btn;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[4]/div/div[2]/div[2]")
+  public WebElement dollar_btn;
 
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[5]/div/div[1]/span")
   public WebElement language_btn;
 
-  // Auto lock button.
- /* @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[6]/div/div[1]/span")
-  public WebElement automaticLocking_btn;*/
-  // Automatic locking after one minute.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[6]/div/div[2]/div[1]/span")
   public WebElement oneMinute_btn;
 
@@ -145,12 +135,21 @@ public class SettingPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[7]/div/div[1]/span")
   public WebElement ledgerConnection_btn;
 
- /* @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[8]/div/div/span")
-  public WebElement aboutUs_btn;*/
-
   @FindBy(className = "item")
   public List<WebElement> aboutUsList;
 
-  /*@FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[9]/div/div/span")
-  public WebElement logout_btn;*/
+  @FindBy(className = "unit")
+  public List<WebElement> languageList;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[5]/div/div[2]/div[2]")
+  public WebElement Chinese_btn;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[5]/div/div[2]/div[1]")
+  public WebElement English_btn;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div[5]/div/div[2]/div[3]")
+  public WebElement Japanese_btn;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[2]")
+  public WebElement version;
 }

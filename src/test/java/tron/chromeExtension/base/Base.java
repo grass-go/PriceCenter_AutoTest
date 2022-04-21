@@ -94,6 +94,9 @@ public class Base {
       Configuration.getByPath("testng.conf").getString("link.contactUs");
   public static String chain =
       Configuration.getByPath("test.conf").getString("chromeExtension.chain");
+
+  public static String nowVersion =
+      Configuration.getByPath("testng.conf").getString("chromeExtension.nowVersion");
   ChromeOptions OPTION = new ChromeOptions();
   public static SimpleDateFormat timeStamp = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss ");
   public static String addressBookName = "自动化测试账户1";
@@ -147,7 +150,7 @@ public class Base {
         loginPage.login_btn.click();
         DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         closeWindow(new AccountListPage(DRIVER).close_btn);
-        switchToTestAccount();
+        //  switchToTestAccount();
         try {
           if (chain.contains("Nile")) {
             mainPage.selectedChain_btn.click();
