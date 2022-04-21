@@ -31,7 +31,7 @@ public class monitorVersion extends Base {
         "https://chrome.google.com/webstore/detail/tronlink/" + Base.UNIQUEID + "?hl=zh-CN";
     log("url:" + url);
     DRIVER.get(url);
-    waitingTime(5);
+    waitingTime(10);
     String result =
         DRIVER
             .findElement(
