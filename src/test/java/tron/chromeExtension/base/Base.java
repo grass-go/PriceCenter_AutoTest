@@ -178,6 +178,15 @@ public class Base {
     return false;
   }
 
+  public boolean importAccount() throws Exception {
+    Integer retryLoginTimes = 1;
+    while (retryLoginTimes > 0) {
+      retryLoginTimes--;
+      DRIVER.get(URL);
+    }
+    return false;
+  }
+
   public void changeChain() throws InterruptedException {
     MainPage mainPage = new MainPage(DRIVER);
     mainPage.selectedChain_btn.click();
