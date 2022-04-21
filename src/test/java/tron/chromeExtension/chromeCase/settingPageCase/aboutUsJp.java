@@ -48,7 +48,8 @@ public class aboutUsJp extends Base {
   public void test002privacyPolicyTest() throws Exception {
     SettingPage settingPage = new SettingPage(DRIVER);
     String url = Helper.getAboutUsLink(settingPage, 0);
-    log("url:" + url);
+    log("privacyPolicy_url:" + url);
+    log("privacyReportUrlJp:" + privacyReportUrlJp);
     Assert.assertEquals(privacyReportUrlJp, url);
   }
 
@@ -62,7 +63,8 @@ public class aboutUsJp extends Base {
 
     SettingPage settingPage = new SettingPage(DRIVER);
     String url = Helper.getAboutUsLink(settingPage, 1);
-    log("url:" + url);
+    log("auditReport_url:" + url);
+    log("auditReport:" + auditReport);
     Assert.assertEquals(auditReport, url);
   }
 
@@ -76,7 +78,8 @@ public class aboutUsJp extends Base {
 
     SettingPage settingPage = new SettingPage(DRIVER);
     String url = Helper.getAboutUsLink(settingPage, 2);
-    log("url:" + url);
+    log("website_url:" + url);
+    log("website:" + website);
     Assert.assertEquals(website, url);
   }
 
@@ -86,11 +89,12 @@ public class aboutUsJp extends Base {
       description = "Support center",
       alwaysRun = true,
       enabled = true)
-  public void test005SupportCenterTest() throws Exception {
+  public void test005supportCenterTest() throws Exception {
 
     SettingPage settingPage = new SettingPage(DRIVER);
     String url = Helper.getAboutUsLink(settingPage, 3);
-    log("url:" + url);
+    log("SupportCenter_url:" + url);
+    log("supportCenter:" + supportCenter);
     Assert.assertEquals(supportCenter, url);
   }
 
@@ -100,15 +104,17 @@ public class aboutUsJp extends Base {
       description = "Contact us.",
       alwaysRun = true,
       enabled = true)
-  public void test006ContactusTest() throws Exception {
+  public void test006contactusTest() throws Exception {
 
     SettingPage settingPage = new SettingPage(DRIVER);
     String url = Helper.getAboutUsLink(settingPage, 4);
-    log("url:" + url);
+    log("Contactus_url:" + url);
+    log("contactUs:" + contactUs);
     Assert.assertEquals(contactUs, url);
   }
 
   @Test(
+      dependsOnMethods = {"test001changeLanguageToJapaneseTest"},
       groups = {"P0"},
       description = "Change language to Chinese",
       alwaysRun = true,
