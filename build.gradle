@@ -51,6 +51,21 @@ task chromeExtensionUI(type: Test) {
 }
 
 
+task monitorVersion(type: Test) {
+
+    useTestNG {
+        suites(file('src/test/resources/testng_monitorChromeExtensionVersion.xml'))
+        parallel 'tests'
+        threadCount 1
+
+    }
+    testLogging {
+        exceptionFormat = 'full'
+        showStackTraces = "true"
+    }
+
+}
+
 task tronscan(type: Test) {
 
     useTestNG {

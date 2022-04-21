@@ -27,7 +27,7 @@ import tron.chromeExtension.pages.*;
 public class Base {
 
   public static ChromeDriver DRIVER;
-  static String UNIQUEID =
+  public static  String UNIQUEID =
       Configuration.getByPath("testng.conf").getString("chromeExtension.uniqueId");
   static String PAGEPATH =
       Configuration.getByPath("testng.conf").getString("chromeExtension.pagePath");
