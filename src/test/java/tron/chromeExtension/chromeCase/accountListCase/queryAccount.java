@@ -50,7 +50,8 @@ public class queryAccount extends Base {
       groups = {"P0"},
       description = "Search  the login account",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test002searchAccountsTest() throws Exception {
     try {
       MainPage mainPage = new MainPage(DRIVER);

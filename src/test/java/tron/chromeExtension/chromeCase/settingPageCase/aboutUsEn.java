@@ -49,7 +49,7 @@ public class aboutUsEn extends Base {
     SettingPage settingPage = new SettingPage(DRIVER);
     String url = Helper.getAboutUsLink(settingPage, 0);
     log("privacyPolicy_url:" + url);
-    log("privacyReportUrlEn:" + privacyReportUrlJp);
+    log("privacyReportUrlEn:" + privacyReportUrlEn);
     Assert.assertEquals(privacyReportUrlEn, url);
   }
 
