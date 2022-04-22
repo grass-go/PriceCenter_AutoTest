@@ -114,7 +114,7 @@ public class aboutUsEn extends Base {
   }
 
   @Test(
-      dependsOnMethods = {"test001changeLanguageToJapaneseTest"},
+      dependsOnMethods = {"test001changeLanguageToEnglishTest"},
       groups = {"P0"},
       description = "Change language to Chinese",
       alwaysRun = true,
