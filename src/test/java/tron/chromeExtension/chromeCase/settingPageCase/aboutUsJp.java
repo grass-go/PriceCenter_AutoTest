@@ -40,7 +40,6 @@ public class aboutUsJp extends Base {
   }
 
   @Test(
-      dependsOnMethods = {"test001changeLanguageToJapaneseTest"},
       groups = {"P1"},
       description = "Privacy policy",
       alwaysRun = true,
@@ -54,7 +53,6 @@ public class aboutUsJp extends Base {
   }
 
   @Test(
-      dependsOnMethods = {"test001changeLanguageToJapaneseTest"},
       groups = {"P1"},
       description = "Audit report",
       alwaysRun = true,
@@ -69,7 +67,6 @@ public class aboutUsJp extends Base {
   }
 
   @Test(
-      dependsOnMethods = {"test001changeLanguageToJapaneseTest"},
       groups = {"P1"},
       description = "Website",
       alwaysRun = true,
@@ -84,7 +81,6 @@ public class aboutUsJp extends Base {
   }
 
   @Test(
-      dependsOnMethods = {"test001changeLanguageToJapaneseTest"},
       groups = {"P1"},
       description = "Support center",
       alwaysRun = true,
@@ -99,7 +95,6 @@ public class aboutUsJp extends Base {
   }
 
   @Test(
-      dependsOnMethods = {"test001changeLanguageToJapaneseTest"},
       groups = {"P1"},
       description = "Contact us.",
       alwaysRun = true,
@@ -114,7 +109,6 @@ public class aboutUsJp extends Base {
   }
 
   @Test(
-      dependsOnMethods = {"test001changeLanguageToJapaneseTest"},
       groups = {"P0"},
       description = "Change language to Chinese",
       alwaysRun = true,

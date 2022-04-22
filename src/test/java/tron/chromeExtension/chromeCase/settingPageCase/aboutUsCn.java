@@ -19,11 +19,32 @@ public class aboutUsCn extends Base {
   }
 
   @Test(
+      groups = {"P0"},
+      description = "Change language to Chinese",
+      alwaysRun = true,
+      enabled = true)
+  public void test001changeLanguageToChineseTest() throws Exception {
+
+    MainPage mainPage = new MainPage(DRIVER);
+    SettingPage settingPage = new SettingPage(DRIVER);
+    waitingTime(5);
+    click(mainPage.set_btn);
+    waitingTime();
+    click(settingPage.settingList.get(4));
+    waitingTime(5);
+    click(settingPage.Chinese_btn);
+    waitingTime(5);
+    String languageType = getText(settingPage.language_btn);
+    log("languageType:" + languageType);
+    Assert.assertEquals("语言", languageType);
+  }
+
+  @Test(
       groups = {"P1"},
       description = "Privacy policy",
       alwaysRun = true,
       enabled = true)
-  public void test001privacyPolicyTest() throws Exception {
+  public void test002privacyPolicyTest() throws Exception {
     SettingPage settingPage = new SettingPage(DRIVER);
     String url = Helper.getAboutUsLink(settingPage, 0);
     log("url:" + url);
@@ -35,7 +56,7 @@ public class aboutUsCn extends Base {
       description = "Audit report",
       alwaysRun = true,
       enabled = true)
-  public void test002auditReportTest() throws Exception {
+  public void test003auditReportTest() throws Exception {
 
     SettingPage settingPage = new SettingPage(DRIVER);
     String url = Helper.getAboutUsLink(settingPage, 1);
@@ -48,7 +69,7 @@ public class aboutUsCn extends Base {
       description = "Website",
       alwaysRun = true,
       enabled = true)
-  public void test003websiteTest() throws Exception {
+  public void test004websiteTest() throws Exception {
 
     SettingPage settingPage = new SettingPage(DRIVER);
     String url = Helper.getAboutUsLink(settingPage, 2);
@@ -61,7 +82,7 @@ public class aboutUsCn extends Base {
       description = "Support center",
       alwaysRun = true,
       enabled = true)
-  public void test004SupportCenterTest() throws Exception {
+  public void test005SupportCenterTest() throws Exception {
 
     SettingPage settingPage = new SettingPage(DRIVER);
     String url = Helper.getAboutUsLink(settingPage, 3);
@@ -74,7 +95,7 @@ public class aboutUsCn extends Base {
       description = "Contact us.",
       alwaysRun = true,
       enabled = true)
-  public void test005ContactusTest() throws Exception {
+  public void test006ContactusTest() throws Exception {
 
     SettingPage settingPage = new SettingPage(DRIVER);
     String url = Helper.getAboutUsLink(settingPage, 4);
