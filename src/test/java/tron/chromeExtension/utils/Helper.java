@@ -90,23 +90,18 @@ public class Helper extends Base {
   }
 
   public static void slidingScrollBar() throws Exception {
-    String js = "var q=document.getElementById('id').scrollTop=100000";
-    DRIVER.executeScript(js);
-  }
-
-  public static void slidingScrollBar1() throws Exception {
     ImportPage importPage = new ImportPage(DRIVER);
     Actions actions = new Actions(DRIVER);
-    // todo:滚动条元素定位不到
     while (true) {
       actions.sendKeys(importPage.scrollBar, Keys.DOWN).perform(); /*A：滚动条所在元素位置
            * Keys.DOWN：点击键盘下键
            * perform()：确定键盘操作事件，不能省略*/
       // 使用try…catch…来判断元素是否可见，可见就进行元素操作并退出循环
       try {
-        click(importPage.agree_btn);
-        break;
-
+        //  boolean flag = isElementChecked(importPage.agree_btn, "class", "disabled");
+        if (!isElementChecked(importPage.agree_btn, "class", "disabled")) {
+          break;
+        }
       } catch (Exception e) {
       }
     }

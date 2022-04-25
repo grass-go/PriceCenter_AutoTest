@@ -67,6 +67,8 @@ public class Base {
       Configuration.getByPath("testng.conf").getString("chromeExtension.accountAddress001");
   public String accountKey001 =
       Configuration.getByPath("testng.conf").getString("chromeExtension.accountKey001");
+  public String accountMnemonicWords001 =
+      Configuration.getByPath("testng.conf").getString("chromeExtension.accountMnemonicWords001");
   public String accountAddress002 =
       Configuration.getByPath("testng.conf").getString("chromeExtension.accountAddress002");
   public String accountKey002 =
@@ -243,6 +245,7 @@ public class Base {
       throws Exception {
     Boolean isSelectOrNot = null;
     try {
+      // String temp = webElement.getAttribute(eleKey);
       isSelectOrNot = webElement.getAttribute(eleKey).contains(eleValue);
     } catch (org.openqa.selenium.NoSuchElementException e) {
       log("No such element!");
