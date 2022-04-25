@@ -5,10 +5,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.testng.Assert;
 import tron.chromeExtension.base.Base;
-import tron.chromeExtension.pages.AbstractPage;
-import tron.chromeExtension.pages.ImportPage;
-import tron.chromeExtension.pages.MainPage;
-import tron.chromeExtension.pages.SettingPage;
+import tron.chromeExtension.pages.*;
 import org.openqa.selenium.interactions.Actions;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -52,6 +49,67 @@ public class Helper extends Base {
       el = DRIVER.findElementById(element);
       return el;
     }
+  }
+
+  // is pledge for myself or not.
+  public static String pledgeTrxForMyself(String type, String minorHandle) throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    TronScanPage tronScanPage = new TronScanPage(DRIVER);
+    click(tronScanPage.getSources_btn);
+    waitingTime(5);
+    if (type.equals("energy")) {
+      click(tronScanPage.dropDown_box);
+      click(tronScanPage.getVotesAndEnergy_option);
+      waitingTime();
+    }
+    sendKeys(tronScanPage.amount_input, "1");
+    waitingTime(5);
+    click(tronScanPage.confirmation_box);
+    waitingTime(5);
+    click(tronScanPage.pledge_btn);
+    waitingTime(5);
+    String majorHandle = DRIVER.getWindowHandle();
+    switchWindows(majorHandle);
+    waitingTime(5);
+    click(mainPage.signature_btn);
+    waitingTime(5);
+    switchWindows(minorHandle);
+    waitingTime(5);
+    String tips = getText(tronScanPage.pledgeSuccess_tips);
+    log("tips:" + tips);
+    return tips;
+  }
+
+  // is pledge for myself or not.
+  public static String pledgeTrxForOthers(String type, String minorHandle, String address)
+      throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    TronScanPage tronScanPage = new TronScanPage(DRIVER);
+    click(tronScanPage.getSources_btn);
+    waitingTime(5);
+    if (type.equals("energy")) {
+      click(tronScanPage.dropDown_box);
+      click(tronScanPage.getVotesAndEnergy_option);
+      waitingTime();
+    }
+    sendKeys(tronScanPage.amount_input, "1");
+    waitingTime(5);
+    Helper.clickAndClearAndInput(tronScanPage.address_input, address);
+    waitingTime();
+    click(tronScanPage.confirmation_box);
+    waitingTime(5);
+    click(tronScanPage.pledge_btn);
+    waitingTime(5);
+    String majorHandle = DRIVER.getWindowHandle();
+    switchWindows(majorHandle);
+    waitingTime(5);
+    click(mainPage.signature_btn);
+    waitingTime(5);
+    switchWindows(minorHandle);
+    waitingTime(5);
+    String tips = getText(tronScanPage.pledgeSuccess_tips);
+    log("tips:" + tips);
+    return tips;
   }
 
   public void importUsePrivateKey(String privatekey, String name, String pass) {}

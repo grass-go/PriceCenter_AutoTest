@@ -1,0 +1,95 @@
+package tron.chromeExtension.chromeCase.mainPageCase;
+
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import tron.chromeExtension.base.Base;
+import tron.chromeExtension.pages.LockPage;
+import tron.chromeExtension.pages.MainPage;
+import tron.chromeExtension.pages.TronScanPage;
+import tron.chromeExtension.utils.Helper;
+
+public class pledge extends Base {
+
+  @BeforeMethod
+  public void before() throws Exception {
+    setUpChromeDriver();
+    loginAccount();
+  }
+
+  @Test(
+      groups = {"P0"},
+      description = "Pledge myself to get bandwidth. ",
+      alwaysRun = true,
+      enabled = true)
+  public void test001PledgeMyselfToGetBandwidthTest() throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    waitingTime(5);
+    click(mainPage.pledge_btn);
+    waitingTime();
+    String minorHandle = DRIVER.getWindowHandle();
+    switchWindows(minorHandle);
+    waitingTime();
+    String tips = Helper.pledgeTrxForMyself("width", minorHandle);
+    Assert.assertTrue(tips.contains("成功质押"));
+  }
+
+  @Test(
+      groups = {"P0"},
+      description = " Pledge to myself for energy. ",
+      alwaysRun = true,
+      enabled = true)
+  public void test002PledgeToMyselfForEnergyTest() throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    waitingTime(5);
+    click(mainPage.pledge_btn);
+    waitingTime();
+    String minorHandle = DRIVER.getWindowHandle();
+    switchWindows(minorHandle);
+    waitingTime();
+    String tips = Helper.pledgeTrxForMyself("energy", minorHandle);
+    Assert.assertTrue(tips.contains("成功质押"));
+  }
+
+  @Test(
+      groups = {"P0"},
+      description = "Pledge others to get bandwidth. ",
+      alwaysRun = true,
+      enabled = true)
+  public void test003PledgeOthersToGetBandwidthTest() throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    waitingTime(5);
+    click(mainPage.pledge_btn);
+    waitingTime();
+    String minorHandle = DRIVER.getWindowHandle();
+    switchWindows(minorHandle);
+    waitingTime();
+    String tips = Helper.pledgeTrxForOthers("width", minorHandle, testAddress);
+    Assert.assertTrue(tips.contains("成功质押"));
+  }
+
+  @Test(
+      groups = {"P0"},
+      description = " Pledge to others for energy. ",
+      alwaysRun = true,
+      enabled = true)
+  public void test004PledgeToOthersForEnergyTest() throws Exception {
+
+    MainPage mainPage = new MainPage(DRIVER);
+    waitingTime(5);
+    click(mainPage.pledge_btn);
+    waitingTime();
+    String minorHandle = DRIVER.getWindowHandle();
+    switchWindows(minorHandle);
+    waitingTime(5);
+    String tips = Helper.pledgeTrxForOthers("energy", minorHandle, testAddress);
+    Assert.assertTrue(tips.contains("成功质押"));
+  }
+
+  @AfterMethod(enabled = true)
+  public void after() throws Exception {
+    logoutAccount();
+  }
+}

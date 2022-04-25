@@ -176,6 +176,13 @@ public class MainPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[2]/div/div[3]/div[1]/span")
   public WebElement btt_btn;
 
+  // pledge btn
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[1]/div[4]/span")
+  public WebElement pledge_btn;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div[6]/button[2]")
+  public WebElement signature_btn;
+
   public SendPage enterSendPage() throws Exception {
     try {
       TimeUnit.SECONDS.sleep(2);

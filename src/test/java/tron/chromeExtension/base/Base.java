@@ -224,7 +224,7 @@ public class Base {
     }
   }
 
-  public String getText(WebElement webElement) throws Exception {
+  public static String getText(WebElement webElement) throws Exception {
     return webElement.getText();
   }
 
@@ -300,7 +300,6 @@ public class Base {
 
   public static void switchWindows(String targetHandle) throws InterruptedException {
     Set<String> handles = DRIVER.getWindowHandles();
-    // String searchHand = DRIVER.getWindowHandle();
     for (String i : handles) {
       if (!targetHandle.equals(i)) {
         DRIVER.switchTo().window(i);
