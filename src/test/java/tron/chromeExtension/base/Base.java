@@ -63,6 +63,9 @@ public class Base {
       Configuration.getByPath("testng.conf").getString("chromeExtension.testAccountOneIndex");
   public static String testAccountTwoIndex =
       Configuration.getByPath("testng.conf").getString("chromeExtension.testAccountTwoIndex");
+  public static String testAccountMultiIndex =
+      Configuration.getByPath("testng.conf").getString("chromeExtension.testAccountMultiIndex");
+
   public String accountAddress001 =
       Configuration.getByPath("testng.conf").getString("chromeExtension.accountAddress001");
   public String accountKey001 =
@@ -73,6 +76,9 @@ public class Base {
       Configuration.getByPath("testng.conf").getString("chromeExtension.accountAddress002");
   public String accountKey002 =
       Configuration.getByPath("testng.conf").getString("chromeExtension.accountKey002");
+  public String multiAddress =
+      Configuration.getByPath("testng.conf").getString("chromeExtension.multiAddress");
+
   public String URL = "chrome-extension://" + UNIQUEID + PAGEPATH;
   public static String privacyReportUrlCn =
       Configuration.getByPath("testng.conf").getString("link.privacyReportUrlCn");
@@ -108,6 +114,7 @@ public class Base {
     try {
       // Set to headless mode (required)
       // OPTION.addArguments("--headless");
+      OPTION.addArguments("start-maximized");
       OPTION.addArguments("--user-data-dir=" + userDataDir);
       OPTION.addArguments("load-extension=" + extensionDir);
       OPTION.setExperimentalOption("excludeSwitches", new String[] {"enable-automation"});
@@ -115,6 +122,7 @@ public class Base {
       OPTION.addArguments("--verbose");
       log("OPTION:" + OPTION.toString());
       DRIVER = new ChromeDriver(OPTION);
+      DRIVER.manage().window().maximize();
     } catch (Exception e) {
       log("Setup Chromedriver exception!");
       e.printStackTrace();
@@ -309,7 +317,7 @@ public class Base {
   }
 
   //  Copy clipboard contents and return string
-  public String fetchClipboardContents(Clipboard clip)
+  public static String fetchClipboardContents(Clipboard clip)
       throws IOException, UnsupportedFlavorException {
     // Get the contents of the clipboard
     Transferable clipT = clip.getContents(null);
@@ -324,7 +332,7 @@ public class Base {
   }
 
   // Verify back to home page
-  public Boolean onTheHomepageOrNot(String address) throws Exception {
+  public static Boolean onTheHomepageOrNot(String address) throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     TimeUnit.SECONDS.sleep(5);
     click(mainPage.copy_btn);

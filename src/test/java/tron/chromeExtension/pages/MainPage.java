@@ -191,6 +191,10 @@ public class MainPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div[6]/button[1]")
   public WebElement cancelSignature_btn;
 
+  // click jump
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[2]/div")
+  public WebElement clickJump_btn;
+
   public SendPage enterSendPage() throws Exception {
     try {
       TimeUnit.SECONDS.sleep(2);

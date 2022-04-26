@@ -51,6 +51,106 @@ public class Helper extends Base {
     }
   }
 
+  // multiSignature
+  public static String multiSignature(
+      String permission,
+      String minorHandle,
+      String toAddress,
+      int index,
+      String amount,
+      boolean flag)
+      throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    TronScanPage tronScanPage = new TronScanPage(DRIVER);
+    waitingTime();
+    click(tronScanPage.accountAddress_btn);
+    Helper.click(tronScanPage.multiSignature_btn);
+    waitingTime();
+    int i = 10;
+    while (i > 0) {
+      click(tronScanPage.permission_input);
+      try {
+        if (permission.equals("owner")) {
+          click(tronScanPage.ownerPermission_option);
+        } else {
+          click(tronScanPage.activePermission_option);
+        }
+        break;
+      } catch (Exception e) {
+        i--;
+      }
+    }
+    waitingTime(5);
+    sendKeys(tronScanPage.receive_input, toAddress);
+    waitingTime(5);
+
+    waitingTime();
+    if (index == 5) {
+      int j = 10;
+      while (j > 0) {
+        click(tronScanPage.permission_input);
+        try {
+          click(tronScanPage.token_box);
+          click(tronScanPage.token_list.get(index));
+          click(tronScanPage.collection_box);
+          click(tronScanPage.trc721Token_btn);
+          break;
+        } catch (Exception e) {
+          j--;
+        }
+      }
+    } else {
+      int j = 10;
+      while (j > 0) {
+        click(tronScanPage.permission_input);
+        try {
+          click(tronScanPage.token_box);
+          click(tronScanPage.token_list.get(index));
+          clickAndClearAndInput(tronScanPage.tokenAccount_input, amount);
+          waitingTime();
+          break;
+        } catch (Exception e) {
+          j--;
+        }
+      }
+    }
+
+    click(tronScanPage.transferConfirm_btn);
+    waitingTime();
+    String majorHandle = DRIVER.getWindowHandle();
+    switchWindows(majorHandle);
+    waitingTime(5);
+    if (flag) {
+      click(mainPage.signature_btn);
+    } else {
+      click(mainPage.cancelSignature_btn);
+    }
+    waitingTime(5);
+    switchWindows(minorHandle);
+    waitingTime(5);
+    String tips = null;
+    if (flag) {
+      tips = getText(tronScanPage.signSuccess_tips);
+    } else {
+      tips = getText(tronScanPage.cancelSign_tips);
+    }
+    log("tips:" + tips);
+    return tips;
+  }
+
+  // Switch account.
+  public static boolean switchAccount(String index, String switchToAddress) throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    AccountListPage accountlistPage = new AccountListPage(DRIVER);
+    click(mainPage.switchAccount_btn);
+    waitingTime(5);
+    click(accountlistPage.account_list.get(Integer.parseInt(index)));
+    waitingTime(5);
+    log("switchToAddress:" + switchToAddress);
+    return onTheHomepageOrNot(switchToAddress);
+  }
+
+  // vote
   public static String vote(boolean flag, String minorHandle) throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     TronScanPage tronScanPage = new TronScanPage(DRIVER);
@@ -160,7 +260,7 @@ public class Helper extends Base {
   }
 
   // Verify back to home page
-  public Boolean onTheHomepageOrNot(String address) throws Exception {
+  public static Boolean onTheHomepageOrNot(String address) throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     TimeUnit.SECONDS.sleep(5);
     click(mainPage.copy_btn);
@@ -179,12 +279,8 @@ public class Helper extends Base {
     ImportPage importPage = new ImportPage(DRIVER);
     Actions actions = new Actions(DRIVER);
     while (true) {
-      actions.sendKeys(importPage.scrollBar, Keys.DOWN).perform(); /*A：滚动条所在元素位置
-           * Keys.DOWN：点击键盘下键
-           * perform()：确定键盘操作事件，不能省略*/
-      // 使用try…catch…来判断元素是否可见，可见就进行元素操作并退出循环
+      actions.sendKeys(importPage.scrollBar, Keys.DOWN).perform();
       try {
-        //  boolean flag = isElementChecked(importPage.agree_btn, "class", "disabled");
         if (!isElementChecked(importPage.agree_btn, "class", "disabled")) {
           break;
         }

@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
 import tron.chromeExtension.pages.AccountListPage;
 import tron.chromeExtension.pages.MainPage;
+import tron.chromeExtension.utils.Helper;
 import tron.common.utils.MyIRetryAnalyzer;
 
 import java.util.concurrent.TimeUnit;
@@ -79,19 +80,8 @@ public class queryAccount extends Base {
       enabled = true)
   public void test003switchAccountTest() throws Exception {
     try {
-      MainPage mainPage = new MainPage(DRIVER);
-      AccountListPage accountlistPage = new AccountListPage(DRIVER);
-      waitingTime(5);
-      click(mainPage.switchAccount_btn);
-      waitingTime(5);
-      click(accountlistPage.account_list.get(Integer.parseInt(testAccountTwoIndex)));
-      waitingTime(5);
-      Assert.assertTrue(onTheHomepageOrNot(testAddress));
-      click(mainPage.switchAccount_btn);
-      waitingTime(5);
-      click(accountlistPage.account_list.get(Integer.parseInt(testAccountOneIndex)));
-      waitingTime(5);
-      Assert.assertTrue(onTheHomepageOrNot(loginAddress));
+      Assert.assertTrue(Helper.switchAccount(testAccountTwoIndex, testAddress));
+      Assert.assertTrue(Helper.switchAccount(testAccountOneIndex, loginAddress));
     } catch (Exception e) {
       AccountListPage accountlistPage = new AccountListPage(DRIVER);
       waitingTime(5);
