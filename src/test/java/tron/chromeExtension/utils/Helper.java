@@ -51,7 +51,35 @@ public class Helper extends Base {
     }
   }
 
-  // is pledge for myself or not.
+  public static String vote(boolean flag, String minorHandle) throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    TronScanPage tronScanPage = new TronScanPage(DRIVER);
+    waitingTime();
+    click(tronScanPage.beforeEnteringVotes_btn);
+    waitingTime(5);
+    Helper.clickAndClearAndInput(tronScanPage.vote_input, "1");
+    waitingTime();
+    click(tronScanPage.votesEntered_btn);
+    waitingTime();
+    click(tronScanPage.confirmVote_btn);
+    waitingTime();
+    String majorHandle = DRIVER.getWindowHandle();
+    switchWindows(majorHandle);
+    waitingTime(5);
+    if (flag) {
+      click(mainPage.signature_btn);
+    } else {
+      click(mainPage.cancelSignature_btn);
+    }
+    waitingTime();
+    switchWindows(minorHandle);
+    waitingTime(5);
+    String tips = getText(tronScanPage.voteSuccessOrFailed_tips);
+    log("tips:" + tips);
+    return tips;
+  }
+
+  // Is pledge for myself or not.
   public static String pledgeTrxForMyself(String type, String minorHandle) throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     TronScanPage tronScanPage = new TronScanPage(DRIVER);

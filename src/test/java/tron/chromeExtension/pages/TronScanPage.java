@@ -35,4 +35,27 @@ public class TronScanPage extends AbstractPage {
   //  Check get votes and energy .
   @FindBy(xpath = "/html/body/div[3]/div/div/div/div[2]/div[1]/div/div/div[2]/div")
   public WebElement getVotesAndEnergy_option;
+  // Vote button.
+  @FindBy(
+      xpath =
+          "//*[@id=\"root\"]/div[2]/main/div[3]/div/div/div/div[1]/div/div[2]/div/div[2]/button/span")
+  public WebElement beforeEnteringVotes_btn;
+
+  @FindBy(
+      xpath =
+          "//*[@id=\"root\"]/div[2]/main/div[3]/div/div/div/div[1]/div/div[2]/div/div[2]/button[3]/span")
+  public WebElement votesEntered_btn;
+
+  // Vote input.
+  @FindBy(
+      xpath =
+          "/html/body/div[1]/div[2]/main/div[3]/div/div/div/div[2]/div/div/div/div/div/div/table/tbody/tr[1]/td[8]/div/div/input")
+  public WebElement vote_input;
+  // Confirm vote button.
+  @FindBy(xpath = "//*[@id=\"root\"]/div[2]/main/div[1]/div[2]/p/span/button")
+  public WebElement confirmVote_btn;
+
+  //
+  @FindBy(xpath = "//*[@id=\"root\"]/div[2]/main/div[1]/div[2]/div/h3/span")
+  public WebElement voteSuccessOrFailed_tips;
 }

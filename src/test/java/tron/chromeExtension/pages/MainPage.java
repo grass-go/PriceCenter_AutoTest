@@ -180,8 +180,16 @@ public class MainPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[1]/div[4]/span")
   public WebElement pledge_btn;
 
+  // vote btn
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[1]/div[3]")
+  public WebElement vote_btn;
+  // signature btn
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div[6]/button[2]")
   public WebElement signature_btn;
+
+  // cancel signature btn
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div[6]/button[1]")
+  public WebElement cancelSignature_btn;
 
   public SendPage enterSendPage() throws Exception {
     try {
