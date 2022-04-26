@@ -68,8 +68,8 @@ public class Helper extends Base {
     waitingTime();
     int i = 10;
     while (i > 0) {
-      click(tronScanPage.permission_input);
       try {
+        click(tronScanPage.permission_input);
         if (permission.equals("owner")) {
           click(tronScanPage.ownerPermission_option);
         } else {

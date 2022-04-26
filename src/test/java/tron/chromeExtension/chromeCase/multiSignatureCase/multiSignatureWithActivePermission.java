@@ -162,6 +162,15 @@ public class multiSignatureWithActivePermission extends Base {
     Assert.assertTrue(tips.contains("declined"));
   }
 
+  @Test(
+      groups = {"P0"},
+      description = "Switch account.",
+      alwaysRun = true,
+      enabled = true)
+  public void test009switchAccountToLoginAddressTest() throws Exception {
+    Assert.assertTrue(Helper.switchAccount(testAccountOneIndex, loginAddress));
+  }
+
   @AfterMethod(enabled = true)
   public void after() throws Exception {
     logoutAccount();
