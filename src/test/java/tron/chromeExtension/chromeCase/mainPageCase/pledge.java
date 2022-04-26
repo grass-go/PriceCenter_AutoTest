@@ -28,7 +28,7 @@ public class pledge extends Base {
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);
     click(mainPage.pledge_btn);
-    waitingTime();
+    waitingTime(5);
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime();
@@ -45,7 +45,7 @@ public class pledge extends Base {
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);
     click(mainPage.pledge_btn);
-    waitingTime();
+    waitingTime(5);
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime();
@@ -62,7 +62,7 @@ public class pledge extends Base {
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);
     click(mainPage.pledge_btn);
-    waitingTime();
+    waitingTime(5);
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime();
@@ -80,7 +80,7 @@ public class pledge extends Base {
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);
     click(mainPage.pledge_btn);
-    waitingTime();
+    waitingTime(5);
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime(5);

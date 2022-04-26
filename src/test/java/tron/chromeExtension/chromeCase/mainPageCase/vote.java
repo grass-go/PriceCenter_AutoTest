@@ -25,7 +25,7 @@ public class vote extends Base {
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);
     click(mainPage.vote_btn);
-    waitingTime();
+    waitingTime(5);
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime();
@@ -42,7 +42,7 @@ public class vote extends Base {
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);
     click(mainPage.vote_btn);
-    waitingTime();
+    waitingTime(5);
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime();
