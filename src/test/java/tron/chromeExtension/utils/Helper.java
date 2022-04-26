@@ -138,6 +138,23 @@ public class Helper extends Base {
     return tips;
   }
 
+  public static boolean switchChain(String chainName, int index) throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    try {
+      if (chainName.contains("Nile")) {
+        mainPage.selectedChain_btn.click();
+        DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        waitingTime(2);
+        mainPage.chainList.get(index).click();
+        waitingTime(5);
+      }
+    } catch (Exception e) {
+      log("Change chain Failed!");
+      return false;
+    }
+    return true;
+  }
+
   // Switch account.
   public static boolean switchAccount(String index, String switchToAddress) throws Exception {
     MainPage mainPage = new MainPage(DRIVER);

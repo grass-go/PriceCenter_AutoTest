@@ -19,8 +19,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import tron.chromeExtension.utils.Helper;
 import tron.common.utils.Configuration;
 import tron.chromeExtension.pages.*;
 
@@ -109,6 +111,13 @@ public class Base {
   public static SimpleDateFormat timeStamp = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss ");
   public static String addressBookName = "自动化测试账户1";
 
+  @BeforeSuite
+  /* public void beforeSuit() throws Exception {
+    Helper.switchAccount(testAccountOneIndex, loginAddress);
+    Assert.assertTrue(Helper.switchAccount(testAccountOneIndex, loginAddress));
+    log("123123123");
+  }*/
+
   public void setUpChromeDriver() throws Exception {
     killChromePid();
     try {
@@ -129,16 +138,6 @@ public class Base {
     }
   }
 
-  public void switchToTestAccount() throws Exception {
-    MainPage mainPage = new MainPage(DRIVER);
-    waitingTime(5);
-    AccountListPage accountlistPage = new AccountListPage(DRIVER);
-    click(mainPage.switchAccount_btn);
-    waitingTime(5);
-    click(accountlistPage.account_list.get(Integer.parseInt(testAccountOneIndex)));
-    waitingTime(5);
-  }
-
   public boolean loginAccount() throws Exception {
     Integer retryLoginTimes = 1;
     while (retryLoginTimes > 0) {
@@ -154,25 +153,15 @@ public class Base {
         DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         LoginPage loginPage = new LoginPage(DRIVER);
         MainPage mainPage = new MainPage(DRIVER);
-
         loginPage.password_input.sendKeys(password);
         DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         loginPage.login_btn.click();
         DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         closeWindow(new AccountListPage(DRIVER).close_btn);
-        //  switchToTestAccount();
-        try {
-          if (chain.contains("Nile")) {
-            mainPage.selectedChain_btn.click();
-            DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-            waitingTime(2);
-            mainPage.chainList.get(3).click();
-            waitingTime(5);
-          }
-        } catch (Exception e) {
-          log("Change chain Failed!");
-        }
-
+        // Switch chain to nile.
+        Assert.assertTrue(Helper.switchChain(chain, 3));
+        // Switch account.
+        // Assert.assertTrue(Helper.switchAccount(testAccountOneIndex, loginAddress));
         String totalBalanceStr = mainPage.accountTotalBalance.getText().substring(1);
         double totalBalance = getBalanceFromSelectionBtn(totalBalanceStr);
         if (totalBalance > 0) {
@@ -195,27 +184,6 @@ public class Base {
       DRIVER.get(URL);
     }
     return false;
-  }
-
-  public void changeChain() throws InterruptedException {
-    MainPage mainPage = new MainPage(DRIVER);
-    mainPage.selectedChain_btn.click();
-    waitingTime();
-    if (chain.equals("nile")) {
-      try {
-        for (int i = 0; i < mainPage.chainList.size(); i++) {
-          WebElement temp = mainPage.chainList.get(i).findElement(By.className("content"));
-          String chainName = temp.findElement(new By.ByTagName("span")).getText();
-          if (chain.equals(chainName)) {
-            mainPage.chainList.get(i).click();
-            waitingTime();
-            break;
-          }
-        }
-      } catch (Exception e) {
-        log("Change chain failed");
-      }
-    }
   }
 
   public void logoutAccount() throws Exception {

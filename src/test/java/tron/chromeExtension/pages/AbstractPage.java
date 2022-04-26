@@ -16,10 +16,12 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.BeforeSuite;
 import tron.chromeExtension.base.Base;
+import tron.chromeExtension.utils.Helper;
 
-import static tron.chromeExtension.base.Base.DRIVER;
-import static tron.chromeExtension.base.Base.loginAddress;
+import static tron.chromeExtension.base.Base.*;
+import static tron.chromeExtension.base.Base.log;
 
 public abstract class AbstractPage {
 
