@@ -85,41 +85,42 @@ public class Helper extends Base {
     waitingTime(5);
 
     waitingTime();
+    int j = 10;
     if (index == 5) {
-      int j = 10;
       while (j > 0) {
-        click(tronScanPage.permission_input);
         try {
           click(tronScanPage.token_box);
           click(tronScanPage.token_list.get(index));
+          waitingTime();
           click(tronScanPage.collection_box);
           click(tronScanPage.trc721Token_btn);
           break;
         } catch (Exception e) {
           j--;
+          waitingTime(1);
         }
       }
     } else {
-      int j = 10;
       while (j > 0) {
-        click(tronScanPage.permission_input);
         try {
           click(tronScanPage.token_box);
           click(tronScanPage.token_list.get(index));
+          waitingTime();
           clickAndClearAndInput(tronScanPage.tokenAccount_input, amount);
           waitingTime();
           break;
         } catch (Exception e) {
           j--;
+          waitingTime(1);
         }
       }
     }
 
+    waitingTime();
     click(tronScanPage.transferConfirm_btn);
     waitingTime();
     String majorHandle = DRIVER.getWindowHandle();
     switchWindows(majorHandle);
-    waitingTime(5);
     if (flag) {
       click(mainPage.signature_btn);
     } else {
@@ -127,7 +128,6 @@ public class Helper extends Base {
     }
     waitingTime(5);
     switchWindows(minorHandle);
-    waitingTime(5);
     String tips = null;
     if (flag) {
       tips = getText(tronScanPage.signSuccess_tips);
@@ -159,11 +159,22 @@ public class Helper extends Base {
   public static boolean switchAccount(String index, String switchToAddress) throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     AccountListPage accountlistPage = new AccountListPage(DRIVER);
-    click(mainPage.switchAccount_btn);
-    waitingTime(5);
-    click(accountlistPage.account_list.get(Integer.parseInt(index)));
-    waitingTime(5);
-    log("switchToAddress:" + switchToAddress);
+    int times = 10;
+    while (times > 0) {
+      try {
+        log("switchToAddress:" + switchToAddress);
+        Helper.closeWindow(accountlistPage.close_btn);
+        click(mainPage.switchAccount_btn);
+        waitingTime(5);
+        click(accountlistPage.account_list.get(Integer.parseInt(index)));
+        waitingTime(5);
+        break;
+      } catch (Exception e) {
+        times--;
+        log("Switch account failed!");
+      }
+    }
+
     return onTheHomepageOrNot(switchToAddress);
   }
 

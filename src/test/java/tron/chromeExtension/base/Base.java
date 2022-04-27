@@ -112,11 +112,11 @@ public class Base {
   public static String addressBookName = "自动化测试账户1";
 
   @BeforeSuite
-  /* public void beforeSuit() throws Exception {
-    Helper.switchAccount(testAccountOneIndex, loginAddress);
+  public void beforeSuit() throws Exception {
+    setUpChromeDriver();
+    Assert.assertTrue(loginAccount());
     Assert.assertTrue(Helper.switchAccount(testAccountOneIndex, loginAddress));
-    log("123123123");
-  }*/
+  }
 
   public void setUpChromeDriver() throws Exception {
     killChromePid();
@@ -190,7 +190,7 @@ public class Base {
     DRIVER.quit();
   }
 
-  public void closeWindow(WebElement webElement) throws Exception {
+  public static void closeWindow(WebElement webElement) throws Exception {
     try {
       if (webElement.isDisplayed()) {
         webElement.click();

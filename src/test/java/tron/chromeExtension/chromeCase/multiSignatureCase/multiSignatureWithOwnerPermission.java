@@ -10,6 +10,7 @@ import tron.chromeExtension.pages.MainPage;
 import tron.chromeExtension.pages.SettingPage;
 import tron.chromeExtension.pages.TronScanPage;
 import tron.chromeExtension.utils.Helper;
+import tron.common.utils.MyIRetryAnalyzer;
 
 public class multiSignatureWithOwnerPermission extends Base {
 
@@ -24,7 +25,8 @@ public class multiSignatureWithOwnerPermission extends Base {
       groups = {"P0"},
       description = "Transfer trx with owner permission and confirm to signature.",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test001transferTrxWithOwnerPermissionTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
@@ -42,7 +44,8 @@ public class multiSignatureWithOwnerPermission extends Base {
       groups = {"P0"},
       description = "Transfer trx with owner permission and cancel signature.",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test002transferTrxWithOwnerPermissionFailedTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
@@ -60,7 +63,8 @@ public class multiSignatureWithOwnerPermission extends Base {
       groups = {"P0"},
       description = "Transfer TRC10 with owner permission and confirm to signature.",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test003transferTRC10WithOwnerPermissionTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
@@ -79,7 +83,8 @@ public class multiSignatureWithOwnerPermission extends Base {
       description =
           "Transfer TRC10 with owner permission and confirm to signature and cancel signature.",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test004transferTRC10WithOwnerPermissionFailedTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
@@ -97,7 +102,8 @@ public class multiSignatureWithOwnerPermission extends Base {
       groups = {"P0"},
       description = "Transfer TRC20 with owner permission and confirm to signature.",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test005transferTRC20WithOwnerPermissionTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
@@ -115,7 +121,8 @@ public class multiSignatureWithOwnerPermission extends Base {
       groups = {"P0"},
       description = "Transfer TRC20 with owner permission and cancel to signature.",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test006transferTRC20WithOwnerPermissionFailedTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
@@ -133,7 +140,8 @@ public class multiSignatureWithOwnerPermission extends Base {
       groups = {"P0"},
       description = "Transfer TRC721 with owner permission and confirm to signature.",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test007transferTRC721WithOwnerPermissionTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
@@ -151,7 +159,8 @@ public class multiSignatureWithOwnerPermission extends Base {
       groups = {"P0"},
       description = "Transfer TRC721 with owner permission and cancel to signature.",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test008transferTRC721WithOwnerPermissionFailedTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
@@ -169,7 +178,8 @@ public class multiSignatureWithOwnerPermission extends Base {
       groups = {"P0"},
       description = "Switch account.",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test009switchAccountToLoginAddressTest() throws Exception {
     Assert.assertTrue(Helper.switchAccount(testAccountOneIndex, loginAddress));
   }
