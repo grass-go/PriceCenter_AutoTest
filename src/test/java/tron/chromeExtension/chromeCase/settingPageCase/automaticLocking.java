@@ -24,7 +24,8 @@ public class automaticLocking extends Base {
       groups = {"P0"},
       description = "Automatic locking after 1 minute",
       alwaysRun = true,
-      enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test001automaticLockingTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
@@ -44,11 +45,19 @@ public class automaticLocking extends Base {
     waitingTime(5);
     Assert.assertTrue(onTheHomepageOrNot(loginAddress));
     waitingTime();
-    click(mainPage.set_btn);
-    waitingTime();
-    click(settingPage.settingList.get(5));
-    waitingTime();
-    click(settingPage.neverAutomaticLocking_btn);
+    int times = 10;
+    while (times > 0) {
+      try {
+        click(mainPage.set_btn);
+        waitingTime();
+        click(settingPage.settingList.get(5));
+        waitingTime();
+        click(settingPage.neverAutomaticLocking_btn);
+        break;
+      } catch (Exception e) {
+        times--;
+      }
+    }
   }
 
   @AfterMethod(enabled = true)
