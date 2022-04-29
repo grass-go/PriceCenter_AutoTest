@@ -29,7 +29,7 @@ public class TronScanPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div[2]/main/section/main/div/div[1]/div[2]/div[2]/div[2]/span")
   public WebElement pledgeSuccess_tips;
   // Address input.
-  @FindBy(xpath = "/html/body/div[2]/div/div[1]/div/div/div[2]/form/div[6]/div/input")
+  @FindBy(xpath = "/html/body/div[2]/div/div[1]/div/div/div[2]/div[4]/input")
   public WebElement address_input;
   //  Drop-down box .
   @FindBy(xpath = "/html/body/div[2]/div/div[1]/div/div/div[2]/div[2]/div[2]/div/span[2]")
