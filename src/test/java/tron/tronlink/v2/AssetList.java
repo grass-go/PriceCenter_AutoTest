@@ -99,7 +99,7 @@ public class AssetList extends TronlinkBase {
   }
 
   //v4.2.1 old user the first token is TRX. Others order by trxCount.
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void assetList03() {
 
     params.clear();
@@ -203,7 +203,7 @@ public class AssetList extends TronlinkBase {
           break;
         case 2:
           Assert.assertEquals("",id);
-          Assert.assertEquals("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",contractAddress);
+          Assert.assertEquals("TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn",contractAddress);
           break;
         default:
           break;
