@@ -48,7 +48,7 @@ public class AllAssetList extends TronlinkBase {
     Assert.assertTrue(responseContent.containsKey("data"));
     dataContent = responseContent.getJSONObject("data");
     int count =dataContent.getIntValue("count");
-    Assert.assertEquals(6,count);
+    Assert.assertEquals(7,count);
     array = dataContent.getJSONArray("token");
     int type=0;
     for(int j=0;j<count;j++){
@@ -272,7 +272,7 @@ public class AllAssetList extends TronlinkBase {
         Integer scan_level = Integer.valueOf(scan_levelObject.toString());
         log.info("curAddress:"+curAddress+", cur_isOfficial:"+cur_isOfficial.toString()+", transcan level:"+scan_levelObject.toString());
         log.info("======");
-        if (curAddress.equals("TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4")){
+        if (curAddress.equals("TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4") || curAddress.equals("TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn")){
           Assert.assertEquals(Math.abs(Integer.parseInt(cur_isOfficial.toString())), 1);
         } else{
           Assert.assertEquals(Math.abs(Integer.parseInt(cur_isOfficial.toString())), scan_level+1);
