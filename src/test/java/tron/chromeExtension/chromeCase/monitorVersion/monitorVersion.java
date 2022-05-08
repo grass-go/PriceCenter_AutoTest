@@ -10,6 +10,7 @@ import tron.chromeExtension.pages.LoginPage;
 import tron.chromeExtension.pages.MainPage;
 import tron.chromeExtension.pages.SettingPage;
 import tron.common.utils.Configuration;
+import tron.common.utils.MyIRetryAnalyzer;
 
 public class monitorVersion extends Base {
 
@@ -22,7 +23,8 @@ public class monitorVersion extends Base {
       groups = {"P0"},
       description = "Monitor Version",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test001monitorVersionTest() throws Exception {
     String nowExtensionVersion =
         Configuration.getByPath("testng.conf").getString("chromeExtension.nowExtensionVersion");
