@@ -178,6 +178,37 @@ public class Helper extends Base {
     return onTheHomepageOrNot(switchToAddress);
   }
 
+  // Transfer.
+  public static String transfer(String receiveAddress, String searchContent, String amount,Boolean isTrc721)
+      throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    SendPage sendPage = new SendPage(DRIVER);
+    waitingTime();
+    click(mainPage.transfer_btn);
+    waitingTime();
+    sendKeys(sendPage.receiverAddress_input, receiveAddress);
+    waitingTime();
+    click(sendPage.next_btn);
+    waitingTime();
+    click(sendPage.trx_neirong);
+    sendKeys(sendPage.search_input, searchContent);
+    waitingTime();
+    click(sendPage.search_result);
+    waitingTime();
+    if (!isTrc721) {
+      sendKeys(sendPage.amount_input, amount);
+      waitingTime();
+    }
+    click(sendPage.transfer_btn);
+    waitingTime();
+    click(sendPage.signature_btn);
+    waitingTime(5);
+    String transactionStatus = getText(sendPage.transactionStatus);
+    click(sendPage.complete_btn);
+
+    return transactionStatus;
+  }
+
   // vote
   public static String vote(boolean flag, String minorHandle) throws Exception {
     MainPage mainPage = new MainPage(DRIVER);

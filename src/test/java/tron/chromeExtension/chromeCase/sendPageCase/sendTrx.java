@@ -1,21 +1,14 @@
 package tron.chromeExtension.chromeCase.sendPageCase;
 
-import java.util.concurrent.TimeUnit;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
 import tron.chromeExtension.pages.MainPage;
 import tron.chromeExtension.pages.SendPage;
-import tron.common.utils.MyIRetryAnalyzer;
 
 public class sendTrx extends Base {
-  public double beforeBalance;
-  public double afterBalance;
-  public double sendAmount = 0.000001;
 
   @BeforeMethod
   public void before() throws Exception {
@@ -23,32 +16,36 @@ public class sendTrx extends Base {
     loginAccount();
   }
 
-  // @Test
-  // @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
-  @Test(enabled = true)
-  public void test001SendTrxTest() throws Exception {
-    SendPage sendPage = new MainPage(DRIVER).enterSendPage();
-    log(sendPage.balanceInSendPage_text.getText());
-    sendPage.receiverAddress_input.sendKeys(accountAddress002);
-    TimeUnit.SECONDS.sleep(2);
-    sendPage.amount_input.sendKeys(String.valueOf(sendAmount));
-    TimeUnit.SECONDS.sleep(2);
-    beforeBalance = getBalanceFromSelectionBtn(sendPage.select_coin_type_btn.getText());
-    sendPage.send_btn.click();
-    TimeUnit.SECONDS.sleep(30);
-  }
+  @Test(
+      groups = {"P0"},
+      description = "Send trx .",
+      alwaysRun = true,
+      enabled = true)
+  public void test001sendTrxTest() throws Exception {
 
-  // @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
-  @Test(enabled = true)
-  public void test002SendTrxCheckTest() throws Exception {
-    SendPage sendPage = new MainPage(DRIVER).enterSendPage();
-    DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-    afterBalance = getBalanceFromSelectionBtn(sendPage.select_coin_type_btn.getText());
-    log("trx beforeBalance:" + beforeBalance);
-    log("trx afterbalance:" + afterBalance);
-    Assert.assertNotEquals(beforeBalance, afterBalance);
-    // Assert.assertEquals(beforeBalance - sendAmount,afterBalance);
-
+    MainPage mainPage = new MainPage(DRIVER);
+    SendPage sendPage = new SendPage(DRIVER);
+    waitingTime();
+    click(mainPage.transfer_btn);
+    waitingTime();
+    sendKeys(sendPage.receiverAddress_input,loginAddress);
+    waitingTime();
+    click(sendPage.next_btn);
+    waitingTime();
+    click(sendPage.trx_neirong);
+    sendKeys(sendPage.search_input,"TF17BgPaZYbz8oxbjhriubPDsA7ArKoLX3");
+    waitingTime();
+    click(sendPage.search_result);
+    waitingTime();
+    sendKeys(sendPage.amount_input,"1");
+    waitingTime();
+    click(sendPage.transfer_btn);
+    waitingTime();
+    click(sendPage.signature_btn);
+    waitingTime(5);
+    click(sendPage.complete_btn);
+    waitingTime(5);
+    Assert.assertTrue(onTheHomepageOrNot(loginAddress));
   }
 
   @AfterMethod(enabled = true)

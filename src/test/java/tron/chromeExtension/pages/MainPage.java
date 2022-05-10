@@ -85,6 +85,10 @@ public class MainPage extends AbstractPage {
   // Total assets of all accounts.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[1]/div/div[1]/div[1]/div/span[2]")
   public WebElement totalBalanceOfAllAccounts;
+
+  // Transfer accounts.
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[1]/div[1]")
+  public WebElement transfer_btn;
   // Add Wallet.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[1]/div/div[2]/div[1]/a[1]")
   public WebElement addWallet_btn;

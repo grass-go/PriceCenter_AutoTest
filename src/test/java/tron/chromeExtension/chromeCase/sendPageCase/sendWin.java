@@ -20,6 +20,7 @@ public class sendWin extends Base {
     setUpChromeDriver();
     loginAccount();
   }
+/*
 
   // @Test
   // @Test(enabled = true,retryAnalyzer = MyIRetryAnalyzer.class)
@@ -57,6 +58,7 @@ public class sendWin extends Base {
     // Assert.assertTrue(beforeBalance - sendAmount == afterBalance);
 
   }
+*/
 
   @AfterMethod(enabled = true)
   public void after() throws Exception {
