@@ -10,6 +10,7 @@ import tron.chromeExtension.pages.LockPage;
 import tron.chromeExtension.pages.MainPage;
 import tron.chromeExtension.pages.TronScanPage;
 import tron.chromeExtension.utils.Helper;
+import tron.common.utils.MyIRetryAnalyzer;
 
 public class pledge extends Base {
 
@@ -41,7 +42,7 @@ public class pledge extends Base {
       description = " Pledge to myself for energy. ",
       alwaysRun = true,
       enabled = true)
-  public void test002PledgeToMyselfForEnergyTest() throws Exception {
+  public void test002PledgeMyselfToGetEnergyTest() throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);
     click(mainPage.pledge_btn);
@@ -57,7 +58,8 @@ public class pledge extends Base {
       groups = {"P0"},
       description = "Pledge others to get bandwidth. ",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test003PledgeOthersToGetBandwidthTest() throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);
@@ -74,8 +76,9 @@ public class pledge extends Base {
       groups = {"P0"},
       description = " Pledge to others for energy. ",
       alwaysRun = true,
-      enabled = true)
-  public void test004PledgeToOthersForEnergyTest() throws Exception {
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
+  public void test004PledgeOthersToGetEnergyTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);

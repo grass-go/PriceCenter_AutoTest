@@ -92,11 +92,21 @@ public class TronScanPage extends AbstractPage {
           "/html/body/div[2]/div/div[1]/div/div/div[2]/form/div[6]/div/div/div/span[2]/div/div[1]")
   public WebElement token_box;
 
-  @FindBy(xpath = " /html/body/div[2]/div/div[1]/div/div/div[2]/form/div[7]/div/div/div")
+  /* @FindBy(xpath = "/html/body/div[2]/div/div[1]/div/div/div[2]/form/div[7]/div/div/div")
+  public WebElement collection_box;*/
+
+  @FindBy(xpath = "/html/body/div[2]/div/div[1]/div/div/div[2]/form/div[7]/div/div/div/span[1]")
   public WebElement collection_box;
 
-  @FindBy(xpath = " /html/body/div[5]/div/div/div/div[2]/div[1]/div/div/div[1]/div")
-  public WebElement trc721Token_btn;
+ /* @FindBy(xpath = "/html/body/div[5]/div/div/div/div[2]/div[1]/div/div/div[1]/div")
+  public WebElement trc721Token_btn;*/
+ @FindBy(xpath = " /html/body/div[5]/div/div/div/div[2]/div[1]/div/div/div[1]")
+ public WebElement trc721Token_btn;
+
+/*  /html/body/div[5]/div/div/div/div[2]/div[1]/div/div/div[1]*/
+
+
+
 
   @FindBy(xpath = "/html/body/div[2]/div/div[1]/div/div/div[2]/form/div[7]/div/input")
   public WebElement tokenAccount_input;
