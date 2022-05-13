@@ -19,7 +19,7 @@ public class Dapp_History extends TronlinkBase {
     private HttpResponse response;
 
     @Test(enabled = true)
-    public void history() {
+    public void history() throws InterruptedException {
         Map<String, String> params = new HashMap<>();
         params.put("address","TAVNk5hkaPNJcTf6TvJVgBWEaRhuiHE5Ab");
         response = TronlinkApiList.history(params);
@@ -34,10 +34,19 @@ public class Dapp_History extends TronlinkBase {
             Assert.assertTrue(history.containsKey("slogan"));
             Assert.assertTrue(history.containsKey("createTime"));
             Assert.assertTrue(history.containsKey("updateTime"));
-            Assert.assertEquals(200, TronlinkApiList.createGetConnect(history.getString("image_url")).getStatusLine().getStatusCode());
-            Assert.assertEquals(200, TronlinkApiList.createGetConnect(history.getString("home_url")).getStatusLine().getStatusCode());
+
+            if(200 != TronlinkApiList.createGetConnect(history.getString("image_url")).getStatusLine().getStatusCode()) {
+                Thread.sleep(60000);
+                Assert.assertEquals(200, TronlinkApiList.createGetConnect(history.getString("image_url")).getStatusLine().getStatusCode());
+            }
+
+            if(200 != TronlinkApiList.createGetConnect(history.getString("home_url")).getStatusLine().getStatusCode()) {
+                Thread.sleep(60000);
+                Assert.assertEquals(200, TronlinkApiList.createGetConnect(history.getString("home_url")).getStatusLine().getStatusCode());
+            }
 
         }
     }
 
 }
+
