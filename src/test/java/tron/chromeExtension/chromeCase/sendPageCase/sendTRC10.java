@@ -17,6 +17,7 @@ public class sendTRC10 extends Base {
   public void before() throws Exception {
     setUpChromeDriver();
     loginAccount();
+    Helper.switchAccount(testAccountMultiIndex, multiAddress);
   }
 
   @Test(
