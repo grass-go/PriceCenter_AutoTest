@@ -64,6 +64,7 @@ public class queryAccount extends Base {
       waitingTime(5);
       String searchStr = "自动化测试账户1";
       sendKeys(accountlistPage.searchAccount_input, searchStr);
+      waitingTime(5);
       String address = getText(mainPage.address_content);
       log("address:" + address);
       Assert.assertTrue(loginAddress.contains(address.substring(13)));
