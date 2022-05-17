@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
 import tron.chromeExtension.pages.MainPage;
 import tron.chromeExtension.pages.SendPage;
+import tron.chromeExtension.utils.Helper;
 
 public class sendTrx extends Base {
 
@@ -14,6 +15,7 @@ public class sendTrx extends Base {
   public void before() throws Exception {
     setUpChromeDriver();
     loginAccount();
+    Helper.switchAccount(testAccountMultiIndex, multiAddress);
   }
 
   @Test(
@@ -22,30 +24,9 @@ public class sendTrx extends Base {
       alwaysRun = true,
       enabled = true)
   public void test001sendTrxTest() throws Exception {
-
-    MainPage mainPage = new MainPage(DRIVER);
-    SendPage sendPage = new SendPage(DRIVER);
-    waitingTime();
-    click(mainPage.transfer_btn);
-    waitingTime();
-    sendKeys(sendPage.receiverAddress_input,loginAddress);
-    waitingTime();
-    click(sendPage.next_btn);
-    waitingTime();
-    click(sendPage.trx_neirong);
-    sendKeys(sendPage.search_input,"TF17BgPaZYbz8oxbjhriubPDsA7ArKoLX3");
-    waitingTime();
-    click(sendPage.search_result);
-    waitingTime();
-    sendKeys(sendPage.amount_input,"1");
-    waitingTime();
-    click(sendPage.transfer_btn);
-    waitingTime();
-    click(sendPage.signature_btn);
-    waitingTime(5);
-    click(sendPage.complete_btn);
-    waitingTime(5);
-    Assert.assertTrue(onTheHomepageOrNot(loginAddress));
+    String transactionStatus = Helper.transfer(loginAddress, "trx", "1", false);
+    Assert.assertEquals("交易已广播", transactionStatus);
+    Assert.assertTrue(onTheHomepageOrNot(multiAddress));
   }
 
   @AfterMethod(enabled = true)

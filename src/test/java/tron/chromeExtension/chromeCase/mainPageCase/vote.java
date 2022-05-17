@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
 import tron.chromeExtension.pages.MainPage;
 import tron.chromeExtension.utils.Helper;
+import tron.common.utils.MyIRetryAnalyzer;
 
 public class vote extends Base {
 
@@ -37,7 +38,8 @@ public class vote extends Base {
       groups = {"P0"},
       description = "Cancel voting. ",
       alwaysRun = true,
-      enabled = true)
+      enabled = true,
+      retryAnalyzer = MyIRetryAnalyzer.class)
   public void test002CancelVotingTest() throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);
