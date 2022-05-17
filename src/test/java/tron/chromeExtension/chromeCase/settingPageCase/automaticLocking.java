@@ -24,7 +24,7 @@ public class automaticLocking extends Base {
       groups = {"P0"},
       description = "Automatic locking after 1 minute",
       alwaysRun = true,
-      enabled = true,
+      enabled = false,
       retryAnalyzer = MyIRetryAnalyzer.class)
   public void test001automaticLockingTest() throws Exception {
 
