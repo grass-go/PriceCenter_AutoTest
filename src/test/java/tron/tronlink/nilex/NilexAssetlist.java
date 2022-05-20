@@ -18,7 +18,7 @@ public class NilexAssetlist extends TronlinkBase {
 
 
 
-  @Test(enabled = true, description= "Get Assetlist From MainChain")
+  @Test(enabled = false, description= "Get Assetlist From MainChain")
   public void test000GetAssetlistFromMainChain(){
     header.put("Lang","1");
     header.put("Version","3.7.0");
