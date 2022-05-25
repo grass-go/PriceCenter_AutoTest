@@ -38,7 +38,7 @@ public class AssetList extends TronlinkBase {
 
   //v4.2.1 new user(not even have transfer trx),with parameter version=v1, will return trx only.
   @SneakyThrows
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void assetList01(){
     char cbuf[] = new char[5000];
     InputStreamReader input =new InputStreamReader(new FileInputStream(new File("src/test/resources/TestData/new1_assetList_v1_exp.json")),"UTF-8");
@@ -67,7 +67,7 @@ public class AssetList extends TronlinkBase {
 
   //v4.2.1 new user(not even have transfer trx),with parameter version=v2, will return trx only.
   @SneakyThrows
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void assetList02(){
     char cbuf[] = new char[5000];
     InputStreamReader input =new InputStreamReader(new FileInputStream(new File("src/test/resources/TestData/new1_assetList_v2_exp.json")),"UTF-8");
