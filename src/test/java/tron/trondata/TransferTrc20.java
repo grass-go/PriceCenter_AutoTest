@@ -32,15 +32,15 @@ public class TransferTrc20 extends TrondataBase {
     for (index=0; index<10; index++) {
       log.info("cur index is " + index);
       response = TronlinkApiList.getTransferTrc20(params);
-      Assert.assertEquals(200, response.getStatusLine().getStatusCode());
+      int statuscode = response.getStatusLine().getStatusCode();
+      //Assert.assertEquals(200, response.getStatusLine().getStatusCode());
       responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-      Assert.assertTrue(responseContent.containsKey("page_size"));
-
-      if (responseContent.getIntValue("page_size") > 0){
+      boolean page_size_exist = responseContent.containsKey("page_size");
+      if (statuscode == 200 && page_size_exist && responseContent.getIntValue("page_size") > 0){
         index=11;
       }
       else{
-        Thread.sleep(1000);
+        Thread.sleep(3000);
         continue;
       }
       Assert.assertTrue(responseContent.containsKey("data"));
@@ -67,7 +67,7 @@ public class TransferTrc20 extends TrondataBase {
   }
 
   @Test(enabled = true,description = "getTransferTrc20 only from")
-  public void Test002getTransferTrc20From() {
+  public void Test002getTransferTrc20From() throws InterruptedException {
     Map<String, String> params = new HashMap<>();
     params.put("address",queryAddress);
     params.put("direction","1");
@@ -82,14 +82,15 @@ public class TransferTrc20 extends TrondataBase {
       log.info("Test002getTransferTrc20From: cur index is " + index);
 
       response = TronlinkApiList.getTransferTrc20(params);
-      Assert.assertEquals(200, response.getStatusLine().getStatusCode());
+      int statuscode = response.getStatusLine().getStatusCode();
       responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-      Assert.assertTrue(responseContent.containsKey("page_size"));
+      boolean page_size_exists= responseContent.containsKey("page_size");
 
-      if (responseContent.getIntValue("page_size") == 1){
+      if (statuscode==200 && page_size_exists && responseContent.getIntValue("page_size") == 1){
         index=6;
       }
       else{
+        Thread.sleep(3000);
         continue;
       }
 
@@ -114,7 +115,7 @@ public class TransferTrc20 extends TrondataBase {
   }
 
   @Test(enabled = true,description = "getTransferTrc20 only to within the specified time range")
-  public void Test003getTransferTrc20To() {
+  public void Test003getTransferTrc20To() throws InterruptedException {
     Map<String, String> params = new HashMap<>();
     params.put("address", queryAddress);
     params.put("direction", "2");
@@ -129,14 +130,15 @@ public class TransferTrc20 extends TrondataBase {
     for (index = 0; index < 5; index++) {
       log.info("Test003getTransferTrc20To: cur index is " + index);
       response = TronlinkApiList.getTransferTrc20(params);
-      Assert.assertEquals(200, response.getStatusLine().getStatusCode());
+      int statuscode = response.getStatusLine().getStatusCode();
       responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-      Assert.assertTrue(responseContent.containsKey("page_size"));
+      boolean page_size_exist = responseContent.containsKey("page_size");
 
-      if (responseContent.getIntValue("page_size") == 1){
+      if (statuscode == 200 && page_size_exist && responseContent.getIntValue("page_size") == 1){
         index=6;
       }
       else{
+        Thread.sleep(3000);
         continue;
       }
       Assert.assertTrue(responseContent.containsKey("data"));
