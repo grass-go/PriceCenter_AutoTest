@@ -90,10 +90,10 @@ task djedAPI(type: Test) {
 
 }
 
-task tronlinkAPI(type: Test) {
+task priceAPI(type: Test) {
 
     useTestNG {
-        suites(file('src/test/resources/testng_tronlinkAPI.xml'))
+        suites(file('src/test/resources/testng_price-centreAPI.xml'))
         parallel 'tests'
         threadCount 1
 
@@ -102,7 +102,5 @@ task tronlinkAPI(type: Test) {
         exceptionFormat = 'full'
         showStackTraces = "true"
     }
-
-
 
 }
