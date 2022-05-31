@@ -193,6 +193,7 @@ public class getallprice {
         Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(expbttusd.toString(), bttusd));
     }
 
+
     //check common 20 coin equals to getPrice API.
     @Test(enabled = false, description = "Test BTT in getallprice")
     public void Test04Common20Coin() {
@@ -201,6 +202,7 @@ public class getallprice {
         //USDD 10 ->TRX
         //USDD 20 ->USD
     }
+    //check common 0xAddress coin equals to getPrice API.
     @Test(enabled = false, description = "Test BTT in getallprice")
     public void Test05Common0xAddressCoin() {
         //USDD 20 ->TRX
@@ -208,5 +210,7 @@ public class getallprice {
         //USDD 10 ->TRX
         //USDD 20 ->USD
     }
+
+
 
 }

@@ -26,7 +26,7 @@ public class LPTokenPrice extends priceBase{
     private JSONArray array = new JSONArray();
     Map<String, String> params = new HashMap<>();
 
-    @Test(enabled = true, description = "Test LP Token price compared to Transcan API")
+    @Test(enabled = true, description = "Check JUSTSwap Token's price，get LP Token from tronscan，then compare price.")
     public void Test001getprice() {
         //request transcan search API to gain LPTokens and price.
         params.put("term","JUSTSWAP");
