@@ -45,6 +45,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 
+import static io.grpc.stub.ClientCalls.blockingUnaryCall;
+
 @Slf4j
 public class TronlinkApiList {
 
@@ -1462,6 +1464,151 @@ public static HttpResponse search(Map<String, String> params) {
     transaction = transactionBuilderSigned.build();
     return transaction;
   }
+
+ /* public static String triggerContract(byte[] contractAddress, String method, String argsStr,
+                                       Boolean isHex, long callValue, long feeLimit, String tokenId, long tokenValue,
+                                       byte[] ownerAddress, String priKey, WalletGrpc.WalletBlockingStub blockingStubFull) {
+    Wallet.setAddressPreFixByte((byte) 0x41);
+    ECKey temKey = null;
+    try {
+      BigInteger priK = new BigInteger(priKey, 16);
+      temKey = ECKey.fromPrivate(priK);
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+    final ECKey ecKey = temKey;
+    if (argsStr.equalsIgnoreCase("#")) {
+      log.info("argsstr is #");
+      argsStr = "";
+    }
+
+    byte[] owner = ownerAddress;
+    byte[] input = new byte[0];
+    if (!method.equalsIgnoreCase("#")) {
+      input = Hex.decode(parseMethod(method, argsStr, isHex));
+    }
+
+    SmartContractOuterClass.TriggerSmartContract.Builder builder = SmartContractOuterClass.TriggerSmartContract.newBuilder();
+    builder.setOwnerAddress(ByteString.copyFrom(owner));
+    builder.setContractAddress(ByteString.copyFrom(contractAddress));
+    builder.setData(ByteString.copyFrom(input));
+    builder.setCallValue(callValue);
+    builder.setTokenId(Long.parseLong(tokenId));
+    builder.setCallTokenValue(tokenValue);
+    SmartContractOuterClass.TriggerSmartContract triggerContract = builder.build();
+
+    GrpcAPI.TransactionExtention transactionExtention = blockingStubFull.triggerContract(triggerContract);
+    if (transactionExtention == null || !transactionExtention.getResult().getResult()) {
+      System.out.println("RPC create call trx failed!");
+      System.out.println("Code = " + transactionExtention.getResult().getCode());
+      System.out
+              .println("Message = " + transactionExtention.getResult().getMessage().toStringUtf8());
+      return null;
+    }
+    Protocol.Transaction transaction = transactionExtention.getTransaction();
+    if (transaction.getRetCount() != 0 && transactionExtention.getConstantResult(0) != null
+            && transactionExtention.getResult() != null) {
+      byte[] result = transactionExtention.getConstantResult(0).toByteArray();
+      System.out.println("message:" + transaction.getRet(0).getRet());
+      System.out.println(
+              ":" + ByteArray.toStr(transactionExtention.getResult().getMessage().toByteArray()));
+      System.out.println("Result:" + Hex.toHexString(result));
+      return null;
+    }
+
+    final GrpcAPI.TransactionExtention.Builder texBuilder = GrpcAPI.TransactionExtention.newBuilder();
+    Protocol.Transaction.Builder transBuilder = Protocol.Transaction.newBuilder();
+    Protocol.Transaction.raw.Builder rawBuilder = transactionExtention.getTransaction().getRawData()
+            .toBuilder();
+    rawBuilder.setFeeLimit(feeLimit);
+
+    transBuilder.setRawData(rawBuilder);
+    for (int i = 0; i < transactionExtention.getTransaction().getSignatureCount(); i++) {
+      ByteString s = transactionExtention.getTransaction().getSignature(i);
+      transBuilder.setSignature(i, s);
+    }
+    for (int i = 0; i < transactionExtention.getTransaction().getRetCount(); i++) {
+      Protocol.Transaction.Result r = transactionExtention.getTransaction().getRet(i);
+      transBuilder.setRet(i, r);
+    }
+    texBuilder.setTransaction(transBuilder);
+    texBuilder.setResult(transactionExtention.getResult());
+    texBuilder.setTxid(transactionExtention.getTxid());
+
+    transactionExtention = texBuilder.build();
+    if (transactionExtention == null) {
+      return null;
+    }
+    GrpcAPI.Return ret = transactionExtention.getResult();
+    if (!ret.getResult()) {
+      System.out.println("Code = " + ret.getCode());
+      System.out.println("Message = " + ret.getMessage().toStringUtf8());
+      return null;
+    }
+    transaction = transactionExtention.getTransaction();
+    if (transaction == null || transaction.getRawData().getContractCount() == 0) {
+      System.out.println("Transaction is empty");
+      return null;
+    }
+    transaction = signTransaction(ecKey, transaction);
+    *//*System.out.println("trigger txid = " + ByteArray.toHexString(Sha256Hash
+        .hash(CommonParameter.getInstance().isECKeyCryptoEngine(),
+            transaction.getRawData().toByteArray())));*//*
+    GrpcAPI.Return response = broadcastTransaction(transaction, blockingStubFull);
+    if (response.getResult() == false) {
+      return null;
+    } else {
+      return ByteArray.toHexString(Sha256Hash
+              .hash(CommonParameter.getInstance().isECKeyCryptoEngine(),
+                      transaction.getRawData().toByteArray()));
+    }
+  }*/
+
+
+
+  public static Protocol.Transaction signTransaction(ECKey ecKey,
+                                                     Protocol.Transaction transaction) {
+    Wallet.setAddressPreFixByte((byte) 0x41);
+    if (ecKey == null || ecKey.getPrivKey() == null) {
+      //logger.warn("Warning: Can't sign,there is no private key !!");
+      return null;
+    }
+    transaction = setTimestamp(transaction);
+//    logger.info("Txid in sign is " + ByteArray.toHexString(Sha256Hash
+//        .hash(CommonParameter.getInstance().isECKeyCryptoEngine(),
+//            transaction.getRawData().toByteArray())));
+    return sign(transaction, ecKey);
+  }
+  public static Protocol.Transaction sign(Protocol.Transaction transaction, ECKey myKey) {
+    ByteString lockSript = ByteString.copyFrom(myKey.getAddress());
+    Protocol.Transaction.Builder transactionBuilderSigned = transaction.toBuilder();
+
+    byte[] hash = Sha256Hash.hash(CommonParameter
+            .getInstance().isECKeyCryptoEngine(), transaction.getRawData().toByteArray());
+    List<Protocol.Transaction.Contract> listContract = transaction.getRawData().getContractList();
+    for (int i = 0; i < listContract.size(); i++) {
+      ECKey.ECDSASignature signature = myKey.sign(hash);
+      ByteString bsSign = ByteString.copyFrom(signature.toByteArray());
+      transactionBuilderSigned.addSignature(
+              bsSign);//Each contract may be signed with a different private key in the future.
+    }
+
+    transaction = transactionBuilderSigned.build();
+    return transaction;
+  }
+
+
+
+  public static Protocol.Transaction setTimestamp(Protocol.Transaction transaction) {
+    long currentTime = System.currentTimeMillis();//*1000000 + System.nanoTime()%1000000;
+    Protocol.Transaction.Builder builder = transaction.toBuilder();
+    org.tron.protos.Protocol.Transaction.raw.Builder rowBuilder = transaction.getRawData()
+            .toBuilder();
+    rowBuilder.setTimestamp(currentTime);
+    builder.setRawData(rowBuilder.build());
+    return builder.build();
+  }
+
 
   public static Protocol.Transaction triggerContract(byte[] contractAddress, String method,
                                                      String argsStr, Boolean isHex, long callValue, long feeLimit, String tokenId, long tokenValue,

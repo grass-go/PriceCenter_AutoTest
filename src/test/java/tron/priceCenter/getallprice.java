@@ -1,4 +1,5 @@
 package tron.priceCenter;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONPath;
 import org.testng.annotations.BeforeClass;
 import tron.common.TronlinkApiList;
@@ -12,6 +13,7 @@ import org.testng.annotations.Test;
 import lombok.extern.slf4j.Slf4j;
 
 import java.math.BigDecimal;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,37 +53,42 @@ public class getallprice {
         return prices;
     }
 
+    public void compareSelfAPITokenPrice(Map<String, String> tokenAddressMap) throws URISyntaxException {
+        log.info("compareSelfAPITokenPrice start");
+        for(Map.Entry<String, String> entry : tokenAddressMap.entrySet()){
+            String curSymbol = entry.getKey();
 
-    @BeforeClass(enabled = true,description = "getallprice")
-    public void getAllPriceContentAndUSDTRXPrice() throws InterruptedException {
-        /*allpriceResponse = PriceCenterApiList.getallprice();
-        Assert.assertEquals(200, allpriceResponse.getStatusLine().getStatusCode());
-        allpriceResponseContent = TronlinkApiList.parseJsonObResponseContent(allpriceResponse);*/
-        int index;
-        for (index = 0; index < 10; index++) {
-            System.out.println("getallprice: cur index is " + index);
-            allpriceResponse = PriceCenterApiList.getallprice();
-            System.out.println("beforeClass: allpriceResponse" + allpriceResponse );
-            int statuscode = allpriceResponse.getStatusLine().getStatusCode();
-            allpriceResponseContent = TronlinkApiList.parseJsonObResponseContent(allpriceResponse);
-            System.out.println("beforeClass: statuscode" + statuscode +"; "+allpriceResponseContent.toString());
-            if (statuscode == 200 && allpriceResponseContent !=null){
-                object = allpriceResponseContent.getJSONObject("data");
-                allpriceTokensArray = object.getJSONArray("rows");
-                index=11;
-            }else{
-                Thread.sleep(3000);
-                continue;
-            }
+            String curTokenAddress = entry.getValue();
+            log.info("compareSelfAPITokenPrice: curSymbol:"+curSymbol);
+
+            //check USD price
+            String getallpriceResult = PriceCenterApiList.getallprice(allpriceResponseContent,curSymbol,curTokenAddress,"USD");
+            JSONObject getprice_obj = PriceCenterApiList.getprice(curSymbol,"USD");
+            Object getpricePrice_result = JSONPath.eval(getprice_obj,"$..data."+curSymbol.toUpperCase()+".quote.USD.price[0]");
+            String getpriceResult = getpricePrice_result.toString();
+            log.info("compareSelfAPITokenPrice:USD:getallpriceResult:"+getallpriceResult+", getpriceResult"+getpriceResult);
+            Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(getallpriceResult,getpriceResult));
+
+            //check TRX price
+            getallpriceResult = PriceCenterApiList.getallprice(allpriceResponseContent,curSymbol,curTokenAddress,"TRX");
+            getprice_obj = PriceCenterApiList.getprice(curSymbol,"TRX");
+            getpricePrice_result = JSONPath.eval(getprice_obj,"$..data."+curSymbol.toUpperCase()+".quote.TRX.price[0]");
+            getpriceResult = getpricePrice_result.toString();
+            log.info("compareSelfAPITokenPrice:TRX:getallpriceResult:"+getallpriceResult+", getpriceResult"+getpriceResult);
+            Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(getallpriceResult,getpriceResult));
+
         }
-        Assert.assertEquals(12,index);
+    }
+
+    @BeforeClass(enabled = true,description = "getallprice and get usdt->trx price")
+    public void getAllPriceContentAndUSDTRXPrice() throws InterruptedException, URISyntaxException {
+        String allpriceResponse_str = PriceCenterApiList.getallprice();
+        allpriceResponseContent = JSON.parseObject(allpriceResponse_str);
+        log.info("getAllPriceContentAndUSDTRXPrice,allpriceResponseContent:"+allpriceResponseContent.toString());
 
         //http://47.253.46.247:8051/v1/cryptocurrency/getprice?symbol=USDT&convert=TRX
-        params.clear();
-        params.put("symbol","USD");
-        params.put("convert","TRX");
-        response = PriceCenterApiList.getprice(params);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = PriceCenterApiList.getprice("USD","TRX");
+        log.info("getAllPriceContentAndUSDTRXPrice:responseContent:"+responseContent.toString());
         Object usdttrx = JSONPath.eval(responseContent, "$..USD.quote.TRX.price[0]");
         usdTrxPrice = usdttrx.toString() ;
         log.info("usdTrxPrice:"+usdTrxPrice);
@@ -202,6 +209,7 @@ public class getallprice {
         //USDD 10 ->TRX
         //USDD 20 ->USD
     }
+
     //check common 0xAddress coin equals to getPrice API.
     @Test(enabled = false, description = "Test BTT in getallprice")
     public void Test05Common0xAddressCoin() {
@@ -211,6 +219,14 @@ public class getallprice {
         //USDD 20 ->USD
     }
 
+    @Test(enabled = true, description = "check NewPoolToken price are the same between getprice API and getallprice API")
+    public void Test006CheckSelf2API_newPoolTokens() throws URISyntaxException {
+        compareSelfAPITokenPrice(PriceCenterApiList.newPoolAddressMap);
+    }
 
-
+    @Test(enabled = true, description = "check jTokens price are the same between getprice API and getallprice API")
+    public void Test007CheckSelf2API_jTokens() throws URISyntaxException, InterruptedException {
+        log.info("Test007CheckSelf2API_jTokens start...");
+        compareSelfAPITokenPrice(PriceCenterApiList.JTokenAddressMap);
+    }
 }

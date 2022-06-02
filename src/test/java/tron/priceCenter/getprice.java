@@ -1,5 +1,6 @@
 package tron.priceCenter;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
@@ -26,8 +27,11 @@ public class getprice {
     Map<String,String> params = new HashMap<>();
     private JSONObject object;
     private String trxusdPrice;
-    private String symbolExchageTokens="";
-    private String addressExchageTokens="";
+    private static String symbolExchageTokens="";
+    private static String addressExchageTokens="";
+
+    private static Map<String,String> getallprice_Map = new HashMap<>();
+    private static Map<String,String> getprice_Map = new HashMap<>();
 
     @BeforeClass(enabled = true,description = "getallprice")
     //@Test(enabled = true, description = "")
@@ -60,11 +64,13 @@ public class getprice {
         for (Map.Entry<String, String> entry : tokenExpPrice.entrySet()) {
             symbol = entry.getKey();
             String expPrice = entry.getValue();
-            log.info("compareTokensPriceWithTronscan: cur symbol:"+symbol);
+            log.info("compareTokensPriceWithTronscan using TRX price unit: cur symbol:"+symbol);
             Object curPrice = JSONPath.eval(responseContent, "$..data."+symbol+".quote.TRX.price[0]");
             String priceCentreValue =curPrice.toString();
-            log.info("compareTokensPriceWithTronscan: expPrice:"+expPrice+",priceCentreValue:"+priceCentreValue);
+            log.info("compareTokensPriceWithTronscan using TRX price unit: expPrice:"+expPrice+",priceCentreValue:"+priceCentreValue);
+
             Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(expPrice, priceCentreValue));
+
             Object curPriceTime = JSONPath.eval(responseContent, "$..data."+symbol+".quote.TRX.last_updated[0]");
             log.info("symbol:"+symbol+", curPriceTime:"+ curPriceTime);
         }
@@ -119,6 +125,9 @@ public class getprice {
         //暂不支持地址对CNY，EUR，GBP。
         for (Map.Entry<String, String> entry : tokenAddressMap.entrySet()) {
             String curSymbol = entry.getKey();
+            if (curSymbol.equals("usdc3SUN")){
+                curSymbol = curSymbol.toUpperCase();
+            }
             String curAddress = entry.getValue();
             log.info("CheckSameValueGotByDiffFormat: curSymbol:"+curSymbol+ ",curAddress: "+curAddress);
             Object trxSymbolPrice = JSONPath.eval(symbolRespContent, String.join("", "$..data.",curSymbol,".quote.TRX.price[0]"));
@@ -351,10 +360,12 @@ public class getprice {
         }
     }
 
-    @Test(enabled = false, description = "check wToken's price with related token by usd price")
-    public void Test012CheckCentrePrice_0xTokens_CMC() throws URISyntaxException {
-
+    //wtokens need to do later
+    @Test(enabled = true, description = "Check values correct between address/address, address/usd, symbol/symbol, symbol/exchangeRate")
+    public void Test012CheckDiffFormat_newPoolTokens() throws URISyntaxException {
+        CheckSameValueGotByDiffFormat(PriceCenterApiList.newPoolAddressMap);
     }
+    //check getPrice usd Price equals to getAllPrice USD price.
 
 }
 
