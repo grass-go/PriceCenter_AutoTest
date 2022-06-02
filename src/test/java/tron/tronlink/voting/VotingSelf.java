@@ -27,15 +27,20 @@ public class VotingSelf extends TronlinkBase {
     map.put("start","0");
     map.put("limit","0");
     map.put("voter","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
-    boolean re = TronlinkApiList.getVoteSelfFromTronscan(map);
-    if(!re){
-      System.out.println("* * * * * * * tronscan get vote self total * * * * * *");
+    boolean re=false;
+    int count = 0;
+    while (count < 5) {
+      try {
+        re = TronlinkApiList.getVoteSelfFromTronscan(map);
+        break;
+      } catch (Exception e){
+        Thread.sleep(60000);
+        count +=1;
+      }
     }
 
-    map.put("limit","10");
-    re = TronlinkApiList.getVoteSelfFromTronscan(map);
     if(!re){
-      System.out.println("* * * * * * * tronscan get vote self data  * * * * * *");
+      System.out.println("* * * * * * * tronscan get vote self total * * * * * *");
     }
 
 
