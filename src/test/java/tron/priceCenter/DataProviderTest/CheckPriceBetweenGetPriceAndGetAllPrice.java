@@ -65,7 +65,14 @@ public class CheckPriceBetweenGetPriceAndGetAllPrice {
         String curTokenAddress = address;
 
         //get trx/usd price from getallprice API
-        java.util.List<String> getallprice_Price = PriceCenterApiList.getTRXandUSDbyfTokenAddrFromAllAPI(allpriceResponseContent,"$..data.rows[fTokenAddr='"+curTokenAddress+"']");
+        String myjsonpath;
+        if (curSymbol.equals("BTTOLD")) {
+            myjsonpath ="$..data.rows[fShortName='"+curSymbol+"']";
+        } else{
+            myjsonpath="$..data.rows[fTokenAddr='"+curTokenAddress+"']";
+        }
+
+        java.util.List<String> getallprice_Price = PriceCenterApiList.getTRXandUSDbyfTokenAddrFromAllAPI(allpriceResponseContent,myjsonpath);
         String getallprice_trxPrice=getallprice_Price.get(0);
         String getallprice_usdPrice=getallprice_Price.get(1);
 
