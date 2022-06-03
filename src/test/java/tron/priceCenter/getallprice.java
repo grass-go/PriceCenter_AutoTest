@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -70,9 +71,14 @@ public class getallprice {
 
     @Test(enabled = true, description = "Test getallprice api return normally")
     public void Test001getallprice() {
-        int rowCount = allpriceTokensArray.size();
-        Assert.assertTrue(rowCount > 500);
-        object = (JSONObject) allpriceTokensArray.get(0);
+
+        Object fshortRows = JSONPath.eval(allpriceResponseContent,"$..fTokenAddr");
+        List tokenItems = (List) fshortRows;
+        int rowCount = tokenItems.size();
+        Assert.assertTrue(rowCount > 300);
+        JSONObject dataContent = allpriceResponseContent.getJSONObject("data");
+        JSONArray allpriceTokensArray =  dataContent.getJSONArray("rows");
+        JSONObject object = (JSONObject) allpriceTokensArray.get(0);
         Assert.assertTrue(object.containsKey("fShortName"));
         Assert.assertTrue(object.containsKey("fTokenAddr"));
         Assert.assertTrue(object.containsKey("price"));

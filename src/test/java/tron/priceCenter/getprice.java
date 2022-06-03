@@ -69,7 +69,7 @@ public class getprice {
             String priceCentreValue =curPrice.toString();
             log.info("compareTokensPriceWithTronscan using TRX price unit: expPrice:"+expPrice+",priceCentreValue:"+priceCentreValue);
 
-            Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(expPrice, priceCentreValue,"0.01"));
+            Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(expPrice, priceCentreValue,"0.2"));
 
             Object curPriceTime = JSONPath.eval(responseContent, "$..data."+symbol+".quote.TRX.last_updated[0]");
             log.info("symbol:"+symbol+", curPriceTime:"+ curPriceTime);
