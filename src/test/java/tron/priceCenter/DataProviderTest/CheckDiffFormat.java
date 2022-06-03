@@ -10,7 +10,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import tron.common.PriceCenterApiList;
 import tron.common.TronlinkApiList;
-import tron.priceCenter.DataProvideTest.CommonTokenTest;
 
 import java.io.*;
 import java.net.URISyntaxException;
