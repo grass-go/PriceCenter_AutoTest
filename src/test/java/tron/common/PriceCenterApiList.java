@@ -53,7 +53,7 @@ public class PriceCenterApiList {
     static HttpPost httppost;
 
     //public static String HttpNode = priceBase.priceUrl;
-    public static String HttpNode = priceBase.testPriceUrl;
+    public static String HttpNode = priceBase.priceUrl;
     //public static String HttpNode = "https://c.tronlink.org/";
     public static String TranscanHttpNode = priceBase.tronscanApiUrl;
     static HttpResponse response;
