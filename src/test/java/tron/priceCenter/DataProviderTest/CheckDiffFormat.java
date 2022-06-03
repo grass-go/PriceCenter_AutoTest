@@ -39,10 +39,22 @@ public class CheckDiffFormat {
         Object gbpPrice = JSONPath.eval(responseContent, String.join("", "$..data.",upperSymbol,".quote.GBP.price[0]"));
 
         responseContent = PriceCenterApiList.getprice(curAddress,"T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb,TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t,USD");
-        Object trxAddressPrice = JSONPath.eval(responseContent,String.join("","$..data.",curAddress,".quote.T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb.price[0]"));
-        Object usdtAddressPrice = JSONPath.eval(responseContent,String.join("","$..data.",curAddress,".quote.TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t.price[0]")); ;
-        Object usdAddressPrice = JSONPath.eval(responseContent, String.join("", "$..data.",curAddress,".quote.USD.price[0]"));
+        Object trxAddressPrice;
+        Object usdtAddressPrice;
+        Object usdAddressPrice;
+        if(curSymbol.equals("BTTOLD"))
+        {
+            trxAddressPrice = JSONPath.eval(responseContent, String.join("", "$..quote.T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb.price[0]"));
+            usdtAddressPrice = JSONPath.eval(responseContent, String.join("", "$..quote.TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t.price[0]"));
+            ;
+            usdAddressPrice = JSONPath.eval(responseContent, String.join("", "$..quote.USD.price[0]"));
 
+        }else {
+            trxAddressPrice = JSONPath.eval(responseContent, String.join("", "$..data.", curAddress, ".quote.T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb.price[0]"));
+            usdtAddressPrice = JSONPath.eval(responseContent, String.join("", "$..data.", curAddress, ".quote.TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t.price[0]"));
+            ;
+            usdAddressPrice = JSONPath.eval(responseContent, String.join("", "$..data.", curAddress, ".quote.USD.price[0]"));
+        }
         log.info("CheckSameValueGotByDiffFormat:trxSymbolPrice:"+trxSymbolPrice+", trxAddressPrice:"+trxAddressPrice+", usdtSymbolPrice:"+usdtSymbolPrice+", usdtAddressPrice:"+usdtAddressPrice);
         log.info("CheckSameValueGotByDiffFormat:cnyPrice:"+cnyPrice+", eurPrice:"+eurPrice+", gbpPrice:"+gbpPrice+", usdSymbolPrice:"+usdSymbolPrice +", usdAddressPrice:"+usdAddressPrice);
 

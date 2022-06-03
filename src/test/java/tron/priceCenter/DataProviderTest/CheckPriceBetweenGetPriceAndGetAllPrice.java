@@ -71,7 +71,12 @@ public class CheckPriceBetweenGetPriceAndGetAllPrice {
 
         //get trx price from getprice API and compare with getallprice API
         JSONObject getprice_obj = PriceCenterApiList.getprice(curTokenAddress,"T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb");
-        Object getprice_result = JSONPath.eval(getprice_obj,"$..data."+curTokenAddress+".quote.T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb.price[0]");
+        Object getprice_result;
+        if(curSymbol.equals("BTTOLD")) {
+            getprice_result = JSONPath.eval(getprice_obj, "$..quote.T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb.price[0]");
+        }else{
+            getprice_result = JSONPath.eval(getprice_obj, "$..data." + curTokenAddress + ".quote.T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb.price[0]");
+        }
         String getprice_trxPrice = getprice_result.toString();
         log.info("test001CheckPriceBetweenGetPriceAndGetAllPrice:TRX:getallpriceResult:"+getallprice_trxPrice+", getpriceResult"+getprice_trxPrice);
         Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(getallprice_trxPrice, getprice_trxPrice,tolerance));
