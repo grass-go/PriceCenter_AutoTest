@@ -65,12 +65,9 @@ public class LPTokenPrice extends priceBase{
             Object price = JSONPath.eval(responseContent, "$..T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb.price");
             try {
                 JSONArray priceArray = (JSONArray) price;
-                String lpprice = priceArray.get(0).toString();
-                BigDecimal lpPrice = new BigDecimal(lpprice);
-                BigDecimal absgap = expPrice.subtract(lpPrice).abs();
-                BigDecimal one = new BigDecimal("0.5");
-                log.info("TranscanPrice:"+expPrice.toString()+", PriceCenter Price:"+lpPrice.toString()+", absgap:"+absgap.toString());
-                Assert.assertTrue(absgap.compareTo(one) == -1);
+                String lpPrice = priceArray.get(0).toString();
+                log.info("TranscanPrice:"+expPrice.toString()+", PriceCenter Price:"+lpPrice.toString());
+                Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(expPrice.toString(),lpPrice,"0.2"));
             } catch (Exception e){
                 log.info(e.toString());
                 Assert.fail("address:"+address+"has no price in price center!!");

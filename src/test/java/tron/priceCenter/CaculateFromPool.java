@@ -27,14 +27,10 @@ public class CaculateFromPool {
     private JSONObject responseContent;
     private JSONObject object;
 
-
-
     public static Map<String,String> SymbolAddressMap= new HashMap<>();
     public static Map<String,String> SymbolPoolMap= new HashMap<>();
     public static Map<String,String> CentrePriceMap= new HashMap<>();
     public static Map<String,String> CoinContainsToken= new HashMap<>();
-
-
 
     static {
     SymbolAddressMap.put("2USD", "TXcJ6pCEGKeLEYXrVnLhqpCVuKfV6wgsfC");   //USDD(18), USDT(6)
@@ -45,14 +41,17 @@ public class CaculateFromPool {
     SymbolAddressMap.put("TUSD","TUpMhErZL2fhh4sVNULAbNKLokS4GjC1F4");
     SymbolAddressMap.put("USDC","TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8");
     SymbolAddressMap.put("3SUN","TD3et9gS2pYz46ZC2mkCfYcKQGNwrnBLef");
+    SymbolAddressMap.put("usdc2USD","TTfT54h1d2NUvxaQKM9MbPeKA9cR6jfjtK");
 
     SymbolPoolMap.put("2USD","TAUGwRhmCP518Bm4VBqv7hDun9fg8kYjC4");
     SymbolPoolMap.put("3USD","TKVsYedAY23WFchBniU7kcx1ybJnmRSbGt");
     SymbolPoolMap.put("usdc3SUN","TQx6CdLHqjwVmJ45ecRzodKfVumAsdoRXH");
+    SymbolPoolMap.put("usdc2USD","TB6zgiG14iQkNxqU4mYe7cMiS5aCYfyidL");
 
     CoinContainsToken.put("2USD","USDD,USDT");
     CoinContainsToken.put("3USD","USDD,TUSD,USDT");
     CoinContainsToken.put("usdc3SUN","USDC,3SUN");
+    CoinContainsToken.put("usdc2USD","USDC,2USD");
 
     }
     //symbol：传要计算的2USDD/3USDD/USDC3SUN
@@ -101,15 +100,19 @@ public class CaculateFromPool {
 
         log.info("testNewPoolTokenPrice:Begin to test 2USD...");
         String USD2_Price = calculatePriceFromPool("2USD");
-        Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(CentrePriceMap.get("2USD"),USD2_Price));
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(CentrePriceMap.get("2USD"),USD2_Price,"0.01"));
 
         log.info("testNewPoolTokenPrice:Begin to test 3USD...");
         String USD3_Price = calculatePriceFromPool("3USD");
-        Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(CentrePriceMap.get("3USD"),USD3_Price));
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(CentrePriceMap.get("3USD"),USD3_Price,"0.01"));
 
         log.info("testNewPoolTokenPrice:Begin to test USDC3SUN...");
         String USDC3SUN_Price = calculatePriceFromPool("usdc3SUN");
-        Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(CentrePriceMap.get("usdc3SUN"),USDC3SUN_Price));
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(CentrePriceMap.get("usdc3SUN"),USDC3SUN_Price,"0.01"));
+
+        log.info("testNewPoolTokenPrice:Begin to test USDC2USD...");
+        String usdc2USD_Price = calculatePriceFromPool("usdc2USD");
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(CentrePriceMap.get("usdc3SUN"),usdc2USD_Price,"0.01"));
 
     }
 

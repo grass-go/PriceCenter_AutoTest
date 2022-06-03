@@ -63,7 +63,6 @@ public class PriceCenterApiList {
             .getInt("defaultParameter.httpSoTimeout");
     static JSONObject responseContent;
     static Long requestTime = 0L;
-    private static BigDecimal FIVE = new BigDecimal("500");
     public static Map<String,String> ExgTokenAddressMap= new HashMap<>();
     public static Map<String,String> exp_exgTokenValueMap = new HashMap<>();
     public static Map<String,String> JTokenAddressMap = new HashMap<>();
@@ -88,10 +87,12 @@ public class PriceCenterApiList {
         tokenDecimalMap.put("TUSD","18");
         tokenDecimalMap.put("USDC","6");
         tokenDecimalMap.put("3SUN","18");
+        tokenDecimalMap.put("usdc2USD","18");
 
         newPoolAddressMap.put("2USD", "TXcJ6pCEGKeLEYXrVnLhqpCVuKfV6wgsfC");   //USDD(18), USDT(6)
         newPoolAddressMap.put("3USD","TA1TVZdERDRDGi9QXNdLVfPxbymmi8xFyc"); //USDD,TUSD,USDT
         newPoolAddressMap.put("usdc3SUN","TQ4i5sdj1VGYGFcivyqFW9NXqzpaP6X8BA"); //USDD, 3SUN(USDT,TUSD,USDJ)
+        newPoolAddressMap.put("usdc2USD","TTfT54h1d2NUvxaQKM9MbPeKA9cR6jfjtK");  //usdc,2USD
 
         JTokenAddressMap.put("JTRX", "TE2RzoSV3wFK99w6J9UnnZ4vLfXYoxvRwP");
         JTokenAddressMap.put("JUSDT", "TXJgMdjVX5dKiQaUi9QobwNxtSQaFqccvd");
@@ -121,6 +122,25 @@ public class PriceCenterApiList {
         ExgTokenAddressMap.put("USDC", "TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8");
         ExgTokenAddressMap.put("NFT", "TFczxzPhnThNSqr5by8tvxsdCFRRz6cPNq");
 
+    }
+
+    public static List<String> ReadFile(String fileNamePath ) throws IOException {
+        File tokenFile = new File(fileNamePath);
+
+        List<String> lines = new ArrayList<>();
+        if (tokenFile.isFile() && tokenFile.exists()){
+            InputStreamReader Reader = new InputStreamReader(new FileInputStream(tokenFile),"UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(Reader);
+            String lineTxt = null;
+            while ((lineTxt=bufferedReader.readLine())!=null){
+                log.info("data:"+lineTxt);
+                lines.add(lineTxt);
+            }
+            Reader.close();
+        } else {
+            log.info("prepare0xTokensAndPrice: Can't find 0xToken file: src/test/resources/TestData/Price/tokens0x.txt");
+        }
+        return lines;
     }
 
     public static HttpResponse createGetConnect(URI uri) {
@@ -419,14 +439,14 @@ public class PriceCenterApiList {
     }
 
     //Compare if string format number gap in tolerance.
-    public static boolean CompareGapInTolerance(String expectedstr, String actualstr) {
+    public static boolean CompareGapInGivenTolerance(String expectedstr, String actualstr,String toleranceRate) {
         BigDecimal expected = new BigDecimal(expectedstr);
         BigDecimal actual = new BigDecimal(actualstr);
-        BigDecimal tolerance = expected.divide(FIVE, 18, 1);
+        BigDecimal toleranceRate_bd = new BigDecimal(toleranceRate);
+        BigDecimal tolerance_bd = expected.multiply(toleranceRate_bd);
         BigDecimal absgap = actual.subtract(expected).abs();
-        log.info("expected:"+ expectedstr +", actual:" + actualstr + ", GAP:" + absgap + ", tolerance:"+ tolerance.toString());
-
-        Boolean InTolerance = (absgap.compareTo(tolerance) == -1);
+        log.info("expected:"+ expectedstr +", actual:" + actualstr + ", GAP:" + absgap + ", tolerance:"+ tolerance_bd.toString());
+        Boolean InTolerance = (absgap.compareTo(tolerance_bd) == -1);
         return InTolerance;
     }
     public static boolean CompareLastUpdateInTolerance(long caseTime, long apiTime) {

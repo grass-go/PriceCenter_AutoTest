@@ -53,33 +53,6 @@ public class getallprice {
         return prices;
     }
 
-    public void compareSelfAPITokenPrice(Map<String, String> tokenAddressMap) throws URISyntaxException {
-        log.info("compareSelfAPITokenPrice start");
-        for(Map.Entry<String, String> entry : tokenAddressMap.entrySet()){
-            String curSymbol = entry.getKey();
-
-            String curTokenAddress = entry.getValue();
-            log.info("compareSelfAPITokenPrice: curSymbol:"+curSymbol);
-
-            //check USD price
-            String getallpriceResult = PriceCenterApiList.getallprice(allpriceResponseContent,curSymbol,curTokenAddress,"USD");
-            JSONObject getprice_obj = PriceCenterApiList.getprice(curSymbol,"USD");
-            Object getpricePrice_result = JSONPath.eval(getprice_obj,"$..data."+curSymbol.toUpperCase()+".quote.USD.price[0]");
-            String getpriceResult = getpricePrice_result.toString();
-            log.info("compareSelfAPITokenPrice:USD:getallpriceResult:"+getallpriceResult+", getpriceResult"+getpriceResult);
-            Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(getallpriceResult,getpriceResult));
-
-            //check TRX price
-            getallpriceResult = PriceCenterApiList.getallprice(allpriceResponseContent,curSymbol,curTokenAddress,"TRX");
-            getprice_obj = PriceCenterApiList.getprice(curSymbol,"TRX");
-            getpricePrice_result = JSONPath.eval(getprice_obj,"$..data."+curSymbol.toUpperCase()+".quote.TRX.price[0]");
-            getpriceResult = getpricePrice_result.toString();
-            log.info("compareSelfAPITokenPrice:TRX:getallpriceResult:"+getallpriceResult+", getpriceResult"+getpriceResult);
-            Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(getallpriceResult,getpriceResult));
-
-        }
-    }
-
     @BeforeClass(enabled = true,description = "getallprice and get usdt->trx price")
     public void getAllPriceContentAndUSDTRXPrice() throws InterruptedException, URISyntaxException {
         String allpriceResponse_str = PriceCenterApiList.getallprice();
@@ -136,8 +109,8 @@ public class getallprice {
         Assert.assertTrue(t10usd.equals("1.000000000000000000"));
         Assert.assertTrue(t20usd.equals("1.000000000000000000"));
 
-        Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(usdTrxPrice, t10trx));
-        Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(usdTrxPrice, t20trx));
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(usdTrxPrice, t10trx,"0.01"));
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(usdTrxPrice, t20trx,"0.01"));
     }
 
     //WBTT, BTTOLD, jWBTT, BTT; Relationship: WBTT=BTTOLD=100jWBTT=1000BTT
@@ -153,12 +126,12 @@ public class getallprice {
         log.info("bttoldtrx:" + bttoldtrx);
         log.info("bttoldusd:"+ bttoldusd);
 
-        Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(expBTTOLDtrxPrice, bttoldtrx));
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(expBTTOLDtrxPrice, bttoldtrx,"0.1"));
 
         BigDecimal usdTrxPrice_bd = new BigDecimal(usdTrxPrice);
         BigDecimal bttoldtrx_bd = new BigDecimal(bttoldtrx);
         BigDecimal expbttoldusd = bttoldtrx_bd.divide(usdTrxPrice_bd,18,1);
-        Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(expbttoldusd.toString(), bttoldusd));
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(expbttoldusd.toString(), bttoldusd,"0.01"));
 
 
         //Check WBTT
@@ -180,10 +153,10 @@ public class getallprice {
         BigDecimal onehundred = new BigDecimal("100");
         BigDecimal wbtttrx_bd = new BigDecimal(wbtttrx);
         BigDecimal expjWBTTtrx = wbtttrx_bd.divide(onehundred,18,1);
-        Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(expjWBTTtrx.toString(), jwbtttrx));
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(expjWBTTtrx.toString(), jwbtttrx,"0.01"));
         BigDecimal wbttusd_bd = new BigDecimal(wbttusd);
         BigDecimal expjWBTTusd = wbttusd_bd.divide(onehundred,18,1);
-        Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(expjWBTTusd.toString(), jwbttusd));
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(expjWBTTusd.toString(), jwbttusd,"0.01"));
 
         //check BTT
         prices = getTRXandUSDbyfTokenAddr(allpriceResponseContent,"$..data.rows[fTokenAddr='TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4']");
@@ -194,39 +167,10 @@ public class getallprice {
 
         BigDecimal onethousand = new BigDecimal("1000");
         BigDecimal expbtttrx = bttoldtrx_bd.divide(onethousand,18,1);
-        Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(expbtttrx.toString(), btttrx));
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(expbtttrx.toString(), btttrx,"0.01"));
         BigDecimal bttoldusd_bd = new BigDecimal(bttoldusd);
         BigDecimal expbttusd = bttoldusd_bd.divide(onethousand,18,1);
-        Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(expbttusd.toString(), bttusd));
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(expbttusd.toString(), bttusd,"0.01"));
     }
 
-
-    //check common 20 coin equals to getPrice API.
-    @Test(enabled = false, description = "Test BTT in getallprice")
-    public void Test04Common20Coin() {
-        //USDD 20 ->TRX
-        //USDD 20 ->USD
-        //USDD 10 ->TRX
-        //USDD 20 ->USD
-    }
-
-    //check common 0xAddress coin equals to getPrice API.
-    @Test(enabled = false, description = "Test BTT in getallprice")
-    public void Test05Common0xAddressCoin() {
-        //USDD 20 ->TRX
-        //USDD 20 ->USD
-        //USDD 10 ->TRX
-        //USDD 20 ->USD
-    }
-
-    @Test(enabled = true, description = "check NewPoolToken price are the same between getprice API and getallprice API")
-    public void Test006CheckSelf2API_newPoolTokens() throws URISyntaxException {
-        compareSelfAPITokenPrice(PriceCenterApiList.newPoolAddressMap);
-    }
-
-    @Test(enabled = true, description = "check jTokens price are the same between getprice API and getallprice API")
-    public void Test007CheckSelf2API_jTokens() throws URISyntaxException, InterruptedException {
-        log.info("Test007CheckSelf2API_jTokens start...");
-        compareSelfAPITokenPrice(PriceCenterApiList.JTokenAddressMap);
-    }
 }

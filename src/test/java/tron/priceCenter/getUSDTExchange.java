@@ -34,23 +34,23 @@ public class getUSDTExchange {
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         Object usdPrice = JSONPath.eval(responseContent, String.join("", "$..data.USDT.quote.USD.price[0]"));
         Object  usdPrice_ts = JSONPath.eval(responseContent, String.join("", "$..data.USDT.quote.USD.last_updated[0]"));
-        Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(expUsdtPriceMap.get("USD"),usdPrice.toString()));
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(expUsdtPriceMap.get("USD"),usdPrice.toString(),"0.01"));
         Assert.assertTrue(PriceCenterApiList.CompareLastUpdateInTolerance(curTime, Long.parseLong(usdPrice_ts.toString())));
 
         Object cnyPrice = JSONPath.eval(responseContent, String.join("", "$..data.USDT.quote.CNY.price[0]"));
         Object  cnyPrice_ts = JSONPath.eval(responseContent, String.join("", "$..data.USDT.quote.CNY.last_updated[0]"));
-        Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(expUsdtPriceMap.get("CNY"),cnyPrice.toString()));
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(expUsdtPriceMap.get("CNY"),cnyPrice.toString(),"0.01"));
         Assert.assertTrue(PriceCenterApiList.CompareLastUpdateInTolerance(curTime, Long.parseLong(cnyPrice_ts.toString())));
 
 
         Object eurPrice = JSONPath.eval(responseContent, String.join("", "$..data.USDT.quote.EUR.price[0]"));
         Object  eurPrice_ts = JSONPath.eval(responseContent, String.join("", "$..data.USDT.quote.EUR.last_updated[0]"));
-        Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(expUsdtPriceMap.get("EUR"),eurPrice.toString()));
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(expUsdtPriceMap.get("EUR"),eurPrice.toString(),"0.01"));
         Assert.assertTrue(PriceCenterApiList.CompareLastUpdateInTolerance(curTime, Long.parseLong(eurPrice_ts.toString())));
 
         Object gbpPrice = JSONPath.eval(responseContent, String.join("", "$..data.USDT.quote.GBP.price[0]"));
         Object  gbpPrice_ts = JSONPath.eval(responseContent, String.join("", "$..data.USDT.quote.GBP.last_updated[0]"));
-        Assert.assertTrue(PriceCenterApiList.CompareGapInTolerance(expUsdtPriceMap.get("GBP"),gbpPrice.toString()));
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(expUsdtPriceMap.get("GBP"),gbpPrice.toString(),"0.01"));
         Assert.assertTrue(PriceCenterApiList.CompareLastUpdateInTolerance(curTime, Long.parseLong(gbpPrice_ts.toString())));
 
         Object statusCode = JSONPath.eval(responseContent, "$..status.error_code[0]");
