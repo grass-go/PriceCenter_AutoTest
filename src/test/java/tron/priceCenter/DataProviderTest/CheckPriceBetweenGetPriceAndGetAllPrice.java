@@ -91,7 +91,11 @@ public class CheckPriceBetweenGetPriceAndGetAllPrice {
 
         //get usd price from getprice API and compare with getallprice API
         getprice_obj = PriceCenterApiList.getprice(curTokenAddress,"USD");
-        getprice_result = JSONPath.eval(getprice_obj,"$..data."+curTokenAddress+".quote.USD.price[0]");
+        if(curSymbol.equals("BTTOLD")) {
+            getprice_result = JSONPath.eval(getprice_obj, "$..quote.USD.price[0]");
+        }else {
+            getprice_result = JSONPath.eval(getprice_obj, "$..data." + curTokenAddress + ".quote.USD.price[0]");
+        }
         String getprice_usdPrice = getprice_result.toString();
         log.info("test001CheckPriceBetweenGetPriceAndGetAllPrice:USD:getallpriceResult:"+getallprice_usdPrice+", getpriceResult"+getprice_usdPrice);
         Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(getallprice_usdPrice, getprice_usdPrice,tolerance));
