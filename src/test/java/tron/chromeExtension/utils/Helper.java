@@ -21,10 +21,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.testng.internal.Utils.log;
-import static tron.chromeExtension.base.Base.DRIVER;
-import static tron.chromeExtension.base.Base.chain;
-
 public class Helper extends Base {
 
   public static SimpleDateFormat timeStamp = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss ");
@@ -138,16 +134,33 @@ public class Helper extends Base {
     return tips;
   }
 
-  public static boolean switchChain(String chainName, int index) throws Exception {
+  /* public static boolean switchChain(String chainName, int index) throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     try {
-      if (chainName.contains("Nile")) {
+      if (chainName.contains("nile")) {
         mainPage.selectedChain_btn.click();
         DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         waitingTime(2);
         mainPage.chainList.get(index).click();
         waitingTime(5);
       }
+    } catch (Exception e) {
+      log("Change chain Failed!");
+      return false;
+    }
+    return true;
+  }*/
+
+  public static boolean switchChain(String chainName, int index) throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    try {
+
+      mainPage.selectedChain_btn.click();
+      DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+      waitingTime(2);
+      mainPage.chainList.get(index).click();
+      waitingTime(5);
+
     } catch (Exception e) {
       log("Change chain Failed!");
       return false;
@@ -179,7 +192,8 @@ public class Helper extends Base {
   }
 
   // Transfer.
-  public static String transfer(String receiveAddress, String searchContent, String amount,Boolean isTrc721)
+  public static String transfer(
+      String receiveAddress, String searchContent, String amount, Boolean isTrc721)
       throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     SendPage sendPage = new SendPage(DRIVER);
@@ -297,6 +311,35 @@ public class Helper extends Base {
     String tips = getText(tronScanPage.pledgeSuccess_tips);
     log("tips:" + tips);
     return tips;
+  }
+
+  // Is pledge for myself or not.
+  public static String exchangeToken(String searchedToken, String minorHandle) throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    SunSwapPage tronScanPage = new SunSwapPage(DRIVER);
+    /* click(tronScanPage.connectAccount_btn);
+    waitingTime(5);*/
+    sendKeys(tronScanPage.amount_input, "1");
+    waitingTime(5);
+    click(tronScanPage.dropDown_btn);
+    waitingTime(5);
+    sendKeys(tronScanPage.search_input, searchedToken);
+    waitingTime(5);
+    click(tronScanPage.searchedTokenList.get(0));
+    waitingTime(5);
+    click(tronScanPage.exchange_btn);
+    waitingTime(5);
+    click(tronScanPage.confirmExchange_btn);
+    String majorHandle = DRIVER.getWindowHandle();
+    switchWindows(majorHandle);
+    waitingTime(5);
+    click(mainPage.cancelSignature_btn);
+    waitingTime(5);
+    switchWindows(minorHandle);
+    waitingTime(5);
+    String errorMsg = getText(tronScanPage.errorMsg);
+    log("errorMsg:" + errorMsg);
+    return errorMsg;
   }
 
   public void importUsePrivateKey(String privatekey, String name, String pass) {}

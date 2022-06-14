@@ -74,6 +74,18 @@ public class MainPage extends AbstractPage {
           "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[1]/div[1]/div[2]/span")
   public WebElement collectibles_btn;
 
+  // All assets button.
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[1]/div[2]/div[2]")
+  public WebElement allAssets_btn;
+
+    @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div/div[3]/div[2]/span")
+    public WebElement allAssetsBottom_btn;
+
+  @FindBy(
+      xpath =
+          "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div/div[1]/div[1]/img[2]")
+  public WebElement trxIconWithLetterV;
+
   // Switch assets.
   @FindBy(
       xpath =
@@ -185,6 +197,10 @@ public class MainPage extends AbstractPage {
   // pledge btn
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[1]/div[4]/span")
   public WebElement pledge_btn;
+
+  // exchange btn
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[1]/div[5]/span")
+  public WebElement exchange_btn;
 
   // vote btn
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[1]/div[3]")

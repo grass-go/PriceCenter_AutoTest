@@ -19,7 +19,7 @@ public class queryToken extends Base {
   @BeforeMethod
   public void before() throws Exception {
     setUpChromeDriver();
-    loginAccount();
+    loginAccount(chainNile);
   }
 
   @Test(

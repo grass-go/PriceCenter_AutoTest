@@ -102,21 +102,22 @@ public class Base {
       Configuration.getByPath("testng.conf").getString("link.contactUsCn");
   public static String contactUs =
       Configuration.getByPath("testng.conf").getString("link.contactUs");
-  public static String chain =
-      Configuration.getByPath("test.conf").getString("chromeExtension.chain");
-
+  public static String chainNile =
+      Configuration.getByPath("test.conf").getString("chromeExtension.chainNile");
+  public static String chainMain =
+      Configuration.getByPath("test.conf").getString("chromeExtension.chainMain");
   public static String nowVersion =
       Configuration.getByPath("testng.conf").getString("chromeExtension.nowVersion");
   ChromeOptions OPTION = new ChromeOptions();
   public static SimpleDateFormat timeStamp = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss ");
   public static String addressBookName = "自动化测试账户1";
 
-  @BeforeSuite
+  /*@BeforeSuite
   public void beforeSuit() throws Exception {
     setUpChromeDriver();
-    Assert.assertTrue(loginAccount());
+    Assert.assertTrue(loginAccount("nile"));
     Assert.assertTrue(Helper.switchAccount(testAccountOneIndex, loginAddress));
-  }
+  }*/
 
   public void setUpChromeDriver() throws Exception {
     killChromePid();
@@ -138,7 +139,7 @@ public class Base {
     }
   }
 
-  public boolean loginAccount() throws Exception {
+  public boolean loginAccount(String network) throws Exception {
     Integer retryLoginTimes = 1;
     while (retryLoginTimes > 0) {
       try {
@@ -159,7 +160,23 @@ public class Base {
         DRIVER.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         closeWindow(new AccountListPage(DRIVER).close_btn);
         // Switch chain to nile.
-        Assert.assertTrue(Helper.switchChain(chain, 3));
+        /*if(network.equals("main")){
+            Assert.assertTrue(Helper.switchChain(chain, 0));
+        }else{
+            Assert.assertTrue(Helper.switchChain(chain, 3));
+        }*/
+
+        switch (network) {
+          case "main":
+            Assert.assertTrue(Helper.switchChain(network, 0));
+            break;
+          case "nile":
+            Assert.assertTrue(Helper.switchChain(network, 3));
+            break;
+          default:
+            Assert.assertTrue(Helper.switchChain(network, 3));
+        }
+
         // Switch account.
         // Assert.assertTrue(Helper.switchAccount(testAccountOneIndex, loginAddress));
         String totalBalanceStr = mainPage.accountTotalBalance.getText().substring(1);

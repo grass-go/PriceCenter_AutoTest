@@ -1,41 +1,38 @@
 package tron.chromeExtension.chromeCase.mainPageCase;
 
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.util.concurrent.TimeUnit;
-
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
+import tron.chromeExtension.pages.AllAssetsPage;
 import tron.chromeExtension.pages.MainPage;
 
-public class copyAccountAddress extends Base {
+public class tokenInfomation extends Base {
 
   @BeforeMethod
   public void before() throws Exception {
     setUpChromeDriver();
-    loginAccount(chainNile);
+    loginAccount(chainMain);
   }
 
   @Test(
       groups = {"P0"},
-      description = "Receive balance page",
+      description = " Verify that the TRX icon contains the letter V.",
       alwaysRun = true,
       enabled = true)
-  public void test001copyAccountAddressTest() throws Exception {
-
+  public void test001TRXTestIconContainsLetterV() throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
-    waitingTime(5);
-    click(mainPage.copy_btn);
-    waitingTime(5);
-    Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
-    String accountAddress = fetchClipboardContents(clip);
-    log("accountAddress: " + accountAddress);
-    Assert.assertNotNull(accountAddress);
-    Assert.assertEquals(loginAddress, accountAddress);
+    waitingTime(3);
+    WebElement temp = mainPage.token_list.get(0);
+    waitingTime(3);
+    Assert.assertEquals(
+        2,
+        temp.findElement(new By.ByClassName("logo"))
+            .findElements(By.cssSelector("img[alt]"))
+            .size());
   }
 
   @AfterMethod(enabled = true)

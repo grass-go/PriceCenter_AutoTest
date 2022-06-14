@@ -20,7 +20,7 @@ public class sendTrx1 extends Base {
   @BeforeMethod
   public void before() throws Exception {
     setUpChromeDriver();
-    loginAccount();
+    loginAccount(chainNile);
   }
 
   /*// @Test

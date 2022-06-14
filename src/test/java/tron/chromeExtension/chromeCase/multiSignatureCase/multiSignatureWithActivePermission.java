@@ -14,7 +14,7 @@ public class multiSignatureWithActivePermission extends Base {
   @BeforeMethod
   public void before() throws Exception {
     setUpChromeDriver();
-    loginAccount();
+    loginAccount(chainNile);
     Helper.switchAccount(testAccountMultiIndex, multiAddress);
   }
 
