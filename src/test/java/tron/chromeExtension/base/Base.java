@@ -112,12 +112,12 @@ public class Base {
   public static SimpleDateFormat timeStamp = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss ");
   public static String addressBookName = "自动化测试账户1";
 
-  /*@BeforeSuite
+  @BeforeSuite
   public void beforeSuit() throws Exception {
     setUpChromeDriver();
     Assert.assertTrue(loginAccount("nile"));
     Assert.assertTrue(Helper.switchAccount(testAccountOneIndex, loginAddress));
-  }*/
+  }
 
   public void setUpChromeDriver() throws Exception {
     killChromePid();
