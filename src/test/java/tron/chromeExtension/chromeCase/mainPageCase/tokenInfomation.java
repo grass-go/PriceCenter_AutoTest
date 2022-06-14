@@ -20,19 +20,18 @@ public class tokenInfomation extends Base {
 
   @Test(
       groups = {"P0"},
-      description = " Verify that the TRX icon contains the letter V.",
+      description = "Verify that the TRX icon has a recommendation flag.",
       alwaysRun = true,
       enabled = true)
-  public void test001TRXTestIconContainsLetterV() throws Exception {
+  public void test001TRXIconHasARecommendationFlag() throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(3);
-    WebElement temp = mainPage.token_list.get(0);
+    WebElement trxDiv = mainPage.token_list.get(0);
     waitingTime(3);
-    Assert.assertEquals(
-        2,
-        temp.findElement(new By.ByClassName("logo"))
+    Assert.assertTrue(
+        trxDiv.findElement(new By.ByClassName("logo"))
             .findElements(By.cssSelector("img[alt]"))
-            .size());
+            .get(1).getAttribute("src").contains("/static/media/icon-verify.d25d69e8.svg"));
   }
 
   @AfterMethod(enabled = true)
