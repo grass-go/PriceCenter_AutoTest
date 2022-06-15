@@ -38,7 +38,7 @@ public class allAssets extends Base {
   public void test002detailsOfAssetsNotConcernedTest() throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     AllAssetsPage allAssetsPage = new AllAssetsPage(DRIVER);
-    waitingTime(3);
+    waitingTime(5);
     click(mainPage.allAssets_btn);
     Assert.assertEquals("全部资产", getText(allAssetsPage.allAssets_title));
     click(allAssetsPage.tokenList.get(2));
