@@ -92,7 +92,7 @@ public class getprice {
     }
 
     @Test(enabled = true, description = "check TRX/usd Price with price got from CMC")
-    public void Test005CheckCentrePrice_TrxRelated_CMC() throws URISyntaxException {
+    public void Test003CheckCentrePrice_TrxRelated_CMC() throws URISyntaxException {
         String expTrxPrice = PriceCenterApiList.trxPriceMap.get("USD");
         params.clear();
         params.put("symbol", "TRX,WTRX,jTRX");
@@ -122,7 +122,7 @@ public class getprice {
 
 
     @Test(enabled = true, description = "check BTT price with swap api")
-    public void Test007CheckCentrePrice_BTT_SunSwap(){
+    public void Test004CheckCentrePrice_BTT_SunSwap(){
         String swapAPI = "https://pabc.ablesdxd.link/swapv2/scan/getTokenInfo?tokenAddress=TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4";
         response = PriceCenterApiList.createGetConnectWithHeader(swapAPI,null,null,null);
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
@@ -139,7 +139,7 @@ public class getprice {
     //WBTT, jWBTT, BTT, BTTOLD
     //真实价格的比较已经在getallprice有，预期是自己设定的固定值。此处仅对getprice内各币关系做比较。
     @Test(enabled = true, description = "check BTT related price")
-    public void Test008CheckRelationship_BttRelated() throws URISyntaxException {
+    public void Test005CheckRelationship_BttRelated() throws URISyntaxException {
         //check WBTT = BTTOLD , BTTOLD=BTT*1000, WBTT=jWBTT*100
         params.clear();
         params.put("symbol", "WBTT,BTTOLD,jWBTT,BTT");
@@ -164,7 +164,7 @@ public class getprice {
     //WBTT价格上面已单独计算，目前仅剩WETH价格。
     //目前价格中心WETH的价格也没有。所以case暂时false。
     @Test(enabled = false, description = "check wToken's price with related token by usd price")
-    public void Test011CheckDiffFormat_wTokens() throws URISyntaxException {
+    public void Test006CheckDiffFormat_wTokens() throws URISyntaxException {
         Map<String,String> wTokenMap = new HashMap<>();
         wTokenMap.put("WETH","ETH");
         java.util.List joinedStr = PriceCenterApiList.getJoinedSymbolAndAddress(wTokenMap);

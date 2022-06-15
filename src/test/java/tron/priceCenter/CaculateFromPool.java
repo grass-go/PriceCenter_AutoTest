@@ -41,17 +41,16 @@ public class CaculateFromPool {
     SymbolAddressMap.put("TUSD","TUpMhErZL2fhh4sVNULAbNKLokS4GjC1F4");
     SymbolAddressMap.put("USDC","TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8");
     SymbolAddressMap.put("3SUN","TD3et9gS2pYz46ZC2mkCfYcKQGNwrnBLef");
-    SymbolAddressMap.put("usdc2USD","TTfT54h1d2NUvxaQKM9MbPeKA9cR6jfjtK");
 
     SymbolPoolMap.put("2USD","TAUGwRhmCP518Bm4VBqv7hDun9fg8kYjC4");
     SymbolPoolMap.put("3USD","TKVsYedAY23WFchBniU7kcx1ybJnmRSbGt");
     SymbolPoolMap.put("usdc3SUN","TQx6CdLHqjwVmJ45ecRzodKfVumAsdoRXH");
-    SymbolPoolMap.put("usdc2USD","TB6zgiG14iQkNxqU4mYe7cMiS5aCYfyidL");
+
 
     CoinContainsToken.put("2USD","USDD,USDT");
     CoinContainsToken.put("3USD","USDD,TUSD,USDT");
     CoinContainsToken.put("usdc3SUN","USDC,3SUN");
-    CoinContainsToken.put("usdc2USD","USDC,2USD");
+
 
     }
     //symbol：传要计算的2USDD/3USDD/USDC3SUN
@@ -110,14 +109,6 @@ public class CaculateFromPool {
         String USDC3SUN_Price = calculatePriceFromPool("usdc3SUN");
         Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(CentrePriceMap.get("usdc3SUN"),USDC3SUN_Price,"0.01"));
 
-        log.info("testNewPoolTokenPrice:Begin to test USDC2USD...");
-        String usdc2USD_Price = calculatePriceFromPool("usdc2USD");
-        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(CentrePriceMap.get("usdc3SUN"),usdc2USD_Price,"0.01"));
-
     }
-
-
-
-
 
 }

@@ -53,7 +53,7 @@ public class PriceCenterApiList {
     static HttpPost httppost;
 
     //public static String HttpNode = priceBase.priceUrl;
-    public static String HttpNode = priceBase.priceUrl;
+    public static String HttpNode = priceBase.testPriceUrl;
     //public static String HttpNode = "https://c.tronlink.org/";
     public static String TranscanHttpNode = priceBase.tronscanApiUrl;
     static HttpResponse response;
@@ -87,12 +87,11 @@ public class PriceCenterApiList {
         tokenDecimalMap.put("TUSD","18");
         tokenDecimalMap.put("USDC","6");
         tokenDecimalMap.put("3SUN","18");
-        tokenDecimalMap.put("usdc2USD","18");
+
 
         newPoolAddressMap.put("2USD", "TXcJ6pCEGKeLEYXrVnLhqpCVuKfV6wgsfC");   //USDD(18), USDT(6)
         newPoolAddressMap.put("3USD","TA1TVZdERDRDGi9QXNdLVfPxbymmi8xFyc"); //USDD,TUSD,USDT
         newPoolAddressMap.put("usdc3SUN","TQ4i5sdj1VGYGFcivyqFW9NXqzpaP6X8BA"); //USDD, 3SUN(USDT,TUSD,USDJ)
-        newPoolAddressMap.put("usdc2USD","TTfT54h1d2NUvxaQKM9MbPeKA9cR6jfjtK");  //usdc,2USD
 
         JTokenAddressMap.put("JTRX", "TE2RzoSV3wFK99w6J9UnnZ4vLfXYoxvRwP");
         JTokenAddressMap.put("JUSDT", "TXJgMdjVX5dKiQaUi9QobwNxtSQaFqccvd");
@@ -419,7 +418,7 @@ public class PriceCenterApiList {
         BigDecimal tolerance_bd = expected.multiply(toleranceRate_bd);
         BigDecimal absgap = actual.subtract(expected).abs();
         log.info("expected:"+ expectedstr +", actual:" + actualstr + ", GAP:" + absgap + ", tolerance:"+ tolerance_bd.toString());
-        Boolean InTolerance = (absgap.compareTo(tolerance_bd) == -1);
+        Boolean InTolerance = (absgap.compareTo(tolerance_bd) == -1 || absgap.compareTo(tolerance_bd) == 0);
         return InTolerance;
     }
     public static boolean CompareLastUpdateInTolerance(long caseTime, long apiTime) {
