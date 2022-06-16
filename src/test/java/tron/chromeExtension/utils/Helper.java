@@ -48,7 +48,7 @@ public class Helper extends Base {
   }
 
   // multiSignature
-  public static String multiSignature(
+  public static String multiSignatureInitiation(
       String permission,
       String minorHandle,
       String toAddress,
@@ -130,6 +130,39 @@ public class Helper extends Base {
     } else {
       tips = getText(tronScanPage.cancelSign_tips);
     }
+    log("tips:" + tips);
+    return tips;
+  }
+
+  // multiSignature
+  public static String multiSignature(String minorHandle, boolean flag) throws Exception {
+
+    MainPage mainPage = new MainPage(DRIVER);
+    TronScanPage tronScanPage = new TronScanPage(DRIVER);
+    waitingTime();
+    click(tronScanPage.confirm_btn);
+    waitingTime();
+    click(tronScanPage.multiSignTransactionTab_btn);
+    click(tronScanPage.toBeSignedTab_btn);
+    waitingTime();
+    click(tronScanPage.sign_btn);
+    waitingTime();
+    String majorHandle = DRIVER.getWindowHandle();
+    switchWindows(majorHandle);
+    if (flag) {
+      click(mainPage.signature_btn);
+    } else {
+      click(mainPage.cancelSignature_btn);
+    }
+    waitingTime(5);
+    switchWindows(minorHandle);
+    String tips = null;
+    if (flag) {
+      tips = getText(tronScanPage.multipleSignaturesSucceeded_tips);
+    } else {
+      tips = getText(tronScanPage.multipleSignaturesFailed_tips);
+    }
+
     log("tips:" + tips);
     return tips;
   }

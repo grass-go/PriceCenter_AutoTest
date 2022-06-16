@@ -33,7 +33,17 @@ public class multiSignatureWithActivePermission extends Base {
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime(10);
-    String tips = Helper.multiSignature("active", minorHandle, loginAddress, 4, "1", true);
+    String tips =
+        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, 4, "1", true);
+    Assert.assertTrue(tips.contains("成功"));
+
+    String majorHandle = DRIVER.getWindowHandle();
+    switchWindows(majorHandle);
+    Helper.switchAccount(testAccountTwoIndex, accountAddress002);
+    waitingTime(2);
+    minorHandle = DRIVER.getWindowHandle();
+    switchWindows(minorHandle);
+    tips = Helper.multiSignature(minorHandle, true);
     Assert.assertTrue(tips.contains("成功"));
   }
 
@@ -52,7 +62,16 @@ public class multiSignatureWithActivePermission extends Base {
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime(10);
-    String tips = Helper.multiSignature("active", minorHandle, loginAddress, 4, "1", false);
+    String tips =
+        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, 4, "1", true);
+    Assert.assertTrue(tips.contains("成功"));
+    String majorHandle = DRIVER.getWindowHandle();
+    switchWindows(majorHandle);
+    Helper.switchAccount(testAccountTwoIndex, accountAddress002);
+    waitingTime(2);
+    minorHandle = DRIVER.getWindowHandle();
+    switchWindows(minorHandle);
+    tips = Helper.multiSignature(minorHandle, false);
     Assert.assertTrue(tips.contains("declined"));
   }
 
@@ -71,7 +90,16 @@ public class multiSignatureWithActivePermission extends Base {
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime(10);
-    String tips = Helper.multiSignature("active", minorHandle, loginAddress, 7, "1", true);
+    String tips =
+        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, 7, "1", true);
+    Assert.assertTrue(tips.contains("成功"));
+    String majorHandle = DRIVER.getWindowHandle();
+    switchWindows(majorHandle);
+    Helper.switchAccount(testAccountTwoIndex, accountAddress002);
+    waitingTime(2);
+    minorHandle = DRIVER.getWindowHandle();
+    switchWindows(minorHandle);
+    tips = Helper.multiSignature(minorHandle, true);
     Assert.assertTrue(tips.contains("成功"));
   }
 
@@ -91,7 +119,16 @@ public class multiSignatureWithActivePermission extends Base {
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime(10);
-    String tips = Helper.multiSignature("active", minorHandle, loginAddress, 7, "1", false);
+    String tips =
+        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, 7, "1", true);
+    Assert.assertTrue(tips.contains("成功"));
+    String majorHandle = DRIVER.getWindowHandle();
+    switchWindows(majorHandle);
+    Helper.switchAccount(testAccountTwoIndex, accountAddress002);
+    waitingTime();
+    minorHandle = DRIVER.getWindowHandle();
+    switchWindows(minorHandle);
+    tips = Helper.multiSignature(minorHandle, false);
     Assert.assertTrue(tips.contains("declined"));
   }
 
@@ -110,7 +147,16 @@ public class multiSignatureWithActivePermission extends Base {
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime(10);
-    String tips = Helper.multiSignature("active", minorHandle, loginAddress, 6, "1", true);
+    String tips =
+        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, 6, "1", true);
+    Assert.assertTrue(tips.contains("成功"));
+    String majorHandle = DRIVER.getWindowHandle();
+    switchWindows(majorHandle);
+    Helper.switchAccount(testAccountTwoIndex, accountAddress002);
+    waitingTime();
+    minorHandle = DRIVER.getWindowHandle();
+    switchWindows(minorHandle);
+    tips = Helper.multiSignature(minorHandle, true);
     Assert.assertTrue(tips.contains("成功"));
   }
 
@@ -129,7 +175,16 @@ public class multiSignatureWithActivePermission extends Base {
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime(10);
-    String tips = Helper.multiSignature("active", minorHandle, loginAddress, 6, "1", false);
+    String tips =
+        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, 6, "1", true);
+    Assert.assertTrue(tips.contains("成功"));
+    String majorHandle = DRIVER.getWindowHandle();
+    switchWindows(majorHandle);
+    Helper.switchAccount(testAccountTwoIndex, accountAddress002);
+    waitingTime();
+    minorHandle = DRIVER.getWindowHandle();
+    switchWindows(minorHandle);
+    tips = Helper.multiSignature(minorHandle, false);
     Assert.assertTrue(tips.contains("declined"));
   }
 
@@ -148,7 +203,16 @@ public class multiSignatureWithActivePermission extends Base {
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime(10);
-    String tips = Helper.multiSignature("active", minorHandle, loginAddress, 5, "1", true);
+    String tips =
+        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, 5, "1", true);
+    Assert.assertTrue(tips.contains("成功"));
+    String majorHandle = DRIVER.getWindowHandle();
+    switchWindows(majorHandle);
+    Helper.switchAccount(testAccountTwoIndex, accountAddress002);
+    waitingTime();
+    minorHandle = DRIVER.getWindowHandle();
+    switchWindows(minorHandle);
+    tips = Helper.multiSignature(minorHandle, true);
     Assert.assertTrue(tips.contains("成功"));
   }
 
@@ -167,7 +231,16 @@ public class multiSignatureWithActivePermission extends Base {
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime(10);
-    String tips = Helper.multiSignature("active", minorHandle, loginAddress, 5, "1", false);
+    String tips =
+        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, 5, "1", true);
+    Assert.assertTrue(tips.contains("成功"));
+    String majorHandle = DRIVER.getWindowHandle();
+    switchWindows(majorHandle);
+    Helper.switchAccount(testAccountTwoIndex, accountAddress002);
+    waitingTime();
+    minorHandle = DRIVER.getWindowHandle();
+    switchWindows(minorHandle);
+    tips = Helper.multiSignature(minorHandle, false);
     Assert.assertTrue(tips.contains("declined"));
   }
 

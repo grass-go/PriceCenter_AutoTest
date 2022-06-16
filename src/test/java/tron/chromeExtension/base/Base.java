@@ -115,7 +115,8 @@ public class Base {
   @BeforeSuite
   public void beforeSuit() throws Exception {
     setUpChromeDriver();
-    Assert.assertTrue(loginAccount(chainNile));
+      loginAccount(chainNile);
+  //  Assert.assertTrue(loginAccount(chainNile));
     Assert.assertTrue(Helper.switchAccount(testAccountOneIndex, loginAddress));
   }
 
