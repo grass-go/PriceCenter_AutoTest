@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-public class CheckDiffFormat {
+public class CheckDiffAccessWay {
     public HttpResponse response;
     public JSONObject responseContent;
 
@@ -116,7 +116,9 @@ public class CheckDiffFormat {
     }
 
     @Test(dataProvider = "ddt")
-    public void test001DiffFormat(String symbol, String address, String compareWith,String tolerance) throws URISyntaxException {
+    public void test001DiffFormat(String symbol, String address, String compareWith,String tolerance) throws URISyntaxException, IOException {
+        /*File directory = new File(".");
+        log.info("data:debug:"+directory.getCanonicalFile());*/
         log.info("test001DiffFormat:"+symbol,", address", address, ", compareWith:",compareWith, ", tolerance:");
         CheckSameValueGotByDiffFormat(symbol,address,tolerance);
     }

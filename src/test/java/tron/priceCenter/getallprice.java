@@ -124,7 +124,7 @@ public class getallprice {
     public void Test003BTTRelated() {
 
         //Check BTTOLD(fix BTTOLD value to test BTT)
-        String expBTTOLDtrxPrice = "0.012644975581545992";
+        String expBTTOLDtrxPrice = "0.012644975581545992";     //因为BTTOLD值交易所需要下架CMC未下架，产品规定BTTOLD=1000BTT，造成不同系统间的差值比较大，暂时写死预期值。
         java.util.List<String> prices = getTRXandUSDbyfTokenAddr(allpriceResponseContent,"$..data.rows[fTokenAddr='1002000']");
         String bttoldtrx = prices.get(0);
         String bttoldusd = prices.get(1);
