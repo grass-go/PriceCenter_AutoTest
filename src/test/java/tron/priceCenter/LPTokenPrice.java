@@ -26,7 +26,7 @@ public class LPTokenPrice extends priceBase{
     private JSONArray array = new JSONArray();
     Map<String, String> params = new HashMap<>();
 
-    @Test(enabled = true, description = "Check JUSTSwap Token's price，get LP Token from tronscan，then compare price.")
+    @Test(enabled = false, description = "Check JUSTSwap Token's price，get LP Token from tronscan，then compare price.")
     public void Test001getprice() {
         //request transcan search API to gain LPTokens and price.
         params.put("term","JUSTSWAP");
@@ -38,13 +38,15 @@ public class LPTokenPrice extends priceBase{
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         JSONArray tokensArray = responseContent.getJSONArray("search_result");
         int searchCount = tokensArray.size();
+        log.info("Test001getprice:tronscan search_result total:"+searchCount);
+        log.info("Test001getprice:tokensArray:"+tokensArray.toString());
         Map<String, BigDecimal> LPTokenMap = new HashMap<>();
         log.info("LPTokens from Transcan:");
         for (int i=0;i<searchCount;i++){
             object = tokensArray.getJSONObject(i);
-            if (object.getString("name").startsWith("JUSTSWAP-") && object.getString("abbr").startsWith("S-") && object.containsKey("market_info")) {
+            if (object.getString("name").startsWith("SUNSWAP-JustSwap-") && object.getString("abbr").startsWith("S-") && object.containsKey("market_info")) {
                 JSONObject market_info = object.getJSONObject("market_info");
-
+                log.info("Test001getprice:curobject:market_info:"+market_info.toString());
                 LPTokenMap.put(object.getString("contract_address"), market_info.getBigDecimal("priceInTrx"));
                 log.info("contract_address:" + object.getString("contract_address") + " ,priceInTrx:" + market_info.getBigDecimal("priceInTrx").toString());
             }

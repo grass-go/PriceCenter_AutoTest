@@ -10,6 +10,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import tron.common.PriceCenterApiList;
+import tron.common.utils.Configuration;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,9 +31,9 @@ public class CheckPriceBetweenGetPriceAndGetAllPrice {
     @DataProvider(name = "ddt")
     public Object[][] data() throws IOException {
 
+        String datafile = Configuration.getByPath("testng.conf").getString("commonTokens");
         File directory = new File(".");
-        String tokenFile= directory.getCanonicalFile() + "/src/test/resources/TestData/Price/"
-                + "CommonTokenTest" + ".csv";
+        String tokenFile= directory.getCanonicalFile() + datafile;
         List<String> contentLines = PriceCenterApiList.ReadFile(tokenFile);
 
         int columnNum = 0;

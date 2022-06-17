@@ -121,6 +121,7 @@ public class PriceCenterApiList {
         ExgTokenAddressMap.put("USDC", "TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8");
         ExgTokenAddressMap.put("NFT", "TFczxzPhnThNSqr5by8tvxsdCFRRz6cPNq");
 
+
     }
 
     public static List<String> ReadFile(String fileNamePath ) throws IOException {

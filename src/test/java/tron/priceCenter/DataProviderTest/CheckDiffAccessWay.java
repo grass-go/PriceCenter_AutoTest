@@ -10,6 +10,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import tron.common.PriceCenterApiList;
 import tron.common.TronlinkApiList;
+import tron.common.utils.Configuration;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -95,9 +96,9 @@ public class CheckDiffAccessWay {
     @DataProvider(name = "ddt")
     public Object[][] data() throws IOException {
 
+        String datafile = Configuration.getByPath("testng.conf").getString("commonTokens");
         File directory = new File(".");
-        String tokenFile= directory.getCanonicalFile() + "/src/test/resources/TestData/Price/"
-                + "CommonTokenTest" + ".csv";
+        String tokenFile= directory.getCanonicalFile() + datafile;
         List<String> contentLines = PriceCenterApiList.ReadFile(tokenFile);
 
         int columnNum = 0;
@@ -117,8 +118,8 @@ public class CheckDiffAccessWay {
 
     @Test(dataProvider = "ddt")
     public void test001DiffFormat(String symbol, String address, String compareWith,String tolerance) throws URISyntaxException, IOException {
-        /*File directory = new File(".");
-        log.info("data:debug:"+directory.getCanonicalFile());*/
+        File directory = new File(".");
+        log.info("data:debug:"+directory.getCanonicalFile());
         log.info("test001DiffFormat:"+symbol,", address", address, ", compareWith:",compareWith, ", tolerance:");
         CheckSameValueGotByDiffFormat(symbol,address,tolerance);
     }
