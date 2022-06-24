@@ -546,7 +546,9 @@ public static HttpResponse search(Map<String, String> params) {
   public static HttpResponse multiTransaction(JSONObject body) {
     try {
       //String requestUrl = "HttpNode" + "/api/wallet/multi/transaction";
-      String requestUrl = "https://niletest.tronlink.org" + "/api/wallet/multi/transaction";
+      //String requestUrl = "http://123.56.3.74" + "/api/wallet/multi/transaction";
+      String requestUrl = "http://101.201.66.150:8885" + "/api/wallet/multi/transaction";
+      //String requestUrl = "https://niletest.tronlink.org" + "/api/wallet/multi/transaction";
       response = createConnect(requestUrl,body);
     } catch (Exception e) {
       e.printStackTrace();
@@ -1523,7 +1525,8 @@ public static HttpResponse search(Map<String, String> params) {
 
     //transaction = setPermissionId(transaction, permissionId);
     long now = System.currentTimeMillis();
-    Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder().setExpiration(now+86400000L);
+    //Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder().setExpiration(now+86400000L);
+    Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder().setExpiration(now+120000L);
     //Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder();
     Protocol.Transaction.Contract.Builder contract = raw.getContract(0).toBuilder()
             .setPermissionId(permissionId);

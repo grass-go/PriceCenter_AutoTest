@@ -49,7 +49,7 @@ public class CreateMultiTransaction {
     byte[] yunli = Commons.decode58Check(yunli58);
     String yunlikey = "cafcc392b9b5518324728a9c43c7d857d6d2766669177ea7515e92f8918ab106";
     String wqq1key = "8d5c18030466b6ab0e5367154d15c4f6cb46d2fb56a0b552e017d183abd8c255";
-    byte[] wqq1 = TronlinkApiList.getFinalAddress(key2);
+    byte[] wqq1 = TronlinkApiList.getFinalAddress(wqq1key);
     String wqq158 =Base58.encode(wqq1);
     private byte[] byteCode;
 
@@ -66,11 +66,11 @@ public class CreateMultiTransaction {
     @Test(enabled = true,description = "nulti sign send coin")
     public void sendCoin() {
         Protocol.Transaction transaction = TronlinkApiList
-                .sendcoin(wqq1, 500_000, quince, blockingStubFull);
+                .sendcoin(wqq1, 3, quince, blockingStubFull);
         log.info("-----111111  "+ JsonFormat.printToString(transaction));
 
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, wqq1key, 4, blockingStubFull);
+                transaction, wqq1key, 5, blockingStubFull);
         log.info("-----2222  "+JsonFormat.printToString(transaction1));
 
         JSONObject object = new JSONObject();
