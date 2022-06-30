@@ -66,7 +66,7 @@ public class CreateMultiTransaction {
     @Test(enabled = true,description = "nulti sign send coin")
     public void sendCoin() {
         Protocol.Transaction transaction = TronlinkApiList
-                .sendcoin(wqq1, 4, quince, blockingStubFull);
+                .sendcoin(wqq1, 5, quince, blockingStubFull);
         log.info("-----111111  "+ JsonFormat.printToString(transaction));
 
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
