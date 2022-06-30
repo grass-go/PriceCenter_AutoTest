@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="multi-sign" parallel="tests" thread-count="0">
+    <test name="multi_sign" >
+        <parameter name="firstAddress" value="TH4Vi2SXuiYCpnWykZgmphEKfajVNbFYA7"></parameter>
+        <parameter name="firstPriKey" value="609a3c603854f9b30b651a4551752082485abd111b7666397b728c36f31f65fe"></parameter>
+        <parameter name="secondAddress" value="TYFqZJNwujsD4MD3eoJYukFdypcmJfjSDh"></parameter>
+        <parameter name="toAddress" value="TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ"></parameter>
+        <parameter name="fullnode" value="47.252.19.181:50051"></parameter>
+        <classes>
+            <class name="tron.tronlink.mutisign.CreateMultiTransaction"></class>
+        </classes>
+    </test>
+</suite>
