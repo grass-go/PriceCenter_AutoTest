@@ -61,6 +61,35 @@ public class getBalance extends fullOrSolidityBase {
   /**
    * constructor.
    */
+  @Test(enabled = true, description = "Get TRC20 WIN balance from trongrid")
+  public void test04TriggerConstantContractTrongrid() {
+    response = triggerConstantContract(queryAddress, winAddress, "approve(address,uint256)",
+        "00000000000000000000000070082243784DCDF3042034E7B044D6D342A913600000000000000000000000000000000000000000000000000000000000000011", 1000000000L);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
+    responseContent = parseResponseContent(response);
+    printJsonContent(responseContent);
+    Assert.assertTrue(responseContent.getJSONObject("result").getBoolean("result"));
+    Assert.assertEquals(22412, responseContent.getLongValue("energy_used"));
+  }
+
+  /**
+   * constructor.
+   */
+  @Test(enabled = true, description = "trigger constant contract from nile")
+  public void test05TriggerconstantContractFromNile() {
+    response = triggerConstantContractFromNile("TF5Bn4cJCT6GVeUgyCN4rBhDg42KBrpAjg",
+        "TF17BgPaZYbz8oxbjhriubPDsA7ArKoLX3", "approve(address,uint256)",
+        "00000000000000000000000070082243784DCDF3042034E7B044D6D342A913600000000000000000000000000000000000000000000000000000000000000011", 1000000000L);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
+    responseContent = parseResponseContent(response);
+    printJsonContent(responseContent);
+    Assert.assertTrue(responseContent.getJSONObject("result").getBoolean("result"));
+    Assert.assertEquals(22473, responseContent.getLongValue("energy_used"));
+  }
+
+  /**
+   * constructor.
+   */
   @AfterClass
   public void shutdown() throws InterruptedException {
     try {

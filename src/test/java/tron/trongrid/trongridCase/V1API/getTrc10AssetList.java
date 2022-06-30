@@ -75,7 +75,7 @@ public class getTrc10AssetList extends V1Base {
     printJsonContent(getAssetListBody);
     Assert.assertEquals(getAssetListBody.getBoolean("success"),true);
     Assert.assertTrue(getAssetListBody.containsKey("meta"));
-    Assert.assertTrue(getAssetListBody.getJSONArray("data").getJSONObject(1).getInteger("id") == 1000001);
+    Assert.assertTrue(getAssetListBody.getJSONArray("data").getJSONObject(0).getInteger("id") == 1000001);
 
 
     getAssetListBody = getAssetList("id,desc",20,"");

@@ -266,6 +266,31 @@ public class fullOrSolidityBase {
     return response;
   }
 
+  /**
+   * constructor.
+   */
+  public static HttpResponse triggerConstantContractFromNile(String ownerAddress,
+                                                     String contractAddress, String functionSelector, String parameter, Long feeLimit) {
+    try {
+      final String requestUrl = "https://nile.trongrid.io/wallet/triggerconstantcontract";
+      JsonObject userBaseObj2 = new JsonObject();
+
+      userBaseObj2.addProperty("owner_address", ownerAddress);
+      userBaseObj2.addProperty("contract_address", contractAddress);
+      userBaseObj2.addProperty("function_selector", functionSelector);
+      userBaseObj2.addProperty("parameter", parameter);
+      userBaseObj2.addProperty("fee_limit", feeLimit);
+      userBaseObj2.addProperty("visible", true);
+
+      response = createConnect(requestUrl, userBaseObj2);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
 
   /**
    * constructor.
