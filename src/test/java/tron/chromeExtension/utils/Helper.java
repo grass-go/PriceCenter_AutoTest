@@ -424,6 +424,7 @@ public class Helper extends Base {
     }
   }
 
+
   public static String getAboutUsLink(SettingPage settingPage, Integer i) throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);
@@ -493,6 +494,101 @@ public class Helper extends Base {
     }
 
     return "找不到token:" + name;
+  }
+
+  public static boolean addCustomTokenFailed(String tokenAddress) throws Exception {
+    try {
+      MainPage mainPage = new MainPage(DRIVER);
+      AllAssetsPage allAssetsPage = new AllAssetsPage(DRIVER);
+      waitingTime();
+      click(mainPage.allAssets_btn);
+      waitingTime();
+      click(allAssetsPage.customToken_btn);
+      waitingTime();
+      sendKeys(allAssetsPage.customTokenAddress_input, tokenAddress);
+      waitingTime(5);
+      String tipError = getText(allAssetsPage.tipError);
+      Assert.assertEquals("非通证合约，无法添加自定义通证", tipError);
+    } catch (org.openqa.selenium.NoSuchElementException ex) {
+      return false;
+    }
+    return true;
+  }
+
+  public static boolean addCustomTokenSuccess(
+      String tokenAddress, String tokenShortName, String tokenFullName, String actualTokenType)
+      throws Exception {
+    try {
+      MainPage mainPage = new MainPage(DRIVER);
+      AllAssetsPage allAssetsPage = new AllAssetsPage(DRIVER);
+      waitingTime();
+      click(mainPage.allAssets_btn);
+      waitingTime();
+      click(allAssetsPage.customToken_btn);
+      waitingTime();
+      sendKeys(allAssetsPage.customTokenAddress_input, tokenAddress);
+      waitingTime(5);
+      sendKeys(allAssetsPage.tokenShortName_input, tokenShortName);
+      waitingTime();
+      sendKeys(allAssetsPage.tokenFullName_input, tokenFullName);
+      waitingTime();
+      String defaultTokenPrecision = getTextWithDefaultValue(allAssetsPage.tokenPrecision);
+
+      Assert.assertEquals("0", defaultTokenPrecision);
+      waitingTime();
+      String defaultTokenType = getTextWithDefaultValue(allAssetsPage.tokenType);
+      log("tokenType:" + defaultTokenType);
+      Assert.assertEquals(actualTokenType, defaultTokenType);
+      waitingTime();
+      click(allAssetsPage.next_btn);
+      waitingTime();
+      // todo:校验自定义通证缺少合约给出的提示符是否正确
+      click(allAssetsPage.confirm_btn);
+      waitingTime(5);
+      Assert.assertTrue(onTheHomepageOrNot(loginAddress));
+    } catch (org.openqa.selenium.NoSuchElementException ex) {
+      return false;
+    }
+    return true;
+  }
+
+  public static boolean deleteCustomToken(
+      String tokenShortName, String tokenAddress, Boolean isDelete) throws Exception {
+    try {
+      MainPage mainPage = new MainPage(DRIVER);
+      AllAssetsPage allAssetsPage = new AllAssetsPage(DRIVER);
+      waitingTime();
+      click(mainPage.allAssets_btn);
+      waitingTime();
+      click(allAssetsPage.multiFunction_btn);
+      waitingTime();
+      click(allAssetsPage.multiFunction_btn);
+      waitingTime();
+      click(allAssetsPage.delete_btn);
+      waitingTime();
+      String deletePromptTitle = getText(allAssetsPage.deletePromptTitle);
+      Assert.assertEquals("确认删除自定义通证" + tokenShortName + "吗？", deletePromptTitle);
+      String deletePromptContent = getText(allAssetsPage.deletePromptContent);
+      Assert.assertEquals("自定义通证删除后只能通过“自定义通证”功能再次被添加。", deletePromptContent);
+      if (isDelete) {
+        click(allAssetsPage.deleteConfirm_btn);
+        sendKeys(allAssetsPage.tokenSearch_input, tokenAddress);
+        waitingTime();
+        String tokenSearchAddressResult = getText(allAssetsPage.tokenSearchAddressResult);
+        log("tokenSearchAddressResult:" + tokenSearchAddressResult);
+        Assert.assertEquals(tokenAddress, tokenSearchAddressResult);
+        return true;
+      } else {
+        click(allAssetsPage.deleteCancel_btn);
+        sendKeys(allAssetsPage.tokenSearch_input, tokenAddress);
+        waitingTime();
+        String getCustomToken_tips = getText(allAssetsPage.getCustomToken_tips);
+        Assert.assertEquals("添加自定义通证", getCustomToken_tips);
+      }
+    } catch (org.openqa.selenium.NoSuchElementException ex) {
+      return false;
+    }
+    return true;
   }
 
   public static boolean containElement(WebElement wl, String name) {

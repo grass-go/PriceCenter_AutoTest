@@ -115,8 +115,8 @@ public class Base {
   @BeforeSuite
   public void beforeSuit() throws Exception {
     setUpChromeDriver();
-      loginAccount(chainNile);
-  //  Assert.assertTrue(loginAccount(chainNile));
+    loginAccount(chainNile);
+    //  Assert.assertTrue(loginAccount(chainNile));
     Assert.assertTrue(Helper.switchAccount(testAccountOneIndex, loginAddress));
   }
 
@@ -220,6 +220,10 @@ public class Base {
 
   public static String getText(WebElement webElement) throws Exception {
     return webElement.getText();
+  }
+
+  public static String getTextWithDefaultValue(WebElement webElement) throws Exception {
+    return webElement.getAttribute("value");
   }
 
   public static void clear(WebElement webElement) throws Exception {
