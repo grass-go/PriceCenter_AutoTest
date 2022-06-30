@@ -21,7 +21,7 @@ public class VotingSelf extends TronlinkBase {
   private HttpResponse response;
 
 
-  @Test(enabled = true,description = "get self voting witness")
+  @Test(enabled = false,description = "get self voting witness")
   public void Test000getVotingSelf() throws Exception {
     Map<String, String> map = new HashMap<>();
     map.put("start","0");
