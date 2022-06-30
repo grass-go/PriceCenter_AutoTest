@@ -1526,7 +1526,7 @@ public static HttpResponse search(Map<String, String> params) {
     //transaction = setPermissionId(transaction, permissionId);
     long now = System.currentTimeMillis();
     //Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder().setExpiration(now+86400000L);
-    Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder().setExpiration(now+120000L);
+    Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder().setExpiration(now+86400000L);
     //Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder();
     Protocol.Transaction.Contract.Builder contract = raw.getContract(0).toBuilder()
             .setPermissionId(permissionId);

@@ -2,6 +2,8 @@ package tron.tronlink.base;
 
 import java.net.URLEncoder;
 import java.util.HashMap;
+
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
@@ -11,6 +13,7 @@ import tron.common.utils.Configuration;
 import tron.trondata.base.TrondataBase;
 import tron.tronlink.base.GetSign;
 
+@Slf4j
 public class TronlinkBase {
     public static  volatile String tronlinkUrl;
     public static  volatile String tronscanApiUrl;
@@ -39,6 +42,7 @@ public class TronlinkBase {
         this.tronscanApiUrl = tronscanApiUrl;
         TronlinkApiList.HttpNode =tronlinkUrl;
         TronlinkApiList.HttpTronDataNode = tronscanApiUrl;
+        log.info("In before test");
     }
 
     public String getSign(HashMap<String,String> paramMap) throws Exception{

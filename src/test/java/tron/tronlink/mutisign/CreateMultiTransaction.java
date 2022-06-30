@@ -66,11 +66,11 @@ public class CreateMultiTransaction {
     @Test(enabled = true,description = "nulti sign send coin")
     public void sendCoin() {
         Protocol.Transaction transaction = TronlinkApiList
-                .sendcoin(wqq1, 3, quince, blockingStubFull);
+                .sendcoin(wqq1, 4, quince, blockingStubFull);
         log.info("-----111111  "+ JsonFormat.printToString(transaction));
 
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, wqq1key, 5, blockingStubFull);
+                transaction, wqq1key, 6, blockingStubFull);
         log.info("-----2222  "+JsonFormat.printToString(transaction1));
 
         JSONObject object = new JSONObject();
@@ -87,13 +87,13 @@ public class CreateMultiTransaction {
     public void freezeBalandce() throws Exception{
         BalanceContract.FreezeBalanceContract.Builder builder = BalanceContract.FreezeBalanceContract.newBuilder();
         ByteString byteAddreess = ByteString.copyFrom(quince);
-        builder.setOwnerAddress(byteAddreess).setFrozenBalance(4000000)
+        builder.setOwnerAddress(byteAddreess).setFrozenBalance(1000000)
                 .setFrozenDuration(3).setResourceValue(0);
         BalanceContract.FreezeBalanceContract contract = builder.build();
         Protocol.Transaction transaction = blockingStubFull.freezeBalance(contract);
         log.info("0000 "+JsonFormat.printToString(transaction));
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, wqq1key, 4, blockingStubFull);
+                transaction, wqq1key, 5, blockingStubFull);
         log.info("-----111  "+JsonFormat.printToString(transaction1));
         JSONObject object = new JSONObject();
         object.put("address",wqq158);
@@ -123,7 +123,7 @@ public class CreateMultiTransaction {
         Protocol.Transaction transaction = blockingStubFull.transferAsset(contract);
         log.info("-----111111  "+JsonFormat.printToString(transaction));
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, wqq1key, 4, blockingStubFull);
+                transaction, wqq1key, 5, blockingStubFull);
         log.info("-----2222  "+JsonFormat.printToString(transaction1));
         JSONObject object = new JSONObject();
         object.put("address",wqq158);
