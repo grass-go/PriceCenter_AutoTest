@@ -98,11 +98,11 @@ public class PriceCenterApiList {
         JTokenAddressMap.put("JTUSD", "TSXv71Fy5XdL3Rh2QfBoUu3NAaM4sMif8R");
         JTokenAddressMap.put("JBTC", "TLeEu311Cbw63BcmMHDgDLu7fnk9fqGcqT");
         JTokenAddressMap.put("JETH", "TR7BUFRQeq1w5jAZf1FKx85SHuX6PfMqsV");
-        JTokenAddressMap.put("JSUNOLD", "TGBr8uh9jBVHJhhkwSJvQN2ZAKzVkxDmno");
+        //JTokenAddressMap.put("JSUNOLD", "TGBr8uh9jBVHJhhkwSJvQN2ZAKzVkxDmno");  //与cocoli确认过，ONLIVE-477，暂时不修复。
         JTokenAddressMap.put("JJST", "TWQhCXaWz4eHK4Kd1ErSDHjMFPoPc9czts");
         JTokenAddressMap.put("JUSDJ", "TL5x9MtSnDy537FXKx53yAaHRRNdg9TkkA");
-        //JTokenAddressMap.put("JWBTT", "TUY54PVeH6WCcYCd6ZXXoBDsHytN9V5PXt");  与tronscan比价格差距太大,已单独写用例。
-        //JTokenAddressMap.put("JNFT", "TFpPyDCKvNFgos3g3WVsAqMrdqhB81JXHE"); 差别大，临时取消
+        //JTokenAddressMap.put("JWBTT", "TUY54PVeH6WCcYCd6ZXXoBDsHytN9V5PXt");  与tronscan的开发确认过，暂时不修改，比价格差距太大,已单独写用例。
+        JTokenAddressMap.put("JNFT", "TFpPyDCKvNFgos3g3WVsAqMrdqhB81JXHE");
         JTokenAddressMap.put("JWIN", "TRg6MnpsFXc82ymUPgf5qbj59ibxiEDWvv");
         JTokenAddressMap.put("JUSDD", "TX7kybeP6UwTBRHLNPYmswFESHfyjm9bAS");
 
