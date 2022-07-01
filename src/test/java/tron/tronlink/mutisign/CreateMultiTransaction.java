@@ -66,7 +66,7 @@ public class CreateMultiTransaction {
     @Test(enabled = true,description = "nulti sign send coin")
     public void sendCoin() {
         Protocol.Transaction transaction = TronlinkApiList
-                .sendcoin(wqq1, 5, quince, blockingStubFull);
+                .sendcoin(wqq1, 7, quince, blockingStubFull);
         log.info("-----111111  "+ JsonFormat.printToString(transaction));
 
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
@@ -111,7 +111,7 @@ public class CreateMultiTransaction {
     public void transferTrc10() throws Exception{
         AssetIssueContractOuterClass.TransferAssetContract.Builder builder = AssetIssueContractOuterClass.TransferAssetContract.newBuilder();
         ByteString bsTo = ByteString.copyFrom(wqq1);
-        ByteString bsName = ByteString.copyFrom("1000323".getBytes());
+        ByteString bsName = ByteString.copyFrom("1000002".getBytes());
         ByteString bsOwner = ByteString.copyFrom(quince);
         builder.setToAddress(bsTo);
         builder.setAssetName(bsName);
@@ -123,7 +123,7 @@ public class CreateMultiTransaction {
         Protocol.Transaction transaction = blockingStubFull.transferAsset(contract);
         log.info("-----111111  "+JsonFormat.printToString(transaction));
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, wqq1key, 5, blockingStubFull);
+                transaction, wqq1key, 6, blockingStubFull);
         log.info("-----2222  "+JsonFormat.printToString(transaction1));
         JSONObject object = new JSONObject();
         object.put("address",wqq158);
@@ -165,7 +165,7 @@ public class CreateMultiTransaction {
     }
     @Test(enabled = true,description = "nulti sign transfer trc20")
     public void transferTrc721() throws Exception {
-        String contractAddress = "TQD3TUrfQbLsCBKPgP9UVvv7iyReG9BHts";
+        String contractAddress = "TVwK7UVwVpkfcGSyhCgvW3JzmowveztmQE";
         byte[] contractAdd = Commons.decode58Check(contractAddress);
         String args = "000000000000000000000000e7d71e72ea48de9144dc2450e076415af0ea745f0000000000000000000000000c497701e37f11b042bdc7aabfc0cd5d45f7a0c70000000000000000000000000000000000000000000000000000000000000457";
         Long maxFeeLimit = 1000000000L;
