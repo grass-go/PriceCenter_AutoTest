@@ -44,6 +44,7 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 public class TronlinkApiList {
@@ -1396,6 +1397,42 @@ public static HttpResponse search(Map<String, String> params) {
       ex.printStackTrace();
     }
     return temKey.getAddress();
+  }
+
+  public Map<String, Long> expirationTime = new ConcurrentHashMap<>();
+
+  // addTransactionSignWithPermissionIdAndExpiredTime 不设置过期时间的签名函数
+  public static Protocol.Transaction addTransactionSignWithPermissionIdAndExpiredTime(Protocol.Transaction transaction,
+                                                                        String priKey, int permissionId, WalletGrpc.WalletBlockingStub blockingStubFull) {
+    Wallet.setAddressPreFixByte(ADD_PRE_FIX_BYTE_MAINNET);
+    ECKey temKey = null;
+    try {
+      BigInteger priK = new BigInteger(priKey, 16);
+      temKey = ECKey.fromPrivate(priK);
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+
+    //transaction = setPermissionId(transaction, permissionId);
+    Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder();
+//    long now = System.currentTimeMillis();
+    // 设置过期时间
+//    raw.setExpiration(now+86400000L);
+//    Protocol.Transaction.Contract.Builder contract = raw.getContract(0).toBuilder()
+//            .setPermissionId(permissionId);
+//    raw.clearContract();
+//    raw.addContract(contract);
+    transaction = transaction.toBuilder().setRawData(raw).build();
+
+    Protocol.Transaction.Builder transactionBuilderSigned = transaction.toBuilder();
+    byte[] hash = Sha256Hash.hash(CommonParameter.getInstance()
+            .isECKeyCryptoEngine(), transaction.getRawData().toByteArray());
+    ECKey ecKey = temKey;
+    ECKey.ECDSASignature signature = ecKey.sign(hash);
+    ByteString bsSign = ByteString.copyFrom(signature.toByteArray());
+    transactionBuilderSigned.addSignature(bsSign);
+    transaction = transactionBuilderSigned.build();
+    return transaction;
   }
 
   public static Protocol.Transaction addTransactionSignWithPermissionId(Protocol.Transaction transaction,

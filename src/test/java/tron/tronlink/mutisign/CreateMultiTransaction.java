@@ -2,6 +2,7 @@ package tron.tronlink.mutisign;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.protobuf.ByteString;
+//import com.sun.istack.internal.NotNull;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -29,8 +30,10 @@ public class CreateMultiTransaction {
 //    String key1="c21f0c6fdc467f4ae7dc4c1a0b802234a930bff198ce34fde6850b0afd383cf5"; //线上
 //    byte[] address1=TronlinkApiList.getFinalAddress(key1);
 
-    String address158= "TY9touJknFcezjLiaGTjnH1dUHiqriu6L8";
-    byte[] address1 = Commons.decode58Check(address158);
+//    String address158= "TY9touJknFcezjLiaGTjnH1dUHiqriu6L8";
+//    byte[] address1 = Commons.decode58Check(address158);
+    String address158;
+    byte[] address1;
     String priKey1;
     String priKey2;
     String key2 = "7ef4f6b32643ea063297416f2f0112b562a4b3dac2c960ece00a59c357db3720";//线上
@@ -68,11 +71,12 @@ public class CreateMultiTransaction {
      * invocationCount设定的是这个方法的执行次数.
      * threadPoolSize 这个属性表示的是开启线程数的多少.
      */
-    @Test(enabled = true,invocationCount = 5, threadPoolSize = 1 ,description = "multi sign performance test，A and B control account of C")
+    @Test(enabled = true,invocationCount = 1, threadPoolSize = 1 ,description = "multi sign performance test，A and B control account of C")
     public void createMultiSign(){
+        log.info("address1 : " + address158 + " address2 = " + address258);
         // 发起一笔交易
         Protocol.Transaction transaction = TronlinkApiList
-                .sendcoin(toAddressByte, 500_000, address1, blockingStubFull);
+                .sendcoin(toAddressByte, 600_000, address1, blockingStubFull);
         log.info("send coin finished!  " + JsonFormat.printToString(transaction));
 
         // 第一个用户签名
@@ -81,21 +85,26 @@ public class CreateMultiTransaction {
         log.info("key1 sign finished!  " + JsonFormat.printToString(transaction1));
         // 广播 & 断言
         HttpResponse res;
-        res = boardcastTransction(address158, transaction1);
+        res = postTransction(address158, transaction1);
         assertResponse(res);
 
         // 第二个用户签名
-        Protocol.Transaction transaction2 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, priKey2, 3, blockingStubFull);
-        log.info("key2 sign finished!  " + JsonFormat.printToString(transaction1));
+        Protocol.Transaction transaction2 = TronlinkApiList.addTransactionSignWithPermissionIdAndExpiredTime(
+                transaction1, priKey2, 3, blockingStubFull);
+        log.info("key2 sign finished!  " + JsonFormat.printToString(transaction2));
         // 广播 & 断言
-        res = boardcastTransction(address258, transaction2);
+        res = postTransction(address258, transaction2);
         assertResponse(res);
 
         log.info("test finished!");
     }
 
-    private void assertResponse(HttpResponse res){
+    private void assertResponse( HttpResponse res){
+//        if (res == null) {
+//            log.error("res is null !!");
+//            return;
+//        }
+        Assert.assertNotEquals(res, null);
         // 结果校验
         log.info( res.toString());
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
@@ -104,7 +113,7 @@ public class CreateMultiTransaction {
     }
 
 
-    private HttpResponse  boardcastTransction(String address, Protocol.Transaction transaction) {
+    private HttpResponse postTransction(String address, Protocol.Transaction transaction) {
         // 开始广播
         JSONObject object = new JSONObject();
         object.put("address", address);
