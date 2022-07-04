@@ -101,12 +101,12 @@ task tronlinkAPI(type: Test) {
     }
 }
 
+// 多签性能压测task
 task multiSignDebug(type: Test) {
     useTestNG {
-        suites(file('src/test/resources/debug/testng_tronlinkAPI.xml'))
+        suites(file('src/test/resources/debug/testng_multi_sign_performance.xml'))
         parallel 'tests'
         threadCount 1
-
     }
     testLogging {
         exceptionFormat = 'full'

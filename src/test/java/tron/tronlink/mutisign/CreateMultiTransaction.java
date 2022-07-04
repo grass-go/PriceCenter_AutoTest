@@ -7,10 +7,7 @@ import io.grpc.ManagedChannelBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import org.tron.common.utils.Base58;
 import org.tron.common.utils.Commons;
 import org.tron.core.services.http.JsonFormat;
@@ -35,6 +32,7 @@ public class CreateMultiTransaction {
     String address158= "TY9touJknFcezjLiaGTjnH1dUHiqriu6L8";
     byte[] address1 = Commons.decode58Check(address158);
     String priKey1;
+    String priKey2;
     String key2 = "7ef4f6b32643ea063297416f2f0112b562a4b3dac2c960ece00a59c357db3720";//线上
     byte[] address2=TronlinkApiList.getFinalAddress(key2);
     String address258=Base58.encode(address2);
@@ -45,45 +43,85 @@ public class CreateMultiTransaction {
      * constructor.
      */
     @BeforeClass(enabled = true)
-    @Parameters({"fullnode", "firstAddress", "secondAddress", "firstPriKey", "toAddress"})
-    public void beforeClass(String fullnode, String address158, String address258, String firstPriKey, String toAddress) {
+    @Parameters({"fullnode", "firstAddress", "secondAddress", "firstPriKey", "secondPriKey","toAddress"})
+    public void beforeClass(String fullnode, String address158, String address258, String firstPriKey,String secondPriKey, String toAddress) {
         TronlinkBase.tronlinkUrl = "http://101.201.66.150";
-        initEnv(fullnode, address158, address258, firstPriKey, toAddress);
+        initEnv(fullnode, address158, address258, firstPriKey,secondPriKey, toAddress);
         channelFull = ManagedChannelBuilder.forTarget(fullnode).usePlaintext().build();
         blockingStubFull = org.tron.api.WalletGrpc.newBlockingStub(channelFull);
     }
 
     // 初始化环境
-    private void initEnv(String fullnode, String address158, String address258, String firstPriKey, String toAddress){
+    private void initEnv(String fullnode, String address158, String address258, String firstPriKey,String secondPriKey, String toAddress){
         this.fullnode = fullnode;
         this.address158 = address158;
         this.address258 = address258;
         address1 = Commons.decode58Check(address158);
         address2 = Commons.decode58Check(address258);
         priKey1 = firstPriKey;
+        priKey2 = secondPriKey;
         this.toAddress = toAddress;
         toAddressByte = Commons.decode58Check(toAddress);
     }
 
-    @Test(enabled = true,description = "multi sign send coin")
-    public void sendCoin() {
+    /**
+     * invocationCount设定的是这个方法的执行次数.
+     * threadPoolSize 这个属性表示的是开启线程数的多少.
+     */
+    @Test(enabled = true,invocationCount = 5, threadPoolSize = 5 ,description = "multi sign performance test，A and B control account of C")
+    public void createMultiSign(){
+        // 发起一笔交易
         Protocol.Transaction transaction = TronlinkApiList
                 .sendcoin(toAddressByte, 500_000, address1, blockingStubFull);
-        log.info("-----111111  "+ JsonFormat.printToString(transaction));
+        log.info("send coin finished!  " + JsonFormat.printToString(transaction));
 
+        // 第一个用户签名
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
                 transaction, priKey1, 3, blockingStubFull);
-        log.info("-----2222  "+JsonFormat.printToString(transaction1));
+        log.info("key1 sign finished!  " + JsonFormat.printToString(transaction1));
 
+        // 第二个用户签名
+        Protocol.Transaction transaction2 = TronlinkApiList.addTransactionSignWithPermissionId(
+                transaction, priKey2, 3, blockingStubFull);
+        log.info("key2 sign finished!  " + JsonFormat.printToString(transaction1));
+
+
+        // 开始广播
         JSONObject object = new JSONObject();
-        object.put("address",address158);
-        object.put("netType","main_net");
-        object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
+        object.put("address", address158);
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(JsonFormat.printToString(transaction1)));
         TronlinkApiList.HttpNode = "http://101.201.66.150";
         res = TronlinkApiList.multiTransaction(object);
+
+        // 结果校验
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(res);
-        Assert.assertEquals(0,responseContent.getIntValue("code"));
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+        log.info("test finished!");
+    }
+
+    @Test(enabled = false,description = "multi sign send coin")
+    public void sendCoin() {
+        for (int i = 1;i < 200;i ++) {
+            Protocol.Transaction transaction = TronlinkApiList
+                    .sendcoin(toAddressByte, 500_000, address1, blockingStubFull);
+            log.info("-----111111  " + JsonFormat.printToString(transaction));
+
+            Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
+                    transaction, priKey1, 3, blockingStubFull);
+            log.info("-----2222  " + JsonFormat.printToString(transaction1));
+
+            JSONObject object = new JSONObject();
+            object.put("address", address158);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(JsonFormat.printToString(transaction1)));
+            TronlinkApiList.HttpNode = "http://101.201.66.150";
+            res = TronlinkApiList.multiTransaction(object);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseJsonObResponseContent(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+        }
     }
 
     @Test(enabled = false,description = "multi sign freeze balandce")
