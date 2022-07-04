@@ -24,7 +24,7 @@ public class CreateMultiTransaction {
     private org.tron.api.WalletGrpc.WalletBlockingStub blockingStubFull = null;
     private String fullnode = "47.75.245.225:50051";  //线上
     private ManagedChannel channelFull = null;
-    HttpResponse res;
+//    HttpResponse res;
     private JSONObject responseContent;
 //    String key1="c21f0c6fdc467f4ae7dc4c1a0b802234a930bff198ce34fde6850b0afd383cf5"; //线上
 //    byte[] address1=TronlinkApiList.getFinalAddress(key1);
@@ -68,7 +68,7 @@ public class CreateMultiTransaction {
      * invocationCount设定的是这个方法的执行次数.
      * threadPoolSize 这个属性表示的是开启线程数的多少.
      */
-    @Test(enabled = true,invocationCount = 5, threadPoolSize = 5 ,description = "multi sign performance test，A and B control account of C")
+    @Test(enabled = true,invocationCount = 5, threadPoolSize = 1 ,description = "multi sign performance test，A and B control account of C")
     public void createMultiSign(){
         // 发起一笔交易
         Protocol.Transaction transaction = TronlinkApiList
@@ -79,26 +79,41 @@ public class CreateMultiTransaction {
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
                 transaction, priKey1, 3, blockingStubFull);
         log.info("key1 sign finished!  " + JsonFormat.printToString(transaction1));
+        // 广播 & 断言
+        HttpResponse res;
+        res = boardcastTransction(address158, transaction1);
+        assertResponse(res);
 
         // 第二个用户签名
         Protocol.Transaction transaction2 = TronlinkApiList.addTransactionSignWithPermissionId(
                 transaction, priKey2, 3, blockingStubFull);
         log.info("key2 sign finished!  " + JsonFormat.printToString(transaction1));
+        // 广播 & 断言
+        res = boardcastTransction(address258, transaction2);
+        assertResponse(res);
 
+        log.info("test finished!");
+    }
 
-        // 开始广播
-        JSONObject object = new JSONObject();
-        object.put("address", address158);
-        object.put("netType", "main_net");
-        object.put("transaction", JSONObject.parse(JsonFormat.printToString(transaction1)));
-        TronlinkApiList.HttpNode = "http://101.201.66.150";
-        res = TronlinkApiList.multiTransaction(object);
-
+    private void assertResponse(HttpResponse res){
         // 结果校验
+        log.info( res.toString());
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(res);
         Assert.assertEquals(0, responseContent.getIntValue("code"));
-        log.info("test finished!");
+    }
+
+
+    private HttpResponse  boardcastTransction(String address, Protocol.Transaction transaction) {
+        // 开始广播
+        JSONObject object = new JSONObject();
+        object.put("address", address);
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(JsonFormat.printToString(transaction)));
+        TronlinkApiList.HttpNode = "http://101.201.66.150";
+        HttpResponse res;
+        res = TronlinkApiList.multiTransaction(object);
+        return res;
     }
 
     @Test(enabled = false,description = "multi sign send coin")
@@ -117,6 +132,7 @@ public class CreateMultiTransaction {
             object.put("netType", "main_net");
             object.put("transaction", JSONObject.parse(JsonFormat.printToString(transaction1)));
             TronlinkApiList.HttpNode = "http://101.201.66.150";
+            HttpResponse res;
             res = TronlinkApiList.multiTransaction(object);
             Assert.assertEquals(200, res.getStatusLine().getStatusCode());
             responseContent = TronlinkApiList.parseJsonObResponseContent(res);
@@ -140,6 +156,7 @@ public class CreateMultiTransaction {
         object.put("address",address258);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
+        HttpResponse res;
         res = TronlinkApiList.multiTransaction(object);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(res);
@@ -168,7 +185,9 @@ public class CreateMultiTransaction {
         object.put("address",address258);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
+        HttpResponse res;
         res = TronlinkApiList.multiTransaction(object);
+
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
@@ -192,6 +211,7 @@ public class CreateMultiTransaction {
         object.put("address",address258);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
+        HttpResponse res;
         res = TronlinkApiList.multiTransaction(object);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(res);
