@@ -14,11 +14,23 @@ public class AllAssetsPage extends AbstractPage {
     this.driver = driver;
   }
 
-  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div/input")
+  /*  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div/input")*/
+  @FindBy(className = "inputArea")
   public WebElement tokenSearch_input;
 
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div[1]/div/input")
+  public WebElement tokenSearch1_input;
+
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[3]/div[2]/div/div[2]/div/div/div[1]/div[2]/div[3]")
+  // @FindBy(className = "address")
   public WebElement tokenSearchAddressResult;
+
+ // @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div[2]/span")
+    @FindBy(className = "cancel")
+  public WebElement cancelSearch_btn;
+
+  @FindBy(className = "back")
+  public WebElement back_btn;
 
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[3]/div[2]/div/div/div/button/span")
   public WebElement getCustomToken_tips;
@@ -73,8 +85,12 @@ public class AllAssetsPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[3]/div/div/div[2]/div[9]/div[2]/div/img[2]")
   public WebElement multiFunction_btn;
 
-  @FindBy(xpath = "/html/body/div[3]/div/div/div/div[2]/div/div/div[2]/span")
-  public WebElement delete_btn;
+  // @FindBy(xpath = "/html/body/div[3]/div/div/div/div[2]/div/div/div[2]/span")
+ /* @FindBy(xpath = "/html/body/div[2]/div/div/div/div[2]/div/div/div[2]/span")
+  public WebElement delete_btn;*/
+
+    @FindBy(className = "menuContent")
+    public WebElement integration_btn;
 
   @FindBy(className = "assetListComponent")
   public WebElement allAssets_scroll;

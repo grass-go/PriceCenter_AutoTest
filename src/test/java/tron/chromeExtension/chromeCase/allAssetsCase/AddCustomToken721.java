@@ -43,28 +43,39 @@ public class AddCustomToken721 extends Base {
       alwaysRun = false,
       enabled = false,
       retryAnalyzer = MyIRetryAnalyzer.class)
-  public void test003AddCustomToken721WithBalanceOfAndTransferFunctionsTest() throws Exception {
+  public void test003AddCustomToken721WithBalanceOfAndTransferFunctionsAndDeleteFailedTest()
+      throws Exception {
+      //todo:
     String shortName = "shortName";
-    String tokenAddress = "TX9MUEoScrGQJ8X5jvp9eSVxxbfZfRGJUb";
-    Assert.assertTrue(Helper.addCustomTokenSuccess(tokenAddress, shortName, "fullName", "TRC20"));
+    String fullName = "fullName";
+    String tokenAddress = "TY4deKdy1f4YXMHhmiqzu9tA2rBYTTTBpB";
+   // Assert.assertTrue(Helper.addCustomTokenSuccess(tokenAddress, shortName, fullName, "TRC721"));
     Assert.assertTrue(Helper.deleteCustomToken(shortName, tokenAddress, false));
+  }
+
+  @Test(
+      groups = {"P0"},
+      description = "Delete custom token 721 with balanceOf and  Transfer functions success.",
+      alwaysRun = false,
+      enabled = false,
+      retryAnalyzer = MyIRetryAnalyzer.class)
+  public void test004AddCustomToken721WithBalanceOfAndTransferFunctionsTest() throws Exception {
+      //todo:
+    String shortName = "shortName";
+    String tokenAddress = "TY4deKdy1f4YXMHhmiqzu9tA2rBYTTTBpB";
     Assert.assertTrue(Helper.deleteCustomToken(shortName, tokenAddress, true));
   }
 
   @Test(
       groups = {"P0"},
       description = "Add custom token 721 with all functions.",
-      alwaysRun = false,
-      enabled = false,
+      alwaysRun = true,
+      enabled = true,
       retryAnalyzer = MyIRetryAnalyzer.class)
-  public void test004AddCustomToken721WithAllFunctionsTest() throws Exception {
+  public void test005AddCustomToken721WithAllFunctionsTest() throws Exception {
 
-    String shortName = "shortName";
     String tokenAddress = "TJx9N7dMg31CkEwcS3Sb3NHS3fCgpX1YoZ";
-    Assert.assertTrue(Helper.addCustomTokenSuccess(tokenAddress, shortName, "fullName", "TRC20"));
-
-    Assert.assertTrue(Helper.deleteCustomToken(shortName, tokenAddress, false));
-    Assert.assertTrue(Helper.deleteCustomToken(shortName, tokenAddress, true));
+    Assert.assertTrue(Helper.addCustomTokenRepeat(tokenAddress));
   }
 
   @AfterMethod(enabled = true)

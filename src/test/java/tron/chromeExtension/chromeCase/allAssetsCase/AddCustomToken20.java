@@ -45,33 +45,59 @@ public class AddCustomToken20 extends Base {
 
   @Test(
       groups = {"P0"},
-      description = "Add custom token 20 with balanceOf and  Transfer functions.",
-      alwaysRun = false,
+      description = "Add custom token 20 with balanceOf and  Transfer functions and delete failed.",
+      alwaysRun = true,
       enabled = false,
       retryAnalyzer = MyIRetryAnalyzer.class)
-  public void test003AddCustomToken20WithBalanceOfAndTransferFunctionsTest() throws Exception {
+  public void test003AddCustomToken20WithBalanceOfAndTransferFunctionsAndDeleteFailedTest()
+      throws Exception {
+      //todo:
+    String shortName = "shortName";
+    String fullName = "fullName";
+    String tokenAddress = "TX9MUEoScrGQJ8X5jvp9eSVxxbfZfRGJUb";
+    Assert.assertTrue(Helper.addCustomTokenSuccess(tokenAddress, shortName, fullName, "TRC20"));
+  }
+
+  @Test(
+      groups = {"P0"},
+      description = "Delete custom token 20 with balanceOf and  Transfer functions  failed.",
+      alwaysRun = true,
+      enabled = false,
+      retryAnalyzer = MyIRetryAnalyzer.class)
+  public void test004DeleteCustomToken20WithBalanceOfAndTransferFunctionsFailedTest()
+      throws Exception {
+      //todo:
+    waitingTime(5);
     String shortName = "shortName";
     String tokenAddress = "TX9MUEoScrGQJ8X5jvp9eSVxxbfZfRGJUb";
-    Assert.assertTrue(Helper.addCustomTokenSuccess(tokenAddress, shortName, "fullName", "TRC20"));
-
     Assert.assertTrue(Helper.deleteCustomToken(shortName, tokenAddress, false));
+  }
+
+  @Test(
+      groups = {"P0"},
+      description = "Delete custom token 20 with balanceOf and  Transfer functions  success.",
+      alwaysRun = true,
+      enabled = false,
+      retryAnalyzer = MyIRetryAnalyzer.class)
+  public void test005DeleteCustomToken20WithBalanceOfAndTransferAndDeleteSuccessFunctionsTest()
+      throws Exception {
+      //todo:
+    String shortName = "shortName";
+    String tokenAddress = "TX9MUEoScrGQJ8X5jvp9eSVxxbfZfRGJUb";
+
     Assert.assertTrue(Helper.deleteCustomToken(shortName, tokenAddress, true));
   }
 
   @Test(
       groups = {"P0"},
       description = "Add custom token 20 with all functions.",
-      alwaysRun = false,
-      enabled = false,
+      alwaysRun = true,
+      enabled = true,
       retryAnalyzer = MyIRetryAnalyzer.class)
-  public void test004AddCustomToken20WithAllFunctionsTest() throws Exception {
+  public void test006AddCustomToken20WithAllFunctionsTest() throws Exception {
 
-    String shortName = "shortName";
     String tokenAddress = "TJx9N7dMg31CkEwcS3Sb3NHS3fCgpX1YoZ";
-    Assert.assertTrue(Helper.addCustomTokenSuccess(tokenAddress, shortName, "fullName", "TRC20"));
-
-    Assert.assertTrue(Helper.deleteCustomToken(shortName, tokenAddress, false));
-    Assert.assertTrue(Helper.deleteCustomToken(shortName, tokenAddress, true));
+    Assert.assertTrue(Helper.addCustomTokenRepeat(tokenAddress));
   }
 
   @AfterMethod(enabled = true)

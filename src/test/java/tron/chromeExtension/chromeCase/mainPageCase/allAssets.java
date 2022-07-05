@@ -26,7 +26,7 @@ public class allAssets extends Base {
         MainPage mainPage = new MainPage(DRIVER);
         AllAssetsPage allAssetsPage = new AllAssetsPage(DRIVER);
         waitingTime(3);
-        click(mainPage.allAssetsBottom_btn);
+        click(mainPage.allAssets_btn);
         Assert.assertEquals("全部资产", getText(allAssetsPage.allAssets_title));
     }
 

@@ -424,7 +424,6 @@ public class Helper extends Base {
     }
   }
 
-
   public static String getAboutUsLink(SettingPage settingPage, Integer i) throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     waitingTime(5);
@@ -515,9 +514,7 @@ public class Helper extends Base {
     return true;
   }
 
-  public static boolean addCustomTokenSuccess(
-      String tokenAddress, String tokenShortName, String tokenFullName, String actualTokenType)
-      throws Exception {
+  public static boolean addCustomTokenRepeat(String tokenAddress) throws Exception {
     try {
       MainPage mainPage = new MainPage(DRIVER);
       AllAssetsPage allAssetsPage = new AllAssetsPage(DRIVER);
@@ -528,15 +525,36 @@ public class Helper extends Base {
       waitingTime();
       sendKeys(allAssetsPage.customTokenAddress_input, tokenAddress);
       waitingTime(5);
+      String tipError = getText(allAssetsPage.tipError);
+      Assert.assertEquals("此通证已录入，请通过搜索添加该通证", tipError);
+    } catch (org.openqa.selenium.NoSuchElementException ex) {
+      return false;
+    }
+    return true;
+  }
+
+  public static boolean addCustomTokenSuccess(
+      String tokenAddress, String tokenShortName, String tokenFullName, String actualTokenType)
+      throws Exception {
+    try {
+      MainPage mainPage = new MainPage(DRIVER);
+      AllAssetsPage allAssetsPage = new AllAssetsPage(DRIVER);
+      waitingTime();
+      click(mainPage.allAssets_btn);
+      waitingTime(5);
+      click(allAssetsPage.customToken_btn);
+      waitingTime();
+      sendKeys(allAssetsPage.customTokenAddress_input, tokenAddress);
+      waitingTime(5);
       sendKeys(allAssetsPage.tokenShortName_input, tokenShortName);
       waitingTime();
       sendKeys(allAssetsPage.tokenFullName_input, tokenFullName);
       waitingTime();
-      String defaultTokenPrecision = getTextWithDefaultValue(allAssetsPage.tokenPrecision);
+      String defaultTokenPrecision = getAttribute(allAssetsPage.tokenPrecision,"value");
 
       Assert.assertEquals("0", defaultTokenPrecision);
       waitingTime();
-      String defaultTokenType = getTextWithDefaultValue(allAssetsPage.tokenType);
+      String defaultTokenType = getAttribute(allAssetsPage.tokenType,"value");
       log("tokenType:" + defaultTokenType);
       Assert.assertEquals(actualTokenType, defaultTokenType);
       waitingTime();
@@ -560,11 +578,27 @@ public class Helper extends Base {
       waitingTime();
       click(mainPage.allAssets_btn);
       waitingTime();
-      click(allAssetsPage.multiFunction_btn);
-      waitingTime();
-      click(allAssetsPage.multiFunction_btn);
-      waitingTime();
-      click(allAssetsPage.delete_btn);
+      Boolean flag = false;
+      int retryTimes = 10;
+      while (retryTimes-- > 0 && !flag) {
+        click(allAssetsPage.multiFunction_btn);
+        waitingTime(5);
+        try {
+          List<WebElement> list = allAssetsPage.integration_btn.findElements(By.className("item"));
+          for (int i = 0; i < list.size(); i++) {
+            WebElement temp = list.get(i);
+            String text = temp.getText();
+            if (text.equals("删除该资产")) {
+              click(temp);
+              flag = true;
+              break;
+            }
+          }
+
+        } catch (org.openqa.selenium.NoSuchElementException ex) {
+          continue;
+        }
+      }
       waitingTime();
       String deletePromptTitle = getText(allAssetsPage.deletePromptTitle);
       Assert.assertEquals("确认删除自定义通证" + tokenShortName + "吗？", deletePromptTitle);
@@ -572,23 +606,39 @@ public class Helper extends Base {
       Assert.assertEquals("自定义通证删除后只能通过“自定义通证”功能再次被添加。", deletePromptContent);
       if (isDelete) {
         click(allAssetsPage.deleteConfirm_btn);
-        sendKeys(allAssetsPage.tokenSearch_input, tokenAddress);
         waitingTime();
-        String tokenSearchAddressResult = getText(allAssetsPage.tokenSearchAddressResult);
-        log("tokenSearchAddressResult:" + tokenSearchAddressResult);
-        Assert.assertEquals(tokenAddress, tokenSearchAddressResult);
+        click(allAssetsPage.tokenSearch_input);
+        waitingTime();
+        sendKeys(allAssetsPage.tokenSearch1_input, tokenAddress);
+        waitingTime();
+
+        String getCustomToken_tips = getText(allAssetsPage.getCustomToken_tips);
+        Assert.assertEquals("添加自定义通证", getCustomToken_tips);
         return true;
       } else {
         click(allAssetsPage.deleteCancel_btn);
-        sendKeys(allAssetsPage.tokenSearch_input, tokenAddress);
         waitingTime();
-        String getCustomToken_tips = getText(allAssetsPage.getCustomToken_tips);
-        Assert.assertEquals("添加自定义通证", getCustomToken_tips);
+        click(allAssetsPage.tokenSearch_input);
+        waitingTime();
+
+        sendKeys(allAssetsPage.tokenSearch1_input, tokenAddress);
+        /* sendKeys(allAssetsPage.tokenSearch_input, tokenAddress);
+        allAssetsPage.tokenSearch_input.sendKeys(Keys.RETURN);*/
+        /*  Actions action = new Actions(DRIVER);
+        action.sendKeys(Keys.ENTER).perform();*/
+        click(allAssetsPage.tokenSearchAddressResult);
+        Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
+        String tokenSearchAddressResult = fetchClipboardContents(clip);
+        // String tokenSearchAddressResult = getText(allAssetsPage.tokenSearchAddressResult);
+        log("tokenSearchAddressResult:" + tokenSearchAddressResult);
+        Assert.assertEquals(tokenAddress, tokenSearchAddressResult);
+        click(allAssetsPage.cancelSearch_btn);
+        click(allAssetsPage.back_btn);
+        return true;
       }
     } catch (org.openqa.selenium.NoSuchElementException ex) {
       return false;
     }
-    return true;
   }
 
   public static boolean containElement(WebElement wl, String name) {

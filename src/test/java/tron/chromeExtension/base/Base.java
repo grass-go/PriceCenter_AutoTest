@@ -222,8 +222,8 @@ public class Base {
     return webElement.getText();
   }
 
-  public static String getTextWithDefaultValue(WebElement webElement) throws Exception {
-    return webElement.getAttribute("value");
+  public static String getAttribute(WebElement webElement, String attribute) throws Exception {
+    return webElement.getAttribute(attribute);
   }
 
   public static void clear(WebElement webElement) throws Exception {
@@ -288,6 +288,11 @@ public class Base {
     webElement.sendKeys(str);
   }
 
+  public static void sendKeysAndEnter(WebElement webElement, String str) {
+    webElement.sendKeys(str);
+    webElement.sendKeys(Keys.ENTER);
+  }
+
   public double getBalanceFromSelectionBtn(String str) {
     String value = str;
     if (str.contains(",")) {
@@ -301,7 +306,7 @@ public class Base {
     for (String i : handles) {
       if (!targetHandle.equals(i)) {
         DRIVER.switchTo().window(i);
-        waitingTime(5);
+        break;
       }
     }
   }
