@@ -18,6 +18,7 @@ import org.tron.protos.contract.BalanceContract;
 import tron.common.TronlinkApiList;
 import tron.tronlink.base.TronlinkBase;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -67,23 +68,38 @@ public class CreateMultiTransaction {
         toAddressByte = Commons.decode58Check(toAddress);
     }
 
-    /**
-     * invocationCount设定的是这个方法的执行次数.
-     * threadPoolSize 这个属性表示的是开启线程数的多少.
-     */
+    private static int count = 0;
+
     @Test(enabled = true,invocationCount = 1, threadPoolSize = 1 ,description = "multi sign performance test，A and B control account of C")
-    public void createMultiSign(){
+    public void serserialExcuteMultiSign()  {
+        for(int i = 0;i < 10;i ++){
+            try {
+                excuteOnceMultiSign();
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void excuteOnceMultiSign(){
+        count++;
+        log.info("count = " + count);
+        log.info("thread pool id = " + Thread.currentThread().getId() + Thread.currentThread().getName());
+//        Thread.sleep(2000);
         log.info("address1 : " + address158 + " address2 = " + address258);
+        int money = new Random().nextInt(5);
         // 发起一笔交易
         Protocol.Transaction transaction = TronlinkApiList
-                .sendcoin(toAddressByte, 600_000, address1, blockingStubFull);
-        log.info("send coin finished!  " + JsonFormat.printToString(transaction));
+                .sendcoin(toAddressByte, money * 100_000, address1, blockingStubFull);
+        log.info("send coin finished!  tx hash = "   + JsonFormat.printToString(transaction));
+
 
         // 第一个用户签名
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
                 transaction, priKey1, 3, blockingStubFull);
         log.info("key1 sign finished!  " + JsonFormat.printToString(transaction1));
-        // 广播 & 断言
+        // post & 断言
         HttpResponse res;
         res = postTransction(address158, transaction1);
         assertResponse(res);
@@ -92,8 +108,67 @@ public class CreateMultiTransaction {
         Protocol.Transaction transaction2 = TronlinkApiList.addTransactionSignWithPermissionIdAndExpiredTime(
                 transaction1, priKey2, 3, blockingStubFull);
         log.info("key2 sign finished!  " + JsonFormat.printToString(transaction2));
-        // 广播 & 断言
+        // post & 断言
         res = postTransction(address258, transaction2);
+//        if res.
+        if (TronlinkApiList.parseJsonObResponseContent(res).getIntValue("code") == 40008){
+            log.info("TRANSACTION_EXPIRATION_ERROR info = " + JsonFormat.printToString(transaction2));
+            int i = 0;
+            while (i < 5) {
+                i++;
+                res = postTransction(address258, transaction2);
+                if (TronlinkApiList.parseJsonObResponseContent(res).getIntValue("code") == 40008){
+                    continue;
+                }
+            }
+        }
+        assertResponse(res);
+
+        log.info("test finished!");
+    }
+
+
+    /**
+     * invocationCount设定的是这个方法的执行次数.
+     * threadPoolSize 这个属性表示的是开启线程数的多少.
+     */
+    @Test(enabled = true,invocationCount = 30, threadPoolSize = 1 ,description = "multi sign performance test，A and B control account of C")
+    public void createMultiSign() throws InterruptedException {
+        count++;
+        log.info("count = " + count);
+        log.info("thread pool id = " + Thread.currentThread().getId() + Thread.currentThread().getName());
+//        Thread.sleep(2000);
+        log.info("address1 : " + address158 + " address2 = " + address258);
+        int money = new Random().nextInt(5);
+        // 发起一笔交易
+        Protocol.Transaction transaction = TronlinkApiList
+                .sendcoin(toAddressByte, money * 100_000, address1, blockingStubFull);
+        if (transaction == null){
+            log.error("send coin failed! skip this case!");
+            return;
+        }
+        log.info("send coin finished!  tx hash = "   + JsonFormat.printToString(transaction));
+
+
+        // 第一个用户签名
+        Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
+                transaction, priKey1, 3, blockingStubFull);
+        log.info("key1 sign finished!  " + JsonFormat.printToString(transaction1));
+        // post & 断言
+        HttpResponse res;
+        res = postTransction(address158, transaction1);
+        assertResponse(res);
+
+        // 第二个用户签名
+        Protocol.Transaction transaction2 = TronlinkApiList.addTransactionSignWithPermissionIdAndExpiredTime(
+                transaction1, priKey2, 3, blockingStubFull);
+        log.info("key2 sign finished!  " + JsonFormat.printToString(transaction2));
+        // post & 断言
+        res = postTransction(address258, transaction2);
+//        if res.
+        if (TronlinkApiList.parseJsonObResponseContent(res).getIntValue("code") == 40008){
+            log.info("TRANSACTION_EXPIRATION_ERROR info = " + JsonFormat.printToString(transaction2));
+        }
         assertResponse(res);
 
         log.info("test finished!");

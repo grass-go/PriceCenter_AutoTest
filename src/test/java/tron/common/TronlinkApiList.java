@@ -1450,7 +1450,7 @@ public static HttpResponse search(Map<String, String> params) {
     Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder();
     long now = System.currentTimeMillis();
     // 设置过期时间
-    raw.setExpiration(now+86400000L);
+    raw.setExpiration(now+16400000L);
     Protocol.Transaction.Contract.Builder contract = raw.getContract(0).toBuilder()
             .setPermissionId(permissionId);
     raw.clearContract();
