@@ -536,7 +536,7 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
-  public static HttpResponse multiTransaction(JSONObject body) {
+  public  static HttpResponse multiTransaction(JSONObject body) {
     try {
       String requestUrl = HttpNode + "/api/wallet/multi/transaction";
       response = createConnect(requestUrl,body);
@@ -1272,7 +1272,7 @@ public static HttpResponse search(Map<String, String> params) {
     log.info("JSON content size are: " + responseContent.size());
     log.info("----------------------------Print JSON End-----------------------------");
   }
-  public static HttpResponse createConnect(String url, JSONObject requestBody) {
+  public synchronized static HttpResponse createConnect(String url, JSONObject requestBody) {
     try {
       httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
           connectionTimeout);

@@ -8,17 +8,25 @@ import io.grpc.ManagedChannelBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
+import org.seleniumhq.jetty9.util.ConcurrentHashSet;
 import org.testng.annotations.*;
 import org.tron.common.utils.Base58;
+import org.tron.common.utils.ByteArray;
 import org.tron.common.utils.Commons;
 import org.tron.core.services.http.JsonFormat;
 import org.tron.protos.Protocol;
 import org.tron.protos.contract.AssetIssueContractOuterClass;
 import org.tron.protos.contract.BalanceContract;
 import tron.common.TronlinkApiList;
+import tron.common.utils.Sha256Sm3Hash;
 import tron.tronlink.base.TronlinkBase;
 
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
+//import stest.tron.wallet.common.client.utils;
+import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -53,6 +61,7 @@ public class CreateMultiTransaction {
         initEnv(fullnode, address158, address258, firstPriKey,secondPriKey, toAddress);
         channelFull = ManagedChannelBuilder.forTarget(fullnode).usePlaintext().build();
         blockingStubFull = org.tron.api.WalletGrpc.newBlockingStub(channelFull);
+        startTime = System.currentTimeMillis();
     }
 
     // 初始化环境
@@ -68,30 +77,106 @@ public class CreateMultiTransaction {
         toAddressByte = Commons.decode58Check(toAddress);
     }
 
-    private static int count = 0;
+    private volatile static int count = 0;
 
-    @Test(enabled = true,invocationCount = 1, threadPoolSize = 1 ,description = "multi sign performance test，A and B control account of C")
-    public void serserialExcuteMultiSign()  {
-        for(int i = 0;i < 10;i ++){
+
+    // 串行 执行100次
+    @Test(enabled = true,invocationCount = 100, threadPoolSize = 1 ,description = "multi sign performance test，A and B control account of C")
+    public void serserialExcuteMultiSign100()  {
             try {
                 excuteOnceMultiSign();
-
             }catch (Exception e){
+
                 e.printStackTrace();
             }
+    }
+
+
+    // 串行 执行1000次
+    @Test(enabled = true,invocationCount = 1000, threadPoolSize = 1 ,description = "multi sign performance test，A and B control account of C")
+    public void serserialExcuteMultiSign1000()  {
+        try {
+            excuteOnceMultiSign();
+        }catch (Exception e){
+
+            e.printStackTrace();
+        }
+        log.info("failed count == " + failed);
+    }
+    private volatile static  int failed = 0;
+
+    // 并发 5线程100交易数量
+    @Test(enabled = true,invocationCount = 10, threadPoolSize = 2 ,description = "multi sign performance test，A and B control account of C")
+    public void concurrentExcuteMultiSign100()  {
+        try {
+            excuteOnceMultiSign();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+//        printResult();
+    }
+
+
+    // 并发 10个线程1000个交易
+    @Test(enabled = true,invocationCount = 1000, threadPoolSize = 10 ,description = "multi sign performance test，A and B control account of C")
+    public void concurrentExcuteMultiSign1000()  {
+        try {
+            excuteOnceMultiSign();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
+
+    // 并发 30个线程3000笔交易
+    @Test(enabled = true,invocationCount = 30000, threadPoolSize = 30 ,description = "multi sign performance test，A and B control account of C")
+    public void concurrentExcuteMultiSign3000()  {
+        try {
+            excuteOnceMultiSign();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        log.info("failed count == " + failed+ " repeated count = " + repeatedHash);
+
+    }
+
+    private void printResult(){
+        log.info("failed count == " + failed+ " repeated count = " + repeatedHash  + " hashset size = " + s.size());
+        log.info("cost time = " + (endTime - startTime));
+//        for (String key:
+//                s) {
+//            log.info("hash value = " + key);
+//
+//        }
+    }
+
+    // 根据tx计算交易hash值
+    public String getHash(Protocol.Transaction transaction){
+        String txID = ByteArray.toHexString(Sha256Sm3Hash.hash(transaction.getRawData().toByteArray()));
+        return txID;
+    }
+
+
+
+
+    static Set<String> s = new CopyOnWriteArraySet<>();
+    // 重复hash值数量
+    private volatile static int repeatedHash = 0;
+    static long  startTime = 0;
+    static long endTime = 0;
 
     private void excuteOnceMultiSign(){
         count++;
         log.info("count = " + count);
         log.info("thread pool id = " + Thread.currentThread().getId() + Thread.currentThread().getName());
-//        Thread.sleep(2000);
         log.info("address1 : " + address158 + " address2 = " + address258);
         int money = new Random().nextInt(5);
         // 发起一笔交易
         Protocol.Transaction transaction = TronlinkApiList
                 .sendcoin(toAddressByte, money * 100_000, address1, blockingStubFull);
+        if (transaction == null){
+            failed++;
+            return;
+        }
         log.info("send coin finished!  tx hash = "   + JsonFormat.printToString(transaction));
 
 
@@ -99,29 +184,40 @@ public class CreateMultiTransaction {
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
                 transaction, priKey1, 3, blockingStubFull);
         log.info("key1 sign finished!  " + JsonFormat.printToString(transaction1));
+        String txID = getHash(transaction1);
+        synchronized (CreateMultiTransaction.class) {
+            if (s.contains(txID)) {
+                repeatedHash++;
+                return;
+            } else {
+                s.add(txID);
+            }
+        }
         // post & 断言
         HttpResponse res;
         res = postTransction(address158, transaction1);
         assertResponse(res);
 
+
+
         // 第二个用户签名
         Protocol.Transaction transaction2 = TronlinkApiList.addTransactionSignWithPermissionIdAndExpiredTime(
                 transaction1, priKey2, 3, blockingStubFull);
         log.info("key2 sign finished!  " + JsonFormat.printToString(transaction2));
-        // post & 断言
-        res = postTransction(address258, transaction2);
-//        if res.
-        if (TronlinkApiList.parseJsonObResponseContent(res).getIntValue("code") == 40008){
-            log.info("TRANSACTION_EXPIRATION_ERROR info = " + JsonFormat.printToString(transaction2));
-            int i = 0;
-            while (i < 5) {
-                i++;
-                res = postTransction(address258, transaction2);
-                if (TronlinkApiList.parseJsonObResponseContent(res).getIntValue("code") == 40008){
-                    continue;
-                }
+
+        // 对hash 去重
+        txID = getHash(transaction2);
+        synchronized (CreateMultiTransaction.class) {
+            if (s.contains(txID)) {
+                repeatedHash++;
+                return;
+            } else {
+                s.add(txID);
             }
         }
+
+        // post & 断言
+        res = postTransction(address258, transaction2);
         assertResponse(res);
 
         log.info("test finished!");
@@ -166,19 +262,15 @@ public class CreateMultiTransaction {
         // post & 断言
         res = postTransction(address258, transaction2);
 //        if res.
-        if (TronlinkApiList.parseJsonObResponseContent(res).getIntValue("code") == 40008){
-            log.info("TRANSACTION_EXPIRATION_ERROR info = " + JsonFormat.printToString(transaction2));
-        }
+//        if (TronlinkApiList.parseJsonObResponseContent(res).getIntValue("code") == 40008){
+//            log.info("TRANSACTION_EXPIRATION_ERROR info = " + JsonFormat.printToString(transaction2));
+//        }
         assertResponse(res);
 
         log.info("test finished!");
     }
 
     private void assertResponse( HttpResponse res){
-//        if (res == null) {
-//            log.error("res is null !!");
-//            return;
-//        }
         Assert.assertNotEquals(res, null);
         // 结果校验
         log.info( res.toString());
@@ -309,6 +401,8 @@ public class CreateMultiTransaction {
      */
     @AfterClass
     public void shutdown() throws InterruptedException {
+        endTime = System.currentTimeMillis();
+        printResult();
         if (channelFull != null) {
             channelFull.shutdown().awaitTermination(5, TimeUnit.SECONDS);
         }
