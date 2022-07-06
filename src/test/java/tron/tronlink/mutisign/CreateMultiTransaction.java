@@ -28,6 +28,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 public class CreateMultiTransaction {
@@ -103,7 +104,7 @@ public class CreateMultiTransaction {
         }
         log.info("failed count == " + failed);
     }
-    private volatile static  int failed = 0;
+    private volatile static AtomicInteger failed ;
 
     // 并发 5线程100交易数量
     @Test(enabled = true,invocationCount = 10, threadPoolSize = 2 ,description = "multi sign performance test，A and B control account of C")
@@ -127,7 +128,7 @@ public class CreateMultiTransaction {
         }
     }
 
-    // 并发 30个线程3000笔交易
+    // 并发 30个线程30000笔交易
     @Test(enabled = true,invocationCount = 30000, threadPoolSize = 30 ,description = "multi sign performance test，A and B control account of C")
     public void concurrentExcuteMultiSign3000()  {
         try {
@@ -135,8 +136,6 @@ public class CreateMultiTransaction {
         }catch (Exception e){
             e.printStackTrace();
         }
-        log.info("failed count == " + failed+ " repeated count = " + repeatedHash);
-
     }
 
     private void printResult(){
@@ -169,12 +168,12 @@ public class CreateMultiTransaction {
         log.info("count = " + count);
         log.info("thread pool id = " + Thread.currentThread().getId() + Thread.currentThread().getName());
         log.info("address1 : " + address158 + " address2 = " + address258);
-        int money = new Random().nextInt(5);
+        int money = new Random().nextInt(10000);
         // 发起一笔交易
         Protocol.Transaction transaction = TronlinkApiList
-                .sendcoin(toAddressByte, money * 100_000, address1, blockingStubFull);
+                .sendcoin(toAddressByte, money + 1, address1, blockingStubFull);
         if (transaction == null){
-            failed++;
+            failed.getAndAdd(1);
             return;
         }
         log.info("send coin finished!  tx hash = "   + JsonFormat.printToString(transaction));
@@ -206,15 +205,15 @@ public class CreateMultiTransaction {
         log.info("key2 sign finished!  " + JsonFormat.printToString(transaction2));
 
         // 对hash 去重
-        txID = getHash(transaction2);
-        synchronized (CreateMultiTransaction.class) {
-            if (s.contains(txID)) {
-                repeatedHash++;
-                return;
-            } else {
-                s.add(txID);
-            }
-        }
+//        txID = getHash(transaction2);
+//        synchronized (CreateMultiTransaction.class) {
+//            if (s.contains(txID)) {
+//                repeatedHash++;
+//                return;
+//            } else {
+//                s.add(txID);
+//            }
+//        }
 
         // post & 断言
         res = postTransction(address258, transaction2);
@@ -261,10 +260,6 @@ public class CreateMultiTransaction {
         log.info("key2 sign finished!  " + JsonFormat.printToString(transaction2));
         // post & 断言
         res = postTransction(address258, transaction2);
-//        if res.
-//        if (TronlinkApiList.parseJsonObResponseContent(res).getIntValue("code") == 40008){
-//            log.info("TRANSACTION_EXPIRATION_ERROR info = " + JsonFormat.printToString(transaction2));
-//        }
         assertResponse(res);
 
         log.info("test finished!");
