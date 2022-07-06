@@ -7,8 +7,10 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
+import org.apache.jmeter.protocol.http.control.Header;
+import org.apache.jmeter.protocol.http.control.HeaderManager;
+import org.apache.jmeter.testelement.property.TestElementProperty;
 import org.junit.Assert;
-import org.seleniumhq.jetty9.util.ConcurrentHashSet;
 import org.testng.annotations.*;
 import org.tron.common.utils.Base58;
 import org.tron.common.utils.ByteArray;
@@ -18,15 +20,19 @@ import org.tron.protos.Protocol;
 import org.tron.protos.contract.AssetIssueContractOuterClass;
 import org.tron.protos.contract.BalanceContract;
 import tron.common.TronlinkApiList;
+import tron.common.jmeter.CsvOperation;
+import tron.common.jmeter.JmeterOperation;
 import tron.common.utils.Sha256Sm3Hash;
 import tron.tronlink.base.TronlinkBase;
 
-import java.util.HashSet;
-import java.util.Map;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Random;
 //import stest.tron.wallet.common.client.utils;
 import java.util.Set;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -99,7 +105,6 @@ public class CreateMultiTransaction {
         try {
             excuteOnceMultiSign();
         }catch (Exception e){
-
             e.printStackTrace();
         }
         log.info("failed count == " + failed);
@@ -221,6 +226,89 @@ public class CreateMultiTransaction {
 
         log.info("test finished!");
     }
+
+    BlockingQueue<Protocol.Transaction> firstQueue = new LinkedBlockingQueue<>(10);
+
+    // 准备数据
+    private void prepareTransaction(){
+        for (int i = 0; i < 1; i++) {
+            int money = new Random().nextInt(10000);
+            // 发起一笔交易
+            Protocol.Transaction transaction = TronlinkApiList
+                    .sendcoin(toAddressByte, money + 1, address1, blockingStubFull);
+            if (transaction == null){
+                failed.getAndAdd(1);
+                return;
+            }
+            // 第一个用户签名
+            Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
+                    transaction, priKey1, 3, blockingStubFull);
+            log.info("key1 sign finished!  " + JsonFormat.printToString(transaction1));
+            String txID = getHash(transaction1);
+            synchronized (CreateMultiTransaction.class) {
+                if (s.contains(txID)) {
+                    repeatedHash++;
+                    return;
+                } else {
+                    s.add(txID);
+                }
+            }
+            firstQueue.add(transaction);
+        }
+    }
+
+    private void excuteOnceMultiSignV2(){
+        count++;
+//        log.info("count = " + count);
+//        log.info("thread pool id = " + Thread.currentThread().getId() + Thread.currentThread().getName());
+//        log.info("address1 : " + address158 + " address2 = " + address258);
+        prepareTransaction();
+//        log.info("send coin finished!  tx hash = "   + JsonFormat.printToString(transaction));
+//        generateJmx();
+        File csv = CsvOperation.generateCSV("/Users/dannygguo/Desktop/tron/Tronscan_AutoTest/logs/", firstQueue);
+        ArrayList<TestElementProperty> heads = generateHeaderInfo();
+        JmeterOperation.RunJemterWithCSV("http://101.201.66.150", "80", "/api/wallet/multi/transaction", "${body}",csv,heads);
+
+        // post & 断言
+//        HttpResponse res;
+//        res = postTransction(address158, transaction1);
+//        assertResponse(res);
+//
+//
+//
+//        // 第二个用户签名
+//        Protocol.Transaction transaction2 = TronlinkApiList.addTransactionSignWithPermissionIdAndExpiredTime(
+//                transaction1, priKey2, 3, blockingStubFull);
+//        log.info("key2 sign finished!  " + JsonFormat.printToString(transaction2));
+
+        // 对hash 去重
+//        txID = getHash(transaction2);
+//        synchronized (CreateMultiTransaction.class) {
+//            if (s.contains(txID)) {
+//                repeatedHash++;
+//                return;
+//            } else {
+//                s.add(txID);
+//            }
+//        }
+
+        // post & 断言
+//        res = postTransction(address258, transaction2);
+//        assertResponse(res);
+
+        log.info("test finished!");
+    }
+
+    // 生成header信息
+    private ArrayList<TestElementProperty> generateHeaderInfo(){
+        ArrayList<TestElementProperty> headerMangerList = new ArrayList<>();
+        Header header = new Header("Content-Type", "application/json");
+        TestElementProperty HeaderElement = new TestElementProperty("", header);
+        headerMangerList.add(HeaderElement);
+        return headerMangerList;
+    }
+
+
 
 
     /**

@@ -31,6 +31,7 @@ import org.apache.jmeter.timers.ConstantThroughputTimer;
 import org.apache.jmeter.util.JMeterUtils;
 import org.apache.jorphan.collections.HashTree;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -39,6 +40,8 @@ import java.util.List;
 /**
  */
 public class JmeterOperation {
+
+    static String jemterHome = "/Users/dannygguo/Downloads/apache-jmeter-5.5";
 
     public static final String JMETER_ENCODING = "UTF-8";
 
@@ -64,7 +67,7 @@ public class JmeterOperation {
 //        String request = "{\"name\":\"wangwu\",\"password\":\"wnagwu123456\"}";
 
 
-        String jemterHome = "/Users/dannygguo/Downloads/apache-jmeter-5.5";
+
         JMeterUtils.setJMeterHome(jemterHome);
         JMeterUtils.loadJMeterProperties(JMeterUtils.getJMeterBinDir() + "/jmeter.properties");
         //JMeterUtils.initLocale();
@@ -127,6 +130,96 @@ public class JmeterOperation {
         Runtime.getRuntime().exec(command);
         System.out.println(command);*/
     }
+
+
+    public static void RunJemterWithCSV(String url, String port, String api, String body, File csvFile,ArrayList<TestElementProperty> heads) {
+
+//        String url = "localhost";
+//        String port = "8088";
+//        String api = "/mongo/insert";
+//        /** 由于csv文件的请求体列中标题是body */
+//        String request = "${body}";
+
+//        String jemterHome = "/Users/liufei/Downloads/apache-jmeter-5.3";
+        JMeterUtils.setJMeterHome(jemterHome);
+        JMeterUtils.loadJMeterProperties(JMeterUtils.getJMeterBinDir() + "/jmeter.properties");
+        //JMeterUtils.initLocale();
+
+        // 获取TestPlan
+        TestPlan testPlan = getTestPlan();
+
+        // 获取设置循环控制器
+        LoopController loopController = getLoopController();
+
+
+        // 获取Http请求信息
+        HTTPSamplerProxy httpSamplerProxy = getHttpSamplerProxy(url, port, api, body);
+
+        // 获取结果：如汇总报告、察看结果树
+        List<ResultCollector> resultCollector = getResultCollector(replayLogPath);
+
+        // 获取CVSData设置
+        /** === 主要是这里的变化 ====== */
+        File cvsPath = csvFile;
+        int number = 0;
+        try {
+            // 去掉body标题列
+            number = CsvOperation.getTotalLines(cvsPath) - 1;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CSVDataSet csvDataSet = getCSVDataSet(cvsPath.getAbsolutePath());
+
+        // 获取线程组
+        ThreadGroup threadGroup = getThreadGroup(loopController, number);
+
+        // 获取设置吞吐量
+        ConstantThroughputTimer constantThroughputTimer = getConstantThroughputTimer(20);
+
+        // 获取请求头信息
+        HeaderManager headerManager = getHeaderManager();
+
+        HashTree fourHashTree = new HashTree();
+        resultCollector.stream().forEach(item -> fourHashTree.add(item));
+        fourHashTree.add(headerManager);
+        /** 将csvDataSet添加进去 */
+        fourHashTree.add(csvDataSet);
+
+        HashTree thirdHashTree = new HashTree();
+        // 注意：设置吞吐量需要和Http请求同一级，否则无效
+        thirdHashTree.add(constantThroughputTimer);
+        thirdHashTree.add(httpSamplerProxy, fourHashTree);
+
+        HashTree secondHashTree = new HashTree();
+        secondHashTree.add(threadGroup, thirdHashTree);
+
+
+        HashTree firstTreeTestPlan = new HashTree();
+        firstTreeTestPlan.add(testPlan, secondHashTree);
+
+        try {
+            SaveService.saveTree(firstTreeTestPlan, new FileOutputStream(jmxPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // 第一种方式：运行
+        StandardJMeterEngine jMeterEngine = new StandardJMeterEngine();
+        jMeterEngine.configure(firstTreeTestPlan);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        jMeterEngine.run();
+        System.out.println("运行成功!!!");
+
+        // 使用命令
+       /* String command = JMeterUtils.getJMeterBinDir() + "/jmeter -n -t " + jmxPath + " -l /Users/liufei/Downloads/jmter/replay_result.jtl";
+        Runtime.getRuntime().exec(command);
+        System.out.println(command);*/
+    }
+
 
     /***
      * 监听结果
@@ -290,6 +383,22 @@ public class JmeterOperation {
         Header header = new Header("Content-Type", "application/json");
         TestElementProperty HeaderElement = new TestElementProperty("", header);
         headerMangerList.add(HeaderElement);
+
+        headerManager.setEnabled(true);
+        headerManager.setName("HTTP Header Manager");
+        headerManager.setProperty(new CollectionProperty(HeaderManager.HEADERS, headerMangerList));
+        headerManager.setProperty(new StringProperty(TestElement.TEST_CLASS, HeaderManager.class.getName()));
+        headerManager.setProperty(new StringProperty(TestElement.GUI_CLASS, HeaderPanel.class.getName()));
+        return headerManager;
+    }
+
+    // 动态设置头信息
+    private static HeaderManager getDynamicHeaderManager(ArrayList<TestElementProperty> headerMangerList ) {
+//        ArrayList<TestElementProperty> headerMangerList = new ArrayList<>();
+        HeaderManager headerManager = new HeaderManager();
+//        Header header = new Header("Content-Type", "application/json");
+//        TestElementProperty HeaderElement = new TestElementProperty("", header);
+//        headerMangerList.add(HeaderElement);
 
         headerManager.setEnabled(true);
         headerManager.setName("HTTP Header Manager");

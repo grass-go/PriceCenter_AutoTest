@@ -7,10 +7,14 @@ package tron.common.jmeter;
 //import com.yiyang.myfirstspringdemo.model.Passenger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.tron.core.services.http.JsonFormat;
+import org.tron.protos.Protocol;
+
 import java.io.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.UUID;
 
 import static tron.common.jmeter.JmeterOperation.JMETER_ENCODING;
@@ -21,8 +25,8 @@ import static tron.common.jmeter.JmeterOperation.NUMBER_THREADS;
 
 
 @Slf4j
-@Component
-public class CVSUtils {
+//@Component
+public class CsvOperation {
 
     static String format = "\"%s\"";
 
@@ -115,15 +119,32 @@ public class CVSUtils {
     }
 
 
-    public static File getCsvPath () {
-        String outFile = "/Users/liufei/Downloads/jmter";
-        String filename = "my_replay_data";
+    public static File generateCSV(String path, Queue<Protocol.Transaction> txs){
+        List<List<String>> csvs = initCSV();
+        for (int i = 0; i < txs.size(); i++) {
+            Protocol.Transaction tx =  txs.poll();
+            List<String> col = new ArrayList<>();
+            col.add( JsonFormat.printToString(tx));
+            csvs.add(col);
+        }
+        return createCSVFile(csvs, path, "multi_sign_stress");
+    }
+
+    private static List<List<String>>  initCSV(){
         List<List<String>> listList = new ArrayList<List<String>>();
-        List<String> list = null;
+        List<String> list;
         list = new ArrayList<>();//一个List为一行
         // 标题
         list.add("body");
         listList.add(list);
+        return listList;
+    }
+
+
+    public static File getCsvPath () {
+        String outFile = "/Users/liufei/Downloads/jmter";
+        String filename = "my_replay_data";
+        List<List<String>> csvs = initCSV();
 
         // 内容
         int count = NUMBER_THREADS;
@@ -140,9 +161,9 @@ public class CVSUtils {
 //                e.printStackTrace();
 //            }
 //            colList.add(json);
-            listList.add(colList);
+            csvs.add(colList);
         }
-        return createCSVFile(listList, outFile, filename);
+        return createCSVFile(csvs, outFile, filename);
     }
 
     /***
