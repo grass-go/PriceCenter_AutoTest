@@ -5,6 +5,8 @@ package tron.common.jmeter;
 //package com.yiyang.myfirstspringdemo.utils;
 
 //import com.yiyang.myfirstspringdemo.model.Passenger;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.tron.core.services.http.JsonFormat;
@@ -12,10 +14,8 @@ import org.tron.protos.Protocol;
 
 import java.io.*;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static tron.common.jmeter.JmeterOperation.JMETER_ENCODING;
 import static tron.common.jmeter.JmeterOperation.NUMBER_THREADS;
@@ -51,7 +51,8 @@ public class CsvOperation {
                 }
             }
             // 定义文件名格式并创建
-            csvFile = File.createTempFile(fileName, ".csv", new File(outPutPath));
+            String curTime = new SimpleDateFormat("yyyyMMddHHmmssSSS") .format(new Date() );
+            csvFile = File.createTempFile(fileName + "_" + curTime + "_", ".csv", new File(outPutPath));
             csvFileOutputStream = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csvFile)));
             for (List<String> exportDatum : exportData) {
                 writeRow(exportDatum, csvFileOutputStream);
@@ -119,12 +120,16 @@ public class CsvOperation {
     }
 
 
-    public static File generateCSV(String path, Queue<Protocol.Transaction> txs){
+    public static File generateCSV(String path, Queue<JSONObject> txs) throws IllegalAccessException {
         List<List<String>> csvs = initCSV();
-        for (int i = 0; i < txs.size(); i++) {
-            Protocol.Transaction tx =  txs.poll();
+        int queueLength = txs.size();
+        for (int i = 0; i < queueLength; i++) {
+            JSONObject tx =  txs.poll();
             List<String> col = new ArrayList<>();
-            col.add( JsonFormat.printToString(tx));
+            String tmp = tx.toJSONString();
+            tmp= tmp.replaceAll("\"", "\"\"");
+            tmp = "\"" + tmp + "\"";
+            col.add(tmp);
             csvs.add(col);
         }
         return createCSVFile(csvs, path, "multi_sign_stress");

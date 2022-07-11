@@ -49,7 +49,7 @@ public class JmeterOperation {
     public static final int NUMBER_THREADS = 1;
 
     /** 执行结果输出的日志 */
-    public static final String replayLogPath = "/Users/dannygguo/Desktop/tron/Tronscan_AutoTest/logsstress_test.log";
+    public static final String StressTestLogPath = "/Users/dannygguo/Desktop/tron/Tronscan_AutoTest/logs/stress_test.log";
 
     /** 生成的jmx的地址 */
     public static final String jmxPath = "/Users/dannygguo/Desktop/tron/Tronscan_AutoTest/logs/multi_sign_stress.jmx";
@@ -85,7 +85,7 @@ public class JmeterOperation {
         HTTPSamplerProxy httpSamplerProxy = getHttpSamplerProxy(url, port, api, body);
 
         // 获取结果：如汇总报告、察看结果树
-        List<ResultCollector> resultCollector = getResultCollector(replayLogPath);
+        List<ResultCollector> resultCollector = getResultCollector(StressTestLogPath);
 
         // 获取设置吞吐量
         ConstantThroughputTimer constantThroughputTimer = getConstantThroughputTimer(20);
@@ -132,15 +132,8 @@ public class JmeterOperation {
     }
 
 
+    // 运行jmeter
     public static void RunJemterWithCSV(String url, String port, String api, String body, File csvFile,ArrayList<TestElementProperty> heads) {
-
-//        String url = "localhost";
-//        String port = "8088";
-//        String api = "/mongo/insert";
-//        /** 由于csv文件的请求体列中标题是body */
-//        String request = "${body}";
-
-//        String jemterHome = "/Users/liufei/Downloads/apache-jmeter-5.3";
         JMeterUtils.setJMeterHome(jemterHome);
         JMeterUtils.loadJMeterProperties(JMeterUtils.getJMeterBinDir() + "/jmeter.properties");
         //JMeterUtils.initLocale();
@@ -156,7 +149,7 @@ public class JmeterOperation {
         HTTPSamplerProxy httpSamplerProxy = getHttpSamplerProxy(url, port, api, body);
 
         // 获取结果：如汇总报告、察看结果树
-        List<ResultCollector> resultCollector = getResultCollector(replayLogPath);
+        List<ResultCollector> resultCollector = getResultCollector(StressTestLogPath);
 
         // 获取CVSData设置
         /** === 主要是这里的变化 ====== */
@@ -174,10 +167,10 @@ public class JmeterOperation {
         ThreadGroup threadGroup = getThreadGroup(loopController, number);
 
         // 获取设置吞吐量
-        ConstantThroughputTimer constantThroughputTimer = getConstantThroughputTimer(20);
+        ConstantThroughputTimer constantThroughputTimer = getConstantThroughputTimer(1);
 
         // 获取请求头信息
-        HeaderManager headerManager = getHeaderManager();
+        HeaderManager headerManager = getDynamicHeaderManager(heads);
 
         HashTree fourHashTree = new HashTree();
         resultCollector.stream().forEach(item -> fourHashTree.add(item));
@@ -223,20 +216,20 @@ public class JmeterOperation {
 
     /***
      * 监听结果
-     * @param replayLogPath  将结果保存到文件中，这个是文件的路径
+     * @param RunLogPath  将结果保存到文件中，这个是文件的路径
      * @return
      */
-    private static List<ResultCollector> getResultCollector(String replayLogPath) {
+    private static List<ResultCollector> getResultCollector(String RunLogPath) {
         // 察看结果数
         List<ResultCollector> resultCollectors = new ArrayList<>();
-        Summariser summariser = new Summariser("速度");
+        Summariser summariser = new Summariser("压测报告");
         ResultCollector resultCollector = new ResultCollector(summariser);
         resultCollector.setProperty(new BooleanProperty("ResultCollector.error_logging", false));
         resultCollector.setProperty(new ObjectProperty("saveConfig", getSampleSaveConfig()));
         resultCollector.setProperty(new StringProperty("TestElement.gui_class", "org.apache.jmeter.visualizers.ViewResultsFullVisualizer"));
         resultCollector.setProperty(new StringProperty("TestElement.name", "察看结果树"));
         resultCollector.setProperty(new StringProperty("TestElement.enabled", "true"));
-        resultCollector.setProperty(new StringProperty("filename", replayLogPath));
+        resultCollector.setProperty(new StringProperty("filename", RunLogPath));
         resultCollectors.add(resultCollector);
 
         // 结果汇总
@@ -339,7 +332,7 @@ public class JmeterOperation {
         threadGroup.setDuration(0);
         threadGroup.setProperty(new StringProperty(ThreadGroup.ON_SAMPLE_ERROR, "continue"));
         threadGroup.setScheduler(false);
-        threadGroup.setName("回放流量");
+        threadGroup.setName("创建多签");
         threadGroup.setProperty(TestElement.TEST_CLASS, ThreadGroup.class.getName());
         threadGroup.setProperty(TestElement.GUI_CLASS, ThreadGroupGui.class.getName());
         threadGroup.setProperty(new BooleanProperty(TestElement.ENABLED, true));

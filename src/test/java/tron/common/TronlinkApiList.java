@@ -1278,8 +1278,8 @@ public static HttpResponse search(Map<String, String> params) {
           connectionTimeout);
       httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
       httppost = new HttpPost(url);
-      httppost.setHeader("Content-type", "application/json; charset=utf-8");
       httppost.setHeader("Connection", "keep-alive");
+      httppost.setHeader("Content-type", "application/json; charset=utf-8");
       httppost.addHeader("Lang","1");
       httppost.addHeader("Version","3.7.0");
       httppost.addHeader("DeviceID","1111111111");
