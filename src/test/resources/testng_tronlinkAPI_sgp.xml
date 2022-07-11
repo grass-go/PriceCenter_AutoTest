@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="tronlinkAPI" parallel="tests" thread-count="0">
+<suite name="tronlinkAPI_sgp" parallel="tests" thread-count="0">
     <listeners>
         <listener class-name="tron.common.utils.SqlTronlinkAPI"/>
         <listener class-name="tron.common.utils.RetryListener"/>
