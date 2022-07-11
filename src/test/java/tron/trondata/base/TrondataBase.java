@@ -8,7 +8,7 @@ import tron.common.utils.Configuration;
 
 public class TrondataBase {
 
-    public static  String trondataUrl;
+    public static volatile String trondataUrl;
     public String queryAddress = Configuration.getByPath("testng.conf").getString("tronlink.queryAddress");
 
 
