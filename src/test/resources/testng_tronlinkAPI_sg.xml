@@ -6,7 +6,7 @@
         <listener class-name="tron.common.utils.RetryListener"/>
     </listeners>
     <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>
-    <test name="tronlinkAPI">
+    <!--<test name="tronlinkAPI">
         <parameter name="tronscanApiUrl" value="https://apilist.tronscan.org"></parameter>
         <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>
         <parameter name="tronlinkUrl" value="https://list.tronlink.org"></parameter>
@@ -16,8 +16,8 @@
         <packages>
             <package name="tron.tronlink.*"></package>
         </packages>
-    </test>
-    <!--<test name="tronlinkAPI-Singapore">
+    </test>-->
+    <test name="tronlinkAPI-Singapore">
         <parameter name="trc721OwnerAddress" value="TGzgVdQszcAHbEd9VELwifASLRdQY9kTcx"></parameter>
         <parameter name="trc721TokenAddress" value="TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG"></parameter>
         <parameter name="trc721AssetId" value="1"></parameter>
@@ -29,7 +29,7 @@
                 <exclude name="tron.tronlink.v2.socket"/>
             </package>
         </packages>
-    </test>-->
+    </test>
     <test name="trondataAPI">
         <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>
         <packages>
