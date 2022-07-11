@@ -22,6 +22,11 @@ import org.tron.protos.Protocol;
 import org.tron.protos.contract.*;
 import tron.common.TronlinkApiList;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -45,10 +50,12 @@ public class CreateMultiTransaction {
     String quince58 = "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t";
     byte[] quince = Commons.decode58Check(quince58);
     String quincekey = "b47e686119f2236f38cd0e8a4fe20f8a7fc5cb4284d36131f447c63857e3dac9";
-    String yunli58 = "TYyptUzArG7hUprUCUk2kzBrY4faKD4ioz";
+    String yunli58 = "THDEBkMEcWuee6ZpXF1KAmWs8x5YAzvVch";
     byte[] yunli = Commons.decode58Check(yunli58);
     String yunlikey = "cafcc392b9b5518324728a9c43c7d857d6d2766669177ea7515e92f8918ab106";
     String wqq1key = "8d5c18030466b6ab0e5367154d15c4f6cb46d2fb56a0b552e017d183abd8c255";
+    String wqq2key = "ee16960c312bb08f691fe011ec81530eb613aa1408aca57d7cf736d82f4383de";
+    String wqq258 = "TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ";
     byte[] wqq1 = TronlinkApiList.getFinalAddress(wqq1key);
     String wqq158 =Base58.encode(wqq1);
     private byte[] byteCode;
@@ -63,14 +70,57 @@ public class CreateMultiTransaction {
         blockingStubFull = org.tron.api.WalletGrpc.newBlockingStub(channelFull);
     }
 
-    @Test(enabled = true,description = "nulti sign send coin")
+    @Test(enabled = true, description = "send coins to perf users")
+    public void sendCoinToPerfUsers() {
+        File file = new File("/Users/wqq/Perf/perf-msg/data/AccountActive.txt");
+        String fromAddress = "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t";
+        byte[] fromAddress_byte = Commons.decode58Check(fromAddress);
+        String fromKey = "b47e686119f2236f38cd0e8a4fe20f8a7fc5cb4284d36131f447c63857e3dac9";
+        BufferedReader reader = null;
+        try {
+
+            reader = new BufferedReader(new FileReader(file));
+            String tempString = null;
+            Date date = new Date();
+            log.info("start date:" + date);
+            int line = 1;
+            while ((tempString = reader.readLine()) != null) {
+                // 显示行号
+                System.out.println("line " + line + ": " + tempString);
+                String[] accounts = tempString.split("\t");
+                String curAddress = accounts[0];
+                byte[] curAddress_byte = Commons.decode58Check(curAddress);
+
+                TronlinkApiList.sendcoinDirectely(curAddress_byte, 1L, fromAddress_byte, fromKey,
+                        blockingStubFull);
+                Thread.sleep(100);
+                line++;
+            }
+            log.info("Total transfer times:"+line);
+            Date enddate = new Date();
+            log.info("end date:" + enddate);
+            reader.close();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                }
+            }
+        }
+
+    }
+
+    @Test(enabled = true,description = "multi sign send coin")
     public void sendCoin() {
         Protocol.Transaction transaction = TronlinkApiList
-                .sendcoin(wqq1, 7, quince, blockingStubFull);
+                .sendcoin(wqq1, 8, quince, blockingStubFull);
         log.info("-----111111  "+ JsonFormat.printToString(transaction));
 
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, wqq1key, 6, blockingStubFull);
+                transaction, wqq1key, 3, blockingStubFull);
         log.info("-----2222  "+JsonFormat.printToString(transaction1));
 
         JSONObject object = new JSONObject();
@@ -81,6 +131,34 @@ public class CreateMultiTransaction {
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
+
+
+        //others sign again
+
+        Protocol.Transaction transaction2 = TronlinkApiList.addTransactionSignWithPermissionIdOnly(
+                transaction1, quincekey, 6, blockingStubFull);
+        log.info("-----333  "+JsonFormat.printToString(transaction2));
+        object.clear();
+        object.put("address",quince58);
+        object.put("netType","main_net");
+        object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction2)));
+        res = TronlinkApiList.multiTransaction(object);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseJsonObResponseContent(res);
+        //Assert.assertEquals(0,responseContent.getIntValue("code"));*/
+
+        Protocol.Transaction transaction3 = TronlinkApiList.addTransactionSignWithPermissionIdOnly(
+                transaction1, wqq2key, 6, blockingStubFull);
+        log.info("-----444  "+JsonFormat.printToString(transaction3));
+        object.clear();
+        object.put("address",wqq258);
+        object.put("netType","main_net");
+        object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction3)));
+        res = TronlinkApiList.multiTransaction(object);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseJsonObResponseContent(res);
+
+
     }
 
     @Test(enabled = true,description = "multi sign freeze balandce")
@@ -167,13 +245,13 @@ public class CreateMultiTransaction {
     public void transferTrc721() throws Exception {
         String contractAddress = "TVwK7UVwVpkfcGSyhCgvW3JzmowveztmQE";
         byte[] contractAdd = Commons.decode58Check(contractAddress);
-        String args = "000000000000000000000000e7d71e72ea48de9144dc2450e076415af0ea745f0000000000000000000000000c497701e37f11b042bdc7aabfc0cd5d45f7a0c70000000000000000000000000000000000000000000000000000000000000457";
+        String args = "000000000000000000000000e7d71e72ea48de9144dc2450e076415af0ea745f0000000000000000000000002CBAEBC9F5FAB6D610549F22406FFB8B9A04AE500000000000000000000000000000000000000000000000000000000000000457";
         Long maxFeeLimit = 1000000000L;
         Protocol.Transaction transaction = TronlinkApiList.triggerContract(contractAdd,"transferFrom(address,address,uint256)",args,true,0,maxFeeLimit,"0",0L,
                 quince,blockingStubFull);
         log.info("-----111111  "+JsonFormat.printToString(transaction));
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, wqq1key, 4, blockingStubFull);
+                transaction, wqq1key, 6, blockingStubFull);
         log.info("-----2222  "+JsonFormat.printToString(transaction1));
 
         JSONObject object = new JSONObject();
@@ -197,7 +275,7 @@ public class CreateMultiTransaction {
         Long end = System.currentTimeMillis() + 1000000000;
         AssetIssueContractOuterClass.AssetIssueContract.Builder builder = AssetIssueContractOuterClass.AssetIssueContract.newBuilder();
         builder.setOwnerAddress(ByteString.copyFrom(yunli));
-        String token10Name = "multiGen10qwer221";
+        String token10Name = "testmsg";
         builder.setName(ByteString.copyFrom(token10Name.getBytes()));
         builder.setTotalSupply(totalSupply);
         builder.setTrxNum(1);
@@ -381,7 +459,7 @@ public class CreateMultiTransaction {
         transaction = transBuilder.build();
 
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, wqq1key, 4, blockingStubFull);
+                transaction, wqq1key, 5, blockingStubFull);
         log.info("-----2222  "+JsonFormat.printToString(transaction1));
         JSONObject object = new JSONObject();
         object.put("address",wqq158);

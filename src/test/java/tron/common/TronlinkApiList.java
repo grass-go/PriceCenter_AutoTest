@@ -1545,6 +1545,33 @@ public static HttpResponse search(Map<String, String> params) {
     return transaction;
   }
 
+  public static Protocol.Transaction addTransactionSignWithPermissionIdOnly(Protocol.Transaction transaction,
+                                                                        String priKey, int permissionId, WalletGrpc.WalletBlockingStub blockingStubFull) {
+    Wallet.setAddressPreFixByte(ADD_PRE_FIX_BYTE_MAINNET);
+    ECKey temKey = null;
+    try {
+      BigInteger priK = new BigInteger(priKey, 16);
+      temKey = ECKey.fromPrivate(priK);
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+
+    //transaction = setPermissionId(transaction, permissionId);
+
+    Protocol.Transaction.Builder transactionBuilderSigned = transaction.toBuilder();
+    byte[] hash = Sha256Hash.hash(CommonParameter.getInstance()
+            .isECKeyCryptoEngine(), transaction.getRawData().toByteArray());
+    ECKey ecKey = temKey;
+    ECKey.ECDSASignature signature = ecKey.sign(hash);
+    ByteString bsSign = ByteString.copyFrom(signature.toByteArray());
+    transactionBuilderSigned.addSignature(bsSign);
+    transaction = transactionBuilderSigned.build();
+    return transaction;
+  }
+
+
+
+
   public static Protocol.Transaction triggerContract(byte[] contractAddress, String method,
                                                      String argsStr, Boolean isHex, long callValue, long feeLimit, String tokenId, long tokenValue,
                                                      byte[] ownerAddress, WalletGrpc.WalletBlockingStub blockingStubFull) {
