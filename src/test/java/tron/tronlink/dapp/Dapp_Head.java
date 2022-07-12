@@ -20,7 +20,7 @@ public class Dapp_Head extends TronlinkBase {
     private String node = Configuration.getByPath("testng.conf")
             .getStringList("tronlink.ip.list")
             .get(0);
-//todo 待补充
+
     @Test(enabled = true)
     public void head() throws InterruptedException {
 
@@ -51,9 +51,11 @@ public class Dapp_Head extends TronlinkBase {
             int retryIdx=0;
             for (retryIdx=0;retryIdx<10;retryIdx++){
                 log.info("In roll_data #"+n+", cur retry index for image_url is " + retryIdx);
+                log.info("image_url:" +roll_data.getJSONObject(n).getString("image_url") );
                 int responseCode;
                 try {
                     responseCode = TronlinkApiList.createGetConnect(roll_data.getJSONObject(n).getString("image_url")).getStatusLine().getStatusCode();
+                    log.info("debug: responseCode:"+responseCode);
                 } catch (Exception e) {
                     Thread.sleep(2000);
                     continue;
@@ -70,12 +72,22 @@ public class Dapp_Head extends TronlinkBase {
             Assert.assertEquals(12, retryIdx);
             for (retryIdx=0;retryIdx<10;retryIdx++){
                 log.info("In roll_data #"+n+", cur retry index for home_url is " + retryIdx);
-                if(200==TronlinkApiList.createGetConnect(roll_data.getJSONObject(n).getString("home_url")).getStatusLine().getStatusCode())
+                log.info("home_url:"+roll_data.getJSONObject(n).getString("home_url"));
+                int responseCode;
+                try {
+                    responseCode = TronlinkApiList.createGetConnect(roll_data.getJSONObject(n).getString("home_url")).getStatusLine().getStatusCode();
+                    log.info("debug: responseCode:"+ responseCode);
+                } catch (Exception e) {
+                    Thread.sleep(2000);
+                    continue;
+
+                }
+                if(200==responseCode)
                 {
                     retryIdx = 11;
                 }
                 else{
-                    Thread.sleep(60000);
+                    Thread.sleep(1000);
                     continue;
                 }
             }
@@ -87,7 +99,14 @@ public class Dapp_Head extends TronlinkBase {
             int retryIdx=0;
             for (retryIdx=0;retryIdx<10;retryIdx++){
                 log.info("In hot_recommend #"+n+", cur retry index for image_url is " + retryIdx);
-                if(200==TronlinkApiList.createGetConnect(jo.getString("image_url")).getStatusLine().getStatusCode())
+                int responseCode;
+                try {
+                    responseCode = TronlinkApiList.createGetConnect(jo.getString("image_url")).getStatusLine().getStatusCode();
+                } catch(Exception e) {
+                    Thread.sleep(2000);
+                    continue;
+                }
+                if(200==responseCode)
                 {
                     retryIdx = 11;
                 }
@@ -100,4 +119,3 @@ public class Dapp_Head extends TronlinkBase {
         }
     }
 }
-

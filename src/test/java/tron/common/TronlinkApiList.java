@@ -40,10 +40,19 @@ import tron.tronlink.base.TronlinkBase;
 import java.math.BigInteger;
 import java.net.URI;
 import java.nio.charset.Charset;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.TrustStrategy;
+import javax.net.ssl.SSLContext;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 
 @Slf4j
 public class TronlinkApiList {
@@ -68,12 +77,31 @@ public class TronlinkApiList {
   static Long requestTime = 0L;
   static byte ADD_PRE_FIX_BYTE_MAINNET = (byte) 0x41;
 
+
   static {
     PoolingClientConnectionManager pccm = new PoolingClientConnectionManager();
     pccm.setDefaultMaxPerRoute(80);
     pccm.setMaxTotal(100);
 
     httpClient = new DefaultHttpClient(pccm);
+
+    // if httpClient occur "javax.net.ssl.SSLException: Certificate for <list.tronlink.org> doesn't match any of the subject alternative names", then use below code
+    /*TrustStrategy acceptingTrustStrategy = new TrustSelfSignedStrategy();
+    try {
+      SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy)
+              .build();
+      SSLConnectionSocketFactory scsf = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
+      httpClient = HttpClients.custom().setSSLSocketFactory(scsf).build();
+
+
+    } catch (NoSuchAlgorithmException e) {
+      e.printStackTrace();
+    } catch (KeyManagementException e) {
+      e.printStackTrace();
+    } catch (KeyStoreException e) {
+      e.printStackTrace();
+    }*/
+
   }
 
   public static HttpResponse classify() {
@@ -573,6 +601,7 @@ public static HttpResponse search(Map<String, String> params) {
 
   public static HttpResponse createPostConnect(String url, String requestBody) {
     try {
+      // if ssl issue occur, use httpClient.custome().setxxx to set timeout.
       httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
           connectionTimeout);
       httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
