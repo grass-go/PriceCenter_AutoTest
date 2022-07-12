@@ -100,7 +100,7 @@ task tronlinkAPI(type: Test) {
         showStackTraces = "true"
     }
 }
-task tronlinkAPI_sgp(type: Test) {
+task tronlinkAPISGP(type: Test) {
     useTestNG {
         suites(file('src/test/resources/testng_tronlinkAPI_sgp.xml'))
         parallel 'tests'
