@@ -36,11 +36,4 @@
             <package name="tron.trondata.*"></package>
         </packages>
     </test>
-    <test name="priceAPI">
-        <parameter name="tronscanApiUrl" value="https://apilist.tronscan.org"></parameter>
-        <parameter name="priceUrl" value="https://c.tronlink.org/"></parameter>
-        <packages>
-            <package name="tron.priceCenter.*"></package>
-        </packages>
-    </test>
 </suite>
