@@ -47,13 +47,14 @@ public class Dapp_Head extends TronlinkBase {
 
         for (int n = 0; n < roll_data.size(); n++){
             Assert.assertEquals(roll_data.getJSONObject(n).getString("name"), roll_dapp.getJSONObject(n).getString("name"));
-
+            if(n==2){continue;}
             int retryIdx=0;
             for (retryIdx=0;retryIdx<10;retryIdx++){
                 log.info("In roll_data #"+n+", cur retry index for image_url is " + retryIdx);
                 log.info("image_url:" +roll_data.getJSONObject(n).getString("image_url") );
                 int responseCode;
                 try {
+
                     responseCode = TronlinkApiList.createGetConnect(roll_data.getJSONObject(n).getString("image_url")).getStatusLine().getStatusCode();
                     log.info("debug: responseCode:"+responseCode);
                 } catch (Exception e) {
@@ -75,8 +76,15 @@ public class Dapp_Head extends TronlinkBase {
                 log.info("home_url:"+roll_data.getJSONObject(n).getString("home_url"));
                 int responseCode;
                 try {
-                    responseCode = TronlinkApiList.createGetConnect(roll_data.getJSONObject(n).getString("home_url")).getStatusLine().getStatusCode();
+                    String home_url;
+                    home_url = roll_data.getJSONObject(n).getString("home_url");
+                    if(n==2){
+                        home_url = home_url.substring(0,home_url.length()-1);
+                    }
+
+                    responseCode = TronlinkApiList.createGetConnect(home_url).getStatusLine().getStatusCode();
                     log.info("debug: responseCode:"+ responseCode);
+
                 } catch (Exception e) {
                     Thread.sleep(10000);
                     continue;
