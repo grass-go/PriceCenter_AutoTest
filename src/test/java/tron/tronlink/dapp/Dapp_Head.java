@@ -65,7 +65,7 @@ public class Dapp_Head extends TronlinkBase {
                     retryIdx = 11;
                 }
                 else{
-                    Thread.sleep(1000);
+                    Thread.sleep(10000);
                     continue;
                 }
             }
@@ -78,7 +78,7 @@ public class Dapp_Head extends TronlinkBase {
                     responseCode = TronlinkApiList.createGetConnect(roll_data.getJSONObject(n).getString("home_url")).getStatusLine().getStatusCode();
                     log.info("debug: responseCode:"+ responseCode);
                 } catch (Exception e) {
-                    Thread.sleep(2000);
+                    Thread.sleep(10000);
                     continue;
 
                 }
@@ -87,7 +87,7 @@ public class Dapp_Head extends TronlinkBase {
                     retryIdx = 11;
                 }
                 else{
-                    Thread.sleep(1000);
+                    Thread.sleep(6000);
                     continue;
                 }
             }
