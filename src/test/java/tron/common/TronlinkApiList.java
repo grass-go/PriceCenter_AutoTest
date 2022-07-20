@@ -29,6 +29,8 @@ import org.tron.common.utils.Sha256Hash;
 import org.tron.core.Wallet;
 import org.tron.protos.Protocol;
 import org.tron.protos.contract.BalanceContract;
+
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -1660,6 +1662,25 @@ public static HttpResponse search(Map<String, String> params) {
     header.put("Connection", "Close");
     response = createPostConnectWithHeader(requestUrl,params, object,header);
     return response;
+  }
+
+  public static List<String> ReadFile(String fileNamePath ) throws IOException {
+    File tokenFile = new File(fileNamePath);
+
+    List<String> lines = new ArrayList<>();
+    if (tokenFile.isFile() && tokenFile.exists()){
+      InputStreamReader Reader = new InputStreamReader(new FileInputStream(tokenFile),"UTF-8");
+      BufferedReader bufferedReader = new BufferedReader(Reader);
+      String lineTxt = null;
+      while ((lineTxt=bufferedReader.readLine())!=null){
+        log.info("data:"+lineTxt);
+        lines.add(lineTxt);
+      }
+      Reader.close();
+    } else {
+      log.info("ReadFile: can't find file: "+fileNamePath);
+    }
+    return lines;
   }
 
 
