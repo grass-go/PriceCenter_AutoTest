@@ -52,7 +52,7 @@ public class ScanNode {
   public void test001ScanNode() throws Exception{
     JSONObject job = new JSONObject();
     for(int i=0;i<3;i++){
-      String url = "http://18.218.176.219:8888//api/block/current_num";
+      String url = "http://3.130.220.30:8888//api/block/current_num";
       response = TronlinkApiList.createGetConnect(url);
       Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
       responseContent = TronlinkApiList.parseJsonObResponseContent(response);
