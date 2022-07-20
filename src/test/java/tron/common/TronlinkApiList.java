@@ -47,6 +47,8 @@ import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.HttpClients;
@@ -58,6 +60,7 @@ import org.apache.http.conn.ssl.NoopHostnameVerifier;
 public class TronlinkApiList {
 
   static HttpClient httpClient;
+  static HttpClient httpClient2;
   static HttpPost httppost;
   static HttpGet httpget;
 
@@ -86,29 +89,26 @@ public class TronlinkApiList {
     httpClient = new DefaultHttpClient(pccm);
 
     // if httpClient occur "javax.net.ssl.SSLException: Certificate for <list.tronlink.org> doesn't match any of the subject alternative names", then use below code
-    /*TrustStrategy acceptingTrustStrategy = new TrustSelfSignedStrategy();
+    TrustStrategy acceptingTrustStrategy = new TrustSelfSignedStrategy();
     try {
       SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom().loadTrustMaterial(null, acceptingTrustStrategy)
               .build();
       SSLConnectionSocketFactory scsf = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
-      httpClient = HttpClients.custom().setSSLSocketFactory(scsf).build();
-
-
+      httpClient2 = HttpClients.custom().setSSLSocketFactory(scsf).setConnectionTimeToLive(10,TimeUnit.SECONDS).build();
     } catch (NoSuchAlgorithmException e) {
       e.printStackTrace();
     } catch (KeyManagementException e) {
       e.printStackTrace();
     } catch (KeyStoreException e) {
       e.printStackTrace();
-    }*/
-
+    }
   }
 
   public static HttpResponse classify() {
     try {
       String requestUrl = HttpNode + "/api/dapp/v2/classify";
       log.info(requestUrl);
-      response = createGetConnect(requestUrl);
+      response = createGetConnectClient2(requestUrl,null);
     } catch (Exception e) {
       e.printStackTrace();
       httpget.releaseConnection();
@@ -289,7 +289,7 @@ public class TronlinkApiList {
     try {
       String requestUrl = HttpNode + "/api/dapp/v2/head";
       log.info(requestUrl);
-      response = createGetConnect(requestUrl);
+      response = createGetConnectClient2(requestUrl,null);
     } catch (Exception e) {
       e.printStackTrace();
       httpget.releaseConnection();
@@ -301,7 +301,7 @@ public class TronlinkApiList {
     try {
       String requestUrl = HttpNode + "/api/dapp/v2/dapp/hot_search";
       log.info(requestUrl);
-      response = createGetConnect(requestUrl);
+      response = createGetConnectClient2(requestUrl,null);
     } catch (Exception e) {
       e.printStackTrace();
       httpget.releaseConnection();
@@ -314,7 +314,7 @@ public class TronlinkApiList {
     try {
       String requestUrl = HttpNode + "/api/dapp/v2/dapp";
       log.info(requestUrl);
-      response = createGetConnect(requestUrl, params);
+      response = createGetConnectClient2(requestUrl, params);
     } catch (Exception e) {
       e.printStackTrace();
       httpget.releaseConnection();
@@ -326,7 +326,7 @@ public class TronlinkApiList {
   public static HttpResponse dappBanner() {
     try {
       String requestUrl = HttpNode + "/api/dapp/v2/banner";
-      response = createGetConnect(requestUrl);
+      response = createGetConnectClient2(requestUrl,null);
     } catch (Exception e) {
       e.printStackTrace();
       httpget.releaseConnection();
@@ -351,7 +351,7 @@ public class TronlinkApiList {
 public static HttpResponse search(Map<String, String> params) {
     try {
       String requestUrl = HttpNode + "/api/dapp/v2/dapp/search";
-      response = createGetConnect(requestUrl, params);
+      response = createGetConnectClient2(requestUrl, params);
     } catch (Exception e) {
       e.printStackTrace();
       httpget.releaseConnection();
@@ -363,7 +363,7 @@ public static HttpResponse search(Map<String, String> params) {
   public static HttpResponse history(Map<String, String> params) {
     try {
       String requestUrl = HttpNode + "/api/dapp/v2/dapp/history";
-      response = createGetConnect(requestUrl, params);
+      response = createGetConnectClient2(requestUrl, params);
     } catch (Exception e) {
       e.printStackTrace();
       httpget.releaseConnection();
@@ -1152,6 +1152,46 @@ public static HttpResponse search(Map<String, String> params) {
   public static HttpResponse createGetConnect(String url) {
     return createGetConnect(url, null);
   }
+
+  public static HttpResponse createGetConnectClient2(String url,Map<String, String> params) {
+    try {
+      //httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,connectionTimeout);
+      //httpClient2.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+      if (params != null) {
+        StringBuffer stringBuffer = new StringBuffer(url);
+        stringBuffer.append("?");
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+          stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
+        }
+        stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+        url = stringBuffer.toString();
+      }
+      httpget = new HttpGet(url);
+      httpget.addHeader("Lang","1");
+      httpget.addHeader("Version","3.7.0");
+      httpget.addHeader("DeviceID","1111111111");
+      httpget.addHeader("chain","MainChain");
+      httpget.addHeader("packageName","com.tronlinkpro.wallet");
+      httpget.addHeader("System","Android");
+      httpget.setHeader("Content-type", "application/json; charset=utf-8");
+      httpget.setHeader("Connection", "Keep-Alive");
+      Header[] allHeaders = httpget.getAllHeaders();
+      for (int i = 0; i < allHeaders.length; i++) {
+        log.info(""+allHeaders[i]);
+      }
+      Instant startTime = Instant.now();
+      response = httpClient.execute(httpget);
+      Instant endTime = Instant.now();
+      requestTime = Duration.between(startTime, endTime).toMillis();
+      log.info(url + " 请求总耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
+    } catch (Exception e) {
+      e.printStackTrace();
+      httpget.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
   public static HttpResponse createGetConnect(URI uri) {
     try {
       httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
