@@ -99,6 +99,7 @@ public class checkPrice extends TronlinkBase {
         Object usdCount_obj;
         Object cnyCount_obj;
 
+        //get token unit price in assetlist response
         if (symbol == "BTTOLD" || symbol == "USDD10"){
             trxCount_obj = JSONPath.eval(assetListRespContent,String.join("","$..data.token[id='", address, "'].trxCount[0]"));
             usdCount_obj = JSONPath.eval(assetListRespContent,String.join("","$..data.token[id='", address, "'].usdCount[0]"));
@@ -111,9 +112,10 @@ public class checkPrice extends TronlinkBase {
         }
 
 
-        //get token unit price in assetlist response
         //get token unit price in tronscan
+
         //compare price between assetlist api and tronscan api.
+        //Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(trxSymbolPrice.toString(), trxAddressPrice.toString(),curTolerance));
     }
 
     @Test(enabled = false)
