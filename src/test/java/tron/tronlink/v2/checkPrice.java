@@ -44,20 +44,31 @@ public class checkPrice extends TronlinkBase {
     }
 
     public static String getTrxPricefromCMC(String exchageType){
-        Map<String,String> header = new HashMap<>();
-        header.put("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36");
-        header.put("Content-Type","MediaType.MULTIPART_FORM_DATA");
-        header.put("X-CMC_PRO_API_KEY","8cd87197-8386-4bcb-835c-ff7b78d6ba48");
-        header.put("Accept","application/json");
-        Map<String,String> params = new HashMap<>();
-        params.put("symbol","TRX");
-        params.put("convert",exchageType);
-        String CMCurl = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest";
-        response = TronlinkApiList.createGetConnectWithHeader(CMCurl,params,null,header);
-        JSONObject responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-        Object expPrice = JSONPath.eval(responseContent, String.join("", "$..data.TRX.quote."+exchageType+".price[0]"));
-        String trxPrice = expPrice.toString();
-        return trxPrice;
+        for(int i = 0; i < 3; i++) {
+            Map<String,String> header = new HashMap<>();
+            header.put("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36");
+            header.put("Content-Type","MediaType.MULTIPART_FORM_DATA");
+            header.put("X-CMC_PRO_API_KEY","8cd87197-8386-4bcb-835c-ff7b78d6ba48");
+            header.put("Accept","application/json");
+            Map<String,String> params = new HashMap<>();
+            params.put("symbol","TRX");
+            params.put("convert",exchageType);
+            String CMCurl = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest";
+            response = TronlinkApiList.createGetConnectWithHeader(CMCurl,params,null,header);
+            if(response == null || response.getStatusLine().getStatusCode() != 200){
+                try {
+                    Thread.sleep(500);
+                    continue;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            JSONObject responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+            Object expPrice = JSONPath.eval(responseContent, String.join("", "$..data.TRX.quote."+exchageType+".price[0]"));
+            String trxPrice = expPrice.toString();
+            return trxPrice;
+        }
+        return null;
     }
     public static void SetTrxPriceMap() {
 //        trxPriceMap.put("USD",getTrxPricefromCMC("USD"));
