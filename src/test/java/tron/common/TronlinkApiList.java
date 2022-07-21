@@ -2,6 +2,7 @@ package tron.common;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPath;
 import com.google.gson.JsonObject;
 import com.google.protobuf.ByteString;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ import org.tron.protos.Protocol;
 import org.tron.protos.contract.BalanceContract;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -903,6 +905,35 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static JSONObject getTronscanTrc20Price(String address){
+    if(address.startsWith("T")){
+      String reqestUrl = "https://apilist.tronscan.org/api/token_trc20?contract=" + address + "&showAll=1";
+      HttpResponse transcanRsp = TronlinkApiList.createGetConnect(reqestUrl);
+      JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
+      JSONObject priceJson = (JSONObject)JSONPath.eval(transcanRspContent, String.join("", "$..trc20_tokens[contract_address='", address, "'].market_info[0]"));
+      return priceJson;
+    }else if(address.startsWith("100")){
+      String reqestUrl = "https://apilist.tronscan.org/api/token?id=" + address + "&showAll=1";
+      HttpResponse transcanRsp = TronlinkApiList.createGetConnect(reqestUrl);
+      JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
+      System.out.println(String.join("", "$..data[id=",address,"].market_info[0]"));
+      JSONObject priceJson = (JSONObject)JSONPath.eval(transcanRspContent, String.join("", "$..data[id=",address,"].market_info[0]"));
+      return priceJson;
+    }
+    return null;
+  }
+
+  //Compare if string format number gap in tolerance.
+  public static boolean CompareGapInGivenTolerance(String expectedstr, String actualstr,String toleranceRate) {
+    BigDecimal expected = new BigDecimal(expectedstr);
+    BigDecimal actual = new BigDecimal(actualstr);
+    BigDecimal toleranceRate_bd = new BigDecimal(toleranceRate);
+    BigDecimal tolerance_bd = expected.multiply(toleranceRate_bd);
+    BigDecimal absgap = actual.subtract(expected).abs();
+    log.info("expected:"+ expectedstr +", actual:" + actualstr + ", GAP:" + absgap + ", tolerance:"+ tolerance_bd.toString());
+    Boolean InTolerance = (absgap.compareTo(tolerance_bd) == -1 || absgap.compareTo(tolerance_bd) == 0);
+    return InTolerance;
+  }
 
 
   public static Map<String, String> getV2Header(){

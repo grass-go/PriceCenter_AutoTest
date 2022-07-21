@@ -1,6 +1,5 @@
 package tron.tronlink.v2;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
 import lombok.extern.slf4j.Slf4j;
@@ -9,15 +8,13 @@ import org.junit.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import tron.common.PriceCenterApiList;
 import tron.common.TronlinkApiList;
 import tron.common.utils.Configuration;
 import tron.tronlink.base.TronlinkBase;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +40,7 @@ public class checkPrice extends TronlinkBase {
         response = TronlinkApiList.v2AssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         assetListRespContent = TronlinkApiList.parseJsonObResponseContent(response);
+        SetTrxPriceMap();
     }
 
     public static String getTrxPricefromCMC(String exchageType){
@@ -62,11 +60,11 @@ public class checkPrice extends TronlinkBase {
         return trxPrice;
     }
     public static void SetTrxPriceMap() {
-        trxPriceMap.put("USD",getTrxPricefromCMC("USD"));
-        trxPriceMap.put("USDT",getTrxPricefromCMC("USDT"));
+//        trxPriceMap.put("USD",getTrxPricefromCMC("USD"));
+//        trxPriceMap.put("USDT",getTrxPricefromCMC("USDT"));
         trxPriceMap.put("CNY",getTrxPricefromCMC("CNY"));
-        trxPriceMap.put("EUR",getTrxPricefromCMC("EUR"));
-        trxPriceMap.put("GBP",getTrxPricefromCMC("GBP"));
+//        trxPriceMap.put("EUR",getTrxPricefromCMC("EUR"));
+//        trxPriceMap.put("GBP",getTrxPricefromCMC("GBP"));
     }
 
     @DataProvider(name = "checkPriceTokens")
@@ -81,41 +79,47 @@ public class checkPrice extends TronlinkBase {
         int totalLine = contentLines.size();
         columnNum = contentLines.get(0).split(",").length;
 
-        Object[][] data = new Object[totalLine-1][columnNum];
-        for(int i = 1; i<totalLine; i++){
+        Object[][] data = new Object[totalLine-2][columnNum];
+        for(int i = 2; i<totalLine; i++){
             String stringValue[] = contentLines.get(i).split(",");
             for(int j = 0; j<columnNum; j++) {
-                data[i-1][j] = stringValue[j];
+                data[i-2][j] = stringValue[j];
             }
         }
         log.info("data:"+data.toString());
         return data;
     }
 
-    @Test(enabled = false, dataProvider = "checkPriceTokens")
-    public void test001CompareTokenPriceWithTronscan(String symbol, String address, String tolerance) throws URISyntaxException, IOException {
+    @Test(enabled = true, dataProvider = "checkPriceTokens", description = "token without WBTC and WETH")
+    public void test001CompareTokenPriceWithTronscan(String symbol, String address, String tolerance) {
         log.info("test001CompareTokenPriceWithTronscan:"+symbol,", address", address, ", tolerance:");
-        Object trxCount_obj;
-        Object usdCount_obj;
-        Object cnyCount_obj;
+        Object trxPrice_obj;
+        Object usdPrice_obj;
+        Object cnyPrice_obj;
 
         //get token unit price in assetlist response
-        if (symbol == "BTTOLD" || symbol == "USDD10"){
-            trxCount_obj = JSONPath.eval(assetListRespContent,String.join("","$..data.token[id='", address, "'].trxCount[0]"));
-            usdCount_obj = JSONPath.eval(assetListRespContent,String.join("","$..data.token[id='", address, "'].usdCount[0]"));
-            cnyCount_obj = JSONPath.eval(assetListRespContent,String.join("","$..data.token[id='", address, "'].cnyCount[0]"));
+        if ("BTTOLD".equalsIgnoreCase(symbol) || "USDD10".equalsIgnoreCase(symbol)){
+            trxPrice_obj = JSONPath.eval(assetListRespContent,String.join("","$..data.token[id='", address, "'].price[0]"));
+            usdPrice_obj = JSONPath.eval(assetListRespContent,String.join("","$..data.token[id='", address, "'].usdPrice[0]"));
+            cnyPrice_obj = JSONPath.eval(assetListRespContent,String.join("","$..data.token[id='", address, "'].cnyPrice[0]"));
         }
         else{
-            trxCount_obj = JSONPath.eval(assetListRespContent,String.join("","$..data.token[contractAddress='", address, "'].trxCount[0]"));
-            usdCount_obj = JSONPath.eval(assetListRespContent,String.join("","$..data.token[contractAddress='", address, "'].usdCount[0]"));
-            cnyCount_obj = JSONPath.eval(assetListRespContent,String.join("","$..data.token[contractAddress='", address, "'].cnyCount[0]"));
+            trxPrice_obj = JSONPath.eval(assetListRespContent,String.join("","$..data.token[contractAddress='", address, "'].price[0]"));
+            usdPrice_obj = JSONPath.eval(assetListRespContent,String.join("","$..data.token[contractAddress='", address, "'].usdPrice[0]"));
+            cnyPrice_obj = JSONPath.eval(assetListRespContent,String.join("","$..data.token[contractAddress='", address, "'].cnyPrice[0]"));
         }
 
-
         //get token unit price in tronscan
+        JSONObject tronscanPriceObj = TronlinkApiList.getTronscanTrc20Price(address);
+        System.out.println(tronscanPriceObj.toJSONString());
+        String tronscanTrxPrice = tronscanPriceObj.get("priceInTrx").toString();
+        String tronscanUsdPrice = tronscanPriceObj.get("priceInUsd").toString();
+        String cmcCnyPrice = new BigDecimal(trxPriceMap.get("CNY")).multiply(new BigDecimal(trxPrice_obj.toString())).toString();
 
         //compare price between assetlist api and tronscan api.
-        //Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(trxSymbolPrice.toString(), trxAddressPrice.toString(),curTolerance));
+        Assert.assertTrue(TronlinkApiList.CompareGapInGivenTolerance(trxPrice_obj.toString(), tronscanTrxPrice, tolerance));
+        Assert.assertTrue(TronlinkApiList.CompareGapInGivenTolerance(usdPrice_obj.toString(), tronscanUsdPrice, tolerance));
+        Assert.assertTrue(TronlinkApiList.CompareGapInGivenTolerance(cnyPrice_obj.toString(), cmcCnyPrice, tolerance));
     }
 
     @Test(enabled = false)
