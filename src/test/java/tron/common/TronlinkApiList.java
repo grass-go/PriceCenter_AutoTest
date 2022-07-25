@@ -619,7 +619,7 @@ public static HttpResponse search(Map<String, String> params) {
         httppost.setEntity(entity);
       }
       SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-      log.info("url: " + httppost.toString() + "\n params:"+requestBody);
+//      log.info("url: " + httppost.toString() + "\n params:"+requestBody);
       response = httpClient.execute(httppost);
     } catch (Exception e) {
       e.printStackTrace();
@@ -1010,7 +1010,7 @@ public static HttpResponse search(Map<String, String> params) {
         entity.setContentType("application/json");
         httppost.setEntity(entity);
       }
-      log.info("url: "+httppost.toString() + "\n params: "+requestBody.toString());
+//      log.info("url: "+httppost.toString() + "\n params: "+requestBody.toString());
       SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
       response = httpClient.execute(httppost);
     } catch (Exception e) {
@@ -1054,7 +1054,7 @@ public static HttpResponse search(Map<String, String> params) {
         httppost.setEntity(entity);
       }
       SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-      log.info("url: "+httppost.toString()+"\nparams: "+requestBody.toString());
+//      log.info("url: "+httppost.toString()+"\nparams: "+requestBody.toString());
       response = httpClient.execute(httppost);
 
     } catch (Exception e) {
@@ -1142,7 +1142,7 @@ public static HttpResponse search(Map<String, String> params) {
         entity.setContentEncoding("UTF-8");
         entity.setContentType("application/json");
 //        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-        log.info("url: "+httpget.toString()+"\nparams: "+requestBody.toString());
+//        log.info("url: "+httpget.toString()+"\nparams: "+requestBody.toString());
       }
 
       log.info("" + httpget);
@@ -1181,7 +1181,7 @@ public static HttpResponse search(Map<String, String> params) {
         httppost.setEntity(entity);
       }
       response = httpClient.execute(httppost);
-      log.info("url: "+httppost.toString()+"\nparams: "+requestBody.toString());
+//      log.info("url: "+httppost.toString()+"\nparams: "+requestBody.toString());
     } catch (Exception e) {
       e.printStackTrace();
       httppost.releaseConnection();
