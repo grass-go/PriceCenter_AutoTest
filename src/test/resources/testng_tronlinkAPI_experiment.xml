@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="tronlinkAPIExperiment" parallel="tests" thread-count="0">
+    <listeners>
+<!--        <listener class-name="tron.common.utils.SqlTronlinkAPI"/>-->
+<!--        <listener class-name="tron.common.utils.RetryListener"/>-->
+    </listeners>
+
+
+    <test name="tronlinkAPIExperiment" >
+        <parameter name="tronlinkUrl" value="https://list.tronlink.org"></parameter>
+        <parameter name="tronscanApiUrl" value="https://apilist.tronscan.org"></parameter>
+        <classes>
+            <class name="tron.priceCenter.experiment.TokenPricePuller"></class>
+        </classes>
+    </test>
+</suite>

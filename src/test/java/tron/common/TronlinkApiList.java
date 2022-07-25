@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
@@ -701,6 +700,13 @@ public static HttpResponse search(Map<String, String> params) {
     return response;
   }
 
+  public static HttpResponse v2GetAssetList(Map<String, String> params, JSONObject body, Map<String,String>headers) {
+    final String requestUrl = HttpNode + "/api/wallet/v2/assetList";
+    log.info("requestUrl : " + requestUrl);
+    response = createGetConnectWithHeader(requestUrl, params, body, headers);
+    return response;
+  }
+
   public static HttpResponse v2GetAllCollection(Map<String, String> params) {
     final String requestUrl = HttpNode + "/api/wallet/nft/getAllCollection";
     response = v2CreateGetConnect(requestUrl, params);
@@ -1091,7 +1097,11 @@ public static HttpResponse search(Map<String, String> params) {
         httppost.setEntity(entity);
       }
       SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-      log.info("url: "+httppost.toString()+"\nparams: "+requestBody.toString());
+      if (requestBody == null){
+        log.info("no request body info");
+        requestBody = new JSONObject();
+      }
+      log.info("url: "+httppost.toString()+"\nparams: "+params.toString() + " \n requestbody : "+requestBody.toString());
       response = httpClient.execute(httppost);
     } catch (Exception e) {
       e.printStackTrace();
@@ -1130,7 +1140,7 @@ public static HttpResponse search(Map<String, String> params) {
         StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
         entity.setContentEncoding("UTF-8");
         entity.setContentType("application/json");
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
+//        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
         log.info("url: "+httpget.toString()+"\nparams: "+requestBody.toString());
       }
 
