@@ -19,7 +19,7 @@ public class TokenPricePuller extends TronlinkBase {
     private String testAddress = "TJNSYUxnViYJH95oK3fk9aZH7ejr5BFvQW";
     private String token = "";
 
-    @Test(enabled = true,description = "get part token prices", invocationCount = 180)
+    @Test(enabled = true,description = "get part token prices", invocationCount = 10)
     public void GetTokenPrice() throws InterruptedException {
         BigDecimal first = GetV2PriceByToken();
         BigDecimal sencond = GetSinglePriceByToken();
