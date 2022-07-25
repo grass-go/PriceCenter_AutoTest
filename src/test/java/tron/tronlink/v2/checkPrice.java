@@ -57,7 +57,7 @@ public class checkPrice extends TronlinkBase {
             response = TronlinkApiList.createGetConnectWithHeader(CMCurl,params,null,header);
             if(response == null || response.getStatusLine().getStatusCode() != 200){
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(20000);
                     continue;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
