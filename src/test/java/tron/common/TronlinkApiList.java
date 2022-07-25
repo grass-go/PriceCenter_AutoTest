@@ -1097,11 +1097,12 @@ public static HttpResponse search(Map<String, String> params) {
         httppost.setEntity(entity);
       }
       SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-      if (requestBody == null){
-        log.info("no request body info");
-        requestBody = new JSONObject();
-      }
-      log.info("url: "+httppost.toString()+"\nparams: "+params.toString() + " \n requestbody : "+requestBody.toString());
+//      if (requestBody == null){
+//        log.info("no request body info");
+//        requestBody = new JSONObject();
+//      }
+//      log.info("url: "+httppost.toString()+"\nparams: "+params.toString() + " \n requestbody : "+requestBody.toString());
+//
       response = httpClient.execute(httppost);
     } catch (Exception e) {
       e.printStackTrace();
