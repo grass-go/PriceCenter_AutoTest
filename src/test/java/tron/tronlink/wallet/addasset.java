@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -162,7 +163,7 @@ public class addasset {
       tokenJson.put("token20", trc20ContractAddressList);
       tokenJson.put("token10", trc10tokenList);
       response = TronlinkApiList.addAsset(tokenJson);
-      Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+      Assert.assertEquals(response.getStatusLine().getStatusCode(), HttpStatus.SC_OK);
     }
   }
 
