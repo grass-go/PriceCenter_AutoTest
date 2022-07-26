@@ -125,6 +125,7 @@ public class checkPrice extends TronlinkBase {
         System.out.println(tronscanPriceObj.toJSONString());
         String tronscanTrxPrice = tronscanPriceObj.get("priceInTrx").toString();
         String tronscanUsdPrice = tronscanPriceObj.get("priceInUsd").toString();
+        log.info("trxPriceMap:"+trxPriceMap.toString());
         String cmcCnyPrice = new BigDecimal(trxPriceMap.get("CNY")).multiply(new BigDecimal(trxPrice_obj.toString())).toString();
 
         //compare price between assetlist api and tronscan api.
