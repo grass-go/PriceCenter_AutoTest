@@ -110,7 +110,7 @@ public class addasset {
 
   }
 
-  @Test(enabled = true,description = "Test cancel trc20 token ,four trc20 token are always exist")
+  @Test(enabled = false,description = "Test cancel trc20 token ,four trc20 token are always exist")
   public void test003CancelTrc20FromAccount() throws Exception {
     tokenJson.clear();
     tokenJson.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");

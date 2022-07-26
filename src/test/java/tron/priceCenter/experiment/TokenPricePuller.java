@@ -17,29 +17,34 @@ import java.util.Map;
 public class TokenPricePuller extends TronlinkBase {
 
     private String testAddress = "TJNSYUxnViYJH95oK3fk9aZH7ejr5BFvQW";
-    private String token = "";
+    private String token1 = "TFpPyDCKvNFgos3g3WVsAqMrdqhB81JXHE";
+    private String token2 = "TFczxzPhnThNSqr5by8tvxsdCFRRz6cPNq";
 
-    @Test(enabled = true,description = "get part token prices", invocationCount = 14400)
+    @Test(enabled = true,description = "get part token prices", invocationCount = 2)
     public void GetTokenPrice() throws InterruptedException {
-        BigDecimal first = GetV2PriceByToken();
-        BigDecimal sencond = GetSinglePriceByToken();
-        BigDecimal three  = GetAllPriceByToken();
+        BigDecimal first = GetV2PriceByToken(token1);
+        BigDecimal sencond = GetSinglePriceByToken(token1);
+        BigDecimal three  = GetAllPriceByToken(token1);
+
+        BigDecimal first2 = GetV2PriceByToken(token2);
+        BigDecimal sencond2 = GetSinglePriceByToken(token2);
+        BigDecimal three2  = GetAllPriceByToken(token2);
 
         String line = System.currentTimeMillis() + "\t" +
-                first + "\t" + sencond + "\t" + three;
+                first + "\t" + sencond + "\t" + three + "\t" + first2 + "\t" + sencond2 + "\t" + three2;
         FileOperation.OutToFile("./price_result.txt", line);
 
         Thread.sleep(10 * 1000);
     }
 
-    public BigDecimal GetV2PriceByToken(){
+    public BigDecimal GetV2PriceByToken(String token){
         Map<String,String> params = GenerateParams();
         Map<String,String> headers = GenerateHeaders();
         HttpResponse response = TronlinkApiList.v2GetAssetList(params, null, headers);
         JSONObject assetListRespContent = TronlinkApiList.parseJsonObResponseContent(response);
 
         log.debug(assetListRespContent.toJSONString());
-        Object usdPrice = JSONPath.eval(assetListRespContent, String.join("","$..data.token[contractAddress='TFpPyDCKvNFgos3g3WVsAqMrdqhB81JXHE'].usdPrice[0]"));
+        Object usdPrice = JSONPath.eval(assetListRespContent, String.join("","$..data.token[contractAddress='" + token + "'].usdPrice[0]"));
         BigDecimal up = new BigDecimal((String)usdPrice);
         log.info("first usd price = " + up);
         return up;
@@ -75,23 +80,23 @@ public class TokenPricePuller extends TronlinkBase {
         return headers;
     }
 
-    public BigDecimal GetSinglePriceByToken(){
-        HttpResponse response = TronlinkApiList.createGetConnect("https://c.tronlink.org/v1/cryptocurrency/getprice?symbol=TFpPyDCKvNFgos3g3WVsAqMrdqhB81JXHE&convert=USD");
+    public BigDecimal GetSinglePriceByToken(String token){
+        HttpResponse response = TronlinkApiList.createGetConnect("https://c.tronlink.org/v1/cryptocurrency/getprice?symbol=" + token + "&convert=USD");
 
         JSONObject assetListRespContent = TronlinkApiList.parseJsonObResponseContent(response);
         log.debug(assetListRespContent.toJSONString());
-        Object usdPrice = JSONPath.eval(assetListRespContent, String.join("","$..data[0].TFpPyDCKvNFgos3g3WVsAqMrdqhB81JXHE.quote.USD.price"));
+        Object usdPrice = JSONPath.eval(assetListRespContent, String.join("","$..data[0]." + token + ".quote.USD.price"));
         BigDecimal up = new BigDecimal((String)usdPrice);
         log.info("second usd price = " + up);
         return up;
     }
 
-    public BigDecimal GetAllPriceByToken(){
+    public BigDecimal GetAllPriceByToken(String token ){
         HttpResponse response = TronlinkApiList.createGetConnect("https://c.tronlink.org/v1/cryptocurrency/getallprice");
 
         JSONObject assetListRespContent = TronlinkApiList.parseJsonObResponseContent(response);
         log.debug(assetListRespContent.toJSONString());
-        Object usdPrice = JSONPath.eval(assetListRespContent, String.join("","$..data[0].rows[fTokenAddr='TFpPyDCKvNFgos3g3WVsAqMrdqhB81JXHE'][sShortName = 'USD'].price[0]"));
+        Object usdPrice = JSONPath.eval(assetListRespContent, String.join("","$..data[0].rows[fTokenAddr='" + token +"'][sShortName = 'USD'].price[0]"));
         BigDecimal up = new BigDecimal((String)usdPrice);
         log.info("three usd price = " + up);
         return up;
