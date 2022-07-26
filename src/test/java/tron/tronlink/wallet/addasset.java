@@ -11,6 +11,7 @@ import tron.common.TronlinkApiList;
 import tron.common.utils.Configuration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class addasset {
@@ -151,4 +152,47 @@ public class addasset {
 //    Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()==trc20ContractAddressList.size());
   }
 
+  @Test(enabled = true,description = "restore add all token to account.")
+  public void test006AddAllTokenToAccount() throws Exception {
+    int RecommendedCurrencyNum = 15;
+    if (trc20ContractAddressList.size() == RecommendedCurrencyNum) {
+      trc20ContractAddressList = restoreTrc20List();
+      tokenJson.clear();
+      tokenJson.put("address", "414db7719251ce8ba74549ba35bbdc02418ecde595");
+      tokenJson.put("token20", trc20ContractAddressList);
+      tokenJson.put("token10", trc10tokenList);
+      response = TronlinkApiList.addAsset(tokenJson);
+      Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    }
+  }
+
+  private ArrayList<String> restoreTrc20List(){
+    String[] origins = {"TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9",
+            "TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4",
+            "THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF",
+            "TDyvndWuvX5xTBwHPYJi7J3Yq8pq8yh62h",
+            "TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9",
+            "TR3DLthpnDdCGabhVDbD3VMsiJoCXY3bZd",
+            "TFczxzPhnThNSqr5by8tvxsdCFRRz6cPNq",
+            "TKAtLoCB529zusLfLVkGvLNis6okwjB7jf",
+            "TYukBQZ2XXCcRCReAUguyXncCWNY9CEiDQ",
+            "TUEYcyPAqc4hTg1fSuBCPc18vGWcJDECVw",
+            "TEjpEVwm3Xr5VHfa2CWYLqcyKZEGE9CGUz",
+            "TEMrHs44addxrafXBWQiQxLjPKwNT8tgWc",
+            "TSJWbBJAS8HgQCMJfY5drVwYDa7JBAm6Es",
+            "TQn9Y2khEsLJW1ChVWFMSMeRDow5KcbLSE",
+            "TSSMHYeV2uE9qYH95DqyoCuNCzEL1NvU3S",
+            "TKkeiboTkxXKJpbmVFbv4a8ov5rAfRDMf9",
+            "TKTwvJhHAfiUNMrdnWoYkoUY9meYnTgtdk",
+            "TQ8kZgvhcP6cHZTPLEJbBojsycZKb8V2wL",
+            "TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8",
+            "TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn",
+            "TMwFHYXLJaRUPeW6421aqXL4ZEzPRFGkGT",
+            "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+            "TKfjV9RNKJJCqPvBtK8L7Knykh7DNWvnYt",
+            "TXWkP3jLBqRGojUih1ShzNyDaN5Csnebok",
+            "TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",
+            "TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR"};
+    return  new ArrayList<String>(Arrays.asList(origins));
+  }
 }
