@@ -13,25 +13,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-public class RiskToken extends TronlinkBase {
+public class RiskTokens extends TronlinkBase {
 
 
     @Test(description = "查询所有的风险tokens")
     public void getRiskTokens(){
+        JSONObject tokens = GetAllRiskTokens();
+        //todo 断言
+    }
+
+    // 对外提供的接口
+    public JSONObject GetAllRiskTokens(){
         final String url = "/api/wallet/v2/risktokens";
         Map<String,String> params = GenerateParams(queryAddress58, url);
         Map<String,String> headers = GenerateHeaders();
         JSONObject body = new JSONObject();
         body.put(Keys.Address, queryAddress58);
-
-        HttpResponse response = TronlinkApiList.v2PostRiskToken(params, body, headers, url);
+        HttpResponse response = TronlinkApiList.v2PostRiskTokens(params, body, headers, url);
         Assert.assertNotEquals(response, null);
-        JSONObject assetListRespContent = TronlinkApiList.parseJsonObResponseContent(response);
-
-        log.debug(assetListRespContent.toJSONString());
-//        Object usdPrice = JSONPath.eval(assetListRespContent, String.join("","$..data.token[contractAddress='" + token + "'].usdPrice[0]"));
-//        BigDecimal up = new BigDecimal((String)usdPrice);
-//        log.info("first usd price = " + up);
+        JSONObject riskTokensRsp = TronlinkApiList.parseJsonObResponseContent(response);
+        log.debug("all risk tokens =" + riskTokensRsp.toJSONString());
+        return riskTokensRsp;
     }
 
     private Map<String,String> GenerateParams(String Address, String url){

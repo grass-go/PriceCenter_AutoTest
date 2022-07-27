@@ -6,4 +6,5 @@ package tron.common.utils;
 public class Keys {
     public static final String Address = "address";
     public static final String url = "url";
+    public static final String data = "data";
 }

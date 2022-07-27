@@ -1725,10 +1725,19 @@ public static HttpResponse search(Map<String, String> params) {
     return lines;
   }
 
-  public static HttpResponse v2PostRiskToken(Map<String, String> params, JSONObject body, Map<String,String>headers, String url) {
+  public static HttpResponse v2PostRiskTokens(Map<String, String> params, JSONObject body, Map<String,String>headers, String url) {
     final String requestUrl = HttpNode + url;
     log.info("requestUrl : " + requestUrl);
     response = createPostConnectWithHeader(requestUrl, params, body, headers);
+    return response;
+  }
+
+  public static HttpResponse v2GetRisk(Map<String, String> params, JSONObject body, Map<String,String>headers, String url) {
+//    final String requestUrl = HttpNode + url;
+    final String requestUrl = "https://testpre.tronlink.com" + url;
+
+    log.info("requestUrl : " + requestUrl);
+    response = createGetConnectWithHeader(requestUrl, params, body, headers);
     return response;
   }
 
