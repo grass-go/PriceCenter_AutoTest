@@ -1725,5 +1725,12 @@ public static HttpResponse search(Map<String, String> params) {
     return lines;
   }
 
+  public static HttpResponse v2PostRiskToken(Map<String, String> params, JSONObject body, Map<String,String>headers, String url) {
+    final String requestUrl = HttpNode + url;
+    log.info("requestUrl : " + requestUrl);
+    response = createPostConnectWithHeader(requestUrl, params, body, headers);
+    return response;
+  }
+
 
 }
