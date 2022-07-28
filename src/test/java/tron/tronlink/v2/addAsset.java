@@ -242,21 +242,20 @@ public class addAsset extends TronlinkBase {
         System.out.println("actualName2 Object is: " + actualName2.toString());
         Assert.assertEquals(actualName2.toString(), "[]");
     }
-    GetSign sign = new GetSign();
+    GetSign sig = new GetSign();
 
     // 关注资产、取消关注
     // follow: true 表示关注目标token
     // unfollow: true 表示取消关注目标token
-    public boolean addAssetByToken10(boolean follow, String address, String token) {
-
+    public boolean addAssetByToken10(boolean follow, String address41, String token) {
+        JSONObject jsonObject = new JSONObject();
+        Map<String,String> params;
 //        params.put("nonce", "12345");
 //        params.put("secretId", "SFSUIOJBFMLKSJIF");
-//
 //        params.put("signature", "0MD5qghokR6tbCau0m%2BUfZzz45o%3D");
-//        Map<String,String> params = sign.GenerateParams();
+        params = sig.GenerateParams(unfollowAsset, "/api/wallet/v2/addAsset", "POST");
 
-
-        jsonObject.put("address", address);
+        jsonObject.put("address", address41);
         //    "1002000"
         trc10tokenList.add(token);
         if (follow) {
