@@ -7,4 +7,7 @@ public class Keys {
     public static final String Address = "address";
     public static final String url = "url";
     public static final String data = "data";
+    public static final String FollowToken10 = "token10";
+    public static final String unFollowToken10 = "token10Cancel";
+
 }

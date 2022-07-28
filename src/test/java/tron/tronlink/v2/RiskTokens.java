@@ -25,7 +25,7 @@ public class RiskTokens extends TronlinkBase {
     // 对外提供的接口
     public JSONObject GetAllRiskTokens(){
         final String url = "/api/wallet/v2/risktokens";
-        Map<String,String> params = GenerateParams(queryAddress58, url);
+        Map<String,String> params = GenerateParams(queryAddress58, url, "POST");
         Map<String,String> headers = GenerateHeaders();
         JSONObject body = new JSONObject();
         body.put(Keys.Address, queryAddress58);
@@ -36,7 +36,7 @@ public class RiskTokens extends TronlinkBase {
         return riskTokensRsp;
     }
 
-    private Map<String,String> GenerateParams(String Address, String url){
+    public Map<String,String> GenerateParams(String Address, String url, String method){
         Map<String,String> params = new HashMap<>();
         params.put("nonce","12345");
         params.put("secretId","SFSUIOJBFMLKSJIF");
@@ -44,7 +44,7 @@ public class RiskTokens extends TronlinkBase {
         HashMap<String,String> sigs = new HashMap<>();
         sigs.put("address", Address);
         sigs.put("url", url);
-        sigs.put("method", "POST");
+        sigs.put("method", method);
         try {
             String sig = getSign(sigs);
             params.put("signature",sig);

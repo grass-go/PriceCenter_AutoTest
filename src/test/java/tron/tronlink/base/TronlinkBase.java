@@ -28,7 +28,7 @@ public class TronlinkBase {
     public String quince_B58 = Configuration.getByPath("testng.conf").getString("tronlink.quince_B58");
     public String testDELuser_B58 = Configuration.getByPath("testng.conf").getString("tronlink.testDELuser_B58");
     public String price_B58 = Configuration.getByPath("testng.conf").getString("tronlink.priceUser");
-
+    public String unfollowAsset41 = addressNewAsset41;
     public static GetSign getSign = new GetSign();
     public String nonce = "12345";
     public String secretId = "SFSUIOJBFMLKSJIF";
@@ -36,7 +36,8 @@ public class TronlinkBase {
     @Parameters({"tronlinkUrl","tronscanApiUrl"})
     @BeforeTest
     public void  getMonitorUrl(String tronlinkUrl, String tronscanApiUrl) {
-        this.tronlinkUrl = tronlinkUrl;
+//        this.tronlinkUrl = tronlinkUrl;
+        this.tronlinkUrl = "https://testpre.tronlink.org";
         this.tronscanApiUrl = tronscanApiUrl;
         TronlinkApiList.HttpNode =tronlinkUrl;
         TronlinkApiList.HttpTronDataNode = tronscanApiUrl;

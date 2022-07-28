@@ -665,7 +665,9 @@ public static HttpResponse search(Map<String, String> params) {
 
   public static HttpResponse V2UnfollowAssetList(Map<String, String> params){
     try {
-      String requestUrl = HttpNode +"/api/wallet/v2/unfollowAssetList";
+
+//      String requestUrl = HttpNode +"/api/wallet/v2/unfollowAssetList";
+      String requestUrl = "https://testpre.tronlink.org" +"/api/wallet/v2/unfollowAssetList";
       response = v2CreateGetConnect(requestUrl,params);
     } catch (Exception e) {
       e.printStackTrace();
