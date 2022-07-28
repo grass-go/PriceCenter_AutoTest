@@ -41,20 +41,20 @@ public class addasset {
   public void addasset(){
 
     response = TronlinkApiList.addasset("{\n"
-        + "  \"address\": \"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe\",\n"
-        + "  \"token10\": [\n"
-        + "    \"zzz\"\n"
-        + "  ],\n"
-        + "  \"token10Cancel\": [\n"
-        + "    \"aaa\"\n"
-        + "  ],\n"
-        + "  \"token20\": [\n"
-        + "    \"xxx\"\n"
-        + "  ],\n"
-        + "  \"token20Cancel\": [\n"
-        + "    \"ccc\"\n"
-        + "  ]\n"
-        + "}");
+            + "  \"address\": \"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe\",\n"
+            + "  \"token10\": [\n"
+            + "    \"zzz\"\n"
+            + "  ],\n"
+            + "  \"token10Cancel\": [\n"
+            + "    \"aaa\"\n"
+            + "  ],\n"
+            + "  \"token20\": [\n"
+            + "    \"xxx\"\n"
+            + "  ],\n"
+            + "  \"token20Cancel\": [\n"
+            + "    \"ccc\"\n"
+            + "  ]\n"
+            + "}");
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     responseArrayContent = responseContent.getJSONArray("data");
@@ -197,3 +197,4 @@ public class addasset {
     return  new ArrayList<String>(Arrays.asList(origins));
   }
 }
+

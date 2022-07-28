@@ -1727,5 +1727,15 @@ public static HttpResponse search(Map<String, String> params) {
     return lines;
   }
 
+  public static JSONObject getprice(String symbol, String convert){
+    Map<String,String> params = new HashMap<>();
+    params.clear();
+    params.put("symbol", symbol);
+    params.put("convert", convert);
+    response = PriceCenterApiList.getprice(params);
+    Assert.assertEquals(200, response.getStatusLine().getStatusCode());
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    return responseContent;
+  }
 
 }
