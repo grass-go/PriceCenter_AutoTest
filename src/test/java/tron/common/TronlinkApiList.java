@@ -701,7 +701,9 @@ public static HttpResponse search(Map<String, String> params) {
   }
 
   public static HttpResponse v2GetAssetList(Map<String, String> params, JSONObject body, Map<String,String>headers) {
-    final String requestUrl = HttpNode + "/api/wallet/v2/assetList";
+//    final String requestUrl = HttpNode + "/api/wallet/v2/assetList";
+    final String requestUrl = "https://testpre.tronlink.org" + "/api/wallet/v2/assetList";
+
     log.info("requestUrl : " + requestUrl);
     response = createGetConnectWithHeader(requestUrl, params, body, headers);
     return response;
