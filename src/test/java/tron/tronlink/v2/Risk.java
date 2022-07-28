@@ -35,7 +35,7 @@ public class Risk extends TronlinkBase {
         List<String> errTokens = generateErrTokens();
         for (String str:
                 errTokens) {
-//            Assert.assertEquals(false, isRiskToken(str));
+            Assert.assertEquals(false, isRiskToken(str));
         }
     }
 

@@ -34,8 +34,7 @@ public class TronlinkBase {
     @Parameters({"tronlinkUrl","tronscanApiUrl"})
     @BeforeTest
     public void  getMonitorUrl(String tronlinkUrl, String tronscanApiUrl) {
-//        this.tronlinkUrl = tronlinkUrl;
-        this.tronlinkUrl = "https://testpre.tronlink.org";
+        this.tronlinkUrl = tronlinkUrl;
         this.tronscanApiUrl = tronscanApiUrl;
         TronlinkApiList.HttpNode =tronlinkUrl;
         TronlinkApiList.HttpTronDataNode = tronscanApiUrl;

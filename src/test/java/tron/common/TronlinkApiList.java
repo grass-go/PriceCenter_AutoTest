@@ -666,8 +666,7 @@ public static HttpResponse search(Map<String, String> params) {
   public static HttpResponse V2UnfollowAssetList(Map<String, String> params){
     try {
 
-//      String requestUrl = HttpNode +"/api/wallet/v2/unfollowAssetList";
-      String requestUrl = "https://testpre.tronlink.org" +"/api/wallet/v2/unfollowAssetList";
+      String requestUrl = HttpNode +"/api/wallet/v2/unfollowAssetList";
       response = v2CreateGetConnect(requestUrl,params);
     } catch (Exception e) {
       e.printStackTrace();
@@ -1105,6 +1104,7 @@ public static HttpResponse search(Map<String, String> params) {
 //      }
 //      log.info("url: "+httppost.toString()+"\nparams: "+params.toString() + " \n requestbody : "+requestBody.toString());
 //
+      printHttpInfo(httppost,params,requestBody );
       response = httpClient.execute(httppost);
     } catch (Exception e) {
       e.printStackTrace();
@@ -1112,6 +1112,20 @@ public static HttpResponse search(Map<String, String> params) {
       return null;
     }
     return response;
+  }
+
+  public static void  printHttpInfo(HttpPost httppost, Map<String,String> params, JSONObject requestbody){
+    log.info("begin print http info");
+    if (httppost != null){
+      log.info("httppost = " + httppost);
+    }
+    if (params != null){
+      log.info("params = " + params);
+    }
+    if (requestbody != null){
+      log.info("requestbody = " + requestbody);
+    }
+    log.info("end print http info");
   }
 
   /**
@@ -1735,8 +1749,7 @@ public static HttpResponse search(Map<String, String> params) {
   }
 
   public static HttpResponse v2GetRisk(Map<String, String> params, JSONObject body, Map<String,String>headers, String url) {
-//    final String requestUrl = HttpNode + url;
-    final String requestUrl = "https://testpre.tronlink.com" + url;
+    final String requestUrl = HttpNode + url;
 
     log.info("requestUrl : " + requestUrl);
     response = createGetConnectWithHeader(requestUrl, params, body, headers);
