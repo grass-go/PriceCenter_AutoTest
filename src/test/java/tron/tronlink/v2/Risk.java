@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.common.utils.Keys;
 import tron.tronlink.base.TronlinkBase;
+import tron.tronlink.v2.model.RiskRsp;
 
 import java.util.*;
 
@@ -29,13 +30,23 @@ public class Risk extends TronlinkBase {
         List<String> pickTokens = generateRandomTokens(tokenStrs);
         for (String str:
              pickTokens) {
-            Assert.assertEquals(true, isRiskToken(str));
+            Assert.assertEquals( isRiskToken(str),true);
         }
+        // 构造错误的地址
+//        List<String> errTokens = generateErrTokens();
+//        for (String str:
+//                errTokens) {
+//            Assert.assertEquals( isRiskToken(str),false);
+//        }
+    }
+
+    @Test(description = "判断risktokens接口返回的token在该接口能否查到")
+    public void getRisk02(){
         // 构造错误的地址
         List<String> errTokens = generateErrTokens();
         for (String str:
                 errTokens) {
-            Assert.assertEquals(false, isRiskToken(str));
+            Assert.assertEquals( isRiskToken(str),false);
         }
     }
 
@@ -73,9 +84,10 @@ public class Risk extends TronlinkBase {
         HttpResponse response = TronlinkApiList.v2GetRisk(params, null, headers, url);
         Assert.assertNotEquals(response, null);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), HttpStatus.SC_OK);
-        JSONObject riskRsp = TronlinkApiList.parseJsonObResponseContent(response);
-        log.debug("all risk tokens =" + riskRsp.toJSONString());
-        return false;
+        String riskStr = TronlinkApiList.parseResponse2String(response);
+        log.debug("all risk tokens =" + riskStr);
+        RiskRsp rsp = JSONObject.parseObject(riskStr, RiskRsp.class);
+        return rsp.getData();
     }
 
     private Map<String,String> GenerateParams(String Address,String token, String url, String method){

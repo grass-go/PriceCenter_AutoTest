@@ -99,8 +99,8 @@ public class unfollowAssetList extends TronlinkBase {
 
     @Test(enabled = true, description = "验证余额balance=0的普通币，取消关注，不在unfollow接口")
     public void unfollowAssetList03() {
-        // 无余额的一个官方币 eth
-        String followToken = "THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF";
+        // 无余额的一个 doge coin
+        String followToken = "THbVQp8kMjStKNnf2iCY6NEzThKMK5aBHg";
         // 先取消关注一个币
         boolean follow = addAsset.addAssetByToken10(20, false, unfollowAsset41, followToken);
         org.testng.Assert.assertEquals(true, follow);
@@ -151,10 +151,10 @@ public class unfollowAssetList extends TronlinkBase {
     }
 
     // todo check
-    @Test(enabled = true, description = "系统推荐币（线上：USDT）没有余额balance=0， 关注，在unfollow接口。")
+    @Test(enabled = true, description = "系统推荐币（线上：USDT）没有余额balance=0， 关注，不在unfollow接口。")
     public void unfollowAssetList04_1() {
         // 无余额的一个推荐币 usdt
-        String followToken = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
+        String followToken = "THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF";
         // 先取消关注一个币
         boolean follow = addAsset.addAssetByToken10(20, true, unfollowAsset41, followToken);
         org.testng.Assert.assertEquals(true, follow);
@@ -165,7 +165,7 @@ public class unfollowAssetList extends TronlinkBase {
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         // 断言
-        assertFound(followToken);
+        assertNotFound(followToken);
     }
 
     @Test(enabled = true, description = "排序验证：trxCount > 余额 > 简称忽略大小写排序")
