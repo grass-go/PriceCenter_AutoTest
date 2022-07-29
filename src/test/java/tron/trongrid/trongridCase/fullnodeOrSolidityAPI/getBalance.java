@@ -84,7 +84,7 @@ public class getBalance extends fullOrSolidityBase {
     responseContent = parseResponseContent(response);
     printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getJSONObject("result").getBoolean("result"));
-    Assert.assertEquals(22473, responseContent.getLongValue("energy_used"));
+    Assert.assertEquals(22484, responseContent.getLongValue("energy_used"));
   }
 
   /**
