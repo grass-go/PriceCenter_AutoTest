@@ -185,9 +185,7 @@ public class unfollowAssetList extends TronlinkBase {
         // 获取原顺序id
         List<String> ids = getIdsByTokens(rsp.getData().getToken());
 
-        // 计算排序后的顺序id
-//        List<Token> newTokens = new ArrayList<>();
-//        Collections.copy(newTokens,rsp.getData().getToken() );
+        // 排序
         Collections.sort(rsp.getData().getToken(), new Comparator<Token>() {
             @Override
             public int compare(Token t1, Token t2) {
@@ -198,10 +196,10 @@ public class unfollowAssetList extends TronlinkBase {
                     return -1;
                 }
 
-                if (t1.getUsdCount() < t2.getUsdCount()){
+                if (t1.getBalance() < t2.getBalance()){
                     return 1;
                 }
-                if (t1.getUsdCount() > t2.getUsdCount()){
+                if (t1.getBalance() > t2.getBalance()){
                     return -1;
                 }
                 return t1.getShortName().toLowerCase().compareTo(t2.getShortName().toLowerCase());
