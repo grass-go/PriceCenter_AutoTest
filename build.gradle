@@ -110,6 +110,20 @@ task tronlinkAPI_pre(type: Test) {
     }
 }
 
+// qa环境job
+task tronlinkAPI_pre(type: Test) {
+    useTestNG {
+        suites(file('src/test/resources/testng_tronlinkAPI_qa.xml'))
+        parallel 'tests'
+        threadCount 1
+
+    }
+    testLogging {
+        exceptionFormat = 'full'
+        showStackTraces = "true"
+    }
+}
+
 task tronlinkAPISGP(type: Test) {
     useTestNG {
         suites(file('src/test/resources/testng_tronlinkAPI_sgp.xml'))
