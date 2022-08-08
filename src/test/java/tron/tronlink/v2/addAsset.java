@@ -10,15 +10,21 @@ import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
+import tron.common.Constants;
 import tron.common.TronlinkApiList;
+import tron.common.utils.AddressConvert;
 import tron.common.utils.Keys;
 import tron.tronlink.base.TronlinkBase;
+import tron.tronlink.v2.model.CommonRsp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 关注、取消关注v2
+ */
 @Slf4j
 public class addAsset extends TronlinkBase {
     private JSONObject responseContent;
@@ -247,10 +253,10 @@ public class addAsset extends TronlinkBase {
     // 关注资产、取消关注
     // follow: true 表示关注目标token
     // unfollow: true 表示取消关注目标token
-    public boolean addAssetByToken10(int type, boolean follow, String address41, String token) {
+    public boolean addAssetByTokenType(int type, boolean follow, String address41, String token) {
         JSONObject jsonObject = new JSONObject();
         Map<String,String> params;
-        params = sig.GenerateParams(unfollowAsset, "/api/wallet/v2/addAsset", "POST");
+        params = sig.GenerateParams(AddressConvert.toHex(address41), Constants.addAssetUrl, "POST");
 
         jsonObject.put("address", address41);
         //    "1002000"
@@ -263,6 +269,9 @@ public class addAsset extends TronlinkBase {
             if(type == 20) {
                 jsonObject.put(Keys.FollowToken20, trcTokens);
             }
+            if(type == Constants.Token1155){
+                jsonObject.put(Keys.FollowToken1155, trcTokens);
+            }
         } else {
             if (type == 10) {
                 jsonObject.put(Keys.unFollowToken10, trcTokens);
@@ -270,19 +279,16 @@ public class addAsset extends TronlinkBase {
             if(type == 20) {
                 jsonObject.put(Keys.unFollowToken20, trcTokens);
             }
+            if(type == 1155){
+                jsonObject.put(Keys.unFollowToken1155, trcTokens);
+            }
         }
 
         response = TronlinkApiList.v2AddAsset(params, jsonObject);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-
-        if (0 != responseContent.getIntValue("code")) {
-            return false;
-        }
-        if (!"OK".equals(responseContent.getString("message"))) {
-            return false;
-        }
-        if (true != responseContent.getBooleanValue("data")) {
+        String rspStr = TronlinkApiList.parseResponse2String(response);
+        CommonRsp rsp = JSONObject.parseObject(rspStr, CommonRsp.class);
+        if ((rsp.getCode() != 0) || (rsp.getData() != true) || (!"OK".equals(rsp.getMessage()))){
             return false;
         }
         return true;
@@ -312,5 +318,22 @@ public class addAsset extends TronlinkBase {
         Assert.assertEquals("OK", responseContent.getString("message"));
         Assert.assertEquals(true, responseContent.getBooleanValue("data"));
     }
+
+
+    @Test(description = "1155 关注资产，覆盖了取消和关注1155的全部逻辑")
+    public void test001_1155_addAsset() {
+        String followToken = "TGzTpAMcxzxxJhQ61nq2jtAyJ3XJDwZHiA";
+        // 先取消关注一个1155币
+        boolean follow = addAssetByTokenType(Constants.Token1155,false, B58_1155_user, followToken);
+        org.testng.Assert.assertEquals(true, follow);
+        // 关注一个1155币
+        follow = addAssetByTokenType(Constants.Token1155,true, B58_1155_user, followToken);
+        org.testng.Assert.assertEquals(true, follow);
+        // 先取消关注一个1155币
+        follow = addAssetByTokenType(Constants.Token1155,false, B58_1155_user, followToken);
+        org.testng.Assert.assertEquals(true, follow);
+    }
+
+
 
 }

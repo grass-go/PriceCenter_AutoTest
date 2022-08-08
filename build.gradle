@@ -31,6 +31,8 @@ dependencies {
     compile group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.5.1'
     implementation group: 'com.madgag.spongycastle', name: 'core', version: '1.58.0.0'
     compile group: 'com.github.tronprotocol', name:'java-tron', version: 'GreatVoyage-v4.4.4'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.7.2'
+
 }
 
 test {
@@ -111,7 +113,7 @@ task tronlinkAPI_pre(type: Test) {
 }
 
 // qa环境job
-task tronlinkAPI_pre(type: Test) {
+task tronlinkAPI_qa(type: Test) {
     useTestNG {
         suites(file('src/test/resources/testng_tronlinkAPI_qa.xml'))
         parallel 'tests'

@@ -258,5 +258,17 @@ public class SearchAsset extends TronlinkBase {
     }
   }
 
+//  sig = GetSign();
+
+  @Test(description = "搜索1155资产")
+  public void search1155(){
+    initParams();
+//    params =
+  }
+
+  private void initParams(){
+    params.clear();
+  }
+
 
 }

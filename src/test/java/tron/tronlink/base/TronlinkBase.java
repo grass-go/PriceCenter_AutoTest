@@ -6,7 +6,9 @@ import java.util.HashMap;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import tron.common.TronlinkApiList;
+import tron.common.utils.AddressConvert;
 import tron.common.utils.Configuration;
+import tron.common.utils.Keys;
 
 public class TronlinkBase {
     public static  volatile String tronlinkUrl;
@@ -25,9 +27,12 @@ public class TronlinkBase {
     public String quince_B58 = Configuration.getByPath("testng.conf").getString("tronlink.quince_B58");
     public String testDELuser_B58 = Configuration.getByPath("testng.conf").getString("tronlink.testDELuser_B58");
     public String price_B58 = Configuration.getByPath("testng.conf").getString("tronlink.priceUser");
-    public String unfollowAsset = addressNewAsset;
+    public String Hex_1155_user = Configuration.getByPath(Keys.settingFileName).getString("tronlink.1155User");
+    public String B58_1155_user = AddressConvert.hexTo58(Hex_1155_user);
+    public String Hex_1155_newAssetUser = Configuration.getByPath(Keys.settingFileName).getString("tronlink.1155newAssetUser");
+
+    public String followAsset = addressNewAsset;
     public String unfollowAsset41 = addressNewAsset41;
-    public static GetSign getSign = new GetSign();
     public String nonce = "12345";
     public String secretId = "SFSUIOJBFMLKSJIF";
 

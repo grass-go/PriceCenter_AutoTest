@@ -8,10 +8,14 @@ import com.alibaba.fastjson.JSONPath;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
+import org.seleniumhq.jetty9.http.HttpMethod;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
+import tron.common.Constants;
 import tron.common.TronlinkApiList;
 import tron.tronlink.base.TronlinkBase;
+import tron.tronlink.v2.model.CommonRsp;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -369,6 +373,27 @@ public class delAsset extends TronlinkBase {
         fullbalance = new BigDecimal("6.792603");
         Assert.assertTrue(balance.compareTo(fullbalance) == -1);
 
+    }
+
+    private GetSign sig = new GetSign();
+
+    @Test(description = "删除1155资产")
+    public void delAsset_1155(){
+        initParams();
+        params = sig.GenerateParams(Hex_1155_user, Constants.delAssetUrl, RequestMethod.POST.toString());
+        response = TronlinkApiList.v2DelAsset(params,jsonObject);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        String rspStr = TronlinkApiList.parseResponse2String(response);
+        CommonRsp rsp = JSONObject.parseObject(rspStr, CommonRsp.class);
+        if ((rsp.getCode() != 0) || (rsp.getData() != true) || (!"OK".equals(rsp.getMessage()))){
+            org.testng.Assert.assertEquals(false, true);
+        }
+    }
+
+    // 初始化参数
+    private void initParams(){
+        params.clear();
+        jsonObject.clear();
     }
 
 }
