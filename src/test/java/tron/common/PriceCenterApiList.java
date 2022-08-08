@@ -52,9 +52,8 @@ public class PriceCenterApiList {
     static HttpGet httpGet;
     static HttpPost httppost;
 
-    //public static String HttpNode = priceBase.priceUrl;
     public static String HttpNode = priceBase.priceUrl;
-    //public static String HttpNode = "https://c.tronlink.org/";
+    //public static String HttpNode = priceBase.testPriceUrl;
     public static String TranscanHttpNode = priceBase.tronscanApiUrl;
     static HttpResponse response;
     static Integer connectionTimeout = Configuration.getByPath("testng.conf")
@@ -105,6 +104,10 @@ public class PriceCenterApiList {
         JTokenAddressMap.put("JNFT", "TFpPyDCKvNFgos3g3WVsAqMrdqhB81JXHE");
         JTokenAddressMap.put("JWIN", "TRg6MnpsFXc82ymUPgf5qbj59ibxiEDWvv");
         JTokenAddressMap.put("JUSDD", "TX7kybeP6UwTBRHLNPYmswFESHfyjm9bAS");
+        JTokenAddressMap.put("JUSDC", "TNSBA6KvSvMoTqQcEgpVK7VhHT3z7wifxy"); // new added
+        JTokenAddressMap.put("JBTT", "TUaUHU9Dy8x5yNi1pKnFYqHWojot61Jfto");  // new added
+        JTokenAddressMap.put("JSUN", "TPXDpkg9e3eZzxqxAUyke9S4z4pGJBJw9e");  // new added
+
 
         ExgTokenAddressMap.put("USDT", "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
         ExgTokenAddressMap.put("BTC", "TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9");

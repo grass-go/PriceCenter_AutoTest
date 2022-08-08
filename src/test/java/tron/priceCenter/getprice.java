@@ -142,7 +142,7 @@ public class getprice {
     public void Test005CheckRelationship_BttRelated() throws URISyntaxException {
         //check WBTT = BTTOLD , BTTOLD=BTT*1000, WBTT=jWBTT*100
         params.clear();
-        params.put("symbol", "WBTT,BTTOLD,jWBTT,BTT");
+        params.put("symbol", "WBTT,BTTOLD,jWBTT,BTT,jBTT");
         params.put("convert", "TRX");
         response = PriceCenterApiList.getprice(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
@@ -151,11 +151,14 @@ public class getprice {
         Object bttoldPrice = JSONPath.eval(responseContent, "$..data.BTTOLD.quote.TRX.price[0]");
         Object jwbttPrice = JSONPath.eval(responseContent, "$..data.JWBTT.quote.TRX.price[0]");
         Object bttPrice = JSONPath.eval(responseContent, "$..data.BTT.quote.TRX.price[0]");
+        Object jbttPrice = JSONPath.eval(responseContent, "$..data.JBTT.quote.TRX.price[0]");
         Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(wbttPrice.toString(), bttoldPrice.toString(),"0.1"));
         String thousandthBttoldPrice = PriceCenterApiList.getZoomInValue(bttoldPrice.toString(),"1000");
         Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(thousandthBttoldPrice, bttPrice.toString(),"0.1"));
         String percentWbttPrice = PriceCenterApiList.getZoomInValue(wbttPrice.toString(),"100");
         Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(percentWbttPrice, jwbttPrice.toString(),"0.1"));
+        String hundredthBttPrice = PriceCenterApiList.getZoomInValue(bttPrice.toString(),"100");
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(hundredthBttPrice, jbttPrice.toString(),"0.1"));
     }
 
     //WTokens 仅收录了四个： WTRX，WBTT，WBTC，WETH，WBTC
