@@ -170,7 +170,7 @@ public class unfollowAssetList extends TronlinkBase {
 
     @Test(enabled = true, description = "系统推荐币（线上：USDT）没有余额balance=0， 关注，不在unfollow接口。")
     public void unfollowAssetList04_1() {
-        // 无余额的一个推荐币 usdt
+        // 无余额的一个推荐币
         String followToken = "THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF";
         // 先关注一个币
         boolean follow = addAsset.addAssetByToken10(20, true, unfollowAsset41, followToken);
@@ -254,10 +254,16 @@ public class unfollowAssetList extends TronlinkBase {
 
     @AfterClass(enabled = true)
     public void restore(){
+        // usdt
         String followToken = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
 
         boolean follow = addAsset.addAssetByToken10(20, true, unfollowAsset41, followToken);
         log.info("restore usdt, result = ", follow);
+
+        followToken = "1002000";
+        follow = addAsset.addAssetByToken10(10, true, unfollowAsset41, followToken);
+        log.info("restore 1002000, result = ", follow);
+
 
     }
 
