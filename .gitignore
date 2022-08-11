@@ -18,3 +18,5 @@ tronlink-UI-test.iml
 out
 local.properties
 price_result.txt
+.vscode
+bin
