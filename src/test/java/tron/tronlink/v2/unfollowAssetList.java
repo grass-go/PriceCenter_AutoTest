@@ -8,6 +8,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.springframework.util.StringUtils;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import org.tron.common.utils.StringUtil;
 import tron.common.TronlinkApiList;
@@ -249,6 +250,15 @@ public class unfollowAssetList extends TronlinkBase {
             }
         }
         return ids;
+    }
+
+    @AfterClass(enabled = true)
+    public void restore(){
+        String followToken = "THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF";
+
+        boolean follow = addAsset.addAssetByToken10(20, true, unfollowAsset41, followToken);
+        log.info("restore usdt, result = ", follow);
+
     }
 
 
