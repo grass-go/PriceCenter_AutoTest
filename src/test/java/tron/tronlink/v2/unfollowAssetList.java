@@ -254,7 +254,7 @@ public class unfollowAssetList extends TronlinkBase {
 
     @AfterClass(enabled = true)
     public void restore(){
-        String followToken = "THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF";
+        String followToken = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
 
         boolean follow = addAsset.addAssetByToken10(20, true, unfollowAsset41, followToken);
         log.info("restore usdt, result = ", follow);
