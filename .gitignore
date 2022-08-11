@@ -20,3 +20,4 @@ local.properties
 price_result.txt
 .vscode
 bin
+nohup.out
