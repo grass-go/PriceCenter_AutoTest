@@ -24,7 +24,8 @@ public class PriceCenterApiList {
     static HttpGet httpget;
     static HttpGet httpGet;
 
-    public static String HttpNode = priceBase.priceUrl;
+    //public static String HttpNode = priceBase.priceUrl;
+    public static String HttpNode = "https://c.tronlink.org";
     public static String TranscanHttpNode = priceBase.tronscanApiUrl;
     static HttpResponse response;
     static Integer connectionTimeout = Configuration.getByPath("testng.conf")
