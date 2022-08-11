@@ -18,10 +18,10 @@ import java.util.*;
 public class Risk extends TronlinkBase {
 
     private RiskTokens riskTokens = new RiskTokens();
-    private Random ramdom = new Random();
+    private final Random ramdom = new Random();
 
     @Test(description = "判断risktokens接口返回的token在该接口能否查到")
-    public void getRisk(){
+    public void getRisk() throws InterruptedException {
         JSONObject tokenObjs = riskTokens.GetAllRiskTokens();
         JSONArray arr = tokenObjs.getJSONArray(Keys.data);
         List<String> tokenStrs = JSONObject.parseArray(arr.toJSONString(), String.class);
@@ -31,16 +31,12 @@ public class Risk extends TronlinkBase {
         for (String str:
              pickTokens) {
             Assert.assertEquals( isRiskToken(str),true);
+            Thread.sleep(1 * 1000);
         }
-        // 构造错误的地址
-//        List<String> errTokens = generateErrTokens();
-//        for (String str:
-//                errTokens) {
-//            Assert.assertEquals( isRiskToken(str),false);
-//        }
+
     }
 
-    @Test(description = "判断risktokens接口返回的token在该接口能否查到")
+    @Test(description = "判断错误的token在该接口能否查到")
     public void getRisk02(){
         // 构造错误的地址
         List<String> errTokens = generateErrTokens();
@@ -52,7 +48,7 @@ public class Risk extends TronlinkBase {
 
     // 测试数据：rsp边缘数据+随机抽取数据
     private List<String> generateRandomTokens(List<String> tokens){
-        int totalTokenNum = 15;
+        int totalTokenNum = 5;
         Assert.assertTrue(tokens.size() > totalTokenNum);
         List<String> result = tokens.subList(0, 5);
         result.addAll(tokens.subList(tokens.size() - 5,tokens.size()));
@@ -66,12 +62,22 @@ public class Risk extends TronlinkBase {
 
     private List<String> generateErrTokens(){
         List<String> result = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            result.add(UUID.randomUUID().toString().replace("-", "").substring(0, 35).toUpperCase());
+        for (int i = 0; i < 6; i++) {
+            String tmp = UUID.randomUUID().toString().replace("-", "");
+            if(tmp.length()> 35) {
+                result.add(tmp.substring(0, 35).toUpperCase());
+            }
         }
         log.info("prepare get rick token err data: " +result);
         return  result;
 
+    }
+
+    @Test(description = "测试单个case")
+    public void testRiskToken(){
+        String token = "TJjJ5kmJcZfNay5pJUA1Er8PUHnFFFJ7QX";
+        boolean result = isRiskToken(token);
+        Assert.assertEquals(result, true);
     }
 
 
@@ -87,7 +93,11 @@ public class Risk extends TronlinkBase {
         String riskStr = TronlinkApiList.parseResponse2String(response);
         log.debug("all risk tokens =" + riskStr);
         RiskRsp rsp = JSONObject.parseObject(riskStr, RiskRsp.class);
-        return rsp.getData();
+        if(rsp.getCode() != 0){
+            log.error("rsp = " + JSONObject.toJSONString(rsp));
+            return false;
+        }
+        return true;
     }
 
     private Map<String,String> GenerateParams(String Address,String token, String url, String method){

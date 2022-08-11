@@ -3,11 +3,14 @@ package tron.tronlink.v2;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.common.utils.Keys;
 import tron.tronlink.base.TronlinkBase;
+import tron.tronlink.v2.model.GetRiskTokensRsp;
+import tron.tronlink.v2.model.RiskRsp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,13 +20,25 @@ public class RiskTokens extends TronlinkBase {
 
 
     @Test(description = "查询所有的风险tokens")
-    public void getRiskTokens(){
-        JSONObject tokens = GetAllRiskTokens();
-        //todo 断言
+    public void getAllRiskTokens(){
+        HttpResponse rsp = GetAllRiskTokensRsp();
+        String riskTokensStr = TronlinkApiList.parseResponse2String(rsp);
+        GetRiskTokensRsp r = JSONObject.parseObject(riskTokensStr, GetRiskTokensRsp.class);
+        Assert.assertEquals(r.getCode(),0);
+        Assert.assertEquals(r.getMessage(), "OK");
+        Assert.assertNotEquals(r.getData().size(), 0);
     }
 
     // 对外提供的接口
     public JSONObject GetAllRiskTokens(){
+        HttpResponse response = GetAllRiskTokensRsp();
+        Assert.assertNotEquals(response, null);
+        JSONObject riskTokensRsp = TronlinkApiList.parseJsonObResponseContent(response);
+
+        return riskTokensRsp;
+    }
+
+    public HttpResponse GetAllRiskTokensRsp(){
         final String url = "/api/wallet/v2/risktokens";
         Map<String,String> params = GenerateParams(queryAddress58, url, "POST");
         Map<String,String> headers = GenerateHeaders();
@@ -31,9 +46,7 @@ public class RiskTokens extends TronlinkBase {
         body.put(Keys.Address, queryAddress58);
         HttpResponse response = TronlinkApiList.v2PostRiskTokens(params, body, headers, url);
         Assert.assertNotEquals(response, null);
-        JSONObject riskTokensRsp = TronlinkApiList.parseJsonObResponseContent(response);
-        log.debug("all risk tokens =" + riskTokensRsp.toJSONString());
-        return riskTokensRsp;
+        return response;
     }
 
     public Map<String,String> GenerateParams(String Address, String url, String method){
