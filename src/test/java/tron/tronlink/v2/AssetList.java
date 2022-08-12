@@ -162,8 +162,6 @@ public class AssetList extends TronlinkBase {
     bodyObject.put("addressType", "2");
 
     response = TronlinkApiList.v2AssetList(params, bodyObject);
-    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
 
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
