@@ -40,6 +40,8 @@ public class AllAssetList extends TronlinkBase {
     params.put("secretId","SFSUIOJBFMLKSJIF");
     params.put("signature","3ePuP28sQRThx9WrDajgcec4NlI%3D");
     params.put("address",addressNewAsset41);
+    // v2版本 推荐币的 recommandSortId = 1
+    params.put("version", "v2");
     response = TronlinkApiList.V2AllAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
@@ -68,14 +70,14 @@ public class AllAssetList extends TronlinkBase {
         }
       }
 
-      // todo
-//      if(object.getString("contractAddress").equals("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"))
-//      {
-//        Assert.assertEquals(1,object.getIntValue("recommandSortId"));
-//      }
-//      else{
-//        Assert.assertEquals(0,object.getIntValue("recommandSortId"));
-//      }
+      // 校验系统推荐币
+      if(object.getString("contractAddress").equals("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"))
+      {
+        Assert.assertEquals(1,object.getIntValue("recommandSortId"));
+      }
+      else{
+        Assert.assertEquals(0,object.getIntValue("recommandSortId"));
+      }
     }
 
   }
