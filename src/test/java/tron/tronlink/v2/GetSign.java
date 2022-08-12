@@ -16,12 +16,17 @@ import java.util.Base64;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
+import tron.common.utils.Keys;
+import tron.tronlink.base.TronlinkBase;
 
-public class GetSign {
+@Slf4j
+public class GetSign extends TronlinkBase {
     //ANDROID_TEST("AndroidTest","SFSUIOJBFMLKSJIF", "SKDOE543KLMFSLKMJTIO4JTSSDFDSMKM65765",
     private static final String MAC_NAME = "HmacSHA1";
     private static final String ENCODING = "UTF-8";
@@ -223,5 +228,26 @@ public class GetSign {
         String pretty = JSON.toJSONString(result, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
             SerializerFeature.WriteDateUseDateFormat);
         System.out.println(pretty);
+    }
+
+    // 组装参数
+    public Map<String,String> GenerateParams(String Address, String url, String method){
+        Map<String,String> params = new HashMap<>();
+        params.put("nonce","12345");
+        params.put("secretId","SFSUIOJBFMLKSJIF");
+        // 计算sig
+        HashMap<String,String> sigs = new HashMap<>();
+        sigs.put("address", Address);
+        sigs.put("url", url);
+        sigs.put("method", method);
+        try {
+            String sig = getSign(sigs);
+            params.put("signature",sig);
+        }catch (Exception e){
+            log.error("sig 计算错误！");
+            e.printStackTrace();
+        }
+        params.put(Keys.Address, Address);
+        return params;
     }
 }
