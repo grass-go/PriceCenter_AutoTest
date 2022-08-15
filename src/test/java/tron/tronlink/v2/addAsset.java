@@ -18,6 +18,7 @@ import tron.tronlink.base.TronlinkBase;
 import tron.tronlink.v2.model.CommonRsp;
 import tron.tronlink.v2.model.trc1155.Data;
 import tron.tronlink.v2.model.trc1155.GetAllCollectionRsp;
+import tron.tronlink.v2.trc1155.GetAllCollection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +44,9 @@ public class addAsset extends TronlinkBase {
     List<String> trc10tokenList = new ArrayList<>();
     List<String> trc721tokenList = new ArrayList<>();
     Map<String, String> params = new HashMap<>();
+
+    GetAllCollection gac = new GetAllCollection();
+
 
     // 关注资产，assetList接口可见，取消关注，assetList不可见
     @Test(enabled = true)
@@ -339,35 +343,13 @@ public class addAsset extends TronlinkBase {
         follow = addAssetByTokenType(Constants.Token1155, true, B58_1155_user, followToken);
         org.testng.Assert.assertEquals(true, follow);
         // 查询首页，预期可以查到
-        Map<String,String> params = sig.GenerateParams(B58_1155_user, getAllCollection1155Url, "GET" );
-        HttpResponse httpResponse = v2GetAllCollectionByType(getAllCollection1155Url, params);
-        String getAllCollectionStr = TronlinkApiList.parseResponse2String(httpResponse);
-        GetAllCollectionRsp rsp = JSONObject.parseObject(getAllCollectionStr, GetAllCollectionRsp.class);
-        AssertGetAllCollection(rsp, followToken, true);
+        gac.AssertNotFoundInGAC(B58_1155_user, followToken, true);
 
         // 先取消关注一个1155币
         follow = addAssetByTokenType(Constants.Token1155, false, B58_1155_user, followToken);
         org.testng.Assert.assertEquals(true, follow);
 
         //再次查询首页，预期无法查到
-         params = sig.GenerateParams(B58_1155_user, getAllCollection1155Url, "GET" );
-         httpResponse = v2GetAllCollectionByType(getAllCollection1155Url, params);
-         getAllCollectionStr = TronlinkApiList.parseResponse2String(httpResponse);
-         rsp = JSONObject.parseObject(getAllCollectionStr, GetAllCollectionRsp.class);
-         AssertGetAllCollection(rsp, followToken, false);
-    }
-
-
-    private void AssertGetAllCollection(GetAllCollectionRsp rsp, String followToken, boolean expect){
-        org.testng.Assert.assertEquals(rsp.getCode(), 0, SuccessCodeErr);
-        org.testng.Assert.assertEquals(rsp.getMessage(), OK,OKErr );
-        boolean find = false;
-        for(Data data : rsp.getData()){
-            if(followToken.equals(data.getContractAddress())){
-                find = true;
-                break;
-            }
-        }
-        org.testng.Assert.assertEquals(find, expect, trc1155NotFound);
+         gac.AssertNotFoundInGAC(B58_1155_user, followToken, false);
     }
 }

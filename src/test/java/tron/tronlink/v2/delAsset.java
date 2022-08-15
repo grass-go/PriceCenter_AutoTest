@@ -14,14 +14,22 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import tron.common.Constants;
 import tron.common.TronlinkApiList;
+import tron.common.utils.AddressConvert;
+import tron.common.utils.Keys;
 import tron.tronlink.base.TronlinkBase;
 import tron.tronlink.v2.model.CommonRsp;
+import tron.tronlink.v2.model.trc1155.GetAllCollectionRsp;
+import tron.tronlink.v2.trc1155.AllCollection;
+import tron.tronlink.v2.trc1155.GetAllCollection;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static tron.common.Constants.getAllCollection1155Url;
+import static tron.common.TronlinkApiList.v2GetAllCollectionByType;
 
 @Slf4j
 public class delAsset extends TronlinkBase {
@@ -43,6 +51,11 @@ public class delAsset extends TronlinkBase {
     List<String> tokenDelList = new ArrayList<>();
     List<String> token721DelList = new ArrayList<>();
     Map<String, String> params = new HashMap<>();
+
+    AllCollection ac = new AllCollection();
+    GetAllCollection gac = new GetAllCollection();
+
+    addAsset addAsset = new addAsset();
 
 
     @Test(enabled = true, description = "del focus coin, related api should not see.")
@@ -380,6 +393,12 @@ public class delAsset extends TronlinkBase {
     @Test(description = "删除1155资产")
     public void delAsset_1155(){
         initParams();
+        String delToken = "";
+        jsonObject.put(Keys.Address,Hex_1155_user);
+        List<String> dels = new ArrayList<>();
+        dels.add(delToken);
+        jsonObject.put(Keys.unFollowToken1155, dels);
+
         params = sig.GenerateParams(Hex_1155_user, Constants.delAssetUrl, RequestMethod.POST.toString());
         response = TronlinkApiList.v2DelAsset(params,jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -388,6 +407,14 @@ public class delAsset extends TronlinkBase {
         if ((rsp.getCode() != 0) || (rsp.getData() != true) || (!"OK".equals(rsp.getMessage()))){
             org.testng.Assert.assertEquals(false, true);
         }
+
+        // 删除之后无法在全部资产查询
+        ac.AssertNotFoundInAC(B58_1155_user, delToken, false);
+        // 删除之后无法在首页查询
+        gac.AssertNotFoundInGAC(B58_1155_user, delToken, false);
+        // 恢复现场再关注下
+        addAsset.addAssetByTokenType(1155, true, AddressConvert.toHex(B58_1155_user), delToken);
+
     }
 
     // 初始化参数

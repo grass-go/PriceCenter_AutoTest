@@ -12,4 +12,6 @@ public class Constants {
     public static final String delAssetUrl = "/api/wallet/v2/delAsset";
     public static final String searchUrl = "/api/wallet/v2/search";
     public static final String getAllCollection1155Url = "/api/wallet/trc1155/getAllCollection";
+    public static final String AllCollection1155Url = "/api/wallet/trc1155/allCollections";
+
 }
