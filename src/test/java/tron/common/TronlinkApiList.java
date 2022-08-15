@@ -27,6 +27,7 @@ import javax.net.ssl.SSLContext;
 
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -725,6 +726,14 @@ public class TronlinkApiList {
     public static HttpResponse v2GetAllCollection(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/nft/getAllCollection";
         response = v2CreateGetConnect(requestUrl, params);
+        return response;
+    }
+
+    // 根据token类型查询首页信息
+    public static HttpResponse v2GetAllCollectionByType(String url, Map<String, String> params) {
+        final String requestUrl = HttpNode +  url ;
+        response = v2CreateGetConnect(requestUrl, params);
+        Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         return response;
     }
 
@@ -1780,6 +1789,8 @@ public class TronlinkApiList {
         response = createGetConnectWithHeader(requestUrl, params, body, headers);
         return response;
     }
+
+
 
     public static JSONObject getprice(String symbol, String convert) {
         Map<String, String> params = new HashMap<>();

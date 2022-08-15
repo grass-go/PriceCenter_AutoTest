@@ -41,50 +41,51 @@ public class addasset {
     }
 
   @Test(enabled = false)
-  public void addasset(){
+  public void addasset() {
 
-    response = TronlinkApiList.addasset("{\n"
-            + "  \"address\": \"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe\",\n"
-            + "  \"token10\": [\n"
-            + "    \"zzz\"\n"
-            + "  ],\n"
-            + "  \"token10Cancel\": [\n"
-            + "    \"aaa\"\n"
-            + "  ],\n"
-            + "  \"token20\": [\n"
-            + "    \"xxx\"\n"
-            + "  ],\n"
-            + "  \"token20Cancel\": [\n"
-            + "    \"ccc\"\n"
-            + "  ]\n"
-            + "}");
-    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    responseArrayContent = responseContent.getJSONArray("data");
-    System.out.println("```````````````````````");
-    System.out.println(responseArrayContent);
-    System.out.println("```````````````````````");
-    //data object
-    for (Object json:responseArrayContent
-    ) {
-      JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
-      Assert.assertTrue(jsonObject.containsKey("type"));
-      Assert.assertTrue(jsonObject.containsKey("top"));
-      Assert.assertTrue(jsonObject.containsKey("isOfficial"));
-      Assert.assertTrue(jsonObject.containsKey("name"));
-      Assert.assertTrue(jsonObject.containsKey("shortName"));
-      Assert.assertTrue(jsonObject.containsKey("id"));
-      Assert.assertTrue(jsonObject.containsKey("contractAddress"));
-      Assert.assertTrue(jsonObject.containsKey("balance"));
-      Assert.assertTrue(jsonObject.containsKey("totalBalance"));
-      Assert.assertTrue(jsonObject.containsKey("logoUrl"));
-      Assert.assertTrue(jsonObject.containsKey("precision"));
-      Assert.assertTrue(jsonObject.containsKey("marketId"));
-      Assert.assertTrue(jsonObject.containsKey("price"));
-      Assert.assertTrue(jsonObject.containsKey("trxCount"));
-      Assert.assertTrue(jsonObject.containsKey("inMainChain"));
-      Assert.assertTrue(jsonObject.containsKey("inSideChain"));
-    }
+      response = TronlinkApiList.addasset("{\n"
+              + "  \"address\": \"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe\",\n"
+              + "  \"token10\": [\n"
+              + "    \"zzz\"\n"
+              + "  ],\n"
+              + "  \"token10Cancel\": [\n"
+              + "    \"aaa\"\n"
+              + "  ],\n"
+              + "  \"token20\": [\n"
+              + "    \"xxx\"\n"
+              + "  ],\n"
+              + "  \"token20Cancel\": [\n"
+              + "    \"ccc\"\n"
+              + "  ]\n"
+              + "}");
+      Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+      responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+      responseArrayContent = responseContent.getJSONArray("data");
+      System.out.println("```````````````````````");
+      System.out.println(responseArrayContent);
+      System.out.println("```````````````````````");
+      //data object
+      for (Object json : responseArrayContent
+      ) {
+          JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
+          Assert.assertTrue(jsonObject.containsKey("type"));
+          Assert.assertTrue(jsonObject.containsKey("top"));
+          Assert.assertTrue(jsonObject.containsKey("isOfficial"));
+          Assert.assertTrue(jsonObject.containsKey("name"));
+          Assert.assertTrue(jsonObject.containsKey("shortName"));
+          Assert.assertTrue(jsonObject.containsKey("id"));
+          Assert.assertTrue(jsonObject.containsKey("contractAddress"));
+          Assert.assertTrue(jsonObject.containsKey("balance"));
+          Assert.assertTrue(jsonObject.containsKey("totalBalance"));
+          Assert.assertTrue(jsonObject.containsKey("logoUrl"));
+          Assert.assertTrue(jsonObject.containsKey("precision"));
+          Assert.assertTrue(jsonObject.containsKey("marketId"));
+          Assert.assertTrue(jsonObject.containsKey("price"));
+          Assert.assertTrue(jsonObject.containsKey("trxCount"));
+          Assert.assertTrue(jsonObject.containsKey("inMainChain"));
+          Assert.assertTrue(jsonObject.containsKey("inSideChain"));
+      }
+  }
 
     @Test(enabled = true, description = "Test cancel trc10 token to account.1002000 is always exist")
     public void test001CancelTrc10FromAccount() throws Exception {
