@@ -202,7 +202,7 @@ public class AssetList extends TronlinkBase {
         case 2:
           Assert.assertEquals("",id);
           Assert.assertEquals("TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn".equals(contractAddress) ||
-                  "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t".equals(contractAddress) , true);
+                  "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t".equals(contractAddress) || "THbVQp8kMjStKNnf2iCY6NEzThKMK5aBHg".equals(contractAddress) , true);
           break;
         default:
           break;
