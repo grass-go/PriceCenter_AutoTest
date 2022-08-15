@@ -81,7 +81,7 @@ public class unfollowAssetList extends TronlinkBase {
                 continue;
             }
             log.info("token = " + token + " desttoken = " + destToken);
-            org.testng.Assert.assertNotEquals(token, destToken, "未关注接口里面应该没有当前token");
+            org.testng.Assert.assertNotEquals( destToken.equals(token),true, "未关注接口里面应该没有当前token");
         }
     }
 
