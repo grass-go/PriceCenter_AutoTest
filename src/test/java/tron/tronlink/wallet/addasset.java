@@ -31,7 +31,7 @@ public class addasset {
     @BeforeClass(enabled = true, description = "please use hex address,get all asset")
     public void removeAllTokenList() throws Exception {
         tokenJson.put("address", "414db7719251ce8ba74549ba35bbdc02418ecde595");
-        //只传输地址的时候，会返回该地址当前添加过的资产
+        // 只传输地址的时候，会返回该地址当前添加过的资产
         response = TronlinkApiList.addasset("{\n" + " \"address\": \"414db7719251ce8ba74549ba35bbdc02418ecde595\"}");
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
@@ -40,65 +40,63 @@ public class addasset {
         trc20ContractAddressList = TronlinkApiList.getTrc20AddressList(tokenArray);
     }
 
-    @Test(enabled = false)
-    public void addasset() {
+  @Test(enabled = false)
+  public void addasset(){
 
-        response = TronlinkApiList.addasset("{\n"
-                + "  \"address\": \"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe\",\n"
-                + "  \"token10\": [\n"
-                + "    \"zzz\"\n"
-                + "  ],\n"
-                + "  \"token10Cancel\": [\n"
-                + "    \"aaa\"\n"
-                + "  ],\n"
-                + "  \"token20\": [\n"
-                + "    \"xxx\"\n"
-                + "  ],\n"
-                + "  \"token20Cancel\": [\n"
-                + "    \"ccc\"\n"
-                + "  ]\n"
-                + "}");
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-        responseArrayContent = responseContent.getJSONArray("data");
-        System.out.println("```````````````````````");
-        System.out.println(responseArrayContent);
-        System.out.println("```````````````````````");
-        //data object
-        for (Object json : responseArrayContent
-        ) {
-            JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
-            Assert.assertTrue(jsonObject.containsKey("type"));
-            Assert.assertTrue(jsonObject.containsKey("top"));
-            Assert.assertTrue(jsonObject.containsKey("isOfficial"));
-            Assert.assertTrue(jsonObject.containsKey("name"));
-            Assert.assertTrue(jsonObject.containsKey("shortName"));
-            Assert.assertTrue(jsonObject.containsKey("id"));
-            Assert.assertTrue(jsonObject.containsKey("contractAddress"));
-            Assert.assertTrue(jsonObject.containsKey("balance"));
-            Assert.assertTrue(jsonObject.containsKey("totalBalance"));
-            Assert.assertTrue(jsonObject.containsKey("logoUrl"));
-            Assert.assertTrue(jsonObject.containsKey("precision"));
-            Assert.assertTrue(jsonObject.containsKey("marketId"));
-            Assert.assertTrue(jsonObject.containsKey("price"));
-            Assert.assertTrue(jsonObject.containsKey("trxCount"));
-            Assert.assertTrue(jsonObject.containsKey("inMainChain"));
-            Assert.assertTrue(jsonObject.containsKey("inSideChain"));
-        }
-        System.out.println(responseArrayContent.size());
+    response = TronlinkApiList.addasset("{\n"
+            + "  \"address\": \"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe\",\n"
+            + "  \"token10\": [\n"
+            + "    \"zzz\"\n"
+            + "  ],\n"
+            + "  \"token10Cancel\": [\n"
+            + "    \"aaa\"\n"
+            + "  ],\n"
+            + "  \"token20\": [\n"
+            + "    \"xxx\"\n"
+            + "  ],\n"
+            + "  \"token20Cancel\": [\n"
+            + "    \"ccc\"\n"
+            + "  ]\n"
+            + "}");
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseArrayContent = responseContent.getJSONArray("data");
+    System.out.println("```````````````````````");
+    System.out.println(responseArrayContent);
+    System.out.println("```````````````````````");
+    //data object
+    for (Object json:responseArrayContent
+    ) {
+      JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
+      Assert.assertTrue(jsonObject.containsKey("type"));
+      Assert.assertTrue(jsonObject.containsKey("top"));
+      Assert.assertTrue(jsonObject.containsKey("isOfficial"));
+      Assert.assertTrue(jsonObject.containsKey("name"));
+      Assert.assertTrue(jsonObject.containsKey("shortName"));
+      Assert.assertTrue(jsonObject.containsKey("id"));
+      Assert.assertTrue(jsonObject.containsKey("contractAddress"));
+      Assert.assertTrue(jsonObject.containsKey("balance"));
+      Assert.assertTrue(jsonObject.containsKey("totalBalance"));
+      Assert.assertTrue(jsonObject.containsKey("logoUrl"));
+      Assert.assertTrue(jsonObject.containsKey("precision"));
+      Assert.assertTrue(jsonObject.containsKey("marketId"));
+      Assert.assertTrue(jsonObject.containsKey("price"));
+      Assert.assertTrue(jsonObject.containsKey("trxCount"));
+      Assert.assertTrue(jsonObject.containsKey("inMainChain"));
+      Assert.assertTrue(jsonObject.containsKey("inSideChain"));
     }
 
     @Test(enabled = true, description = "Test cancel trc10 token to account.1002000 is always exist")
     public void test001CancelTrc10FromAccount() throws Exception {
         tokenJson.clear();
-        tokenJson.put("address", "414db7719251ce8ba74549ba35bbdc02418ecde595"); //sophia's address
+        tokenJson.put("address", "414db7719251ce8ba74549ba35bbdc02418ecde595"); // sophia's address
         tokenJson.put("token10Cancel", trc10tokenList);
         response = TronlinkApiList.addAsset(tokenJson);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
         JSONArray tokenArray = assetInformation.getJSONArray("data");
         Assert.assertTrue(TronlinkApiList.getTrc10TokenIdList(tokenArray).size() == 1);
-//    Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()==trc20ContractAddressList.size());
+        // Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()==trc20ContractAddressList.size());
     }
 
     @Test(enabled = true, description = "Test add all trc10 token to account.")
@@ -111,7 +109,7 @@ public class addasset {
         JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
         JSONArray tokenArray = assetInformation.getJSONArray("data");
         Assert.assertTrue(TronlinkApiList.getTrc10TokenIdList(tokenArray).size() == trc10tokenList.size());
-//    Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()==trc20ContractAddressList.size());
+        // Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()==trc20ContractAddressList.size());
 
     }
 
@@ -138,7 +136,7 @@ public class addasset {
         JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
         JSONArray tokenArray = assetInformation.getJSONArray("data");
         Assert.assertTrue(TronlinkApiList.getTrc10TokenIdList(tokenArray).size() > 0);
-//    Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()==trc20ContractAddressList.size());
+        // Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()==trc20ContractAddressList.size());
     }
 
     @Test(enabled = true, description = "Test add all token to account.")
@@ -153,7 +151,7 @@ public class addasset {
         JSONArray tokenArray = assetInformation.getJSONArray("data");
         Assert.assertTrue(TronlinkApiList.getTrc10TokenIdList(tokenArray).size() > 0);
         Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size() > 0);
-//    Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()==trc20ContractAddressList.size());
+        // Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()==trc20ContractAddressList.size());
     }
 
     @Test(enabled = true, description = "restore add all token to account.")
@@ -171,7 +169,7 @@ public class addasset {
     }
 
     private ArrayList<String> restoreTrc20List() {
-        String[] origins = {"TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9",
+        String[] origins = { "TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9",
                 "TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4",
                 "THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF",
                 "TDyvndWuvX5xTBwHPYJi7J3Yq8pq8yh62h",
@@ -196,11 +194,8 @@ public class addasset {
                 "TKfjV9RNKJJCqPvBtK8L7Knykh7DNWvnYt",
                 "TXWkP3jLBqRGojUih1ShzNyDaN5Csnebok",
                 "TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",
-                "TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR"};
+                "TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR" };
         return new ArrayList<String>(Arrays.asList(origins));
     }
-
-
-
 
 }
