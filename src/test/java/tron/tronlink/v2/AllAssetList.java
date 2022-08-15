@@ -35,7 +35,7 @@ public class AllAssetList extends TronlinkBase {
 
 
   // 暂时关闭，等有结论了打开
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void allAssetList01(){
     params.put("nonce","12345");
     params.put("secretId","SFSUIOJBFMLKSJIF");
