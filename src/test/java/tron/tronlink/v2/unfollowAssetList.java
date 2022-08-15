@@ -147,8 +147,7 @@ public class unfollowAssetList extends TronlinkBase {
 
 
 
-    // todo
-    @Test(enabled = false, description = "系统推荐币（线上：USDT）没有余额balance=0， 取消关注，在unfollow接口。")
+    @Test(enabled = true, description = "系统推荐币（线上：USDT）没有过余额balance=0， 取消关注，不在unfollow接口。")
     public void unfollowAssetList04() {
         // 无余额的一个推荐币 usdt
         String followToken = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
@@ -165,7 +164,7 @@ public class unfollowAssetList extends TronlinkBase {
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         // 断言
-        assertFound(followToken);
+        assertNotFound(followToken);
 
     }
 
