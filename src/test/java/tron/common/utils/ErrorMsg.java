@@ -7,5 +7,6 @@ public class ErrorMsg {
     public static final String OK = "OK";
     public static final String OKErr =  "msg 必须是 ok";
     public static final String trc1155NotFound = "在首页没有找到关注的1155";
+    public static final String trc1155NotFoundSearch = "搜索页面中没有找到1155";
 
 }

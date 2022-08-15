@@ -11,13 +11,17 @@ import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.tronlink.base.TronlinkBase;
 import tron.tronlink.v2.model.CommonRsp;
+import tron.tronlink.v2.model.trc1155.Data;
 import tron.tronlink.v2.model.trc1155.search.SearchRsp;
+import tron.tronlink.v2.model.trc1155.search.Token;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static tron.common.Constants.GET;
 import static tron.common.Constants.searchUrl;
+import static tron.common.utils.ErrorMsg.*;
+import static tron.common.utils.ErrorMsg.trc1155NotFound;
 
 @Slf4j
 public class SearchAsset extends TronlinkBase {
@@ -270,6 +274,23 @@ public class SearchAsset extends TronlinkBase {
     Assert.assertEquals(httpRsp.getStatusLine().getStatusCode(), 200);
     String rspStr = TronlinkApiList.parseResponse2String(response);
     SearchRsp rsp = JSONObject.parseObject(rspStr, SearchRsp.class);
+    // token在结果中可以找到
+    String token = "";
+    AssertSearchResult(rsp, token, true);
+
+  }
+
+  private void AssertSearchResult(SearchRsp rsp, String token, boolean expect){
+    org.testng.Assert.assertEquals(rsp.getCode(), 0, SuccessCodeErr);
+    org.testng.Assert.assertEquals(rsp.getMessage(), OK,OKErr );
+    boolean find = false;
+    for(tron.tronlink.v2.model.trc1155.search.Token data : rsp.getData().getToken()){
+      if(token.equals(data.getContractAddress())){
+        find = true;
+        break;
+      }
+    }
+    org.testng.Assert.assertEquals(find, expect, trc1155NotFoundSearch);
 
   }
 
