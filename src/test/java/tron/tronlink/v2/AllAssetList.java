@@ -273,6 +273,7 @@ public class AllAssetList extends TronlinkBase {
         HttpResponse transcanRsp = TronlinkApiList.createGetConnect(requestUrl);
         JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
         Object scan_levelObject = JSONPath.eval(transcanRspContent, String.join("","$..trc20_tokens[0].level"));
+        org.testng.Assert.assertNotEquals(scan_levelObject, null, "tronscan 接口的数据为空导致");
         Integer scan_level = Integer.valueOf(scan_levelObject.toString());
         log.info("curAddress:"+curAddress+", cur_isOfficial:"+cur_isOfficial.toString()+", transcan level:"+scan_levelObject.toString());
         log.info("======");
