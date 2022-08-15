@@ -1,6 +1,5 @@
 package tron.tronlink.v2;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
@@ -11,10 +10,14 @@ import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.tronlink.base.TronlinkBase;
+import tron.tronlink.v2.model.CommonRsp;
+import tron.tronlink.v2.model.trc1155.search.SearchRsp;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static tron.common.Constants.GET;
+import static tron.common.Constants.searchUrl;
 
 @Slf4j
 public class SearchAsset extends TronlinkBase {
@@ -24,6 +27,7 @@ public class SearchAsset extends TronlinkBase {
 
   private JSONArray array = new JSONArray();
   Map<String, String> params = new HashMap<>();
+  GetSign sig = new GetSign();
 
   @Test(enabled = true)
   public void searchAssetList01(){
@@ -258,17 +262,30 @@ public class SearchAsset extends TronlinkBase {
     }
   }
 
-//  sig = GetSign();
 
   @Test(description = "搜索1155资产")
   public void search1155(){
-    initParams();
-//    params =
+    init1155Params();
+    HttpResponse httpRsp = TronlinkApiList.v2SearchAsset(params);
+    Assert.assertEquals(httpRsp.getStatusLine().getStatusCode(), 200);
+    String rspStr = TronlinkApiList.parseResponse2String(response);
+    SearchRsp rsp = JSONObject.parseObject(rspStr, SearchRsp.class);
+
   }
 
-  private void initParams(){
+  private void init1155Params(){
     params.clear();
+    // 计算sig
+    params = sig.GenerateParams(B58_1155_user, searchUrl, GET);
+    params.put("keyWord","TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");
+    long now = System.currentTimeMillis();
+    if(now %2 == 0) {
+      // 随机带page 和count，可选参数
+      params.put("page", "1");
+      params.put("count", "10");
+    }
+    params.put("version","v3");
+    params.put("type","6");
+
   }
-
-
 }
