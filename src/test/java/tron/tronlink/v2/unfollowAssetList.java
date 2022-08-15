@@ -256,10 +256,16 @@ public class unfollowAssetList extends TronlinkBase {
     public void restore(){
         // usdt
         String followToken = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
-
         boolean follow = addAsset.addAssetByToken10(20, true, unfollowAsset41, followToken);
         log.info("restore usdt, result = ", follow);
 
+        // doge coin
+        followToken = "THbVQp8kMjStKNnf2iCY6NEzThKMK5aBHg";
+        follow = addAsset.addAssetByToken10(20, false, unfollowAsset41, followToken);
+        log.info("restore doge coin, result = ", follow);
+
+
+        // bttold
         followToken = "1002000";
         follow = addAsset.addAssetByToken10(10, true, unfollowAsset41, followToken);
         log.info("restore 1002000, result = ", follow);
