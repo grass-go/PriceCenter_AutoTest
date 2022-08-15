@@ -30,10 +30,10 @@ public class unfollowAssetList extends TronlinkBase {
         // bttold 有余额的一个官方币
         String followToken = "1002000";
         // 先关注一个10币
-        boolean follow = addAsset.addAssetByToken10(10, true, unfollowAsset41, followToken);
+        boolean follow = addAsset.addAssetByTokenType(10, true, unfollowAsset41, followToken);
 
         // 取消关注一个10币
-        follow = addAsset.addAssetByToken10(10, false, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(10, false, unfollowAsset41, followToken);
         org.testng.Assert.assertEquals(true, follow);
 
         // 查询
@@ -58,7 +58,7 @@ public class unfollowAssetList extends TronlinkBase {
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         assertNotFound(followToken);
         // 恢复现场
-        follow = addAsset.addAssetByToken10(10, false, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(10, false, unfollowAsset41, followToken);
         log.info("restore unfollowAssetList02, result = " + follow);
     }
 
@@ -103,10 +103,10 @@ public class unfollowAssetList extends TronlinkBase {
         // 无余额的一个 doge coin
         String followToken = "THbVQp8kMjStKNnf2iCY6NEzThKMK5aBHg";
         // 关注
-        boolean follow = addAsset.addAssetByToken10(20, true, unfollowAsset41, followToken);
+        boolean follow = addAsset.addAssetByTokenType(20, true, unfollowAsset41, followToken);
 
         // 取消关注一个币
-        follow = addAsset.addAssetByToken10(20, false, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(20, false, unfollowAsset41, followToken);
         org.testng.Assert.assertEquals(true, follow);
 
         // 查询
@@ -134,7 +134,7 @@ public class unfollowAssetList extends TronlinkBase {
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         // 断言
         assertNotFound(followToken);
-        follow = addAsset.addAssetByToken10(20, false, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(20, false, unfollowAsset41, followToken);
         log.info("unfollowAssetList03_1 unfollow eth, result = " + follow);
 
     }
@@ -144,10 +144,10 @@ public class unfollowAssetList extends TronlinkBase {
         // 无余额的一个推荐币 usdt
         String followToken = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
         // 先关注
-        boolean follow = addAsset.addAssetByToken10(20, true, unfollowAsset41, followToken);
+        boolean follow = addAsset.addAssetByTokenType(20, true, unfollowAsset41, followToken);
 
         // 取消关注一个币
-        follow = addAsset.addAssetByToken10(20, false, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(20, false, unfollowAsset41, followToken);
         org.testng.Assert.assertEquals(true, follow);
 
         // 查询
@@ -165,7 +165,7 @@ public class unfollowAssetList extends TronlinkBase {
         // 无余额的一个推荐币
         String followToken = "THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF";
         // 先关注一个币
-        boolean follow = addAsset.addAssetByToken10(20, true, unfollowAsset41, followToken);
+        boolean follow = addAsset.addAssetByTokenType(20, true, unfollowAsset41, followToken);
         org.testng.Assert.assertEquals(follow, true);
 
         // 查询
@@ -175,7 +175,7 @@ public class unfollowAssetList extends TronlinkBase {
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         // 断言
         assertNotFound(followToken);
-        follow = addAsset.addAssetByToken10(20, false, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(20, false, unfollowAsset41, followToken);
         log.info("restore unfollowAssetList04_1, result = ", follow);
 
     }
@@ -246,17 +246,17 @@ public class unfollowAssetList extends TronlinkBase {
     public void restore() {
         // usdt
         String followToken = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
-        boolean follow = addAsset.addAssetByToken10(20, true, unfollowAsset41, followToken);
+        boolean follow = addAsset.addAssetByTokenType(20, true, unfollowAsset41, followToken);
         log.info("restore usdt, result = ", follow);
 
         // doge coin
         followToken = "THbVQp8kMjStKNnf2iCY6NEzThKMK5aBHg";
-        follow = addAsset.addAssetByToken10(20, false, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(20, false, unfollowAsset41, followToken);
         log.info("restore doge coin, result = ", follow);
 
         // bttold
         followToken = "1002000";
-        follow = addAsset.addAssetByToken10(10, true, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(10, true, unfollowAsset41, followToken);
         log.info("restore 1002000, result = ", follow);
 
     }
