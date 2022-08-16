@@ -30,6 +30,7 @@ public class TronlinkBase {
     public String Hex_1155_user = Configuration.getByPath(Keys.settingFileName).getString("tronlink.1155User");
     public String B58_1155_user = AddressConvert.hexTo58(Hex_1155_user);
     public String Hex_1155_newAssetUser = Configuration.getByPath(Keys.settingFileName).getString("tronlink.1155newAssetUser");
+    public String SearchToken = Configuration.getByPath(Keys.settingFileName).getString("tronlink.search_token");
 
     public String followAsset = addressNewAsset;
     public String unfollowAsset41 = addressNewAsset41;

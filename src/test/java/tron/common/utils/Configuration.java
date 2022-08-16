@@ -10,6 +10,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Parameters;
 
 
 public class Configuration {
@@ -26,12 +28,16 @@ public class Configuration {
      */
 
     public static Config getByPath( String configurationPath) {
-        if (isBlank(configurationPath)) {
-            throw new IllegalArgumentException("Configuration path is required!");
-        }
+//        if (isBlank(configurationPath)) {
+//            throw new IllegalArgumentException("Configuration path is required!");
+//        }
 
         if (config == null) {
-            configurationPath = "src/test/resources/testng.conf";
+            if("qa".equals(env)){
+                configurationPath = "src/test/resources/testng_qa.conf";
+            }else {
+                configurationPath = "src/test/resources/testng.conf";
+            }
             System.out.println(configurationPath);
             File configFile = new File(System.getProperty("user.dir") + "/" + configurationPath);
             if (configFile.exists()) {
@@ -49,4 +55,15 @@ public class Configuration {
         }
         return config;
     }
+
+
+    // 根据不同的环境加载不同的配置文件，方便测试
+    @Parameters({"env"})
+    @BeforeSuite()
+    public void getMonitorUrl(String env) {
+        this.env = env;
+    }
+
+    private static  String env;
+
 }
