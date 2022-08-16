@@ -15,7 +15,7 @@ public class sendTrx extends Base {
   public void before() throws Exception {
     setUpChromeDriver();
     loginAccount(chainNile);
-    Helper.switchAccount(testAccountMultiIndex, multiAddress);
+    Helper.switchAccount(testAccountTwoIndex, testAddress);
   }
 
   @Test(
@@ -26,7 +26,7 @@ public class sendTrx extends Base {
   public void test001sendTrxTest() throws Exception {
     String transactionStatus = Helper.transfer(loginAddress, "trx", "1", false);
     Assert.assertEquals("交易已广播", transactionStatus);
-    Assert.assertTrue(onTheHomepageOrNot(multiAddress));
+    Assert.assertTrue(onTheHomepageOrNot(testAddress));
   }
 
   @AfterMethod(enabled = true)

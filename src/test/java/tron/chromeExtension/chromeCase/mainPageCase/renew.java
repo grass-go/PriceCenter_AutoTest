@@ -22,7 +22,7 @@ public class renew extends Base {
       groups = {"P0"},
       description = "Renew page ",
       alwaysRun = true,
-      enabled = true)
+      enabled = false)
   public void test001renewPageTest() throws Exception {
 
     MainPage mainPage = new MainPage(DRIVER);

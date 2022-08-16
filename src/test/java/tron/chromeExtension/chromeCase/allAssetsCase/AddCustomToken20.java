@@ -29,7 +29,7 @@ public class AddCustomToken20 extends Base {
       enabled = true,
       retryAnalyzer = MyIRetryAnalyzer.class)
   public void test001AddCustomToken20WithoutBalanceOfFunctionTest() throws Exception {
-    Assert.assertTrue(Helper.addCustomTokenFailed("TWqfoPF8MXQR1sPaLsZNZjdF7R7H6bmmC5"));
+    Assert.assertTrue(Helper.addCustomTokenFailed("非通证合约，无法添加自定义通证","TWqfoPF8MXQR1sPaLsZNZjdF7R7H6bmmC5"));
   }
 
   @Test(
@@ -40,7 +40,7 @@ public class AddCustomToken20 extends Base {
       retryAnalyzer = MyIRetryAnalyzer.class)
   public void test002AddCustomToken20WithoutTransferFunctionTest() throws Exception {
 
-    Assert.assertTrue(Helper.addCustomTokenFailed("TGmiMvg11brj78c5X5fkkvySUsUv37QTk2"));
+    Assert.assertTrue(Helper.addCustomTokenFailed("非通证合约，无法添加自定义通证","TGmiMvg11brj78c5X5fkkvySUsUv37QTk2"));
   }
 
   @Test(
@@ -51,7 +51,7 @@ public class AddCustomToken20 extends Base {
       retryAnalyzer = MyIRetryAnalyzer.class)
   public void test003AddCustomToken20WithBalanceOfAndTransferFunctionsAndDeleteFailedTest()
       throws Exception {
-      //todo:
+      //todo:4.0版本自定义通证已经不支持删除
     String shortName = "shortName";
     String fullName = "fullName";
     String tokenAddress = "TX9MUEoScrGQJ8X5jvp9eSVxxbfZfRGJUb";
@@ -66,7 +66,7 @@ public class AddCustomToken20 extends Base {
       retryAnalyzer = MyIRetryAnalyzer.class)
   public void test004DeleteCustomToken20WithBalanceOfAndTransferFunctionsFailedTest()
       throws Exception {
-      //todo:
+      //todo:4.0版本自定义通证已经不支持删除
     waitingTime(5);
     String shortName = "shortName";
     String tokenAddress = "TX9MUEoScrGQJ8X5jvp9eSVxxbfZfRGJUb";
@@ -81,7 +81,7 @@ public class AddCustomToken20 extends Base {
       retryAnalyzer = MyIRetryAnalyzer.class)
   public void test005DeleteCustomToken20WithBalanceOfAndTransferAndDeleteSuccessFunctionsTest()
       throws Exception {
-      //todo:
+      //todo:4.0版本自定义通证已经不支持删除
     String shortName = "shortName";
     String tokenAddress = "TX9MUEoScrGQJ8X5jvp9eSVxxbfZfRGJUb";
 
@@ -97,7 +97,7 @@ public class AddCustomToken20 extends Base {
   public void test006AddCustomToken20WithAllFunctionsTest() throws Exception {
 
     String tokenAddress = "TJx9N7dMg31CkEwcS3Sb3NHS3fCgpX1YoZ";
-    Assert.assertTrue(Helper.addCustomTokenRepeat(tokenAddress));
+    Assert.assertTrue(Helper.addCustomTokenFailed("此通证已录入，请通过搜索添加该通证",tokenAddress));
   }
 
   @AfterMethod(enabled = true)

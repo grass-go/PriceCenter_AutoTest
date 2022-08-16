@@ -35,7 +35,8 @@ public class MainPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[3]")
   public WebElement accountTotalBalance;
   // Current account address.
-  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[2]/span[1]")
+  //  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[2]/span[1]")
+  @FindBy(className = "bottom")
   public WebElement address_content;
   // Current account name.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[1]/div[1]/span")
@@ -78,8 +79,10 @@ public class MainPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[1]/div[2]/div[2]")
   public WebElement allAssets_btn;
 
-    @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div/div[3]/div[2]/span")
-    public WebElement allAssetsBottom_btn;
+  @FindBy(
+      xpath =
+          "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[3]/div/div[2]/div/div[3]/div[2]/span")
+  public WebElement allAssetsBottom_btn;
 
   @FindBy(
       xpath =

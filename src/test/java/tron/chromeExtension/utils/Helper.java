@@ -495,7 +495,7 @@ public class Helper extends Base {
     return "找不到token:" + name;
   }
 
-  public static boolean addCustomTokenFailed(String tokenAddress) throws Exception {
+  public static boolean addCustomTokenFailed(String tips,String tokenAddress) throws Exception {
     try {
       MainPage mainPage = new MainPage(DRIVER);
       AllAssetsPage allAssetsPage = new AllAssetsPage(DRIVER);
@@ -507,14 +507,14 @@ public class Helper extends Base {
       sendKeys(allAssetsPage.customTokenAddress_input, tokenAddress);
       waitingTime(5);
       String tipError = getText(allAssetsPage.tipError);
-      Assert.assertEquals("非通证合约，无法添加自定义通证", tipError);
+      Assert.assertEquals(tips, tipError);
     } catch (org.openqa.selenium.NoSuchElementException ex) {
       return false;
     }
     return true;
   }
 
-  public static boolean addCustomTokenRepeat(String tokenAddress) throws Exception {
+  /*public static boolean addCustomTokenRepeat(String tokenAddress) throws Exception {
     try {
       MainPage mainPage = new MainPage(DRIVER);
       AllAssetsPage allAssetsPage = new AllAssetsPage(DRIVER);
@@ -531,7 +531,7 @@ public class Helper extends Base {
       return false;
     }
     return true;
-  }
+  }*/
 
   public static boolean addCustomTokenSuccess(
       String tokenAddress, String tokenShortName, String tokenFullName, String actualTokenType)
@@ -550,11 +550,11 @@ public class Helper extends Base {
       waitingTime();
       sendKeys(allAssetsPage.tokenFullName_input, tokenFullName);
       waitingTime();
-      String defaultTokenPrecision = getAttribute(allAssetsPage.tokenPrecision,"value");
+      String defaultTokenPrecision = getAttribute(allAssetsPage.tokenPrecision, "value");
 
       Assert.assertEquals("0", defaultTokenPrecision);
       waitingTime();
-      String defaultTokenType = getAttribute(allAssetsPage.tokenType,"value");
+      String defaultTokenType = getAttribute(allAssetsPage.tokenType, "value");
       log("tokenType:" + defaultTokenType);
       Assert.assertEquals(actualTokenType, defaultTokenType);
       waitingTime();
@@ -664,7 +664,7 @@ public class Helper extends Base {
     }
   }
 
-  public static boolean isElementExist(String name) {
+  public static boolean isElementExist(String name,String text) {
     try {
       DRIVER.findElementByName(name);
       System.out.println("IsFindByName: " + name);
@@ -677,7 +677,7 @@ public class Helper extends Base {
         return true;
       } catch (org.openqa.selenium.NoSuchElementException eex) {
         try {
-          if (DRIVER.findElementByClassName("XCUIElementTypeButton").getText().contains(name)) {
+          if (DRIVER.findElementByClassName(name).getText().contains(text)) {
             System.out.println("IsFindByBtn: " + name);
             return true;
           } else {

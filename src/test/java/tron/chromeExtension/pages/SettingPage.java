@@ -21,6 +21,8 @@ public class SettingPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div[2]")
   public WebElement addAddressBook_btn;
 
+  @FindBy(className = "r2")
+  public WebElement addressRecord;
   // Address  already exists.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[4]/span")
   public WebElement duplicateAddressTips;
@@ -30,14 +32,21 @@ public class SettingPage extends AbstractPage {
   // Name input box.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[2]/input")
   public WebElement name_input;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div[2]/input")
+  public WebElement modifyName_input;
   // Address input box.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[3]/div/input")
   public WebElement address_input;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div[3]/div/input")
+  public WebElement modifyAddress_input;
   // Note input box.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[4]/input")
   public WebElement remarks_input;
   // Save button.
-  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/button[1]")
+  // @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/button[1]")
+  @FindBy(className = "primary")
   public WebElement save_btn;
   // Close button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/button[2]/span")
@@ -46,6 +55,17 @@ public class SettingPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/span")
   public WebElement addressBook_content;
 
+  @FindBy(className = "addressName")
+  public WebElement addressName_text;
+
+  @FindBy(className = "address")
+  public WebElement address_text;
+
+  @FindBy(className = "remarks")
+  public WebElement remarks_text;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div[4]/input")
+  public WebElement modifyRemarks_text;
   // Search input box.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/input")
   public WebElement search_input;

@@ -47,7 +47,7 @@ public class whiteListAuthorization extends Base {
     switchWindows(minorHandle);
     String tips = getAttribute(justLendPage.white_btn, "data-tip");
     log("tips:" + tips);
-    Assert.assertEquals("此合约地址归属于 JustLend 项目", tips);
+    Assert.assertEquals("此合约地址归属于 JustLend DAO 项目", tips);
   }
 
   @AfterMethod(enabled = true)

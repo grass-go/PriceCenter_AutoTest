@@ -17,18 +17,18 @@ public class sendTRC10 extends Base {
   public void before() throws Exception {
     setUpChromeDriver();
     loginAccount(chainNile);
-    Helper.switchAccount(testAccountMultiIndex, multiAddress);
+    Helper.switchAccount(testAccountTwoIndex, testAddress);
   }
 
   @Test(
       groups = {"P0"},
-      description = "Send trc10 AK .",
+      description = "Send trc10 1004910 .",
       alwaysRun = true,
       enabled = true)
   public void test001sendTrc10Test() throws Exception {
-    String transactionStatus = Helper.transfer(loginAddress, "1000012", "1", false);
+    String transactionStatus = Helper.transfer(loginAddress, "1004910", "1", false);
     Assert.assertEquals("交易已广播", transactionStatus);
-    Assert.assertTrue(onTheHomepageOrNot(multiAddress));
+    Assert.assertTrue(onTheHomepageOrNot(testAddress));
   }
 
   @AfterMethod(enabled = true)

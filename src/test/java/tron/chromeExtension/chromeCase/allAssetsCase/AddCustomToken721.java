@@ -23,7 +23,7 @@ public class AddCustomToken721 extends Base {
       enabled = true,
       retryAnalyzer = MyIRetryAnalyzer.class)
   public void test001AddCustomToken721WithoutTransferFunctionTest() throws Exception {
-    Assert.assertTrue(Helper.addCustomTokenFailed("TG1pQCiqhzb5411yphnoFCgtwqQYgicwUG"));
+    Assert.assertTrue(Helper.addCustomTokenFailed("非通证合约，无法添加自定义通证","TYwrv5ExAs52MPYqnaucf24fW57FQhLp8u"));
   }
 
   @Test(
@@ -34,7 +34,7 @@ public class AddCustomToken721 extends Base {
       retryAnalyzer = MyIRetryAnalyzer.class)
   public void test002AddCustomToken721WithoutOwnerOfFunctionTest() throws Exception {
 
-    Assert.assertTrue(Helper.addCustomTokenFailed("TLioFVVnTb9x6d4Vaet4CXZWYBLut7rk1f"));
+    Assert.assertTrue(Helper.addCustomTokenFailed("非通证合约，无法添加自定义通证","TLioFVVnTb9x6d4Vaet4CXZWYBLut7rk1f"));
   }
 
   @Test(
@@ -45,7 +45,7 @@ public class AddCustomToken721 extends Base {
       retryAnalyzer = MyIRetryAnalyzer.class)
   public void test003AddCustomToken721WithBalanceOfAndTransferFunctionsAndDeleteFailedTest()
       throws Exception {
-      //todo:
+      //todo:4.0版本自定义通证已经不支持删除
     String shortName = "shortName";
     String fullName = "fullName";
     String tokenAddress = "TY4deKdy1f4YXMHhmiqzu9tA2rBYTTTBpB";
@@ -60,7 +60,7 @@ public class AddCustomToken721 extends Base {
       enabled = false,
       retryAnalyzer = MyIRetryAnalyzer.class)
   public void test004AddCustomToken721WithBalanceOfAndTransferFunctionsTest() throws Exception {
-      //todo:
+      //todo:4.0版本自定义通证已经不支持删除
     String shortName = "shortName";
     String tokenAddress = "TY4deKdy1f4YXMHhmiqzu9tA2rBYTTTBpB";
     Assert.assertTrue(Helper.deleteCustomToken(shortName, tokenAddress, true));
@@ -75,7 +75,7 @@ public class AddCustomToken721 extends Base {
   public void test005AddCustomToken721WithAllFunctionsTest() throws Exception {
 
     String tokenAddress = "TJx9N7dMg31CkEwcS3Sb3NHS3fCgpX1YoZ";
-    Assert.assertTrue(Helper.addCustomTokenRepeat(tokenAddress));
+    Assert.assertTrue(Helper.addCustomTokenFailed("此通证已录入，请通过搜索添加该通证",tokenAddress));
   }
 
   @AfterMethod(enabled = true)

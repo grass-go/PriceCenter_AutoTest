@@ -235,6 +235,16 @@ public class Base {
     webElement.click();
   }
 
+  public static Boolean isEnabled(WebElement webElement) throws Exception {
+
+    return webElement.isEnabled();
+  }
+
+  public static Boolean isDisplayed(WebElement webElement) throws Exception {
+
+    return webElement.isDisplayed();
+  }
+
   public static Boolean isSelected(WebElement webElement) throws Exception {
     return webElement.isSelected();
   }
