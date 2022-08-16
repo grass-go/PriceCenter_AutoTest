@@ -215,7 +215,7 @@ public class addAddressBook extends Base {
     waitingTime();
     Assert.assertEquals(addressBookName, getText(settingPage.searchResultName_content));
     Assert.assertEquals(loginAddress, getText(settingPage.searchResultAddress_content));
-    Assert.assertEquals("备注：" + remarksInput, getText(settingPage.searchResultRemarks_content));
+    Assert.assertEquals(getText(settingPage.searchResultRemarks_content), "备注：" + remarksInputSecond);
   }
 
   @Test(
