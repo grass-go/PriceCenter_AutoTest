@@ -44,11 +44,14 @@ public class CheckPriceWithTronscan extends priceBase {
             JSONObject token = (JSONObject) JSON.toJSON(curtoken);
             String fTokenAddr = token.getString("fTokenAddr");
             String sShortName = token.getString("sShortName");
-            if(fTokenAddr.startsWith("0x") || sShortName.equals("USD")){
+            if(fTokenAddr.startsWith("0x") || sShortName.equals("USD") || fTokenAddr.length()==7){
                 continue;
             }
             String fShortName = token.getString("fShortName");
             String centerPrice = token.getString("price");
+            if(centerPrice.equals("0")){
+                continue;
+            }
             tokenlist.add(fShortName+","+fTokenAddr+","+sShortName+","+centerPrice);
         }
 
@@ -74,31 +77,23 @@ public class CheckPriceWithTronscan extends priceBase {
     public void test001DiffFormat(String fShortName, String fTokenAddr, String sShortName,String centerPrice) throws URISyntaxException, IOException, InterruptedException {
         log.info("fShortName:"+fShortName+" fTokenAddr:"+fTokenAddr+" sShortName:"+sShortName+" centerPrice:"+ centerPrice);
 
-        String scanUrl=null;
-        if( fTokenAddr.length() == 7 || centerPrice.equals("0")) {
-            log.info("No Need Compare!");
-        }else {
-            scanUrl = priceBase.tronscanApiUrl + "/api/token_trc20?contract=" + fTokenAddr + "&showAll=1";
-            HttpResponse transcanRsp = TronlinkApiList.createGetConnect(scanUrl);
-            JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
-            int total = transcanRspContent.getIntValue("total");
-            if (total == 0) {
-                log.info("test001DiffFormat Can not find token!!");
-            } else {
-                Object scanPrice = JSONPath.eval(transcanRspContent, String.join("", "$..trc20_tokens[contract_address='", fTokenAddr, "'].market_info.priceInTrx[0]"));
-                if (scanPrice==null){
-                    log.info("Tronscan has no price!!");
-                }else {
-                    log.info(" scanPrice:" + scanPrice.toString() + "centerPrice:" + centerPrice);
-                    Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(scanPrice.toString(), centerPrice, "0.1"));
-                }
+        String scanUrl="";
+        scanUrl = priceBase.tronscanApiUrl + "/api/token_trc20?contract=" + fTokenAddr + "&showAll=1";
+        HttpResponse transcanRsp = TronlinkApiList.createGetConnect(scanUrl);
+        JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
+        int total = transcanRspContent.getIntValue("total");
+        if (total == 0) {
+            log.info("test001DiffFormat Can not find token!!");
+        } else {
+            Object scanPrice = JSONPath.eval(transcanRspContent, String.join("", "$..trc20_tokens[contract_address='", fTokenAddr, "'].market_info.priceInTrx[0]"));
+            if (scanPrice==null){
+                log.info("Tronscan has no price!!");
+            }else {
+                log.info(" scanPrice:" + scanPrice.toString() + "centerPrice:" + centerPrice);
+                Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(scanPrice.toString(), centerPrice, "0.1"));
             }
-            Thread.sleep(500);
         }
-
+        Thread.sleep(500);
     }
-
-
-
 
 }

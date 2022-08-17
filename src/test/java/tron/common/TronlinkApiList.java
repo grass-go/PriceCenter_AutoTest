@@ -1282,6 +1282,23 @@ public static HttpResponse search(Map<String, String> params) {
     }
   }
 
+  public static JSONArray parseJsonArrayResponseContent(HttpResponse response) {
+    try {
+      String result = EntityUtils.toString(response.getEntity());
+      log.info("======");
+      log.info(result);
+      log.info("======");
+//      result = result.substring(0, result.lastIndexOf("}"));
+//      result = result + ",\"requestTime\":" + requestTime + "}";
+      StringEntity entity = new StringEntity(result, Charset.forName("UTF-8"));
+      response.setEntity(entity);
+      JSONArray array = JSONArray.parseArray(result);
+      return array;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
 
   /**
    * constructor.

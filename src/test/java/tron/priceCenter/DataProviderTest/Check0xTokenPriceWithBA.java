@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
+import com.google.api.Http;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.utils.URIBuilder;
 import org.junit.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -17,84 +19,77 @@ import tron.priceCenter.base.priceBase;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
-public class CheckPriceWithTronscan extends priceBase {
+public class Check0xTokenPriceWithBA extends priceBase {
 
-    private JSONObject allpriceResponseContent;
+    private JSONObject ResponseContent;
 
-    @BeforeClass(enabled = true,description = "get all price ")
-    public void getAllPrice() throws URISyntaxException {
-        String allpriceResponse_str = PriceCenterApiList.getallprice();
-        allpriceResponseContent = JSON.parseObject(allpriceResponse_str);
-    }
+    @DataProvider(name = "0xToken")
+    public Object[][] data() throws IOException, URISyntaxException {
+        String datafile = Configuration.getByPath("testng.conf").getString("tokens0x");
+        File directory = new File(".");
+        String tokenFile= directory.getCanonicalFile() + datafile;
+        List<String> contentLines = PriceCenterApiList.ReadFile(tokenFile);
 
-    @DataProvider(name = "allToken")
-    public Object[][] data()  {
-        List<String> tokenlist = new java.util.ArrayList<String>();
-        JSONObject dataContent = allpriceResponseContent.getJSONObject("data");
-        JSONArray tokensArray = dataContent.getJSONArray("rows");
-        //fShortName, fTokenAddr, sShortName, price, So colomnNum=4.
-        for (Object curtoken : tokensArray) {
-            JSONObject curToken = (JSONObject) curtoken;
-            System.out.println("cur token info: " + curtoken.toString());
-            JSONObject token = (JSONObject) JSON.toJSON(curtoken);
-            String fTokenAddr = token.getString("fTokenAddr");
-            String sShortName = token.getString("sShortName");
-            if(fTokenAddr.startsWith("0x") || sShortName.equals("USD")){
-                continue;
-            }
-            String fShortName = token.getString("fShortName");
-            String centerPrice = token.getString("price");
-            tokenlist.add(fShortName+","+fTokenAddr+","+sShortName+","+centerPrice);
+        int columnNum = 0;
+        int totalLine = contentLines.size();
+        columnNum = contentLines.get(0).split(",").length;
+        Object[][] data = new Object[totalLine][4];
+
+        //request to BiAn to get BA pirce.
+        String baURL = "https://api.binance.com/api/v3/ticker/price";
+        URIBuilder builder = new URIBuilder(baURL);
+        URI requestUri = builder.build();
+        HttpResponse baRsp = PriceCenterApiList.createGetConnect(requestUri);
+        JSONArray baRspArray = TronlinkApiList.parseJsonArrayResponseContent(baRsp);
+        JSONObject baContents = new JSONObject();
+        baContents.put("baTokens",baRspArray);
+        System.out.println("baContents:"+baContents.toString());
+
+        String allTokenStr="";
+        for(int i = 0; i<totalLine; i++){
+            String stringValue[] = contentLines.get(i).split(",");
+            String curTokenAddress = stringValue[0];
+            String curTokenSymbol = stringValue[1];
+            data[i][0] = curTokenAddress;
+            data[i][1] = curTokenSymbol;
+            allTokenStr = allTokenStr + curTokenAddress + ",";
+            Object baPrice_obj = JSONPath.eval(baContents, "$.baTokens[symbol='"+curTokenSymbol+"USDT'].price[0]");
+            System.out.println("baPrice_obj:"+baPrice_obj.toString());
+            data[i][2] = baPrice_obj.toString();
         }
 
-        int totalNum = tokenlist.size();
-        Object[][] data = new Object[totalNum][4];
-        int dataIdx = 0;
-        for (int i=0; i<tokenlist.size(); i++) {
-            String tokeninfo = tokenlist.get(i);
-            System.out.println("cur token info: " + tokeninfo);
-
-            String[] lineList = tokeninfo.split(",");
-            data[dataIdx][0] = lineList[0];
-            data[dataIdx][1] = lineList[1];
-            data[dataIdx][2] = lineList[2];
-            data[dataIdx][3] = lineList[3];
-            dataIdx+=1;
+        //get Price from price-centre.
+        allTokenStr = allTokenStr.substring(0,allTokenStr.length()-1);
+        Map<String,String> params = new HashMap<>();
+        params.put("symbol", allTokenStr);
+        params.put("convert", "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
+        HttpResponse response = PriceCenterApiList.getprice(params);
+        Assert.assertEquals(200, response.getStatusLine().getStatusCode());
+        JSONObject centreContent = TronlinkApiList.parseJsonObResponseContent(response);
+        for(int i = 0; i<totalLine; i++){
+            String curTokenAddress = (String) data[i][0];
+            Object centrePrice_obj = JSONPath.eval(centreContent, "$..data." + curTokenAddress + ".quote.TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t.price");
+            List<String> centrePrice_list = (List<String>) centrePrice_obj;
+            System.out.println("centrePrice_obj:" + centrePrice_list.get(0) );
+            data[i][3] = centrePrice_list.get(0);
         }
+
         System.out.println("data:"+data.toString());
         return data;
+
     }
 
-    @Test(dataProvider = "allToken")
-    public void test001DiffFormat(String fShortName, String fTokenAddr, String sShortName,String centerPrice) throws URISyntaxException, IOException, InterruptedException {
-        log.info("fShortName:"+fShortName+" fTokenAddr:"+fTokenAddr+" sShortName:"+sShortName+" centerPrice:"+ centerPrice);
-
-        String scanUrl=null;
-        if( fTokenAddr.length() == 7 || centerPrice.equals("0")) {
-            log.info("No Need Compare!");
-        }else {
-            scanUrl = priceBase.tronscanApiUrl + "/api/token_trc20?contract=" + fTokenAddr + "&showAll=1";
-            HttpResponse transcanRsp = TronlinkApiList.createGetConnect(scanUrl);
-            JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
-            int total = transcanRspContent.getIntValue("total");
-            if (total == 0) {
-                log.info("test001DiffFormat Can not find token!!");
-            } else {
-                Object scanPrice = JSONPath.eval(transcanRspContent, String.join("", "$..trc20_tokens[contract_address='", fTokenAddr, "'].market_info.priceInTrx[0]"));
-                if (scanPrice==null){
-                    log.info("Tronscan has no price!!");
-                }else {
-                    log.info(" scanPrice:" + scanPrice.toString() + "centerPrice:" + centerPrice);
-                    Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(scanPrice.toString(), centerPrice, "0.1"));
-                }
-            }
-            Thread.sleep(500);
-        }
+    @Test(dataProvider = "0xToken")
+    public void test0xTokenPrice(String TokenAddr, String ShortName , String baPrice,String centerPrice) throws URISyntaxException, IOException, InterruptedException {
+        log.info("ShortName:"+ShortName+", TokenAddr:"+TokenAddr+", baPrice:"+baPrice+", centerPrice:"+centerPrice);
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(baPrice, centerPrice, "0.1"));
 
     }
 
