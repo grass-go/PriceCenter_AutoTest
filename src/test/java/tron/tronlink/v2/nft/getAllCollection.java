@@ -92,6 +92,8 @@ public class getAllCollection extends TronlinkBase {
       if (responseContent.getIntValue("code") == 4500){
         Thread.currentThread().sleep(5000);
         response = TronlinkApiList.v2GetAllCollection(params);
+        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+
       }
       else{
         break;
@@ -100,12 +102,35 @@ public class getAllCollection extends TronlinkBase {
 
 
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-    responseString = TronlinkApiList.parseResponse2String(response);
+    /*responseString = TronlinkApiList.parseResponse2String(response);
     String cmp_result = new CompareJson("contractAddress,transferCount").compareJson(responseString, expResponse);
     System.out.println("=========actual response==========\n"+responseString+"\n");
     System.out.println("=========expect response==========\n"+expResponse+"\n");
     System.out.println("=========cmp_result===============\n"+cmp_result);
-    Assert.assertEquals("null",cmp_result);
+    Assert.assertEquals("null",cmp_result);*/
+
+    JSONArray array = responseContent.getJSONArray("data");
+    int tokenlen=array.size();
+    Assert.assertEquals(4,tokenlen);
+    JSONObject first = array.getJSONObject(0);
+    JSONObject second = array.getJSONObject(1);
+    JSONObject third = array.getJSONObject(2);
+    JSONObject forth = array.getJSONObject(3);
+    Assert.assertEquals("TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG", first.getString("contractAddress"));
+    Assert.assertEquals(0, first.getIntValue("count"));
+    Assert.assertEquals("NFT", first.getString("shortName"));
+
+    Assert.assertEquals("TD1Ack8frEuatgdyDajBEDqjvUBDeztDAE", second.getString("contractAddress"));
+    Assert.assertEquals(9, second.getIntValue("count"));
+    Assert.assertEquals("ATC", second.getString("shortName"));
+
+    Assert.assertEquals("TBeAjUWtvsJ1NCouwtk7eCVrPzCc2Kco99", third.getString("contractAddress"));
+    Assert.assertEquals(0, third.getIntValue("count"));
+    Assert.assertEquals("PITAYA", third.getString("shortName"));
+
+    Assert.assertEquals("TPLVhGLc1BWHCHBMnBYakNsqhXQ7v5xp2h", forth.getString("contractAddress"));
+    Assert.assertEquals(0, forth.getIntValue("count"));
+    Assert.assertEquals("TAHIGO", forth.getString("shortName"));
 
   }
 
