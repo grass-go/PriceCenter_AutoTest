@@ -3,15 +3,9 @@
 <suite name="chromeExtensionUI" parallel="tests" thread-count="1">
     <test name="chromeExtensionUI">
         <packages>
-           <!-- <package name="tron.chromeExtension.chromeCase.*">
-            </package>-->
-            <package name="tron.chromeExtension.chromeCase.authorizationCase">
+            <package name="tron.chromeExtension.chromeCase.*">
             </package>
-
         </packages>
-        <classes>
-            <class name = "tron.chromeExtension.chromeCase.settingPageCase.addAddressBook"/>
-        </classes>
     </test>
 </suite>
 

@@ -35,23 +35,23 @@ public class addressAuthorization extends Base {
     DRIVER.get("https://tronscan.org/#/contract/TGuqYUfia1HhBBhNkrV4mToMKtXrxxoh9S/code");
     TronScanPage tronScanPage = new TronScanPage(DRIVER);
     click(tronScanPage.prepareContract_btn);
-    waitingTime();
+    waitingTime(5);
     click(tronScanPage.approve_btn);
     waitingTime(5);
     sendKeys(tronScanPage.spenderAddress_input, "TG46VehcrBnw5mDPRvcSWFd1sRV85vKDDJ");
-    waitingTime();
+    waitingTime(5);
     sendKeys(tronScanPage.value_input, "1000000");
-    waitingTime();
+    waitingTime(5);
     click(tronScanPage.send_btn);
-    waitingTime();
+    waitingTime(5);
     String majorHandle = DRIVER.getWindowHandle();
     switchWindows(majorHandle);
-    waitingTime();
+    waitingTime(5);
     /* String tips = getAttribute(authorizationPage.white_btn, "data-tip");
     log("tips:" + tips);
     Assert.assertEquals("此合约地址归属于未知项目，请谨慎授权！", tips);*/
     click(authorizationPage.signatureAuthorization_btn);
-    waitingTime();
+    waitingTime(5);
     String authorizationCopyWriting_text = getText(authorizationPage.authorizationCopyWriting_text);
     log("authorizationCopyWriting_text:" + authorizationCopyWriting_text);
     Assert.assertEquals(
