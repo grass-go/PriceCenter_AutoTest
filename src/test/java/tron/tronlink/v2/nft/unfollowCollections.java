@@ -1,4 +1,4 @@
-package tron.tronlink.v2;
+package tron.tronlink.v2.nft;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -21,7 +21,7 @@ public class unfollowCollections extends TronlinkBase{
     Map<String, String> params = new HashMap<>();
 
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void unfollowCollections01(){
         params.put("nonce","12345");
         params.put("secretId","SFSUIOJBFMLKSJIF");
@@ -32,17 +32,13 @@ public class unfollowCollections extends TronlinkBase{
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         dataContent = responseContent.getJSONObject("data");
         int count =dataContent.getIntValue("count");
-        Assert.assertEquals(2,count);
+        Assert.assertEquals(1,count);
         array = dataContent.getJSONArray("token");
         int tokenlen=array.size();
-        Assert.assertEquals(2,tokenlen);
+        Assert.assertEquals(1,tokenlen);
         JSONObject first = array.getJSONObject(0);
-        JSONObject second = array.getJSONObject(1);
-        Assert.assertEquals("TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG", first.getString("id"));
+        Assert.assertEquals("TCpctLh4QoYrLiWnDNMg1Q3HMnsfpNyxCf", first.getString("id"));
         Assert.assertEquals(1, first.getIntValue("count"));
-        Assert.assertEquals("NFTT", first.getString("shortName"));
-        Assert.assertEquals("TCpctLh4QoYrLiWnDNMg1Q3HMnsfpNyxCf", second.getString("id"));
-        Assert.assertEquals(1, second.getIntValue("count"));
-        Assert.assertEquals("TNFT", second.getString("shortName"));
+        Assert.assertEquals("TNFT", first.getString("shortName"));
     }
 }
