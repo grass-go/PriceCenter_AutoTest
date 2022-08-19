@@ -57,7 +57,7 @@ task tronscanApi(type: Test) {
 
     useTestNG {
         suites(file('src/test/resources/testng_tronscanAPI.xml'))
-        parallel 'tests'
+        parallel 'false'
         threadCount 1
 
     }
@@ -72,7 +72,7 @@ task djedAPI(type: Test) {
 
     useTestNG {
         suites(file('src/test/resources/testng_djedAPI.xml'))
-        parallel 'tests'
+        parallel 'false'
         threadCount 1
 
     }
@@ -88,7 +88,7 @@ task djedAPI(type: Test) {
 task tronlinkAPI(type: Test) {
     useTestNG {
         suites(file('src/test/resources/testng_tronlinkAPI.xml'))
-        parallel 'tests'
+        parallel 'false'
         threadCount 1
 
     }
@@ -102,7 +102,7 @@ task tronlinkAPI(type: Test) {
 task tronlinkAPI_pre(type: Test) {
     useTestNG {
         suites(file('src/test/resources/testng_tronlinkAPI_pre.xml'))
-        parallel 'tests'
+        parallel 'false'
         threadCount 1
 
     }
@@ -129,7 +129,7 @@ task tronlinkAPI_qa(type: Test) {
 task tronlinkAPISGP(type: Test) {
     useTestNG {
         suites(file('src/test/resources/testng_tronlinkAPI_sgp.xml'))
-        parallel 'tests'
+        parallel 'false'
         threadCount 1
 
     }
@@ -143,7 +143,7 @@ task tronlinkAPISGP(type: Test) {
 task tronlinkAPIExperiment(type: Test) {
     useTestNG {
         suites(file('src/test/resources/testng_tronlinkAPI_experiment.xml'))
-        parallel 'tests'
+        parallel 'false'
         threadCount 1
     }
     testLogging {

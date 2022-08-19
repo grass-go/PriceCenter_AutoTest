@@ -1,21 +1,27 @@
 package tron.tronlink.v2;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.JSONPath;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.springframework.util.StringUtils;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPath;
+
+import lombok.extern.slf4j.Slf4j;
 import tron.common.TronlinkApiList;
 import tron.tronlink.base.TronlinkBase;
 import tron.tronlink.v2.model.Token;
 import tron.tronlink.v2.model.UnfollowAssertListRsp;
-
-import java.util.*;
 
 @Slf4j
 public class unfollowAssetList extends TronlinkBase {
@@ -75,7 +81,8 @@ public class unfollowAssetList extends TronlinkBase {
             if (StringUtils.isEmpty(token)) {
                 continue;
             }
-            org.testng.Assert.assertNotEquals(token, destToken);
+            log.info("token = " + token + " desttoken = " + destToken);
+            org.testng.Assert.assertNotEquals(destToken.equals(token), true, "未关注接口里面应该没有当前token");
         }
     }
 
@@ -139,7 +146,7 @@ public class unfollowAssetList extends TronlinkBase {
 
     }
 
-    @Test(enabled = true, description = "系统推荐币（线上：USDT）没有过余额balance=0， 取消关注，不在unfollow接口。")
+    @Test(enabled = true, description = "系统推荐币（线上：USDT）没有余额,balance=0， 取消关注，在unfollow接口。")
     public void unfollowAssetList04() {
         // 无余额的一个推荐币 usdt
         String followToken = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
@@ -156,7 +163,10 @@ public class unfollowAssetList extends TronlinkBase {
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         // 断言
-        assertNotFound(followToken);
+        assertFound(followToken);
+
+        follow = addAsset.addAssetByToken10(20, true, unfollowAsset41, followToken);
+        log.info("restore follow usdt, result = " + follow);
 
     }
 
