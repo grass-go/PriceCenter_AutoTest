@@ -8,9 +8,6 @@ import com.alibaba.fastjson.JSONPath;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
-import org.seleniumhq.jetty9.http.HttpMethod;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import tron.common.Constants;
 import tron.common.TronlinkApiList;
@@ -18,7 +15,6 @@ import tron.common.utils.AddressConvert;
 import tron.common.utils.Keys;
 import tron.tronlink.base.TronlinkBase;
 import tron.tronlink.v2.model.CommonRsp;
-import tron.tronlink.v2.model.trc1155.GetAllCollectionRsp;
 import tron.tronlink.v2.trc1155.AllCollection;
 import tron.tronlink.v2.trc1155.GetAllCollection;
 
@@ -28,15 +24,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static tron.common.Constants.getAllCollection1155Url;
-import static tron.common.TronlinkApiList.v2GetAllCollectionByType;
+import static tron.common.Constants.POST;
 
 @Slf4j
 public class delAsset extends TronlinkBase {
     private JSONObject responseContent;
-    private JSONObject dataContent;
     private HttpResponse response;
-    private JSONObject object;
 
     private JSONArray array = new JSONArray();
     JSONObject jsonObject = new JSONObject();
@@ -393,13 +386,13 @@ public class delAsset extends TronlinkBase {
     @Test(description = "删除1155资产")
     public void delAsset_1155(){
         initParams();
-        String delToken = "";
+        String delToken = "TAp4M94p4ngPqTJnT85mVT9YJeQtVL2Cgk";
         jsonObject.put(Keys.Address,Hex_1155_user);
         List<String> dels = new ArrayList<>();
         dels.add(delToken);
         jsonObject.put(Keys.unFollowToken1155, dels);
 
-        params = sig.GenerateParams(Hex_1155_user, Constants.delAssetUrl, RequestMethod.POST.toString());
+        params = sig.GenerateParams(Hex_1155_user, Constants.delAssetUrl,POST);
         response = TronlinkApiList.v2DelAsset(params,jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         String rspStr = TronlinkApiList.parseResponse2String(response);

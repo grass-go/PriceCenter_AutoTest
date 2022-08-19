@@ -3,6 +3,7 @@ package tron.tronlink.base;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import tron.common.TronlinkApiList;
@@ -10,6 +11,7 @@ import tron.common.utils.AddressConvert;
 import tron.common.utils.Configuration;
 import tron.common.utils.Keys;
 
+@Slf4j
 public class TronlinkBase {
     public static  volatile String tronlinkUrl;
     public static  volatile String tronscanApiUrl;
@@ -31,7 +33,7 @@ public class TronlinkBase {
     public String B58_1155_user = AddressConvert.hexTo58(Hex_1155_user);
     public String Hex_1155_newAssetUser = Configuration.getByPath(Keys.settingFileName).getString("tronlink.1155newAssetUser");
     public String SearchToken = Configuration.getByPath(Keys.settingFileName).getString("tronlink.search_token");
-
+    public String keyWord1155 = Configuration.getByPath(Keys.settingFileName).getString("tronlink.keyWord1155");
     public String followAsset = addressNewAsset;
     public String unfollowAsset41 = addressNewAsset41;
     public String nonce = "12345";
@@ -40,6 +42,7 @@ public class TronlinkBase {
     @Parameters({"tronlinkUrl","tronscanApiUrl"})
     @BeforeTest
     public void  getMonitorUrl(String tronlinkUrl, String tronscanApiUrl) {
+        log.info("begin load xml config----");
         this.tronlinkUrl = tronlinkUrl;
         this.tronscanApiUrl = tronscanApiUrl;
         TronlinkApiList.HttpNode =tronlinkUrl;

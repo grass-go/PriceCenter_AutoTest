@@ -275,7 +275,7 @@ public class SearchAsset extends TronlinkBase {
     String rspStr = TronlinkApiList.parseResponse2String(httpRsp);
     SearchRsp rsp = JSONObject.parseObject(rspStr, SearchRsp.class);
     // token在结果中可以找到
-    String token = "";
+    String token = SearchToken;
     AssertSearchResult(rsp, token, true);
 
   }
@@ -298,7 +298,7 @@ public class SearchAsset extends TronlinkBase {
     params.clear();
     // 计算sig
     params = sig.GenerateParams(B58_1155_user, searchUrl, GET);
-    params.put("keyWord","TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");
+    params.put("keyWord",keyWord1155);
     long now = System.currentTimeMillis();
     if(now %2 == 0) {
       // 随机带page 和count，可选参数
