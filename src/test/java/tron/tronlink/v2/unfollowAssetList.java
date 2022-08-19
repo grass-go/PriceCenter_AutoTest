@@ -188,7 +188,7 @@ public class unfollowAssetList extends TronlinkBase {
         // 断言
         assertNotFound(followToken);
         follow = addAsset.addAssetByToken10(20, false, unfollowAsset41, followToken);
-        log.info("restore unfollowAssetList04_1, result = ", follow);
+        log.info("restore unfollowAssetList04_1, result = " + follow);
 
     }
 
