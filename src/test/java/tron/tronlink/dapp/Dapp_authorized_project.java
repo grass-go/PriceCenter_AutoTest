@@ -1,7 +1,5 @@
 package tron.tronlink.dapp;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
@@ -11,7 +9,6 @@ import tron.common.TronlinkApiList;
 import tron.tronlink.base.TronlinkBase;
 import tron.tronlink.dapp.model.AuthProjectRsp;
 import tron.tronlink.dapp.model.Data;
-import tron.tronlink.v2.model.GetRiskTokensRsp;
 
 @Slf4j
 public class Dapp_authorized_project extends TronlinkBase {
