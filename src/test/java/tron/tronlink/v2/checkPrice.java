@@ -116,6 +116,7 @@ public class checkPrice extends TronlinkBase {
 
         //get token unit price in tronscan
         JSONObject tronscanPriceObj = TronlinkApiList.getTronscanTrc20Price(address);
+        Assert.assertNotEquals(tronscanPriceObj, null);
         System.out.println(tronscanPriceObj.toJSONString());
         String tronscanTrxPrice = tronscanPriceObj.get("priceInTrx").toString();
         String tronscanUsdPrice = tronscanPriceObj.get("priceInUsd").toString();
