@@ -52,41 +52,31 @@ public class Helper extends Base {
       String permission,
       String minorHandle,
       String toAddress,
-      int index,
+      String nameOrTokenIdOrTokenAddress,
       String amount,
       boolean flag)
       throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     TronScanPage tronScanPage = new TronScanPage(DRIVER);
-    waitingTime();
-    click(tronScanPage.accountAddress_btn);
+    waitingTime(5);
+    Helper.click(tronScanPage.accountAddress_btn);
     Helper.click(tronScanPage.multiSignature_btn);
     waitingTime();
-    int i = 10;
-    while (i > 0) {
-      try {
-        click(tronScanPage.permission_input);
-        if (permission.equals("owner")) {
-          click(tronScanPage.ownerPermission_option);
-        } else {
-          click(tronScanPage.activePermission_option);
-        }
-        break;
-      } catch (Exception e) {
-        i--;
-      }
-    }
-    waitingTime(5);
-    sendKeys(tronScanPage.receive_input, toAddress);
-    waitingTime(5);
 
+    Helper.click(tronScanPage.controlAccount_dropDown);
+    Helper.click(tronScanPage.controlAccount);
     waitingTime();
+    //  Helper.click(tronScanPage.receive_input);
+    Helper.clickAndClearAndInput(tronScanPage.receive_input, toAddress);
+
     int j = 10;
-    if (index == 5) {
+    if ("TVzRKmCZ471QGsKqFJbXc2qeNtJNmcumbR".equals(nameOrTokenIdOrTokenAddress)) {
       while (j > 0) {
         try {
-          click(tronScanPage.token_box);
-          click(tronScanPage.token_list.get(index));
+          click(tronScanPage.tokenBox_dropDown);
+          sendKeys(tronScanPage.tokenBox_input, nameOrTokenIdOrTokenAddress);
+          // click(tronScanPage.token_list.get(nameOrTokenIdOrTokenAddress));
+          click(tronScanPage.token_searched);
           waitingTime();
           click(tronScanPage.collection_box);
           click(tronScanPage.trc721Token_btn);
@@ -99,8 +89,9 @@ public class Helper extends Base {
     } else {
       while (j > 0) {
         try {
-          click(tronScanPage.token_box);
-          click(tronScanPage.token_list.get(index));
+          click(tronScanPage.tokenBox_dropDown);
+          sendKeys(tronScanPage.tokenBox_input, nameOrTokenIdOrTokenAddress);
+          click(tronScanPage.token_searched);
           waitingTime();
           clickAndClearAndInput(tronScanPage.tokenAccount_input, amount);
           waitingTime();
@@ -109,6 +100,23 @@ public class Helper extends Base {
           j--;
           waitingTime(1);
         }
+      }
+    }
+
+    int i = 10;
+    while (i > 0) {
+      try {
+        click(tronScanPage.permission_dropDown);
+        waitingTime();
+        if (permission.equals("owner")) {
+          // click(tronScanPage.ownerPermission_option);
+          click(tronScanPage.permission_option.get(0));
+        } else {
+          click(tronScanPage.permission_option.get(1));
+        }
+        break;
+      } catch (Exception e) {
+        i--;
       }
     }
 
@@ -139,8 +147,6 @@ public class Helper extends Base {
 
     MainPage mainPage = new MainPage(DRIVER);
     TronScanPage tronScanPage = new TronScanPage(DRIVER);
-    waitingTime();
-    click(tronScanPage.confirm_btn);
     waitingTime();
     click(tronScanPage.multiSignTransactionTab_btn);
     click(tronScanPage.toBeSignedTab_btn);
@@ -495,7 +501,7 @@ public class Helper extends Base {
     return "找不到token:" + name;
   }
 
-  public static boolean addCustomTokenFailed(String tips,String tokenAddress) throws Exception {
+  public static boolean addCustomTokenFailed(String tips, String tokenAddress) throws Exception {
     try {
       MainPage mainPage = new MainPage(DRIVER);
       AllAssetsPage allAssetsPage = new AllAssetsPage(DRIVER);
@@ -664,7 +670,7 @@ public class Helper extends Base {
     }
   }
 
-  public static boolean isElementExist(String name,String text) {
+  public static boolean isElementExist(String name, String text) {
     try {
       DRIVER.findElementByName(name);
       System.out.println("IsFindByName: " + name);
