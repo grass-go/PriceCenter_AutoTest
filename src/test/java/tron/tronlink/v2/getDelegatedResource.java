@@ -54,7 +54,7 @@ public class getDelegatedResource extends TronlinkBase {
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         responseString = TronlinkApiList.parseResponse2String(response);
 
-        String cmp_result = new CompareJson("contractAddress,transferCount").compareJson(responseString, expResponse);
+        String cmp_result = new CompareJson("data").compareJson(responseString, expResponse);
         System.out.println("=========actual response========== "+responseString+" ");
         System.out.println("=========expect response========== "+expResponse+" ");
         System.out.println("=========cmp_result=============== "+cmp_result);
@@ -86,7 +86,7 @@ public class getDelegatedResource extends TronlinkBase {
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         responseString = TronlinkApiList.parseResponse2String(response);
 
-        String cmp_result = new CompareJson("contractAddress,transferCount").compareJson(responseString, expResponse);
+        String cmp_result = new CompareJson("data").compareJson(responseString, expResponse);
         System.out.println("=========actual response========== "+responseString+" ");
         System.out.println("=========expect response========== "+expResponse+" ");
         System.out.println("=========cmp_result=============== "+cmp_result);
@@ -116,7 +116,7 @@ public class getDelegatedResource extends TronlinkBase {
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         responseString = TronlinkApiList.parseResponse2String(response);
 
-        String cmp_result = new CompareJson("contractAddress,transferCount").compareJson(responseString, expResponse);
+        String cmp_result = new CompareJson("data").compareJson(responseString, expResponse);
         System.out.println("=========actual response========== "+responseString+" ");
         System.out.println("=========expect response========== "+expResponse+" ");
         System.out.println("=========cmp_result=============== "+cmp_result);
@@ -147,7 +147,7 @@ public class getDelegatedResource extends TronlinkBase {
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         responseString = TronlinkApiList.parseResponse2String(response);
 
-        String cmp_result = new CompareJson("contractAddress,transferCount").compareJson(responseString, expResponse);
+        String cmp_result = new CompareJson("data").compareJson(responseString, expResponse);
         System.out.println("=========actual response========== "+responseString+" ");
         System.out.println("=========expect response========== "+expResponse+" ");
         System.out.println("=========cmp_result=============== "+cmp_result);
@@ -177,7 +177,7 @@ public class getDelegatedResource extends TronlinkBase {
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         responseString = TronlinkApiList.parseResponse2String(response);
 
-        String cmp_result = new CompareJson("contractAddress,transferCount").compareJson(responseString, expResponse);
+        String cmp_result = new CompareJson("data").compareJson(responseString, expResponse);
         System.out.println("=========actual response========== "+responseString+" ");
         System.out.println("=========expect response========== "+expResponse+" ");
         System.out.println("=========cmp_result=============== "+cmp_result);
@@ -208,7 +208,7 @@ public class getDelegatedResource extends TronlinkBase {
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         responseString = TronlinkApiList.parseResponse2String(response);
 
-        String cmp_result = new CompareJson("contractAddress,transferCount").compareJson(responseString, expResponse);
+        String cmp_result = new CompareJson("data").compareJson(responseString, expResponse);
         System.out.println("=========actual response========== "+responseString+" ");
         System.out.println("=========expect response========== "+expResponse+" ");
         System.out.println("=========cmp_result=============== "+cmp_result);
