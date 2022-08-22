@@ -1792,4 +1792,13 @@ public class TronlinkApiList {
         return responseContent;
     }
 
+    public static HttpResponse v2CheckWhite(Map<String, String> params) throws Exception {
+        String requestUrl = HttpNode + "/api/wallet/v2/white";
+        Map<String, String> header = getV2Header();
+        header.put("Content-type", "application/json; charset=utf-8");
+        header.put("Connection", "Close");
+        response = v2CreateGetConnect(requestUrl, params);
+        return response;
+    }
+
 }
