@@ -1812,5 +1812,16 @@ public class TronlinkApiList {
         response = v2CreateGetConnect(requestUrl, params);
         return response;
     }
+    public static HttpResponse v1Balance(Map<String, String> params) {
+        try {
+            String requestUrl = HttpNode + "/api/wallet/balance";
+            response = createGetConnectNoHeader(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
 
 }
