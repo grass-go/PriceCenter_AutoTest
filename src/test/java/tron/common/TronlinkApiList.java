@@ -362,6 +362,18 @@ public class TronlinkApiList {
         return response;
     }
 
+    public static HttpResponse dappAuthorizedProject() {
+        try {
+            String requestUrl = HttpNode + "/api/dapp/v2/authorized_project";
+            response = createGetConnectClient2(requestUrl, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
     public static HttpResponse dappId(Map<String, String> params) {
         try {
             String requestUrl = HttpNode + "/api/dapp/v2/dapp/id";
