@@ -61,11 +61,11 @@ public class Helper extends Base {
     waitingTime(5);
     Helper.click(tronScanPage.accountAddress_btn);
     Helper.click(tronScanPage.multiSignature_btn);
-    waitingTime();
+    waitingTime(5);
 
     Helper.click(tronScanPage.controlAccount_dropDown);
     Helper.click(tronScanPage.controlAccount);
-    waitingTime();
+    waitingTime(5);
     //  Helper.click(tronScanPage.receive_input);
     Helper.clickAndClearAndInput(tronScanPage.receive_input, toAddress);
 
@@ -120,9 +120,9 @@ public class Helper extends Base {
       }
     }
 
-    waitingTime();
+    waitingTime(5);
     click(tronScanPage.transferConfirm_btn);
-    waitingTime();
+    waitingTime(5);
     String majorHandle = DRIVER.getWindowHandle();
     switchWindows(majorHandle);
     if (flag) {
