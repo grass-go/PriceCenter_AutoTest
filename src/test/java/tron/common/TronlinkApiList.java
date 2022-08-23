@@ -374,6 +374,18 @@ public class TronlinkApiList {
         return response;
     }
 
+    public static HttpResponse swapExchanges(Map<String,String> params) {
+        try {
+            String requestUrl = HttpNode + "/api/swap/v1/exchanges";
+            response = createGetConnectClient2(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
     public static HttpResponse dappPlug() {
         try {
             String requestUrl = HttpNode + "/dapphouseapp/plug";
