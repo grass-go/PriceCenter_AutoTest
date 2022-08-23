@@ -221,6 +221,19 @@ public class TronlinkApiList {
         return response;
     }
 
+    public static HttpResponse apiTransferTrc20Status(HashMap<String, String> param) throws Exception {
+        final String requestUrl = HttpNode + "/api/transfer/trc20_status";
+        URIBuilder builder = new URIBuilder(requestUrl);
+        if (param != null) {
+            for (String key : param.keySet()) {
+                builder.addParameter(key, param.get(key));
+            }
+        }
+        URI uri = builder.build();
+        response = createGetConnect(uri);
+        return response;
+    }
+
     public static HttpResponse votingV2Witness(Map<String, String> params) throws Exception {
         String requestUrl = HttpNode + "/api/voting/v2/witness";
 
