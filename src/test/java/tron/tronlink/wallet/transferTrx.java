@@ -27,7 +27,7 @@ public class transferTrx {
     response = TronlinkApiList.apiTransferTrx(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    Assert.assertNotEquals( null,responseContent);
+    org.testng.Assert.assertNotEquals(responseContent, null);
     responseArrayContent = responseContent.getJSONArray("data");
     Assert.assertNotEquals( null,responseArrayContent);
 
