@@ -1848,5 +1848,15 @@ public class TronlinkApiList {
         }
         return response;
     }
+    public static HttpResponse TransferV2Trc721(Map<String, String> params) {
+        final String requestUrl = HttpNode + "/api/transfer/v2/trc721";
+        response = v2CreateGetConnect(requestUrl, params);
+        return response;
+    }
+    public static HttpResponse TransferTrc721(Map<String, String> params) {
+        final String requestUrl = HttpNode + "/api/transfer/trc721";
+        response = v2CreateGetConnect(requestUrl, params);
+        return response;
+    }
 
 }
