@@ -13,7 +13,7 @@ import tron.tronlink.base.TronlinkBase;
 import java.util.HashMap;
 
 @Slf4j
-public class trc20Status extends TronlinkBase {
+public class transferTrc20Status extends TronlinkBase {
     private JSONObject responseContent;
     private JSONArray responseArrayContent;
     private HttpResponse response;
