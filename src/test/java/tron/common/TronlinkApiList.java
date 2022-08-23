@@ -1858,5 +1858,16 @@ public class TronlinkApiList {
         response = v2CreateGetConnect(requestUrl, params);
         return response;
     }
+    public static HttpResponse sdk_verify(String json) {
+        try {
+            String requestUrl = HttpNode + "/api/wallet/sdk_verify";
+            response = createPostConnect(requestUrl, json);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
 
 }
