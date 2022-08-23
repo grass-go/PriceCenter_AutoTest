@@ -13,7 +13,6 @@ import tron.tronlink.dapp.model.Data;
 @Slf4j
 public class Dapp_authorized_project extends TronlinkBase {
 
-    private JSONObject responseContent;
     private HttpResponse response;
 
     @Test(description = "获取dapp白名单")

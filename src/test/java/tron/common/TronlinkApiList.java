@@ -374,6 +374,18 @@ public class TronlinkApiList {
         return response;
     }
 
+    public static HttpResponse dappPlug() {
+        try {
+            String requestUrl = HttpNode + "/dapphouseapp/plug";
+            response = createGetConnectClient2(requestUrl, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
     public static HttpResponse dappId(Map<String, String> params) {
         try {
             String requestUrl = HttpNode + "/api/dapp/v2/dapp/id";
