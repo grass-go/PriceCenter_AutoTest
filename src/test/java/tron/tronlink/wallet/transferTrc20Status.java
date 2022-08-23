@@ -47,8 +47,9 @@ public class transferTrc20Status extends TronlinkBase {
         Assert.assertEquals(7,index);
 
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        Assert.assertNotEquals( null,responseArrayContent);
         responseArrayContent = responseContent.getJSONArray("data");
-
+        Assert.assertNotEquals( null,responseArrayContent);
         //data object
         for (Object json:responseArrayContent) {
             JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
