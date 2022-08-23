@@ -34,7 +34,7 @@ public class multiSignatureWithActivePermission extends Base {
     switchWindows(minorHandle);
     waitingTime(10);
     String tips =
-        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, 4, "1", true);
+        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, "TRX", "1", true);
     Assert.assertTrue(tips.contains("成功"));
 
     String majorHandle = DRIVER.getWindowHandle();
@@ -63,7 +63,7 @@ public class multiSignatureWithActivePermission extends Base {
     switchWindows(minorHandle);
     waitingTime(10);
     String tips =
-        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, 4, "1", true);
+        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, "TRX", "1", true);
     Assert.assertTrue(tips.contains("成功"));
     String majorHandle = DRIVER.getWindowHandle();
     switchWindows(majorHandle);
@@ -91,7 +91,7 @@ public class multiSignatureWithActivePermission extends Base {
     switchWindows(minorHandle);
     waitingTime(10);
     String tips =
-        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, 7, "1", true);
+        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, "1004910", "1", true);
     Assert.assertTrue(tips.contains("成功"));
     String majorHandle = DRIVER.getWindowHandle();
     switchWindows(majorHandle);
@@ -120,7 +120,7 @@ public class multiSignatureWithActivePermission extends Base {
     switchWindows(minorHandle);
     waitingTime(10);
     String tips =
-        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, 7, "1", true);
+        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, "1004910", "1", true);
     Assert.assertTrue(tips.contains("成功"));
     String majorHandle = DRIVER.getWindowHandle();
     switchWindows(majorHandle);
@@ -148,7 +148,8 @@ public class multiSignatureWithActivePermission extends Base {
     switchWindows(minorHandle);
     waitingTime(10);
     String tips =
-        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, 6, "1", true);
+        Helper.multiSignatureInitiation(
+            "active", minorHandle, loginAddress, "TF17BgPaZYbz8oxbjhriubPDsA7ArKoLX3", "1", true);
     Assert.assertTrue(tips.contains("成功"));
     String majorHandle = DRIVER.getWindowHandle();
     switchWindows(majorHandle);
@@ -176,7 +177,8 @@ public class multiSignatureWithActivePermission extends Base {
     switchWindows(minorHandle);
     waitingTime(10);
     String tips =
-        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, 6, "1", true);
+        Helper.multiSignatureInitiation(
+            "active", minorHandle, loginAddress, "TF17BgPaZYbz8oxbjhriubPDsA7ArKoLX3", "1", true);
     Assert.assertTrue(tips.contains("成功"));
     String majorHandle = DRIVER.getWindowHandle();
     switchWindows(majorHandle);
@@ -204,7 +206,8 @@ public class multiSignatureWithActivePermission extends Base {
     switchWindows(minorHandle);
     waitingTime(10);
     String tips =
-        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, 5, "1", true);
+        Helper.multiSignatureInitiation(
+            "active", minorHandle, loginAddress, "TVzRKmCZ471QGsKqFJbXc2qeNtJNmcumbR", "1", true);
     Assert.assertTrue(tips.contains("成功"));
     String majorHandle = DRIVER.getWindowHandle();
     switchWindows(majorHandle);
@@ -232,7 +235,8 @@ public class multiSignatureWithActivePermission extends Base {
     switchWindows(minorHandle);
     waitingTime(10);
     String tips =
-        Helper.multiSignatureInitiation("active", minorHandle, loginAddress, 5, "1", true);
+        Helper.multiSignatureInitiation(
+            "active", minorHandle, loginAddress, "TVzRKmCZ471QGsKqFJbXc2qeNtJNmcumbR", "1", true);
     Assert.assertTrue(tips.contains("成功"));
     String majorHandle = DRIVER.getWindowHandle();
     switchWindows(majorHandle);

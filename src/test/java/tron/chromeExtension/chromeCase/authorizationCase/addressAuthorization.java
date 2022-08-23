@@ -28,10 +28,10 @@ public class addressAuthorization extends Base {
     MainPage mainPage = new MainPage(DRIVER);
     AuthorizationPage authorizationPage = new AuthorizationPage(DRIVER);
     click(mainPage.pledge_btn);
-    waitingTime();
+    waitingTime(5);
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
-    waitingTime();
+    waitingTime(5);
     DRIVER.get("https://tronscan.org/#/contract/TGuqYUfia1HhBBhNkrV4mToMKtXrxxoh9S/code");
     TronScanPage tronScanPage = new TronScanPage(DRIVER);
     click(tronScanPage.prepareContract_btn);
