@@ -1881,5 +1881,28 @@ public class TronlinkApiList {
         }
         return response;
     }
+    public static HttpResponse v2GetAllCollection_1155(Map<String, String> params) {
+        final String requestUrl = HttpNode + "/api/wallet/trc1155/getAllCollection";
+        response = v2CreateGetConnect(requestUrl, params);
+        return response;
+    }
+    
+    public static HttpResponse v2AllCollections_1155(Map<String, String> params) {
+        final String requestUrl = HttpNode + "/api/wallet/trc1155/allCollections";
+        response = v2CreateGetConnect(requestUrl, params);
+        return response;
+    }
+    
+    public static HttpResponse v2GetCollectionList_1155(Map<String, String> params) {
+        final String requestUrl = HttpNode + "/api/wallet/trc1155/getCollectionList";
+        response = v2CreateGetConnect(requestUrl, params);
+        return response;
+    }
+    public static HttpResponse v2GetCollectionInfos_1155(Map<String, String> params, JSONObject body) {
+        final String requestUrl = HttpNode + "/api/wallet/trc1155/getCollectionInfos";
+        response = createPostConnectWithHeader(requestUrl, params, body, getV2Header());
+        return response;
+    }
+  
 
 }

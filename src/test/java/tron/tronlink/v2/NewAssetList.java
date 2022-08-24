@@ -110,6 +110,43 @@ public class NewAssetList extends TronlinkBase {
 
 
   }
+  @Test(enabled = false, description = "check 1155 can be in new Asset API")
+  public void newAssetList03_1155(){
+    params.put("nonce","12345");
+    params.put("secretId","SFSUIOJBFMLKSJIF");
+    params.put("signature","vamHDpsmhAJiiuRqNdLNqupKWUI%3D");
+    params.put("address",address721_B58);
 
+    response = TronlinkApiList.v2NewAssetList(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    JSONObject trc1155token = (JSONObject) JSONPath.eval(responseContent,"$.data.trc1155Token[0]");
+    int type = trc1155token.getIntValue("type");
+    Assert.assertEquals(6,type);
+    int top = trc1155token.getIntValue("top");
+    Assert.assertEquals(0,top);
+    int isOfficial = trc1155token.getIntValue("isOfficial");
+    Assert.assertEquals(0,isOfficial);
+    String name = trc1155token.getString("name");
+    Assert.assertEquals("bill1155_001",name);
+    String shortName = trc1155token.getString("shortName");
+    Assert.assertEquals("bill1155_001",shortName);
+    String contractAddress = trc1155token.getString("contractAddress");
+    Assert.assertEquals("TBgckQzPTLcyvVG7fuGwSowzfhmykA7V4L",contractAddress);
+    int count = trc1155token.getIntValue("count");
+    Assert.assertEquals(1,count);
+    String logoUrl = trc1155token.getString("logoUrl");
+    Assert.assertEquals("https://image.tronlink.org/pictures/nft_contract_default_logo.png",logoUrl);
+    boolean inMainChain = trc1155token.getBooleanValue("inMainChain");
+    Assert.assertTrue(inMainChain);
+    boolean inSideChain = trc1155token.getBooleanValue("inSideChain");
+    Assert.assertFalse(inSideChain);
+    String issueTime = trc1155token.getString("issueTime");
+    Assert.assertEquals("2022-08-05 10:29:06",issueTime);
+    String issueAddress = trc1155token.getString("issueAddress");
+    Assert.assertEquals("TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t",issueAddress);
+  }
+
+    //read expected json
 
 }
