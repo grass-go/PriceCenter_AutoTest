@@ -27,7 +27,7 @@ public class getAllCollection extends TronlinkBase {
     private HttpResponse response;
     Map<String, String> params = new HashMap<>();
 
-    public String expTopToken = Configuration.getByPath("testng.conf").getString("tronlink.trc1155TopToken");
+    //public String expTopToken = Configuration.getByPath("testng.conf").getString("tronlink.trc1155TopToken");
     public String expFollowAndHold = Configuration.getByPath("testng.conf").getString("tronlink.trc1155FollowAndHold");
     public String expFollowButNoHold = Configuration.getByPath("testng.conf").getString("tronlink.trc1155FollowButNoHold");
 
@@ -93,16 +93,16 @@ public class getAllCollection extends TronlinkBase {
         response = TronlinkApiList.v2GetAllCollection_1155(params);
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
 
-        Object topToken = JSONPath.eval(responseContent, "$..data[0].contractAddress");
+        /*Object topToken = JSONPath.eval(responseContent, "$..data[0].contractAddress");
         log.info("expect top token: "+ expTopToken +", actual top Token"+topToken.toString());
         Assert.assertEquals(expTopToken,topToken.toString());
-
-        Object FollowAndHold = JSONPath.eval(responseContent, "$..data[1].contractAddress");
+*/
+        Object FollowAndHold = JSONPath.eval(responseContent, "$..data[0].contractAddress");
         log.info("expect FollowAndHold token: "+ expFollowAndHold +", actual FollowButNoHold Token"+FollowAndHold.toString());
         Assert.assertEquals(expFollowAndHold,FollowAndHold.toString());
 
-        Object FollowButNoHold = JSONPath.eval(responseContent, "$..data[2].contractAddress");
-        log.info("expect FollowButNoHold token: "+ expFollowButNoHold +", actual FollowButNoHold Token"+FollowButNoHold.toString());
+        Object FollowButNoHold = JSONPath.eval(responseContent, "$..data[1].contractAddress");
+        log.info("expect FollowButNoHold token: "+ expFollowButNoHold +", actual FollowButNoHold Token: "+FollowButNoHold.toString());
         Assert.assertEquals(expFollowButNoHold,FollowButNoHold.toString());
 
     }
