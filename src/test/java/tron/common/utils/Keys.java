@@ -15,7 +15,7 @@ public class Keys {
     public static final String unFollowToken20 = "token20Cancel";
 
     public static final String FollowToken1155 = "token1155";
-    public static final String unFollowToken1155 = "token1155Cancel";
+    public static final String unFollowToken1155 = "token1155Del";
 
 
 }

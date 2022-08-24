@@ -31,7 +31,7 @@ public class TronlinkBase {
     public String price_B58 = Configuration.getByPath("testng.conf").getString("tronlink.priceUser");
     public String Hex_1155_user = Configuration.getByPath(Keys.settingFileName).getString("tronlink.1155User");
     public String B58_1155_user = AddressConvert.hexTo58(Hex_1155_user);
-    public String Hex_1155_newAssetUser = Configuration.getByPath(Keys.settingFileName).getString("tronlink.1155newAssetUser");
+//    public String Hex_1155_newAssetUser = Configuration.getByPath(Keys.settingFileName).getString("tronlink.1155newAssetUser");
     public String SearchToken = Configuration.getByPath(Keys.settingFileName).getString("tronlink.search_token");
     public String keyWord1155 = Configuration.getByPath(Keys.settingFileName).getString("tronlink.keyWord1155");
     public String followAsset = addressNewAsset;

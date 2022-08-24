@@ -1,6 +1,7 @@
 package tron.tronlink.v2.trc1155;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import tron.common.TronlinkApiList;
 import tron.tronlink.v2.GetSign;
@@ -14,6 +15,7 @@ import static tron.common.TronlinkApiList.v2GetAllCollectionByType;
 import static tron.common.utils.ErrorMsg.*;
 import static tron.common.utils.ErrorMsg.trc1155NotFound;
 
+@Slf4j
 public class AllCollection {
     GetSign sig = new GetSign();
 
@@ -22,6 +24,7 @@ public class AllCollection {
         Map<String,String> params = sig.GenerateParams(user, AllCollection1155Url, "GET" );
         HttpResponse httpResponse = v2GetAllCollectionByType(AllCollection1155Url, params);
         String AllCollectionStr = TronlinkApiList.parseResponse2String(httpResponse);
+        log.info(AllCollectionStr);
         AllCollectionRsp gacRsp = JSONObject.parseObject(AllCollectionStr, AllCollectionRsp.class);
         AssertAllCollection(gacRsp, token, expect);
     }

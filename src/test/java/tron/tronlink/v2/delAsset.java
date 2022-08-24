@@ -16,6 +16,7 @@ import tron.tronlink.base.TronlinkBase;
 import tron.tronlink.v2.model.CommonRsp;
 import tron.tronlink.v2.trc1155.AllCollection;
 import tron.tronlink.v2.trc1155.AssertGetAllCollection;
+import tron.tronlink.v2.trc1155.getCollectionList;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -381,17 +382,18 @@ public class delAsset extends TronlinkBase {
     }
 
     private GetSign sig = new GetSign();
-
+    getCollectionList g = new getCollectionList();
     @Test(description = "删除1155资产")
     public void delAsset_1155(){
         initParams();
-        String delToken = "TAp4M94p4ngPqTJnT85mVT9YJeQtVL2Cgk";
-        jsonObject.put(Keys.Address,Hex_1155_user);
+        String delToken = g.expFollowAndHold;
+        String user = address721_B58;
+        jsonObject.put(Keys.Address,user);
         List<String> dels = new ArrayList<>();
         dels.add(delToken);
         jsonObject.put(Keys.unFollowToken1155, dels);
 
-        params = sig.GenerateParams(Hex_1155_user, Constants.delAssetUrl,POST);
+        params = sig.GenerateParams(user, Constants.delAssetUrl,POST);
         response = TronlinkApiList.v2DelAsset(params,jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         String rspStr = TronlinkApiList.parseResponse2String(response);
@@ -401,11 +403,13 @@ public class delAsset extends TronlinkBase {
         }
 
         // 删除之后无法在全部资产查询
-        ac.AssertNotFoundInAC(B58_1155_user, delToken, false);
+        ac.AssertNotFoundInAC(user, delToken, false);
         // 删除之后无法在首页查询
-        gac.AssertNotFoundInGAC(B58_1155_user, delToken, false);
+        gac.AssertNotFoundInGAC(user, delToken, false);
         // 恢复现场再关注下
-        addAsset.addAssetByTokenType(1155, true, AddressConvert.toHex(B58_1155_user), delToken);
+        addAsset.addAssetByTokenType(1155, true, AddressConvert.toHex(user), delToken);
+        ac.AssertNotFoundInAC(user, delToken, true);
+        gac.AssertNotFoundInGAC(user, delToken, true);
 
     }
 
