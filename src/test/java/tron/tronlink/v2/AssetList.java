@@ -67,7 +67,7 @@ public class AssetList extends TronlinkBase {
 
   //v4.2.1 new user(not even have transfer trx),with parameter version=v2, will return trx only.
   @SneakyThrows
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void assetList02(){
     char cbuf[] = new char[5000];
     InputStreamReader input =new InputStreamReader(new FileInputStream(new File("src/test/resources/TestData/new1_assetList_v2_exp.json")),"UTF-8");
@@ -162,8 +162,6 @@ public class AssetList extends TronlinkBase {
     bodyObject.put("addressType", "2");
 
     response = TronlinkApiList.v2AssetList(params, bodyObject);
-    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
 
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
@@ -203,7 +201,8 @@ public class AssetList extends TronlinkBase {
           break;
         case 2:
           Assert.assertEquals("",id);
-          Assert.assertEquals("TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn",contractAddress);
+          Assert.assertEquals("TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn".equals(contractAddress) ||
+                  "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t".equals(contractAddress) || "THbVQp8kMjStKNnf2iCY6NEzThKMK5aBHg".equals(contractAddress) , true);
           break;
         default:
           break;

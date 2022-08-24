@@ -16,6 +16,9 @@ public class Configuration {
 
     private static Config config;
 
+    // 配置文件相对路径
+    public static String confFilePath = "testng.conf";
+
     private static final Logger logger = LoggerFactory.getLogger("Configuration");
 
     /**

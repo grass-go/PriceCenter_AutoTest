@@ -43,6 +43,7 @@ public class transactionHistory extends TronlinkBase {
         index=11;
       }
       JSONArray data = jsonObject.getJSONArray("data");
+      Assert.assertNotEquals(data, null);
       for (Object object:data){
         JSONObject history = (JSONObject) JSON.toJSON(object);
         Assert.assertTrue(!history.getString("hash").isEmpty());

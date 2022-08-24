@@ -27,6 +27,7 @@ public class trxTransferRecord extends TronlinkBase {
     responseContent = api.parseResponseContent(response);
     api.printJsonContent(responseContent);
     JSONArray transferArray = responseContent.getJSONArray("data");
+    Assert.assertNotEquals(transferArray, null);
     System.out.println(transferArray.size());
     //最大limit数值为50
     Assert.assertTrue(transferArray.size() == 50);

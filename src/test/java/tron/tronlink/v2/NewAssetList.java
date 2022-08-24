@@ -80,12 +80,6 @@ public class NewAssetList extends TronlinkBase {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
 
-    /*
-    //check Count failed by 空投，
-    Object actualCount = JSONPath.eval(responseContent, "$..data.count");
-    JSONArray actualCountArray=(JSONArray)actualCount;
-    Assert.assertEquals(2, actualCountArray.get(0));
-    */
 
     //check BitTorrent balance
     Object actualBT = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].balanceStr");
@@ -114,15 +108,6 @@ public class NewAssetList extends TronlinkBase {
     actualRSIArray=(JSONArray)actualRSIPrice;
     Assert.assertEquals(0,actualRSIArray.get(0));
 
-
-    /*
-    responseString = TronlinkApiList.parseResponse2String(response);
-    String cmp_result = new CompareJson("contractAddress", "price,trxCount,nrOfTokenHolders,transferCount").compareJson(responseString, expResponse);
-    System.out.println("=========actual response========== "+responseString+" ");
-    System.out.println("=========expect response========== "+expResponse+" ");
-    System.out.println("=========cmp_result=============== "+cmp_result);
-    Assert.assertEquals("null",cmp_result);
-    */
 
   }
   @Test(enabled = false, description = "check 1155 can be in new Asset API")

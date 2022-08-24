@@ -28,7 +28,9 @@ public class transferToken10 {
     response = TronlinkApiList.apiTransferToken10(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    Assert.assertNotEquals(null, responseContent);
     responseArrayContent = responseContent.getJSONArray("data");
+    Assert.assertNotEquals(responseArrayContent, null);
 
     //data object
     for (Object json:responseArrayContent) {
