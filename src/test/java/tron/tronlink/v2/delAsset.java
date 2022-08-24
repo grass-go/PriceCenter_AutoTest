@@ -1,6 +1,5 @@
 package tron.tronlink.v2;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
@@ -16,7 +15,7 @@ import tron.common.utils.Keys;
 import tron.tronlink.base.TronlinkBase;
 import tron.tronlink.v2.model.CommonRsp;
 import tron.tronlink.v2.trc1155.AllCollection;
-import tron.tronlink.v2.trc1155.GetAllCollection;
+import tron.tronlink.v2.trc1155.AssertGetAllCollection;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class delAsset extends TronlinkBase {
     Map<String, String> params = new HashMap<>();
 
     AllCollection ac = new AllCollection();
-    GetAllCollection gac = new GetAllCollection();
+    AssertGetAllCollection gac = new AssertGetAllCollection();
 
     addAsset addAsset = new addAsset();
 

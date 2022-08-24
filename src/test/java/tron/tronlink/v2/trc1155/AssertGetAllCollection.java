@@ -14,7 +14,7 @@ import static tron.common.TronlinkApiList.v2GetAllCollectionByType;
 import static tron.common.utils.ErrorMsg.*;
 import static tron.common.utils.ErrorMsg.trc1155NotFound;
 
-public class GetAllCollection {
+public class AssertGetAllCollection {
 
     GetSign sig = new GetSign();
     private void AssertGetAllCollection(GetAllCollectionRsp rsp, String followToken, boolean expect){

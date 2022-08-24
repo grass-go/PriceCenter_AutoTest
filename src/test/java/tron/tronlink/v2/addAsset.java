@@ -16,18 +16,12 @@ import tron.common.utils.AddressConvert;
 import tron.common.utils.Keys;
 import tron.tronlink.base.TronlinkBase;
 import tron.tronlink.v2.model.CommonRsp;
-import tron.tronlink.v2.model.trc1155.Data;
-import tron.tronlink.v2.model.trc1155.GetAllCollectionRsp;
-import tron.tronlink.v2.trc1155.GetAllCollection;
+import tron.tronlink.v2.trc1155.AssertGetAllCollection;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static tron.common.Constants.getAllCollection1155Url;
-import static tron.common.TronlinkApiList.v2GetAllCollectionByType;
-import static tron.common.utils.ErrorMsg.*;
 
 /**
  * 关注、取消关注v2
@@ -45,7 +39,7 @@ public class addAsset extends TronlinkBase {
     List<String> trc721tokenList = new ArrayList<>();
     Map<String, String> params = new HashMap<>();
 
-    GetAllCollection gac = new GetAllCollection();
+    AssertGetAllCollection gac = new AssertGetAllCollection();
 
 
     // 关注资产，assetList接口可见，取消关注，assetList不可见
