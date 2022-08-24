@@ -20,6 +20,8 @@ public class getCollectionList  extends TronlinkBase {
 
     public String expFollowAndHold = Configuration.getByPath("testng.conf").getString("tronlink.trc1155FollowAndHold");
 
+    public String expFollowAndNoHold = Configuration.getByPath("testng.conf").getString("tronlink.trc1155FollowButNoHold");
+
     @Test
     public void getCollectionListTest001() {
         params.put("nonce","12345");

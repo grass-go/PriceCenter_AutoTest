@@ -391,7 +391,7 @@ public class delAsset extends TronlinkBase {
         jsonObject.put(Keys.Address,user);
         List<String> dels = new ArrayList<>();
         dels.add(delToken);
-        jsonObject.put(Keys.unFollowToken1155, dels);
+        jsonObject.put(Keys.delToken1155, dels);
 
         params = sig.GenerateParams(user, Constants.delAssetUrl,POST);
         response = TronlinkApiList.v2DelAsset(params,jsonObject);

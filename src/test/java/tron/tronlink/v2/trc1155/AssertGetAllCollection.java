@@ -1,6 +1,7 @@
 package tron.tronlink.v2.trc1155;
 
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import tron.common.TronlinkApiList;
 import tron.tronlink.v2.GetSign;
@@ -13,7 +14,7 @@ import static tron.common.Constants.getAllCollection1155Url;
 import static tron.common.TronlinkApiList.v2GetAllCollectionByType;
 import static tron.common.utils.ErrorMsg.*;
 import static tron.common.utils.ErrorMsg.trc1155NotFound;
-
+@Slf4j
 public class AssertGetAllCollection {
 
     GetSign sig = new GetSign();
@@ -32,10 +33,11 @@ public class AssertGetAllCollection {
 
 
     public void AssertNotFoundInGAC(String user, String token,boolean expect){
-        // 删除之后无法在全部资产查询
+        // 删除之后无法在首页资产查询
         Map<String,String> params = sig.GenerateParams(user, getAllCollection1155Url, "GET" );
         HttpResponse httpResponse = v2GetAllCollectionByType(getAllCollection1155Url, params);
         String getAllCollectionStr = TronlinkApiList.parseResponse2String(httpResponse);
+        log.info(getAllCollectionStr);
         GetAllCollectionRsp gacRsp = JSONObject.parseObject(getAllCollectionStr, GetAllCollectionRsp.class);
         AssertGetAllCollection(gacRsp, token, expect);
     }

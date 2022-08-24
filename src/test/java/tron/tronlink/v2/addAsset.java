@@ -17,6 +17,7 @@ import tron.common.utils.Keys;
 import tron.tronlink.base.TronlinkBase;
 import tron.tronlink.v2.model.CommonRsp;
 import tron.tronlink.v2.trc1155.AssertGetAllCollection;
+import tron.tronlink.v2.trc1155.getCollectionList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -326,24 +327,30 @@ public class addAsset extends TronlinkBase {
         Assert.assertEquals("OK", responseContent.getString("message"));
         Assert.assertEquals(true, responseContent.getBooleanValue("data"));
     }
+    getCollectionList g = new getCollectionList();
 
     @Test(enabled = true, description = "1155 关注资产，覆盖了取消和关注1155的全部逻辑")
     public void test001_1155_addAsset() {
-        String followToken = "TGzTpAMcxzxxJhQ61nq2jtAyJ3XJDwZHiA";
+        String followToken = g.expFollowAndNoHold;
+        String user = address721_B58;
         // 先取消关注一个1155币
-        boolean follow = addAssetByTokenType(Constants.Token1155, false, B58_1155_user, followToken);
+        boolean follow = addAssetByTokenType(Constants.Token1155, false, user, followToken);
         org.testng.Assert.assertEquals(true, follow);
         // 关注一个1155币
-        follow = addAssetByTokenType(Constants.Token1155, true, B58_1155_user, followToken);
+        follow = addAssetByTokenType(Constants.Token1155, true, user, followToken);
         org.testng.Assert.assertEquals(true, follow);
         // 查询首页，预期可以查到
-        gac.AssertNotFoundInGAC(B58_1155_user, followToken, true);
+        gac.AssertNotFoundInGAC(user, followToken, true);
 
         // 先取消关注一个1155币
-        follow = addAssetByTokenType(Constants.Token1155, false, B58_1155_user, followToken);
+        follow = addAssetByTokenType(Constants.Token1155, false, user, followToken);
         org.testng.Assert.assertEquals(true, follow);
 
         //再次查询首页，预期无法查到
-         gac.AssertNotFoundInGAC(B58_1155_user, followToken, false);
+         gac.AssertNotFoundInGAC(user, followToken, false);
+
+        // restore
+        follow = addAssetByTokenType(Constants.Token1155, true, user, followToken);
+        org.testng.Assert.assertEquals(true, follow);
     }
 }
