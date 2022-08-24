@@ -165,7 +165,7 @@ public class unfollowAssetList extends TronlinkBase {
         // 断言
         assertFound(followToken);
 
-        follow = addAsset.addAssetByToken10(20, true, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(20, true, unfollowAsset41, followToken);
         log.info("restore follow usdt, result = " + follow);
 
     }
