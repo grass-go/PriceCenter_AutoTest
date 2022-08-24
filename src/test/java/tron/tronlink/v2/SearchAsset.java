@@ -330,6 +330,7 @@ public class SearchAsset extends TronlinkBase {
     HttpResponse httpRsp = TronlinkApiList.v2SearchAsset(params);
     Assert.assertEquals(httpRsp.getStatusLine().getStatusCode(), 200);
     String rspStr = TronlinkApiList.parseResponse2String(httpRsp);
+    log.info(rspStr);
     SearchRsp rsp = JSONObject.parseObject(rspStr, SearchRsp.class);
     // token在结果中可以找到
     String token = SearchToken;
