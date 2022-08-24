@@ -222,6 +222,19 @@ public class TronlinkApiList {
         return response;
     }
 
+    public static HttpResponse apiTransferTrc20Status(HashMap<String, String> param) throws Exception {
+        final String requestUrl = HttpNode + "/api/transfer/trc20_status";
+        URIBuilder builder = new URIBuilder(requestUrl);
+        if (param != null) {
+            for (String key : param.keySet()) {
+                builder.addParameter(key, param.get(key));
+            }
+        }
+        URI uri = builder.build();
+        response = createGetConnect(uri);
+        return response;
+    }
+
     public static HttpResponse votingV2Witness(Map<String, String> params) throws Exception {
         String requestUrl = HttpNode + "/api/voting/v2/witness";
 
@@ -341,6 +354,42 @@ public class TronlinkApiList {
     public static HttpResponse dappBanner() {
         try {
             String requestUrl = HttpNode + "/api/dapp/v2/banner";
+            response = createGetConnectClient2(requestUrl, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse dappAuthorizedProject() {
+        try {
+            String requestUrl = HttpNode + "/api/dapp/v2/authorized_project";
+            response = createGetConnectClient2(requestUrl, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse swapExchanges(Map<String,String> params) {
+        try {
+            String requestUrl = HttpNode + "/api/swap/v1/exchanges";
+            response = createGetConnectClient2(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse dappPlug() {
+        try {
+            String requestUrl = HttpNode + "/dapphouseapp/plug";
             response = createGetConnectClient2(requestUrl, null);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1802,5 +1851,69 @@ public class TronlinkApiList {
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         return responseContent;
     }
+
+    public static HttpResponse v2CheckWhite(Map<String, String> params) throws Exception {
+        String requestUrl = HttpNode + "/api/wallet/v2/white";
+        Map<String, String> header = getV2Header();
+        header.put("Content-type", "application/json; charset=utf-8");
+        header.put("Connection", "Close");
+        response = v2CreateGetConnect(requestUrl, params);
+        return response;
+    }
+    public static HttpResponse v1Balance(Map<String, String> params) {
+        try {
+            String requestUrl = HttpNode + "/api/wallet/balance";
+            response = createGetConnectNoHeader(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+    public static HttpResponse TransferV2Trc721(Map<String, String> params) {
+        final String requestUrl = HttpNode + "/api/transfer/v2/trc721";
+        response = v2CreateGetConnect(requestUrl, params);
+        return response;
+    }
+    public static HttpResponse TransferTrc721(Map<String, String> params) {
+        final String requestUrl = HttpNode + "/api/transfer/trc721";
+        response = v2CreateGetConnect(requestUrl, params);
+        return response;
+    }
+    public static HttpResponse sdk_verify(String json) {
+        try {
+            String requestUrl = HttpNode + "/api/wallet/sdk_verify";
+            response = createPostConnect(requestUrl, json);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+    public static HttpResponse v2GetAllCollection_1155(Map<String, String> params) {
+        final String requestUrl = HttpNode + "/api/wallet/trc1155/getAllCollection";
+        response = v2CreateGetConnect(requestUrl, params);
+        return response;
+    }
+    
+    public static HttpResponse v2AllCollections_1155(Map<String, String> params) {
+        final String requestUrl = HttpNode + "/api/wallet/trc1155/allCollections";
+        response = v2CreateGetConnect(requestUrl, params);
+        return response;
+    }
+    
+    public static HttpResponse v2GetCollectionList_1155(Map<String, String> params) {
+        final String requestUrl = HttpNode + "/api/wallet/trc1155/getCollectionList";
+        response = v2CreateGetConnect(requestUrl, params);
+        return response;
+    }
+    public static HttpResponse v2GetCollectionInfos_1155(Map<String, String> params, JSONObject body) {
+        final String requestUrl = HttpNode + "/api/wallet/trc1155/getCollectionInfos";
+        response = createPostConnectWithHeader(requestUrl, params, body, getV2Header());
+        return response;
+    }
+  
 
 }
