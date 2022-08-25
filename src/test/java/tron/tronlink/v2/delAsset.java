@@ -14,7 +14,7 @@ import tron.common.utils.AddressConvert;
 import tron.common.utils.Keys;
 import tron.tronlink.base.TronlinkBase;
 import tron.tronlink.v2.model.CommonRsp;
-import tron.tronlink.v2.trc1155.AllCollection;
+import tron.tronlink.v2.trc1155.AssertAllCollection;
 import tron.tronlink.v2.trc1155.AssertGetAllCollection;
 import tron.tronlink.v2.trc1155.getCollectionList;
 
@@ -45,7 +45,7 @@ public class delAsset extends TronlinkBase {
     List<String> token721DelList = new ArrayList<>();
     Map<String, String> params = new HashMap<>();
 
-    AllCollection ac = new AllCollection();
+    AssertAllCollection ac = new AssertAllCollection();
     AssertGetAllCollection gac = new AssertGetAllCollection();
 
     addAsset addAsset = new addAsset();

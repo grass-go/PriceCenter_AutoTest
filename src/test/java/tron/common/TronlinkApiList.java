@@ -375,10 +375,24 @@ public class TronlinkApiList {
         return response;
     }
 
+
+
     public static HttpResponse swapExchanges(Map<String,String> params) {
         try {
             String requestUrl = HttpNode + "/api/swap/v1/exchanges";
             response = createGetConnectClient2(requestUrl, params);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpget.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse transfer1155(Map<String,String> params) {
+        try {
+            String requestUrl = HttpNode + "/api/transfer/v2/trc1155";
+            response = v2CreateGetConnect(requestUrl, params);
         } catch (Exception e) {
             e.printStackTrace();
             httpget.releaseConnection();

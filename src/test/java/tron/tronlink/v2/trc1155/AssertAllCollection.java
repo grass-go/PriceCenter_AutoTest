@@ -16,7 +16,7 @@ import static tron.common.utils.ErrorMsg.*;
 import static tron.common.utils.ErrorMsg.trc1155NotFound;
 
 @Slf4j
-public class AllCollection {
+public class AssertAllCollection {
     GetSign sig = new GetSign();
 
     public void AssertNotFoundInAC(String user, String token,boolean expect){
