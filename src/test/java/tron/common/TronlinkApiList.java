@@ -17,11 +17,10 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 import javax.net.ssl.SSLContext;
 
@@ -535,6 +534,15 @@ public class TronlinkApiList {
         response = createPostConnect(requestUrl, body);
         return response;
     }
+
+    // nodeinfo升级的请求接口
+    public static HttpResponse getNodeInfoV2(Map<String,String> params, JSONArray body, Map<String,String> headers) {
+        final String requestUrl = HttpNode + "/api/wallet/node_info";
+        response = createPostConnectWithHeaderV2(requestUrl,params, body, headers);
+        return response;
+    }
+
+
 
     public static HttpResponse getConfig() {
         final String requestUrl = HttpNode + "/api/wallet/get_config";
@@ -1207,6 +1215,55 @@ public class TronlinkApiList {
         return response;
     }
 
+    // 和其他方法的不同是requestBody变成了数组类型
+    public static HttpResponse createPostConnectWithHeaderV2(String url, Map<String, String> params,
+                                                           JSONArray requestBody, Map<String, String> header) {
+        try {
+            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
+                    connectionTimeout);
+            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+            if (params != null) {
+                StringBuffer stringBuffer = new StringBuffer(url);
+                stringBuffer.append("?");
+                for (Map.Entry<String, String> entry : params.entrySet()) {
+                    stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
+                }
+                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+                url = stringBuffer.toString();
+            }
+            httppost = new HttpPost(url);
+            // httppost.setHeader("Content-type", "application/json; charset=utf-8");
+            // httppost.setHeader("Connection", "Close");
+            if (header != null) {
+                for (String key : header.keySet()) {
+                    httppost.setHeader(key, header.get(key));
+                    log.info(key + ": " + header.get(key));
+                }
+            }
+            if (requestBody != null) {
+                StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
+                entity.setContentEncoding("UTF-8");
+                entity.setContentType("application/json");
+                httppost.setEntity(entity);
+            }
+//            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
+            // if (requestBody == null){
+            // log.info("no request body info");
+            // requestBody = new JSONObject();
+            // }
+            // log.info("url: "+httppost.toString()+"\nparams: "+params.toString() + " \n
+            // requestbody : "+requestBody.toString());
+            //
+//            printHttpInfo(httppost, params, requestBody);
+            response = httpClient.execute(httppost);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
     public static void printHttpInfo(HttpPost httppost, Map<String, String> params, JSONObject requestbody) {
         log.info("begin print http info");
         if (httppost != null) {
@@ -1290,6 +1347,7 @@ public class TronlinkApiList {
                 httppost.setEntity(entity);
             }
             response = httpClient.execute(httppost);
+            printHttpInfoV2(httppost, httppost.getAllHeaders(), httppost.getParams());
             // log.info("url: "+httppost.toString()+"\nparams: "+requestBody.toString());
         } catch (Exception e) {
             e.printStackTrace();
@@ -1297,6 +1355,26 @@ public class TronlinkApiList {
             return null;
         }
         return response;
+    }
+
+    public static void printHttpInfoV2(HttpPost httppost, org.apache.http.Header[] headers,  org.apache.http.params.HttpParams params){
+        if (httppost != null) {
+            log.info(httppost.toString());
+
+        }
+        if (headers == null) {
+            for (Header h:
+                 headers) {
+                log.info(h.getName() + " " + h.getValue());
+            }
+        }
+        if (httppost.getEntity() != null) {
+            log.info(JSONObject.toJSONString(httppost.getEntity()));
+        }
+
+//        if (params == null) {
+//            log.info(params.);
+//        }
     }
 
     /**
