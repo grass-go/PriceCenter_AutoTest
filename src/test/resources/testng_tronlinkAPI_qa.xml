@@ -14,7 +14,7 @@
         <parameter name="tronscanApiUrl" value="https://apilist.tronscan.org"></parameter>
         <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>
         <!--    这里配置和线上不一样    -->
-        <parameter name="tronlinkUrl" value="http://123.56.3.74"></parameter>
+        <parameter name="tronlinkUrl" value="http://123.56.3.74:8899"></parameter>
 
         <parameter name="trc721OwnerAddress" value="TGzgVdQszcAHbEd9VELwifASLRdQY9kTcx"></parameter>
         <parameter name="trc721TokenAddress" value="TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG"></parameter>

@@ -10,9 +10,9 @@ import tron.common.TronlinkApiList;
 import tron.tronlink.base.TronlinkBase;
 import tron.tronlink.v2.GetSign;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Slf4j
 public class NodeInfo extends TronlinkBase {
@@ -178,47 +178,293 @@ public class NodeInfo extends TronlinkBase {
         }
     }
 
-    @Test(description = "正确性测试：在chrome版本号大于等于4.0.0，app版本大于等于4.11.0 的时候， 当前接口进行权限校验。")
+    @Test(description = "正确性测试：app版本 >= 4.11.0 的时候， 当前接口进行权限校验。")
     public void test001_GetNodeInfo() {
-        JSONArray array = getRequestBody();
-        Map<String,String> headers = getTest001Headers();
-        Map<String,String> params = getTest001Params();
-        response = TronlinkApiList.getNodeInfoV2(params,array,headers);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        String getNodeInfoStr = TronlinkApiList.parseResponse2String(response);
-        log.info(getNodeInfoStr);
-        NodeInfoRsp nodeInfoRsp = JSONObject.parseObject(getNodeInfoStr, NodeInfoRsp.class);
-        AssertNodeInfo(nodeInfoRsp);
+        for (int i = 0; i < 20; i++) {
+            JSONArray array = getRequestBody();
+            Map<String, String> headers = getTest001Headers();
+            Map<String, String> params = getTest001Params();
+            response = TronlinkApiList.getNodeInfoV2(params, array, headers);
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+            String getNodeInfoStr = TronlinkApiList.parseResponse2String(response);
+            log.info(getNodeInfoStr);
+            NodeInfoRsp nodeInfoRsp = JSONObject.parseObject(getNodeInfoStr, NodeInfoRsp.class);
+            AssertNodeInfo(nodeInfoRsp);
+        }
     }
 
-    private Map<String,String> getTest001Params(){
-//        Map<String,String> params = new HashMap<>();
-        return g.GenerateParams("", "/api/wallet/node_info","POST");
-//        return params;
+    @Test(description = "正确性测试：chrome版本 >= 4.0.0 的时候， 当前接口进行权限校验。")
+    public void test002_GetNodeInfo() {
+        for (int i = 0; i < 20; i++) {
+            JSONArray array = getRequestBody();
+            Map<String, String> headers = getTest002Headers();
+            Map<String, String> params = getTest002Params();
+            response = TronlinkApiList.getNodeInfoV2(params, array, headers);
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+            String getNodeInfoStr = TronlinkApiList.parseResponse2String(response);
+            log.info(getNodeInfoStr);
+            NodeInfoRsp nodeInfoRsp = JSONObject.parseObject(getNodeInfoStr, NodeInfoRsp.class);
+            AssertNodeInfo(nodeInfoRsp);
+        }
+    }
+
+
+
+
+
+
+
+    @Test(description = "测试header里面的env，在没有env或者env！=prod的情况下，后端不记录请求里的账户信息(需要观察数据库)")
+    public void test003_GetNodeInfo() {
+        for (int i = 0; i < 20; i++) {
+            JSONArray array = getRequestBody();
+            Map<String, String> headers = getTest003Headers();
+            Map<String, String> params = getTest003Params();
+            response = TronlinkApiList.getNodeInfoV2(params, array, headers);
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+            String getNodeInfoStr = TronlinkApiList.parseResponse2String(response);
+            log.info(getNodeInfoStr);
+            NodeInfoRsp nodeInfoRsp = JSONObject.parseObject(getNodeInfoStr, NodeInfoRsp.class);
+            AssertNodeInfo(nodeInfoRsp);
+        }
+    }
+
+    @Test(description = "正确性测试，请求参数里的ts为当前时间的毫秒数，跟服务器时间误差不能超过10分钟。")
+    public void test004_GetNodeInfo() {
+        for (int i = 0; i < 20; i++) {
+            JSONArray array = getRequestBody();
+            Map<String, String> headers = getTest004Headers();
+            Map<String, String> params = getTestParams();
+            response = TronlinkApiList.getNodeInfoV2(params, array, headers);
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+            String getNodeInfoStr = TronlinkApiList.parseResponse2String(response);
+            log.info(getNodeInfoStr);
+            NodeInfoRsp nodeInfoRsp = JSONObject.parseObject(getNodeInfoStr, NodeInfoRsp.class);
+            AssertNodeInfo(nodeInfoRsp);
+        }
+    }
+
+    @Test(description = "边界测试，请求参数里的ts为当前时间的毫秒数，跟服务器时间超过10分钟返回错误。")
+    public void test005_GetNodeInfo() {
+        for (int i = 0; i < 20; i++) {
+            JSONArray array = getRequestBody();
+            Map<String, String> headers = getTest005Headers();
+            Map<String, String> params = getTestParams();
+            response = TronlinkApiList.getNodeInfoV2(params, array, headers);
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+            String getNodeInfoStr = TronlinkApiList.parseResponse2String(response);
+            log.info(getNodeInfoStr);
+            NodeInfoRsp nodeInfoRsp = JSONObject.parseObject(getNodeInfoStr, NodeInfoRsp.class);
+            AssertNotNodeInfo(nodeInfoRsp);
+        }
+    }
+
+    @Test(description = "正确性测试，system为必传参数")
+    public void test006_GetNodeInfo() {
+        for (int i = 0; i < 20; i++) {
+            JSONArray array = getRequestBody();
+            Map<String, String> headers = getTest006Headers();
+            Map<String, String> params = getTestParams();
+            response = TronlinkApiList.getNodeInfoV2(params, array, headers);
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+            String getNodeInfoStr = TronlinkApiList.parseResponse2String(response);
+            log.info(getNodeInfoStr);
+            NodeInfoRsp nodeInfoRsp = JSONObject.parseObject(getNodeInfoStr, NodeInfoRsp.class);
+            AssertNotNodeInfo(nodeInfoRsp);
+        }
+    }
+
+
+
+    private Map<String, String> getTest001Params() {
+        return g.GenerateParams(queryAddress58, "/api/wallet/node_info", "POST");
+    }
+
+    private Map<String, String> getTest002Params() {
+        return g.GenerateParams(queryAddress58, "/api/wallet/node_info", "POST");
+    }
+
+    private Map<String, String> getTest003Params() {
+        return g.GenerateParams(queryAddress58, "/api/wallet/node_info", "POST");
+    }
+
+    private Map<String, String> getTestParams() {
+        return g.GenerateParams(queryAddress58, "/api/wallet/node_info", "POST");
     }
 
     GetSign g = new GetSign();
+    public static String system;
+    public static String ts;
+    public static String version;
+    public static String method = "POST";
 
-    private Map<String,String> getTest001Headers(){
-        Map<String,String> headers;
+    private Map<String, String> getTest001Headers() {
+        Map<String, String> headers;
         headers = TronlinkApiList.getV2Header();
-        headers.put("ts", String.valueOf(System.currentTimeMillis()));
-        headers.put("Version", "v4.11.0");
-        headers.put("env","prod");
+        ts = String.valueOf(System.currentTimeMillis());
+        headers.put("ts", ts);
+        version = getLimitVersion();
+        headers.put("Version", version);
+        headers.put("env", "prod");
+        system = getAppSystem();
+        headers.put("System", system);
 
         return headers;
+    }
+
+    private Map<String, String> getTest003Headers() {
+        Map<String, String> headers;
+        headers = TronlinkApiList.getV2Header();
+        ts = String.valueOf(System.currentTimeMillis());
+        headers.put("ts", ts);
+        version = getLimitVersion();
+        headers.put("Version", version);
+        int n = r.nextInt(1000);
+        if (n % 2 == 0) {
+            headers.put("env", "test");
+        }
+        system = getAppSystem();
+        headers.put("System", system);
+
+        return headers;
+    }
+
+    private Map<String, String> getTest004Headers() {
+        Map<String, String> headers;
+        headers = TronlinkApiList.getV2Header();
+        int t = r.nextInt(1000);
+        long now;
+        if(t %2 ==0) {
+            now = System.currentTimeMillis() - 9 * 60 * 1000;
+        }else{
+            now  = System.currentTimeMillis() + 9 * 60 * 1000;
+        }
+        ts = String.valueOf(now);
+        headers.put("ts", ts);
+        version = getLimitVersion();
+        headers.put("Version", version);
+        int n = r.nextInt(1000);
+        if (n % 2 == 0) {
+            headers.put("env", "test");
+        }else{
+            headers.put("env","prod");
+        }
+        system = getAppSystem();
+        headers.put("System", system);
+
+        return headers;
+    }
+
+    private Map<String, String> getTest005Headers() {
+        Map<String, String> headers;
+        headers = TronlinkApiList.getV2Header();
+        int t = r.nextInt(1000);
+        long now;
+        if(t %2 ==0) {
+            now = System.currentTimeMillis() - 11 * 60 * 1000;
+        }else{
+            now  = System.currentTimeMillis() + 11 * 60 * 1000;
+        }
+        ts = String.valueOf(now);
+        headers.put("ts", ts);
+        version = getLimitVersion();
+        headers.put("Version", version);
+        int n = r.nextInt(1000);
+        if (n % 2 == 0) {
+            headers.put("env", "test");
+        }else{
+            headers.put("env","prod");
+        }
+        system = getAppSystem();
+        headers.put("System", system);
+
+        return headers;
+    }
+
+    private Map<String, String> getTest002Headers() {
+        Map<String, String> headers;
+        headers = TronlinkApiList.getV2Header();
+        ts = String.valueOf(System.currentTimeMillis());
+        headers.put("ts", ts);
+        version = getChromeLimitVersion();
+        headers.put("Version", version);
+        headers.put("env", "prod");
+        system = getChromeSystem();
+        headers.put("System", system);
+
+        return headers;
+    }
+
+
+    private Map<String, String> getTest006Headers() {
+        Map<String, String> headers;
+        headers = TronlinkApiList.getV2Header();
+        int t = r.nextInt(1000);
+        long now;
+        if(t %2 ==0) {
+            now = System.currentTimeMillis() - 9 * 60 * 1000;
+        }else{
+            now  = System.currentTimeMillis() + 9 * 60 * 1000;
+        }
+        ts = String.valueOf(now);
+        headers.put("ts", ts);
+        version = getLimitVersion();
+        headers.put("Version", version);
+        int n = r.nextInt(1000);
+        if (n % 2 == 0) {
+            headers.put("env", "test");
+
+        }else{
+            headers.put("env","prod");
+        }
+        system = getAppSystem();
+
+//        if (n % 2 == 0) {
+//            headers.put("System", "test"); //不能带错误system
+//        }else{
+//        }
+        return headers;
+    }
+
+    private String getLimitVersion() {
+        String[] vs = new String[]{"4.11.0", "4.13.4", "5.10.0", "100.1.1", "99.99.1"};
+        Random r = new Random();
+        return vs[r.nextInt(vs.length)];
+    }
+
+    private String getChromeLimitVersion() {
+        String[] vs = new String[]{"4.0.0", "4.13.4", "5.10.0", "100.1.1", "99.99.1"};
+        Random r = new Random();
+        return vs[r.nextInt(vs.length)];
+    }
+
+    private String getAppSystem() {
+        String[] vs = new String[]{"Android", "iOS", "android", "ios", "androidtest", "IOS", "iostest", "iosTest"};
+        Random r = new Random();
+        return vs[r.nextInt(vs.length)];
+
+    }
+
+    private String getChromeSystem() {
+//        String[] vs = new String[]{"chrome", "Chrome", "chrome-extension", "chrome-extension-test", "chrome-extension-tesT", "chrome-Extension"};
+        // todo
+        String[] vs = new String[]{"chrome", "Chrome",  "chrome-extension-test", "chrome-extension-tesT"};
+
+        Random r = new Random();
+        return vs[r.nextInt(vs.length)];
+
     }
 
     private void AssertNodeInfo(NodeInfoRsp nodeInfoRsp) {
         Assert.assertTrue(nodeInfoRsp.code == 0);
         Assert.assertTrue(nodeInfoRsp.message.equals("OK"));
         Assert.assertTrue(nodeInfoRsp.getData().size() > 0);
-        for (Data d:
-             nodeInfoRsp.data) {
+        for (Data d :
+                nodeInfoRsp.data) {
             Assert.assertTrue(d.getFullNode().size() > 0);
             Assert.assertTrue(d.getSolidityNode().size() > 0);
             Assert.assertTrue(d.getEventServer().equals("") || d.getEventServer().trim().startsWith("http"));
-            if(d.getIsMainChain() == 1){
+            if (d.getIsMainChain() == 1) {
                 Assert.assertTrue(d.sideChainContract.equals(""));
                 Assert.assertTrue(d.chainName.equals("MainChain"));
                 Assert.assertTrue(d.mainChainContract.equals(""));
@@ -227,12 +473,21 @@ public class NodeInfo extends TronlinkBase {
         }
     }
 
+    private void AssertNotNodeInfo(NodeInfoRsp nodeInfoRsp) {
+        Assert.assertTrue(nodeInfoRsp.code == 20004);
+        Assert.assertTrue(nodeInfoRsp.message.equals("Error param."));
+        Assert.assertTrue(nodeInfoRsp.getData() == null);
+
+    }
+    Random r = new Random();
+
     private JSONArray getRequestBody() {
         JSONArray array = new JSONArray();
         JSONObject ob1 = new JSONObject();
-        ob1.put(queryAddress58, 2);
+        int[] accountTypes = new int[]{1,2,3,8,9,11};
+        ob1.put(queryAddress58, accountTypes[r.nextInt(accountTypes.length)]);
         JSONObject ob2 = new JSONObject();
-        ob2.put(queryAddressTH48, 2);
+        ob2.put(queryAddressTH48, accountTypes[r.nextInt(accountTypes.length)]);
         array.add(ob1);
         array.add(ob2);
         log.info(array.toJSONString());

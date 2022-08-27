@@ -24,6 +24,7 @@ import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.common.utils.Keys;
 import tron.tronlink.base.TronlinkBase;
+import tron.tronlink.wallet.NodeInfo;
 
 @Slf4j
 public class GetSign extends TronlinkBase {
@@ -234,20 +235,66 @@ public class GetSign extends TronlinkBase {
     public Map<String,String> GenerateParams(String Address, String url, String method){
         Map<String,String> params = new HashMap<>();
         params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
+//        params.put("secretId","SFSUIOJBFMLKSJIF");
+//        params.put("secretId", getSecIdBySystem(NodeInfo.system));
         // 计算sig
         HashMap<String,String> sigs = new HashMap<>();
         sigs.put("address", Address);
         sigs.put("url", url);
         sigs.put("method", method);
+        sigs.put("secretId", getSecIdBySystem(NodeInfo.system));
+        sigs.put("ts", NodeInfo.ts);
+        sigs.put("version", NodeInfo.version);
+        sigs.put("system", NodeInfo.system);
+        sigs.put("method",NodeInfo.method);
+        params.put("secretId", getSecIdBySystem(NodeInfo.system));
         try {
+
             String sig = getSign(sigs);
+            log.info("sig = " + sig);
             params.put("signature",sig);
+//            params.put("signature","x8N9g9wShp3%3DM4un6rQscf1jg28o%3D");
         }catch (Exception e){
             log.error("sig 计算错误！");
             e.printStackTrace();
         }
         params.put(Keys.Address, Address);
         return params;
+    }
+
+    public String getSecIdBySystem(String sys){
+        Map<String,String> ids = new HashMap<>();
+        ids.put("chrome-extension-test","8JKSO2PM4M2K45EL");
+        ids.put("chrome-extension","AE68A487AA919CAE");
+        ids.put("Chrome","AE68A487AA919CAE");
+        ids.put("AndroidTest","SFSUIOJBFMLKSJIF");
+        ids.put("Android","A4ADE880F46CA8D4");
+        ids.put("iOSTest","JSKLJKFJDFDSFER3");
+        ids.put("iOS","ED151200DD0B3B52");
+        for (Map.Entry<String,String> kv:
+             ids.entrySet()) {
+            if (kv.getKey().equalsIgnoreCase(sys.toLowerCase())) {
+                return kv.getValue();
+            }
+        }
+        return "";
+    }
+
+    public static String getSecKeyBySystem(String sys){
+        Map<String,String> ids = new HashMap<>();
+        ids.put("chrome-extension-test","S8NFNSFJDFJKNFKASNFSJNFKJSN2344SFN2K2");
+        ids.put("chrome-extension","FMD5MW11TIIMYFSWDXVGQDUD9XR7GVV9XR29J");
+        ids.put("Chrome","FMD5MW11TIIMYFSWDXVGQDUD9XR7GVV9XR29J");
+        ids.put("AndroidTest","SKDOE543KLMFSLKMJTIO4JTSSDFDSMKM65765");
+        ids.put("Android","0F46CA8D490936A851D688F9BED151200D45G");
+        ids.put("iOSTest","RERTNJNVJKNKJGNDKJGJGF33G2G246H4H54H4");
+        ids.put("iOS","6C848A38C0BDA1C71A22C9D5F5FD65845F886");
+        for (Map.Entry<String,String> kv:
+                ids.entrySet()) {
+            if (kv.getKey().equalsIgnoreCase(sys.toLowerCase())) {
+                return kv.getValue();
+            }
+        }
+        return "";
     }
 }

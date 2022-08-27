@@ -538,6 +538,7 @@ public class TronlinkApiList {
     // nodeinfo升级的请求接口
     public static HttpResponse getNodeInfoV2(Map<String,String> params, JSONArray body, Map<String,String> headers) {
         final String requestUrl = HttpNode + "/api/wallet/node_info";
+        log.info(requestUrl);
         response = createPostConnectWithHeaderV2(requestUrl,params, body, headers);
         return response;
     }

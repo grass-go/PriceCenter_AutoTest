@@ -72,15 +72,15 @@ public class GetSign {
         System.out.println(String.format("%s%s%s?%s", method, deviceId, url, makeQueryString(arguments, "utf-8")));
 
 //        return hmacSHA1("RERTNJNVJKNKJGNDKJGJGF33G2G246H4H54H4", String.format("%s%s%s?%s", method, deviceId, url, makeQueryString(arguments, "utf-8")));
-        String secretKey = "";
+        String secretKey = tron.tronlink.v2.GetSign.getSecKeyBySystem(system);
 
-        if (system.equals("AndroidTest")){
-            secretKey = "SKDOE543KLMFSLKMJTIO4JTSSDFDSMKM65765";
-        }else if (system.equals("chrome-extension-test")){
-            secretKey = "S8NFNSFJDFJKNFKASNFSJNFKJSN2344SFN2K2";
-        }else if (system.equals("IosTest")){
-            secretKey = "RERTNJNVJKNKJGNDKJGJGF33G2G246H4H54H4";
-        }
+//        if (system.equals("AndroidTest")){
+//            secretKey = "SKDOE543KLMFSLKMJTIO4JTSSDFDSMKM65765";
+//        }else if (system.equals("chrome-extension-test")){
+//            secretKey = "S8NFNSFJDFJKNFKASNFSJNFKJSN2344SFN2K2";
+//        }else if (system.equals("IosTest")){
+//            secretKey = "RERTNJNVJKNKJGNDKJGJGF33G2G246H4H54H4";
+//        }
 
         return hmacSHA1(secretKey, String.format("%s%s%s?%s", method, deviceId, url, makeQueryString(arguments, "utf-8")));
 
