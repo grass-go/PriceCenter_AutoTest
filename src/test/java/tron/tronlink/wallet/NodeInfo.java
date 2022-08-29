@@ -212,6 +212,17 @@ public class NodeInfo extends TronlinkBase {
         }
     }
 
+    @Test(description = "异常测试：app版本 < 4.11.0 的时候， 如果不包含System，不返回正确结果。")
+    public void test007_GetNodeInfo() {
+        for (int i = 0; i < 20; i++) {
+            JSONArray array = getRequestBody();
+            Map<String, String> headers = getTest007Headers();
+            Map<String, String> params = getTestParams();
+            response = TronlinkApiList.getNodeInfoV2(params, array, headers);
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
+        }
+    }
+
     @Test(description = "正确性测试：chrome版本 >= 4.0.0 的时候， 当前接口进行权限校验。")
     public void test002_GetNodeInfo() {
         for (int i = 0; i < 20; i++) {
@@ -327,6 +338,23 @@ public class NodeInfo extends TronlinkBase {
         headers.put("env", "prod");
         system = getAppSystem();
         headers.put("System", system);
+
+        return headers;
+    }
+
+    private Map<String, String> getTest007Headers() {
+        Map<String, String> headers;
+        headers = TronlinkApiList.getV2Header();
+        ts = String.valueOf(System.currentTimeMillis());
+        headers.put("ts", ts);
+        version = getLowLimitVersion();
+        headers.put("Version", version);
+        headers.put("env", "prod");
+        system = getAppSystem();
+//        headers.put("System", system);
+        headers.remove("System");
+
+
 
         return headers;
     }
@@ -451,6 +479,12 @@ public class NodeInfo extends TronlinkBase {
         return vs[r.nextInt(vs.length)];
     }
 
+    private String getLowLimitVersion() {
+        String[] vs = new String[]{"4.10.0", "4.10.99", "3.10.0", "2.1.1", "1.99.1"};
+        Random r = new Random();
+        return vs[r.nextInt(vs.length)];
+    }
+
     private String getChromeLimitVersion() {
         String[] vs = new String[]{"4.0.0", "4.13.4", "5.10.0", "100.1.1", "99.99.1"};
         Random r = new Random();
@@ -466,9 +500,6 @@ public class NodeInfo extends TronlinkBase {
 
     private String getChromeSystem() {
         String[] vs = new String[]{"chrome", "Chrome", "chrome-extension", "chrome-extension-test", "chrome-extension-tesT", "chrome-Extension"};
-        // todo
-//        String[] vs = new String[]{"chrome", "Chrome",  "chrome-extension-test", "chrome-extension-tesT"};
-
         Random r = new Random();
         return vs[r.nextInt(vs.length)];
 
