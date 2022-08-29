@@ -149,9 +149,18 @@ public class fullOrSolidityBase {
           }
           for(String s: ob.keySet()){
             if (!((ob.getString(s)).equals(ob1.getString(s)))){
-              System.out.println("====from compareJsonWithKey 2222 asset one key with diff value !!  key: "+s
-                      +"\n  value-tar: "+ob.getString(s) +" \n value-sour: "+ob1.getString(s));
-              return false;
+              if("public_free_asset_net_usage".equalsIgnoreCase(s)){
+                if (Math.abs(ob.getLongValue(s)-ob1.getLongValue(s))>2){
+                  System.out.println("====from compareJsonWithKey 333 public_free_asset_net_usage diff value !!  " +
+                      "\n  value-tar: "+ob.getString(s) +" \n value-sour: "+ob1.getString(s));
+                  return false;
+                }
+              }else {
+                System.out.println("====from compareJsonWithKey 2222 asset one key with diff value !!  key: "+s
+                    +"\n  value-tar: "+ob.getString(s) +" \n value-sour: "+ob1.getString(s));
+                return false;
+              }
+
             }
           }
         }
