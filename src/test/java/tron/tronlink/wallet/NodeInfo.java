@@ -178,6 +178,25 @@ public class NodeInfo extends TronlinkBase {
         }
     }
 
+    @Test(description = "历史请求测试，测试的时候删除db数据或者更换token")
+    public void test002GetNodeInfo() {
+        JSONArray array = new JSONArray();
+        JSONObject ob1 = new JSONObject();
+        ob1.put("TBXmEE4txLmdH3yM2yyKHbJM7Qc7EujNrK", 2);
+        JSONObject ob2 = new JSONObject();
+        ob2.put("TH4Vi2SXuiYCpnWykZgmphEKfajVNbFYA7", 2);
+        array.add(ob1);
+        array.add(ob2);
+        log.info(array.toJSONString());
+        response = TronlinkApiList.getNodeInfo(array);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        String getNodeInfoStr = TronlinkApiList.parseResponse2String(response);
+        log.info(getNodeInfoStr);
+        NodeInfoRsp nodeInfoRsp = JSONObject.parseObject(getNodeInfoStr, NodeInfoRsp.class);
+        AssertNodeInfo(nodeInfoRsp);
+    }
+
+
     @Test(description = "正确性测试：app版本 >= 4.11.0 的时候， 当前接口进行权限校验。")
     public void test001_GetNodeInfo() {
         for (int i = 0; i < 20; i++) {
@@ -446,9 +465,9 @@ public class NodeInfo extends TronlinkBase {
     }
 
     private String getChromeSystem() {
-//        String[] vs = new String[]{"chrome", "Chrome", "chrome-extension", "chrome-extension-test", "chrome-extension-tesT", "chrome-Extension"};
+        String[] vs = new String[]{"chrome", "Chrome", "chrome-extension", "chrome-extension-test", "chrome-extension-tesT", "chrome-Extension"};
         // todo
-        String[] vs = new String[]{"chrome", "Chrome",  "chrome-extension-test", "chrome-extension-tesT"};
+//        String[] vs = new String[]{"chrome", "Chrome",  "chrome-extension-test", "chrome-extension-tesT"};
 
         Random r = new Random();
         return vs[r.nextInt(vs.length)];
