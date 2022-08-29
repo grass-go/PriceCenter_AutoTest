@@ -10,6 +10,7 @@ import java.math.BigInteger;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -64,6 +65,7 @@ import com.google.protobuf.ByteString;
 import lombok.extern.slf4j.Slf4j;
 import tron.common.utils.Configuration;
 import tron.trondata.base.TrondataBase;
+import tron.tronlink.base.GetSign;
 import tron.tronlink.base.TronlinkBase;
 
 @Slf4j
@@ -1197,6 +1199,19 @@ public class TronlinkApiList {
         }
         log.info("end print http info");
     }
+    public static void printHttpInfo(HttpPost httppost, Map<String, String> params, JSONArray requestbody) {
+        log.info("begin print http info");
+        if (httppost != null) {
+            log.info("httppost = " + httppost);
+        }
+        if (params != null) {
+            log.info("params = " + params);
+        }
+        if (requestbody != null) {
+            log.info("requestbody = " + requestbody);
+        }
+        log.info("end print http info");
+    }
 
     /**
      * constructor.
@@ -1903,6 +1918,125 @@ public class TronlinkApiList {
         response = createPostConnectWithHeader(requestUrl, params, body, getV2Header());
         return response;
     }
-  
+
+
+    public static Map<java.lang.String, java.lang.String> getNodeInfoParamsAndHeaders(String address, String needSys) throws Exception {
+        Map<String, String> paramsAndHeaders = new HashMap<>();
+        if (needSys.equals("chrome-extension-test")){
+            paramsAndHeaders.put("System","chrome-extension-test");
+            paramsAndHeaders.put("secretId","8JKSO2PM4M2K45EL");
+        } else if(needSys.equals("chrome-extension")){
+            paramsAndHeaders.put("System","chrome-extension");
+            paramsAndHeaders.put("secretId","AE68A487AA919CAE");
+        } else if(needSys.equals("Chrome")){
+            paramsAndHeaders.put("System","Chrome");
+            paramsAndHeaders.put("secretId","AE68A487AA919CAE");
+        } else if(needSys.equals("AndroidTest")){
+            paramsAndHeaders.put("System","AndroidTest");
+            paramsAndHeaders.put("secretId","SFSUIOJBFMLKSJIF");
+        } else if(needSys.equals("Android")){
+            paramsAndHeaders.put("System","Android");
+            paramsAndHeaders.put("secretId","A4ADE880F46CA8D4");
+        } else if(needSys.equals("iOSTest")){
+            paramsAndHeaders.put("System","iOSTest");
+            paramsAndHeaders.put("secretId","JSKLJKFJDFDSFER3");
+        } else if(needSys.equals("iOS")){
+            paramsAndHeaders.put("System","iOS");
+            paramsAndHeaders.put("secretId","ED151200DD0B3B52");
+        }
+        paramsAndHeaders.put("nonce","12345");
+        paramsAndHeaders.put("Lang","1");
+        paramsAndHeaders.put("Version","V4.12.0");
+        paramsAndHeaders.put("DeviceID","fca5a022-5526-45f5-a7e7");
+        paramsAndHeaders.put("chain","MainChain");
+        paramsAndHeaders.put("channel","official");
+
+        paramsAndHeaders.put("ts", java.lang.String.valueOf(System.currentTimeMillis()));
+        //paramsAndHeaders.put("ts","1609302220000");
+        paramsAndHeaders.put("Content-type", "application/json; charset=utf-8");
+        paramsAndHeaders.put("Connection", "Keep-Alive");
+        GetSign getSign = new GetSign();
+        String signature = URLEncoder.encode(getSign.getSignature(
+                paramsAndHeaders.get("channel"),
+                paramsAndHeaders.get("chain"),
+                paramsAndHeaders.get("Lang"),
+                address,
+                paramsAndHeaders.get("nonce"),
+                paramsAndHeaders.get("secretId"),
+                paramsAndHeaders.get("System"),
+                paramsAndHeaders.get("DeviceID"),
+                paramsAndHeaders.get("ts"),
+                paramsAndHeaders.get("Version"),
+                "/api/wallet/node_info",
+                "POST"));
+        paramsAndHeaders.put("signature",signature);
+
+        return paramsAndHeaders;
+    }
+
+
+    public static HttpResponse nodeinfo(String address, String testSys,JSONArray requestBody) throws Exception {
+        Map<String, String> allparamsheaders = getNodeInfoParamsAndHeaders(address,testSys);
+        Map<String, String> params = new HashMap<>();
+        Map<String, String> headers = new HashMap<>();
+        params.put("nonce", allparamsheaders.get("nonce"));
+        params.put("secretId", allparamsheaders.get("secretId"));
+        params.put("signature",allparamsheaders.get("signature"));
+        params.put("address", address);
+
+
+        headers.put("System",allparamsheaders.get("System"));
+        headers.put("Version",allparamsheaders.get("Version"));
+        headers.put("DeviceID",allparamsheaders.get("DeviceID"));
+        headers.put("Lang",allparamsheaders.get("Lang"));
+        headers.put("channel",allparamsheaders.get("channel"));
+        headers.put("chain",allparamsheaders.get("chain"));
+        headers.put("ts",allparamsheaders.get("ts"));
+        headers.put("packageName","com.tronlinkpro.wallet");
+        headers.put("deviceName","wqqtest");
+        headers.put("osVersion","10.0.0");
+        headers.put("env","prod");
+
+        printHttpInfo(httppost, params, requestBody);
+
+        String requestUrl = HttpNode + "/api/wallet/node_info";
+        log.info("requestUrl:"+requestUrl);
+
+        try {
+            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
+                    connectionTimeout);
+            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+            if (params != null) {
+                StringBuffer stringBuffer = new StringBuffer(requestUrl);
+                stringBuffer.append("?");
+                for (Map.Entry<String, String> entry : params.entrySet()) {
+                    stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
+                }
+                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+                requestUrl = stringBuffer.toString();
+            }
+            httppost = new HttpPost(requestUrl);
+            if (headers != null) {
+                for (String key : headers.keySet()) {
+                    httppost.setHeader(key, headers.get(key));
+                    log.info(key + ": " + headers.get(key));
+                }
+            }
+            if (requestBody != null) {
+                StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
+                entity.setContentEncoding("UTF-8");
+                entity.setContentType("application/json");
+                httppost.setEntity(entity);
+            }
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
+
+            response = httpClient.execute(httppost);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httppost.releaseConnection();
+            return null;
+        }
+        return response;
+    }
 
 }

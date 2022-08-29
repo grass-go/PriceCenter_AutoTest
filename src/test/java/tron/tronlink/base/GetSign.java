@@ -76,10 +76,18 @@ public class GetSign {
 
         if (system.equals("AndroidTest")){
             secretKey = "SKDOE543KLMFSLKMJTIO4JTSSDFDSMKM65765";
-        }else if (system.equals("chrome-extension-test")){
+        }else if (system.equals("Android")) {
+            secretKey = "0F46CA8D490936A851D688F9BED151200D45G";
+        }else if (system.equals("iOSTest")){
+        secretKey = "RERTNJNVJKNKJGNDKJGJGF33G2G246H4H54H4";
+        }else if (system.equals("iOS")) {
+        secretKey = "6C848A38C0BDA1C71A22C9D5F5FD65845F886";
+        }else if (system.equals("chrome-extension-test")) {
             secretKey = "S8NFNSFJDFJKNFKASNFSJNFKJSN2344SFN2K2";
-        }else if (system.equals("IosTest")){
-            secretKey = "RERTNJNVJKNKJGNDKJGJGF33G2G246H4H54H4";
+        }else if (system.equals("chrome-extension")) {
+            secretKey = "FMD5MW11TIIMYFSWDXVGQDUD9XR7GVV9XR29J";
+        }else if (system.equals("Chrome")) {
+            secretKey = "FMD5MW11TIIMYFSWDXVGQDUD9XR7GVV9XR29J";
         }
 
         return hmacSHA1(secretKey, String.format("%s%s%s?%s", method, deviceId, url, makeQueryString(arguments, "utf-8")));
