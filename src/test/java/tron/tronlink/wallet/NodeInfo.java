@@ -300,7 +300,7 @@ public class NodeInfo extends TronlinkBase {
             String getNodeInfoStr = TronlinkApiList.parseResponse2String(response);
             log.info(getNodeInfoStr);
             NodeInfoRsp nodeInfoRsp = JSONObject.parseObject(getNodeInfoStr, NodeInfoRsp.class);
-            AssertNotNodeInfo(nodeInfoRsp);
+            AssertNodeInfo(nodeInfoRsp);
         }
     }
 
@@ -465,6 +465,7 @@ public class NodeInfo extends TronlinkBase {
             headers.put("env","prod");
         }
         system = getAppSystem();
+        headers.put("System", system); //不能带错误system
 
 //        if (n % 2 == 0) {
 //            headers.put("System", "test"); //不能带错误system
@@ -474,21 +475,43 @@ public class NodeInfo extends TronlinkBase {
     }
 
     private String getLimitVersion() {
-        String[] vs = new String[]{"4.11.0", "4.13.4", "5.10.0", "100.1.1", "99.99.1"};
+        String[] vs = new String[]{"4.11.0", "4.13.4", "5.10.0", "100.1.1", "99.99.1",};
         Random r = new Random();
-        return vs[r.nextInt(vs.length)];
+        int n = r.nextInt(10000);
+        String prefix = "";
+        if(n %3 == 0){
+            prefix = "v";
+        } else if (n %2 == 0) {
+            prefix = "V";
+        }
+        return prefix + vs[r.nextInt(vs.length)];
     }
 
     private String getLowLimitVersion() {
         String[] vs = new String[]{"4.10.0", "4.10.99", "3.10.0", "2.1.1", "1.99.1"};
+
         Random r = new Random();
-        return vs[r.nextInt(vs.length)];
+        int n = r.nextInt(10000);
+        String prefix = "";
+        if(n %3 == 0){
+            prefix = "v";
+        } else if (n %2 == 0) {
+            prefix = "V";
+        }
+        return prefix + vs[r.nextInt(vs.length)];
     }
 
     private String getChromeLimitVersion() {
         String[] vs = new String[]{"4.0.0", "4.13.4", "5.10.0", "100.1.1", "99.99.1"};
         Random r = new Random();
-        return vs[r.nextInt(vs.length)];
+        int n = r.nextInt(10000);
+        String prefix = "";
+        if(n %3 == 0){
+            prefix = "v";
+        } else if (n %2 == 0) {
+            prefix = "V";
+        }
+        return prefix + vs[r.nextInt(vs.length)];
     }
 
     private String getAppSystem() {
