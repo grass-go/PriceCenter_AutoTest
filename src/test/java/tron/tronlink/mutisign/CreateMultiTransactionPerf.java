@@ -254,8 +254,25 @@ public class CreateMultiTransactionPerf {
                 String curAddress = accounts[0];
                 byte[] curAddress_byte = Commons.decode58Check(curAddress);
 
-                TronlinkApiList.sendcoinDirectely(curAddress_byte, 1L, fromAddress_byte, fromKey,
-                        blockingStubFull);
+                Protocol.Transaction transaction = TronlinkApiList
+                        .sendcoin(curAddress_byte, 1, quince, blockingStubFull);
+                log.info("-----111111  "+ JsonFormat.printToString(transaction));
+
+                Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
+                        transaction, wqq1key, 9, blockingStubFull);
+                log.info("-----2222  "+JsonFormat.printToString(transaction1));
+
+                JSONObject object = new JSONObject();
+                object.put("address",wqq158);
+                object.put("netType","main_net");
+                object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
+                res = TronlinkApiList.multiTransaction(object);
+                Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+                responseContent = TronlinkApiList.parseJsonObResponseContent(res);
+                Assert.assertEquals(0,responseContent.getIntValue("code"));
+
+
+
                 Thread.sleep(100);
                 line++;
             }

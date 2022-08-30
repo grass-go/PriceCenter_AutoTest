@@ -547,8 +547,8 @@ public static HttpResponse search(Map<String, String> params) {
     try {
       //String requestUrl = "HttpNode" + "/api/wallet/multi/transaction";
       //String requestUrl = "http://123.56.3.74" + "/api/wallet/multi/transaction";
-      String requestUrl = "http://101.201.66.150:8885" + "/api/wallet/multi/transaction";
-      //String requestUrl = "https://niletest.tronlink.org" + "/api/wallet/multi/transaction";
+      //String requestUrl = "http://101.201.66.150:8885" + "/api/wallet/multi/transaction";
+      String requestUrl = "https://niletest.tronlink.org" + "/api/wallet/multi/transaction";
       response = createConnect(requestUrl,body);
     } catch (Exception e) {
       e.printStackTrace();

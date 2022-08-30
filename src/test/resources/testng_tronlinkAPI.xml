@@ -15,7 +15,7 @@
         <parameter name="trc721TokenAddress" value="TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG"></parameter>
         <parameter name="trc721AssetId" value="1"></parameter>
         <classes>
-            <class name="tron.tronlink.mutisign.CreateMultiTransaction"></class>
+            <class name="tron.tronlink.mutisign.CreateMultiTransactionPerf"></class>
         </classes>
     </test>
     <!--<test name="trondataAPI">
