@@ -101,7 +101,7 @@ public class CheckDiffAccessWayCMCTokens {
         return data;
     }
 
-    @Test(enabled = false, dataProvider = "ddt")
+    @Test(enabled = true, dataProvider = "ddt")
     public void test001DiffFormat(String symbol, String address, String tolerance) throws URISyntaxException, IOException {
         log.info("test001DiffFormat:"+symbol,", address", address, ", tolerance:"+tolerance);
         CheckSameValueGotByDiffFormat(symbol,address,tolerance);

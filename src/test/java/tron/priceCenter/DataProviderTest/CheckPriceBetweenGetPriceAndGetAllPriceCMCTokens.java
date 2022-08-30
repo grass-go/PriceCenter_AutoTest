@@ -52,7 +52,7 @@ public class CheckPriceBetweenGetPriceAndGetAllPriceCMCTokens {
         return data;
     }
 
-    @Test(enabled = false, dataProvider = "ddt")
+    @Test(enabled = true, dataProvider = "ddt")
     public void test001CheckPriceBetweenGetPriceAndGetAllPrice(String symbol,String address,String tolerance) throws URISyntaxException {
         log.info("test001CheckPriceBetweenGetPriceAndGetAllPrice:symbol:"+symbol+", address:"+address + ", tolerance:"+tolerance);
         //get getallprice response once for all the tokens.
