@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPath;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -18,7 +17,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @Slf4j
-public class CheckPriceBetweenGetPriceAndGetAllPrice {
+public class CheckPriceBetweenGetPriceAndGetAllPriceCMCTokens {
     public JSONObject allpriceResponseContent;
 
     @BeforeClass(enabled = true,description = "get allprice response")
@@ -31,7 +30,7 @@ public class CheckPriceBetweenGetPriceAndGetAllPrice {
     @DataProvider(name = "ddt")
     public Object[][] data() throws IOException {
 
-        String datafile = Configuration.getByPath("testng.conf").getString("commonTokens");
+        String datafile = Configuration.getByPath("testng.conf").getString("CMCTokens");
         File directory = new File(".");
         String tokenFile= directory.getCanonicalFile() + datafile;
         List<String> contentLines = PriceCenterApiList.ReadFile(tokenFile);
@@ -40,24 +39,20 @@ public class CheckPriceBetweenGetPriceAndGetAllPrice {
         int totalLine = contentLines.size();
         columnNum = contentLines.get(0).split(",").length;
 
-        Object[][] data = new Object[totalLine-3][3];
+        Object[][] data = new Object[totalLine][3];
         int dataIndex = 0;
-        for(int i = 1; i<totalLine; i++){
+        for(int i = 0; i<totalLine; i++){
             String stringValue[] = contentLines.get(i).split(",");
-            if(stringValue[0].equals("TRX") || stringValue[0].equals("USDT")){
-                continue;
-            }else{
-                data[dataIndex][0] = stringValue[0];
-                data[dataIndex][1] = stringValue[1];
-                data[dataIndex][2] = stringValue[3];
-                dataIndex +=1;
-            }
+            data[dataIndex][0] = stringValue[0];
+            data[dataIndex][1] = stringValue[1];
+            data[dataIndex][2] = stringValue[2];
+            dataIndex +=1;
         }
         log.info("data:"+data.toString());
         return data;
     }
 
-    @Test(dataProvider = "ddt")
+    @Test(enabled = false, dataProvider = "ddt")
     public void test001CheckPriceBetweenGetPriceAndGetAllPrice(String symbol,String address,String tolerance) throws URISyntaxException {
         log.info("test001CheckPriceBetweenGetPriceAndGetAllPrice:symbol:"+symbol+", address:"+address + ", tolerance:"+tolerance);
         //get getallprice response once for all the tokens.
@@ -66,25 +61,18 @@ public class CheckPriceBetweenGetPriceAndGetAllPrice {
         String curTokenAddress = address;
 
         //get trx/usd price from getallprice API
-        String myjsonpath;
-        if (curSymbol.equals("BTTOLD")) {
-            myjsonpath ="$..data.rows[fShortName='"+curSymbol+"']";
-        } else{
-            myjsonpath="$..data.rows[fTokenAddr='"+curTokenAddress+"']";
-        }
+        String myjsonpath="$..data.rows[fTokenAddr='"+curTokenAddress+"']";
 
-        java.util.List<String> getallprice_Price = PriceCenterApiList.getTRXandUSDbyfTokenAddrFromAllAPI(allpriceResponseContent,myjsonpath);
+
+        List<String> getallprice_Price = PriceCenterApiList.getTRXandUSDbyfTokenAddrFromAllAPI(allpriceResponseContent,myjsonpath);
         String getallprice_trxPrice=getallprice_Price.get(0);
         String getallprice_usdPrice=getallprice_Price.get(1);
 
         //get trx price from getprice API and compare with getallprice API
         JSONObject getprice_obj = PriceCenterApiList.getprice(curTokenAddress,"T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb");
-        Object getprice_result;
-        if(curSymbol.equals("BTTOLD")) {
-            getprice_result = JSONPath.eval(getprice_obj, "$..quote.T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb.price[0]");
-        }else{
-            getprice_result = JSONPath.eval(getprice_obj, "$..data." + curTokenAddress + ".quote.T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb.price[0]");
-        }
+
+        Object getprice_result = JSONPath.eval(getprice_obj, "$..quote.T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb.price[0]");
+
         String getprice_trxPrice = getprice_result.toString();
         log.info("test001CheckPriceBetweenGetPriceAndGetAllPrice:TRX:getallpriceResult:"+getallprice_trxPrice+", getpriceResult"+getprice_trxPrice);
         Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(getallprice_trxPrice, getprice_trxPrice,tolerance));
@@ -92,11 +80,8 @@ public class CheckPriceBetweenGetPriceAndGetAllPrice {
 
         //get usd price from getprice API and compare with getallprice API
         getprice_obj = PriceCenterApiList.getprice(curTokenAddress,"USD");
-        if(curSymbol.equals("BTTOLD")) {
-            getprice_result = JSONPath.eval(getprice_obj, "$..quote.USD.price[0]");
-        }else {
-            getprice_result = JSONPath.eval(getprice_obj, "$..data." + curTokenAddress + ".quote.USD.price[0]");
-        }
+        getprice_result = JSONPath.eval(getprice_obj, "$..quote.USD.price[0]");
+
         String getprice_usdPrice = getprice_result.toString();
         log.info("test001CheckPriceBetweenGetPriceAndGetAllPrice:USD:getallpriceResult:"+getallprice_usdPrice+", getpriceResult"+getprice_usdPrice);
         Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(getallprice_usdPrice, getprice_usdPrice,tolerance));
