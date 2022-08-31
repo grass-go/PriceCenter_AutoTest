@@ -259,6 +259,26 @@ public class GetSign extends TronlinkBase {
         return params;
     }
 
+    public Map<String,String> GenerateParams(String Address, String url, String method){
+        Map<String,String> params = new HashMap<>();
+        params.put("nonce","12345");
+        params.put("secretId","SFSUIOJBFMLKSJIF");
+        // 计算sig
+        HashMap<String,String> sigs = new HashMap<>();
+        sigs.put("address", Address);
+        sigs.put("url", url);
+        sigs.put("method", method);
+        try {
+            String sig = getSign(sigs);
+            params.put("signature",sig);
+        }catch (Exception e){
+            log.error("sig 计算错误！");
+            e.printStackTrace();
+        }
+        params.put(Keys.Address, Address);
+        return params;
+    }
+
 
 
     public String getSecIdBySystem(String sys){
