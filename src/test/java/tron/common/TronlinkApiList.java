@@ -31,6 +31,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -66,6 +67,7 @@ import lombok.extern.slf4j.Slf4j;
 import tron.common.utils.Configuration;
 import tron.trondata.base.TrondataBase;
 import tron.tronlink.base.TronlinkBase;
+import tron.common.utils.HttpDeleteWithBody;
 
 @Slf4j
 public class TronlinkApiList {
@@ -74,8 +76,10 @@ public class TronlinkApiList {
     static HttpClient httpClient2;
     static HttpPost httppost;
     static HttpGet httpget;
-
     static HttpGet httpGet;
+    static HttpPut httpput;
+    static HttpDeleteWithBody httpdelete;
+
     public static String HttpTronDataNode = TrondataBase.trondataUrl;
     public static String HttpNode = TronlinkBase.tronlinkUrl;
     static HttpResponse response;
@@ -450,6 +454,36 @@ public class TronlinkApiList {
         return response;
     }
 
+    public static HttpResponse put_history(JSONObject requestBody) {
+        try {
+            String requestUrl = HttpNode + "/api/dapp/v2/dapp/history";
+            Map<String, String> header = new HashMap<>();
+            header.put("Lang","1");
+            header.put("Content-Type","application/json");
+            response = createPutConnect(requestUrl, null, requestBody,header);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpput.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse delete_history(JSONObject requestBody) {
+        try {
+            String requestUrl = HttpNode + "/api/dapp/v2/dapp/history";
+            Map<String, String> header = new HashMap<>();
+            header.put("Lang","1");
+            header.put("Content-Type","application/json");
+            response = createDeleteConnect(requestUrl, null,requestBody,header);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpdelete.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
     public static HttpResponse accountList(JSONArray body) {
         try {
             String requestUrl = HttpNode + "/api/wallet/account/list";
@@ -675,6 +709,105 @@ public class TronlinkApiList {
         response = createConnect(requestUrl, body);
         return response;
     }
+
+    public static HttpResponse createPutConnect(String url, Map<String, String> params,
+                                                JSONObject requestBody, Map<String, String> headers) {
+        try {
+            // if ssl issue occur, use httpClient.custome().setxxx to set timeout.
+            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
+                    connectionTimeout);
+            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+
+            httpput = new HttpPut(url);
+            httpput.setHeader("Content-type", "application/json; charset=utf-8");
+            httpput.setHeader("Connection", "Keep-Alive");
+            if (headers != null) {
+                for (String key : headers.keySet()) {
+                    httpput.addHeader(key, headers.get(key));
+                }
+            }
+            Header[] allHeaders = httpput.getAllHeaders();
+            for (int i = 0; i < allHeaders.length; i++) {
+                log.info("" + allHeaders[i]);
+            }
+
+            if (params != null) {
+                StringBuffer stringBuffer = new StringBuffer(url);
+                stringBuffer.append("?");
+                for (Map.Entry<String, String> entry : params.entrySet()) {
+                    stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
+                }
+                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+                url = stringBuffer.toString();
+            }
+            log.info("Put: "+url);
+
+            if (requestBody != null) {
+                StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
+                entity.setContentEncoding("UTF-8");
+                entity.setContentType("application/json");
+                httpput.setEntity(entity);
+            }
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
+            // log.info("url: " + httppost.toString() + "\n params:"+requestBody);
+            response = httpClient.execute(httpput);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpput.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
+    public static HttpResponse createDeleteConnect(String url, Map<String, String> params,
+                                                JSONObject requestBody, Map<String, String> headers) {
+
+        try {
+            httpdelete = new HttpDeleteWithBody(url);
+            // if ssl issue occur, use httpClient.custome().setxxx to set timeout.
+            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
+                    connectionTimeout);
+            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
+
+            httpdelete.setHeader("Content-type", "application/json; charset=utf-8");
+            httpdelete.setHeader("Connection", "Keep-Alive");
+            if (headers != null) {
+                for (String key : headers.keySet()) {
+                    httpdelete.addHeader(key, headers.get(key));
+                }
+            }
+            Header[] allHeaders = httpdelete.getAllHeaders();
+            for (int i = 0; i < allHeaders.length; i++) {
+                log.info("" + allHeaders[i]);
+            }
+
+            if (params != null) {
+                StringBuffer stringBuffer = new StringBuffer(url);
+                stringBuffer.append("?");
+                for (Map.Entry<String, String> entry : params.entrySet()) {
+                    stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
+                }
+                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+                url = stringBuffer.toString();
+            }
+            log.info("Delete: "+url);
+
+            if (requestBody != null) {
+                StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
+                entity.setContentEncoding("UTF-8");
+                entity.setContentType("application/json");
+                httpdelete.setEntity(entity);
+            }
+
+            response = httpClient.execute(httpdelete);
+        } catch (Exception e) {
+            e.printStackTrace();
+            httpdelete.releaseConnection();
+            return null;
+        }
+        return response;
+    }
+
 
     public static HttpResponse createPostConnect(String url, String requestBody) {
         try {
