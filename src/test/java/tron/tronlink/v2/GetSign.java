@@ -232,11 +232,9 @@ public class GetSign extends TronlinkBase {
     }
 
     // 组装参数
-    public Map<String,String> GenerateParams(String Address, String url, String method){
+    public Map<String,String> GenerateParamsForNodeInfo(String Address, String url, String method){
         Map<String,String> params = new HashMap<>();
         params.put("nonce","12345");
-//        params.put("secretId","SFSUIOJBFMLKSJIF");
-//        params.put("secretId", getSecIdBySystem(NodeInfo.system));
         // 计算sig
         HashMap<String,String> sigs = new HashMap<>();
         sigs.put("address", Address);
@@ -253,7 +251,6 @@ public class GetSign extends TronlinkBase {
             String sig = getSign(sigs);
             log.info("sig = " + sig);
             params.put("signature",sig);
-//            params.put("signature","x8N9g9wShp3%3DM4un6rQscf1jg28o%3D");
         }catch (Exception e){
             log.error("sig 计算错误！");
             e.printStackTrace();
@@ -261,6 +258,8 @@ public class GetSign extends TronlinkBase {
         params.put(Keys.Address, Address);
         return params;
     }
+
+
 
     public String getSecIdBySystem(String sys){
         Map<String,String> ids = new HashMap<>();

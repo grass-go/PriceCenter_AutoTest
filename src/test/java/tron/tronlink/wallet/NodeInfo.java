@@ -307,19 +307,19 @@ public class NodeInfo extends TronlinkBase {
 
 
     private Map<String, String> getTest001Params() {
-        return g.GenerateParams(queryAddress58, "/api/wallet/node_info", "POST");
+        return g.GenerateParamsForNodeInfo(queryAddress58, "/api/wallet/node_info", "POST");
     }
 
     private Map<String, String> getTest002Params() {
-        return g.GenerateParams(queryAddress58, "/api/wallet/node_info", "POST");
+        return g.GenerateParamsForNodeInfo(queryAddress58, "/api/wallet/node_info", "POST");
     }
 
     private Map<String, String> getTest003Params() {
-        return g.GenerateParams(queryAddress58, "/api/wallet/node_info", "POST");
+        return g.GenerateParamsForNodeInfo(queryAddress58, "/api/wallet/node_info", "POST");
     }
 
     private Map<String, String> getTestParams() {
-        return g.GenerateParams(queryAddress58, "/api/wallet/node_info", "POST");
+        return g.GenerateParamsForNodeInfo(queryAddress58, "/api/wallet/node_info", "POST");
     }
 
     GetSign g = new GetSign();
