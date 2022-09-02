@@ -253,7 +253,11 @@ public class AllAssetList extends TronlinkBase {
         HttpResponse transcanRsp = TronlinkApiList.createGetConnect(requestUrl);
         JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
         Object scan_levelObject = JSONPath.eval(transcanRspContent, String.join("","$..data[0].level"));
+        if(scan_levelObject.equals("")){
+          scan_levelObject = "0";
+        }
         Integer scan_level = Integer.valueOf(scan_levelObject.toString());
+
         log.info("curId:"+curId+", cur_isOfficial:"+cur_isOfficial.toString()+", transcan level:"+scan_levelObject.toString());
         log.info("======");
         Assert.assertEquals(Math.abs(Integer.parseInt(cur_isOfficial.toString())), scan_level+1);
