@@ -16,11 +16,14 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 
+@Slf4j
 public class GetSign {
     //ANDROID_TEST("AndroidTest","SFSUIOJBFMLKSJIF", "SKDOE543KLMFSLKMJTIO4JTSSDFDSMKM65765",
     private static final String MAC_NAME = "HmacSHA1";
@@ -69,7 +72,7 @@ public class GetSign {
         arguments.put("nonce", nonce);
         arguments.put("secretId", secretId);
         arguments.put("address", address);
-        System.out.println(String.format("%s%s%s?%s", method, deviceId, url, makeQueryString(arguments, "utf-8")));
+        log.info("pre cal sig info: " + String.format("%s%s%s?%s", method, deviceId, url, makeQueryString(arguments, "utf-8")));
 
 //        return hmacSHA1("RERTNJNVJKNKJGNDKJGJGF33G2G246H4H54H4", String.format("%s%s%s?%s", method, deviceId, url, makeQueryString(arguments, "utf-8")));
         String secretKey = tron.tronlink.v2.GetSign.getSecKeyBySystem(system);

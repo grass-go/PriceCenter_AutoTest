@@ -67,6 +67,7 @@ import tron.common.utils.Configuration;
 import tron.trondata.base.TrondataBase;
 import tron.tronlink.base.TronlinkBase;
 import tron.common.utils.HttpDeleteWithBody;
+import tron.tronlink.v2.GetSign;
 
 @Slf4j
 public class TronlinkApiList {
@@ -93,6 +94,8 @@ public class TronlinkApiList {
     static JSONObject transactionApprovedListContent;
     static Long requestTime = 0L;
     static byte ADD_PRE_FIX_BYTE_MAINNET = (byte) 0x41;
+
+    private static GetSign getSign = new GetSign();
 
     static {
         PoolingClientConnectionManager pccm = new PoolingClientConnectionManager();
@@ -1609,11 +1612,16 @@ public class TronlinkApiList {
         return response;
     }
 
+    static Random r = new Random();
     /**
      * constructor.
      */
     public static HttpResponse createGetConnect(String url, Map<String, String> params) {
         try {
+            HttpGet httpget = new HttpGet(url);
+            params = getSign.FillSig(url, params );
+
+            // set params
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
                     connectionTimeout);
             httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
@@ -1626,15 +1634,17 @@ public class TronlinkApiList {
                 stringBuffer.deleteCharAt(stringBuffer.length() - 1);
                 url = stringBuffer.toString();
             }
-            httpget = new HttpGet(url);
-            httpget.addHeader("Lang", "1");
-            httpget.addHeader("Version", "3.7.0");
-            httpget.addHeader("DeviceID", "1111111111");
-            httpget.addHeader("chain", "MainChain");
-            httpget.addHeader("packageName", "com.tronlinkpro.wallet");
-            httpget.addHeader("System", "Android");
-            httpget.setHeader("Content-type", "application/json; charset=utf-8");
-            httpget.setHeader("Connection", "Keep-Alive");
+
+//            httpget.addHeader("Lang", "1");
+//            httpget.addHeader("Version", "3.7.0");
+//            httpget.addHeader("DeviceID", "1111111111");
+//            httpget.addHeader("chain", "MainChain");
+//            httpget.addHeader("packageName", "com.tronlinkpro.wallet");
+//            httpget.addHeader("System", "Android");
+//            httpget.setHeader("Content-type", "application/json; charset=utf-8");
+//            httpget.setHeader("Connection", "Keep-Alive");
+
+            // print headers
             Header[] allHeaders = httpget.getAllHeaders();
             for (int i = 0; i < allHeaders.length; i++) {
                 log.info("" + allHeaders[i]);

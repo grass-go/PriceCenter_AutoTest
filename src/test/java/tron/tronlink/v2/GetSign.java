@@ -3,22 +3,18 @@ package tron.tronlink.v2;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+
+import java.util.*;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
@@ -127,6 +123,138 @@ public class GetSign extends TronlinkBase {
         return httpget;
     }
 
+    static int appType = 1;
+    static int chromeType = 0;
+    static int lowVersion = 1;
+    static int highVersion = 2;
+    static boolean app = false;
+    static boolean chrome = false;
+
+    public static Map<String, String> getHeaderByTypesV3(int osType, int versionType){
+        Map<String, String> headers;
+        headers = TronlinkApiList.getV2Header();
+        ts = String.valueOf(System.currentTimeMillis());
+        headers.put("ts", ts);
+        if(osType == appType){
+            app = true;
+            system = getAppSystem();
+        }else {
+            chrome = true;
+            system = getChromeSystem();
+        }
+        headers.put("System", system);
+        version = getVersion(versionType);
+        headers.put("Version", version);
+
+
+        return headers;
+    }
+
+    public static String getVersion(int type){
+        if (type == lowVersion){
+            if(app){
+                return getAppLowVersion();
+            }
+            if(chrome){
+                return getChromeLowVersion();
+            }
+        }
+        if(type == highVersion){
+            if(app){
+                return getAppHignVersion();
+            }
+            if(chrome){
+                return getChromeHighVersion();
+            }
+        }
+        return "";
+    }
+
+    public static Map<String, String> getV4HeaderByOS(int type){
+        Map<String, String> headers;
+        headers = TronlinkApiList.getV2Header();
+        ts = String.valueOf(System.currentTimeMillis());
+        headers.put("ts", ts);
+        version = getAppLowVersion();
+        headers.put("Version", version);
+        if(type == appType){
+            system = getAppSystem();
+        }else {
+            system = getChromeSystem();
+        }
+        headers.put("System", system);
+
+        return headers;
+    }
+
+    private static String getAppHignVersion() {
+        String[] vs = new String[]{"4.11.0", "4.13.4", "5.10.0", "100.1.1", "99.99.1",};
+        Random r = new Random();
+        int n = r.nextInt(10000);
+        String prefix = "";
+        if(n %3 == 0){
+            prefix = "v";
+        } else if (n %2 == 0) {
+            prefix = "V";
+        }
+        return prefix + vs[r.nextInt(vs.length)];
+    }
+
+    private static String getAppLowVersion() {
+        String[] vs = new String[]{"4.10.0", "4.10.99", "3.10.0", "2.1.1", "1.99.1"};
+
+        Random r = new Random();
+        int n = r.nextInt(10000);
+        String prefix = "";
+        if(n %3 == 0){
+            prefix = "v";
+        } else if (n %2 == 0) {
+            prefix = "V";
+        }
+        return prefix + vs[r.nextInt(vs.length)];
+    }
+
+    private static String getChromeHighVersion() {
+        String[] vs = new String[]{"4.0.0", "4.13.4", "5.10.0", "100.1.1", "99.99.1"};
+        Random r = new Random();
+        int n = r.nextInt(10000);
+        String prefix = "";
+        if(n %3 == 0){
+            prefix = "v";
+        } else if (n %2 == 0) {
+            prefix = "V";
+        }
+        return prefix + vs[r.nextInt(vs.length)];
+    }
+
+
+    private static String getChromeLowVersion() {
+        String[] vs = new String[]{"3.0.0", "2.13.4", "1.10.0", "0.1.1", "3.99.1"};
+        Random r = new Random();
+        int n = r.nextInt(10000);
+        String prefix = "";
+        if(n %3 == 0){
+            prefix = "v";
+        } else if (n %2 == 0) {
+            prefix = "V";
+        }
+        return prefix + vs[r.nextInt(vs.length)];
+    }
+
+    private static String getAppSystem() {
+        String[] vs = new String[]{"Android", "iOS", "android", "ios", "androidtest", "IOS", "iostest", "iosTest"};
+        Random r = new Random();
+        return vs[r.nextInt(vs.length)];
+
+    }
+
+    private static String getChromeSystem() {
+        String[] vs = new String[]{"chrome", "Chrome", "chrome-extension", "chrome-extension-test", "chrome-extension-tesT", "chrome-Extension"};
+        Random r = new Random();
+        return vs[r.nextInt(vs.length)];
+
+    }
+
     @Test
     public void GetResquest() throws Exception {
 
@@ -231,6 +359,11 @@ public class GetSign extends TronlinkBase {
         System.out.println(pretty);
     }
 
+    public static String system;
+    public static String ts;
+    public static String version;
+    public static String method;
+
     // 组装参数
     public Map<String,String> GenerateParamsForNodeInfo(String Address, String url, String method){
         Map<String,String> params = new HashMap<>();
@@ -281,6 +414,55 @@ public class GetSign extends TronlinkBase {
 
 
 
+    public Map<String,String> GenerateParamsV3(int versionType, String Address, String url, String method){
+        Map<String,String> params = new HashMap<>();
+        if(lowVersion == versionType) {
+            boolean b1 = r.nextBoolean();
+            boolean b2 = r.nextBoolean();
+            boolean b3 = r.nextBoolean();
+            if (b1) {
+                params.put("nonce", "12345");
+            }
+            if (b2) {
+                params.put(Keys.Address, Address);
+            }
+            if (b3) {
+                params.put("secretId", getSecIdBySystem(system));
+            }
+        }
+        if(highVersion == versionType){
+            params.put("nonce", "12345");
+            params.put(Keys.Address, Address);
+            params.put("secretId", getSecIdBySystem(system));
+        }
+
+        // 计算sig
+        HashMap<String,String> sigs = new HashMap<>();
+        sigs.put("address", Address);
+        sigs.put("url", url);
+        sigs.put("method", method);
+        sigs.put("secretId", getSecIdBySystem(system));
+        sigs.put("ts", ts);
+        sigs.put("version", version);
+        sigs.put("system", system);
+//        sigs.put("method",method);
+
+        try {
+            if(versionType == highVersion) {
+                String sig = getSign(sigs);
+                log.info("sig = " + sig);
+                params.put("signature", sig);
+            }
+        }catch (Exception e){
+            log.error("sig 计算错误！");
+            e.printStackTrace();
+        }
+
+        return params;
+    }
+
+
+
     public String getSecIdBySystem(String sys){
         Map<String,String> ids = new HashMap<>();
         ids.put("chrome-extension-test","8JKSO2PM4M2K45EL");
@@ -315,5 +497,34 @@ public class GetSign extends TronlinkBase {
             }
         }
         return "";
+    }
+
+    static Random r = new Random();
+
+    // fill header and sig and other params
+    public Map<String,String> FillSig(String url, Map<String,String> params){
+        HttpGet httpGet = new HttpGet(url);
+        boolean oldVersion =  r.nextBoolean();
+        int osType = r.nextInt(1000) % 2;
+        Map<String,String> headers;
+        if(oldVersion){
+            headers = getHeaderByTypesV3(osType, lowVersion);
+            for (Map.Entry<String,String> kv:
+                 headers.entrySet()) {
+                httpGet.addHeader(kv.getKey(), kv.getValue());
+            }
+            params = GenerateParamsV3(lowVersion, params.get(Keys.Address), httpGet.getURI().getPath(), httpGet.getMethod());
+        }{
+            headers = getHeaderByTypesV3(osType, highVersion);
+            for (Map.Entry<String,String> kv:
+                    headers.entrySet()) {
+                httpGet.addHeader(kv.getKey(), kv.getValue());
+            }
+            if(!params.containsKey(Keys.Address)){
+                params.put(Keys.Address,"TH4Vi2SXuiYCpnWykZgmphEKfajVNbFYA7");
+            }
+            params = GenerateParamsV3(highVersion,params.get(Keys.Address), httpGet.getURI().getPath(), httpGet.getMethod());
+        }
+        return params;
     }
 }
