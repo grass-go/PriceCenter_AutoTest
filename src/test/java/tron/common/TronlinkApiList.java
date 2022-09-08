@@ -18,10 +18,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLContext;
@@ -31,6 +28,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -1920,122 +1918,153 @@ public class TronlinkApiList {
     }
 
 
-    public static Map<java.lang.String, java.lang.String> getNodeInfoParamsAndHeaders(String address, String needSys) throws Exception {
-        Map<String, String> paramsAndHeaders = new HashMap<>();
+    public static Map<String, String> getNewSigHeader(String needSys) {
+        Map<String, String> header = new HashMap<>();
         if (needSys.equals("chrome-extension-test")){
-            paramsAndHeaders.put("System","chrome-extension-test");
-            paramsAndHeaders.put("secretId","8JKSO2PM4M2K45EL");
+            header.put("System","chrome-extension-test");
         } else if(needSys.equals("chrome-extension")){
-            paramsAndHeaders.put("System","chrome-extension");
-            paramsAndHeaders.put("secretId","AE68A487AA919CAE");
+            header.put("System","chrome-extension");
         } else if(needSys.equals("Chrome")){
-            paramsAndHeaders.put("System","Chrome");
-            paramsAndHeaders.put("secretId","AE68A487AA919CAE");
+            header.put("System","Chrome");
         } else if(needSys.equals("AndroidTest")){
-            paramsAndHeaders.put("System","AndroidTest");
-            paramsAndHeaders.put("secretId","SFSUIOJBFMLKSJIF");
+            header.put("System","AndroidTest");
         } else if(needSys.equals("Android")){
-            paramsAndHeaders.put("System","Android");
-            paramsAndHeaders.put("secretId","A4ADE880F46CA8D4");
+            header.put("System","Android");
         } else if(needSys.equals("iOSTest")){
-            paramsAndHeaders.put("System","iOSTest");
-            paramsAndHeaders.put("secretId","JSKLJKFJDFDSFER3");
+            header.put("System","iOSTest");
         } else if(needSys.equals("iOS")){
-            paramsAndHeaders.put("System","iOS");
-            paramsAndHeaders.put("secretId","ED151200DD0B3B52");
+            header.put("System","iOS");
         }
-        paramsAndHeaders.put("nonce","12345");
-        paramsAndHeaders.put("Lang","1");
-        paramsAndHeaders.put("Version","V4.12.0");
-        paramsAndHeaders.put("DeviceID","fca5a022-5526-45f5-a7e7");
-        paramsAndHeaders.put("chain","MainChain");
-        paramsAndHeaders.put("channel","official");
+        header.put("Lang","1");
+        header.put("Version","v4.11.0");
+        header.put("DeviceID","fca5a022-5526-45f5-a7e7");
+        header.put("chain","MainChain");
+        header.put("channel","official");
 
-        paramsAndHeaders.put("ts", java.lang.String.valueOf(System.currentTimeMillis()));
-        //paramsAndHeaders.put("ts","1609302220000");
-        paramsAndHeaders.put("Content-type", "application/json; charset=utf-8");
-        paramsAndHeaders.put("Connection", "Keep-Alive");
+        header.put("ts", java.lang.String.valueOf(System.currentTimeMillis()));
+        //header.put("ts","1609302220000");
+
+        header.put("packageName", "com.tronlinkpro.wallet");
+        header.put("Content-type", "application/json; charset=utf-8");
+        header.put("Connection", "Keep-Alive");
+
+        header.put("deviceName","wqqtest");
+        header.put("osVersion","10.0.0");
+
+        return header;
+    }
+    public static Map<String, String> getNewSigParams(String needSys) {
+        Map<String, String> params = new HashMap<>();
+
+        if (needSys.equals("chrome-extension-test")){
+            params.put("secretId","8JKSO2PM4M2K45EL");
+        } else if(needSys.equals("chrome-extension")){
+            params.put("secretId","AE68A487AA919CAE");
+        } else if(needSys.equals("Chrome")){
+            params.put("secretId","AE68A487AA919CAE");
+        } else if(needSys.equals("AndroidTest")){
+            params.put("secretId","SFSUIOJBFMLKSJIF");
+        } else if(needSys.equals("Android")){
+            params.put("secretId","A4ADE880F46CA8D4");
+        } else if(needSys.equals("iOSTest")){
+            params.put("secretId","JSKLJKFJDFDSFER3");
+        } else if(needSys.equals("iOS")){
+            params.put("secretId","ED151200DD0B3B52");
+        }
+        params.put("nonce","12345");
+        return params;
+    }
+
+    public static String getNodeInfoParamsAndHeaders(String curUri,String httpMethod, String address, String needSys) throws Exception {
+        Map<String, String> params = getNewSigParams(needSys);
+        Map<String, String> headers = getNewSigHeader(needSys);
         GetSign getSign = new GetSign();
         String signature = URLEncoder.encode(getSign.getSignature(
-                paramsAndHeaders.get("channel"),
-                paramsAndHeaders.get("chain"),
-                paramsAndHeaders.get("Lang"),
+                headers.get("channel"),
+                headers.get("chain"),
+                headers.get("Lang"),
                 address,
-                paramsAndHeaders.get("nonce"),
-                paramsAndHeaders.get("secretId"),
-                paramsAndHeaders.get("System"),
-                paramsAndHeaders.get("DeviceID"),
-                paramsAndHeaders.get("ts"),
-                paramsAndHeaders.get("Version"),
-                "/api/wallet/node_info",
-                "POST"));
-        paramsAndHeaders.put("signature",signature);
-
-        return paramsAndHeaders;
+                params.get("nonce"),
+                params.get("secretId"),
+                headers.get("System"),
+                headers.get("DeviceID"),
+                headers.get("ts"),
+                headers.get("Version"),
+                curUri,
+                httpMethod));
+        return signature;
     }
 
 
-    public static HttpResponse nodeinfo(String address, String testSys,JSONArray requestBody) throws Exception {
-        Map<String, String> allparamsheaders = getNodeInfoParamsAndHeaders(address,testSys);
-        Map<String, String> params = new HashMap<>();
-        Map<String, String> headers = new HashMap<>();
-        params.put("nonce", allparamsheaders.get("nonce"));
-        params.put("secretId", allparamsheaders.get("secretId"));
-        params.put("signature",allparamsheaders.get("signature"));
+    public static HttpResponse node_info(String address, String testSys,JSONArray requestBody) throws Exception {
+        String curUri = "/api/wallet/node_info";
+        Map<String, String> params = getNewSigParams(testSys);
+        Map<String, String> headers = getNewSigHeader(testSys);
+        params.put("signature", getNodeInfoParamsAndHeaders(curUri, "POST", address, testSys));
         params.put("address", address);
 
-
-        headers.put("System",allparamsheaders.get("System"));
-        headers.put("Version",allparamsheaders.get("Version"));
-        headers.put("DeviceID",allparamsheaders.get("DeviceID"));
-        headers.put("Lang",allparamsheaders.get("Lang"));
-        headers.put("channel",allparamsheaders.get("channel"));
-        headers.put("chain",allparamsheaders.get("chain"));
-        headers.put("ts",allparamsheaders.get("ts"));
-        headers.put("packageName","com.tronlinkpro.wallet");
-        headers.put("deviceName","wqqtest");
-        headers.put("osVersion","10.0.0");
-        headers.put("env","prod");
-
         printHttpInfo(httppost, params, requestBody);
+        String requestUrl = HttpNode + curUri;
+        log.info("requestUrl:" + requestUrl);
+        response = createPostConnectWithHeader(requestUrl, params, requestBody, headers);
+        return response;
+    }
 
-        String requestUrl = HttpNode + "/api/wallet/node_info";
-        log.info("requestUrl:"+requestUrl);
+    public static HttpResponse dapp_V3banner(String address, String testSys) throws Exception {
+        String curUri = "/api/dapp/v3/banner";
+        Map<String, String> params = getNewSigParams(testSys);
+        Map<String, String> headers = getNewSigHeader(testSys);
+        params.put("signature", getNodeInfoParamsAndHeaders(curUri, "GET", address, testSys));
+        params.put("address", address);
+        log.info("httpget = " + httpget);
+        log.info("params = " + params);
+        String requestUrl = HttpNode + curUri;
+        log.info("requestUrl:" + requestUrl);
+        response = createGetConnectWithHeader(requestUrl, params, null, headers);
+        return response;
+    }
 
-        try {
-            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
-            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
-            if (params != null) {
-                StringBuffer stringBuffer = new StringBuffer(requestUrl);
-                stringBuffer.append("?");
-                for (Map.Entry<String, String> entry : params.entrySet()) {
-                    stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
-                }
-                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-                requestUrl = stringBuffer.toString();
-            }
-            httppost = new HttpPost(requestUrl);
-            if (headers != null) {
-                for (String key : headers.keySet()) {
-                    httppost.setHeader(key, headers.get(key));
-                    log.info(key + ": " + headers.get(key));
-                }
-            }
-            if (requestBody != null) {
-                StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
-                entity.setContentEncoding("UTF-8");
-                entity.setContentType("application/json");
-                httppost.setEntity(entity);
-            }
-            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
+    public static HttpResponse dapp_V3classify(String address, String testSys) throws Exception {
+        String curUri = "/api/dapp/v3/classify";
+        Map<String, String> params = getNewSigParams(testSys);
+        Map<String, String> headers = getNewSigHeader(testSys);
+        params.put("signature", getNodeInfoParamsAndHeaders(curUri, "GET", address, testSys));
+        params.put("address", address);
+        params.put("classify","7");
+        log.info("httpget = " + httpget);
+        log.info("params = " + params);
+        String requestUrl = HttpNode + curUri;
+        log.info("requestUrl:" + requestUrl);
+        response = createGetConnectWithHeader(requestUrl, params, null, headers);
+        return response;
+    }
 
-            response = httpClient.execute(httppost);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
+    public static HttpResponse dapp_V3search(String address, String testSys) throws Exception {
+        String curUri = "/api/dapp/v3/search";
+        Map<String, String> params = getNewSigParams(testSys);
+        Map<String, String> headers = getNewSigHeader(testSys);
+        params.put("signature", getNodeInfoParamsAndHeaders(curUri, "GET", address, testSys));
+        params.put("address", address);
+        params.put("word","tron");
+        log.info("httpget = " + httpget);
+        log.info("params = " + params);
+        String requestUrl = HttpNode + curUri;
+        log.info("requestUrl:" + requestUrl);
+        response = createGetConnectWithHeader(requestUrl, params, null, headers);
+        return response;
+    }
+
+    public static HttpResponse tronweb(String address, String testSys) throws Exception {
+        String curUri = "/api/web/v1/tronweb";
+        Map<String, String> params = getNewSigParams(testSys);
+        Map<String, String> headers = getNewSigHeader(testSys);
+        params.put("signature", getNodeInfoParamsAndHeaders(curUri, "GET", address, testSys));
+        params.put("address", address);
+        log.info("httpget = " + httpget);
+        log.info("params = " + params);
+        String requestUrl = HttpNode + curUri;
+        log.info("requestUrl:" + requestUrl);
+        response = createGetConnectWithHeader(requestUrl, params, null, headers);
         return response;
     }
 

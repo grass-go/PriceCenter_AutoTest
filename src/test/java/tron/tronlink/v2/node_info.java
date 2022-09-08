@@ -48,7 +48,7 @@ public class node_info extends TronlinkBase {
 
         log.info(array.toString());
 
-        response = TronlinkApiList.nodeinfo("TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t","AndroidTest", array);
+        response = TronlinkApiList.node_info("TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t","AndroidTest",array);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
         Assert.assertTrue(responseContent.containsKey("code"));

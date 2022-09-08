@@ -38,6 +38,23 @@ public class Dapp_Classify extends TronlinkBase {
       Assert.assertTrue(jsonObject.containsKey("weight"));
       Assert.assertTrue(jsonObject.containsKey("status"));
     }
-//    Assert.assertTrue(responseArrayContent.size() == 5);
   }
+
+  @Test(enabled = true)
+  public void dapp_classifyV3() throws Exception {
+
+    response = TronlinkApiList.dapp_V3classify(quince_B58,"Android");
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    JSONArray jsonArray = responseContent.getJSONArray("data");
+    for (Object json:jsonArray) {
+      JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
+      Assert.assertTrue(jsonObject.containsKey("classifyId"));
+      Assert.assertTrue(jsonObject.containsKey("name"));
+      Assert.assertTrue(jsonObject.containsKey("imageUrl"));
+      Assert.assertTrue(jsonObject.containsKey("homeUrl"));
+    }
+  }
+
+
 }

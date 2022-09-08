@@ -46,4 +46,23 @@ public class Dapp_Search extends TronlinkBase {
     Assert.assertTrue(responseArrayContent.size() >= 0);
   }
 
+  @Test(enabled = true)
+  public void dapp_searchV3() throws Exception {
+    response = TronlinkApiList.dapp_V3search(quince_B58,"iOSTest");
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseArrayContent = responseContent.getJSONArray("data");
+    for (Object json:responseArrayContent) {
+      System.out.println(json);
+      JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
+      Assert.assertTrue(jsonObject.containsKey("classifyId"));
+      Assert.assertTrue(jsonObject.containsKey("name"));
+      Assert.assertTrue(jsonObject.containsKey("imageUrl"));
+      Assert.assertTrue(jsonObject.containsKey("homeUrl"));
+    }
+    System.out.println(responseArrayContent.size());
+    Assert.assertTrue(responseArrayContent.size() >= 0);
+  }
+
+
 }
