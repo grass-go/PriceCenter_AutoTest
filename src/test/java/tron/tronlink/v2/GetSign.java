@@ -15,11 +15,13 @@ import java.security.NoSuchAlgorithmException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.common.utils.Keys;
 import tron.tronlink.base.TronlinkBase;
+import tron.tronlink.v2.model.SigRsp;
 import tron.tronlink.wallet.NodeInfo;
 
 @Slf4j
@@ -133,8 +135,18 @@ public class GetSign extends TronlinkBase {
     public static Map<String, String> getHeaderByTypesV3(int osType, int versionType){
         Map<String, String> headers;
         headers = TronlinkApiList.getV2Header();
+        boolean err = r.nextBoolean();
         ts = String.valueOf(System.currentTimeMillis());
-        headers.put("ts", ts);
+//        if (err) {
+//            ts = ts + "000";
+//        }
+        if(versionType == highVersion) {
+            headers.put("ts", ts);
+        }else{
+            if(err) {
+                headers.remove("ts");
+            }
+        }
         if(osType == appType){
             app = true;
             system = getAppSystem();
@@ -142,7 +154,12 @@ public class GetSign extends TronlinkBase {
             chrome = true;
             system = getChromeSystem();
         }
-        headers.put("System", system);
+        boolean systemErr = r.nextBoolean();
+        headers.put("System", system );
+
+//        if(systemErr){
+//            headers.put("System", system+ "err");
+//        }
         version = getVersion(versionType);
         headers.put("Version", version);
 
@@ -170,22 +187,22 @@ public class GetSign extends TronlinkBase {
         return "";
     }
 
-    public static Map<String, String> getV4HeaderByOS(int type){
-        Map<String, String> headers;
-        headers = TronlinkApiList.getV2Header();
-        ts = String.valueOf(System.currentTimeMillis());
-        headers.put("ts", ts);
-        version = getAppLowVersion();
-        headers.put("Version", version);
-        if(type == appType){
-            system = getAppSystem();
-        }else {
-            system = getChromeSystem();
-        }
-        headers.put("System", system);
-
-        return headers;
-    }
+//    public static Map<String, String> getV4HeaderByOS(int type){
+//        Map<String, String> headers;
+//        headers = TronlinkApiList.getV2Header();
+//        ts = String.valueOf(System.currentTimeMillis());
+//        headers.put("ts", ts);
+//        version = getAppLowVersion();
+//        headers.put("Version", version);
+//        if(type == appType){
+//            system = getAppSystem();
+//        }else {
+//            system = getChromeSystem();
+//        }
+//        headers.put("System", system);
+//
+//        return headers;
+//    }
 
     private static String getAppHignVersion() {
         String[] vs = new String[]{"4.11.0", "4.13.4", "5.10.0", "100.1.1", "99.99.1",};
@@ -414,8 +431,8 @@ public class GetSign extends TronlinkBase {
 
 
 
-    public Map<String,String> GenerateParamsV3(int versionType, String Address, String url, String method){
-        Map<String,String> params = new HashMap<>();
+    public Map<String,String> GenerateParamsV3(Map<String,String> params,int versionType, String Address, String url, String method){
+//        Map<String,String> params = new HashMap<>();
         if(lowVersion == versionType) {
             boolean b1 = r.nextBoolean();
             boolean b2 = r.nextBoolean();
@@ -451,7 +468,7 @@ public class GetSign extends TronlinkBase {
             if(versionType == highVersion) {
                 String sig = getSign(sigs);
                 log.info("sig = " + sig);
-                params.put("signature", sig);
+                params.put("signature", sig );
             }
         }catch (Exception e){
             log.error("sig 计算错误！");
@@ -502,8 +519,18 @@ public class GetSign extends TronlinkBase {
     static Random r = new Random();
 
     // fill header and sig and other params
-    public Map<String,String> FillSig(String url, Map<String,String> params){
-        HttpGet httpGet = new HttpGet(url);
+    public SigRsp FillSig(String method,String url, Map<String,String> params){
+        HttpGet httpGet = null;
+        HttpPost httpPost = null;
+        String uri = "";
+        if(method.equals("GET")){
+            httpGet = new HttpGet(url);
+            uri = httpGet.getURI().getPath();
+        }
+        if(method.equals("POST")){
+            httpPost = new HttpPost(url);
+            uri = httpPost.getURI().getPath();
+        }
         boolean oldVersion =  r.nextBoolean();
         int osType = r.nextInt(1000) % 2;
         Map<String,String> headers;
@@ -511,20 +538,33 @@ public class GetSign extends TronlinkBase {
             headers = getHeaderByTypesV3(osType, lowVersion);
             for (Map.Entry<String,String> kv:
                  headers.entrySet()) {
-                httpGet.addHeader(kv.getKey(), kv.getValue());
+                if(httpGet != null){
+                    httpGet.addHeader(kv.getKey(), kv.getValue());
+                }
+                if(httpPost != null){
+                    httpPost.addHeader(kv.getKey(), kv.getValue());
+                }
             }
-            params = GenerateParamsV3(lowVersion, params.get(Keys.Address), httpGet.getURI().getPath(), httpGet.getMethod());
-        }{
+            params = GenerateParamsV3(params, lowVersion, params.get(Keys.Address), uri, method);
+        }else{
             headers = getHeaderByTypesV3(osType, highVersion);
             for (Map.Entry<String,String> kv:
                     headers.entrySet()) {
-                httpGet.addHeader(kv.getKey(), kv.getValue());
+                if(httpGet != null){
+                    httpGet.addHeader(kv.getKey(), kv.getValue());
+                }
+                if(httpPost != null){
+                    httpPost.addHeader(kv.getKey(), kv.getValue());
+                }
             }
+
             if(!params.containsKey(Keys.Address)){
                 params.put(Keys.Address,"TH4Vi2SXuiYCpnWykZgmphEKfajVNbFYA7");
             }
-            params = GenerateParamsV3(highVersion,params.get(Keys.Address), httpGet.getURI().getPath(), httpGet.getMethod());
+            params = GenerateParamsV3(params, highVersion,params.get(Keys.Address), uri, method);
         }
-        return params;
+        return new SigRsp(httpGet,httpPost, params);
     }
 }
+
+

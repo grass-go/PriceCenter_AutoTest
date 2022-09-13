@@ -68,6 +68,7 @@ import tron.trondata.base.TrondataBase;
 import tron.tronlink.base.TronlinkBase;
 import tron.common.utils.HttpDeleteWithBody;
 import tron.tronlink.v2.GetSign;
+import tron.tronlink.v2.model.SigRsp;
 
 @Slf4j
 public class TronlinkApiList {
@@ -165,14 +166,14 @@ public class TronlinkApiList {
 
     public static HttpResponse trc20Info(HashMap<String, String> param) throws Exception {
         final String requestUrl = HttpNode + "/api/wallet/trc20_info";
-        URIBuilder builder = new URIBuilder(requestUrl);
-        if (param != null) {
-            for (String key : param.keySet()) {
-                builder.addParameter(key, param.get(key));
-            }
-        }
-        URI uri = builder.build();
-        response = createGetConnect(uri);
+//        URIBuilder builder = new URIBuilder(requestUrl);
+//        if (param != null) {
+//            for (String key : param.keySet()) {
+//                builder.addParameter(key, param.get(key));
+//            }
+//        }
+//        URI uri = builder.build();
+        response = createGetConnect(requestUrl, param);
         return response;
     }
 
@@ -198,20 +199,22 @@ public class TronlinkApiList {
             }
         }
         URI uri = builder.build();
-        response = createGetConnect(uri);
+//        response = createGetConnect(uri);
+        response = createGetConnect(requestUrl, param);
         return response;
     }
 
     public static HttpResponse apiTransferToken10(HashMap<String, String> param) throws Exception {
         final String requestUrl = HttpNode + "/api/transfer/token10";
-        URIBuilder builder = new URIBuilder(requestUrl);
-        if (param != null) {
-            for (String key : param.keySet()) {
-                builder.addParameter(key, param.get(key));
-            }
-        }
-        URI uri = builder.build();
-        response = createGetConnect(uri);
+//        URIBuilder builder = new URIBuilder(requestUrl);
+//        if (param != null) {
+//            for (String key : param.keySet()) {
+//                builder.addParameter(key, param.get(key));
+//            }
+//        }
+//        URI uri = builder.build();
+//        response = createGetConnect(uri);
+        response = createGetConnect(requestUrl, param);
         return response;
     }
 
@@ -224,7 +227,7 @@ public class TronlinkApiList {
             }
         }
         URI uri = builder.build();
-        response = createGetConnect(uri);
+        response = createGetConnect(requestUrl, param);
         return response;
     }
 
@@ -237,7 +240,7 @@ public class TronlinkApiList {
             }
         }
         URI uri = builder.build();
-        response = createGetConnect(uri);
+        response = createGetConnect(requestUrl, param);
         return response;
     }
 
@@ -382,11 +385,10 @@ public class TronlinkApiList {
     }
 
 
-
-    public static HttpResponse swapExchanges(Map<String,String> params) {
+    public static HttpResponse swapExchanges(Map<String, String> params) {
         try {
             String requestUrl = HttpNode + "/api/swap/v1/exchanges";
-            response = createGetConnectClient2(requestUrl, params);
+            response = createGetConnect(requestUrl, params);
         } catch (Exception e) {
             e.printStackTrace();
             httpget.releaseConnection();
@@ -395,7 +397,7 @@ public class TronlinkApiList {
         return response;
     }
 
-    public static HttpResponse transfer1155(Map<String,String> params) {
+    public static HttpResponse transfer1155(Map<String, String> params) {
         try {
             String requestUrl = HttpNode + "/api/transfer/v2/trc1155";
             response = v2CreateGetConnect(requestUrl, params);
@@ -410,7 +412,7 @@ public class TronlinkApiList {
     public static HttpResponse dappPlug() {
         try {
             String requestUrl = HttpNode + "/dapphouseapp/plug";
-            response = createGetConnectClient2(requestUrl, null);
+            response = createGetConnect(requestUrl, null);
         } catch (Exception e) {
             e.printStackTrace();
             httpget.releaseConnection();
@@ -460,9 +462,9 @@ public class TronlinkApiList {
         try {
             String requestUrl = HttpNode + "/api/dapp/v2/dapp/history";
             Map<String, String> header = new HashMap<>();
-            header.put("Lang","1");
-            header.put("Content-Type","application/json");
-            response = createPutConnect(requestUrl, null, requestBody,header);
+            header.put("Lang", "1");
+            header.put("Content-Type", "application/json");
+            response = createPutConnect(requestUrl, null, requestBody, header);
         } catch (Exception e) {
             e.printStackTrace();
             httpput.releaseConnection();
@@ -475,9 +477,9 @@ public class TronlinkApiList {
         try {
             String requestUrl = HttpNode + "/api/dapp/v2/dapp/history";
             Map<String, String> header = new HashMap<>();
-            header.put("Lang","1");
-            header.put("Content-Type","application/json");
-            response = createDeleteConnect(requestUrl, null,requestBody,header);
+            header.put("Lang", "1");
+            header.put("Content-Type", "application/json");
+            response = createDeleteConnect(requestUrl, null, requestBody, header);
         } catch (Exception e) {
             e.printStackTrace();
             httpdelete.releaseConnection();
@@ -573,13 +575,12 @@ public class TronlinkApiList {
     }
 
     // nodeinfo升级的请求接口
-    public static HttpResponse getNodeInfoV2(Map<String,String> params, JSONArray body, Map<String,String> headers) {
+    public static HttpResponse getNodeInfoV2(Map<String, String> params, JSONArray body, Map<String, String> headers) {
         final String requestUrl = HttpNode + "/api/wallet/node_info";
         log.info(requestUrl);
-        response = createPostConnectWithHeaderV2(requestUrl,params, body, headers);
+        response = createPostConnectWithHeaderV2(requestUrl, params, body, headers);
         return response;
     }
-
 
 
     public static HttpResponse getConfig() {
@@ -752,7 +753,7 @@ public class TronlinkApiList {
                 stringBuffer.deleteCharAt(stringBuffer.length() - 1);
                 url = stringBuffer.toString();
             }
-            log.info("Put: "+url);
+            log.info("Put: " + url);
 
             if (requestBody != null) {
                 StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
@@ -772,7 +773,7 @@ public class TronlinkApiList {
     }
 
     public static HttpResponse createDeleteConnect(String url, Map<String, String> params,
-                                                JSONObject requestBody, Map<String, String> headers) {
+                                                   JSONObject requestBody, Map<String, String> headers) {
 
         try {
             httpdelete = new HttpDeleteWithBody(url);
@@ -802,7 +803,7 @@ public class TronlinkApiList {
                 stringBuffer.deleteCharAt(stringBuffer.length() - 1);
                 url = stringBuffer.toString();
             }
-            log.info("Delete: "+url);
+            log.info("Delete: " + url);
 
             if (requestBody != null) {
                 StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
@@ -898,7 +899,7 @@ public class TronlinkApiList {
     public static HttpResponse V2AllAssetList(Map<String, String> params) {
         try {
             String requestUrl = HttpNode + "/api/wallet/v2/allAssetList";
-            response = v2CreateGetConnect(requestUrl, params);
+            response = createGetConnect(requestUrl, params);
         } catch (Exception e) {
             e.printStackTrace();
             httppost.releaseConnection();
@@ -910,86 +911,88 @@ public class TronlinkApiList {
     public static HttpResponse v2AssetList(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/v2/assetList";
         log.info("requestUrl : " + requestUrl);
-        response = v2CreateGetConnect(requestUrl, params);
+        response = createGetConnect(requestUrl, params);
         return response;
     }
 
     public static HttpResponse v2AssetList(Map<String, String> params, JSONObject body) {
         final String requestUrl = HttpNode + "/api/wallet/v2/assetList";
         log.info("requestUrl : " + requestUrl);
-        response = createPostConnectWithHeader(requestUrl, params, body, getV2Header());
+//        response = createPostConnectWithHeader(requestUrl, params, body, getV2Header());
+        response = createPostConnectWithHeader(requestUrl,null, body, null);
         return response;
     }
 
     public static HttpResponse v2GetAssetList(Map<String, String> params, JSONObject body,
-            Map<String, String> headers) {
+                                              Map<String, String> headers) {
         // final String requestUrl = HttpNode + "/api/wallet/v2/assetList";
         final String requestUrl = "https://testpre.tronlink.org" + "/api/wallet/v2/assetList";
 
         log.info("requestUrl : " + requestUrl);
-        response = createGetConnectWithHeader(requestUrl, params, body, headers);
+//        response = createGetConnectWithHeader(requestUrl, params, body, headers);
+        response = createGetConnect(requestUrl, params);
         return response;
     }
 
     public static HttpResponse v2GetAllCollection(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/nft/getAllCollection";
-        response = v2CreateGetConnect(requestUrl, params);
+        response = createGetConnect(requestUrl, params);
         return response;
     }
 
     // 根据token类型查询首页信息
     public static HttpResponse v2GetAllCollectionByType(String url, Map<String, String> params) {
-        final String requestUrl = HttpNode +  url ;
-        response = v2CreateGetConnect(requestUrl, params);
+        final String requestUrl = HttpNode + url;
+        response = createGetConnect(requestUrl, params);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         return response;
     }
 
     public static HttpResponse v2AllCollections(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/nft/allCollections";
-        response = v2CreateGetConnect(requestUrl, params);
+        response = createGetConnect(requestUrl, params);
         return response;
     }
 
     public static HttpResponse v2GetCollectionList(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/nft/getCollectionList";
-        response = v2CreateGetConnect(requestUrl, params);
+        response = createGetConnect(requestUrl, params);
         return response;
     }
 
     public static HttpResponse v2GetCollectionInfo(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/nft/getCollectionInfo";
-        response = v2CreateGetConnect(requestUrl, params);
+        response =createGetConnect(requestUrl, params);
         return response;
     }
 
     public static HttpResponse v2GetCollectionInfos(Map<String, String> params, JSONObject body) {
         final String requestUrl = HttpNode + "/api/wallet/nft/getCollectionInfos";
-        response = createPostConnectWithHeader(requestUrl, params, body, getV2Header());
+        response = createPostConnectWithHeader(requestUrl, params, body, null);
         return response;
     }
 
     public static HttpResponse getDelegatedResource(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/v2/getDelegatedResource";
-        response = v2CreateGetConnect(requestUrl, params);
+        response = createGetConnect(requestUrl, params);
         return response;
     }
 
     public static HttpResponse v2NewAssetList(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/v2/newAssetList";
-        response = v2CreateGetConnect(requestUrl, params);
+        response = createGetConnect(requestUrl, params);
         return response;
     }
 
     public static HttpResponse v2SearchAsset(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/v2/search";
-        response = v2CreateGetConnect(requestUrl, params);
+        response = createGetConnect(requestUrl, params);
         return response;
     }
 
     public static HttpResponse v2GetNoticeRemind(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/v1/wallet/getNoticeRemind";
-        response = v2CreateGetConnect(requestUrl, params);
+        response =createGetConnect(requestUrl, params);
         return response;
     }
 
@@ -1001,7 +1004,7 @@ public class TronlinkApiList {
 
     public static HttpResponse v2GetAnnouncement() {
         final String requestUrl = HttpNode + "/api/activity/announcement/reveal_v2";
-        response = v2CreateGetConnect(requestUrl, null);
+        response = createGetConnect(requestUrl, null);
         return response;
     }
 
@@ -1013,19 +1016,19 @@ public class TronlinkApiList {
 
     public static HttpResponse v2GetBlacklist(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/activity/website/blacklist";
-        response = v2CreateGetConnect(requestUrl, null);
+        response = createGetConnect(requestUrl, null);
         return response;
     }
 
     public static HttpResponse officialToken(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/official_token";
-        response = v2CreateGetConnect(requestUrl, null);
+        response = createGetConnect(requestUrl, null);
         return response;
     }
 
     public static HttpResponse v2PlayScreenInfo(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/activity/play_screen/info";
-        response = v2CreateGetConnect(requestUrl, null);
+        response = createGetConnect(requestUrl, null);
         return response;
     }
 
@@ -1050,7 +1053,7 @@ public class TronlinkApiList {
     }
 
     public static HttpResponse v2UpdateUserCreateBNum(String updataNumber, String userhash,
-            Map<String, String> headerMap) {
+                                                      Map<String, String> headerMap) {
         final String requestUrl = HttpNode + "/api/v1/wallet/updateUserCreateBNum";
         Map<String, String> header = getV2Header();
         header.put("Content-type", "application/json; charset=utf-8");
@@ -1073,7 +1076,7 @@ public class TronlinkApiList {
         for (String key : headerMap.keySet()) {
             header.put(key, headerMap.get(key));
         }
-        response = createGetConnectWithHeader(requestUrl, params, null, header);
+        response = createGetConnect(requestUrl, params);
         return response;
     }
 
@@ -1095,19 +1098,19 @@ public class TronlinkApiList {
 
     public static HttpResponse v2Asset(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/v2/asset";
-        response = v2CreateGetConnect(requestUrl, params);
+        response = createGetConnect(requestUrl, params);
         return response;
     }
 
     public static HttpResponse v2Auth(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/v2/auth";
-        response = v2CreateGetConnect(requestUrl, params);
+        response = createGetConnect(requestUrl, params);
         return response;
     }
 
     public static HttpResponse v2NftSearch(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/nft/search";
-        response = v2CreateGetConnect(requestUrl, params);
+        response = createGetConnect(requestUrl, params);
         return response;
     }
 
@@ -1134,7 +1137,8 @@ public class TronlinkApiList {
         Map<String, String> header = getV2Header();
         header.put("Content-type", "application/json; charset=utf-8");
         header.put("Connection", "Close");
-        response = createGetConnectWithHeader(requestUrl, null, null, params);
+//        response = createGetConnectWithHeader(requestUrl, null, null, params);
+        response = createGetConnect(requestUrl, params);
         return response;
     }
 
@@ -1143,7 +1147,7 @@ public class TronlinkApiList {
         Map<String, String> header = getV2Header();
         header.put("Content-type", "application/json; charset=utf-8");
         header.put("Connection", "Close");
-        response = createGetConnectWithHeader(requestUrl, null, null, params);
+        response = createGetConnect(requestUrl, params);
         return response;
     }
 
@@ -1264,7 +1268,7 @@ public class TronlinkApiList {
      */
 
     public static HttpResponse createPostConnectWithHeader(String url, Map<String, String> params,
-            JSONArray requestBody, Map<String, String> header) {
+                                                           JSONArray requestBody, Map<String, String> header) {
         try {
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
                     connectionTimeout);
@@ -1291,8 +1295,6 @@ public class TronlinkApiList {
                 entity.setContentType("application/json");
                 httppost.setEntity(entity);
             }
-            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-            // log.info("url: "+httppost.toString()+"\nparams: "+requestBody.toString());
             response = httpClient.execute(httppost);
 
         } catch (Exception e) {
@@ -1304,9 +1306,22 @@ public class TronlinkApiList {
 
     }
 
+    /***
+     *
+     * @param url
+     * @param params
+     * @param requestBody
+     * @param header
+     * @return response with auto header and sig
+     */
     public static HttpResponse createPostConnectWithHeader(String url, Map<String, String> params,
-            JSONObject requestBody, Map<String, String> header) {
+                                                           JSONObject requestBody, Map<String, String> header) {
         try {
+            if (params == null) {
+                params = new HashMap<>();
+            }
+
+            SigRsp rsp = getSign.FillSig("POST", url, params);
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
                     connectionTimeout);
             httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
@@ -1320,28 +1335,21 @@ public class TronlinkApiList {
                 url = stringBuffer.toString();
             }
             httppost = new HttpPost(url);
-            // httppost.setHeader("Content-type", "application/json; charset=utf-8");
-            // httppost.setHeader("Connection", "Close");
-            if (header != null) {
-                for (String key : header.keySet()) {
-                    httppost.setHeader(key, header.get(key));
-                    log.info(key + ": " + header.get(key));
-                }
+//            httppost.setHeaders(rsp.httpPost.getAllHeaders());
+            mergeInputHeader(httppost, rsp, header);
+            // print headers
+            Header[] allHeaders = httppost.getAllHeaders();
+            log.info("begin print header------");
+            for (int i = 0; i < allHeaders.length; i++) {
+                log.info("" + allHeaders[i]);
             }
+            log.info("end print header------");
             if (requestBody != null) {
                 StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
                 entity.setContentEncoding("UTF-8");
                 entity.setContentType("application/json");
                 httppost.setEntity(entity);
             }
-            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-            // if (requestBody == null){
-            // log.info("no request body info");
-            // requestBody = new JSONObject();
-            // }
-            // log.info("url: "+httppost.toString()+"\nparams: "+params.toString() + " \n
-            // requestbody : "+requestBody.toString());
-            //
             printHttpInfo(httppost, params, requestBody);
             response = httpClient.execute(httppost);
         } catch (Exception e) {
@@ -1352,9 +1360,32 @@ public class TronlinkApiList {
         return response;
     }
 
+    private static void mergeInputHeader(HttpPost httppost, SigRsp rsp, Map<String, String> header) {
+        if (header == null){
+            return;
+        }
+        Header[] headers = rsp.httpPost.getAllHeaders();
+        httppost.setHeaders(headers);
+
+//            log.info("" + headers[i]);
+        for (Map.Entry<String, String> kv :
+                header.entrySet()) {
+            boolean find = false;
+            for (int i = 0; i < headers.length; i++) {
+                if(kv.getKey().equals(headers[i].getName()) && kv.getValue().equals(headers[i].getValue())){
+                    find = true;
+                    break;
+                }
+            }
+            if(!find){
+                httppost.setHeader(kv.getKey(),kv.getValue());
+            }
+        }
+    }
+
     // 和其他方法的不同是requestBody变成了数组类型
     public static HttpResponse createPostConnectWithHeaderV2(String url, Map<String, String> params,
-                                                           JSONArray requestBody, Map<String, String> header) {
+                                                             JSONArray requestBody, Map<String, String> header) {
         try {
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
                     connectionTimeout);
@@ -1369,8 +1400,6 @@ public class TronlinkApiList {
                 url = stringBuffer.toString();
             }
             httppost = new HttpPost(url);
-            // httppost.setHeader("Content-type", "application/json; charset=utf-8");
-            // httppost.setHeader("Connection", "Close");
             if (header != null) {
                 for (String key : header.keySet()) {
                     httppost.setHeader(key, header.get(key));
@@ -1383,15 +1412,6 @@ public class TronlinkApiList {
                 entity.setContentType("application/json");
                 httppost.setEntity(entity);
             }
-//            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-            // if (requestBody == null){
-            // log.info("no request body info");
-            // requestBody = new JSONObject();
-            // }
-            // log.info("url: "+httppost.toString()+"\nparams: "+params.toString() + " \n
-            // requestbody : "+requestBody.toString());
-            //
-//            printHttpInfo(httppost, params, requestBody);
             response = httpClient.execute(httppost);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1402,7 +1422,7 @@ public class TronlinkApiList {
     }
 
     public static void printHttpInfo(HttpPost httppost, Map<String, String> params, JSONObject requestbody) {
-        log.info("begin print http info");
+        log.info("begin print post info");
         if (httppost != null) {
             log.info("httppost = " + httppost);
         }
@@ -1412,14 +1432,14 @@ public class TronlinkApiList {
         if (requestbody != null) {
             log.info("requestbody = " + requestbody);
         }
-        log.info("end print http info");
+        log.info("end print post info");
     }
 
     /**
      * constructor.
      */
     public static HttpResponse createGetConnectWithHeader(String url, Map<String, String> params,
-            JSONObject requestBody, Map<String, String> header) {
+                                                          JSONObject requestBody, Map<String, String> header) {
         try {
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
                     connectionTimeout);
@@ -1444,12 +1464,9 @@ public class TronlinkApiList {
                 StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
                 entity.setContentEncoding("UTF-8");
                 entity.setContentType("application/json");
-                // SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-                // log.info("url: "+httpget.toString()+"\nparams: "+requestBody.toString());
             }
 
             log.info("" + httpget);
-
             response = httpClient.execute(httpget);
         } catch (Exception e) {
             e.printStackTrace();
@@ -1485,7 +1502,6 @@ public class TronlinkApiList {
             }
             response = httpClient.execute(httppost);
             printHttpInfoV2(httppost, httppost.getAllHeaders(), httppost.getParams());
-            // log.info("url: "+httppost.toString()+"\nparams: "+requestBody.toString());
         } catch (Exception e) {
             e.printStackTrace();
             httppost.releaseConnection();
@@ -1494,24 +1510,20 @@ public class TronlinkApiList {
         return response;
     }
 
-    public static void printHttpInfoV2(HttpPost httppost, org.apache.http.Header[] headers,  org.apache.http.params.HttpParams params){
+    public static void printHttpInfoV2(HttpPost httppost, org.apache.http.Header[] headers, org.apache.http.params.HttpParams params) {
         if (httppost != null) {
             log.info(httppost.toString());
 
         }
         if (headers == null) {
-            for (Header h:
-                 headers) {
+            for (Header h :
+                    headers) {
                 log.info(h.getName() + " " + h.getValue());
             }
         }
         if (httppost.getEntity() != null) {
             log.info(JSONObject.toJSONString(httppost.getEntity()));
         }
-
-//        if (params == null) {
-//            log.info(params.);
-//        }
     }
 
     /**
@@ -1613,14 +1625,17 @@ public class TronlinkApiList {
     }
 
     static Random r = new Random();
+
     /**
      * constructor.
      */
     public static HttpResponse createGetConnect(String url, Map<String, String> params) {
         try {
-            HttpGet httpget = new HttpGet(url);
-            params = getSign.FillSig(url, params );
+            if (params == null) {
+                params = new HashMap<>();
+            }
 
+            SigRsp rsp = getSign.FillSig("GET", url, params);
             // set params
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
                     connectionTimeout);
@@ -1633,24 +1648,21 @@ public class TronlinkApiList {
                 }
                 stringBuffer.deleteCharAt(stringBuffer.length() - 1);
                 url = stringBuffer.toString();
-            }
 
-//            httpget.addHeader("Lang", "1");
-//            httpget.addHeader("Version", "3.7.0");
-//            httpget.addHeader("DeviceID", "1111111111");
-//            httpget.addHeader("chain", "MainChain");
-//            httpget.addHeader("packageName", "com.tronlinkpro.wallet");
-//            httpget.addHeader("System", "Android");
-//            httpget.setHeader("Content-type", "application/json; charset=utf-8");
-//            httpget.setHeader("Connection", "Keep-Alive");
+            }
+            // copy new http get
+            HttpGet httpGetCopy = new HttpGet(url);
+            httpGetCopy.setHeaders(rsp.httpGet.getAllHeaders());
 
             // print headers
-            Header[] allHeaders = httpget.getAllHeaders();
+            Header[] allHeaders = httpGetCopy.getAllHeaders();
+            log.info("begin print header------");
             for (int i = 0; i < allHeaders.length; i++) {
                 log.info("" + allHeaders[i]);
             }
+            log.info("end print header------");
             Instant startTime = Instant.now();
-            response = httpClient.execute(httpget);
+            response = httpClient.execute(httpGetCopy);
             Instant endTime = Instant.now();
             requestTime = Duration.between(startTime, endTime).toMillis();
             log.info(url + " 请求总耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
@@ -1842,7 +1854,7 @@ public class TronlinkApiList {
      * constructor.
      */
     public static Protocol.Transaction sendcoin(byte[] to, long amount, byte[] owner,
-            WalletGrpc.WalletBlockingStub blockingStubFull) {
+                                                WalletGrpc.WalletBlockingStub blockingStubFull) {
         Wallet.setAddressPreFixByte(ADD_PRE_FIX_BYTE_MAINNET);
         BalanceContract.TransferContract.Builder builder = BalanceContract.TransferContract.newBuilder();
         ByteString bsTo = ByteString.copyFrom(to);
@@ -1877,7 +1889,7 @@ public class TronlinkApiList {
     }
 
     public static Protocol.Transaction addTransactionSignWithPermissionId(Protocol.Transaction transaction,
-            String priKey, int permissionId, WalletGrpc.WalletBlockingStub blockingStubFull) {
+                                                                          String priKey, int permissionId, WalletGrpc.WalletBlockingStub blockingStubFull) {
         Wallet.setAddressPreFixByte(ADD_PRE_FIX_BYTE_MAINNET);
         ECKey temKey = null;
         try {
@@ -1907,8 +1919,8 @@ public class TronlinkApiList {
     }
 
     public static Protocol.Transaction triggerContract(byte[] contractAddress, String method,
-            String argsStr, Boolean isHex, long callValue, long feeLimit, String tokenId, long tokenValue,
-            byte[] ownerAddress, WalletGrpc.WalletBlockingStub blockingStubFull) {
+                                                       String argsStr, Boolean isHex, long callValue, long feeLimit, String tokenId, long tokenValue,
+                                                       byte[] ownerAddress, WalletGrpc.WalletBlockingStub blockingStubFull) {
         Wallet.setAddressPreFixByte(ADD_PRE_FIX_BYTE_MAINNET);
         if (argsStr.equalsIgnoreCase("#")) {
             log.info("argsstr is #");
@@ -2059,7 +2071,7 @@ public class TronlinkApiList {
     }
 
     public static HttpResponse v2PostRiskTokens(Map<String, String> params, JSONObject body,
-            Map<String, String> headers, String url) {
+                                                Map<String, String> headers, String url) {
         final String requestUrl = HttpNode + url;
         log.info("requestUrl : " + requestUrl);
         response = createPostConnectWithHeader(requestUrl, params, body, headers);
@@ -2067,14 +2079,13 @@ public class TronlinkApiList {
     }
 
     public static HttpResponse v2GetRisk(Map<String, String> params, JSONObject body, Map<String, String> headers,
-            String url) {
+                                         String url) {
         final String requestUrl = HttpNode + url;
 
         log.info("requestUrl : " + requestUrl);
         response = createGetConnectWithHeader(requestUrl, params, body, headers);
         return response;
     }
-
 
 
     public static JSONObject getprice(String symbol, String convert) {
@@ -2093,13 +2104,14 @@ public class TronlinkApiList {
         Map<String, String> header = getV2Header();
         header.put("Content-type", "application/json; charset=utf-8");
         header.put("Connection", "Close");
-        response = v2CreateGetConnect(requestUrl, params);
+        response = createGetConnect(requestUrl, params);
         return response;
     }
+
     public static HttpResponse v1Balance(Map<String, String> params) {
         try {
             String requestUrl = HttpNode + "/api/wallet/balance";
-            response = createGetConnectNoHeader(requestUrl, params);
+            response = createGetConnect(requestUrl, params);
         } catch (Exception e) {
             e.printStackTrace();
             httppost.releaseConnection();
@@ -2107,16 +2119,19 @@ public class TronlinkApiList {
         }
         return response;
     }
+
     public static HttpResponse TransferV2Trc721(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/transfer/v2/trc721";
         response = v2CreateGetConnect(requestUrl, params);
         return response;
     }
+
     public static HttpResponse TransferTrc721(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/transfer/trc721";
         response = v2CreateGetConnect(requestUrl, params);
         return response;
     }
+
     public static HttpResponse sdk_verify(String json) {
         try {
             String requestUrl = HttpNode + "/api/wallet/sdk_verify";
@@ -2128,28 +2143,30 @@ public class TronlinkApiList {
         }
         return response;
     }
+
     public static HttpResponse v2GetAllCollection_1155(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/trc1155/getAllCollection";
         response = v2CreateGetConnect(requestUrl, params);
         return response;
     }
-    
+
     public static HttpResponse v2AllCollections_1155(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/trc1155/allCollections";
         response = v2CreateGetConnect(requestUrl, params);
         return response;
     }
-    
+
     public static HttpResponse v2GetCollectionList_1155(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/trc1155/getCollectionList";
         response = v2CreateGetConnect(requestUrl, params);
         return response;
     }
+
     public static HttpResponse v2GetCollectionInfos_1155(Map<String, String> params, JSONObject body) {
         final String requestUrl = HttpNode + "/api/wallet/trc1155/getCollectionInfos";
         response = createPostConnectWithHeader(requestUrl, params, body, getV2Header());
         return response;
     }
-  
+
 
 }

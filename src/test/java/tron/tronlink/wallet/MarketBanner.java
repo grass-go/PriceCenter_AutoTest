@@ -19,7 +19,7 @@ public class MarketBanner {
   private HttpResponse response;
   private HashMap<String,String> param = new HashMap<>();
 
-  @Test(enabled = true)
+  @Test(enabled = true, invocationCount = 5)
   public void Test000getMarketBanner() throws Exception {
     Map<String, String> params = new HashMap<>();
     params.put("sort_type","1");
@@ -33,22 +33,13 @@ public class MarketBanner {
     System.out.println("---------------");
     System.out.println(jo.toJSONString());
     System.out.println("---------------");
+
     String annualizedIncome = String.valueOf(jo.getDoubleValue("annualized_income"));
     int index = annualizedIncome.indexOf('.')+3;
     String ai = annualizedIncome.substring(0,index);
     double origin = Double.valueOf(ai);
     int value = Integer.valueOf(annualizedIncome.charAt(index));
     System.out.println("value: " + value+"    origin: "+ origin + "   annualizedIncome: "+ annualizedIncome);
-//    if(value>=53){
-//      BigDecimal b1=new BigDecimal(Double.toString(origin));
-//      BigDecimal b2=new BigDecimal("0.01");
-//      origin = b1.add(b2).doubleValue();
-//      System.out.println("origin + 0.01");
-//      System.out.println("after origin + 0.01: "+origin);
-//
-//    }
-//
-//    Thread.sleep(3000);
 
     response = TronlinkApiList.walletMarketBanner();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);

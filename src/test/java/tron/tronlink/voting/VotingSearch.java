@@ -21,10 +21,10 @@ public class VotingSearch extends TronlinkBase {
 
   @Test(enabled = true,description = "search witness by keywords")
   public void Test000SearchWitness() throws Exception {
-    boolean re = TronlinkApiList.getAllWitnessFromTronscan();
-    if(!re){
-      System.out.println("* * * * * * * tronscan get witness error * * * * * *");
-    }
+//    boolean re = TronlinkApiList.getAllWitnessFromTronscan();
+//    if(!re){
+//      System.out.println("* * * * * * * tronscan get witness error * * * * * *");
+//    }
     Map<String, String> params = new HashMap<>();
     params.put("keyword","TK");
     response = TronlinkApiList.votingV2Search(params);

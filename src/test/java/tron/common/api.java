@@ -277,10 +277,7 @@ public class api {
 
   public static HttpResponse trxPrice() throws Exception{
     final String requesturl = HttpNode + "/api/v1/wallet/trxPrice";
-    URIBuilder builder = new URIBuilder(requesturl);
-    URI uri = builder.build();
-    System.out.println(uri);
-    response = createGetConnect(uri);
+    response = TronlinkApiList.createGetConnect(requesturl, null);
     Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     return response;
   }
@@ -299,7 +296,7 @@ public class api {
     URIBuilder builder = new URIBuilder(requesturl);
     URI uri = builder.build();
     System.out.println(uri);
-    response = createGetConnect(uri);
+    response = TronlinkApiList.createGetConnect(requesturl,null);
     Assert.assertTrue(api.verificationResult(response));
     return response;
   }
