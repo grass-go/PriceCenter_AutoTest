@@ -48,7 +48,7 @@ public class Dapp_Search extends TronlinkBase {
 
   @Test(enabled = true)
   public void dapp_searchV3() throws Exception {
-    response = TronlinkApiList.dapp_V3search(quince_B58,"iOSTest");
+    response = TronlinkApiList.dapp_V3search(quince_B58,"iOSTest","http");
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     responseArrayContent = responseContent.getJSONArray("data");

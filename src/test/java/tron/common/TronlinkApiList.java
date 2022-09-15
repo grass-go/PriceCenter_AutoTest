@@ -1936,7 +1936,7 @@ public class TronlinkApiList {
             header.put("System","iOS");
         }
         header.put("Lang","1");
-        header.put("Version","v4.11.0");
+        header.put("Version","v4.9.0");
         header.put("DeviceID","fca5a022-5526-45f5-a7e7");
         header.put("chain","MainChain");
         header.put("channel","official");
@@ -2002,6 +2002,8 @@ public class TronlinkApiList {
         Map<String, String> headers = getNewSigHeader(testSys);
         params.put("signature", getNodeInfoParamsAndHeaders(curUri, "POST", address, testSys));
         params.put("address", address);
+        headers.put("env","prod");
+
 
         printHttpInfo(httppost, params, requestBody);
         String requestUrl = HttpNode + curUri;
@@ -2030,7 +2032,7 @@ public class TronlinkApiList {
         Map<String, String> headers = getNewSigHeader(testSys);
         params.put("signature", getNodeInfoParamsAndHeaders(curUri, "GET", address, testSys));
         params.put("address", address);
-        params.put("classify","7");
+        params.put("classify","0");
         log.info("httpget = " + httpget);
         log.info("params = " + params);
         String requestUrl = HttpNode + curUri;
@@ -2039,13 +2041,13 @@ public class TronlinkApiList {
         return response;
     }
 
-    public static HttpResponse dapp_V3search(String address, String testSys) throws Exception {
+    public static HttpResponse dapp_V3search(String address, String testSys, String searchword) throws Exception {
         String curUri = "/api/dapp/v3/search";
         Map<String, String> params = getNewSigParams(testSys);
         Map<String, String> headers = getNewSigHeader(testSys);
         params.put("signature", getNodeInfoParamsAndHeaders(curUri, "GET", address, testSys));
         params.put("address", address);
-        params.put("word","tron");
+        params.put("word",searchword);
         log.info("httpget = " + httpget);
         log.info("params = " + params);
         String requestUrl = HttpNode + curUri;
