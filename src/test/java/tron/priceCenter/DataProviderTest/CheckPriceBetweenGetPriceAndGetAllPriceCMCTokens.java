@@ -52,7 +52,8 @@ public class CheckPriceBetweenGetPriceAndGetAllPriceCMCTokens {
         return data;
     }
 
-    @Test(enabled = true, dataProvider = "ddt")
+    //Disable test because even the test passed, CMC has multi tokens for one symble.
+    @Test(enabled = false, dataProvider = "ddt")
     public void test001CheckPriceBetweenGetPriceAndGetAllPriceCMCTokens(String symbol,String address,String tolerance) throws URISyntaxException {
         log.info("test001CheckPriceBetweenGetPriceAndGetAllPrice:symbol:"+symbol+", address:"+address + ", tolerance:"+tolerance);
         //get getallprice response once for all the tokens.
