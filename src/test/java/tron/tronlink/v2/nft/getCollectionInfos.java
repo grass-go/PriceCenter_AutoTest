@@ -23,9 +23,6 @@ public class getCollectionInfos extends TronlinkBase {
 
   @BeforeMethod
   void setUp(){
-    params.put("nonce","12345");
-    params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","DHAGwUDUmZJdicLpgqmHw1%2FWTCQ%3D");
     params.put("address",addressNewAsset41);
 
     bodyObject.clear();

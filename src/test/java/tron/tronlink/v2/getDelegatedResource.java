@@ -39,9 +39,6 @@ public class getDelegatedResource extends TronlinkBase {
         String expResponse =new String(cbuf,0,len);
 
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","cKrcquwv8LujlfSwAkE05aR%2BLJg%3D");
         params.put("address",address721_B58);
         params.put("start", "0");
         params.put("limit", "10");
@@ -71,9 +68,6 @@ public class getDelegatedResource extends TronlinkBase {
         String expResponse =new String(cbuf,0,len);
 
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","5%2FtpZd7CkSw9faOns%2Fw%2B7fN4Fsc%3D");
         params.put("address",address721_Hex);
         params.put("start", "0");
         params.put("limit", "10");
@@ -102,9 +96,6 @@ public class getDelegatedResource extends TronlinkBase {
         String expResponse =new String(cbuf,0,len);
 
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","5%2FtpZd7CkSw9faOns%2Fw%2B7fN4Fsc%3D");
         params.put("address",address721_Hex);
         params.put("start", "0");
         params.put("limit", "10");
@@ -132,9 +123,6 @@ public class getDelegatedResource extends TronlinkBase {
         String expResponse =new String(cbuf,0,len);
 
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","cKrcquwv8LujlfSwAkE05aR%2BLJg%3D");
         params.put("address",address721_B58);
         params.put("start", "0");
         params.put("limit", "10");
@@ -163,9 +151,6 @@ public class getDelegatedResource extends TronlinkBase {
         String expResponse =new String(cbuf,0,len);
 
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","cKrcquwv8LujlfSwAkE05aR%2BLJg%3D");
         params.put("address",address721_B58);
         params.put("start", "0");
         params.put("limit", "10");
@@ -193,9 +178,6 @@ public class getDelegatedResource extends TronlinkBase {
         String expResponse =new String(cbuf,0,len);
 
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","5%2FtpZd7CkSw9faOns%2Fw%2B7fN4Fsc%3D");
         params.put("address",address721_Hex);
         params.put("start", "0");
         params.put("limit", "10");

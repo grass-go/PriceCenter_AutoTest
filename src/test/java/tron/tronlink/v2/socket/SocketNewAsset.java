@@ -13,13 +13,17 @@ import tron.tronlink.base.TronlinkBase;
 import java.net.URI;
 import java.util.Map;
 
-
+//To do modify signature
 @Slf4j
 public class SocketNewAsset {
   boolean flag = false;
-  @Test(enabled = true,description = "get new asset push message")
+  @Test(enabled = false,description = "get new asset push message")
   public void test00GetNewAssetPush() {
-    Map<String,String> header = TronlinkApiList.getV2Header();
+    //Map<String,String> header = TronlinkApiList.getV2Header();
+    Map<String, String> headers = TronlinkApiList.getNewSigHeader(TronlinkApiList.defaultSys, TronlinkApiList.defaultVersion, TronlinkApiList.defaultLang, TronlinkApiList.defaultPkg);
+    Map<String, String> params = TronlinkApiList.getNewSigParams(TronlinkApiList.defaultSys);
+    params.put("address", "416BDDAC6267A841836AEE7605F54AEE7677008E07");
+    String signature = TronlinkApiList.getNewSignature("/api/message", "POST", params.get("address"),params, headers);
     JSONObject data = new JSONObject();
     JSONObject addressInfo = new JSONObject();
     JSONObject addressInfo1 = new JSONObject();
@@ -44,10 +48,10 @@ public class SocketNewAsset {
 
     String host = TronlinkBase.tronlinkUrl.substring(8);
     try {
-      String url = "wss://" + host +"/api/message?nonce=12345&secretId=SFSUIOJBFMLKSJIF&signature=QvMckbIsFggRBSzkamjVyrCtoHk%3D&address=416BDDAC6267A841836AEE7605F54AEE7677008E07";
+      String url = "wss://" + host +"/api/message?nonce="+params.get("nonce")+"&secretId=" + params.get("secretId") + "&signature="+ signature +"%3D&address="+ params.get("address");
       System.out.println(url);
       URI uri = new URI(url);
-      WebSocketClient mWs = new WebSocketClient(uri,header){
+      WebSocketClient mWs = new WebSocketClient(uri,headers){
         @Override
         public void onOpen(ServerHandshake serverHandshake) {
           log.info("onOpen");

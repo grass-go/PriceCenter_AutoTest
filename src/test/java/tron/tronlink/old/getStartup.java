@@ -1,4 +1,4 @@
-package tron.tronlink.v2;
+package tron.tronlink.old;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -29,7 +29,7 @@ public class getStartup extends TronlinkBase {
     headers.put("System","Android");
     headers.put("Version","3.7.5");
 
-    response = TronlinkApiList.v2GetStartup(params,headers);
+    response = TronlinkApiList.v1GetStartup(params,headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
@@ -48,7 +48,7 @@ public class getStartup extends TronlinkBase {
 
     params.put("height","640.0");
     params.put("width","1136.0");
-    response = TronlinkApiList.v2GetStartup(params,headers);
+    response = TronlinkApiList.v1GetStartup(params,headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
@@ -61,7 +61,7 @@ public class getStartup extends TronlinkBase {
 
     params.put("height","750.0");
     params.put("width","1334.0");
-    response = TronlinkApiList.v2GetStartup(params,headers);
+    response = TronlinkApiList.v1GetStartup(params,headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
@@ -73,7 +73,7 @@ public class getStartup extends TronlinkBase {
 
     params.put("height","828.0");
     params.put("width","1792.0");
-    response = TronlinkApiList.v2GetStartup(params,headers);
+    response = TronlinkApiList.v1GetStartup(params,headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
@@ -85,7 +85,7 @@ public class getStartup extends TronlinkBase {
 
     params.put("height","1125.0");
     params.put("width","2436.0");
-    response = TronlinkApiList.v2GetStartup(params,headers);
+    response = TronlinkApiList.v1GetStartup(params,headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
@@ -97,7 +97,7 @@ public class getStartup extends TronlinkBase {
 
     params.put("height","1242.0");
     params.put("width","2208.0");
-    response = TronlinkApiList.v2GetStartup(params,headers);
+    response = TronlinkApiList.v1GetStartup(params,headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
@@ -109,7 +109,7 @@ public class getStartup extends TronlinkBase {
 
     params.put("height","1242.0");
     params.put("width","2688.0");
-    response = TronlinkApiList.v2GetStartup(params,headers);
+    response = TronlinkApiList.v1GetStartup(params,headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);

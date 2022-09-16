@@ -55,9 +55,7 @@ public class delAsset extends TronlinkBase {
     public void delAsset01() {
         //Prepare parameters and post body; Send delAsset request; Check response of delAsset.
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","DaAyekV3wg5qX%2B1eiWWut6ZPB9Y%3D");
+        params.put("address",testDELuser_B58);
         tokenDelList.clear();
         tokenDelList.add("1002000");
         tokenDelList.add("TKkeiboTkxXKJpbmVFbv4a8ov5rAfRDMf9");
@@ -99,9 +97,6 @@ public class delAsset extends TronlinkBase {
 
         //check allAssetList page
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","g0%2FGbl9FFU95hT6O8DYAN8nLBmc%3D");
         params.put("address",testDELuser_B58);
         response = TronlinkApiList.V2AllAssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -112,7 +107,6 @@ public class delAsset extends TronlinkBase {
         Assert.assertFalse(shortNameArray.contains("SUNOLD"));
 
         //check getAllCollection page
-        params.put("signature","rLqVnuTlZgzGd27HyQ%2FTSp3yMc8%3D");
         params.put("version","v2");
         response = TronlinkApiList.v2GetAllCollection(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -123,7 +117,6 @@ public class delAsset extends TronlinkBase {
 
         //check allCollections page
         params.remove("version");
-        params.put("signature","0SX%2Fzp3x7kE%2FGrfAyj3F9%2BBSrp8%3D");
         response = TronlinkApiList.v2AllCollections(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
@@ -133,7 +126,6 @@ public class delAsset extends TronlinkBase {
 
         //check account/list
         array.clear();
-        params.put("signature","%2F3I27r0%2FGwZ5Rm%2BkiF17Dpg%2FvOg%3D");
         String postStr="{\"TMSsn5sSP9u66dgzf2y63KaTmaLBPgJfj4\":1}";
         array.add(JSONObject.parse(postStr));
         response = TronlinkApiList.v2accountList(params,array);
@@ -158,12 +150,10 @@ public class delAsset extends TronlinkBase {
     }
 
     @Test(enabled = true, description = "add deleted coin to assetList, related api should see.")
-    public void delAsset02() {
+    public void delAsset02() throws Exception {
         //addAsset for these del coin.
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","jbcAnE2zojRRewzq84eS8skMaTM%3D");
+        params.put("address",testDELuser_B58);
         token10List.add("1002000");
         token20List.add("TKkeiboTkxXKJpbmVFbv4a8ov5rAfRDMf9");
         token721List.add("TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG");
@@ -176,7 +166,6 @@ public class delAsset extends TronlinkBase {
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 
         //Check assetList page.
-        params.put("signature","5BSZuynlSpo%2FJAn7zyAsU9d2Hpk%3D");
         params.put("version","v2");
         params.put("address",testDELuser_B58);
         response = TronlinkApiList.v2AssetList(params);
@@ -200,7 +189,6 @@ public class delAsset extends TronlinkBase {
 
         //check allAssetList page
         params.remove("version");
-        params.put("signature","g0%2FGbl9FFU95hT6O8DYAN8nLBmc%3D");
         response = TronlinkApiList.V2AllAssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
@@ -210,7 +198,6 @@ public class delAsset extends TronlinkBase {
         Assert.assertTrue(shortNameArray.contains("SUNOLD"));
 
         //check getAllCollection page
-        params.put("signature","rLqVnuTlZgzGd27HyQ%2FTSp3yMc8%3D");
         params.put("version","v2");
         response = TronlinkApiList.v2GetAllCollection(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -231,7 +218,6 @@ public class delAsset extends TronlinkBase {
 
         //check account/list
         array.clear();
-        params.put("signature","%2F3I27r0%2FGwZ5Rm%2BkiF17Dpg%2FvOg%3D");
         String postStr="{\"TMSsn5sSP9u66dgzf2y63KaTmaLBPgJfj4\":1}";
         array.add(JSONObject.parse(postStr));
         response = TronlinkApiList.v2accountList(params,array);
@@ -266,12 +252,10 @@ public class delAsset extends TronlinkBase {
     }
 
     @Test(enabled = true, description = "Del \"cancel focus\" coin, check all apis.")
-    public void delAsset03() {
+    public void delAsset03() throws Exception {
         //cancel focus
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","hgo5H0FFWsCGHyxNZ7JehNYShL0%3D");
+        params.put("address",testDELuser_B58);
         token10CancelList.add("1002000");
         token20CancelList.add("TKkeiboTkxXKJpbmVFbv4a8ov5rAfRDMf9");
         token721CancelList.add("TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG");
@@ -284,7 +268,6 @@ public class delAsset extends TronlinkBase {
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 
         //del prepared token.
-        params.put("signature","DaAyekV3wg5qX%2B1eiWWut6ZPB9Y%3D");
         tokenDelList.clear();
         tokenDelList.add("1002000");
         tokenDelList.add("TKkeiboTkxXKJpbmVFbv4a8ov5rAfRDMf9");
@@ -301,7 +284,6 @@ public class delAsset extends TronlinkBase {
         //Check assetList page.
         params.put("version","v2");
         params.put("address",testDELuser_B58);
-        params.put("signature","5BSZuynlSpo%2FJAn7zyAsU9d2Hpk%3D");
         response = TronlinkApiList.v2AssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
@@ -323,9 +305,6 @@ public class delAsset extends TronlinkBase {
 
         //check allAssetList page
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","g0%2FGbl9FFU95hT6O8DYAN8nLBmc%3D");
         params.put("address",testDELuser_B58);
         response = TronlinkApiList.V2AllAssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -336,7 +315,6 @@ public class delAsset extends TronlinkBase {
         Assert.assertFalse(shortNameArray.contains("SUNOLD"));
 
         //check getAllCollection page
-        params.put("signature","rLqVnuTlZgzGd27HyQ%2FTSp3yMc8%3D");
         params.put("version","v2");
         response = TronlinkApiList.v2GetAllCollection(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -347,7 +325,6 @@ public class delAsset extends TronlinkBase {
 
         //check allCollections page
         params.remove("version");
-        params.put("signature","0SX%2Fzp3x7kE%2FGrfAyj3F9%2BBSrp8%3D");
         response = TronlinkApiList.v2AllCollections(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseJsonObResponseContent(response);
@@ -357,7 +334,6 @@ public class delAsset extends TronlinkBase {
 
         //check account/list
         array.clear();
-        params.put("signature","%2F3I27r0%2FGwZ5Rm%2BkiF17Dpg%2FvOg%3D");
         String postStr="{\"TMSsn5sSP9u66dgzf2y63KaTmaLBPgJfj4\":1}";
         array.add(JSONObject.parse(postStr));
         response = TronlinkApiList.v2accountList(params,array);
@@ -384,7 +360,7 @@ public class delAsset extends TronlinkBase {
     private GetSign sig = new GetSign();
     getCollectionList g = new getCollectionList();
     @Test(description = "删除1155资产")
-    public void delAsset_1155(){
+    public void delAsset_1155() throws Exception {
         initParams();
         String delToken = g.expFollowAndHold;
         String user = address721_B58;

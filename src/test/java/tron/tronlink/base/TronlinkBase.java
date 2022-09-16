@@ -60,7 +60,7 @@ public class TronlinkBase {
             paramMap.containsKey("secretId") ? paramMap.get("secretId") : "SFSUIOJBFMLKSJIF",
             paramMap.containsKey("system") ? paramMap.get("system") : "AndroidTest",
             paramMap.containsKey("deviceId") ? paramMap.get("deviceId") : "1:1:1:1",
-            paramMap.containsKey("ts") ? paramMap.get("ts") : "1609302220000",
+            paramMap.containsKey("ts") ? paramMap.get("ts") : java.lang.String.valueOf(System.currentTimeMillis()),
             paramMap.containsKey("version") ? paramMap.get("version") : "v1.0.0",
             paramMap.get("url"),
             paramMap.containsKey("method") ? paramMap.get("method") : "GET"));

@@ -1,4 +1,4 @@
-package tron.tronlink.v2;
+package tron.tronlink.old;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -24,11 +24,7 @@ public class getNoticeRemind extends TronlinkBase {
 
   @Test(enabled = true)
   public void test01GetNoticeRemind(){
-    params.put("nonce","12345");
-    params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
-
-    response = TronlinkApiList.v2GetNoticeRemind(params);
+    response = TronlinkApiList.v1GetNoticeRemind();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
@@ -51,7 +47,7 @@ public class getNoticeRemind extends TronlinkBase {
         + "    \"dappName\":\"JustSwap\",\n"
         + "    \"dappUrl\":\"https://justswap.network\"\n"
         + "}";
-    response = TronlinkApiList.v2GetDappHistory((JSONObject) JSONObject.parse(dataRaw));
+    response = TronlinkApiList.v1GetDappHistory((JSONObject) JSONObject.parse(dataRaw));
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
@@ -63,7 +59,7 @@ public class getNoticeRemind extends TronlinkBase {
 
   @Test(enabled = true)
   public void test03GetAnnouncement(){
-    response = TronlinkApiList.v2GetAnnouncement();
+    response = TronlinkApiList.v1GetAnnouncement();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);

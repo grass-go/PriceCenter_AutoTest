@@ -24,9 +24,6 @@ public class nftSearch extends TronlinkBase {
     @Test(enabled = true)
     //wqq1 search by id
     public void test001NftSearchById() {
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","GDjOvEPZ9%2FJnQbchTFqM8wRP4Zk%3D");
         params.put("address","TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo");
         params.put("tokenAddress","TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG");
         String searchWord="1";
@@ -53,9 +50,6 @@ public class nftSearch extends TronlinkBase {
     @Test(enabled = true)
     // search by name
     public void test002NftSearchbyName() {
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","bLrn4pdltOv7puk2C%2FQAEHc4swQ%3D");
         params.put("address","TGzgVdQszcAHbEd9VELwifASLRdQY9kTcx");
         params.put("tokenAddress","TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG");
         String searchWord="hree";

@@ -24,9 +24,6 @@ public class getCollectionList  extends TronlinkBase {
 
     @Test
     public void getCollectionListTest001() {
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","AM0dWIWrOoQgR7FcmB2nQwucUZw%3D");
         params.put("address",address721_B58);
         params.put("tokenAddress",expFollowAndHold);
         params.put("pageIndex","0");

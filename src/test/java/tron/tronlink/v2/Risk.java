@@ -85,9 +85,12 @@ public class Risk extends TronlinkBase {
         final String url = "/api/wallet/v2/risk";
         final String method = "GET";
 
-        Map<String,String> params = GenerateParams(queryAddress58,token, url, method);
-        Map<String,String> headers = GenerateHeaders();
-        HttpResponse response = TronlinkApiList.v2GetRisk(params, null, headers, url);
+        //Map<String,String> params = GenerateParams(queryAddress58,token, url, method);
+        //Map<String,String> headers = GenerateHeaders();
+        Map<String,String> params =new HashMap<>();
+        params.put("address",queryAddress58);
+        params.put("tokenAddress", token);
+        HttpResponse response = TronlinkApiList.v2GetRisk(params);
         Assert.assertNotEquals(response, null);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), HttpStatus.SC_OK);
         String riskStr = TronlinkApiList.parseResponse2String(response);

@@ -32,11 +32,7 @@ public class getAllCollection extends TronlinkBase {
 
   @Test
   public void getAllCollectionTest001(){
-    params.put("nonce","12345");
-    params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","1A8%2FhWTN%2F8g7qKv7vqUdIYKVjJU%3D");
     params.put("address",addressNewAsset41);
-
     response = TronlinkApiList.v2GetAllCollection(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);

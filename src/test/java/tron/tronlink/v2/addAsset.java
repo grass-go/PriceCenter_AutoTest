@@ -45,14 +45,11 @@ public class addAsset extends TronlinkBase {
 
     // 关注资产，assetList接口可见，取消关注，assetList不可见
     @Test(enabled = true)
-    public void addAsset01() throws Exception {
+    public void addAsset01() throws InterruptedException {
         params.clear();
         trc10tokenList.clear();
         jsonObject.clear();
-        params.put("nonce", "12345");
-        params.put("secretId", "SFSUIOJBFMLKSJIF");
-        // params.put("signature","7%2B%2F36luYNVcnean87VL9AaY4O1o%3D");
-        params.put("signature", "6uXyipER57diwY4P3bbT6pDluYo%3D");
+        params.put("address",addressNewAsset41);
         trc10tokenList.add("1002000");
         // jsonObject.put("address","41F985738AE54FD87ED6CD07065905EBEA355E66CD");
         jsonObject.put("address", addressNewAsset41);
@@ -70,10 +67,6 @@ public class addAsset extends TronlinkBase {
         Thread.sleep(500);
 
         params.clear();
-        params.put("nonce", "12345");
-        params.put("secretId", "SFSUIOJBFMLKSJIF");
-        params.put("signature", "66f37xLdCz%2FV9geQGc%2FhYd98HR0%3D");
-        // params.put("signature","YJ825gN23aqvE8izShZp3cWwVQw%3D");
         params.put("address", addressNewAsset41);
         // params.put("address","41F985738AE54FD87ED6CD07065905EBEA355E66CD");
 
@@ -99,9 +92,7 @@ public class addAsset extends TronlinkBase {
         params.clear();
         trc10tokenList.clear();
         jsonObject.clear();
-        params.put("nonce", "12345");
-        params.put("secretId", "SFSUIOJBFMLKSJIF");
-        params.put("signature", "6uXyipER57diwY4P3bbT6pDluYo%3D");
+        params.put("address",addressNewAsset41);
         // params.put("signature","7%2B%2F36luYNVcnean87VL9AaY4O1o%3D");
         trc10tokenList.add("1002000");
         jsonObject.put("address", addressNewAsset41);
@@ -120,10 +111,6 @@ public class addAsset extends TronlinkBase {
         Thread.sleep(500);
 
         params.clear();
-        params.put("nonce", "12345");
-        params.put("secretId", "SFSUIOJBFMLKSJIF");
-        params.put("signature", "66f37xLdCz%2FV9geQGc%2FhYd98HR0%3D");
-        // params.put("signature","YJ825gN23aqvE8izShZp3cWwVQw%3D");
         params.put("address", addressNewAsset41);
         // params.put("address","41F985738AE54FD87ED6CD07065905EBEA355E66CD");
 
@@ -149,14 +136,12 @@ public class addAsset extends TronlinkBase {
 
     // 关注trc721资产，getAllCollections接口可见，取消关注，getAllCollections不可见
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void addAsset02() throws Exception {
         params.clear();
         trc721tokenList.clear();
         jsonObject.clear();
-        params.put("nonce", "12345");
-        params.put("secretId", "SFSUIOJBFMLKSJIF");
-        params.put("signature", "0MD5qghokR6tbCau0m%2BUfZzz45o%3D");
+        params.put("address",address721_Hex);
 
         trc721tokenList.add("TBeAjUWtvsJ1NCouwtk7eCVrPzCc2Kco99");// Pitaya (PITAYA)
         trc721tokenList.add("TPLVhGLc1BWHCHBMnBYakNsqhXQ7v5xp2h");// TAHIGO KOHINAGI (TAHIGO)
@@ -173,9 +158,6 @@ public class addAsset extends TronlinkBase {
         Thread.sleep(500);
 
         params.clear();
-        params.put("nonce", "12345");
-        params.put("secretId", "SFSUIOJBFMLKSJIF");
-        params.put("signature", "15sBsg%2B0R9FOdxGVrZr9K6XVpXI%3D");
         params.put("address", address721_B58);
         params.put("version", "v2");
         response = TronlinkApiList.v2GetAllCollection(params);
@@ -213,10 +195,7 @@ public class addAsset extends TronlinkBase {
         params.clear();
         trc721tokenList.clear();
         jsonObject.clear();
-        params.put("nonce", "12345");
-        params.put("secretId", "SFSUIOJBFMLKSJIF");
-        params.put("signature", "0MD5qghokR6tbCau0m%2BUfZzz45o%3D");
-
+        params.put("address",address721_Hex);
         trc721tokenList.add("TBeAjUWtvsJ1NCouwtk7eCVrPzCc2Kco99");// Pitaya (PITAYA)
         trc721tokenList.add("TPLVhGLc1BWHCHBMnBYakNsqhXQ7v5xp2h");// TAHIGO KOHINAGI (TAHIGO)
 
@@ -233,9 +212,6 @@ public class addAsset extends TronlinkBase {
         Thread.sleep(500);
 
         params.clear();
-        params.put("nonce", "12345");
-        params.put("secretId", "SFSUIOJBFMLKSJIF");
-        params.put("signature", "15sBsg%2B0R9FOdxGVrZr9K6XVpXI%3D");
         params.put("address", address721_B58);
         params.put("version", "v2");
 
@@ -262,7 +238,7 @@ public class addAsset extends TronlinkBase {
     // 关注资产、取消关注
     // follow: true 表示关注目标token
     // unfollow: true 表示取消关注目标token
-    public boolean addAssetByTokenType(int type, boolean follow, String address41, String token) {
+    public boolean addAssetByTokenType(int type, boolean follow, String address41, String token) throws Exception {
         JSONObject jsonObject = new JSONObject();
         Map<String, String> params;
         params = sig.GenerateParams(AddressConvert.toHex(address41), Constants.addAssetUrl, "POST");
@@ -305,13 +281,11 @@ public class addAsset extends TronlinkBase {
 
     // 取消关注用例中关注的trc10
     @AfterClass(enabled = true)
-    public void after() {
+    public void after() throws Exception {
         params.clear();
         trc10tokenList.clear();
         jsonObject.clear();
-        params.put("nonce", "12345");
-        params.put("secretId", "SFSUIOJBFMLKSJIF");
-        params.put("signature", "6uXyipER57diwY4P3bbT6pDluYo%3D");
+        params.put("address",addressNewAsset41);
         // params.put("signature","7%2B%2F36luYNVcnean87VL9AaY4O1o%3D");
         trc10tokenList.add("1002000");
         jsonObject.put("address", addressNewAsset41);
@@ -329,8 +303,8 @@ public class addAsset extends TronlinkBase {
     }
     getCollectionList g = new getCollectionList();
 
-    @Test(enabled = true, description = "1155 关注资产，覆盖了取消和关注1155的全部逻辑")
-    public void test001_1155_addAsset() {
+    @Test(enabled = false, description = "1155 关注资产，覆盖了取消和关注1155的全部逻辑")
+    public void test001_1155_addAsset() throws Exception {
         String followToken = g.expFollowAndNoHold;
         String user = address721_B58;
         // 先取消关注一个1155币

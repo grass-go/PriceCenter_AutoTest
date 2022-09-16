@@ -23,9 +23,6 @@ public class unfollowCollections extends TronlinkBase{
 
     @Test(enabled = true)
     public void unfollowCollections01(){
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","YzJifnURxQw%2F0BcoYANZcdLk8TE%3D");
         params.put("address",address721_B58);
         response = TronlinkApiList.V2UnfollowCollections(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);

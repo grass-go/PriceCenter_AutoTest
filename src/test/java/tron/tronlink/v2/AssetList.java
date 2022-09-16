@@ -45,10 +45,6 @@ public class AssetList extends TronlinkBase {
     int len =input.read(cbuf);
     String expResponse =new String(cbuf,0,len);
 
-
-    params.put("nonce","12345");
-    params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","hq%2B20AfhKD7w%2Fzdi%2FJyUATsiVAM%3D");
     params.put("address",new1_B58);
     params.put("version","v1");
 
@@ -74,9 +70,6 @@ public class AssetList extends TronlinkBase {
     int len =input.read(cbuf);
     String expResponse =new String(cbuf,0,len);
 
-    params.put("nonce","12345");
-    params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","hq%2B20AfhKD7w%2Fzdi%2FJyUATsiVAM%3D");
     params.put("address",new1_B58);
     params.put("version","v2");
 
@@ -103,9 +96,6 @@ public class AssetList extends TronlinkBase {
   public void assetList03() {
 
     params.clear();
-    params.put("nonce", "12345");
-    params.put("secretId", "SFSUIOJBFMLKSJIF");
-    params.put("signature", "ySXhRglTOPIhQ%2B%2BQRbSfVcICPlg%3D");
     params.put("address", quince_B58);
     params.put("version", "v2");
     response = TronlinkApiList.v2AssetList(params);
@@ -150,9 +140,6 @@ public class AssetList extends TronlinkBase {
     trc10tokenList.clear();
     trc20tokenList.clear();
 
-    params.put("nonce","12345");
-    params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","j5nv8itgAnRloCHhkaxI4bFOdSs%3D");
     params.put("address",addressNewAsset41);
 
     trc10tokenList.add("1002000");

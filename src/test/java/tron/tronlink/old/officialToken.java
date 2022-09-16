@@ -1,9 +1,7 @@
-package tron.tronlink.v2;
+package tron.tronlink.old;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import java.util.HashMap;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
@@ -11,31 +9,33 @@ import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.tronlink.base.TronlinkBase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
-public class getNodes extends TronlinkBase {
+public class officialToken extends TronlinkBase {
   private JSONObject responseContent;
   private JSONObject dataContent;
   private HttpResponse response;
 
   private JSONArray array = new JSONArray();
   Map<String, String> params = new HashMap<>();
-  Map<String, String> headers = new HashMap<>();
+  HashMap<String, String> headers = new HashMap<>();
 
   @Test(enabled = true)
-  public void test01GetNodes(){
+  public void testOfficialToken(){
 
-    response = TronlinkApiList.v2GetNodes(null);
+    response = TronlinkApiList.officialToken(null);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
-    Assert.assertEquals(responseContent.getString("msg"),"success");
-    JSONObject nodeInfo = responseContent.getJSONObject("data");
-    Assert.assertTrue(nodeInfo.getJSONArray("fullnode").size() >= 3);
-    Assert.assertTrue(nodeInfo.getJSONArray("solidity_node").size() >= 3);
-    Assert.assertFalse(responseContent.containsKey("upgrade"));
-    Assert.assertFalse(responseContent.containsKey("force"));
-
+    Assert.assertEquals(responseContent.getString("message"),"OK");
+    //JSONObject screenInfo = responseContent.getJSONArray("data").getJSONObject(0);
+    Assert.assertTrue(responseContent.getJSONArray("data").contains("_"));
+    Assert.assertTrue(responseContent.getJSONArray("data").contains("1002000"));
+    Assert.assertTrue(responseContent.getJSONArray("data").contains("TB95FFYRJMLY6mWZqv4JUMqAqsHF4JCXga"));
+    Assert.assertTrue(5<responseContent.getJSONArray("data").size() );
   }
 
 

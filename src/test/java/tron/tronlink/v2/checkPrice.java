@@ -31,9 +31,6 @@ public class checkPrice extends TronlinkBase {
 
     @BeforeClass(enabled = true,description = "get user's assetlist before test")
     public void assetList_request() {
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","l8zYMIE%2Feav7sTCetMLAcgZqV00%3D");
         params.put("address",price_B58);
         params.put("version","v2");
 

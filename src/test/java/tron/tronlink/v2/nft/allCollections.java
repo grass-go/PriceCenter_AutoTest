@@ -45,9 +45,6 @@ public class allCollections extends TronlinkBase {
 
 
     params.clear();
-    params.put("nonce","12345");
-    params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","Fe2iJhHiitdRlqufajemkuvf2CA%3D");
     params.put("address",address721_Hex);
 
     response = TronlinkApiList.v2AllCollections(params);

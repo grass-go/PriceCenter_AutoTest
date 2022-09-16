@@ -24,15 +24,6 @@ public class getCollectionInfo extends TronlinkBase {
   @Test(enabled = true,retryAnalyzer = RetryListener.class)
   @Parameters({"trc721OwnerAddress","trc721TokenAddress","trc721AssetId"})
   public void getCollectionInfoTest001(String trc721OwnerAddress,String trc721TokenAddress,String trc721AssetId) throws Exception {
-    HashMap<String, String> signatureMap = new HashMap<>();
-    signatureMap.put("address", trc721OwnerAddress);
-    signatureMap.put("url", "/api/wallet/nft/getCollectionInfo");
-    String signature = getSign(signatureMap);
-
-
-    params.put("nonce", nonce);
-    params.put("secretId", secretId);
-    params.put("signature", signature);
     params.put("address", trc721OwnerAddress);
     params.put("tokenAddress", trc721TokenAddress);
     params.put("assetId", trc721AssetId);

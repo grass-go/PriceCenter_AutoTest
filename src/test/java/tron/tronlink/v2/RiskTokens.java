@@ -39,12 +39,11 @@ public class RiskTokens extends TronlinkBase {
     }
 
     public HttpResponse GetAllRiskTokensRsp(){
-        final String url = "/api/wallet/v2/risktokens";
-        Map<String,String> params = GenerateParams(queryAddress58, url, "POST");
-        Map<String,String> headers = GenerateHeaders();
+        Map<String,String> params = new HashMap<>();
+        params.put("address",queryAddress58);
         JSONObject body = new JSONObject();
         body.put(Keys.Address, queryAddress58);
-        HttpResponse response = TronlinkApiList.v2PostRiskTokens(params, body, headers, url);
+        HttpResponse response = TronlinkApiList.v2RiskTokens(params,body);
         Assert.assertNotEquals(response, null);
         return response;
     }

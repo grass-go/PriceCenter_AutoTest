@@ -38,9 +38,6 @@ public class SearchAsset extends TronlinkBase {
   @Test(enabled = true)
   public void searchAssetList01(){
     params.clear();
-    params.put("nonce","12345");
-    params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
     params.put("address",addressNewAsset41);
     params.put("keyWord","TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");
     params.put("page","1");
@@ -73,9 +70,6 @@ public class SearchAsset extends TronlinkBase {
       expTokens.put("1000784", new Token("BabyLeprechaun","BLEP", 1, -1, 1));
     }
     params.clear();
-    params.put("nonce","12345");
-    params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
     params.put("address",addressNewAsset41);
     params.put("keyWord","Baby");
     params.put("page","1");
@@ -169,9 +163,6 @@ public class SearchAsset extends TronlinkBase {
     //blackTokens.put("1004092", new Token("NAPCoin", "NAP", 1, -5, 1));
 
     params.clear();
-    params.put("nonce","12345");
-    params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
     params.put("address",addressNewAsset41);
     params.put("page","1");
     params.put("count","10");

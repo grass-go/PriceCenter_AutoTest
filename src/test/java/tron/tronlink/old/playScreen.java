@@ -1,4 +1,4 @@
-package tron.tronlink.v2;
+package tron.tronlink.old;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -24,7 +24,7 @@ public class playScreen extends TronlinkBase {
   @Test(enabled = true)
   public void test01PlayScreenInfo(){
 
-    response = TronlinkApiList.v2PlayScreenInfo(null);
+    response = TronlinkApiList.v1PlayScreenInfo(null);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
@@ -47,7 +47,7 @@ public class playScreen extends TronlinkBase {
     headers.put("packageName","com.tronlinkpro.wallet" );
 
     Integer playId = 11;
-    response = TronlinkApiList.v2PlayScreenDeal(String.valueOf(playId),headers);
+    response = TronlinkApiList.v1PlayScreenDeal(String.valueOf(playId),headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);

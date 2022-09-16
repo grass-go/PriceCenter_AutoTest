@@ -39,7 +39,7 @@ public class Upgrade extends TronlinkBase {
     params.put("channel","official");
     params.put("packageName", "com.tronlinkpro.wallet");
     params.put("chain","MainChain");
-    response = TronlinkApiList.v2Upgrade(params);
+    response = TronlinkApiList.v1UpgradeV2(params);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     JSONObject upgradeObject = responseContent.getJSONObject("data");
     TronlinkApiList.printJsonContent(responseContent.getJSONObject("data"));
@@ -85,7 +85,7 @@ public class Upgrade extends TronlinkBase {
     params.put("channel","official");
     params.put("packageName", "com.tronlinkpro.wallet");
     params.put("chain","MainChain");
-    response = TronlinkApiList.v2Upgrade(params);
+    response = TronlinkApiList.v1UpgradeV2(params);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     JSONObject upgradeObject = responseContent.getJSONObject("data");
     TronlinkApiList.printJsonContent(responseContent.getJSONObject("data"));
@@ -126,7 +126,7 @@ public class Upgrade extends TronlinkBase {
     params.put("Lang","1");
     params.put("packageName", "wallet.tronlink.harmony");
     params.put("chain","MainChain");
-    response = TronlinkApiList.v2Upgrade(params);
+    response = TronlinkApiList.v1UpgradeV2(params);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     JSONObject upgradeObject = responseContent.getJSONObject("data");
     TronlinkApiList.printJsonContent(responseContent.getJSONObject("data"));

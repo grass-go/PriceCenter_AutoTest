@@ -22,11 +22,7 @@ public class transferTrc721 extends TronlinkBase {
 
     @Test(enabled = true,description = "check /api/transfer/trc721 api")
     public void Test000TransferTrc721() throws Exception {
-        param.put("nonce","12345"); //sophia's address
-        param.put("secretId","SFSUIOJBFMLKSJIF");
-        param.put("signature","5yOIf4LW8d6jBoADfmd%2Fbz4mj1Y%3D");
         param.put("address",quince_B58); //sophia's address
-
         param.put("trc20Id","TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG");
         param.put("limit","20");
         param.put("start","0");

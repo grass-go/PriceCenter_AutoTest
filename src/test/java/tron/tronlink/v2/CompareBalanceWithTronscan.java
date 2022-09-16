@@ -29,9 +29,6 @@ public class CompareBalanceWithTronscan extends TronlinkBase {
     @Test(enabled = true)
     public void CompareBalanceWithTronscan001(){
         //Access to tronlink-server allasset api
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","38ljR2%2BTk8YRkub7SJ58qiOolgE%3D");
         params.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
         response = TronlinkApiList.V2AllAssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);

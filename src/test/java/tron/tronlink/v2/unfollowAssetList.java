@@ -32,7 +32,7 @@ public class unfollowAssetList extends TronlinkBase {
     private GetSign sig = new GetSign();
 
     @Test(enabled = true, description = "有余额有价值的币，取消关注,可以查到")
-    public void unfollowAssetList01() {
+    public void unfollowAssetList01() throws Exception {
         // bttold 有余额的一个官方币
         String followToken = "1002000";
         // 先关注一个10币
@@ -52,7 +52,7 @@ public class unfollowAssetList extends TronlinkBase {
     }
 
     @Test(enabled = true, description = "有余额有价值的币，关注,无法查到")
-    public void unfollowAssetList02() {
+    public void unfollowAssetList02() throws Exception {
         String followToken = "1002000";
         // 先关注一个10币
         boolean follow = addAsset.addAssetByTokenType(10, true, unfollowAsset41, followToken);
@@ -106,7 +106,7 @@ public class unfollowAssetList extends TronlinkBase {
     }
 
     @Test(enabled = true, description = "验证余额balance=0的普通币，取消关注，不在unfollow接口")
-    public void unfollowAssetList03() {
+    public void unfollowAssetList03() throws Exception {
         // 无余额的一个 doge coin
         String followToken = "THbVQp8kMjStKNnf2iCY6NEzThKMK5aBHg";
         // 关注
@@ -127,7 +127,7 @@ public class unfollowAssetList extends TronlinkBase {
     }
 
     @Test(enabled = true, description = "验证余额balance=0的普通币，加关注，也不在unfollow接口")
-    public void unfollowAssetList03_1() {
+    public void unfollowAssetList03_1() throws Exception {
         // 无余额的一个官方币 eth
         String followToken = "THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF";
         // 先关注一个币
@@ -147,7 +147,7 @@ public class unfollowAssetList extends TronlinkBase {
     }
 
     @Test(enabled = true, description = "系统推荐币（线上：USDT）没有余额,balance=0， 取消关注，在unfollow接口。")
-    public void unfollowAssetList04() {
+    public void unfollowAssetList04() throws Exception {
         // 无余额的一个推荐币 usdt
         String followToken = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
         // 先关注
@@ -171,7 +171,7 @@ public class unfollowAssetList extends TronlinkBase {
     }
 
     @Test(enabled = true, description = "系统推荐币（线上：USDT）没有余额balance=0， 关注，不在unfollow接口。")
-    public void unfollowAssetList04_1() {
+    public void unfollowAssetList04_1() throws Exception {
         // 无余额的一个推荐币
         String followToken = "THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF";
         // 先关注一个币
@@ -253,7 +253,7 @@ public class unfollowAssetList extends TronlinkBase {
     }
 
     @AfterClass(enabled = true)
-    public void restore() {
+    public void restore() throws Exception {
         // usdt
         String followToken = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
         boolean follow = addAsset.addAssetByTokenType(20, true, unfollowAsset41, followToken);

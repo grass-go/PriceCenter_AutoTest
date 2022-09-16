@@ -24,9 +24,6 @@ public class Asset extends TronlinkBase {
 
   @Test(enabled = true)
   public void asset01(){
-   params.put("nonce","12345");
-    params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","Cp5xpJoj75bJm3j6FlwBLqIQXnU%3D");
     params.put("address",addressNewAsset41);
     params.put("tokenAddress","TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");
     params.put("tokenType","2");

@@ -1,4 +1,4 @@
-package tron.tronlink.v2;
+package tron.tronlink.old;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -28,11 +28,10 @@ public class updateUserCreateBNum extends TronlinkBase {
     params.put("userhash","aaaa");
     params.put("number",String.valueOf(updateBlockNum));
     params.put("access","access");
-
     headers.put("DownloadPlatform","list.tronlink.org");
     headers.put("Version","4.0.2");
 
-    response = TronlinkApiList.v2UpdateUserCreateBNum(String.valueOf(updateBlockNum),"aaaa",headers);
+    response = TronlinkApiList.v1UpdateUserCreateBNum(String.valueOf(updateBlockNum),"aaaa",headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
@@ -47,7 +46,7 @@ public class updateUserCreateBNum extends TronlinkBase {
 
     headers.put("DownloadPlatform","list.tronlink.org");
     headers.put("Version","4.0.2");
-    response = TronlinkApiList.v2UserCreateBlockNum(params,headers);
+    response = TronlinkApiList.v1UserCreateBlockNum(params,headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);

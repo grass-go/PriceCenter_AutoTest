@@ -36,9 +36,6 @@ public class getAllCollection extends TronlinkBase {
 
     @Test(enabled = true, description = "only check contain all fields keys")
     public void getAllCollectionTest001(){
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","b50AtTGnmn3K3NLFmvS0ZsQ5dW8%3D");
         params.put("address",address721_Hex);
 
         response = TronlinkApiList.v2GetAllCollection_1155(params);
@@ -85,9 +82,6 @@ public class getAllCollection extends TronlinkBase {
     public void getAllCollectionTest002(){
         // read actual json
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","POkVyvpW19hmaf4kovjO%2B3cJ2Nk%3D");
         params.put("address",address721_B58);
         params.put("version","v2");
         response = TronlinkApiList.v2GetAllCollection_1155(params);

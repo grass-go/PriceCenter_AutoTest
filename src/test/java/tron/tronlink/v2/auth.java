@@ -24,9 +24,6 @@ public class auth extends TronlinkBase{
     @Test(enabled = true)
     //quince user's multi Auth who only has self permission.
     public void test001Auth() {
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","1i5sfl%2FPH3KURhgMTaDI%2FuO8y70%3D");
         params.put("address",quince_B58);
         response = TronlinkApiList.v2Auth(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -55,9 +52,6 @@ public class auth extends TronlinkBase{
     //wqq1 users multiAuth which have other accounts permission.
     @Test(enabled = true)
     public void test002Auth() {
-        params.put("nonce", "12345");
-        params.put("secretId", "SFSUIOJBFMLKSJIF");
-        params.put("signature", "z1pbfWmx2xd0BCu8jXUj14AmvsA%3D");
         params.put("address", "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo");
         response = TronlinkApiList.v2Auth(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);

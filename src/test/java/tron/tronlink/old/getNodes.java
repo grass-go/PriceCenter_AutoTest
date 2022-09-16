@@ -1,6 +1,5 @@
-package tron.tronlink.v2;
+package tron.tronlink.old;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import java.util.HashMap;
@@ -13,7 +12,7 @@ import tron.common.TronlinkApiList;
 import tron.tronlink.base.TronlinkBase;
 
 @Slf4j
-public class blacklist extends TronlinkBase {
+public class getNodes extends TronlinkBase {
   private JSONObject responseContent;
   private JSONObject dataContent;
   private HttpResponse response;
@@ -25,15 +24,18 @@ public class blacklist extends TronlinkBase {
   @Test(enabled = true)
   public void test01GetNodes(){
 
-    response = TronlinkApiList.v2GetBlacklist(null);
+    response = TronlinkApiList.v1GetNodes(null);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseJsonObResponseContent(response);
     TronlinkApiList.printJsonContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
-    Assert.assertEquals(responseContent.getString("message"),"OK");
-    JSONArray blacklistInfo = responseContent.getJSONArray("data");
+    Assert.assertEquals(responseContent.getString("msg"),"success");
+    JSONObject nodeInfo = responseContent.getJSONObject("data");
+    Assert.assertTrue(nodeInfo.getJSONArray("fullnode").size() >= 3);
+    Assert.assertTrue(nodeInfo.getJSONArray("solidity_node").size() >= 3);
+    Assert.assertFalse(responseContent.containsKey("upgrade"));
+    Assert.assertFalse(responseContent.containsKey("force"));
 
-    Assert.assertTrue(blacklistInfo.size() >= 1);
   }
 
 

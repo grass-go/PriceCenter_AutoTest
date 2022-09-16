@@ -26,9 +26,6 @@ public class white extends TronlinkBase {
     public void test01CheckInWhite() throws Exception {
 
         param.put("contract_address","TXXD6jwUYdPRcMA3CP6gCWPQPY7LwrD5mZ");
-        param.put("nonce","12345");
-        param.put("secretId","SFSUIOJBFMLKSJIF");
-        param.put("signature","DgRWiagEjwyFqgYOV7Smcqe%2FtsU%3D");
         param.put("address",quince_B58);
 
         response = TronlinkApiList.v2CheckWhite(param);

@@ -30,9 +30,6 @@ public class TronlinkDefineToken extends TronlinkBase {
     public void Case001SearchBeforeAdd(){
         //sync,like delete self token
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","41T0WANF78fg4SioWeg%2Bl%2FVjzDs%3D");
         params.put("address",addressNewAsset41);
 
         jsonObject.clear();
@@ -45,9 +42,6 @@ public class TronlinkDefineToken extends TronlinkBase {
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         //begin to test search
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
         params.put("address",addressNewAsset41);
         params.put("keyWord",deployedContract);
         params.put("page","1");
@@ -66,9 +60,6 @@ public class TronlinkDefineToken extends TronlinkBase {
     public void Case002QueryBeforeAdd(){
         //sync at first
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","41T0WANF78fg4SioWeg%2Bl%2FVjzDs%3D");
         params.put("address",addressNewAsset41);
 
         jsonObject.clear();
@@ -81,9 +72,6 @@ public class TronlinkDefineToken extends TronlinkBase {
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         //begin to query
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","3asGeVuGYWLVDh4ZqC15HDBezdE%3D");
         params.put("address",addressNewAsset41);
 
         jsonObject.clear();
@@ -115,9 +103,6 @@ public class TronlinkDefineToken extends TronlinkBase {
     public void Case003Add(){
         //sync
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","41T0WANF78fg4SioWeg%2Bl%2FVjzDs%3D");
         params.put("address",addressNewAsset41);
 
         jsonObject.clear();
@@ -131,9 +116,6 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         //add
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","qcNpxfoLG0DYJ6U3D%2Bm%2BkRIxX5I%3D");
         params.put("address",addressNewAsset41);
 
         jsonObject.clear();
@@ -157,9 +139,6 @@ public class TronlinkDefineToken extends TronlinkBase {
         //first add, no matter add before or not.
         //add
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","qcNpxfoLG0DYJ6U3D%2Bm%2BkRIxX5I%3D");
         params.put("address",addressNewAsset41);
 
         jsonObject.clear();
@@ -177,9 +156,6 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         //Query
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","3asGeVuGYWLVDh4ZqC15HDBezdE%3D");
         params.put("address",addressNewAsset41);
 
         jsonObject.clear();
@@ -212,9 +188,6 @@ public class TronlinkDefineToken extends TronlinkBase {
     public void Case005SearchAfterAdd(){
         //query contract address can get result.
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
         params.put("address",addressNewAsset41);
         params.put("keyWord",deployedContract);
         params.put("page","1");
@@ -242,9 +215,6 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         //query by name can't get result.
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
         params.put("address",addressNewAsset41);
         params.put("keyWord","TronlinkServerToken");
         params.put("page","1");
@@ -260,9 +230,6 @@ public class TronlinkDefineToken extends TronlinkBase {
     @Test(enabled = false)
     public void Case006assetListAfterAdd(){
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","66f37xLdCz%2FV9geQGc%2FhYd98HR0%3D");
         params.put("address",addressNewAsset41);
         params.put("version","v2");
 
@@ -282,9 +249,6 @@ public class TronlinkDefineToken extends TronlinkBase {
     @Test(enabled = false)
     public void Case007allAssetAfterAdd(){
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","3ePuP28sQRThx9WrDajgcec4NlI%3D");
         params.put("address",addressNewAsset41);
 
         response = TronlinkApiList.V2AllAssetList(params);
@@ -312,9 +276,6 @@ public class TronlinkDefineToken extends TronlinkBase {
         jsonObject.put("tokenDel",tokenDelList);
 
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","BPcALRv81IyL2L23lyQkFYUWvZg%3D");
         params.put("address",addressNewAsset41);
 
         response = TronlinkApiList.v2DelAsset(params,jsonObject);
@@ -325,9 +286,6 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         //query assetlist page
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","66f37xLdCz%2FV9geQGc%2FhYd98HR0%3D");
         params.put("address",addressNewAsset41);
         params.put("version","v2");
 
@@ -339,9 +297,6 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         //query AllAssetList
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","3ePuP28sQRThx9WrDajgcec4NlI%3D");
         params.put("address",addressNewAsset41);
 
         response = TronlinkApiList.V2AllAssetList(params);

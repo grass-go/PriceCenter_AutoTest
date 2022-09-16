@@ -34,9 +34,6 @@ public class NewAssetList extends TronlinkBase {
   @Test(enabled = false)
   public void newAssetList01(){
     params.clear();
-    params.put("nonce","12345");
-    params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","0YrPyUSLIbE%2FxRE76n63OZXp2D4%3D");
     params.put("address",addressNewAsset41);
 
     response = TronlinkApiList.v2NewAssetList(params);
@@ -71,9 +68,6 @@ public class NewAssetList extends TronlinkBase {
     int len =input.read(cbuf);
     String expResponse =new String(cbuf,0,len);
 
-    params.put("nonce","12345");
-    params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","vamHDpsmhAJiiuRqNdLNqupKWUI%3D");
     params.put("address",address721_B58);
 
     response = TronlinkApiList.v2NewAssetList(params);
@@ -112,9 +106,6 @@ public class NewAssetList extends TronlinkBase {
   }
   @Test(enabled = false, description = "check 1155 can be in new Asset API")
   public void newAssetList03_1155(){
-    params.put("nonce","12345");
-    params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","vamHDpsmhAJiiuRqNdLNqupKWUI%3D");
     params.put("address",address721_B58);
 
     response = TronlinkApiList.v2NewAssetList(params);
