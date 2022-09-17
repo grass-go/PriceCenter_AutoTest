@@ -1174,7 +1174,7 @@ public class TronlinkApiList {
 
     public static HttpResponse v1GetNodes(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/v1/wallet/nodes";
-        response = createGetConnect(requestUrl, null);
+        response = createConnect(requestUrl, null);
         return response;
     }
 
