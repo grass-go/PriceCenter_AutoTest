@@ -17,7 +17,7 @@
         <packages>
             <package name="tron.tronlink.*">
                 <exclude name="tron.tronlink.v2.socket"/>
-                <exclude name="tron.tronlink.dapp.Dapp_plug"></exclude>
+                <exclude name="tron.tronlink.sgpExclude"/>
             </package>
         </packages>
     </test>
