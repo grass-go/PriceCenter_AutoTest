@@ -86,10 +86,10 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
     public static String defaultSys = "AndroidTest";
     public static String defaultLang = "1";
     public static String defaultPkg = "com.tronlinkpro.wallet";
-    public static String defaultVersion = "1.0.0";
+    public static String defaultVersion = "4.10.0";
     //设置的老接口从本版本开始鉴权。对于chrome，从4.0.0开始,对于安卓从4.10.0开始
-    String chromeUpdateVersion = "4.0.0";
-    String androidUpdateVersion = "4.10.0";
+    public static String chromeUpdateVersion = "4.0.0";
+    public static String androidUpdateVersion = "4.11.0";
 
 
 
@@ -332,9 +332,15 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse votingV2Witness(Map<String, String> params) throws Exception {
+    public static HttpResponse votingWitnessNoSig(Map<String, String> params, Map<String, String> header) {
         String requestUrl = HttpNode + "/api/voting/v2/witness";
-        response = createGetConnect(requestUrl, params,null,null);
+        response = createGetConnect(requestUrl, params,null,header);
+        return response;
+    }
+
+    public static HttpResponse votingWitness(Map<String, String> params) {
+        String curUri = "/api/voting/v2/witness";
+        response = createGetConnectWithSignature(curUri, params, null);
         return response;
     }
 
@@ -371,15 +377,26 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return true;
     }
 
-    public static HttpResponse votingV2Search(Map<String, String> params) throws Exception {
+    public static HttpResponse votingV2SearchNoSig(Map<String, String> params,Map<String, String> header) {
         String requestUrl = HttpNode + "/api/voting/v2/search";
-        response = createGetConnect(requestUrl, params,null,null);
+        response = createGetConnect(requestUrl, params,null,header);
         return response;
     }
 
-    public static HttpResponse votingV2Self(Map<String, String> params) throws Exception {
+    public static HttpResponse votingV2Search(Map<String, String> params) throws Exception {
+        String curUri = "/api/voting/v2/search";
+        response = createGetConnectWithSignature(curUri, params,null);
+        return response;
+    }
+
+    public static HttpResponse votingV2SelfNoSig(Map<String, String> params,Map<String, String> header) {
         String requestUrl = HttpNode + "/api/voting/v2/self";
-        response = createGetConnect(requestUrl, params, null, null);
+        response = createGetConnect(requestUrl, params, null, header);
+        return response;
+    }
+    public static HttpResponse votingV2Self(Map<String, String> params) {
+        String curUri = "/api/voting/v2/self";
+        response = createGetConnectWithSignature(curUri, params, null);
         return response;
     }
 

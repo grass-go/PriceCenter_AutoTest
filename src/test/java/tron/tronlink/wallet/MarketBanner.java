@@ -19,11 +19,15 @@ public class MarketBanner {
   private HttpResponse response;
   private HashMap<String,String> param = new HashMap<>();
 
+
+
+
+
   @Test(enabled = true)
   public void Test000getMarketBanner() throws Exception {
     Map<String, String> params = new HashMap<>();
     params.put("sort_type","1");
-    HttpResponse rs = TronlinkApiList.votingV2Witness(params);
+    HttpResponse rs = TronlinkApiList.votingWitness(params);
     Assert.assertEquals(rs.getStatusLine().getStatusCode(), 200);
     JSONObject rc = TronlinkApiList.parseResponse2JsonObject(rs);
 
@@ -39,16 +43,6 @@ public class MarketBanner {
     double origin = Double.valueOf(ai);
     int value = Integer.valueOf(annualizedIncome.charAt(index));
     System.out.println("value: " + value+"    origin: "+ origin + "   annualizedIncome: "+ annualizedIncome);
-//    if(value>=53){
-//      BigDecimal b1=new BigDecimal(Double.toString(origin));
-//      BigDecimal b2=new BigDecimal("0.01");
-//      origin = b1.add(b2).doubleValue();
-//      System.out.println("origin + 0.01");
-//      System.out.println("after origin + 0.01: "+origin);
-//
-//    }
-//
-//    Thread.sleep(3000);
 
     response = TronlinkApiList.walletMarketBanner();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -68,8 +62,6 @@ public class MarketBanner {
       Assert.assertTrue(jsonObject.containsKey("introduction"));
       Assert.assertTrue(jsonObject.containsKey("yield"));
       Assert.assertTrue(jsonObject.containsKey("lang"));
-//      Assert.assertTrue(jsonObject.containsKey("created_at"));
-//      Assert.assertTrue(jsonObject.containsKey("updated_at"));
       if(jsonObject.getIntValue("id") == 2){
         String reward = jsonObject.getString("vote_reward");
         int indexReward = reward.indexOf('.') + 3;

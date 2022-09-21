@@ -18,6 +18,65 @@ public class VotingSearch extends TronlinkBase {
   private JSONArray responseArrayContent;
   private HttpResponse response;
 
+  @Test(enabled = true,description = "search witness by keywords",groups={"NoSignature"})
+  public void SearchWitnessLowVersionWithNoSig() throws Exception {
+    boolean re = TronlinkApiList.getAllWitnessFromTronscan();
+    if(!re){
+      System.out.println("* * * * * * * tronscan get witness error * * * * * *");
+    }
+    Map<String, String> params = new HashMap<>();
+    params.put("keyword","TK");
+    response = TronlinkApiList.votingV2SearchNoSig(params,null);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+
+    Assert.assertTrue(responseContent.containsKey("data"));
+    JSONObject ob = responseContent.getJSONObject("data");
+    Assert.assertTrue(ob.containsKey("total"));
+    Assert.assertTrue(ob.getInteger("total")>0);
+    Assert.assertTrue(ob.containsKey("totalVotes"));
+    Assert.assertTrue(ob.getLongValue("totalVotes")>0);
+    Assert.assertTrue(ob.containsKey("data"));
+    responseArrayContent = ob.getJSONArray("data");
+
+    //data object
+    for (Object json:responseArrayContent) {
+      JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
+      Assert.assertTrue(jsonObject.containsKey("lastRanking"));
+      Assert.assertTrue(jsonObject.containsKey("ranking"));
+      Assert.assertTrue(jsonObject.containsKey("address"));
+      Assert.assertTrue(jsonObject.containsKey("name"));
+      Assert.assertTrue(jsonObject.containsKey("url"));
+      Assert.assertTrue(jsonObject.containsKey("hasPage"));
+      Assert.assertTrue(jsonObject.containsKey("lastCycleVotes"));
+      Assert.assertTrue(jsonObject.containsKey("realTimeVotes"));
+      Assert.assertTrue(jsonObject.containsKey("changeVotes"));
+      Assert.assertTrue(jsonObject.containsKey("brokerage"));
+      Assert.assertTrue(jsonObject.containsKey("votesPercentage"));
+      Assert.assertTrue(jsonObject.containsKey("change_cycle"));
+      Assert.assertTrue(jsonObject.containsKey("producedTotal"));
+      Assert.assertTrue(jsonObject.containsKey("annualized_income"));
+      Assert.assertTrue(jsonObject.containsKey("totalVotes"));
+    }
+  }
+
+  @Test(enabled = true,description = "search witness by keywords")
+  public void SearchWitnessHighVersionWithNoSig() throws Exception {
+    boolean re = TronlinkApiList.getAllWitnessFromTronscan();
+    if(!re){
+      System.out.println("* * * * * * * tronscan get witness error * * * * * *");
+    }
+    Map<String, String> params = new HashMap<>();
+    params.put("keyword","TK");
+    Map<String, String> header = new HashMap<>();
+    header.put("Version",TronlinkApiList.androidUpdateVersion);
+    header.put("System", TronlinkApiList.defaultSys);
+    response = TronlinkApiList.votingV2SearchNoSig(params,header);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    Assert.assertEquals(20004, responseContent.getIntValue("code"));
+    Assert.assertEquals("Error param.", responseContent.getString("message"));
+  }
+
 
   @Test(enabled = true,description = "search witness by keywords")
   public void Test000SearchWitness() throws Exception {
