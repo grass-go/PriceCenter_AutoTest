@@ -26,7 +26,7 @@ public class DappId {
         params.put("dapp_ids","171");
         response = TronlinkApiList.dappId(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         JSONArray jsonArray = responseContent.getJSONArray("data");
         Assert.assertTrue(jsonArray.size() >0);
         for (Object json:jsonArray) {

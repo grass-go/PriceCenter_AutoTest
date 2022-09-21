@@ -30,7 +30,7 @@ public class nftSearch extends TronlinkBase {
         params.put("word",searchWord);
         response = TronlinkApiList.v2NftSearch(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertTrue(responseContent.containsKey("code"));
         Assert.assertTrue(responseContent.containsKey("message"));
         Assert.assertTrue(responseContent.containsKey("data"));
@@ -56,7 +56,7 @@ public class nftSearch extends TronlinkBase {
         params.put("word",searchWord);
         response = TronlinkApiList.v2NftSearch(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertTrue(responseContent.containsKey("code"));
         Assert.assertTrue(responseContent.containsKey("message"));
         Assert.assertTrue(responseContent.containsKey("data"));

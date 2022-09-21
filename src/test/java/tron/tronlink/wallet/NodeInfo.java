@@ -137,8 +137,8 @@ public class NodeInfo extends TronlinkBase {
     private HttpResponse response;
 
 
-    @Test(enabled = true, description = "线上环境：nodeinfo结果校验")
-    public void test000GetNodeInfo() {
+    @Test(enabled = true, description = "线上环境：nodeinfo结果校验", groups={"NoSignature"})
+    public void test001GetNodeInfo() {
         JSONArray array = new JSONArray();
         JSONObject ob1 = new JSONObject();
         ob1.put(queryAddress58, 2);
@@ -147,9 +147,9 @@ public class NodeInfo extends TronlinkBase {
         array.add(ob1);
         array.add(ob2);
         log.info(array.toJSONString());
-        response = TronlinkApiList.getNodeInfo(array);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        response = TronlinkApiList.getNodeInfo(array,"YES");
+        Assert.assertEquals(200,response.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertTrue(responseContent.containsKey("code"));
         Assert.assertTrue(responseContent.containsKey("message"));
         targetData = responseContent.getJSONArray("data");
@@ -178,7 +178,7 @@ public class NodeInfo extends TronlinkBase {
         }
     }
 
-    @Test(description = "历史请求测试，测试的时候删除db数据或者更换token")
+    @Test(description = "历史请求测试，测试的时候删除db数据或者更换token",groups={"NoSignature"})
     public void test002GetNodeInfo() {
         JSONArray array = new JSONArray();
         JSONObject ob1 = new JSONObject();
@@ -188,7 +188,7 @@ public class NodeInfo extends TronlinkBase {
         array.add(ob1);
         array.add(ob2);
         log.info(array.toJSONString());
-        response = TronlinkApiList.getNodeInfo(array);
+        response = TronlinkApiList.getNodeInfo(array,"YES");
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         String getNodeInfoStr = TronlinkApiList.parseResponse2String(response);
         log.info(getNodeInfoStr);
@@ -198,12 +198,13 @@ public class NodeInfo extends TronlinkBase {
 
 
     @Test(description = "正确性测试：app版本 >= 4.11.0 的时候， 当前接口进行权限校验。")
-    public void test001_GetNodeInfo() {
+    public void test003_GetNodeInfo() {
         for (int i = 0; i < 20; i++) {
             JSONArray array = getRequestBody();
+
             Map<String, String> headers = getTest001Headers();
             Map<String, String> params = getTest001Params();
-            response = TronlinkApiList.getNodeInfoV2(params, array, headers);
+            response = TronlinkApiList.getNodeInfo(params, array, headers);
             Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
             String getNodeInfoStr = TronlinkApiList.parseResponse2String(response);
             log.info(getNodeInfoStr);
@@ -212,24 +213,24 @@ public class NodeInfo extends TronlinkBase {
         }
     }
 
-    @Test(description = "异常测试：app版本 < 4.11.0 的时候， 如果不包含System，不返回正确结果。")
-    public void test007_GetNodeInfo() {
+    @Test(description = "异常测试：app版本 < 4.11.0 的时候， 如果不包含System，不返回正确结果。不参加鉴权，不用新版接口", groups={"NoSignature"})
+    public void test004_GetNodeInfo() {
         for (int i = 0; i < 20; i++) {
             JSONArray array = getRequestBody();
-            Map<String, String> headers = getTest007Headers();
-            Map<String, String> params = getTestParams();
-            response = TronlinkApiList.getNodeInfoV2(params, array, headers);
+            //Map<String, String> headers = getTest007Headers();
+            //Map<String, String> params = getTestParams();
+            response = TronlinkApiList.getNodeInfo(array,"NO");
             Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
         }
     }
 
     @Test(description = "正确性测试：chrome版本 >= 4.0.0 的时候， 当前接口进行权限校验。")
-    public void test002_GetNodeInfo() {
+    public void test005_GetNodeInfo() {
         for (int i = 0; i < 20; i++) {
             JSONArray array = getRequestBody();
             Map<String, String> headers = getTest002Headers();
             Map<String, String> params = getTest002Params();
-            response = TronlinkApiList.getNodeInfoV2(params, array, headers);
+            response = TronlinkApiList.getNodeInfo(params, array, headers);
             Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
             String getNodeInfoStr = TronlinkApiList.parseResponse2String(response);
             log.info(getNodeInfoStr);
@@ -245,12 +246,12 @@ public class NodeInfo extends TronlinkBase {
 
 
     @Test(description = "测试header里面的env，在没有env或者env！=prod的情况下，后端不记录请求里的账户信息(需要观察数据库)")
-    public void test003_GetNodeInfo() {
+    public void test006_GetNodeInfo() {
         for (int i = 0; i < 20; i++) {
             JSONArray array = getRequestBody();
             Map<String, String> headers = getTest003Headers();
             Map<String, String> params = getTest003Params();
-            response = TronlinkApiList.getNodeInfoV2(params, array, headers);
+            response = TronlinkApiList.getNodeInfo(params, array, headers);
             Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
             String getNodeInfoStr = TronlinkApiList.parseResponse2String(response);
             log.info(getNodeInfoStr);
@@ -260,12 +261,12 @@ public class NodeInfo extends TronlinkBase {
     }
 
     @Test(description = "正确性测试，请求参数里的ts为当前时间的毫秒数，跟服务器时间误差不能超过10分钟。")
-    public void test004_GetNodeInfo() {
+    public void test007_GetNodeInfo() {
         for (int i = 0; i < 20; i++) {
             JSONArray array = getRequestBody();
             Map<String, String> headers = getTest004Headers();
             Map<String, String> params = getTestParams();
-            response = TronlinkApiList.getNodeInfoV2(params, array, headers);
+            response = TronlinkApiList.getNodeInfo(params, array, headers);
             Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
             String getNodeInfoStr = TronlinkApiList.parseResponse2String(response);
             log.info(getNodeInfoStr);
@@ -275,12 +276,12 @@ public class NodeInfo extends TronlinkBase {
     }
 
     @Test(description = "边界测试，请求参数里的ts为当前时间的毫秒数，跟服务器时间超过10分钟返回错误。")
-    public void test005_GetNodeInfo() {
+    public void test008_GetNodeInfo() {
         for (int i = 0; i < 20; i++) {
             JSONArray array = getRequestBody();
             Map<String, String> headers = getTest005Headers();
             Map<String, String> params = getTestParams();
-            response = TronlinkApiList.getNodeInfoV2(params, array, headers);
+            response = TronlinkApiList.getNodeInfo(params, array, headers);
             Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
             String getNodeInfoStr = TronlinkApiList.parseResponse2String(response);
             log.info(getNodeInfoStr);
@@ -290,12 +291,12 @@ public class NodeInfo extends TronlinkBase {
     }
 
     @Test(description = "正确性测试，system为必传参数")
-    public void test006_GetNodeInfo() {
+    public void test009_GetNodeInfo() {
         for (int i = 0; i < 20; i++) {
             JSONArray array = getRequestBody();
             Map<String, String> headers = getTest006Headers();
             Map<String, String> params = getTestParams();
-            response = TronlinkApiList.getNodeInfoV2(params, array, headers);
+            response = TronlinkApiList.getNodeInfo(params, array, headers);
             Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
             String getNodeInfoStr = TronlinkApiList.parseResponse2String(response);
             log.info(getNodeInfoStr);

@@ -56,7 +56,7 @@ public class addAsset extends TronlinkBase {
         jsonObject.put("token10", trc10tokenList);
         response = TronlinkApiList.v2AddAsset(params, jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertTrue(responseContent.containsKey("code"));
         Assert.assertTrue(responseContent.containsKey("message"));
         Assert.assertTrue(responseContent.containsKey("data"));
@@ -72,7 +72,7 @@ public class addAsset extends TronlinkBase {
 
         response = TronlinkApiList.v2AssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertTrue(responseContent.containsKey("code"));
         Assert.assertTrue(responseContent.containsKey("message"));
         Assert.assertTrue(responseContent.containsKey("data"));
@@ -100,7 +100,7 @@ public class addAsset extends TronlinkBase {
         jsonObject.put("token10Cancel", trc10tokenList);
         response = TronlinkApiList.v2AddAsset(params, jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertTrue(responseContent.containsKey("code"));
         Assert.assertTrue(responseContent.containsKey("message"));
         Assert.assertTrue(responseContent.containsKey("data"));
@@ -116,7 +116,7 @@ public class addAsset extends TronlinkBase {
 
         response = TronlinkApiList.v2AssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertTrue(responseContent.containsKey("code"));
         Assert.assertTrue(responseContent.containsKey("message"));
         Assert.assertTrue(responseContent.containsKey("data"));
@@ -149,7 +149,7 @@ public class addAsset extends TronlinkBase {
         jsonObject.put("token721", trc721tokenList);
         response = TronlinkApiList.v2AddAsset(params, jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
         Assert.assertEquals(0, responseContent.getIntValue("code"));
         Assert.assertEquals("OK", responseContent.getString("message"));
@@ -172,7 +172,7 @@ public class addAsset extends TronlinkBase {
         }
 
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertTrue(responseContent.containsKey("code"));
         Assert.assertTrue(responseContent.containsKey("message"));
         Assert.assertTrue(responseContent.containsKey("data"));
@@ -204,7 +204,7 @@ public class addAsset extends TronlinkBase {
         response = TronlinkApiList.v2AddAsset(params, jsonObject);
 
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertEquals(0, responseContent.getIntValue("code"));
         Assert.assertEquals("OK", responseContent.getString("message"));
         Assert.assertEquals(true, responseContent.getBooleanValue("data"));
@@ -217,7 +217,7 @@ public class addAsset extends TronlinkBase {
 
         response = TronlinkApiList.v2GetAllCollection(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertTrue(responseContent.containsKey("code"));
         Assert.assertTrue(responseContent.containsKey("message"));
         Assert.assertTrue(responseContent.containsKey("data"));
@@ -293,7 +293,7 @@ public class addAsset extends TronlinkBase {
         jsonObject.put("token10Cancel", trc10tokenList);
         response = TronlinkApiList.v2AddAsset(params, jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertTrue(responseContent.containsKey("code"));
         Assert.assertTrue(responseContent.containsKey("message"));
         Assert.assertTrue(responseContent.containsKey("data"));

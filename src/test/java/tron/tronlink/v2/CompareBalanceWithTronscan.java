@@ -32,12 +32,12 @@ public class CompareBalanceWithTronscan extends TronlinkBase {
         params.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
         response = TronlinkApiList.V2AllAssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        TSContent = TronlinkApiList.parseJsonObResponseContent(response);
+        TSContent = TronlinkApiList.parseResponse2JsonObject(response);
 
         //Access to tronscan api
         String scanURL = TronlinkBase.tronscanApiUrl + "/api/accountv2?address=TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t";
-        response = TronlinkApiList.createGetConnect(scanURL);
-        ScanContent = TronlinkApiList.parseJsonObResponseContent(response);
+        response = TronlinkApiList.createGetConnect(scanURL,null,null,null);
+        ScanContent = TronlinkApiList.parseResponse2JsonObject(response);
 
         //check TRX balance
         Object scanTrxBalanceObject = JSONPath.eval(ScanContent,"$.withPriceTokens[0].balance");

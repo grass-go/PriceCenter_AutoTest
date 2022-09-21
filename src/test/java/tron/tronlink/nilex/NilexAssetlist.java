@@ -28,7 +28,7 @@ public class NilexAssetlist extends TronlinkBase {
     header.put("System","Android");
     response = TronlinkApiList.nilexGetAssetlist(queryAddress,header);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     targetContent = responseContent.getJSONObject("data");
     Assert.assertTrue(targetContent.containsKey("totalTRX"));
     Assert.assertTrue(targetContent.getDoubleValue("totalTRX") > 0);
@@ -44,7 +44,7 @@ public class NilexAssetlist extends TronlinkBase {
     header.put("System","Android");
     response = TronlinkApiList.nilexGetAssetlist(queryAddress,header);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     targetContent = responseContent.getJSONObject("data");
     Assert.assertTrue(targetContent.containsKey("totalTRX"));
   }

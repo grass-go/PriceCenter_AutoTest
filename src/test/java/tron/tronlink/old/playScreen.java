@@ -26,13 +26,10 @@ public class playScreen extends TronlinkBase {
 
     response = TronlinkApiList.v1PlayScreenInfo(null);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    TronlinkApiList.printJsonContent(responseContent);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    TronlinkApiList.printJsonObjectContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
     Assert.assertEquals(responseContent.getString("message"),"OK");
-    //JSONObject screenInfo = responseContent.getJSONArray("data").getJSONObject(0);
-
-    //Assert.assertTrue(screenInfo.containsKey("playId"));
   }
 
 
@@ -49,8 +46,8 @@ public class playScreen extends TronlinkBase {
     Integer playId = 11;
     response = TronlinkApiList.v1PlayScreenDeal(String.valueOf(playId),headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    TronlinkApiList.printJsonContent(responseContent);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    TronlinkApiList.printJsonObjectContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
     Assert.assertEquals(responseContent.getString("message"),"OK");
     //JSONObject screenInfo = responseContent.getJSONArray("data").getJSONObject(0);

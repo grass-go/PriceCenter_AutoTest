@@ -34,7 +34,7 @@ public class TransferTrc20 extends TrondataBase {
       response = TronlinkApiList.getTransferTrc20(params);
       int statuscode = response.getStatusLine().getStatusCode();
       //Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-      responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
       boolean page_size_exist = responseContent.containsKey("page_size");
       if (statuscode == 200 && page_size_exist && responseContent.getIntValue("page_size") > 0){
         index=11;
@@ -83,7 +83,7 @@ public class TransferTrc20 extends TrondataBase {
 
       response = TronlinkApiList.getTransferTrc20(params);
       int statuscode = response.getStatusLine().getStatusCode();
-      responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
       boolean page_size_exists= responseContent.containsKey("page_size");
 
       if (statuscode==200 && page_size_exists && responseContent.getIntValue("page_size") == 1){
@@ -131,7 +131,7 @@ public class TransferTrc20 extends TrondataBase {
       log.info("Test003getTransferTrc20To: cur index is " + index);
       response = TronlinkApiList.getTransferTrc20(params);
       int statuscode = response.getStatusLine().getStatusCode();
-      responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
       boolean page_size_exist = responseContent.containsKey("page_size");
 
       if (statuscode == 200 && page_size_exist && responseContent.getIntValue("page_size") == 1){

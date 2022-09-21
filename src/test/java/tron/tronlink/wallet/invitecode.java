@@ -20,8 +20,8 @@ public class invitecode {
     addressJson.put("deviceId", "ffffefefe");
     response = TronlinkApiList.insertInviteCode(addressJson);
 
-    JSONObject inviteCodeinfo = TronlinkApiList.parseJsonObResponseContent(response);
-    TronlinkApiList.printJsonContent(inviteCodeinfo);
+    JSONObject inviteCodeinfo = TronlinkApiList.parseResponse2JsonObject(response);
+    TronlinkApiList.printJsonObjectContent(inviteCodeinfo);
     Assert.assertEquals(inviteCodeinfo.getString("message"),"User has been invited");
   }
 

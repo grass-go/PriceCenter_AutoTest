@@ -31,7 +31,7 @@ public class AccountList extends TronlinkBase {
     array.add(jsonObject1);
     response = TronlinkApiList.accountList(array);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("code"));
     Assert.assertTrue(responseContent.containsKey("message"));
     Assert.assertTrue(responseContent.containsKey("data"));
@@ -54,7 +54,7 @@ public class AccountList extends TronlinkBase {
   public void comparteBalanceStr() throws Exception {
     response = TronlinkApiList.assetlist(queryAddressTxt41);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent1 = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent1 = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject targetContent1 = responseContent1.getJSONObject("data");
     String assetBalance = targetContent1.getString("totalTRX");
 
@@ -64,7 +64,7 @@ public class AccountList extends TronlinkBase {
     array.add(jsonObject);
     response = TronlinkApiList.accountList(array);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     dataContent = responseContent.getJSONObject("data");
     String accountBalance = dataContent.getString("totalBalance");
 

@@ -27,7 +27,7 @@ public class Trc20Holders extends TrondataBase {
     params.put("limit","10");
     response = TronlinkApiList.getTrc20Holders(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("page_size"));
     Assert.assertEquals(10,responseContent.getIntValue("page_size"));
     Assert.assertTrue(responseContent.containsKey("data"));
@@ -52,7 +52,7 @@ public class Trc20Holders extends TrondataBase {
     params.put("holder_address",queryAddress);
     response = TronlinkApiList.getTrc20Holders(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("page_size"));
     Assert.assertEquals(1,responseContent.getIntValue("page_size"));
     Assert.assertTrue(responseContent.containsKey("data"));

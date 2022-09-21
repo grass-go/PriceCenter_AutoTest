@@ -35,7 +35,7 @@ public class LPTokenPrice extends priceBase{
         params.put("limit","20");
         response = PriceCenterApiList.searchtypeFromTranScan(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         JSONArray tokensArray = responseContent.getJSONArray("search_result");
         int searchCount = tokensArray.size();
         Map<String, BigDecimal> LPTokenMap = new HashMap<>();
@@ -61,7 +61,7 @@ public class LPTokenPrice extends priceBase{
             params.put("convert","T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb");
             response = PriceCenterApiList.getprice(params);
             Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-            responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+            responseContent = TronlinkApiList.parseResponse2JsonObject(response);
             Object price = JSONPath.eval(responseContent, "$..T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb.price");
             try {
                 JSONArray priceArray = (JSONArray) price;

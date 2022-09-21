@@ -21,18 +21,18 @@ public class ScanNode {
     JSONObject job = new JSONObject();
     for(int i=0;i<3;i++){
       String url = "https://list.tronlink.org/api/wallet/blockNum";
-      response = TronlinkApiList.createGetConnect(url);
+      response = TronlinkApiList.createGetConnect(url,null,null,null);
       Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-      responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
       JSONArray dataArray = responseContent.getJSONArray("data");
       double scanNum = dataArray.getJSONObject(0).getDoubleValue("number");
 
 
       //url = "http://34.220.77.106:8090:8090/wallet/getnowblock";
       url = "https://api.trongrid.io/wallet/getnowblock";
-      response = TronlinkApiList.createGetConnect(url);
+      response = TronlinkApiList.createGetConnect(url,null,null,null);
       Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-      responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
       JSONObject dataArray1 = responseContent.getJSONObject("block_header").getJSONObject("raw_data");
       double chainNum = dataArray1.getDoubleValue("number");
 
@@ -53,9 +53,9 @@ public class ScanNode {
     JSONObject job = new JSONObject();
     for(int i=0;i<3;i++){
       String url = "http://3.130.220.30:8888//api/block/current_num";
-      response = TronlinkApiList.createGetConnect(url);
+      response = TronlinkApiList.createGetConnect(url,null,null,null);
       Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-      responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
       double customerTrxNum =responseContent.getDouble("customerTrxNum");
       double customerTrc20Num =responseContent.getDouble("customerTrc20Num");
       double productNum =responseContent.getDouble("productNum");
@@ -63,9 +63,9 @@ public class ScanNode {
 
       //url = "http://34.220.77.106:8090/wallet/getnowblock";
       url = "https://api.trongrid.io/wallet/getnowblock";
-      response = TronlinkApiList.createGetConnect(url);
+      response = TronlinkApiList.createGetConnect(url,null,null,null);
       Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-      responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
       JSONObject dataArray1 = responseContent.getJSONObject("block_header").getJSONObject("raw_data");
       double chainNum = dataArray1.getDoubleValue("number");
 

@@ -23,7 +23,7 @@ public class allasset {
 
     response = TronlinkApiList.allasset("TAVNk5hkaPNJcTf6TvJVgBWEaRhuiHE5Ab");
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     responseArrayContent = responseContent.getJSONArray("data");
     //data object
     boolean TG4 =false,TG12 =false,TG18 =false;;

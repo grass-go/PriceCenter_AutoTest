@@ -32,7 +32,7 @@ public class TransferTrx extends TrondataBase {
 
       response = TronlinkApiList.getTransferTrx(params);
       Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-      responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
       Assert.assertTrue(responseContent.containsKey("page_size"));
       if (responseContent.getIntValue("page_size") > 0) {
         index = 6;
@@ -74,7 +74,7 @@ public class TransferTrx extends TrondataBase {
     params.put("db_version","1");
     response = TronlinkApiList.getTransferTrx(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("page_size"));
     Assert.assertEquals(1, responseContent.getIntValue("page_size"));
     Assert.assertTrue(responseContent.containsKey("data"));
@@ -104,7 +104,7 @@ public class TransferTrx extends TrondataBase {
     params.put("db_version","1");
     response = TronlinkApiList.getTransferTrx(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("page_size"));
     Assert.assertEquals(1, responseContent.getIntValue("page_size"));
     Assert.assertTrue(responseContent.containsKey("data"));

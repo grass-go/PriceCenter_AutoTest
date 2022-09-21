@@ -42,7 +42,7 @@ public class AllAssetList extends TronlinkBase {
     params.put("version", "v2");
     response = TronlinkApiList.V2AllAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("code"));
     Assert.assertTrue(responseContent.containsKey("message"));
     Assert.assertTrue(responseContent.containsKey("data"));
@@ -88,7 +88,7 @@ public class AllAssetList extends TronlinkBase {
 
     response = TronlinkApiList.V2AllAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
 
     //check BitTorrent balance
@@ -121,7 +121,7 @@ public class AllAssetList extends TronlinkBase {
 
     response = TronlinkApiList.V2AllAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
 
 
@@ -144,8 +144,8 @@ public class AllAssetList extends TronlinkBase {
       for (index = 0; index < 5; index++) {
         log.info("cur index is" + index);
         String reqestUrl = TronlinkBase.tronscanApiUrl + "/api/token_trc20?contract=" + contractAddr + "&showAll=1";
-        HttpResponse transcanRsp = TronlinkApiList.createGetConnect(reqestUrl);
-        JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
+        HttpResponse transcanRsp = TronlinkApiList.createGetConnect(reqestUrl,null,null,null);
+        JSONObject transcanRspContent = TronlinkApiList.parseResponse2JsonObject(transcanRsp);
         int total = transcanRspContent.getIntValue("total");
         if (total == 0) {
           continue;
@@ -174,7 +174,7 @@ public class AllAssetList extends TronlinkBase {
 
     response = TronlinkApiList.V2AllAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
     Object token10s = JSONPath.eval(responseContent, "$..id");
     Object token20s = JSONPath.eval(responseContent, "$..contractAddress");
@@ -218,8 +218,8 @@ public class AllAssetList extends TronlinkBase {
         }
         Object cur_isOfficial = JSONPath.eval(responseContent, String.join("","$..data.token[id='",curId,"'].isOfficial[0]"));
         String requestUrl= TronlinkBase.tronscanApiUrl+"/api/token?id="+curId+"&showAll=1";
-        HttpResponse transcanRsp = TronlinkApiList.createGetConnect(requestUrl);
-        JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
+        HttpResponse transcanRsp = TronlinkApiList.createGetConnect(requestUrl,null,null,null);
+        JSONObject transcanRspContent = TronlinkApiList.parseResponse2JsonObject(transcanRsp);
         Object scan_levelObject = JSONPath.eval(transcanRspContent, String.join("","$..data[0].level"));
         if(scan_levelObject.equals("")){
           scan_levelObject = "0";
@@ -242,8 +242,8 @@ public class AllAssetList extends TronlinkBase {
         }
         Object cur_isOfficial = JSONPath.eval(responseContent, String.join("","$..data.token[contractAddress='",curAddress,"'].isOfficial[0]"));
         String requestUrl= TronlinkBase.tronscanApiUrl+"/api/token_trc20?contract="+curAddress+"&showAll=1&source=true";
-        HttpResponse transcanRsp = TronlinkApiList.createGetConnect(requestUrl);
-        JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
+        HttpResponse transcanRsp = TronlinkApiList.createGetConnect(requestUrl,null,null,null);
+        JSONObject transcanRspContent = TronlinkApiList.parseResponse2JsonObject(transcanRsp);
         Object scan_levelObject = JSONPath.eval(transcanRspContent, String.join("","$..trc20_tokens[0].level"));
         org.testng.Assert.assertNotEquals(scan_levelObject, null, "tronscan 接口的数据为空导致");
         Integer scan_level = Integer.valueOf(scan_levelObject.toString());

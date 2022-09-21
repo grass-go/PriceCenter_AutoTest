@@ -43,7 +43,7 @@ public class getCollectionInfos extends TronlinkBase {
         bodyObject.put("tokenAddress", expFollowAndHold);
         response = TronlinkApiList.v2GetCollectionInfos_1155(params, bodyObject);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
         Assert.assertEquals(0,(int)responseContent.get("code"));
         Assert.assertEquals("OK",responseContent.get("message"));

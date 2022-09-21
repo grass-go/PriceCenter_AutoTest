@@ -41,7 +41,7 @@ public class TokenPricePuller extends TronlinkBase {
         Map<String,String> params = GenerateParams();
         Map<String,String> headers = GenerateHeaders();
         HttpResponse response = TronlinkApiList.v2GetAssetList(params, null, headers);
-        JSONObject assetListRespContent = TronlinkApiList.parseJsonObResponseContent(response);
+        JSONObject assetListRespContent = TronlinkApiList.parseResponse2JsonObject(response);
 
         log.debug(assetListRespContent.toJSONString());
         Object usdPrice = JSONPath.eval(assetListRespContent, String.join("","$..data.token[contractAddress='" + token + "'].usdPrice[0]"));
@@ -81,9 +81,9 @@ public class TokenPricePuller extends TronlinkBase {
     }
 
     public BigDecimal GetSinglePriceByToken(String token){
-        HttpResponse response = TronlinkApiList.createGetConnect("https://c.tronlink.org/v1/cryptocurrency/getprice?symbol=" + token + "&convert=USD");
+        HttpResponse response = TronlinkApiList.createGetConnect("https://c.tronlink.org/v1/cryptocurrency/getprice?symbol=" + token + "&convert=USD", null, null, null);
 
-        JSONObject assetListRespContent = TronlinkApiList.parseJsonObResponseContent(response);
+        JSONObject assetListRespContent = TronlinkApiList.parseResponse2JsonObject(response);
         log.debug(assetListRespContent.toJSONString());
         Object usdPrice = JSONPath.eval(assetListRespContent, String.join("","$..data[0]." + token + ".quote.USD.price"));
         BigDecimal up = new BigDecimal((String)usdPrice);
@@ -92,9 +92,9 @@ public class TokenPricePuller extends TronlinkBase {
     }
 
     public BigDecimal GetAllPriceByToken(String token ){
-        HttpResponse response = TronlinkApiList.createGetConnect("https://c.tronlink.org/v1/cryptocurrency/getallprice");
+        HttpResponse response = TronlinkApiList.createGetConnect("https://c.tronlink.org/v1/cryptocurrency/getallprice", null ,null, null);
 
-        JSONObject assetListRespContent = TronlinkApiList.parseJsonObResponseContent(response);
+        JSONObject assetListRespContent = TronlinkApiList.parseResponse2JsonObject(response);
         log.debug(assetListRespContent.toJSONString());
         Object usdPrice = JSONPath.eval(assetListRespContent, String.join("","$..data[0].rows[fTokenAddr='" + token +"'][sShortName = 'USD'].price[0]"));
         BigDecimal up = new BigDecimal((String)usdPrice);

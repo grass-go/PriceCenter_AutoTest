@@ -33,7 +33,7 @@ public class RiskTokens extends TronlinkBase {
     public JSONObject GetAllRiskTokens(){
         HttpResponse response = GetAllRiskTokensRsp();
         Assert.assertNotEquals(response, null);
-        JSONObject riskTokensRsp = TronlinkApiList.parseJsonObResponseContent(response);
+        JSONObject riskTokensRsp = TronlinkApiList.parseResponse2JsonObject(response);
 
         return riskTokensRsp;
     }

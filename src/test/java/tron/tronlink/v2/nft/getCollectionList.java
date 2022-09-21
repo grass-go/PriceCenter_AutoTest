@@ -25,7 +25,7 @@ public class getCollectionList extends TronlinkBase {
 
     response = TronlinkApiList.v2GetCollectionList(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
     Assert.assertEquals(0,(int)responseContent.get("code"));
     Assert.assertEquals("OK",responseContent.get("message"));
@@ -38,7 +38,7 @@ public class getCollectionList extends TronlinkBase {
     Assert.assertTrue(dataContent.containsKey("dappUrl"));
     Assert.assertNotNull(dataContent.containsKey("collectionInfoList"));
 
-    Assert.assertEquals(200, TronlinkApiList.createGetConnect(dataContent.getString("logoUrl")).getStatusLine().getStatusCode());
+    Assert.assertEquals(200, TronlinkApiList.createGetConnect(dataContent.getString("logoUrl"),null,null,null).getStatusLine().getStatusCode());
 
   }
 }

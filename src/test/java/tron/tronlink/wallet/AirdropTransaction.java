@@ -23,7 +23,7 @@ public class AirdropTransaction extends TronlinkBase {
     params.put("address",queryAddress);
     response = TronlinkApiList.getAirdropTransaction(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     log.info("responseContent: "+ responseContent.toJSONString());
   }
 }

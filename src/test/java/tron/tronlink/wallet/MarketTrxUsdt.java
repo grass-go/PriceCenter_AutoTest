@@ -23,7 +23,7 @@ public class MarketTrxUsdt {
     param.put("desc", "2");
     response = TronlinkApiList.walletMarketTrxUsdt(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject data = responseContent.getJSONObject("data");
     responseArrayContent = data.getJSONArray("rows");
 
@@ -60,7 +60,7 @@ public class MarketTrxUsdt {
     param.put("desc", "1");
     response = TronlinkApiList.walletMarketTrxUsdt(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject data = responseContent.getJSONObject("data");
     responseArrayContent = data.getJSONArray("rows");
 
@@ -97,7 +97,7 @@ public class MarketTrxUsdt {
     param.put("desc", "1");
     response = TronlinkApiList.walletMarketTrxUsdt(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject data = responseContent.getJSONObject("data");
     responseArrayContent = data.getJSONArray("rows");
 
@@ -134,7 +134,7 @@ public class MarketTrxUsdt {
     param.put("desc", "2");
     response = TronlinkApiList.walletMarketTrxUsdt(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject data = responseContent.getJSONObject("data");
     responseArrayContent = data.getJSONArray("rows");
 
@@ -171,7 +171,7 @@ public class MarketTrxUsdt {
     param.put("desc", "2");
     response = TronlinkApiList.walletMarketTrxUsdt(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject data = responseContent.getJSONObject("data");
     responseArrayContent = data.getJSONArray("rows");
 
@@ -208,7 +208,7 @@ public class MarketTrxUsdt {
     param.put("desc", "1");
     response = TronlinkApiList.walletMarketTrxUsdt(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject data = responseContent.getJSONObject("data");
     responseArrayContent = data.getJSONArray("rows");
 
@@ -247,7 +247,7 @@ public class MarketTrxUsdt {
     param.put("desc", "1");
     response = TronlinkApiList.walletMarketTrxUsdt(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject data = responseContent.getJSONObject("data");
     responseArrayContent = data.getJSONArray("rows");
 
@@ -284,7 +284,7 @@ public class MarketTrxUsdt {
     param.put("desc", "2");
     response = TronlinkApiList.walletMarketTrxUsdt(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject data = responseContent.getJSONObject("data");
     responseArrayContent = data.getJSONArray("rows");
 
@@ -321,7 +321,7 @@ public class MarketTrxUsdt {
     param.put("desc", "2");
     response = TronlinkApiList.walletMarketTrxUsdt(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject data = responseContent.getJSONObject("data");
     responseArrayContent = data.getJSONArray("rows");
 
@@ -358,7 +358,7 @@ public class MarketTrxUsdt {
     param.put("desc", "1");
     response = TronlinkApiList.walletMarketTrxUsdt(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject data = responseContent.getJSONObject("data");
     responseArrayContent = data.getJSONArray("rows");
 
@@ -395,7 +395,7 @@ public class MarketTrxUsdt {
     param.put("desc", "1");
     response = TronlinkApiList.walletMarketTrxUsdt(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject data = responseContent.getJSONObject("data");
     responseArrayContent = data.getJSONArray("rows");
 
@@ -432,7 +432,7 @@ public class MarketTrxUsdt {
     param.put("desc", "2");
     response = TronlinkApiList.walletMarketTrxUsdt(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject data = responseContent.getJSONObject("data");
     responseArrayContent = data.getJSONArray("rows");
 
@@ -469,7 +469,7 @@ public class MarketTrxUsdt {
     param.put("all","1"); //sophia's address
     response = TronlinkApiList.walletMarketTrxUsdt(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject data = responseContent.getJSONObject("data");
     int total = data.getIntValue("total");
     responseArrayContent = data.getJSONArray("rows");

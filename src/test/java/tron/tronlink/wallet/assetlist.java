@@ -27,7 +27,7 @@ public class assetlist extends TronlinkBase {
   public void assetlist(){
     response = TronlinkApiList.assetlist(queryAddress);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     targetContent = responseContent.getJSONObject("data");
     Assert.assertTrue(targetContent.containsKey("totalTRX"));
     Assert.assertTrue(targetContent.getDoubleValue("totalTRX") > 0);
@@ -76,9 +76,9 @@ public class assetlist extends TronlinkBase {
   @Test(enabled = false, description = "Api /TronlinkApiList/wallet/assetlist test")
   public void test001Assetlist() throws Exception {
     response = TronlinkApiList.assetlist("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     targetContent = responseContent.getJSONObject("data");
-    TronlinkApiList.printJsonContent(targetContent);
+    TronlinkApiList.printJsonObjectContent(targetContent);
 
     Assert.assertTrue(targetContent.getFloat("totalTRX") >= 0);
     Assert.assertTrue(targetContent.getJSONObject("price").getDouble("priceUSD") > 0);
@@ -94,9 +94,9 @@ public class assetlist extends TronlinkBase {
     //Base58 decode address can't get right information
     response = TronlinkApiList.assetlist("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
 
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     targetContent = responseContent.getJSONObject("data");
-    TronlinkApiList.printJsonContent(targetContent);
+    TronlinkApiList.printJsonObjectContent(targetContent);
 
     Assert.assertTrue(targetContent.getFloat("totalTRX") == 0);
     Assert.assertTrue(targetContent.getJSONObject("price").getDouble("priceUSD") > 0);

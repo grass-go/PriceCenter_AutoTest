@@ -36,7 +36,7 @@ public class checkPrice extends TronlinkBase {
 
         response = TronlinkApiList.v2AssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        assetListRespContent = TronlinkApiList.parseJsonObResponseContent(response);
+        assetListRespContent = TronlinkApiList.parseResponse2JsonObject(response);
         SetTrxPriceMap();
     }
 
@@ -50,11 +50,11 @@ public class checkPrice extends TronlinkBase {
         params.put("symbol","TRX");
         params.put("convert",exchageType);
         String CMCurl = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest";
-        response = TronlinkApiList.createGetConnectWithHeader(CMCurl,params,null,header);
+        response = TronlinkApiList.createGetConnect(CMCurl,params,null,header);
         if(response == null || response.getStatusLine().getStatusCode() != 200){
             return null;
         }
-        JSONObject responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        JSONObject responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Object expPrice = JSONPath.eval(responseContent, String.join("", "$..data.TRX.quote."+exchageType+".price[0]"));
         String trxPrice = expPrice.toString();
         return trxPrice;

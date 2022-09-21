@@ -33,8 +33,8 @@ public class updateUserCreateBNum extends TronlinkBase {
 
     response = TronlinkApiList.v1UpdateUserCreateBNum(String.valueOf(updateBlockNum),"aaaa",headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    TronlinkApiList.printJsonContent(responseContent);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    TronlinkApiList.printJsonObjectContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
     Assert.assertEquals(responseContent.getString("message"),"OK");
     Assert.assertEquals(responseContent.getString("data"),"update successful");
@@ -48,8 +48,8 @@ public class updateUserCreateBNum extends TronlinkBase {
     headers.put("Version","4.0.2");
     response = TronlinkApiList.v1UserCreateBlockNum(params,headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    TronlinkApiList.printJsonContent(responseContent);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    TronlinkApiList.printJsonObjectContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
     Assert.assertEquals(responseContent.getString("message"),"OK");
     log.info("responseContent.getJSONObject(\"data\").getLong(\"number\")" + responseContent.getJSONObject("data").getLong("number"));

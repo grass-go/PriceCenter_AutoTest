@@ -33,7 +33,7 @@ public class TransferToken10 extends TrondataBase {
         log.info("cur index is: "+ index);
         response = TronlinkApiList.getTransferToken10(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertTrue(responseContent.containsKey("page_size"));
         // 如果page_size<=0,那么不执行下面的，直接进入循环重试。
         if (responseContent.getIntValue("page_size") > 0) {
@@ -77,7 +77,7 @@ public class TransferToken10 extends TrondataBase {
     params.put("db_version","1");
     response = TronlinkApiList.getTransferToken10(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("page_size"));
     Assert.assertEquals(1,responseContent.getIntValue("page_size"));
     Assert.assertTrue(responseContent.containsKey("data"));
@@ -113,7 +113,7 @@ public class TransferToken10 extends TrondataBase {
     params.put("db_version","1");
     response = TronlinkApiList.getTransferToken10(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("page_size"));
     Assert.assertEquals(1, responseContent.getIntValue("page_size"));
     Assert.assertTrue(responseContent.containsKey("data"));

@@ -35,7 +35,7 @@ public class getAllCollection extends TronlinkBase {
     params.put("address",addressNewAsset41);
     response = TronlinkApiList.v2GetAllCollection(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
     Assert.assertEquals(0,(int)responseContent.get("code"));
     Assert.assertEquals("OK",responseContent.get("message"));
@@ -53,7 +53,7 @@ public class getAllCollection extends TronlinkBase {
       Assert.assertEquals(Expect.ContractAddress, nftData.getString("contractAddress"));
 
       Assert.assertEquals(200,
-          TronlinkApiList.createGetConnect(nftData.getString("logoUrl")).getStatusLine().getStatusCode());
+          TronlinkApiList.createGetConnect(nftData.getString("logoUrl"), null, null,null).getStatusLine().getStatusCode());
 
     }
     System.out.println("responseContent : " + responseContent.toString());
@@ -83,12 +83,12 @@ public class getAllCollection extends TronlinkBase {
     params.put("address",address721_B58);
     params.put("version","v2");
     response = TronlinkApiList.v2GetAllCollection(params);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     for(int i=0;i<2;i++){
       if (responseContent.getIntValue("code") == 4500){
         Thread.currentThread().sleep(5000);
         response = TronlinkApiList.v2GetAllCollection(params);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
       }
       else{

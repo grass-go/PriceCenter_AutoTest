@@ -30,7 +30,7 @@ public class DappToMainFee {
       }
     }
     Assert.assertEquals(7,index);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     data = responseContent.getJSONObject("data");
     Assert.assertEquals(0, data.getIntValue("dappToMainFee"));
   }

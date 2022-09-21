@@ -26,7 +26,7 @@ public class Dapp_Head extends TronlinkBase {
 
         response = TronlinkApiList.head();
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         //data object
         targetContent = responseContent.getJSONObject("data");
 
@@ -55,7 +55,7 @@ public class Dapp_Head extends TronlinkBase {
                 int responseCode;
                 try {
 
-                    responseCode = TronlinkApiList.createGetConnect(roll_data.getJSONObject(n).getString("image_url")).getStatusLine().getStatusCode();
+                    responseCode = TronlinkApiList.createGetConnect(roll_data.getJSONObject(n).getString("image_url"),null,null,null).getStatusLine().getStatusCode();
                     log.info("debug: responseCode:"+responseCode);
                 } catch (Exception e) {
                     Thread.sleep(2000);
@@ -82,7 +82,7 @@ public class Dapp_Head extends TronlinkBase {
                         home_url = home_url.substring(0,home_url.length()-1);
                     }
 
-                    responseCode = TronlinkApiList.createGetConnect(home_url).getStatusLine().getStatusCode();
+                    responseCode = TronlinkApiList.createGetConnect(home_url,null,null,null).getStatusLine().getStatusCode();
                     log.info("debug: responseCode:"+ responseCode);
 
                 } catch (Exception e) {
@@ -109,7 +109,7 @@ public class Dapp_Head extends TronlinkBase {
                 log.info("In hot_recommend #"+n+", cur retry index for image_url is " + retryIdx);
                 int responseCode;
                 try {
-                    responseCode = TronlinkApiList.createGetConnect(jo.getString("image_url")).getStatusLine().getStatusCode();
+                    responseCode = TronlinkApiList.createGetConnect(jo.getString("image_url"),null,null,null).getStatusLine().getStatusCode();
                 } catch(Exception e) {
                     Thread.sleep(2000);
                     continue;

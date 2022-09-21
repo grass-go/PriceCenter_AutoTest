@@ -65,7 +65,7 @@ public class CreateMultiTransaction {
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
         res = TronlinkApiList.multiTransaction(object);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(res);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
     }
 
@@ -87,7 +87,7 @@ public class CreateMultiTransaction {
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
         res = TronlinkApiList.multiTransaction(object);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(res);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
     }
 
@@ -124,7 +124,7 @@ public class CreateMultiTransaction {
             else {
                 continue;
             }
-            responseContent = TronlinkApiList.parseJsonObResponseContent(res);
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
             Assert.assertEquals(0,responseContent.getIntValue("code"));
         }
         Assert.assertEquals(7, index);
@@ -150,7 +150,7 @@ public class CreateMultiTransaction {
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
         res = TronlinkApiList.multiTransaction(object);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(res);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
 
 

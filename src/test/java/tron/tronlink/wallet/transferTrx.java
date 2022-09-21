@@ -26,7 +26,7 @@ public class transferTrx {
     param.put("reverse","true");
     response = TronlinkApiList.apiTransferTrx(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     org.testng.Assert.assertNotEquals(responseContent, null);
     responseArrayContent = responseContent.getJSONArray("data");
     Assert.assertNotEquals( null,responseArrayContent);

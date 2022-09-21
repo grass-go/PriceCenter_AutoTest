@@ -30,8 +30,8 @@ public class white extends TronlinkBase {
 
         response = TronlinkApiList.v2CheckWhite(param);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-        TronlinkApiList.printJsonContent(responseContent);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+        TronlinkApiList.printJsonObjectContent(responseContent);
         Assert.assertTrue(responseContent.getInteger("code") == 0);
         Assert.assertEquals(responseContent.getString("message"),"OK");
         JSONObject dataContent = responseContent.getJSONObject("data");
@@ -54,8 +54,8 @@ public class white extends TronlinkBase {
 
         response = TronlinkApiList.v2CheckWhite(param);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-        TronlinkApiList.printJsonContent(responseContent);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+        TronlinkApiList.printJsonObjectContent(responseContent);
         Assert.assertTrue(responseContent.getInteger("code") == 0);
         Assert.assertEquals(responseContent.getString("message"), "OK");
         JSONObject dataContent = responseContent.getJSONObject("data");

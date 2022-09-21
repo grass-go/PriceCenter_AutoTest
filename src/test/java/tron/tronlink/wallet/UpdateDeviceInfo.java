@@ -19,9 +19,9 @@ public class UpdateDeviceInfo extends TronlinkBase {
     @Test(enabled = true)
     public void test001UpdateDeviceInfo() {
         String requestUrl = TronlinkBase.tronlinkUrl + "/api/wallet/push/UpdateDeviceInfo";
-        response = TronlinkApiList.createGetConnectNoHeader(requestUrl, null);
+        response = TronlinkApiList.createGetConnect(requestUrl, null,null, null);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
         Assert.assertEquals("OK",responseContent.getString("message"));
         Assert.assertEquals("",responseContent.getString("data"));

@@ -14,6 +14,6 @@ public class Ieo {
   public void test000Ieo(){
     response = TronlinkApiList.ieo();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    TronlinkApiList.parseJsonObResponseContent(response);
+    TronlinkApiList.parseResponse2JsonObject(response);
   }
 }

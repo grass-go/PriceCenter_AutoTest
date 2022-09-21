@@ -26,7 +26,7 @@ public class MarketFavoritor {
             "&token=TTVTdn8ipmacfKsCHw5Za48NRnaBRKeJ44_TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"); //win
     response = TronlinkApiList.walletMarketFavorite(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject data = responseContent.getJSONObject("data");
     Assert.assertTrue(data.containsKey("total"));
     Assert.assertTrue(data.getInteger("total")==6);

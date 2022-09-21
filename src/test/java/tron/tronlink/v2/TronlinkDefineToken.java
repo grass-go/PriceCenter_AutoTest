@@ -38,7 +38,7 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         log.info("Case003Add-sync");
         response = TronlinkApiList.v2TokenSync(params,jsonObject);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         //begin to test search
         params.clear();
@@ -49,7 +49,7 @@ public class TronlinkDefineToken extends TronlinkBase {
         params.put("version","v2");
         log.info("Case001SearchBeforeAdd: begin to assert...");
         response = TronlinkApiList.v2SearchAsset(params);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         dataContent = responseContent.getJSONObject("data");
         Object tokenContent=dataContent.getJSONArray("token");
@@ -68,7 +68,7 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         log.info("Case003Add-sync");
         response = TronlinkApiList.v2TokenSync(params,jsonObject);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         //begin to query
         params.clear();
@@ -80,7 +80,7 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         log.info("Case002QueryBeforeAdd");
         response = TronlinkApiList.v2TokenQuery(params,jsonObject);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         dataContent = responseContent.getJSONObject("data");
         //test status
@@ -111,7 +111,7 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         log.info("Case003Add-sync");
         response = TronlinkApiList.v2TokenSync(params,jsonObject);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 
         //add
@@ -128,7 +128,7 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         log.info("Case003Add-add");
         response = TronlinkApiList.v2TokenAdd(params,jsonObject);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         Boolean data = responseContent.getBooleanValue("data");
         Assert.assertTrue(data);
@@ -151,7 +151,7 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         log.info("Case003Add-add");
         response = TronlinkApiList.v2TokenAdd(params,jsonObject);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 
         //Query
@@ -164,7 +164,7 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         log.info("Case002QueryBeforeAdd");
         response = TronlinkApiList.v2TokenQuery(params,jsonObject);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         dataContent = responseContent.getJSONObject("data");
         //test status
@@ -195,7 +195,7 @@ public class TronlinkDefineToken extends TronlinkBase {
         params.put("version","v2");
         log.info("Case005SearchAfterAdd: begin to assert...");
         response = TronlinkApiList.v2SearchAsset(params);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         dataContent = responseContent.getJSONObject("data");
         Integer actualCount = dataContent.getInteger("count");
@@ -222,7 +222,7 @@ public class TronlinkDefineToken extends TronlinkBase {
         params.put("version","v2");
         log.info("Case005SearchAfterAdd: begin to assert...");
         response = TronlinkApiList.v2SearchAsset(params);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         dataContent = responseContent.getJSONObject("data");
         Assert.assertEquals("0",dataContent.get("count").toString());
@@ -235,7 +235,7 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         response = TronlinkApiList.v2AssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Object name = JSONPath.eval(responseContent,String.join("","$..data.token[contractAddress='",deployedContract,"'].name[0]"));
         Assert.assertEquals("TronlinkServerToken",name.toString());
         Object sname = JSONPath.eval(responseContent,String.join("","$..data.token[contractAddress='",deployedContract,"'].shortName[0]"));
@@ -253,7 +253,7 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         response = TronlinkApiList.V2AllAssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
         Object name = JSONPath.eval(responseContent,String.join("","$..data.token[contractAddress='",deployedContract,"'].name[0]"));
         Assert.assertEquals("TronlinkServerToken",name.toString());
@@ -280,7 +280,7 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         response = TronlinkApiList.v2DelAsset(params,jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Boolean data = responseContent.getBooleanValue("data");
         Assert.assertTrue(data);
 
@@ -291,7 +291,7 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         response = TronlinkApiList.v2AssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Object name = JSONPath.eval(responseContent,String.join("","$..data.token[contractAddress='",deployedContract,"'].name[0]"));
         Assert.assertNull(name);
 
@@ -301,7 +301,7 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         response = TronlinkApiList.V2AllAssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
         name = JSONPath.eval(responseContent,String.join("","$..data.token[contractAddress='",deployedContract,"'].name[0]"));
         Assert.assertNull(name);

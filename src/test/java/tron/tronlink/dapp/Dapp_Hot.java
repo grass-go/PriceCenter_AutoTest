@@ -24,7 +24,7 @@ public class Dapp_Hot extends TronlinkBase {
 
     response = TronlinkApiList.hot_recommend();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     //data object
     responseArrayContent = responseContent.getJSONArray("data");
     for (Object json:responseArrayContent
@@ -44,7 +44,7 @@ public class Dapp_Hot extends TronlinkBase {
   public void hot_search(){
     response = TronlinkApiList.hot_search();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     //data object
     responseArrayContent = responseContent.getJSONArray("data");
     Assert.assertTrue(responseArrayContent.size()>0);

@@ -31,7 +31,7 @@ public class getCollectionList  extends TronlinkBase {
 
         response = TronlinkApiList.v2GetCollectionList_1155(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
         Assert.assertEquals(0,(int)responseContent.get("code"));
         Assert.assertEquals("OK",responseContent.get("message"));

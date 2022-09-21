@@ -18,9 +18,9 @@ public class invite_getCode {
     parameter.put("address", "TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
     response = TronlinkApiList.getInviteCode(parameter);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-    JSONObject inviteCodeinfo = TronlinkApiList.parseJsonObResponseContent(response);
+    JSONObject inviteCodeinfo = TronlinkApiList.parseResponse2JsonObject(response);
 
-    TronlinkApiList.printJsonContent(inviteCodeinfo);
+    TronlinkApiList.printJsonObjectContent(inviteCodeinfo);
     JSONObject data = inviteCodeinfo.getJSONObject("data");
     Assert.assertTrue(data.containsKey("address"));
     Assert.assertEquals("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe",data.getString("address"));

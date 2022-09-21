@@ -48,7 +48,7 @@ public class getDelegatedResource extends TronlinkBase {
 
         response = TronlinkApiList.getDelegatedResource(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         responseString = TronlinkApiList.parseResponse2String(response);
 
         String cmp_result = new CompareJson("data").compareJson(responseString, expResponse);
@@ -77,7 +77,7 @@ public class getDelegatedResource extends TronlinkBase {
 
         response = TronlinkApiList.getDelegatedResource(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         responseString = TronlinkApiList.parseResponse2String(response);
 
         String cmp_result = new CompareJson("data").compareJson(responseString, expResponse);
@@ -104,7 +104,7 @@ public class getDelegatedResource extends TronlinkBase {
 
         response = TronlinkApiList.getDelegatedResource(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         responseString = TronlinkApiList.parseResponse2String(response);
 
         String cmp_result = new CompareJson("data").compareJson(responseString, expResponse);
@@ -132,7 +132,7 @@ public class getDelegatedResource extends TronlinkBase {
 
         response = TronlinkApiList.getDelegatedResource(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         responseString = TronlinkApiList.parseResponse2String(response);
 
         String cmp_result = new CompareJson("data").compareJson(responseString, expResponse);
@@ -159,7 +159,7 @@ public class getDelegatedResource extends TronlinkBase {
 
         response = TronlinkApiList.getDelegatedResource(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         responseString = TronlinkApiList.parseResponse2String(response);
 
         String cmp_result = new CompareJson("data").compareJson(responseString, expResponse);
@@ -187,7 +187,7 @@ public class getDelegatedResource extends TronlinkBase {
 
         response = TronlinkApiList.getDelegatedResource(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         responseString = TronlinkApiList.parseResponse2String(response);
 
         String cmp_result = new CompareJson("data").compareJson(responseString, expResponse);

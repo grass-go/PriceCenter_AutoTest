@@ -12,8 +12,8 @@ public class lotteryData {
   @Test(enabled = false, description = "Api GET /TronlinkApiList/wallet/lottery/default_data test")
   public void test001LotteryData() throws Exception {
     response = TronlinkApiList.lotteryData();
-    JSONObject lotteryDataInfo = TronlinkApiList.parseJsonObResponseContent(response);
-    TronlinkApiList.printJsonContent(lotteryDataInfo);
+    JSONObject lotteryDataInfo = TronlinkApiList.parseResponse2JsonObject(response);
+    TronlinkApiList.printJsonObjectContent(lotteryDataInfo);
 
     JSONObject data = lotteryDataInfo.getJSONObject("data");
     if (!data.isEmpty()){

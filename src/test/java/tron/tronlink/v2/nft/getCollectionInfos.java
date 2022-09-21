@@ -41,7 +41,7 @@ public class getCollectionInfos extends TronlinkBase {
     bodyObject.put("tokenAddress", "TPvGT3tWUNakTg23ARKMx46MGLT386nYWD");
     response = TronlinkApiList.v2GetCollectionInfos(params, bodyObject);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
     Assert.assertEquals(0,(int)responseContent.get("code"));
     Assert.assertEquals("OK",responseContent.get("message"));
@@ -53,8 +53,8 @@ public class getCollectionInfos extends TronlinkBase {
       Assert.assertTrue(nftInfo.containsKey("assetId"));
       Assert.assertTrue(nftInfo.containsKey("assetUri"));
 
-      Assert.assertEquals(200, TronlinkApiList.createGetConnect(nftInfo.getString("imageUrl")).getStatusLine().getStatusCode());
-      Assert.assertEquals(200, TronlinkApiList.createGetConnect(nftInfo.getString("logoUrl")).getStatusLine().getStatusCode());
+      Assert.assertEquals(200, TronlinkApiList.createGetConnect(nftInfo.getString("imageUrl"),null,null,null).getStatusLine().getStatusCode());
+      Assert.assertEquals(200, TronlinkApiList.createGetConnect(nftInfo.getString("logoUrl"),null,null,null).getStatusLine().getStatusCode());
     }
 
 

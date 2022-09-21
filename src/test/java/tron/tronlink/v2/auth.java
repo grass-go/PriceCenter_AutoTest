@@ -27,7 +27,7 @@ public class auth extends TronlinkBase{
         params.put("address",quince_B58);
         response = TronlinkApiList.v2Auth(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertTrue(responseContent.containsKey("code"));
         Assert.assertTrue(responseContent.containsKey("message"));
         Assert.assertTrue(responseContent.containsKey("data"));
@@ -55,7 +55,7 @@ public class auth extends TronlinkBase{
         params.put("address", "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo");
         response = TronlinkApiList.v2Auth(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertTrue(responseContent.containsKey("code"));
         Assert.assertTrue(responseContent.containsKey("message"));
         Assert.assertTrue(responseContent.containsKey("data"));

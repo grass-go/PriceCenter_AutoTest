@@ -26,7 +26,7 @@ public class unfollowCollections extends TronlinkBase{
         params.put("address",address721_B58);
         response = TronlinkApiList.V2UnfollowCollections(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         dataContent = responseContent.getJSONObject("data");
         int count =dataContent.getIntValue("count");
         Assert.assertEquals(1,count);

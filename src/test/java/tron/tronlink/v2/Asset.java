@@ -29,7 +29,7 @@ public class Asset extends TronlinkBase {
     params.put("tokenType","2");
     response = TronlinkApiList.v2Asset(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("code"));
     Assert.assertTrue(responseContent.containsKey("message"));
     Assert.assertTrue(responseContent.containsKey("data"));

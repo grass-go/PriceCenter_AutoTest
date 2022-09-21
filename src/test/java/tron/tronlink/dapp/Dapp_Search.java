@@ -27,7 +27,7 @@ public class Dapp_Search extends TronlinkBase {
     params.put("name","JUST");
     response = TronlinkApiList.search(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     //data object
     responseArrayContent = responseContent.getJSONArray("data");
     for (Object json:responseArrayContent

@@ -38,7 +38,7 @@ public class balance extends TronlinkBase {
         params.put("address",quince_B58);
 
         response = TronlinkApiList.V2AllAssetList(params);
-        allAssetresponseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        allAssetresponseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
         Object trc20Tokens = JSONPath.eval(allAssetresponseContent,"$..contractAddress");
         log.info("debug:"+trc20Tokens.toString());
@@ -58,7 +58,7 @@ public class balance extends TronlinkBase {
         params.put("tokens", token20s);
         response = TronlinkApiList.v1Balance(params);
         //compare balance for each token.
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         for (String token:tokenIdList) {
             if (token.equals("")) {
                 continue;

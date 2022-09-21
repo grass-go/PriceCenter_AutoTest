@@ -48,7 +48,7 @@ public class VotingSelf extends TronlinkBase {
     params.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t"); //sophia's address
     response = TronlinkApiList.votingV2Self(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("total"));
     Assert.assertTrue(responseContent.getLongValue("total")>0);
     Assert.assertTrue(responseContent.containsKey("totalVotes"));
@@ -80,7 +80,7 @@ public class VotingSelf extends TronlinkBase {
     params.put("address","TXTNcgJHD9GPii9VcpEr"); //sophia's address
     response = TronlinkApiList.votingV2Self(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("total"));
     Assert.assertEquals(0,responseContent.getLongValue("total"));
     Assert.assertTrue(responseContent.containsKey("totalVotes"));
@@ -97,7 +97,7 @@ public class VotingSelf extends TronlinkBase {
 
     response = TronlinkApiList.votingV2Witness(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONArray responseArrayContent1 = responseContent.getJSONArray("data");
     List<String> list = new ArrayList<>();
     list.add(responseArrayContent1.getJSONObject(0).getString("address"));

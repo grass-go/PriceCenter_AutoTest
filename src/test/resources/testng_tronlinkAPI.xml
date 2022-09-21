@@ -14,9 +14,16 @@
         <parameter name="trc721OwnerAddress" value="TGzgVdQszcAHbEd9VELwifASLRdQY9kTcx"></parameter>
         <parameter name="trc721TokenAddress" value="TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG"></parameter>
         <parameter name="trc721AssetId" value="1"></parameter>
+        <!--如果需要下架老接口的不带签名的版本，则打开一下注释。-->
+        <!--<groups>
+            <run>
+                <exclude name="NoSignature"></exclude>
+            </run>
+        </groups>-->
         <packages>
             <package name="tron.tronlink.*"></package>
         </packages>
+
     </test>
     <test name="trondataAPI">
         <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>

@@ -23,7 +23,7 @@ public class trc20_info {
     param.put("address","TH48niZfbwHMyqZwEB8wmHfzcvR8ZzJKC6"); //sophia's address
     response = TronlinkApiList.trc20Info(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
      responseArrayContent = responseContent.getJSONArray("data");
 
     //data object

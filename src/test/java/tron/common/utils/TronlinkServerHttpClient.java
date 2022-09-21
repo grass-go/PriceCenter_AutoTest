@@ -37,21 +37,19 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class TronlinkServerHttpClient {
-    static HttpClient httpClient;
-    static HttpClient httpClient2;
-    static HttpGet httpGet;
-    static HttpPost httppost;
-    static HttpPut httpput;
-    static HttpDeleteWithBody httpdelete;
-
-
+    public static HttpClient httpClient;
+    public static HttpClient httpClient2;
+    public static HttpGet httpget;
+    public static HttpPost httppost;
+    public static HttpPut httpput;
+    public static HttpDeleteWithBody httpdelete;
 
     public static HttpResponse response;
 
 
-    static Integer connectionTimeout = Configuration.getByPath("testng.conf")
+    public static Integer connectionTimeout = Configuration.getByPath("testng.conf")
             .getInt("defaultParameter.httpConnectionTimeout");
-    static Integer soTimeout = Configuration.getByPath("testng.conf")
+    public static Integer soTimeout = Configuration.getByPath("testng.conf")
             .getInt("defaultParameter.httpSoTimeout");
 
     static {
@@ -81,7 +79,7 @@ public class TronlinkServerHttpClient {
         }
     }
 
-    public static HttpResponse createGetConnectWithHeader(String url, Map<String, String> params,
+    public static HttpResponse createGetConnect(String url, Map<String, String> params,
                                                           JSONObject requestBody, Map<String, String> header) {
         try {
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
@@ -106,10 +104,10 @@ public class TronlinkServerHttpClient {
                 stringBuffer.deleteCharAt(stringBuffer.length() - 1);
                 url = stringBuffer.toString();
             }
-            httpGet = new HttpGet(url);
+            httpget = new HttpGet(url);
             if (header != null) {
                 for (String key : header.keySet()) {
-                    httpGet.setHeader(key, header.get(key));
+                    httpget.setHeader(key, header.get(key));
                     log.info("Add key to header: " + key + ": " + header.get(key));
                 }
             }
@@ -121,18 +119,18 @@ public class TronlinkServerHttpClient {
                 // log.info("url: "+httpget.toString()+"\nparams: "+requestBody.toString());
             }
 
-            log.info("" + httpGet);
+            log.info("" + httpget);
 
-            response = httpClient.execute(httpGet);
+            response = httpClient.execute(httpget);
         } catch (Exception e) {
             e.printStackTrace();
-            httpGet.releaseConnection();
+            httpget.releaseConnection();
             return null;
         }
         return response;
     }
 
-    public static HttpResponse createPostConnectWithHeader(String url, Map<String,String> params,
+    public static HttpResponse createPostConnect(String url, Map<String,String> params,
                                                            String requestBody, Map<String, String> header) {
         try {
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
@@ -172,7 +170,7 @@ public class TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse createPostConnectWithHeader(String url, Map<String, String> params,
+    public static HttpResponse createPostConnect(String url, Map<String, String> params,
                                                            JSONArray requestBody, Map<String, String> header) {
         try {
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
@@ -213,7 +211,7 @@ public class TronlinkServerHttpClient {
 
     }
 
-    public static HttpResponse createPostConnectWithHeader(String url, Map<String, String> params,
+    public static HttpResponse createPostConnect(String url, Map<String, String> params,
                                                            JSONObject requestBody, Map<String, String> header) {
         try {
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
@@ -431,7 +429,7 @@ public class TronlinkServerHttpClient {
     }
 
     public static void disGetConnect() {
-        httpGet.releaseConnection();
+        httpget.releaseConnection();
     }
 
 

@@ -17,7 +17,7 @@ public class GetConfig extends TronlinkBase {
   public void test000getConfig(){
     response = TronlinkApiList.getConfig();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     data = responseContent.getJSONObject("data");
     Assert.assertTrue(data.containsKey("tronscanUrl"));
     Assert.assertTrue(data.getString("tronscanUrl") != null);

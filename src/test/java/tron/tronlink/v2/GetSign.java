@@ -167,8 +167,8 @@ public class GetSign extends TronlinkBase {
         ));
         parameter.put("signature",signature);
 
-        HttpResponse httprespone = TronlinkApiList.createGetConnectWithHeader(httpHost + path, parameter,null,head);
-        JSONObject result = TronlinkApiList.parseJsonObResponseContent(httprespone);
+        HttpResponse httprespone = TronlinkApiList.createGetConnect(httpHost + path, parameter,null,head);
+        JSONObject result = TronlinkApiList.parseResponse2JsonObject(httprespone);
 
         String pretty = JSON.toJSONString(result, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
             SerializerFeature.WriteDateUseDateFormat);
@@ -223,8 +223,8 @@ public class GetSign extends TronlinkBase {
         trc10tokenList.add("134");
         requestBody.put("assetIdList",trc10tokenList);
         requestBody.put("tokenAddress", "TPvGT3tWUNakTg23ARKMx46MGLT386nYWD");
-        HttpResponse httprespone = TronlinkApiList.createPostConnectWithHeader(httpHost + path, parameter,(JSONObject) JSONObject.parse("{\"trc20s\":[\"TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9\"],\"addressType\":\"2\",\"trc10s\":[\"1002000\"]}"),head);
-        JSONObject result = TronlinkApiList.parseJsonObResponseContent(httprespone);
+        HttpResponse httprespone = TronlinkApiList.createPostConnect(httpHost + path, parameter,(JSONObject) JSONObject.parse("{\"trc20s\":[\"TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9\"],\"addressType\":\"2\",\"trc10s\":[\"1002000\"]}"),head);
+        JSONObject result = TronlinkApiList.parseResponse2JsonObject(httprespone);
 
         String pretty = JSON.toJSONString(result, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
             SerializerFeature.WriteDateUseDateFormat);

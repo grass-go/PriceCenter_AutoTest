@@ -50,7 +50,7 @@ public class AssetList extends TronlinkBase {
 
     response = TronlinkApiList.v2AssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     responseString = TronlinkApiList.parseResponse2String(response);
 
     String cmp_result = new CompareJson("data","priceCny,priceUSD").compareJson(responseString, expResponse);
@@ -75,7 +75,7 @@ public class AssetList extends TronlinkBase {
 
     response = TronlinkApiList.v2AssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     responseString = TronlinkApiList.parseResponse2String(response);
 
     String cmp_result = new CompareJson("data","priceCny,priceUSD,price").compareJson(responseString, expResponse);
@@ -101,7 +101,7 @@ public class AssetList extends TronlinkBase {
     response = TronlinkApiList.v2AssetList(params);
 
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("code"));
     Assert.assertTrue(responseContent.containsKey("message"));
     Assert.assertTrue(responseContent.containsKey("data"));
@@ -151,7 +151,7 @@ public class AssetList extends TronlinkBase {
     response = TronlinkApiList.v2AssetList(params, bodyObject);
 
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
     Assert.assertEquals(0,responseContent.getIntValue("code"));
     Assert.assertEquals("OK",responseContent.get("message"));

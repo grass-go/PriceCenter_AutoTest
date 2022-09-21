@@ -26,7 +26,7 @@ public class InterChainEvent {
     param.put("type","deposit");
     response = TronlinkApiList.getInterChainEvent(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("total"));
      responseArrayContent = responseContent.getJSONArray("data");
 

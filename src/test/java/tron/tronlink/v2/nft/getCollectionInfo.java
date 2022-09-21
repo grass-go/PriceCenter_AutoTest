@@ -30,7 +30,7 @@ public class getCollectionInfo extends TronlinkBase {
 
     response = TronlinkApiList.v2GetCollectionInfo(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
     Assert.assertEquals(0, (int) responseContent.get("code"));
     Assert.assertEquals("OK", responseContent.get("message"));
@@ -45,7 +45,7 @@ public class getCollectionInfo extends TronlinkBase {
     for ( index = 0; index < 10; index++) {
       log.info("cur index is: "+index);
       try {
-        if (200 == TronlinkApiList.createGetConnect(dataContent.getString("imageUrl")).getStatusLine().getStatusCode() && 200 == TronlinkApiList.createGetConnect(dataContent.getString("logoUrl")).getStatusLine().getStatusCode()){
+        if (200 == TronlinkApiList.createGetConnect(dataContent.getString("imageUrl"), null, null, null).getStatusLine().getStatusCode() && 200 == TronlinkApiList.createGetConnect(dataContent.getString("logoUrl"),null, null,null).getStatusLine().getStatusCode()){
           index = 11;
         }
       } catch (Exception e) {

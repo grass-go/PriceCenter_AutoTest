@@ -29,7 +29,7 @@ public class VotingSearch extends TronlinkBase {
     params.put("keyword","TK");
     response = TronlinkApiList.votingV2Search(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
     Assert.assertTrue(responseContent.containsKey("data"));
     JSONObject ob = responseContent.getJSONObject("data");

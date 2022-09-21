@@ -40,7 +40,7 @@ public class getAllCollection extends TronlinkBase {
 
         response = TronlinkApiList.v2GetAllCollection_1155(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
         Assert.assertEquals(0,(int)responseContent.get("code"));
         Assert.assertEquals("OK",responseContent.get("message"));
@@ -85,7 +85,7 @@ public class getAllCollection extends TronlinkBase {
         params.put("address",address721_B58);
         params.put("version","v2");
         response = TronlinkApiList.v2GetAllCollection_1155(params);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
         /*Object topToken = JSONPath.eval(responseContent, "$..data[0].contractAddress");
         log.info("expect top token: "+ expTopToken +", actual top Token"+topToken.toString());

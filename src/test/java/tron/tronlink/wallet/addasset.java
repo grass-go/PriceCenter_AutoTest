@@ -35,7 +35,7 @@ public class addasset {
         // 只传输地址的时候，会返回该地址当前添加过的资产
         response = TronlinkApiList.addasset("{\n" + " \"address\": \"414db7719251ce8ba74549ba35bbdc02418ecde595\"}");
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
+        JSONObject assetInformation = TronlinkApiList.parseResponse2JsonObject(response);
         JSONArray tokenArray = assetInformation.getJSONArray("data");
         trc10tokenList = TronlinkApiList.getTrc10TokenIdList(tokenArray);
         trc20ContractAddressList = TronlinkApiList.getTrc20AddressList(tokenArray);
@@ -60,7 +60,7 @@ public class addasset {
                 + "  ]\n"
                 + "}");
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         responseArrayContent = responseContent.getJSONArray("data");
         System.out.println("```````````````````````");
         System.out.println(responseArrayContent);
@@ -94,7 +94,7 @@ public class addasset {
         tokenJson.put("token10Cancel", trc10tokenList);
         response = TronlinkApiList.addAsset(tokenJson);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
+        JSONObject assetInformation = TronlinkApiList.parseResponse2JsonObject(response);
         JSONArray tokenArray = assetInformation.getJSONArray("data");
         Assert.assertTrue(TronlinkApiList.getTrc10TokenIdList(tokenArray).size() == 1);
         // Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()==trc20ContractAddressList.size());
@@ -107,7 +107,7 @@ public class addasset {
         tokenJson.put("token10", trc10tokenList);
         response = TronlinkApiList.addAsset(tokenJson);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
+        JSONObject assetInformation = TronlinkApiList.parseResponse2JsonObject(response);
         JSONArray tokenArray = assetInformation.getJSONArray("data");
         Assert.assertTrue(TronlinkApiList.getTrc10TokenIdList(tokenArray).size() == trc10tokenList.size());
         // Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()==trc20ContractAddressList.size());
@@ -121,7 +121,7 @@ public class addasset {
         tokenJson.put("token20Cancel", trc20ContractAddressList);
         response = TronlinkApiList.addAsset(tokenJson);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
+        JSONObject assetInformation = TronlinkApiList.parseResponse2JsonObject(response);
         JSONArray tokenArray = assetInformation.getJSONArray("data");
         Assert.assertTrue(TronlinkApiList.getTrc10TokenIdList(tokenArray).size() > 0);
         Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size() < trc20ContractAddressList.size());
@@ -134,7 +134,7 @@ public class addasset {
         tokenJson.put("token20", trc20ContractAddressList);
         response = TronlinkApiList.addAsset(tokenJson);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
+        JSONObject assetInformation = TronlinkApiList.parseResponse2JsonObject(response);
         JSONArray tokenArray = assetInformation.getJSONArray("data");
         Assert.assertTrue(TronlinkApiList.getTrc10TokenIdList(tokenArray).size() > 0);
         // Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size()==trc20ContractAddressList.size());
@@ -148,7 +148,7 @@ public class addasset {
         tokenJson.put("token10", trc10tokenList);
         response = TronlinkApiList.addAsset(tokenJson);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        JSONObject assetInformation = TronlinkApiList.parseJsonObResponseContent(response);
+        JSONObject assetInformation = TronlinkApiList.parseResponse2JsonObject(response);
         JSONArray tokenArray = assetInformation.getJSONArray("data");
         Assert.assertTrue(TronlinkApiList.getTrc10TokenIdList(tokenArray).size() > 0);
         Assert.assertTrue(TronlinkApiList.getTrc20AddressList(tokenArray).size() > 0);

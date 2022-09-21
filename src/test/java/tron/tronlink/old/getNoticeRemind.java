@@ -26,8 +26,8 @@ public class getNoticeRemind extends TronlinkBase {
   public void test01GetNoticeRemind(){
     response = TronlinkApiList.v1GetNoticeRemind();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    TronlinkApiList.printJsonContent(responseContent);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    TronlinkApiList.printJsonObjectContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
     Assert.assertEquals(responseContent.getString("message"),"OK");
     Assert.assertTrue(responseContent.getString("data").isEmpty());
@@ -49,8 +49,8 @@ public class getNoticeRemind extends TronlinkBase {
         + "}";
     response = TronlinkApiList.v1GetDappHistory((JSONObject) JSONObject.parse(dataRaw));
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    TronlinkApiList.printJsonContent(responseContent);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    TronlinkApiList.printJsonObjectContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
     Assert.assertEquals(responseContent.getString("message"),"OK");
     Assert.assertTrue(responseContent.containsKey("data"));
@@ -61,8 +61,8 @@ public class getNoticeRemind extends TronlinkBase {
   public void test03GetAnnouncement(){
     response = TronlinkApiList.v1GetAnnouncement();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    TronlinkApiList.printJsonContent(responseContent);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    TronlinkApiList.printJsonObjectContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
     Assert.assertEquals(responseContent.getString("message"),"OK");
     Assert.assertTrue(responseContent.containsKey("data"));

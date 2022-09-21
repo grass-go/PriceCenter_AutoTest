@@ -23,7 +23,7 @@ public class hot_token {
 
     response = TronlinkApiList.hot_token("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     targetContent = responseContent.getJSONObject("data");
     Assert.assertTrue(targetContent.containsKey("totalTRX"));
     Assert.assertTrue(targetContent.containsKey("token"));

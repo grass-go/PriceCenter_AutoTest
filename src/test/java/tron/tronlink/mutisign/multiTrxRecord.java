@@ -25,8 +25,8 @@ public class multiTrxRecord {
     param.put("netType", "main_net");
     response = TronlinkApiList.multiTrxReword(param);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-    TronlinkApiList.printJsonContent(responseContent);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    TronlinkApiList.printJsonObjectContent(responseContent);
     Assert.assertTrue(responseContent.size() >= 3);
     Assert.assertTrue(responseContent.getString("message").equals("OK"));
 
@@ -65,8 +65,8 @@ public class multiTrxRecord {
       else{
         continue;
       }
-      responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-      TronlinkApiList.printJsonContent(responseContent);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+      TronlinkApiList.printJsonObjectContent(responseContent);
       Assert.assertTrue(responseContent.size() >= 3);
       Assert.assertTrue(responseContent.getString("message").equals("OK"));
 
@@ -106,8 +106,8 @@ public class multiTrxRecord {
       } else {
         continue;
       }
-      responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-      TronlinkApiList.printJsonContent(responseContent);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+      TronlinkApiList.printJsonObjectContent(responseContent);
       Assert.assertTrue(responseContent.size() >= 3);
       Assert.assertTrue(responseContent.getString("message").equals("OK"));
 

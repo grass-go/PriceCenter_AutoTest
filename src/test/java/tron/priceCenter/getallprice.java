@@ -30,7 +30,7 @@ public class getallprice {
     public void Test001getallprice() {
         response = PriceCenterApiList.getallprice();
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         object = responseContent.getJSONObject("data");
         JSONArray tokensArray = object.getJSONArray("rows");
         int rowCount = tokensArray.size();

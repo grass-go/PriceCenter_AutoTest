@@ -31,7 +31,7 @@ public class sdk_verify {
 
         response = TronlinkApiList.sdk_verify(jsonbody);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertNotEquals(null, responseContent);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
         Assert.assertEquals("OK",responseContent.getString("message"));

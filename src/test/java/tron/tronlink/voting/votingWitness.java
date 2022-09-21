@@ -28,7 +28,7 @@ public class votingWitness extends TronlinkBase {
     params.put("has_all","0");
     response = TronlinkApiList.votingV2Witness(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("total"));
     Assert.assertTrue(responseContent.getLongValue("total")>0);
     Assert.assertTrue(responseContent.containsKey("totalVotes"));
@@ -69,7 +69,7 @@ public class votingWitness extends TronlinkBase {
     params.put("has_all","0");
     response = TronlinkApiList.votingV2Witness(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("total"));
     Assert.assertTrue(responseContent.getLongValue("total")>0);
     Assert.assertTrue(responseContent.containsKey("totalVotes"));
@@ -110,7 +110,7 @@ public class votingWitness extends TronlinkBase {
     params.put("has_all","0");
     response = TronlinkApiList.votingV2Witness(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("total"));
     Assert.assertTrue(responseContent.getLongValue("total")>0);
     Assert.assertTrue(responseContent.containsKey("totalVotes"));
@@ -151,7 +151,7 @@ public class votingWitness extends TronlinkBase {
     params.put("has_all","0");
     response = TronlinkApiList.votingV2Witness(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("total"));
     Assert.assertTrue(responseContent.getLongValue("total")>0);
     Assert.assertTrue(responseContent.containsKey("totalVotes"));
@@ -195,7 +195,7 @@ public class votingWitness extends TronlinkBase {
 
     response = TronlinkApiList.votingV2Witness(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("total"));
     Assert.assertTrue(responseContent.getLongValue("total")>0);
     Assert.assertTrue(responseContent.containsKey("totalVotes"));
@@ -236,7 +236,7 @@ public class votingWitness extends TronlinkBase {
 
     response = TronlinkApiList.votingV2Witness(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("total"));
     Assert.assertTrue(responseContent.getLongValue("total")>0);
     Assert.assertTrue(responseContent.containsKey("totalVotes"));

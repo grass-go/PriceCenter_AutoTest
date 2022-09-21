@@ -25,7 +25,7 @@ public class MarketBanner {
     params.put("sort_type","1");
     HttpResponse rs = TronlinkApiList.votingV2Witness(params);
     Assert.assertEquals(rs.getStatusLine().getStatusCode(), 200);
-    JSONObject rc = TronlinkApiList.parseJsonObResponseContent(rs);
+    JSONObject rc = TronlinkApiList.parseResponse2JsonObject(rs);
 
     Assert.assertTrue(rc.containsKey("data"));
     JSONArray rac = rc.getJSONArray("data");
@@ -52,7 +52,7 @@ public class MarketBanner {
 
     response = TronlinkApiList.walletMarketBanner();
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     responseArrayContent = responseContent.getJSONArray("data");
 
     //data object

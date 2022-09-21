@@ -45,7 +45,7 @@ public class transferTrc20 {
 
     Assert.assertEquals(7,index);
 
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertNotEquals(null, responseContent);
     responseArrayContent = responseContent.getJSONArray("data");
 

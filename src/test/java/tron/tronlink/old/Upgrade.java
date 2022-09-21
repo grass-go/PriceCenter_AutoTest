@@ -1,4 +1,4 @@
-package tron.tronlink.v2;
+package tron.tronlink.old;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -40,9 +40,9 @@ public class Upgrade extends TronlinkBase {
     params.put("packageName", "com.tronlinkpro.wallet");
     params.put("chain","MainChain");
     response = TronlinkApiList.v1UpgradeV2(params);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject upgradeObject = responseContent.getJSONObject("data");
-    TronlinkApiList.printJsonContent(responseContent.getJSONObject("data"));
+    TronlinkApiList.printJsonObjectContent(responseContent.getJSONObject("data"));
     String newVersion = upgradeObject.getString("title");
     System.out.println("newVersion:" + newVersion);
     newVersion = newVersion.split("V")[1];
@@ -62,9 +62,9 @@ public class Upgrade extends TronlinkBase {
     params.put("packageName", "com.tronlinkpro.wallet");
     params.put("chain","MainChain");
     response = TronlinkApiList.v1Upgrade(params);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject upgradeObject = responseContent.getJSONObject("data");
-    TronlinkApiList.printJsonContent(responseContent.getJSONObject("data"));
+    TronlinkApiList.printJsonObjectContent(responseContent.getJSONObject("data"));
     String newVersion = upgradeObject.getString("title");
     newVersion = newVersion.split("V")[1];
     newVersion = newVersion.replace(".","");
@@ -86,9 +86,9 @@ public class Upgrade extends TronlinkBase {
     params.put("packageName", "com.tronlinkpro.wallet");
     params.put("chain","MainChain");
     response = TronlinkApiList.v1UpgradeV2(params);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject upgradeObject = responseContent.getJSONObject("data");
-    TronlinkApiList.printJsonContent(responseContent.getJSONObject("data"));
+    TronlinkApiList.printJsonObjectContent(responseContent.getJSONObject("data"));
     String newVersion = upgradeObject.getString("title");
     System.out.println("newVersion:" + newVersion);
     newVersion = newVersion.split("V")[1];
@@ -108,9 +108,9 @@ public class Upgrade extends TronlinkBase {
     params.put("packageName", "com.tronlinkpro.wallet");
     params.put("chain","MainChain");
     response = TronlinkApiList.v1Upgrade(params);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject upgradeObject = responseContent.getJSONObject("data");
-    TronlinkApiList.printJsonContent(responseContent.getJSONObject("data"));
+    TronlinkApiList.printJsonObjectContent(responseContent.getJSONObject("data"));
     String newVersion = upgradeObject.getString("title");
     newVersion = newVersion.split("V")[1];
     newVersion = newVersion.replace(".","");
@@ -127,9 +127,9 @@ public class Upgrade extends TronlinkBase {
     params.put("packageName", "wallet.tronlink.harmony");
     params.put("chain","MainChain");
     response = TronlinkApiList.v1UpgradeV2(params);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject upgradeObject = responseContent.getJSONObject("data");
-    TronlinkApiList.printJsonContent(responseContent.getJSONObject("data"));
+    TronlinkApiList.printJsonObjectContent(responseContent.getJSONObject("data"));
     String newVersion = upgradeObject.getString("title");
     System.out.println("newVersion:" + newVersion);
     newVersion = newVersion.split("V")[1];

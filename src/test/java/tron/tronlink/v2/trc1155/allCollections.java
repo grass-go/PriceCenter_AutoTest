@@ -41,7 +41,7 @@ public class allCollections extends TronlinkBase{
 
         response = TronlinkApiList.v2AllCollections_1155(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
         //接口包括预设token，并且顺序严格等于预期。置顶币 -> 持有数据从大到小排 -> token简称忽略大小写排序a-z
         /*Object topToken = JSONPath.eval(responseContent, "$..data.token[0].contractAddress");

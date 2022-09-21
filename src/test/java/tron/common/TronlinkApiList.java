@@ -22,6 +22,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLContext;
+import org.apache.commons.lang3.StringUtils;
 
 import com.google.api.Http;
 import org.apache.http.Header;
@@ -67,814 +68,29 @@ import tron.common.utils.Configuration;
 import tron.trondata.base.TrondataBase;
 import tron.tronlink.base.GetSign;
 import tron.tronlink.base.TronlinkBase;
+
+import tron.common.utils.TronlinkServerHttpClient;
 import tron.common.utils.HttpDeleteWithBody;
 
 @Slf4j
-public class TronlinkApiList {
+public class TronlinkApiList extends TronlinkServerHttpClient {
 
-    static HttpClient httpClient;
-    static HttpClient httpClient2;
-    static HttpPost httppost;
-    static HttpGet httpget;
-    static HttpGet httpGet;
-    static HttpPut httpput;
-    static HttpDeleteWithBody httpdelete;
 
     public static String HttpTronDataNode = TrondataBase.trondataUrl;
     public static String HttpNode = TronlinkBase.tronlinkUrl;
-    static HttpResponse response;
-    static Integer connectionTimeout = Configuration.getByPath("testng.conf")
-            .getInt("defaultParameter.httpConnectionTimeout");
-    static Integer soTimeout = Configuration.getByPath("testng.conf")
-            .getInt("defaultParameter.httpSoTimeout");
-    static String transactionString;
-    static String transactionSignString;
     static JSONObject responseContent;
-    static JSONObject signResponseContent;
-    static JSONObject transactionApprovedListContent;
-    static Long requestTime = 0L;
+    public static Map<String, String> header = new HashMap<>();
+
     static byte ADD_PRE_FIX_BYTE_MAINNET = (byte) 0x41;
     //new sig needed parameter
     public static String defaultSys = "AndroidTest";
     public static String defaultLang = "1";
     public static String defaultPkg = "com.tronlinkpro.wallet";
     public static String defaultVersion = "1.0.0";
+    //设置的老接口从本版本开始鉴权。对于chrome，从4.0.0开始,对于安卓从4.10.0开始
+    String chromeUpdateVersion = "4.0.0";
+    String androidUpdateVersion = "4.10.0";
 
-    static {
-        PoolingClientConnectionManager pccm = new PoolingClientConnectionManager();
-        pccm.setDefaultMaxPerRoute(80);
-        pccm.setMaxTotal(100);
-
-        httpClient = new DefaultHttpClient(pccm);
-
-        // if httpClient occur "javax.net.ssl.SSLException: Certificate for
-        // <list.tronlink.org> doesn't match any of the subject alternative names", then
-        // use below code
-        TrustStrategy acceptingTrustStrategy = new TrustSelfSignedStrategy();
-        try {
-            SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom()
-                    .loadTrustMaterial(null, acceptingTrustStrategy)
-                    .build();
-            SSLConnectionSocketFactory scsf = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
-            httpClient2 = HttpClients.custom().setSSLSocketFactory(scsf).setConnectionTimeToLive(10, TimeUnit.SECONDS)
-                    .build();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (KeyManagementException e) {
-            e.printStackTrace();
-        } catch (KeyStoreException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-
-
-    public static HttpResponse classify() {
-        try {
-            String requestUrl = HttpNode + "/api/dapp/v2/classify";
-            log.info(requestUrl);
-            response = createGetConnectClient2(requestUrl, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse hot_recommend() {
-        try {
-            String requestUrl = HttpNode + "/api/dapp/v2/dapp/hot_recommend";
-            log.info(requestUrl);
-            response = createGetConnect(requestUrl);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse multiTrxReword(HashMap<String, String> param) throws Exception {
-        final String requestUrl = HttpNode + "/api/wallet/multi/trx_record";
-        URIBuilder builder = new URIBuilder(requestUrl);
-        if (param != null) {
-            for (String key : param.keySet()) {
-                builder.addParameter(key, param.get(key));
-            }
-        }
-        URI uri = builder.build();
-        response = createGetConnect(uri);
-        return response;
-    }
-
-    public static HttpResponse trc20Info(HashMap<String, String> param) throws Exception {
-        final String requestUrl = HttpNode + "/api/wallet/trc20_info";
-        URIBuilder builder = new URIBuilder(requestUrl);
-        if (param != null) {
-            for (String key : param.keySet()) {
-                builder.addParameter(key, param.get(key));
-            }
-        }
-        URI uri = builder.build();
-        response = createGetConnect(uri);
-        return response;
-    }
-
-    public static HttpResponse getInterChainEvent(HashMap<String, String> param) throws Exception {
-        final String requestUrl = HttpNode + "/api/interchain-event";
-        URIBuilder builder = new URIBuilder(requestUrl);
-        if (param != null) {
-            for (String key : param.keySet()) {
-                builder.addParameter(key, param.get(key));
-            }
-        }
-        URI uri = builder.build();
-        response = createGetConnect(uri);
-        return response;
-    }
-
-    public static HttpResponse apiTransferTrx(HashMap<String, String> param) throws Exception {
-        final String requestUrl = HttpNode + "/api/transfer/trx";
-        URIBuilder builder = new URIBuilder(requestUrl);
-        if (param != null) {
-            for (String key : param.keySet()) {
-                builder.addParameter(key, param.get(key));
-            }
-        }
-        URI uri = builder.build();
-        response = createGetConnect(uri);
-        return response;
-    }
-
-    public static HttpResponse apiTransferToken10(HashMap<String, String> param) throws Exception {
-        final String requestUrl = HttpNode + "/api/transfer/token10";
-        URIBuilder builder = new URIBuilder(requestUrl);
-        if (param != null) {
-            for (String key : param.keySet()) {
-                builder.addParameter(key, param.get(key));
-            }
-        }
-        URI uri = builder.build();
-        response = createGetConnect(uri);
-        return response;
-    }
-
-    public static HttpResponse apiTransferTrc20(HashMap<String, String> param) throws Exception {
-        final String requestUrl = HttpNode + "/api/transfer/trc20";
-        URIBuilder builder = new URIBuilder(requestUrl);
-        if (param != null) {
-            for (String key : param.keySet()) {
-                builder.addParameter(key, param.get(key));
-            }
-        }
-        URI uri = builder.build();
-        response = createGetConnect(uri);
-        return response;
-    }
-
-    public static HttpResponse apiTransferTrc20Status(HashMap<String, String> param) throws Exception {
-        final String requestUrl = HttpNode + "/api/transfer/trc20_status";
-        URIBuilder builder = new URIBuilder(requestUrl);
-        if (param != null) {
-            for (String key : param.keySet()) {
-                builder.addParameter(key, param.get(key));
-            }
-        }
-        URI uri = builder.build();
-        response = createGetConnect(uri);
-        return response;
-    }
-
-    public static HttpResponse votingV2Witness(Map<String, String> params) throws Exception {
-        String requestUrl = HttpNode + "/api/voting/v2/witness";
-
-        response = createGetConnect(requestUrl, params);
-        return response;
-    }
-
-    public static boolean getAllWitnessFromTronscan() {
-        // String requestUrl = "https://apilist.tronscan.org/api/vote/witness";
-        String requestUrl = TronlinkBase.tronscanApiUrl + "/api/vote/witness";
-        response = createGetConnect(requestUrl);
-        // Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-        if ((response.getStatusLine().getStatusCode() != 200)
-                || responseContent == null
-                || !(responseContent.containsKey("total"))
-                || !(responseContent.getLongValue("total") > 0)
-                || !(responseContent.containsKey("totalVotes"))
-                || !(responseContent.getLongValue("totalVotes") > 0)
-                || !(responseContent.containsKey("data"))
-                || !(responseContent.getJSONArray("data").size() > 0)) {
-            return false;
-        }
-        return true;
-    }
-
-    public static boolean getVoteSelfFromTronscan(Map<String, String> params) {
-        String requestUrl = TronlinkBase.tronscanApiUrl + "/api/vote";
-        response = createGetConnect(requestUrl, params);
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
-        if ((response.getStatusLine().getStatusCode() != 200)
-                || responseContent == null
-                || !(responseContent.containsKey("total"))
-                || !(responseContent.getLongValue("total") > 0)
-                || !(responseContent.containsKey("totalVotes"))
-                || !(responseContent.getLongValue("totalVotes") > 0)
-                || !(responseContent.containsKey("data"))) {
-            return false;
-        }
-        return true;
-    }
-
-    public static HttpResponse votingV2Search(Map<String, String> params) throws Exception {
-        String requestUrl = HttpNode + "/api/voting/v2/search";
-
-        response = createGetConnect(requestUrl, params);
-        return response;
-    }
-
-    public static HttpResponse votingV2Self(Map<String, String> params) throws Exception {
-        String requestUrl = HttpNode + "/api/voting/v2/self";
-
-        response = createGetConnect(requestUrl, params);
-        return response;
-    }
-
-    public static HttpResponse walletMarketBanner() {
-        String requestUrl = HttpNode + "/api/wallet/market/banner";
-
-        response = createGetConnect(requestUrl);
-        return response;
-    }
-
-    public static HttpResponse walletMarketFavorite(Map<String, String> params) throws Exception {
-        String requestUrl = HttpNode + "/api/wallet/market/favorite";
-
-        response = createGetConnect(requestUrl, params);
-        return response;
-    }
-
-    public static HttpResponse walletMarketTrxUsdt(Map<String, String> params) throws Exception {
-        String requestUrl = HttpNode + "/api/wallet/market/trx_usdt";
-
-        response = createGetConnect(requestUrl, params);
-        return response;
-    }
-
-    public static HttpResponse head() {
-        try {
-            String requestUrl = HttpNode + "/api/dapp/v2/head";
-            log.info(requestUrl);
-            response = createGetConnectClient2(requestUrl, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse hot_search() {
-        try {
-            String requestUrl = HttpNode + "/api/dapp/v2/dapp/hot_search";
-            log.info(requestUrl);
-            response = createGetConnectClient2(requestUrl, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse dapp_list(Map<String, String> params) {
-        try {
-            String requestUrl = HttpNode + "/api/dapp/v2/dapp";
-            log.info(requestUrl);
-            response = createGetConnectClient2(requestUrl, params);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse dappBanner() {
-        try {
-            String requestUrl = HttpNode + "/api/dapp/v2/banner";
-            response = createGetConnectClient2(requestUrl, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse dappAuthorizedProject() {
-        try {
-            String requestUrl = HttpNode + "/api/dapp/v2/authorized_project";
-            response = createGetConnectClient2(requestUrl, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-
-
-    public static HttpResponse swapExchanges(Map<String,String> params) {
-        try {
-            String requestUrl = HttpNode + "/api/swap/v1/exchanges";
-            response = createGetConnectClient2(requestUrl, params);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse transfer1155(Map<String,String> params) {
-        try {
-            String curUri = "/api/transfer/v2/trc1155";
-            response = CreateGetConnectWithSIgnature(curUri, params, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse dappPlug() {
-        try {
-            String requestUrl = HttpNode + "/dapphouseapp/plug";
-            response = createGetConnectClient2(requestUrl, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse dappId(Map<String, String> params) {
-        try {
-            String requestUrl = HttpNode + "/api/dapp/v2/dapp/id";
-            log.info(requestUrl);
-            response = createGetConnect(requestUrl);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse search(Map<String, String> params) {
-        try {
-            String requestUrl = HttpNode + "/api/dapp/v2/dapp/search";
-            response = createGetConnectClient2(requestUrl, params);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse history(Map<String, String> params) {
-        try {
-            String requestUrl = HttpNode + "/api/dapp/v2/dapp/history";
-            response = createGetConnectClient2(requestUrl, params);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse put_history(JSONObject requestBody) {
-        try {
-            String requestUrl = HttpNode + "/api/dapp/v2/dapp/history";
-            Map<String, String> header = new HashMap<>();
-            header.put("Lang","1");
-            header.put("Content-Type","application/json");
-            response = createPutConnect(requestUrl, null, requestBody,header);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpput.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse delete_history(JSONObject requestBody) {
-        try {
-            String requestUrl = HttpNode + "/api/dapp/v2/dapp/history";
-            Map<String, String> header = new HashMap<>();
-            header.put("Lang","1");
-            header.put("Content-Type","application/json");
-            response = createDeleteConnect(requestUrl, null,requestBody,header);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpdelete.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse accountList(JSONArray body) {
-        try {
-            String requestUrl = HttpNode + "/api/wallet/account/list";
-            response = createPostConnect(requestUrl, body);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse allasset(String address) {
-        try {
-            String requestUrl = HttpNode + "/api/wallet/class/allasset";
-            JsonObject body = new JsonObject();
-            body.addProperty("address", address);
-            response = createPostConnect(requestUrl, body);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse assetlist(String address) {
-        try {
-            String requestUrl = HttpNode + "/api/wallet/assetlist";
-            JsonObject body = new JsonObject();
-            body.addProperty("address", address);
-            response = createPostConnect(requestUrl, body);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse lotteryData() throws Exception {
-        final String requesturl = HttpNode + "/api/wallet/lottery/default_data";
-        URIBuilder builder = new URIBuilder(requesturl);
-        URI uri = builder.build();
-        response = createGetConnect(requesturl);
-        return response;
-    }
-
-    public static HttpResponse hot_token(String address) {
-        try {
-            String requestUrl = HttpNode + "/api/wallet/hot_token";
-            JsonObject body = new JsonObject();
-            body.addProperty("address", address);
-            response = createPostConnect(requestUrl, body);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse addasset(String json) {
-        try {
-            String requestUrl = HttpNode + "/api/wallet/addasset";
-            response = createPostConnect(requestUrl, json);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse ieo() {
-        final String requestUrl = HttpNode + "/api/wallet/ieo";
-        response = createGetConnect(requestUrl, null);
-        return response;
-    }
-
-    public static HttpResponse getNodeInfo(JSONArray body) {
-        final String requestUrl = HttpNode + "/api/wallet/node_info";
-        response = createPostConnect(requestUrl, body);
-        return response;
-    }
-
-    // nodeinfo升级的请求接口
-    public static HttpResponse getNodeInfoV2(Map<String,String> params, JSONArray body, Map<String,String> headers) {
-        final String requestUrl = HttpNode + "/api/wallet/node_info";
-        log.info(requestUrl);
-        response = createPostConnectWithHeaderV2(requestUrl,params, body, headers);
-        return response;
-    }
-
-
-
-    public static HttpResponse getConfig() {
-        final String requestUrl = HttpNode + "/api/wallet/get_config";
-        response = createGetConnect(requestUrl, null);
-        return response;
-    }
-
-    public static HttpResponse dappToMainFee() {
-        final String requestUrl = HttpNode + "/api/transfer/dappToMainFee";
-        response = createGetConnect(requestUrl, null);
-        return response;
-    }
-
-    public static HttpResponse addAsset(JSONObject address) throws Exception {
-        final String requestUrl = HttpNode + "/api/wallet/addasset";
-        response = createConnect(requestUrl, address);
-        return response;
-    }
-
-    public static HttpResponse getAirdropTransaction(Map<String, String> params) {
-        final String requestUrl = HttpNode + "/api/wallet/airdrop_transaction";
-        response = createGetConnect(requestUrl, params);
-        return response;
-    }
-
-    public static HttpResponse getAllClassAsset(String node, JSONObject address) throws Exception {
-        final String requestUrl = node + "/api/wallet/class/allasset";
-        response = createConnect(requestUrl, address);
-        return response;
-    }
-
-    public static List<String> getTrc10TokenIdList(JSONArray tokenArray) throws Exception {
-        List<String> tokenIdList = new ArrayList<>();
-        String id = "";
-        for (int i = 0; i < tokenArray.size(); i++) {
-            id = tokenArray.getJSONObject(i).getString("id");
-            if (id.isEmpty()) {
-                continue;
-            }
-            tokenIdList.add(id);
-        }
-        return tokenIdList;
-    }
-
-    public static List<String> getTrc20AddressList(JSONArray tokenArray) throws Exception {
-        List<String> trc20ContractAddressList = new ArrayList<>();
-        String contractAddress = "";
-        for (int i = 0; i < tokenArray.size(); i++) {
-            contractAddress = tokenArray.getJSONObject(i).getString("contractAddress");
-            if (contractAddress.isEmpty()) {
-                continue;
-            }
-            trc20ContractAddressList.add(contractAddress);
-        }
-        return trc20ContractAddressList;
-    }
-
-    public static HttpResponse getTransferTrx(Map<String, String> params) {
-        try {
-            String requestUrl = HttpTronDataNode + "/api/transfer/trx";
-            response = createGetConnectNoHeader(requestUrl, params);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse getTransferToken10(Map<String, String> params) {
-        try {
-            String requestUrl = HttpTronDataNode + "/api/transfer/token10";
-            response = createGetConnectNoHeader(requestUrl, params);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse getTransferTrc20(Map<String, String> params) {
-        try {
-            String requestUrl = HttpTronDataNode + "/api/transfer/trc20";
-            response = createGetConnectNoHeader(requestUrl, params);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse getTrc20Holders(Map<String, String> params) {
-        try {
-            String requestUrl = HttpTronDataNode + "/api/trc20/holders";
-            response = createGetConnectNoHeader(requestUrl, params);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse multiTransaction(JSONObject body) {
-        try {
-            String requestUrl = HttpNode + "/api/wallet/multi/transaction";
-            response = createConnect(requestUrl, body);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static Boolean verificationResult(HttpResponse response) {
-        if (response.getStatusLine().getStatusCode() != 200) {
-            return false;
-        }
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-
-        return true;
-    }
-
-    /**
-     * constructor.
-     */
-    public static HttpResponse getInviteCode(JSONObject param) throws Exception {
-        final String requestUrl = HttpNode + "/api/wallet/invite/get_code";
-        response = createConnect(requestUrl, param);
-        return response;
-    }
-
-    public static HttpResponse failTransfer(JSONObject body) {
-        final String requestUrl = HttpNode + "/api/wallet/fail_transfer";
-        response = createConnect(requestUrl, body);
-        return response;
-    }
-
-    public static HttpResponse createPutConnect(String url, Map<String, String> params,
-                                                JSONObject requestBody, Map<String, String> headers) {
-        try {
-            // if ssl issue occur, use httpClient.custome().setxxx to set timeout.
-            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
-            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
-
-            httpput = new HttpPut(url);
-            httpput.setHeader("Content-type", "application/json; charset=utf-8");
-            httpput.setHeader("Connection", "Keep-Alive");
-            if (headers != null) {
-                for (String key : headers.keySet()) {
-                    httpput.addHeader(key, headers.get(key));
-                }
-            }
-            Header[] allHeaders = httpput.getAllHeaders();
-            for (int i = 0; i < allHeaders.length; i++) {
-                log.info("" + allHeaders[i]);
-            }
-
-            if (params != null) {
-                StringBuffer stringBuffer = new StringBuffer(url);
-                stringBuffer.append("?");
-                for (Map.Entry<String, String> entry : params.entrySet()) {
-                    stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
-                }
-                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-                url = stringBuffer.toString();
-            }
-            log.info("Put: "+url);
-
-            if (requestBody != null) {
-                StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
-                entity.setContentEncoding("UTF-8");
-                entity.setContentType("application/json");
-                httpput.setEntity(entity);
-            }
-            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-            // log.info("url: " + httppost.toString() + "\n params:"+requestBody);
-            response = httpClient.execute(httpput);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpput.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse createDeleteConnect(String url, Map<String, String> params,
-                                                JSONObject requestBody, Map<String, String> headers) {
-
-        try {
-            httpdelete = new HttpDeleteWithBody(url);
-            // if ssl issue occur, use httpClient.custome().setxxx to set timeout.
-            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
-            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
-
-            httpdelete.setHeader("Content-type", "application/json; charset=utf-8");
-            httpdelete.setHeader("Connection", "Keep-Alive");
-            if (headers != null) {
-                for (String key : headers.keySet()) {
-                    httpdelete.addHeader(key, headers.get(key));
-                }
-            }
-            Header[] allHeaders = httpdelete.getAllHeaders();
-            for (int i = 0; i < allHeaders.length; i++) {
-                log.info("" + allHeaders[i]);
-            }
-
-            if (params != null) {
-                StringBuffer stringBuffer = new StringBuffer(url);
-                stringBuffer.append("?");
-                for (Map.Entry<String, String> entry : params.entrySet()) {
-                    stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
-                }
-                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-                url = stringBuffer.toString();
-            }
-            log.info("Delete: "+url);
-
-            if (requestBody != null) {
-                StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
-                entity.setContentEncoding("UTF-8");
-                entity.setContentType("application/json");
-                httpdelete.setEntity(entity);
-            }
-
-            response = httpClient.execute(httpdelete);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpdelete.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-
-    public static HttpResponse createPostConnect(String url, String requestBody) {
-        try {
-            // if ssl issue occur, use httpClient.custome().setxxx to set timeout.
-            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
-            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
-
-            httppost = new HttpPost(url);
-            httppost.setHeader("Content-type", "application/json; charset=utf-8");
-            httppost.setHeader("Connection", "Keep-Alive");
-            if (requestBody != null) {
-                StringEntity entity = new StringEntity(requestBody, Charset.forName("UTF-8"));
-                entity.setContentEncoding("UTF-8");
-                entity.setContentType("application/json");
-                httppost.setEntity(entity);
-            }
-            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-            // log.info("url: " + httppost.toString() + "\n params:"+requestBody);
-            response = httpClient.execute(httppost);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse insertInviteCode(JSONObject param) throws Exception {
-        final String requestUrl = HttpNode + "/api/wallet/invite/code";
-        response = createConnect(requestUrl, param);
-        return response;
-    }
-
-    public static HttpResponse nilexGetAssetlist(String address, Map<String, String> header) {
-        try {
-            String requestUrl = "https://niletest.tronlink.org/api/wallet/assetlist";
-            JSONObject body = new JSONObject();
-            body.put("address", address);
-            header.put("Content-type", "application/json; charset=utf-8");
-            header.put("Connection", "Close");
-            response = createPostConnectWithHeader(requestUrl, null, body, header);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
 
 
     public static Map<String, String> getNewSigHeader(String needSys, String testVersion, String testLang, String testPkg) {
@@ -961,7 +177,7 @@ public class TronlinkApiList {
         return signature;
     }
 
-    public static HttpResponse CreateGetConnectWithSIgnature(String curURI, Map<String, String> caseParams,Map<String, String> caseHeader) {
+    public static HttpResponse createGetConnectWithSignature(String curURI, Map<String, String> caseParams,Map<String, String> caseHeader) {
         String requestUrl = HttpNode + curURI;
         Map<String, String> params = getNewSigParams(defaultSys);
         if(caseParams != null){
@@ -976,10 +192,10 @@ public class TronlinkApiList {
         String cursig = getNewSignature(curURI,"GET", caseParams.get("address"), params, headers);
         params.put("signature", cursig);
 
-        response = createGetConnectWithHeader(requestUrl, params, null, headers);
+        response = createGetConnect(requestUrl, params, null, headers);
         return response;
     }
-    
+
     public static HttpResponse createPostConnectWithSignature(String curURI,Map<String, String> caseParams, Map<String, String> caseHeader,JSONObject object ) {
         Map<String, String> params = getNewSigParams(defaultSys);
         if(caseParams != null){
@@ -995,7 +211,7 @@ public class TronlinkApiList {
         params.put("signature", cursig);
 
         String requestUrl = HttpNode + curURI;
-        response = createPostConnectWithHeader(requestUrl, params, object, headers);
+        response = createPostConnect(requestUrl, params, object, headers);
         return response;
     }
 
@@ -1014,58 +230,507 @@ public class TronlinkApiList {
         params.put("signature", cursig);
 
         String requestUrl = HttpNode + curURI;
-        response = createPostConnectWithHeader(requestUrl, params, object, headers);
+        response = createPostConnect(requestUrl, params, object, headers);
+        return response;
+    }
+    //if request version is larger than fixedVersion ,return false.
+    //while request version is smaller than fixed Version return true.
+    public static boolean needUpgrade(String reqVersion, String fixedVersion) {
+        if (StringUtils.isEmpty(fixedVersion)) {
+            return false;
+        }
+
+        if (StringUtils.isEmpty(reqVersion)) {
+            return false;
+        }
+
+        if (Objects.equals(reqVersion, fixedVersion)) {
+            return false;
+        }
+
+        try {
+            final String[] splitReq = reqVersion.split("\\.");
+            final String[] splitDB = fixedVersion.split("\\.");
+
+            int minLen = splitReq.length > splitDB.length ? splitDB.length : splitReq.length;
+
+            for (int i = 0; i < minLen; i++) {
+                int reqV = Integer.valueOf(splitReq[i]);
+                int dbV = Integer.valueOf(splitDB[i]);
+
+                if (dbV > reqV) {
+                    return true;
+                } else if (dbV < reqV) {
+                    return false;
+                }
+            }
+
+            return splitDB.length > splitReq.length;
+        } catch (Exception ex) {
+            log.error("", ex);
+        }
+
+        return false;
+    }
+
+    public static HttpResponse classify() {
+        String requestUrl = HttpNode + "/api/dapp/v2/classify";
+        header.put("Lang", defaultLang);
+        response = createGetConnect(requestUrl, null, null,header);
+        return response;
+    }
+
+    public static HttpResponse hot_recommend() {
+        String requestUrl = HttpNode + "/api/dapp/v2/dapp/hot_recommend";
+        header.clear();
+        header.put("Lang", defaultLang);
+        response = createGetConnect(requestUrl,null,null,header);
+        return response;
+    }
+
+    public static HttpResponse multiTrxReword(HashMap<String, String> param) throws Exception {
+        String requestUrl = HttpNode + "/api/wallet/multi/trx_record";
+        header.clear();
+        header.put("Lang", defaultLang);
+        response = createGetConnect(requestUrl,null,null,header);
+        return response;
+    }
+
+    public static HttpResponse trc20Info(HashMap<String, String> param) throws Exception {
+        String requestUrl = HttpNode + "/api/wallet/trc20_info";
+        response = createGetConnect(requestUrl,param,null,null);
+        return response;
+    }
+
+    public static HttpResponse getInterChainEvent(HashMap<String, String> param) throws Exception {
+        final String requestUrl = HttpNode + "/api/interchain-event";
+        response = createGetConnect(requestUrl,param,null,null);
+        return response;
+    }
+
+    public static HttpResponse apiTransferTrx(HashMap<String, String> param) throws Exception {
+        final String requestUrl = HttpNode + "/api/transfer/trx";
+        response = createGetConnect(requestUrl,param,null,null);
+        return response;
+    }
+
+    public static HttpResponse apiTransferToken10(HashMap<String, String> param) throws Exception {
+        final String requestUrl = HttpNode + "/api/transfer/token10";
+        response = createGetConnect(requestUrl,param,null,null);
+        return response;
+    }
+
+    public static HttpResponse apiTransferTrc20(HashMap<String, String> param) throws Exception {
+        final String requestUrl = HttpNode + "/api/transfer/trc20";
+        response = createGetConnect(requestUrl,param,null,null);
+        return response;
+    }
+
+    public static HttpResponse apiTransferTrc20Status(HashMap<String, String> param) throws Exception {
+        String requestUrl = HttpNode + "/api/transfer/trc20_status";
+        response = createGetConnect(requestUrl,param,null,null);
+        return response;
+    }
+
+    public static HttpResponse votingV2Witness(Map<String, String> params) throws Exception {
+        String requestUrl = HttpNode + "/api/voting/v2/witness";
+        response = createGetConnect(requestUrl, params,null,null);
+        return response;
+    }
+
+    public static boolean getAllWitnessFromTronscan() {
+        String requestUrl = TronlinkBase.tronscanApiUrl + "/api/vote/witness";
+        response = createGetConnect(requestUrl,null,null,null);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+        if ((response.getStatusLine().getStatusCode() != 200)
+                || responseContent == null
+                || !(responseContent.containsKey("total"))
+                || !(responseContent.getLongValue("total") > 0)
+                || !(responseContent.containsKey("totalVotes"))
+                || !(responseContent.getLongValue("totalVotes") > 0)
+                || !(responseContent.containsKey("data"))
+                || !(responseContent.getJSONArray("data").size() > 0)) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean getVoteSelfFromTronscan(Map<String, String> params) {
+        String requestUrl = TronlinkBase.tronscanApiUrl + "/api/vote";
+        response = createGetConnect(requestUrl, params,null,null);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+        if ((response.getStatusLine().getStatusCode() != 200)
+                || responseContent == null
+                || !(responseContent.containsKey("total"))
+                || !(responseContent.getLongValue("total") > 0)
+                || !(responseContent.containsKey("totalVotes"))
+                || !(responseContent.getLongValue("totalVotes") > 0)
+                || !(responseContent.containsKey("data"))) {
+            return false;
+        }
+        return true;
+    }
+
+    public static HttpResponse votingV2Search(Map<String, String> params) throws Exception {
+        String requestUrl = HttpNode + "/api/voting/v2/search";
+        response = createGetConnect(requestUrl, params,null,null);
+        return response;
+    }
+
+    public static HttpResponse votingV2Self(Map<String, String> params) throws Exception {
+        String requestUrl = HttpNode + "/api/voting/v2/self";
+        response = createGetConnect(requestUrl, params, null, null);
+        return response;
+    }
+
+    public static HttpResponse walletMarketBanner() {
+        String requestUrl = HttpNode + "/api/wallet/market/banner";
+        header.clear();
+        header.put("Lang",defaultLang);
+        response = createGetConnect(requestUrl,null,null,header);
+        return response;
+    }
+
+    public static HttpResponse walletMarketFavorite(Map<String, String> params) throws Exception {
+        String requestUrl = HttpNode + "/api/wallet/market/favorite";
+        response = createGetConnect(requestUrl, params,null,null);
+        return response;
+    }
+
+    public static HttpResponse walletMarketTrxUsdt(Map<String, String> params) throws Exception {
+        String requestUrl = HttpNode + "/api/wallet/market/trx_usdt";
+        response = createGetConnect(requestUrl, params,null,null);
+        return response;
+    }
+
+    public static HttpResponse head() {
+        String requestUrl = HttpNode + "/api/dapp/v2/head";
+        header.clear();
+        header.put("Lang",defaultLang);
+        response = createGetConnect(requestUrl, null, null, header);
+        return response;
+    }
+
+    public static HttpResponse hot_search() {
+        String requestUrl = HttpNode + "/api/dapp/v2/dapp/hot_search";
+        header.clear();
+        header.put("Lang",defaultLang);
+        response = createGetConnect(requestUrl, null, null, header);
+        return response;
+    }
+
+    public static HttpResponse dapp_list(Map<String, String> params) {
+        String requestUrl = HttpNode + "/api/dapp/v2/dapp";
+        header.clear();
+        header.put("Lang",defaultLang);
+        response = createGetConnect(requestUrl, params, null, header);
+        return response;
+    }
+
+    public static HttpResponse dappBanner() {
+        String requestUrl = HttpNode + "/api/dapp/v2/banner";
+        header.clear();
+        header.put("Lang",defaultLang);
+        response = createGetConnect(requestUrl, null,null,header);
+        return response;
+    }
+
+    public static HttpResponse dappAuthorizedProject() {
+        String requestUrl = HttpNode + "/api/dapp/v2/authorized_project";
+        response = createGetConnect(requestUrl, null,null,null);
         return response;
     }
 
 
-    public static HttpResponse V2UnfollowCollections(Map<String, String> params) {
+
+    public static HttpResponse swapExchanges(Map<String,String> params) {
+        String requestUrl = HttpNode + "/api/swap/v1/exchanges";
+        response = createGetConnect(requestUrl, params,null,null);
+        return response;
+    }
+
+    public static HttpResponse transfer1155(Map<String,String> params) {
+        String curUri = "/api/transfer/v2/trc1155";
+        response = createGetConnectWithSignature(curUri, params, null);
+        return response;
+    }
+
+    public static HttpResponse dappPlug() {
+        String requestUrl = HttpNode + "/dapphouseapp/plug";
+        header.clear();
+        header.put("Lang",defaultLang);
+        response = createGetConnect(requestUrl, null,null,header);
+        return response;
+    }
+
+    //to do : check api not found?
+    public static HttpResponse dappId(Map<String, String> params) {
+        String requestUrl = HttpNode + "/api/dapp/v2/dapp/id";
+        log.info(requestUrl);
+        response = createGetConnect(requestUrl,params,null,null);
+        return response;
+    }
+
+    public static HttpResponse search(Map<String, String> params) {
+        String requestUrl = HttpNode + "/api/dapp/v2/dapp/search";
+        header.clear();
+        header.put("Lang",defaultLang);
+        response = createGetConnect(requestUrl, params, null,header);
+        return response;
+    }
+
+    public static HttpResponse history(Map<String, String> params) {
+        String requestUrl = HttpNode + "/api/dapp/v2/dapp/history";
+        header.clear();
+        header.put("Lang",defaultLang);
+        response = createGetConnect(requestUrl, params,null,header);
+        return response;
+    }
+
+    public static HttpResponse put_history(JSONObject requestBody) {
+        String requestUrl = HttpNode + "/api/dapp/v2/dapp/history";
+        header.clear();
+        header.put("Lang","1");
+        header.put("Content-Type","application/json");
+        response = createPutConnect(requestUrl, null, requestBody,header);
+        return response;
+    }
+
+    public static HttpResponse delete_history(JSONObject requestBody) {
+        String requestUrl = HttpNode + "/api/dapp/v2/dapp/history";
+        header.clear();
+        header.put("Lang","1");
+        header.put("Content-Type","application/json");
+        response = createDeleteConnect(requestUrl, null,requestBody,header);
+        return response;
+    }
+
+    public static HttpResponse accountList(JSONArray body) {
+        String requestUrl = HttpNode + "/api/wallet/account/list";
+        response = createPostConnect(requestUrl,null, body,null);
+        return response;
+    }
+
+    //related case disabled
+    public static HttpResponse allasset(String address) {
+        String requestUrl = HttpNode + "/api/wallet/class/allasset";
+        JSONObject body = new JSONObject();
+        body.put("address", address);
+        response = createPostConnect(requestUrl,null,body,null);
+        return response;
+    }
+
+    public static HttpResponse assetlist(String address) {
+        String requestUrl = HttpNode + "/api/wallet/assetlist";
+        JSONObject body = new JSONObject();
+        body.put("address", address);
+        response = createPostConnect(requestUrl,null,body,null);
+        return response;
+    }
+
+    //related case disabled.
+    public static HttpResponse lotteryData() throws Exception {
+        final String requesturl = HttpNode + "/api/wallet/lottery/default_data";
+        response = createGetConnect(requesturl,null,null,null);
+        return response;
+    }
+
+    public static HttpResponse hot_token(String address) {
+        String requestUrl = HttpNode + "/api/wallet/hot_token";
+        JSONObject body = new JSONObject();
+        body.put("address", address);
+        response = createPostConnect(requestUrl,null, body,null);
+        return response;
+    }
+
+    public static HttpResponse addasset(String json) {
+        String requestUrl = HttpNode + "/api/wallet/addasset";
+        response = createPostConnect(requestUrl,null,json,null);
+        return response;
+    }
+
+    public static HttpResponse ieo() {
+        final String requestUrl = HttpNode + "/api/wallet/ieo";
+        response = createGetConnect(requestUrl, null,null,null);
+        return response;
+    }
+
+    //如果下架不带签名的接口，则删除本函数。
+    public static HttpResponse getNodeInfo(JSONArray body, String withSystem) {
+
+
+        final String requestUrl = HttpNode + "/api/wallet/node_info";
+        log.info("requestUrl:"+ requestUrl);
+        header.clear();
+        header.put("Version", "3.7.0");
+        if (withSystem.equals("YES")) {
+            header.put("System", "Android");
+        }
+        response = createPostConnect(requestUrl, null,body,header);
+        return response;
+    }
+
+    // nodeinfo升级的需要签名的请求接口,传入的header和参数可以覆盖默认的参数
+    public static HttpResponse getNodeInfo(Map<String,String> params, JSONArray body, Map<String,String> headers) {
+        final String curUri =  "/api/wallet/node_info";
+        response = createPostConnectWithSignature(curUri, params, headers, body);
+        return response;
+    }
+
+
+    public static HttpResponse getConfig() {
+        final String requestUrl = HttpNode + "/api/wallet/get_config";
+        response = createGetConnect(requestUrl, null,null,null);
+        return response;
+    }
+
+    public static HttpResponse dappToMainFee() {
+        final String requestUrl = HttpNode + "/api/transfer/dappToMainFee";
+        response = createGetConnect(requestUrl, null, null, null);
+        return response;
+    }
+
+    public static HttpResponse addAsset(JSONObject address) throws Exception {
+        final String requestUrl = HttpNode + "/api/wallet/addasset";
+        response = createPostConnect(requestUrl,null, address,null);
+        return response;
+    }
+
+    public static HttpResponse getAirdropTransaction(Map<String, String> params) {
+        final String requestUrl = HttpNode + "/api/wallet/airdrop_transaction";
+        response = createGetConnect(requestUrl, params,null,null);
+        return response;
+    }
+
+    public static HttpResponse getAllClassAsset(String node, JSONObject address) throws Exception {
+        final String requestUrl = node + "/api/wallet/class/allasset";
+        response = createPostConnect(requestUrl, null, address,null);
+        return response;
+    }
+
+    public static List<String> getTrc10TokenIdList(JSONArray tokenArray) throws Exception {
+        List<String> tokenIdList = new ArrayList<>();
+        String id = "";
+        for (int i = 0; i < tokenArray.size(); i++) {
+            id = tokenArray.getJSONObject(i).getString("id");
+            if (id.isEmpty()) {
+                continue;
+            }
+            tokenIdList.add(id);
+        }
+        return tokenIdList;
+    }
+
+    public static List<String> getTrc20AddressList(JSONArray tokenArray) throws Exception {
+        List<String> trc20ContractAddressList = new ArrayList<>();
+        String contractAddress = "";
+        for (int i = 0; i < tokenArray.size(); i++) {
+            contractAddress = tokenArray.getJSONObject(i).getString("contractAddress");
+            if (contractAddress.isEmpty()) {
+                continue;
+            }
+            trc20ContractAddressList.add(contractAddress);
+        }
+        return trc20ContractAddressList;
+    }
+
+    public static HttpResponse getTransferTrx(Map<String, String> params) {
+        String requestUrl = HttpTronDataNode + "/api/transfer/trx";
+        response = createGetConnect(requestUrl, params,null,null);
+        return response;
+    }
+
+    public static HttpResponse getTransferToken10(Map<String, String> params) {
+        String requestUrl = HttpTronDataNode + "/api/transfer/token10";
+        response = createGetConnect(requestUrl, params, null, null);
+        return response;
+    }
+
+    public static HttpResponse getTransferTrc20(Map<String, String> params) {
+        String requestUrl = HttpTronDataNode + "/api/transfer/trc20";
+        response = createGetConnect(requestUrl, params, null, null);
+        return response;
+    }
+
+    public static HttpResponse getTrc20Holders(Map<String, String> params) {
+        String requestUrl = HttpTronDataNode + "/api/trc20/holders";
+        response = createGetConnect(requestUrl, params, null, null);
+        return response;
+    }
+
+    public static HttpResponse multiTransaction(JSONObject body) {
+        String requestUrl = HttpNode + "/api/wallet/multi/transaction";
+        response = createPostConnect(requestUrl, null, body, null);
+        return response;
+    }
+
+    public static Boolean verificationResult(HttpResponse response) {
+        if (response.getStatusLine().getStatusCode() != 200) {
+            return false;
+        }
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        return true;
+    }
+
+    public static HttpResponse getInviteCode(JSONObject body) throws Exception {
+        final String requestUrl = HttpNode + "/api/wallet/invite/get_code";
+        response = createPostConnect(requestUrl, null, body, null);
+        return response;
+    }
+
+    public static HttpResponse failTransfer(JSONObject body) {
+        final String requestUrl = HttpNode + "/api/wallet/fail_transfer";
+        response = createPostConnect(requestUrl,null, body, null);
+        return response;
+    }
+
+    public static HttpResponse insertInviteCode(JSONObject body) throws Exception {
+        final String requestUrl = HttpNode + "/api/wallet/invite/code";
+        response = createPostConnect(requestUrl, null,body,null);
+        return response;
+    }
+
+    public static HttpResponse nilexGetAssetlist(String address, Map<String, String> header) {
         try {
-            String curUri = "/api/wallet/nft/unfollowCollections";
-            response = CreateGetConnectWithSIgnature(curUri, params,null);
+            String requestUrl = "https://niletest.tronlink.org/api/wallet/assetlist";
+            JSONObject body = new JSONObject();
+            body.put("address", address);
+            header.put("Content-type", "application/json; charset=utf-8");
+            header.put("Connection", "Close");
+            response = createPostConnect(requestUrl, null, body, header);
         } catch (Exception e) {
             e.printStackTrace();
             httppost.releaseConnection();
             return null;
         }
+        return response;
+    }
+
+
+
+    public static HttpResponse V2UnfollowCollections(Map<String, String> params) {
+        String curUri = "/api/wallet/nft/unfollowCollections";
+        response = createGetConnectWithSignature(curUri, params,null);
         return response;
     }
 
     public static HttpResponse V2UnfollowAssetList(Map<String, String> params) {
-        try {
-
-            String curUri = "/api/wallet/v2/unfollowAssetList";
-            response = CreateGetConnectWithSIgnature(curUri, params,null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
+        String curUri = "/api/wallet/v2/unfollowAssetList";
+        response = createGetConnectWithSignature(curUri, params,null);
         return response;
     }
 
     public static HttpResponse V2AllAssetList(Map<String, String> caseParams) {
 
         String curURI = "/api/wallet/v2/allAssetList";
-        Map<String, String> params = getNewSigParams(defaultSys);
-        params = AddMap(params, caseParams);
-
-        Map<String, String> headers = getNewSigHeader(defaultSys, defaultVersion, defaultLang, defaultPkg);
-
-        //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
-        String cursig = getNewSignature(curURI,"GET", caseParams.get("address"), params, headers);
-        params.put("signature", cursig);
-
-        String requestUrl = HttpNode + curURI;
-        response = createGetConnectWithHeader(requestUrl, params, null, headers);
+        response = createGetConnectWithSignature(curURI, caseParams,null);
         return response;
 
     }
 
     public static HttpResponse v2AssetList(Map<String, String> caseParams)  {
-
         String curURI = "/api/wallet/v2/assetList";
-        response = CreateGetConnectWithSIgnature(curURI, caseParams,null);
+        response = createGetConnectWithSignature(curURI, caseParams,null);
         return response;
 
     }
@@ -1078,28 +743,17 @@ public class TronlinkApiList {
 
     public static HttpResponse v2GetAssetList(Map<String, String> params, JSONObject body,
             Map<String, String> headers) {
-        // final String requestUrl = HttpNode + "/api/wallet/v2/assetList";
         final String requestUrl = "https://testpre.tronlink.org" + "/api/wallet/v2/assetList";
 
         log.info("requestUrl : " + requestUrl);
-        response = createGetConnectWithHeader(requestUrl, params, body, headers);
+        response = createGetConnect(requestUrl, params, body, headers);
         return response;
     }
 
     public static HttpResponse v2GetAllCollection(Map<String, String> caseParams) {
 
         String curURI = "/api/wallet/nft/getAllCollection";
-        Map<String, String> params = getNewSigParams(defaultSys);
-        params = AddMap(params, caseParams);
-
-        Map<String, String> headers = getNewSigHeader(defaultSys, defaultVersion, defaultLang, defaultPkg);
-
-        //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
-        String cursig = getNewSignature(curURI,"GET", caseParams.get("address"), params, headers);
-        params.put("signature", cursig);
-
-        String requestUrl = HttpNode + curURI;
-        response = createGetConnectWithHeader(requestUrl, params, null, headers);
+        response = createGetConnectWithSignature(curURI, caseParams, null);
         return response;
 
     }
@@ -1107,26 +761,26 @@ public class TronlinkApiList {
     // 根据token类型查询首页信息
     public static HttpResponse v2GetAllCollectionByType(String url, Map<String, String> params) {
         final String requestUrl = HttpNode +  url ;
-        response = CreateGetConnectWithSIgnature(url, params,null);
+        response = createGetConnectWithSignature(url, params,null);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         return response;
     }
 
     public static HttpResponse v2AllCollections(Map<String, String> params) {
         final String curUri = "/api/wallet/nft/allCollections";
-        response = CreateGetConnectWithSIgnature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null);
         return response;
     }
 
     public static HttpResponse v2GetCollectionList(Map<String, String> params) {
         final String curUri = "/api/wallet/nft/getCollectionList";
-        response = CreateGetConnectWithSIgnature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null);
         return response;
     }
 
     public static HttpResponse v2GetCollectionInfo(Map<String, String> params) {
         final String curUri = "/api/wallet/nft/getCollectionInfo";
-        response = CreateGetConnectWithSIgnature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null);
         return response;
     }
 
@@ -1138,61 +792,70 @@ public class TronlinkApiList {
 
     public static HttpResponse getDelegatedResource(Map<String, String> params) {
         final String curURI = "/api/wallet/v2/getDelegatedResource";
-        response = CreateGetConnectWithSIgnature(curURI, params, null);
+        response = createGetConnectWithSignature(curURI, params, null);
         return response;
     }
 
     public static HttpResponse v2NewAssetList(Map<String, String> params) {
         final String curURI = "/api/wallet/v2/newAssetList";
-        response = CreateGetConnectWithSIgnature(curURI, params, null);
+        response = createGetConnectWithSignature(curURI, params, null);
         return response;
     }
 
     public static HttpResponse v2SearchAsset(Map<String, String> params) {
         final String curURI = "/api/wallet/v2/search";
-        response = CreateGetConnectWithSIgnature(curURI, params, null);
+        response = createGetConnectWithSignature(curURI, params, null);
         return response;
     }
 
     public static HttpResponse v1GetNoticeRemind() {
         final String requestUrl = HttpNode + "/api/v1/wallet/getNoticeRemind";
-        response = createGetConnect(requestUrl, null);
+        response = createGetConnect(requestUrl, null, null, null);
         return response;
     }
 
-    public static HttpResponse v1GetDappHistory(JSONObject params) {
+    public static HttpResponse v1GetDappHistory(JSONObject body) {
         final String requestUrl = HttpNode + "/api/activity/add";
-        response = createPostConnectWithHeader(requestUrl, null, params, null);
+        response = createPostConnect(requestUrl, null, body, null);
         return response;
     }
 
     public static HttpResponse v1GetAnnouncement() {
         final String requestUrl = HttpNode + "/api/activity/announcement/reveal_v2";
-        response = createGetConnect(requestUrl, null);
+        response = createGetConnect(requestUrl, null, null, null);
         return response;
     }
 
     public static HttpResponse v1GetNodes(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/v1/wallet/nodes";
-        response = createConnect(requestUrl, null);
+        response = createPostConnect(requestUrl, params, (JSONObject) null, null);
         return response;
     }
 
     public static HttpResponse v2GetBlacklist(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/activity/website/blacklist";
-        response = createGetConnect(requestUrl, null);
+        response = createGetConnect(requestUrl, null, null, null);
         return response;
     }
 
     public static HttpResponse officialToken(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/official_token";
-        response = createGetConnect(requestUrl, null);
+        response = createGetConnect(requestUrl, null, null, null);
         return response;
     }
 
     public static HttpResponse v1PlayScreenInfo(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/activity/play_screen/info";
-        response = createGetConnect(requestUrl, null);
+        header.clear();
+        header.put("Lang", "1");
+        header.put("Version", "3.7.0");
+        header.put("DeviceID", "1111111111");
+        header.put("chain", "MainChain");
+        header.put("packageName", "com.tronlinkpro.wallet");
+        header.put("System", "Android");
+        header.put("Content-type", "application/json; charset=utf-8");
+        header.put("Connection", "Keep-Alive");
+        response = createGetConnect(requestUrl, params, null , header);
         return response;
     }
 
@@ -1200,19 +863,20 @@ public class TronlinkApiList {
         final String requestUrl = HttpNode + "/api/activity/play_screen/deal";
         JSONObject body = new JSONObject();
         body.put("playId", playId);
-        response = createPostConnectWithHeader(requestUrl, null, body, header);
+        response = createPostConnect(requestUrl, null, body, header);
         return response;
     }
 
     public static HttpResponse v1GetStartup(Map<String, String> params, Map<String, String> headerMap) {
         final String requestUrl = HttpNode + "/api/v1/wallet/startup";
-        Map<String, String> header = getV2Header();
+        //Map<String, String> header = getV2Header();
+        Map<String, String> header = new HashMap<>();
         header.put("Content-type", "application/json; charset=utf-8");
         header.put("Connection", "Close");
         for (String key : headerMap.keySet()) {
             header.put(key, headerMap.get(key));
         }
-        response = createGetConnectWithHeader(requestUrl, params, null, header);
+        response = createGetConnect(requestUrl, params, null, header);
         return response;
     }
 
@@ -1224,7 +888,7 @@ public class TronlinkApiList {
         for (String key : headerMap.keySet()) {
             header.put(key, headerMap.get(key));
         }
-        response = createPostConnectWithHeader(requestUrl,null, (JSONObject) JSONObject.parse(
+        response = createPostConnect(requestUrl,null, (JSONObject) JSONObject.parse(
                         "{\"userhash\":\"" + userhash + "\",\"number\":\"" + updataNumber + "\",\"access\":\"33572\"}"), header);
         return response;
     }
@@ -1237,24 +901,11 @@ public class TronlinkApiList {
         for (String key : headerMap.keySet()) {
             header.put(key, headerMap.get(key));
         }
-        response = createGetConnectWithHeader(requestUrl, params, null, header);
+        response = createGetConnect(requestUrl, params, null, header);
         return response;
     }
 
     public static HttpResponse v2accountList(Map<String, String> params, JSONArray object) {
-        /*try {
-            String requestUrl = HttpNode + "/api/wallet/v2/account/list";
-            Map<String, String> header = getV2Header();
-            header.put("Content-type", "application/json; charset=utf-8");
-            header.put("Connection", "Close");
-            response = createPostConnectWithHeader(requestUrl, params, object, header);
-            // response = createPostConnect(requestUrl,body);
-            return response;
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }*/
         String curURI = "/api/wallet/v2/account/list";
         response = createPostConnectWithSignature(curURI, params, null, object );
         return response;
@@ -1262,19 +913,19 @@ public class TronlinkApiList {
 
     public static HttpResponse v2Asset(Map<String, String> params) {
         final String curUri = "/api/wallet/v2/asset";
-        response = CreateGetConnectWithSIgnature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null);
         return response;
     }
 
     public static HttpResponse v2Auth(Map<String, String> params) {
         final String curUri = "/api/wallet/v2/auth";
-        response = CreateGetConnectWithSIgnature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null);
         return response;
     }
 
     public static HttpResponse v2NftSearch(Map<String, String> params) {
         final String curUri = "/api/wallet/nft/search";
-        response = CreateGetConnectWithSIgnature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null);
         return response;
     }
 
@@ -1285,14 +936,7 @@ public class TronlinkApiList {
         }
         return map1;
     }
-
     public static HttpResponse v2AddAsset(Map<String, String> caseParams, JSONObject object) {
-        /*String requestUrl = HttpNode + "/api/wallet/v2/addAsset";
-        Map<String, String> header = getV2Header();
-        header.put("Content-type", "application/json; charset=utf-8");
-        header.put("Connection", "Close");
-        response = createPostConnectWithHeader(requestUrl, params, object, header);
-        return response;*/
         String curURI = "/api/wallet/v2/addAsset";
         Map<String, String> caseHeader = new HashMap<>();
         caseHeader.put("Content-type", "application/json; charset=utf-8");
@@ -1317,7 +961,7 @@ public class TronlinkApiList {
         header.put("Connection", "Close");
         header = AddMap(header, params);
 
-        response = createGetConnectWithHeader(requestUrl, null, null, header);
+        response = createGetConnect(requestUrl, null, null, header);
         return response;
     }
 
@@ -1327,22 +971,22 @@ public class TronlinkApiList {
         header.put("Content-type", "application/json; charset=utf-8");
         header.put("Connection", "Close");
         header = AddMap(header, params);
-        response = createGetConnectWithHeader(requestUrl, null, null, header);
+        response = createGetConnect(requestUrl, null, null, header);
         return response;
     }
 
     public static JSONObject getTronscanTrc20Price(String address) {
         if (address.startsWith("T")) {
             String reqestUrl = "https://apilist.tronscan.org/api/token_trc20?contract=" + address + "&showAll=1";
-            HttpResponse transcanRsp = TronlinkApiList.createGetConnect(reqestUrl);
-            JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
+            HttpResponse transcanRsp = createGetConnect(reqestUrl, null, null, null);
+            JSONObject transcanRspContent = TronlinkApiList.parseResponse2JsonObject(transcanRsp);
             JSONObject priceJson = (JSONObject) JSONPath.eval(transcanRspContent,
                     String.join("", "$..trc20_tokens[contract_address='", address, "'].market_info[0]"));
             return priceJson;
         } else if (address.startsWith("100")) {
             String reqestUrl = "https://apilist.tronscan.org/api/token?id=" + address + "&showAll=1";
-            HttpResponse transcanRsp = TronlinkApiList.createGetConnect(reqestUrl);
-            JSONObject transcanRspContent = TronlinkApiList.parseJsonObResponseContent(transcanRsp);
+            HttpResponse transcanRsp = TronlinkApiList.createGetConnect(reqestUrl, null, null, null);
+            JSONObject transcanRspContent = TronlinkApiList.parseResponse2JsonObject(transcanRsp);
             System.out.println(String.join("", "$..data[id=", address, "].market_info[0]"));
             JSONObject priceJson = (JSONObject) JSONPath.eval(transcanRspContent,
                     String.join("", "$..data[id=", address, "].market_info[0]"));
@@ -1379,605 +1023,10 @@ public class TronlinkApiList {
         header.put("Connection", "Keep-Alive");
         return header;
     }
-    
-
-    /**
-     * constructor.
-     */
-    public static HttpResponse createPostConnect(String url, JsonObject requestBody) {
-        try {
-            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
-            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
-
-            httppost = new HttpPost(url);
-            httppost.setHeader("Content-type", "application/json; charset=utf-8");
-            httppost.setHeader("Connection", "Keep-Alive");
-            if (requestBody != null) {
-                StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
-                entity.setContentEncoding("UTF-8");
-                entity.setContentType("application/json");
-                httppost.setEntity(entity);
-            }
-            // log.info("url: "+httppost.toString() + "\n params: "+requestBody.toString());
-            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-            response = httpClient.execute(httppost);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    /**
-     * constructor.
-     */
-
-    public static HttpResponse createPostConnectWithHeader(String url, Map<String, String> params,
-            JSONArray requestBody, Map<String, String> header) {
-        try {
-            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
-            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
-            if (params != null) {
-                StringBuffer stringBuffer = new StringBuffer(url);
-                stringBuffer.append("?");
-                for (Map.Entry<String, String> entry : params.entrySet()) {
-                    stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
-                }
-                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-                url = stringBuffer.toString();
-            }
-            httppost = new HttpPost(url);
-            if (header != null) {
-                for (String key : header.keySet()) {
-                    httppost.setHeader(key, header.get(key));
-                    log.info(key + ": " + header.get(key));
-                }
-            }
-            if (requestBody != null) {
-                StringEntity entity = new StringEntity(requestBody.toJSONString(), Charset.forName("UTF-8"));
-                entity.setContentEncoding("UTF-8");
-                entity.setContentType("application/json");
-                httppost.setEntity(entity);
-            }
-            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-            // log.info("url: "+httppost.toString()+"\nparams: "+requestBody.toString());
-            response = httpClient.execute(httppost);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-
-    }
-
-    public static HttpResponse createPostConnectWithHeader(String url, Map<String, String> params,
-            JSONObject requestBody, Map<String, String> header) {
-        try {
-            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
-            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
-            if (params != null) {
-                StringBuffer stringBuffer = new StringBuffer(url);
-                stringBuffer.append("?");
-                for (Map.Entry<String, String> entry : params.entrySet()) {
-                    stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
-                }
-                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-                url = stringBuffer.toString();
-            }
-            httppost = new HttpPost(url);
-            // httppost.setHeader("Content-type", "application/json; charset=utf-8");
-            // httppost.setHeader("Connection", "Close");
-            if (header != null) {
-                for (String key : header.keySet()) {
-                    httppost.setHeader(key, header.get(key));
-                    log.info(key + ": " + header.get(key));
-                }
-            }
-            if (requestBody != null) {
-                StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
-                entity.setContentEncoding("UTF-8");
-                entity.setContentType("application/json");
-                httppost.setEntity(entity);
-            }
-            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-            // if (requestBody == null){
-            // log.info("no request body info");
-            // requestBody = new JSONObject();
-            // }
-            // log.info("url: "+httppost.toString()+"\nparams: "+params.toString() + " \n
-            // requestbody : "+requestBody.toString());
-            //
-            printHttpInfo(httppost, params, requestBody);
-            response = httpClient.execute(httppost);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    // 和其他方法的不同是requestBody变成了数组类型
-    public static HttpResponse createPostConnectWithHeaderV2(String url, Map<String, String> params,
-                                                           JSONArray requestBody, Map<String, String> header) {
-        try {
-            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
-            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
-            if (params != null) {
-                StringBuffer stringBuffer = new StringBuffer(url);
-                stringBuffer.append("?");
-                for (Map.Entry<String, String> entry : params.entrySet()) {
-                    stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
-                }
-                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-                url = stringBuffer.toString();
-            }
-            httppost = new HttpPost(url);
-            // httppost.setHeader("Content-type", "application/json; charset=utf-8");
-            // httppost.setHeader("Connection", "Close");
-            if (header != null) {
-                for (String key : header.keySet()) {
-                    httppost.setHeader(key, header.get(key));
-                    log.info(key + ": " + header.get(key));
-                }
-            }
-            if (requestBody != null) {
-                StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
-                entity.setContentEncoding("UTF-8");
-                entity.setContentType("application/json");
-                httppost.setEntity(entity);
-            }
-//            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-            // if (requestBody == null){
-            // log.info("no request body info");
-            // requestBody = new JSONObject();
-            // }
-            // log.info("url: "+httppost.toString()+"\nparams: "+params.toString() + " \n
-            // requestbody : "+requestBody.toString());
-            //
-//            printHttpInfo(httppost, params, requestBody);
-            response = httpClient.execute(httppost);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static void printHttpInfo(HttpPost httppost, Map<String, String> params, JSONObject requestbody) {
-        log.info("begin print http info");
-        if (httppost != null) {
-            log.info("httppost = " + httppost);
-        }
-        if (params != null) {
-            log.info("params = " + params);
-        }
-        if (requestbody != null) {
-            log.info("requestbody = " + requestbody);
-        }
-        log.info("end print http info");
-    }
-
-    /**
-     * constructor.
-     */
-    public static HttpResponse createGetConnectWithHeader(String url, Map<String, String> params,
-            JSONObject requestBody, Map<String, String> header) {
-        try {
-            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
-            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
-            if (params != null) {
-                StringBuffer stringBuffer = new StringBuffer(url);
-                stringBuffer.append("?");
-                for (Map.Entry<String, String> entry : params.entrySet()) {
-                    stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
-                }
-                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-                url = stringBuffer.toString();
-            }
-            httpget = new HttpGet(url);
-            if (header != null) {
-                for (String key : header.keySet()) {
-                    httpget.setHeader(key, header.get(key));
-                    log.info("Add key to header: " + key + ": " + header.get(key));
-                }
-            }
-            if (requestBody != null) {
-                StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
-                entity.setContentEncoding("UTF-8");
-                entity.setContentType("application/json");
-                // SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
-                // log.info("url: "+httpget.toString()+"\nparams: "+requestBody.toString());
-            }
-
-            log.info("" + httpget);
-
-            response = httpClient.execute(httpget);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    /**
-     * constructor.
-     */
-    public static HttpResponse createPostConnect(String url, JSONArray requestBody) {
-        try {
-            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
-            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
-
-            httppost = new HttpPost(url);
-            httppost.setHeader("Content-type", "application/json; charset=utf-8");
-            httppost.setHeader("Connection", "Close");
-            httppost.addHeader("Lang", "1");
-            httppost.addHeader("Version", "3.7.0");
-            httppost.addHeader("DeviceID", "1111111111");
-            httppost.addHeader("chain", "MainChain");
-            httppost.addHeader("packageName", "com.tronlinkpro.wallet");
-            httppost.addHeader("System", "Android");
-            if (requestBody != null) {
-                StringEntity entity = new StringEntity(requestBody.toJSONString(), Charset.forName("UTF-8"));
-                entity.setContentEncoding("UTF-8");
-                entity.setContentType("application/json");
-                httppost.setEntity(entity);
-            }
-            response = httpClient.execute(httppost);
-            printHttpInfoV2(httppost, httppost.getAllHeaders(), httppost.getParams());
-            // log.info("url: "+httppost.toString()+"\nparams: "+requestBody.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static void printHttpInfoV2(HttpPost httppost, org.apache.http.Header[] headers,  org.apache.http.params.HttpParams params){
-        if (httppost != null) {
-            log.info(httppost.toString());
-
-        }
-        if (headers == null) {
-            for (Header h:
-                 headers) {
-                log.info(h.getName() + " " + h.getValue());
-            }
-        }
-        if (httppost.getEntity() != null) {
-            log.info(JSONObject.toJSONString(httppost.getEntity()));
-        }
-
-//        if (params == null) {
-//            log.info(params.);
-//        }
-    }
-
-    /**
-     * constructor.
-     */
-    public static HttpResponse createGetConnect(String url) {
-        return createGetConnect(url, null);
-    }
-
-    public static HttpResponse createGetConnectClient2(String url, Map<String, String> params) {
-        try {
-            // httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,connectionTimeout);
-            // httpClient2.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT,
-            // soTimeout);
-            if (params != null) {
-                StringBuffer stringBuffer = new StringBuffer(url);
-                stringBuffer.append("?");
-                for (Map.Entry<String, String> entry : params.entrySet()) {
-                    stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
-                }
-                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-                url = stringBuffer.toString();
-            }
-            httpget = new HttpGet(url);
-            httpget.addHeader("Lang", "1");
-            httpget.addHeader("Version", "3.7.0");
-            httpget.addHeader("DeviceID", "1111111111");
-            httpget.addHeader("chain", "MainChain");
-            httpget.addHeader("packageName", "com.tronlinkpro.wallet");
-            httpget.addHeader("System", "Android");
-            httpget.setHeader("Content-type", "application/json; charset=utf-8");
-            httpget.setHeader("Connection", "Keep-Alive");
-            Header[] allHeaders = httpget.getAllHeaders();
-            for (int i = 0; i < allHeaders.length; i++) {
-                log.info("" + allHeaders[i]);
-            }
-            Instant startTime = Instant.now();
-            response = httpClient.execute(httpget);
-            Instant endTime = Instant.now();
-            requestTime = Duration.between(startTime, endTime).toMillis();
-            log.info(url + " 请求总耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    public static HttpResponse createGetConnect(URI uri) {
-        try {
-            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
-            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
-            log.info("url: " + uri.toString());
-            httpGet = new HttpGet(uri);
-            httpGet.setHeader("Content-type", "application/json; charset=utf-8");
-            httpGet.setHeader("Connection", "Close");
-            response = httpClient.execute(httpGet);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpGet.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    /**
-     * constructor.
-     */
-    public static HttpResponse createGetConnectNoHeader(String url, Map<String, String> params) {
-        try {
-            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
-            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
-            if (params != null) {
-                StringBuffer stringBuffer = new StringBuffer(url);
-                stringBuffer.append("?");
-                for (Map.Entry<String, String> entry : params.entrySet()) {
-                    stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
-                }
-                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-                url = stringBuffer.toString();
-            }
-            httpget = new HttpGet(url);
-            httpget.setHeader("Connection", "Keep-Alive");
-            log.info("---url: " + url);
-            Instant startTime = Instant.now();
-            response = httpClient.execute(httpget);
-            Instant endTime = Instant.now();
-            requestTime = Duration.between(startTime, endTime).toMillis();
-            log.info(" 请求总耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    /**
-     * constructor.
-     */
-    public static HttpResponse createGetConnect(String url, Map<String, String> params) {
-        try {
-            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
-            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
-            if (params != null) {
-                StringBuffer stringBuffer = new StringBuffer(url);
-                stringBuffer.append("?");
-                for (Map.Entry<String, String> entry : params.entrySet()) {
-                    stringBuffer.append(entry.getKey() + "=" + entry.getValue() + "&");
-                }
-                stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-                url = stringBuffer.toString();
-            }
-            httpget = new HttpGet(url);
-            httpget.addHeader("Lang", "1");
-            httpget.addHeader("Version", "3.7.0");
-            httpget.addHeader("DeviceID", "1111111111");
-            httpget.addHeader("chain", "MainChain");
-            httpget.addHeader("packageName", "com.tronlinkpro.wallet");
-            httpget.addHeader("System", "Android");
-            httpget.setHeader("Content-type", "application/json; charset=utf-8");
-            httpget.setHeader("Connection", "Keep-Alive");
-            Header[] allHeaders = httpget.getAllHeaders();
-            for (int i = 0; i < allHeaders.length; i++) {
-                log.info("" + allHeaders[i]);
-            }
-            Instant startTime = Instant.now();
-            response = httpClient.execute(httpget);
-            Instant endTime = Instant.now();
-            requestTime = Duration.between(startTime, endTime).toMillis();
-            log.info(url + " 请求总耗时：" + Duration.between(startTime, endTime).toMillis() + " 毫秒");
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpget.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    /**
-     * constructor.
-     */
-    public static JSONArray parseArrayResponseContent(HttpResponse response) {
-        try {
-            String result = EntityUtils.toString(response.getEntity());
-            log.info(result);
-            StringEntity entity = new StringEntity(result, Charset.forName("UTF-8"));
-            response.setEntity(entity);
-            JSONArray obj = JSONArray.parseArray(result);
-            return obj;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * constructor.
-     */
-    public static JSONArray parseResponseContent(HttpResponse response) {
-        try {
-            String result = EntityUtils.toString(response.getEntity());
-            // result = result.substring(0, result.lastIndexOf("}"));
-            // result = result + ",\"requestTime\":" + requestTime + "}";
-            StringEntity entity = new StringEntity(result, Charset.forName("UTF-8"));
-            response.setEntity(entity);
-            JSONArray obj = JSONArray.parseArray(result);
-            return obj;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static String parseResponse2String(HttpResponse response) {
-        try {
-            String result = EntityUtils.toString(response.getEntity());
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public static JSONObject parseJsonObResponseContent(HttpResponse response) {
-        try {
-            String result = EntityUtils.toString(response.getEntity());
-            log.info("======");
-            log.info(result);
-            log.info("======");
-            // result = result.substring(0, result.lastIndexOf("}"));
-            // result = result + ",\"requestTime\":" + requestTime + "}";
-            StringEntity entity = new StringEntity(result, Charset.forName("UTF-8"));
-            response.setEntity(entity);
-            JSONObject obj = JSONObject.parseObject(result);
-            return obj;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    /**
-     * constructor.
-     */
-    public static void printJsonContent(JSONObject responseContent) {
-        log.info("----------------------------Print JSON Start---------------------------");
-        for (String str : responseContent.keySet()) {
-            log.info(str + ":" + responseContent.get(str));
-        }
-        log.info("JSON content size are: " + responseContent.size());
-        log.info("----------------------------Print JSON End-----------------------------");
-    }
-
-    /**
-     * constructor.
-     */
-    public static void printJsonArrayContent(JSONArray responseContent) {
-        log.info("----------------------------Print JSON Start---------------------------");
-        for (int i = 0; i < responseContent.size(); i++) {
-            for (String str : responseContent.getJSONObject(i).keySet()) {
-                log.info(str + ":" + responseContent.get(i).toString());
-            }
-        }
-        log.info("JSON content size are: " + responseContent.size());
-        log.info("----------------------------Print JSON End-----------------------------");
-    }
-
-    public static HttpResponse createConnect(String url, JSONObject requestBody) {
-        try {
-            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
-            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
-            httppost = new HttpPost(url);
-            httppost.setHeader("Content-type", "application/json; charset=utf-8");
-            httppost.setHeader("Connection", "keep-alive");
-            httppost.addHeader("Lang", "1");
-            httppost.addHeader("Version", "3.7.0");
-            httppost.addHeader("DeviceID", "1111111111");
-            httppost.addHeader("chain", "MainChain");
-            httppost.addHeader("packageName", "com.tronlinkpro.wallet");
-            httppost.addHeader("System", "Android");
-            if (requestBody != null) {
-                StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
-                entity.setContentEncoding("UTF-8");
-                entity.setContentType("application/json");
-                httppost.setEntity(entity);
-            }
-            log.info("url:" + httppost.toString());
-            if (requestBody != null) {
-                log.info("params: " + requestBody.toJSONString());
-            }
-            Header[] allHeaders = httppost.getAllHeaders();
-            for (int i = 0; i < allHeaders.length; i++) {
-                log.info("" + allHeaders[i]);
-            }
-            response = httpClient.execute(httppost);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
-        return response;
-    }
-
-    /**
-     * constructor.
-     */
-    public static void disConnect() {
-        httppost.releaseConnection();
-    }
-
-    /**
-     * constructor.
-     */
-    public static void disGetConnect() {
-        httpget.releaseConnection();
-    }
-
-    public static HttpResponse createGetConnect(URI uri, HashMap<String, String> header) {
-        try {
-            httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
-            httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
-            log.info("url: " + uri.toString());
-            httpGet = new HttpGet(uri);
-            httpGet.setHeader("Content-type", "application/json; charset=utf-8");
-            httpGet.setHeader("Connection", "Close");
-            for (HashMap.Entry<String, String> entry : header.entrySet()) {
-                httpGet.setHeader(entry.getKey(), entry.getValue());
-                log.info(entry.getKey() + ":" + entry.getValue());
-            }
-            response = httpClient.execute(httpGet);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httpGet.releaseConnection();
-            return null;
-        }
-        return response;
-    }
 
     public static HttpResponse upgrade(HashMap<String, String> header) throws Exception {
         final String requestUrl = HttpNode + "/api/v1/wallet/upgrade";
-        URIBuilder builder = new URIBuilder(requestUrl);
-        if (header != null) {
-            for (String key : header.keySet()) {
-                builder.addParameter(key, header.get(key));
-            }
-        }
-        URI uri = builder.build();
-        response = createGetConnect(uri, header);
+        response = createGetConnect(requestUrl, null, null, header);
         Assert.assertTrue(TronlinkApiList.verificationResult(response));
         return response;
     }
@@ -2170,7 +1219,7 @@ public class TronlinkApiList {
         Map<String, String> header = getV2Header();
         header.put("Content-type", "application/json; charset=utf-8");
         header.put("Connection", "Close");
-        response = createPostConnectWithHeader(requestUrl, params, object, header);
+        response = createPostConnect(requestUrl, params, object, header);
         return response;
     }
 
@@ -2211,7 +1260,7 @@ public class TronlinkApiList {
 
     public static HttpResponse v2GetRisk(Map<String, String> caseParams) {
         String curUri = "/api/wallet/v2/risk";
-        response = CreateGetConnectWithSIgnature(curUri, caseParams, null);
+        response = createGetConnectWithSignature(curUri, caseParams, null);
         return response;
     }
 
@@ -2224,7 +1273,7 @@ public class TronlinkApiList {
         params.put("convert", convert);
         response = PriceCenterApiList.getprice(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         return responseContent;
     }
 
@@ -2233,56 +1282,44 @@ public class TronlinkApiList {
         Map<String, String> header = new HashMap<>();
         header.put("Content-type", "application/json; charset=utf-8");
         header.put("Connection", "Close");
-        response = CreateGetConnectWithSIgnature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null);
         return response;
     }
     public static HttpResponse v1Balance(Map<String, String> params) {
-        try {
-            String requestUrl = HttpNode + "/api/wallet/balance";
-            response = createGetConnectNoHeader(requestUrl, params);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
+        String requestUrl = HttpNode + "/api/wallet/balance";
+        response = createGetConnect(requestUrl, params, null, null);
         return response;
     }
     public static HttpResponse TransferV2Trc721(Map<String, String> params) {
         final String curUri = "/api/transfer/v2/trc721";
-        response = CreateGetConnectWithSIgnature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null);
         return response;
     }
     public static HttpResponse TransferTrc721(Map<String, String> params) {
         final String curUri = "/api/transfer/trc721";
-        response = CreateGetConnectWithSIgnature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null);
         return response;
     }
     public static HttpResponse sdk_verify(String json) {
-        try {
-            String requestUrl = HttpNode + "/api/wallet/sdk_verify";
-            response = createPostConnect(requestUrl, json);
-        } catch (Exception e) {
-            e.printStackTrace();
-            httppost.releaseConnection();
-            return null;
-        }
+        String requestUrl = HttpNode + "/api/wallet/sdk_verify";
+        response = createPostConnect(requestUrl, null, json, null);
         return response;
     }
     public static HttpResponse v2GetAllCollection_1155(Map<String, String> params) {
         final String curUri = "/api/wallet/trc1155/getAllCollection";
-        response = CreateGetConnectWithSIgnature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null);
         return response;
     }
     
     public static HttpResponse v2AllCollections_1155(Map<String, String> params) {
         final String curUri = "/api/wallet/trc1155/allCollections";
-        response = CreateGetConnectWithSIgnature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null);
         return response;
     }
     
     public static HttpResponse v2GetCollectionList_1155(Map<String, String> params) {
         final String curUri = "/api/wallet/trc1155/getCollectionList";
-        response = CreateGetConnectWithSIgnature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null);
         return response;
     }
     public static HttpResponse v2GetCollectionInfos_1155(Map<String, String> params, JSONObject body) {

@@ -38,7 +38,7 @@ public class NewAssetList extends TronlinkBase {
 
     response = TronlinkApiList.v2NewAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("code"));
     Assert.assertTrue(responseContent.containsKey("message"));
     Assert.assertTrue(responseContent.containsKey("data"));
@@ -72,7 +72,7 @@ public class NewAssetList extends TronlinkBase {
 
     response = TronlinkApiList.v2NewAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
 
     //check BitTorrent balance
@@ -110,7 +110,7 @@ public class NewAssetList extends TronlinkBase {
 
     response = TronlinkApiList.v2NewAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject trc1155token = (JSONObject) JSONPath.eval(responseContent,"$.data.trc1155Token[0]");
     int type = trc1155token.getIntValue("type");
     Assert.assertEquals(6,type);

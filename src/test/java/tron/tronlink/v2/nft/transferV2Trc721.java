@@ -47,7 +47,7 @@ public class transferV2Trc721 extends TronlinkBase {
 
         Assert.assertEquals(7,index);
 
-        responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         responseArrayContent = responseContent.getJSONArray("token_transfers");
 
         //data object

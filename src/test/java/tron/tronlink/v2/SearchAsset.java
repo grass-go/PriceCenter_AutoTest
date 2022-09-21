@@ -45,7 +45,7 @@ public class SearchAsset extends TronlinkBase {
 
     response = TronlinkApiList.v2SearchAsset(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("code"));
     Assert.assertTrue(responseContent.containsKey("message"));
     Assert.assertTrue(responseContent.containsKey("data"));
@@ -77,7 +77,7 @@ public class SearchAsset extends TronlinkBase {
     params.put("version","v2");
     response = TronlinkApiList.v2SearchAsset(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("code"));
     Assert.assertTrue(responseContent.containsKey("message"));
     Assert.assertTrue(responseContent.containsKey("data"));
@@ -171,7 +171,7 @@ public class SearchAsset extends TronlinkBase {
     params.put("keyWord","1004092");
     response = TronlinkApiList.v2SearchAsset(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Object count = JSONPath.eval(responseContent, "$..data.count[0]");
     Assert.assertEquals("1", count.toString());
     Object name = JSONPath.eval(responseContent, "$..data.token[*].name[0]");
@@ -181,7 +181,7 @@ public class SearchAsset extends TronlinkBase {
     params.put("keyWord","NAPCoin");
     response = TronlinkApiList.v2SearchAsset(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Object tokenid = JSONPath.eval(responseContent, "$..data.token[*].id");
     JSONArray tokenidArray = (JSONArray) tokenid;
     Assert.assertFalse(tokenidArray.contains("1004092"));
@@ -190,7 +190,7 @@ public class SearchAsset extends TronlinkBase {
     params.put("keyWord","NAP");
     response = TronlinkApiList.v2SearchAsset(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     tokenid = JSONPath.eval(responseContent, "$..data.token[*].id");
     tokenidArray = (JSONArray) tokenid;
     Assert.assertFalse(tokenidArray.contains("1004092"));
@@ -213,7 +213,7 @@ public class SearchAsset extends TronlinkBase {
     params.put("keyWord","TET8rVqicX1Zu93W3LHQGg7sFX2vEGktUR");
     response = TronlinkApiList.v2SearchAsset(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Object count = JSONPath.eval(responseContent, "$..data.count[0]");
     Assert.assertEquals("1", count.toString());
     Object name = JSONPath.eval(responseContent, "$..data.token[*].name[0]");
@@ -224,7 +224,7 @@ public class SearchAsset extends TronlinkBase {
     response = TronlinkApiList.v2SearchAsset(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     try {
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Object tokenid = JSONPath.eval(responseContent, "$..data.token[*].contractAddress");
     JSONArray tokenidArray = (JSONArray) tokenid;
     Assert.assertFalse(tokenidArray.contains("TET8rVqicX1Zu93W3LHQGg7sFX2vEGktUR"));
@@ -237,7 +237,7 @@ public class SearchAsset extends TronlinkBase {
     response = TronlinkApiList.v2SearchAsset(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Object tokenid = JSONPath.eval(responseContent, "$..data.token[*].contractAddress");
     JSONArray tokenidArray = (JSONArray) tokenid;
     Assert.assertFalse(tokenidArray.contains("TET8rVqicX1Zu93W3LHQGg7sFX2vEGktUR"));
@@ -269,8 +269,8 @@ public class SearchAsset extends TronlinkBase {
     {
       int start = curPage * 500;
       String url = scanBaseURL+start;
-      response = TronlinkApiList.createGetConnect(url);
-      responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+      response = TronlinkApiList.createGetConnect(url,null,null,null);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
       JSONArray curscantokens = responseContent.getJSONArray("tokens");
       allScan721.addAll(curscantokens);
       curPage = curPage + 1;
@@ -293,7 +293,7 @@ public class SearchAsset extends TronlinkBase {
     params.put("type","5");
     response = TronlinkApiList.v2SearchAsset(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseJsonObResponseContent(response);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     dataContent = responseContent.getJSONObject("data");
     array = dataContent.getJSONArray("token");
 
