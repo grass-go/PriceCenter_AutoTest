@@ -309,26 +309,66 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
     }
 
     public static HttpResponse apiTransferTrx(HashMap<String, String> param) throws Exception {
+        final String curURI = "/api/transfer/trx";
+        response = createGetConnectWithSignature(curURI,param,null);
+        return response;
+    }
+
+    public static HttpResponse apiTransferTrxNoSig(HashMap<String, String> param, HashMap<String, String> header) {
         final String requestUrl = HttpNode + "/api/transfer/trx";
-        response = createGetConnect(requestUrl,param,null,null);
+        response = createGetConnect(requestUrl,param,null,header);
         return response;
     }
 
-    public static HttpResponse apiTransferToken10(HashMap<String, String> param) throws Exception {
+    public static HttpResponse getTransferTrx(Map<String, String> params) {
+        String requestUrl = HttpTronDataNode + "/api/transfer/trx";
+        response = createGetConnect(requestUrl, params,null,null);
+        return response;
+    }
+
+    public static HttpResponse getTransferToken10(Map<String, String> params) {
+        String requestUrl = HttpTronDataNode + "/api/transfer/token10";
+        response = createGetConnect(requestUrl, params, null, null);
+        return response;
+    }
+    public static HttpResponse apiTransferToken10(HashMap<String, String> param) {
+        final String curURI = "/api/transfer/token10";
+        response = createGetConnectWithSignature(curURI,param,null);
+        return response;
+    }
+
+    public static HttpResponse apiTransferToken10NoSig(HashMap<String, String> param,HashMap<String, String> header) throws Exception {
         final String requestUrl = HttpNode + "/api/transfer/token10";
-        response = createGetConnect(requestUrl,param,null,null);
+        response = createGetConnect(requestUrl,param,null,header);
         return response;
     }
 
-    public static HttpResponse apiTransferTrc20(HashMap<String, String> param) throws Exception {
+    public static HttpResponse apiTransferTrc20NoSig(HashMap<String, String> param, HashMap<String, String> header) {
         final String requestUrl = HttpNode + "/api/transfer/trc20";
-        response = createGetConnect(requestUrl,param,null,null);
+        response = createGetConnect(requestUrl,param,null,header);
         return response;
     }
 
-    public static HttpResponse apiTransferTrc20Status(HashMap<String, String> param) throws Exception {
+    public static HttpResponse apiTransferTrc20(HashMap<String, String> param) {
+        final String curURI = "/api/transfer/trc20";
+        response = createGetConnectWithSignature(curURI,param,null);
+        return response;
+    }
+
+    public static HttpResponse getTransferTrc20(Map<String, String> params) {
+        String requestUrl = HttpTronDataNode + "/api/transfer/trc20";
+        response = createGetConnect(requestUrl, params, null, null);
+        return response;
+    }
+
+    public static HttpResponse apiTransferTrc20StatusNoSig(HashMap<String, String> param, HashMap<String, String> header) throws Exception {
         String requestUrl = HttpNode + "/api/transfer/trc20_status";
-        response = createGetConnect(requestUrl,param,null,null);
+        response = createGetConnect(requestUrl,param,null,header);
+        return response;
+    }
+    public static HttpResponse apiTransferTrc20Status(HashMap<String, String> param) throws Exception {
+        String curURI = "/api/transfer/trc20_status";
+        response = createGetConnectWithSignature(curURI,param,null);
         return response;
     }
 
@@ -649,24 +689,6 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
             trc20ContractAddressList.add(contractAddress);
         }
         return trc20ContractAddressList;
-    }
-
-    public static HttpResponse getTransferTrx(Map<String, String> params) {
-        String requestUrl = HttpTronDataNode + "/api/transfer/trx";
-        response = createGetConnect(requestUrl, params,null,null);
-        return response;
-    }
-
-    public static HttpResponse getTransferToken10(Map<String, String> params) {
-        String requestUrl = HttpTronDataNode + "/api/transfer/token10";
-        response = createGetConnect(requestUrl, params, null, null);
-        return response;
-    }
-
-    public static HttpResponse getTransferTrc20(Map<String, String> params) {
-        String requestUrl = HttpTronDataNode + "/api/transfer/trc20";
-        response = createGetConnect(requestUrl, params, null, null);
-        return response;
     }
 
     public static HttpResponse getTrc20Holders(Map<String, String> params) {
