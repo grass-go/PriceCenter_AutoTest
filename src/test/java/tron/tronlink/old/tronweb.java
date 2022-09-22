@@ -15,8 +15,8 @@ public class tronweb extends TronlinkBase {
   @Test(enabled = true, description = "Api /api/web/v1/tronweb test")
   public void test001Tronweb() throws Exception {
     response = api.tronweb();
-    JSONObject tronwebData = api.parseResponseContent(response).getJSONObject("data");
-    api.printJsonContent(tronwebData);
+    JSONObject tronwebData = api.parseResponse2JsonObject(response).getJSONObject("data");
+    api.printJsonObjectContent(tronwebData);
     JSONObject balanceLimit = tronwebData.getJSONObject("balanceLimit");
     Assert.assertEquals(balanceLimit.getIntValue("assetValueLimit"),1);
     Assert.assertEquals(balanceLimit.getIntValue("assetThousandthLimit"), 1);

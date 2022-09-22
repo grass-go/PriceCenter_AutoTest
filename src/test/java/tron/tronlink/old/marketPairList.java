@@ -28,8 +28,8 @@ public class marketPairList extends TronlinkBase {
     header.put("packageName","com.tronlinkpro.wallet");
     header.put("System","Android");
     response = api.marketPairList(header);
-    JSONObject jsonObject = api.parseResponseContent(response);
-    api.printJsonContent(jsonObject);
+    JSONObject jsonObject = api.parseResponse2JsonObject(response);
+    api.printJsonObjectContent(jsonObject);
     JSONObject data = jsonObject.getJSONObject("data");
     JSONArray rows = data.getJSONArray("rows");
     trxNumAndroid370 = rows.size();
@@ -58,8 +58,8 @@ public class marketPairList extends TronlinkBase {
     header.put("packageName","com.tronlinkpro.wallet");
     header.put("System","iOS");
     response = api.marketPairList(header);
-    JSONObject jsonObject = api.parseResponseContent(response);
-    api.printJsonContent(jsonObject);
+    JSONObject jsonObject = api.parseResponse2JsonObject(response);
+    api.printJsonObjectContent(jsonObject);
     JSONObject data = jsonObject.getJSONObject("data");
     JSONArray rows = data.getJSONArray("rows");
     trxNumIos370 = rows.size();
@@ -88,8 +88,8 @@ public class marketPairList extends TronlinkBase {
     header.put("packageName","com.tronlinkpro.wallet");
     header.put("System","iOS");
     response = api.marketPairList(header);
-    JSONObject jsonObject = api.parseResponseContent(response);
-    api.printJsonContent(jsonObject);
+    JSONObject jsonObject = api.parseResponse2JsonObject(response);
+    api.printJsonObjectContent(jsonObject);
     JSONObject data = jsonObject.getJSONObject("data");
     JSONArray rows = data.getJSONArray("rows");
     trxNumIos360 = rows.size();
@@ -119,8 +119,8 @@ public class marketPairList extends TronlinkBase {
     header.put("packageName","com.tronlinkpro.wallet");
     header.put("System","Android");
     response = api.marketPairList(header);
-    JSONObject jsonObject = api.parseResponseContent(response);
-    api.printJsonContent(jsonObject);
+    JSONObject jsonObject = api.parseResponse2JsonObject(response);
+    api.printJsonObjectContent(jsonObject);
     JSONObject data = jsonObject.getJSONObject("data");
     JSONArray rows = data.getJSONArray("rows");
     trxNumAndroid360 = rows.size();

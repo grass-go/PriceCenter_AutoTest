@@ -14,8 +14,8 @@ public class community extends TronlinkBase {
   public void test001Community() throws Exception {
     response = api.community();
 
-    JSONObject jsonObject = api.parseResponseContent(response);
-    api.printJsonContent(jsonObject);
+    JSONObject jsonObject = api.parseResponse2JsonObject(response);
+    api.printJsonObjectContent(jsonObject);
 
     JSONObject data = jsonObject.getJSONObject("data");
 

@@ -32,8 +32,8 @@ public class transactionHistory extends TronlinkBase {
         continue;
       }
 
-      JSONObject jsonObject = api.parseResponseContent(response);
-      api.printJsonContent(jsonObject);
+      JSONObject jsonObject = api.parseResponse2JsonObject(response);
+      api.printJsonObjectContent(jsonObject);
 
       if (jsonObject.toString().equals("{}") ) {
         Thread.sleep(1000);
@@ -83,8 +83,8 @@ public class transactionHistory extends TronlinkBase {
             Thread.sleep(1000);
             continue;
           }
-          JSONObject jsonObject = api.parseResponseContent(response);
-          api.printJsonContent(jsonObject);
+          JSONObject jsonObject = api.parseResponse2JsonObject(response);
+          api.printJsonObjectContent(jsonObject);
           if (jsonObject.toString().equals("{}") ) {
             Thread.sleep(1000);
             continue;
@@ -122,8 +122,8 @@ public class transactionHistory extends TronlinkBase {
         continue;
       }
       index = 11;
-      jsonObject = api.parseResponseContent(response);
-      api.printJsonContent(jsonObject);
+      jsonObject = api.parseResponse2JsonObject(response);
+      api.printJsonObjectContent(jsonObject);
       if (jsonObject.toString().equals("{}") ) {
         Thread.sleep(1000);
         continue;

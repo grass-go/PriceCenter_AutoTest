@@ -17,9 +17,9 @@ public class getLatestAPK extends TronlinkBase {
   public void test001LatestAPK() throws Exception {
     response = api.getLatestAPK();
 
-    JSONObject jsonObject = api.parseResponseContent(response);
+    JSONObject jsonObject = api.parseResponse2JsonObject(response);
     JSONObject jsonData = jsonObject.getJSONObject("data");
-    api.printJsonContent(jsonObject);
+    api.printJsonObjectContent(jsonObject);
     int index=0;
     for(index=0;index<12;index++)
     {

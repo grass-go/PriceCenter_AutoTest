@@ -19,8 +19,8 @@ public class versionLog extends TronlinkBase {
     parameter.put("system","Android");
     response = api.getVersionLog(parameter);
 
-    JSONObject jsonObject = api.parseResponseContent(response);
-    api.printJsonContent(jsonObject);
+    JSONObject jsonObject = api.parseResponse2JsonObject(response);
+    api.printJsonObjectContent(jsonObject);
     JSONObject data = jsonObject.getJSONArray("data").getJSONObject(0);
 
     Assert.assertEquals(data.getString("system"),"Android");
@@ -33,8 +33,8 @@ public class versionLog extends TronlinkBase {
     parameter.put("system","Android");
     response = api.getVersionLog(parameter);
 
-    jsonObject = api.parseResponseContent(response);
-    api.printJsonContent(jsonObject);
+    jsonObject = api.parseResponse2JsonObject(response);
+    api.printJsonObjectContent(jsonObject);
     data = jsonObject.getJSONArray("data").getJSONObject(0);
 
     Assert.assertEquals(data.getString("system"),"Android");
@@ -52,8 +52,8 @@ public class versionLog extends TronlinkBase {
     header.put("package","wallet.tronlink.harmony");
     response = api.getVersionLog(parameter,header);
 
-    JSONObject jsonObject = api.parseResponseContent(response);
-    api.printJsonContent(jsonObject);
+    JSONObject jsonObject = api.parseResponse2JsonObject(response);
+    api.printJsonObjectContent(jsonObject);
     String msg = jsonObject.getString("msg");
     Assert.assertEquals(msg, "success");
 
@@ -72,8 +72,8 @@ public class versionLog extends TronlinkBase {
     parameter.put("system","Android");
     response = api.getVersionLog(parameter,header);
 
-    jsonObject = api.parseResponseContent(response);
-    api.printJsonContent(jsonObject);
+    jsonObject = api.parseResponse2JsonObject(response);
+    api.printJsonObjectContent(jsonObject);
 
 
     // wait for prod has harmony versions.
@@ -94,8 +94,8 @@ public class versionLog extends TronlinkBase {
     parameter.put("download_platform", "appstore");
     response = api.getVersionLog(parameter);
 
-    JSONObject jsonObject = api.parseResponseContent(response);
-    api.printJsonContent(jsonObject);
+    JSONObject jsonObject = api.parseResponse2JsonObject(response);
+    api.printJsonObjectContent(jsonObject);
     JSONObject data = jsonObject.getJSONArray("data").getJSONObject(0);
 
     Assert.assertEquals(data.getString("system"),"iOS");
@@ -109,8 +109,8 @@ public class versionLog extends TronlinkBase {
     parameter.put("download_platform", "appstore");
     response = api.getVersionLog(parameter);
 
-    jsonObject = api.parseResponseContent(response);
-    api.printJsonContent(jsonObject);
+    jsonObject = api.parseResponse2JsonObject(response);
+    api.printJsonObjectContent(jsonObject);
     data = jsonObject.getJSONArray("data").getJSONObject(0);
 
     Assert.assertEquals(data.getString("system"),"iOS");

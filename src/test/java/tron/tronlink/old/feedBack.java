@@ -20,9 +20,9 @@ public class feedBack extends TronlinkBase {
     response = api.feedBack(parameter);
     org.junit.Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 
-    JSONObject jsonObject = api.parseResponseContent(response);
+    JSONObject jsonObject = api.parseResponse2JsonObject(response);
     System.out.println(jsonObject);
-    api.printJsonContent(jsonObject);
+    api.printJsonObjectContent(jsonObject);
 
 //    Assert.assertEquals(jsonObject.getString("msg"),"success");
   }

@@ -14,8 +14,8 @@ public class getCoinCapTrxPrice extends TronlinkBase {
   @Test(enabled = true, description = "GetCoinCapTrxPrice test")
   public void test001CoinCapTrxPrice() throws Exception {
     response = api.getCoinCapTrxPrice();
-    JSONObject trxData = api.parseResponseContent(response).getJSONObject("data");
-    api.printJsonContent(trxData);
+    JSONObject trxData = api.parseResponse2JsonObject(response).getJSONObject("data");
+    api.printJsonObjectContent(trxData);
     Assert.assertTrue(Double.valueOf(trxData.getString("price_usd")) > 0);
     Assert.assertTrue(Double.valueOf(trxData.getString("price_cny")) > 0);
     Assert.assertTrue(Double.valueOf(trxData.getString("price_btc")) > 0);

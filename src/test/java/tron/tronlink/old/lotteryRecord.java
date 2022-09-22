@@ -18,8 +18,8 @@ public class lotteryRecord extends TronlinkBase {
 //    parameter.put("address", api.testAddressBase64);
     response = api.lotteryRecord(parameter);
 
-    JSONObject lotteryRecordInfo = api.parseResponseContent(response);
-    api.printJsonContent(lotteryRecordInfo);
+    JSONObject lotteryRecordInfo = api.parseResponse2JsonObject(response);
+    api.printJsonObjectContent(lotteryRecordInfo);
 
     JSONArray data = lotteryRecordInfo.getJSONObject("data").getJSONArray("data");
     JSONObject record1 = data.getJSONObject(0);
