@@ -7,6 +7,7 @@ import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
+import tron.tronlink.base.TronlinkBase;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -27,6 +28,7 @@ public class MarketBanner {
   public void Test000getMarketBanner() throws Exception {
     Map<String, String> params = new HashMap<>();
     params.put("sort_type","1");
+    params.put("address", TronlinkBase.quince_B58);
     HttpResponse rs = TronlinkApiList.votingWitness(params);
     Assert.assertEquals(rs.getStatusLine().getStatusCode(), 200);
     JSONObject rc = TronlinkApiList.parseResponse2JsonObject(rs);

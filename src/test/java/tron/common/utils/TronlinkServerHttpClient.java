@@ -21,9 +21,12 @@ import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.ssl.TrustStrategy;
 import org.apache.http.util.EntityUtils;
+import tron.tronlink.base.GetSign;
+import tron.tronlink.base.TronlinkBase;
 
 import javax.net.ssl.SSLContext;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
@@ -33,6 +36,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -45,6 +49,18 @@ public class TronlinkServerHttpClient {
     public static HttpDeleteWithBody httpdelete;
 
     public static HttpResponse response;
+
+
+    //business related
+    public static String HttpNode = TronlinkBase.tronlinkUrl;
+    //new sig needed parameter
+    public static String defaultSys = "AndroidTest";
+    public static String defaultLang = "1";
+    public static String defaultPkg = "com.tronlinkpro.wallet";
+    public static String defaultVersion = "4.11.0";
+    //设置的老接口从本版本开始鉴权。对于chrome，从4.0.0开始,对于安卓从4.10.0开始
+    public static String chromeUpdateVersion = "4.0.0";
+    public static String androidUpdateVersion = "4.11.0";
 
 
     public static Integer connectionTimeout = Configuration.getByPath("testng.conf")
@@ -432,5 +448,154 @@ public class TronlinkServerHttpClient {
         httpget.releaseConnection();
     }
 
+    //below are signature related
+    public static Map<String, String> AddMap(Map<String, String> map1, Map<String, String> map2){
+        Set myKeys = map2.keySet();
+        for (Object o : myKeys){
+            map1.put((String) o, map2.get(o));
+        }
+        return map1;
+    }
+
+    public static Map<String, String> getNewSigHeader(String needSys, String testVersion, String testLang, String testPkg) {
+        Map<String, String> header = new HashMap<>();
+        if (needSys.equals("chrome-extension-test")){
+            header.put("System","chrome-extension-test");
+        } else if(needSys.equals("chrome-extension")){
+            header.put("System","chrome-extension");
+        } else if(needSys.equals("Chrome")){
+            header.put("System","Chrome");
+        } else if(needSys.equals("AndroidTest")){
+            header.put("System","AndroidTest");
+        } else if(needSys.equals("Android")){
+            header.put("System","Android");
+        } else if(needSys.equals("iOSTest")){
+            header.put("System","iOSTest");
+        } else if(needSys.equals("iOS")){
+            header.put("System","iOS");
+        }
+        header.put("Lang",testLang);
+        header.put("Version",testVersion);
+        header.put("DeviceID","fca5a022-5526-45f5-a7e7");
+        header.put("chain","MainChain");
+        header.put("channel","official");
+
+        header.put("ts", java.lang.String.valueOf(System.currentTimeMillis()));
+        //header.put("ts","1609302220000");
+
+        //header.put("packageName", "com.tronlinkpro.wallet");
+        header.put("packageName", testPkg);
+        header.put("Content-type", "application/json; charset=utf-8");
+        header.put("Connection", "Keep-Alive");
+
+        header.put("deviceName","wqqtest");
+        header.put("osVersion","10.0.0");
+
+        return header;
+    }
+    public static Map<String, String> getNewSigParams(String needSys) {
+        Map<String, String> params = new HashMap<>();
+
+        if (needSys.equals("chrome-extension-test")){
+            params.put("secretId","8JKSO2PM4M2K45EL");
+        } else if(needSys.equals("chrome-extension")){
+            params.put("secretId","AE68A487AA919CAE");
+        } else if(needSys.equals("Chrome")){
+            params.put("secretId","AE68A487AA919CAE");
+        } else if(needSys.equals("AndroidTest")){
+            params.put("secretId","SFSUIOJBFMLKSJIF");
+        } else if(needSys.equals("Android")){
+            params.put("secretId","A4ADE880F46CA8D4");
+        } else if(needSys.equals("iOSTest")){
+            params.put("secretId","JSKLJKFJDFDSFER3");
+        } else if(needSys.equals("iOS")){
+            params.put("secretId","ED151200DD0B3B52");
+        }
+        params.put("nonce","12345");
+        return params;
+    }
+
+    public static String getNewSignature(String curUri,String httpMethod, String address, Map<String, String> params, Map<String, String> headers) {
+        //Map<String, String> params = getNewSigParams(needSys);
+        //Map<String, String> headers = getNewSigHeader(needSys, testVersion, testLang, testPkg);
+        GetSign getSign = new GetSign();
+        String signature = "";
+        try {
+            signature = URLEncoder.encode(getSign.getSignature(
+                    headers.get("channel"),
+                    headers.get("chain"),
+                    headers.get("Lang"),
+                    address,
+                    params.get("nonce"),
+                    params.get("secretId"),
+                    headers.get("System"),
+                    headers.get("DeviceID"),
+                    headers.get("ts"),
+                    headers.get("Version"),
+                    curUri,
+                    httpMethod));
+        }catch (Exception e) {
+            log.info("getNewSignature Error!");
+            return null;
+        }
+        return signature;
+    }
+
+    public static HttpResponse createGetConnectWithSignature(String curURI, Map<String, String> caseParams,Map<String, String> caseHeader) {
+        String requestUrl = HttpNode + curURI;
+        Map<String, String> params = getNewSigParams(defaultSys);
+        if(caseParams != null){
+            params = AddMap(params, caseParams);
+        }
+        Map<String, String> headers = getNewSigHeader(defaultSys, defaultVersion, defaultLang, defaultPkg);
+        if(caseHeader != null) {
+            headers = AddMap(headers, caseHeader);
+        }
+
+        //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
+        String cursig = getNewSignature(curURI,"GET", caseParams.get("address"), params, headers);
+        params.put("signature", cursig);
+
+        response = createGetConnect(requestUrl, params, null, headers);
+        return response;
+    }
+
+    public static HttpResponse createPostConnectWithSignature(String curURI,Map<String, String> caseParams, Map<String, String> caseHeader,JSONObject object ) {
+        Map<String, String> params = getNewSigParams(defaultSys);
+        if(caseParams != null){
+            params = AddMap(params, caseParams);
+        }
+
+        Map<String, String> headers = getNewSigHeader(defaultSys, defaultVersion, defaultLang, defaultPkg);
+        if(caseHeader != null) {
+            headers = AddMap(headers, caseHeader);
+        }
+        //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
+        String cursig = getNewSignature(curURI,"POST", caseParams.get("address"), params, headers);
+        params.put("signature", cursig);
+
+        String requestUrl = HttpNode + curURI;
+        response = createPostConnect(requestUrl, params, object, headers);
+        return response;
+    }
+
+    public static HttpResponse createPostConnectWithSignature(String curURI,Map<String, String> caseParams, Map<String, String> caseHeader,JSONArray object ) {
+        Map<String, String> params = getNewSigParams(defaultSys);
+        if(caseParams != null){
+            params = AddMap(params, caseParams);
+        }
+
+        Map<String, String> headers = getNewSigHeader(defaultSys, defaultVersion, defaultLang, defaultPkg);
+        if(caseHeader != null) {
+            headers = AddMap(headers, caseHeader);
+        }
+        //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
+        String cursig = getNewSignature(curURI,"POST", caseParams.get("address"), params, headers);
+        params.put("signature", cursig);
+
+        String requestUrl = HttpNode + curURI;
+        response = createPostConnect(requestUrl, params, object, headers);
+        return response;
+    }
 
 }

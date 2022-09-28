@@ -10,6 +10,7 @@ import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
+import tron.common.api;
 import tron.tronlink.base.TronlinkBase;
 
 @Slf4j
@@ -21,17 +22,41 @@ public class getNoticeRemind extends TronlinkBase {
   private JSONArray array = new JSONArray();
   Map<String, String> params = new HashMap<>();
 
-
-  @Test(enabled = true)
-  public void test01GetNoticeRemind(){
-    response = TronlinkApiList.v1GetNoticeRemind();
+  @Test(enabled = true, groups={"NoSignature"})
+  public void GetNoticeRemindLowVersionWithNoSig(){
+    response = TronlinkApiList.v1GetNoticeRemindNoSig(null);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     TronlinkApiList.printJsonObjectContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
     Assert.assertEquals(responseContent.getString("message"),"OK");
     Assert.assertTrue(responseContent.getString("data").isEmpty());
+  }
 
+  @Test(enabled = true)
+  public void GetNoticeRemindHighVerisonWithNoSig(){
+    HashMap<String, String> header = new HashMap<>();
+    header.put("Version",TronlinkApiList.androidUpdateVersion);
+    header.put("System", TronlinkApiList.defaultSys);
+    response = api.getCoinCapTrxPriceNoSig(header);
+    response = TronlinkApiList.v1GetNoticeRemindNoSig(header);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    Assert.assertEquals(20004, responseContent.getIntValue("code"));
+    Assert.assertEquals("Error param.", responseContent.getString("message"));
+  }
+
+  @Test(enabled = true)
+  public void test01GetNoticeRemind(){
+    HashMap<String, String> params = new HashMap<>();
+    params.put("address", quince_B58);
+    response = TronlinkApiList.v1GetNoticeRemind(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    TronlinkApiList.printJsonObjectContent(responseContent);
+    Assert.assertTrue(responseContent.getInteger("code") == 0);
+    Assert.assertEquals(responseContent.getString("message"),"OK");
+    Assert.assertTrue(responseContent.getString("data").isEmpty());
   }
 
 

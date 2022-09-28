@@ -86,6 +86,7 @@ public class VotingSearch extends TronlinkBase {
     }
     Map<String, String> params = new HashMap<>();
     params.put("keyword","TK");
+    params.put("address", quince_B58);
     response = TronlinkApiList.votingV2Search(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);

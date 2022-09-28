@@ -36,11 +36,19 @@ public class api extends TronlinkServerHttpClient {
   public static String testAccountKey = "7400E3D0727F8A61041A8E8BF86599FE5597CE19DE451E59AED07D60967A5E25";
   static String transactionSignString;
 
-  public static HttpResponse upgrade(HashMap<String,String> header) {
+  public static HttpResponse upgradeNoSig(HashMap<String,String> header) {
     final String requestUrl = HttpNode + "/api/v1/wallet/upgrade";
     response = createGetConnect(requestUrl,null,null,header);
     return response;
   }
+
+  public static HttpResponse upgrade(HashMap<String,String> caseParams,HashMap<String,String> header) {
+    final String curURI = "/api/v1/wallet/upgrade";
+    response = createGetConnect(curURI,caseParams,null,header);
+    return response;
+  }
+
+
 
   public static HttpResponse trxTransferRecord(HashMap<String, String> param) {
     final String requestUrl = HttpNode + "/api/simple-transfer";
@@ -95,16 +103,29 @@ public class api extends TronlinkServerHttpClient {
     return response;
   }
 
-  public static HttpResponse getCoinCapTrxPrice() throws Exception{
+  public static HttpResponse getCoinCapTrxPriceNoSig(HashMap<String,String> header) {
     final String requesturl = HttpNode + "/api/v1/wallet/getCoinCapTrxPrice";
-    response = createGetConnect(requesturl,null,null,null);
+    response = createGetConnect(requesturl,null,null,header);
+    Assert.assertTrue(api.verificationResult(response));
+    return response;
+  }
+  public static HttpResponse getCoinCapTrxPrice(HashMap<String,String> params) {
+    final String curURI = "/api/v1/wallet/getCoinCapTrxPrice";
+    response = createGetConnectWithSignature(curURI,params,null);
     Assert.assertTrue(api.verificationResult(response));
     return response;
   }
 
-  public static HttpResponse getLatestAPK() throws Exception{
+  public static HttpResponse getLatestAPKNoSig(HashMap<String,String> header) throws Exception{
     final String requesturl = HttpNode + "/api/v1/wallet/getLatestAPK";
-    response = createGetConnect(requesturl,null,null,null);
+    response = createGetConnect(requesturl,null,null,header);
+    Assert.assertTrue(api.verificationResult(response));
+    return response;
+  }
+
+  public static HttpResponse getLatestAPK(HashMap<String,String> caseParams) throws Exception{
+    final String curURI = "/api/v1/wallet/getLatestAPK";
+    response = createGetConnectWithSignature(curURI,caseParams,null);
     Assert.assertTrue(api.verificationResult(response));
     return response;
   }

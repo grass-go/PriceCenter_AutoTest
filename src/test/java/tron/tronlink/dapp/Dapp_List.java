@@ -52,6 +52,7 @@ public class Dapp_List extends TronlinkBase {
     params.put("is_roll","2");
     params.put("page_size","10");
     params.put("classify_id","0");
+    params.put("address",quince_B58);
     response = TronlinkApiList.dapp_list(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
@@ -71,7 +72,7 @@ public class Dapp_List extends TronlinkBase {
       Assert.assertTrue(jsonObject.getInteger("is_roll") == 2);
     }
     System.out.println(responseArrayContent.size());
-    Assert.assertTrue(responseArrayContent.size() == 3);
+    Assert.assertTrue(responseArrayContent.size() == 2);
   }
 
 }

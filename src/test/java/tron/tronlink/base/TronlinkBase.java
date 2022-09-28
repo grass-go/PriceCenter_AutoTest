@@ -26,7 +26,7 @@ public class TronlinkBase {
 
     public String new1_B58 = Configuration.getByPath("testng.conf").getString("tronlink.new1_B58");
     public String new1_Hex = Configuration.getByPath("testng.conf").getString("tronlink.new1_Hex");
-    public String quince_B58 = Configuration.getByPath("testng.conf").getString("tronlink.quince_B58");
+    public static String quince_B58 = Configuration.getByPath("testng.conf").getString("tronlink.quince_B58");
     public String testDELuser_B58 = Configuration.getByPath("testng.conf").getString("tronlink.testDELuser_B58");
     public String price_B58 = Configuration.getByPath("testng.conf").getString("tronlink.priceUser");
     public String Hex_1155_user = Configuration.getByPath(Keys.settingFileName).getString("tronlink.1155User");

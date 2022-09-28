@@ -116,11 +116,12 @@ public class VotingSelf extends TronlinkBase {
     }
   }
 
+  //In old version, wrong address still can get witness.
   @Test(enabled = true,description = "get self vote with wrong address")
   public void Test001getVotingSelf() throws Exception {
     Map<String, String> params = new HashMap<>();
     params.put("address","TXTNcgJHD9GPii9VcpEr"); //sophia's address
-    response = TronlinkApiList.votingV2Self(params);
+    response = TronlinkApiList.votingV2SelfNoSig(params,null);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("total"));
@@ -136,7 +137,7 @@ public class VotingSelf extends TronlinkBase {
     params.put("has_all","0");
     params.put("page_size","5");
     params.put("page_num","1");
-
+    params.put("address", quince_B58);
     response = TronlinkApiList.votingWitness(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
