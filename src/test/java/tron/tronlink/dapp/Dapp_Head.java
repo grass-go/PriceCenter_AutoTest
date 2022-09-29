@@ -42,10 +42,11 @@ public class Dapp_Head extends TronlinkBase {
         JSONObject small_banner = targetContent.getJSONObject("small_banner");
         JSONArray dapp = targetContent.getJSONArray("dapp");
 
-        Assert.assertEquals(roll_data.size(), roll_dapp.size());
+        Assert.assertEquals(roll_data.size(), 3);
+        Assert.assertEquals(roll_dapp.size(), 2);
 
 
-        for (int n = 0; n < roll_data.size(); n++){
+        for (int n = 0; n < roll_dapp.size(); n++){
             Assert.assertEquals(roll_data.getJSONObject(n).getString("name"), roll_dapp.getJSONObject(n).getString("name"));
             if(n==2){continue;}
             int retryIdx=0;
