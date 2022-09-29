@@ -72,7 +72,7 @@ public class Dapp_List extends TronlinkBase {
       Assert.assertTrue(jsonObject.getInteger("is_roll") == 2);
     }
     System.out.println(responseArrayContent.size());
-    Assert.assertTrue(responseArrayContent.size() == 2);
+    Assert.assertTrue(responseArrayContent.size() == 3);
   }
 
 }
