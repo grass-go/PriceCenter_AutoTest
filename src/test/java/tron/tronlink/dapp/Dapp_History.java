@@ -55,6 +55,20 @@ public class Dapp_History extends TronlinkBase {
     public void put_get_delete_history() throws InterruptedException {
         Map<String, String> params = new HashMap<>();
         params.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
+
+        log.info("put history... ...");
+        jsonObject.clear();
+        jsonObject.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
+        jsonObject.put("dapp_id","405");
+        jsonObject.put("dapp_name","APENFT");
+        response = TronlinkApiList.put_history(jsonObject);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+        Assert.assertEquals(0,responseContent.getIntValue("code"));
+        Assert.assertEquals("OK", responseContent.getString("message"));
+        Assert.assertEquals("SUCCESS", responseContent.getString("data"));
+
+        log.info("get history to check put!");
         response = TronlinkApiList.history(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
@@ -65,6 +79,7 @@ public class Dapp_History extends TronlinkBase {
         Assert.assertEquals(405, id);
         String name = history.getString("name");
         Assert.assertEquals("APENFT", name);
+
 
         log.info("delete history... ...");
         jsonObject.clear();
@@ -86,28 +101,7 @@ public class Dapp_History extends TronlinkBase {
         Assert.assertEquals("OK", responseContent.getString("message"));
         Assert.assertNull(responseContent.getString("data"));
 
-        log.info("put history... ...");
-        jsonObject.clear();
-        jsonObject.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
-        jsonObject.put("dapp_id","405");
-        jsonObject.put("dapp_name","APENFT");
-        response = TronlinkApiList.put_history(jsonObject);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-        Assert.assertEquals(0,responseContent.getIntValue("code"));
-        Assert.assertEquals("OK", responseContent.getString("message"));
-        Assert.assertEquals("SUCCESS", responseContent.getString("data"));
 
-        log.info("get history to check put!");
-        response = TronlinkApiList.history(params);
-        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-        responseArrayContent = responseContent.getJSONArray("data");
-        Assert.assertEquals(1,responseArrayContent.size());
-        history = responseArrayContent.getJSONObject(0);
-        id = history.getIntValue("id");
-        Assert.assertEquals(405, id);
-        name = history.getString("name");
-        Assert.assertEquals("APENFT", name);
 
     }
 
