@@ -17,7 +17,8 @@ public class transferTrx {
   private HttpResponse response;
   private HashMap<String,String> param = new HashMap<>();
 
-  @Test(enabled = true,description = "get only trx transaction",groups={"NoSignature"})
+
+  @Test(enabled = false,description = "get only trx transaction",groups={"NoSignature"})
   public void getTrxTransferLowVersionWithNoSig() throws Exception {
     param.put("address","TH48niZfbwHMyqZwEB8wmHfzcvR8ZzJKC6"); //sophia's address
     param.put("limit","20");
