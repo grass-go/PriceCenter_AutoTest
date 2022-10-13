@@ -33,9 +33,9 @@ public class Upgrade extends TronlinkBase {
     Map<String, String> params = new HashMap<>();
     params.put("System","Android");
     params.put("DeviceID", "1111111111");
-    params.put("Version","3.7.0");
+    params.put("Version","4.10.0");
     //params.put("DownloadPlatform", "appstore");
-    params.put("Lang","1");
+    params.put("Lang","2");
     params.put("channel","official");
     params.put("packageName", "com.tronlinkpro.wallet");
     params.put("chain","MainChain");

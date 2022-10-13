@@ -1934,6 +1934,10 @@ public class TronlinkApiList {
             header.put("System","iOSTest");
         } else if(needSys.equals("iOS")){
             header.put("System","iOS");
+        } else if(needSys.equals("Firefox")){
+            header.put("System","Firefox");
+        } else if(needSys.equals("firefox-test")){
+            header.put("System","firefox-test");
         }
         header.put("Lang","1");
         header.put("Version","v4.9.0");
@@ -1970,6 +1974,10 @@ public class TronlinkApiList {
             params.put("secretId","JSKLJKFJDFDSFER3");
         } else if(needSys.equals("iOS")){
             params.put("secretId","ED151200DD0B3B52");
+        } else if(needSys.equals("Firefox")){
+            params.put("secretId","UEABGANGI530ROIE");
+        } else if(needSys.equals("firefox-test")){
+            params.put("secretId","HRFLANGJNGIE8757");
         }
         params.put("nonce","12345");
         return params;

@@ -13,13 +13,13 @@ public class upgrade extends TronlinkBase {
   private JSONObject responseContent;
   private HashMap<String,String> param = new HashMap<>();
 
-  @Test(enabled = false, description = "Api upgrade test")
+  @Test(enabled = true, description = "Api upgrade test")
   public void upgrade() throws Exception {
-    param.put("packageName","com.tronlink.wallet");
-    param.put("DownloadPlatform","googlePlayAisle");
+    param.put("packageName","com.tronlinkpro.wallet");
+    param.put("DownloadPlatform","");
     param.put("DeviceID","sdfsasdfsa");
-    param.put("Lang","1");
-    param.put("Version","3.2.0");
+    param.put("Lang","2");
+    param.put("Version","4.10.0");
     param.put("System","Android");
 
     response = TronlinkApiList.upgrade(param);

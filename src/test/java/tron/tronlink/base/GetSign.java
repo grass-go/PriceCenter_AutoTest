@@ -88,6 +88,10 @@ public class GetSign {
             secretKey = "FMD5MW11TIIMYFSWDXVGQDUD9XR7GVV9XR29J";
         }else if (system.equals("Chrome")) {
             secretKey = "FMD5MW11TIIMYFSWDXVGQDUD9XR7GVV9XR29J";
+        }else if (system.equals("Firefox")) {
+            secretKey = "TUJNSHKT2HSRTK4FGS5SFGDF3GGGFLD4KHSHH";
+        }else if (system.equals("firefox-test")) {
+            secretKey = "OIR3GNNAO4DGKAN5GAJKG6NAGNAK2GAKGN4AG";
         }
 
         return hmacSHA1(secretKey, String.format("%s%s%s?%s", method, deviceId, url, makeQueryString(arguments, "utf-8")));
