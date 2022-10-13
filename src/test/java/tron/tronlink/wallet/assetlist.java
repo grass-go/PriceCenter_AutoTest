@@ -25,7 +25,7 @@ public class assetlist extends TronlinkBase {
 
   @Test(enabled = true)
   public void assetlist(){
-    response = TronlinkApiList.assetlist(queryAddress);
+    response = TronlinkApiList.assetlist(address721_B58);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     targetContent = responseContent.getJSONObject("data");
@@ -55,8 +55,10 @@ public class assetlist extends TronlinkBase {
       Assert.assertTrue(jsonObject.containsKey("price"));
       Assert.assertTrue(jsonObject.containsKey("trxCount"));
       String shortname = jsonObject.getString("shortName");
-      if ("WIN".equals(shortname) || "JST".equals(shortname)
-              || "USDJ".equals(shortname) || "BTT".equals(shortname)){
+      //if ("WIN".equals(shortname) || "JST".equals(shortname)
+      //        || "USDD".equals(shortname) || "BTT".equals(shortname)){
+      if ("WIN".equals(shortname) || "USDD".equals(shortname) || "BTTOLD".equals(shortname)){
+
         Assert.assertTrue(jsonObject.getDoubleValue("price") > 0);
         Assert.assertTrue(jsonObject.getDoubleValue("trxCount") > 0);
         Assert.assertTrue(jsonObject.getDoubleValue("totalBalance") > 0);
