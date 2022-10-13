@@ -105,7 +105,7 @@ public class AllAssetList extends TronlinkBase {
     //check WINkLink balance
     Object actualWL = JSONPath.eval(responseContent, String.join("","$..data.token[name='WINkLink'].balanceStr"));
     JSONArray actualWLArray=(JSONArray)actualWL;
-    Assert.assertEquals("0.01", actualWLArray.get(0));
+    Assert.assertEquals("206.349755", actualWLArray.get(0));
     Object actualWLPrice = JSONPath.eval(responseContent, "$..data.token[name='WINkLink'].price");
     JSONArray actualWLPriceArray=(JSONArray)actualWLPrice;
     BigDecimal wlPrice = (BigDecimal) actualWLPriceArray.get(0);

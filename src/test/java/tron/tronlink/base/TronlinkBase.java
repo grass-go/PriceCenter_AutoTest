@@ -21,6 +21,8 @@ public class TronlinkBase {
     public  String queryAddressTH48 = Configuration.getByPath("testng.conf").getString("tronlink.queryAddressTH48");
     public  String addressNewAsset = Configuration.getByPath("testng.conf").getString("tronlink.addressNewAsset");
     public  String addressNewAsset41 = Configuration.getByPath("testng.conf").getString("tronlink.addressNewAsset41");
+    public  String addressNewAsset2 = Configuration.getByPath("testng.conf").getString("tronlink.addressNewAsset2");
+    public  String addressNewAsset2_41 = Configuration.getByPath("testng.conf").getString("tronlink.addressNewAsset2_41");
     public String address721_B58 = Configuration.getByPath("testng.conf").getString("tronlink.address721_B58");
     public String address721_Hex = Configuration.getByPath("testng.conf").getString("tronlink.address721_Hex");
 

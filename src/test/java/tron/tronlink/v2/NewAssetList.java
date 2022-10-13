@@ -68,7 +68,7 @@ public class NewAssetList extends TronlinkBase {
     int len =input.read(cbuf);
     String expResponse =new String(cbuf,0,len);
 
-    params.put("address",address721_B58);
+    params.put("address",addressNewAsset2);
 
     response = TronlinkApiList.v2NewAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -76,29 +76,29 @@ public class NewAssetList extends TronlinkBase {
 
 
     //check BitTorrent balance
-    Object actualBT = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].balanceStr");
+    Object actualBT = JSONPath.eval(responseContent, "$..data.token[name='JUST'].balanceStr");
     JSONArray actualBTArray=(JSONArray)actualBT;
-    Assert.assertEquals("9", actualBTArray.get(0));
-    Object actualBTPrice = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].price");
+    Assert.assertEquals("1.251755232041081343", actualBTArray.get(0));
+    Object actualBTPrice = JSONPath.eval(responseContent, "$..data.token[name='JUST'].price");
     JSONArray actualBTPriceArray=(JSONArray)actualBTPrice;
     BigDecimal btPrice = (BigDecimal) actualBTPriceArray.get(0);
     int btflag = btPrice.compareTo(BigDecimal.ZERO);
     Assert.assertTrue(btflag>0);
-    Object actualRSIPrice = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].recommandSortId");
+    Object actualRSIPrice = JSONPath.eval(responseContent, "$..data.token[name='JUST'].recommandSortId");
     JSONArray actualRSIArray=(JSONArray)actualRSIPrice;
     Assert.assertEquals(0,actualRSIArray.get(0));
 
 
     //check WINkLink balance
-    Object actualWL = JSONPath.eval(responseContent, String.join("","$..data.token[name='WINkLink'].balanceStr"));
+    Object actualWL = JSONPath.eval(responseContent, String.join("","$..data.token[name='BitTorrent'].balanceStr"));
     JSONArray actualWLArray=(JSONArray)actualWL;
-    Assert.assertEquals("0.01", actualWLArray.get(0));
-    Object actualWLPrice = JSONPath.eval(responseContent, "$..data.token[name='WINkLink'].price");
+    Assert.assertEquals("2", actualWLArray.get(0));
+    Object actualWLPrice = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent'].price");
     JSONArray actualWLPriceArray=(JSONArray)actualWLPrice;
     BigDecimal wlPrice = (BigDecimal) actualWLPriceArray.get(0);
     int wlflag = wlPrice.compareTo(BigDecimal.ZERO);
     Assert.assertTrue(wlflag > 0);
-    actualRSIPrice = JSONPath.eval(responseContent, "$..data.token[name='WINkLink'].recommandSortId");
+    actualRSIPrice = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent'].recommandSortId");
     actualRSIArray=(JSONArray)actualRSIPrice;
     Assert.assertEquals(0,actualRSIArray.get(0));
 
