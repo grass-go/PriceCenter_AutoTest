@@ -43,7 +43,7 @@ public class Dapp_Head extends TronlinkBase {
         JSONArray dapp = targetContent.getJSONArray("dapp");
 
         Assert.assertEquals(roll_data.size(), 4);
-        Assert.assertEquals(roll_dapp.size(), 2);
+        Assert.assertEquals(roll_dapp.size(), 3);
 
 
         for (int n = 0; n < roll_dapp.size(); n++){
