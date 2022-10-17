@@ -438,13 +438,29 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse hot_token(String address) {
+    public static HttpResponse hot_tokenV2(HashMap<String, String> params) {
+        String curURI = "/api/wallet/v2/hot_token";
+        response = createGetConnectWithSignature(curURI,params,null);
+        return response;
+    }
+
+    //only /api/wallet/hot_token supports low version. /api/wallet/v2/hot_token must has signature to access.
+    public static HttpResponse hot_tokenV1NoSig(String address, HashMap<String, String> header) {
         String requestUrl = HttpNode + "/api/wallet/hot_token";
         JSONObject body = new JSONObject();
         body.put("address", address);
-        response = createPostConnect(requestUrl,null, body,null);
+        response = createPostConnect(requestUrl,null,body,header);
         return response;
     }
+
+    public static HttpResponse hot_tokenV1(HashMap<String, String> params) {
+        String curURI = "/api/wallet/hot_token";
+        JSONObject body = new JSONObject();
+        body.put("address", params.get("address"));
+        response = createPostConnectWithSignature(curURI,params,null,body);
+        return response;
+    }
+
 
     public static HttpResponse addasset(String json) {
         String requestUrl = HttpNode + "/api/wallet/addasset";
@@ -759,7 +775,6 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse v1GetStartup(Map<String, String> params, Map<String, String> headerMap) {
         final String requestUrl = HttpNode + "/api/v1/wallet/startup";
-        //Map<String, String> header = getV2Header();
         Map<String, String> header = new HashMap<>();
         header.put("Content-type", "application/json; charset=utf-8");
         header.put("Connection", "Close");

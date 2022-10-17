@@ -81,7 +81,7 @@ public class AllAssetList extends TronlinkBase {
   }
 
   @SneakyThrows
-  @Test(enabled = true)
+  @Test(enabled = true, description = "check balance add national field")
   public void allAssetList02(){
     params.clear();
     params.put("address",address721_B58);
@@ -89,7 +89,6 @@ public class AllAssetList extends TronlinkBase {
     response = TronlinkApiList.V2AllAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-
 
     //check BitTorrent balance
     Object actualBT = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].balanceStr");
@@ -100,6 +99,8 @@ public class AllAssetList extends TronlinkBase {
     BigDecimal btPrice = (BigDecimal) actualBTPriceArray.get(0);
     int btflag = btPrice.compareTo(BigDecimal.ZERO);
     Assert.assertTrue(btflag>0);
+    Object national = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].national[0]");
+    Assert.assertEquals("",national.toString());
 
 
     //check WINkLink balance
@@ -111,6 +112,27 @@ public class AllAssetList extends TronlinkBase {
     BigDecimal wlPrice = (BigDecimal) actualWLPriceArray.get(0);
     int wlflag = wlPrice.compareTo(BigDecimal.ZERO);
     Assert.assertTrue(wlflag > 0);
+    national = JSONPath.eval(responseContent, "$..data.token[name='WINkLink'].national[0]");
+    Assert.assertEquals("",national.toString());
+    //
+
+    national = JSONPath.eval(responseContent, "$..data.token[0].national[0]");
+    Assert.assertEquals("DM",national.toString());
+
+    national = JSONPath.eval(responseContent, "$..data.token[name='Decentralized USD'].national[0]");
+    Assert.assertEquals("DM",national.toString());
+
+    national = JSONPath.eval(responseContent, "$..data.token[name='Tether USD'].national[0]");
+    Assert.assertEquals("DM",national.toString());
+
+    national = JSONPath.eval(responseContent, "$..data.token[name='APENFT'].national[0]");
+    Assert.assertEquals("DM",national.toString());
+
+    national = JSONPath.eval(responseContent, "$..data.token[name='TrueUSD'].national[0]");
+    Assert.assertEquals("DM",national.toString());
+
+    national = JSONPath.eval(responseContent, "$..data.token[name='JUST'].national[0]");
+    Assert.assertEquals("DM",national.toString());
 
   }
 
@@ -257,7 +279,9 @@ public class AllAssetList extends TronlinkBase {
 
       }
     }
-
-
   }
+
+
+
+
 }

@@ -87,9 +87,11 @@ public class NewAssetList extends TronlinkBase {
     Object actualRSIPrice = JSONPath.eval(responseContent, "$..data.token[name='JUST'].recommandSortId");
     JSONArray actualRSIArray=(JSONArray)actualRSIPrice;
     Assert.assertEquals(0,actualRSIArray.get(0));
+    Object national = JSONPath.eval(responseContent, "$..data.token[name='JUST'].national[0]");
+    Assert.assertEquals("DM",national.toString());
 
 
-    //check WINkLink balance
+    //check BitTorrent balance
     Object actualWL = JSONPath.eval(responseContent, String.join("","$..data.token[name='BitTorrent'].balanceStr"));
     JSONArray actualWLArray=(JSONArray)actualWL;
     Assert.assertEquals("2", actualWLArray.get(0));
@@ -101,6 +103,8 @@ public class NewAssetList extends TronlinkBase {
     actualRSIPrice = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent'].recommandSortId");
     actualRSIArray=(JSONArray)actualRSIPrice;
     Assert.assertEquals(0,actualRSIArray.get(0));
+    national = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent'].national[0]");
+    Assert.assertEquals("DM",national.toString());
 
 
   }

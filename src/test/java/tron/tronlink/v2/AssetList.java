@@ -59,6 +59,12 @@ public class AssetList extends TronlinkBase {
     System.out.println("=========cmp_result=============== "+cmp_result);
     Assert.assertEquals("null",cmp_result);
 
+    Object national = JSONPath.eval(responseContent, "$..data.token[0].national[0]");
+    Assert.assertEquals("DM",national.toString());
+
+    national = JSONPath.eval(responseContent, "$..data.token[name='Decentralized USD'].national[0]");
+    Assert.assertEquals("DM",national.toString());
+
   }
 
   //v4.2.1 new user(not even have transfer trx),with parameter version=v2, will return trx only.
@@ -196,7 +202,5 @@ public class AssetList extends TronlinkBase {
       }
 
     }
-
   }
-
 }

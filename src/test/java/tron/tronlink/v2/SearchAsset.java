@@ -16,9 +16,7 @@ import tron.tronlink.v2.model.trc1155.Data;
 import tron.tronlink.v2.model.trc1155.search.SearchRsp;
 import tron.tronlink.v2.model.trc1155.search.Token;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import static tron.common.Constants.GET;
 import static tron.common.Constants.searchUrl;
@@ -343,6 +341,7 @@ public class SearchAsset extends TronlinkBase {
 
   }
 
+
   private void init1155Params(){
     params.clear();
     // 计算sig
@@ -358,4 +357,58 @@ public class SearchAsset extends TronlinkBase {
     params.put("type","6");
 
   }
+
+  @Test(description = "搜索增加national字段")
+  public void searchNational() {
+    List<String> nationalList = new ArrayList<>();
+    nationalList.add("TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn");  //USDD
+    nationalList.add("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");  //USDT
+    nationalList.add("TUpMhErZL2fhh4sVNULAbNKLokS4GjC1F4");  //TUSD
+    nationalList.add("TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9");  //JST
+    nationalList.add("TFczxzPhnThNSqr5by8tvxsdCFRRz6cPNq");  //NFT
+    nationalList.add("TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4");  //BTT
+
+    for (String token:nationalList){
+      params.clear();
+      params.put("address",addressNewAsset41);
+      params.put("version","v2");
+      params.put("keyWord",token);
+      response = TronlinkApiList.v2SearchAsset(params);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+      Object national = JSONPath.eval(responseContent, "$..national[0]");
+      Assert.assertEquals("DM", national);
+      params.put("version","v3");
+      response = TronlinkApiList.v2SearchAsset(params);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+      national = JSONPath.eval(responseContent, "$..national[0]");
+      Assert.assertEquals("DM", national);
+    }
+  }
+
+  @Test(description = "搜索增加national字段")
+  public void searchNonNational() {
+    List<String> tokenList = new ArrayList<>();
+    tokenList.add("TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR");  //WTRX
+    tokenList.add("TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9");  //BTC
+    tokenList.add("THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF");  //TUSD
+    tokenList.add("TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8");  //USDC
+    tokenList.add("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");  //WIN
+
+    for (String token:tokenList){
+      params.clear();
+      params.put("address",addressNewAsset41);
+      params.put("version","v2");
+      params.put("keyWord",token);
+      response = TronlinkApiList.v2SearchAsset(params);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+      Object national = JSONPath.eval(responseContent, "$..national[0]");
+      Assert.assertEquals("", national);
+      params.put("version","v3");
+      response = TronlinkApiList.v2SearchAsset(params);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+      national = JSONPath.eval(responseContent, "$..national[0]");
+      Assert.assertEquals("", national);
+    }
+  }
+
 }

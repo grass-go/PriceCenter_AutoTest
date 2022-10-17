@@ -49,6 +49,10 @@ public class unfollowAssetList extends TronlinkBase {
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         // 断言
         assertFound(followToken);
+        // 断言 unfollow接口包含national接口。 非法定的national字段为：空
+        Object usdtNational = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].national[0]");
+        Assert.assertEquals("", usdtNational.toString());
+
     }
 
     @Test(enabled = true, description = "有余额有价值的币，关注,无法查到")
@@ -164,9 +168,13 @@ public class unfollowAssetList extends TronlinkBase {
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         // 断言
         assertFound(followToken);
+        // 断言 unfollow接口包含national接口。 USDT的national字段为：DM
+        Object usdtNational = JSONPath.eval(responseContent, "$..data.token[name='Tether USD'].national[0]");
+        Assert.assertEquals("DM", usdtNational.toString());
 
         follow = addAsset.addAssetByTokenType(20, true, unfollowAsset41, followToken);
         log.info("restore follow usdt, result = " + follow);
+
 
     }
 
