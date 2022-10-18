@@ -423,13 +423,32 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse assetlist(String address) {
+
+
+    public static HttpResponse getAllClassAsset(String node, JSONObject address) throws Exception {
+        final String requestUrl = node + "/api/wallet/class/allasset";
+        response = createPostConnect(requestUrl, null, address,null);
+        return response;
+    }
+
+    public static HttpResponse assetlistNoSig(String address,Map<String, String> header) {
         String requestUrl = HttpNode + "/api/wallet/assetlist";
         JSONObject body = new JSONObject();
         body.put("address", address);
-        response = createPostConnect(requestUrl,null,body,null);
+        response = createPostConnect(requestUrl,null,body,header);
         return response;
     }
+
+
+    public static HttpResponse assetlist(String address, Map<String, String> params) {
+        String curURI = "/api/wallet/assetlist";
+        JSONObject body = new JSONObject();
+        body.put("address", address);
+        response = createPostConnectWithSignature(curURI,params,null,body);
+        return response;
+    }
+
+
 
     //related case disabled.
     public static HttpResponse lotteryData() throws Exception {
@@ -462,9 +481,15 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
     }
 
 
-    public static HttpResponse addasset(String json) {
-        String requestUrl = HttpNode + "/api/wallet/addasset";
-        response = createPostConnect(requestUrl,null,json,null);
+    public static HttpResponse addAssetNoSig(JSONObject address, HashMap<String, String> header ) {
+        final String requestUrl = HttpNode + "/api/wallet/addasset";
+        response = createPostConnect(requestUrl,null, address,header);
+        return response;
+    }
+
+    public static HttpResponse addAsset(JSONObject address, HashMap<String, String> params) {
+        final String curURI = "/api/wallet/addasset";
+        response = createPostConnectWithSignature(curURI,params, null,address);
         return response;
     }
 
@@ -509,21 +534,9 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse addAsset(JSONObject address) throws Exception {
-        final String requestUrl = HttpNode + "/api/wallet/addasset";
-        response = createPostConnect(requestUrl,null, address,null);
-        return response;
-    }
-
     public static HttpResponse getAirdropTransaction(Map<String, String> params) {
         final String requestUrl = HttpNode + "/api/wallet/airdrop_transaction";
         response = createGetConnect(requestUrl, params,null,null);
-        return response;
-    }
-
-    public static HttpResponse getAllClassAsset(String node, JSONObject address) throws Exception {
-        final String requestUrl = node + "/api/wallet/class/allasset";
-        response = createPostConnect(requestUrl, null, address,null);
         return response;
     }
 
@@ -773,7 +786,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse v1GetStartup(Map<String, String> params, Map<String, String> headerMap) {
+    public static HttpResponse v1GetStartupNoSig(Map<String, String> params, Map<String, String> headerMap) {
         final String requestUrl = HttpNode + "/api/v1/wallet/startup";
         Map<String, String> header = new HashMap<>();
         header.put("Content-type", "application/json; charset=utf-8");
@@ -784,6 +797,20 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         response = createGetConnect(requestUrl, params, null, header);
         return response;
     }
+
+    public static HttpResponse v1GetStartup(Map<String, String> params, Map<String, String> headerMap) {
+        final String curURI = "/api/v1/wallet/startup";
+        Map<String, String> header = new HashMap<>();
+        header.put("Content-type", "application/json; charset=utf-8");
+        header.put("Connection", "Close");
+        for (String key : headerMap.keySet()) {
+            header.put(key, headerMap.get(key));
+        }
+        response = createGetConnectWithSignature(curURI, params, header);
+        return response;
+    }
+
+
 
     public static HttpResponse v1UpdateUserCreateBNum(String updataNumber, String userhash, Map<String, String> headerMap) {
         final String requestUrl =  HttpNode + "/api/v1/wallet/updateUserCreateBNum";

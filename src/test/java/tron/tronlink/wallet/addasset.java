@@ -1,8 +1,6 @@
 package tron.tronlink.wallet;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -28,12 +26,18 @@ public class addasset {
     private JSONObject tokenJson = new JSONObject();
     List<String> trc10tokenList = new ArrayList<>();
     List<String> trc20ContractAddressList = new ArrayList<>();
+    private HashMap<String, String> params = new HashMap<>();
 
     @BeforeClass(enabled = true, description = "please use hex address,get all asset")
     public void removeAllTokenList() throws Exception {
-        tokenJson.put("address", "414db7719251ce8ba74549ba35bbdc02418ecde595");
+        /*tokenJson.put("address", "414db7719251ce8ba74549ba35bbdc02418ecde595");*/
         // 只传输地址的时候，会返回该地址当前添加过的资产
-        response = TronlinkApiList.addasset("{\n" + " \"address\": \"414db7719251ce8ba74549ba35bbdc02418ecde595\"}");
+        //response = TronlinkApiList.addasset("{\n" + " \"address\": \"414db7719251ce8ba74549ba35bbdc02418ecde595\"}");
+        String postbody = "{\n" + " \"address\": \"414db7719251ce8ba74549ba35bbdc02418ecde595\"}";
+        //String postbody_jsonStr = JSON.toJSONString(postbody);
+        JSONObject postbody_json = JSON.parseObject(postbody);
+        params.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
+        response = TronlinkApiList.addAsset(postbody_json,params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         JSONObject assetInformation = TronlinkApiList.parseResponse2JsonObject(response);
         JSONArray tokenArray = assetInformation.getJSONArray("data");
@@ -41,10 +45,41 @@ public class addasset {
         trc20ContractAddressList = TronlinkApiList.getTrc20AddressList(tokenArray);
     }
 
+    @Test(enabled = true, groups = {"NoSignature"})
+    public void addassetLowVersionWithNoSig() throws Exception {
+        String postbody = "{\n" + " \"address\": \"414db7719251ce8ba74549ba35bbdc02418ecde595\"}";
+        //String postbody_jsonStr = JSON.toJSONString(postbody);
+        JSONObject postbody_json = JSON.parseObject(postbody);
+        params.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
+        response = TronlinkApiList.addAssetNoSig(postbody_json,null);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        JSONObject assetInformation = TronlinkApiList.parseResponse2JsonObject(response);
+        JSONArray tokenArray = assetInformation.getJSONArray("data");
+        Assert.assertTrue(tokenArray.size()>0);
+    }
+
+
+    @Test(enabled = true)
+    public void addassetHighVersionWithNoSig() {
+        HashMap<String, String> header = new HashMap<>();
+        header.put("System","Android");
+        header.put("Version","4.11.0");
+        String postbody = "{\n" + " \"address\": \"414db7719251ce8ba74549ba35bbdc02418ecde595\"}";
+        //String postbody_jsonStr = JSON.toJSONString(postbody);
+        JSONObject postbody_json = JSON.parseObject(postbody);
+        params.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
+        response = TronlinkApiList.addAssetNoSig(postbody_json,header);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        JSONObject assetInformation = TronlinkApiList.parseResponse2JsonObject(response);
+        org.junit.Assert.assertEquals(20004, assetInformation.getIntValue("code"));
+        org.junit.Assert.assertEquals("Error param.", assetInformation.getString("message"));
+
+    }
+
     @Test(enabled = false)
     public void addasset_DeadCase() {
 
-        response = TronlinkApiList.addasset("{\n"
+        /*response = TronlinkApiList.addasset("{\n"
                 + "  \"address\": \"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe\",\n"
                 + "  \"token10\": [\n"
                 + "    \"zzz\"\n"
@@ -58,7 +93,27 @@ public class addasset {
                 + "  \"token20Cancel\": [\n"
                 + "    \"ccc\"\n"
                 + "  ]\n"
-                + "}");
+                + "}");*/
+        String postbody = "{\n"
+                + "  \"address\": \"TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe\",\n"
+                + "  \"token10\": [\n"
+                + "    \"zzz\"\n"
+                + "  ],\n"
+                + "  \"token10Cancel\": [\n"
+                + "    \"aaa\"\n"
+                + "  ],\n"
+                + "  \"token20\": [\n"
+                + "    \"xxx\"\n"
+                + "  ],\n"
+                + "  \"token20Cancel\": [\n"
+                + "    \"ccc\"\n"
+                + "  ]\n"
+                + "}";
+        String postbody_jsonStr = JSON.toJSONString(postbody);
+        JSONObject postbody_json = JSON.parseObject(postbody_jsonStr);
+        params.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
+        response = TronlinkApiList.addAsset(postbody_json,params);
+
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         responseArrayContent = responseContent.getJSONArray("data");
@@ -89,10 +144,11 @@ public class addasset {
 
     @Test(enabled = true, description = "Test cancel trc10 token to account.1002000 is always exist")
     public void test001CancelTrc10FromAccount() throws Exception {
+        params.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
         tokenJson.clear();
         tokenJson.put("address", "414db7719251ce8ba74549ba35bbdc02418ecde595"); // sophia's address
         tokenJson.put("token10Cancel", trc10tokenList);
-        response = TronlinkApiList.addAsset(tokenJson);
+        response = TronlinkApiList.addAsset(tokenJson,params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         JSONObject assetInformation = TronlinkApiList.parseResponse2JsonObject(response);
         JSONArray tokenArray = assetInformation.getJSONArray("data");
@@ -102,10 +158,11 @@ public class addasset {
 
     @Test(enabled = true, description = "Test add all trc10 token to account.")
     public void test002AddAllTrc10TokenToAccount() throws Exception {
+        params.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
         tokenJson.clear();
         tokenJson.put("address", "414db7719251ce8ba74549ba35bbdc02418ecde595");
         tokenJson.put("token10", trc10tokenList);
-        response = TronlinkApiList.addAsset(tokenJson);
+        response = TronlinkApiList.addAsset(tokenJson,params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         JSONObject assetInformation = TronlinkApiList.parseResponse2JsonObject(response);
         JSONArray tokenArray = assetInformation.getJSONArray("data");
@@ -116,10 +173,11 @@ public class addasset {
 
     @Test(enabled = true, description = "Test cancel trc20 token ,four trc20 token are always exist")
     public void test003CancelTrc20FromAccount() throws Exception {
+        params.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
         tokenJson.clear();
         tokenJson.put("address", "414db7719251ce8ba74549ba35bbdc02418ecde595");
         tokenJson.put("token20Cancel", trc20ContractAddressList);
-        response = TronlinkApiList.addAsset(tokenJson);
+        response = TronlinkApiList.addAsset(tokenJson,params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         JSONObject assetInformation = TronlinkApiList.parseResponse2JsonObject(response);
         JSONArray tokenArray = assetInformation.getJSONArray("data");
@@ -129,10 +187,11 @@ public class addasset {
 
     @Test(enabled = true, description = "Test add all trc20 token to account.")
     public void test004AddAllTrc20ToAccount() throws Exception {
+        params.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
         tokenJson.clear();
         tokenJson.put("address", "414db7719251ce8ba74549ba35bbdc02418ecde595");
         tokenJson.put("token20", trc20ContractAddressList);
-        response = TronlinkApiList.addAsset(tokenJson);
+        response = TronlinkApiList.addAsset(tokenJson,params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         JSONObject assetInformation = TronlinkApiList.parseResponse2JsonObject(response);
         JSONArray tokenArray = assetInformation.getJSONArray("data");
@@ -142,11 +201,12 @@ public class addasset {
 
     @Test(enabled = true, description = "Test add all token to account.")
     public void test005AddAllTokenToAccount() throws Exception {
+        params.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
         tokenJson.clear();
         tokenJson.put("address", "414db7719251ce8ba74549ba35bbdc02418ecde595");
         tokenJson.put("token20", trc20ContractAddressList);
         tokenJson.put("token10", trc10tokenList);
-        response = TronlinkApiList.addAsset(tokenJson);
+        response = TronlinkApiList.addAsset(tokenJson,params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         JSONObject assetInformation = TronlinkApiList.parseResponse2JsonObject(response);
         JSONArray tokenArray = assetInformation.getJSONArray("data");
@@ -157,6 +217,7 @@ public class addasset {
 
     @Test(enabled = true, description = "restore add all token to account.")
     public void test006AddAllTokenToAccount() throws Exception {
+        params.put("address","414db7719251ce8ba74549ba35bbdc02418ecde595");
         int RecommendedCurrencyNum = 15;
         if (trc20ContractAddressList.size() == RecommendedCurrencyNum) {
             trc20ContractAddressList = restoreTrc20List();
@@ -164,7 +225,7 @@ public class addasset {
             tokenJson.put("address", "414db7719251ce8ba74549ba35bbdc02418ecde595");
             tokenJson.put("token20", trc20ContractAddressList);
             tokenJson.put("token10", trc10tokenList);
-            response = TronlinkApiList.addAsset(tokenJson);
+            response = TronlinkApiList.addAsset(tokenJson,params);
             Assert.assertEquals(response.getStatusLine().getStatusCode(), HttpStatus.SC_OK);
         }
     }

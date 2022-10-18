@@ -542,14 +542,29 @@ public class TronlinkServerHttpClient {
     }
 
     public static HttpResponse createGetConnectWithSignature(String curURI, Map<String, String> caseParams,Map<String, String> caseHeader) {
+
+        Map<String, String> params = new HashMap<>();
+        Map<String, String> headers = new HashMap<>();
+
         String requestUrl = HttpNode + curURI;
-        Map<String, String> params = getNewSigParams(defaultSys);
-        if(caseParams != null){
-            params = AddMap(params, caseParams);
-        }
-        Map<String, String> headers = getNewSigHeader(defaultSys, defaultVersion, defaultLang, defaultPkg);
-        if(caseHeader != null) {
-            headers = AddMap(headers, caseHeader);
+        if (caseHeader != null && caseHeader.containsKey("System")){
+            params = getNewSigParams(caseHeader.get("System"));
+            if(caseParams != null){
+                params = AddMap(params, caseParams);
+            }
+            headers = getNewSigHeader(caseHeader.get("System"), defaultVersion, defaultLang, defaultPkg);
+            if(caseHeader != null) {
+                headers = AddMap(headers, caseHeader);
+            }
+        } else {
+            params = getNewSigParams(defaultSys);
+            if(caseParams != null){
+                params = AddMap(params, caseParams);
+            }
+            headers = getNewSigHeader(defaultSys, defaultVersion, defaultLang, defaultPkg);
+            if(caseHeader != null) {
+                headers = AddMap(headers, caseHeader);
+            }
         }
 
         //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
@@ -561,15 +576,29 @@ public class TronlinkServerHttpClient {
     }
 
     public static HttpResponse createPostConnectWithSignature(String curURI,Map<String, String> caseParams, Map<String, String> caseHeader,JSONObject object ) {
-        Map<String, String> params = getNewSigParams(defaultSys);
-        if(caseParams != null){
-            params = AddMap(params, caseParams);
+        Map<String, String> params = new HashMap<>();
+        Map<String, String> headers = new HashMap<>();
+        if (caseHeader != null && caseHeader.containsKey("System")){
+            params = getNewSigParams(caseHeader.get("System"));
+            if(caseParams != null){
+                params = AddMap(params, caseParams);
+            }
+            headers = getNewSigHeader(caseHeader.get("System"), defaultVersion, defaultLang, defaultPkg);
+            if(caseHeader != null) {
+                headers = AddMap(headers, caseHeader);
+            }
+        } else{
+            params = getNewSigParams(defaultSys);
+            if(caseParams != null){
+                params = AddMap(params, caseParams);
+            }
+            headers = getNewSigHeader(defaultSys, defaultVersion, defaultLang, defaultPkg);
+            if(caseHeader != null) {
+                headers = AddMap(headers, caseHeader);
+            }
+
         }
 
-        Map<String, String> headers = getNewSigHeader(defaultSys, defaultVersion, defaultLang, defaultPkg);
-        if(caseHeader != null) {
-            headers = AddMap(headers, caseHeader);
-        }
         //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
         String cursig = getNewSignature(curURI,"POST", caseParams.get("address"), params, headers);
         params.put("signature", cursig);

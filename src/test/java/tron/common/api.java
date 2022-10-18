@@ -69,16 +69,18 @@ public class api extends TronlinkServerHttpClient {
     return response;
   }
 
-  public static HttpResponse getVersionLog(HashMap<String,String> param) throws Exception{
+
+
+  public static HttpResponse getVersionLogNoSig(HashMap<String,String> param, HashMap<String,String> header) throws Exception{
     final String requesturl = HttpNode + "/api/v1/wallet/version_log";
-    response = createGetConnect(requesturl,param,null,null);
+    response = createGetConnect(requesturl,param,null, header);
     Assert.assertTrue(api.verificationResult(response));
     return response;
   }
 
   public static HttpResponse getVersionLog(HashMap<String,String> param, HashMap<String,String> header) throws Exception{
-    final String requesturl = HttpNode + "/api/v1/wallet/version_log";
-    response = createGetConnect(requesturl,param,null, header);
+    final String curURI = "/api/v1/wallet/version_log";
+    response = createGetConnectWithSignature(curURI,param,header);
     Assert.assertTrue(api.verificationResult(response));
     return response;
   }
@@ -130,9 +132,16 @@ public class api extends TronlinkServerHttpClient {
     return response;
   }
 
-  public static HttpResponse community() throws Exception{
+  public static HttpResponse communityNoSig(HashMap<String,String> header) throws Exception{
     final String requesturl = HttpNode + "/api/v1/wallet/community";
-    response = createGetConnect(requesturl,null,null,null);
+    response = createGetConnect(requesturl,null,null,header);
+    Assert.assertTrue(api.verificationResult(response));
+    return response;
+  }
+
+  public static HttpResponse community(HashMap<String,String> params) throws Exception{
+    final String curURI = "/api/v1/wallet/community";
+    response = createGetConnectWithSignature(curURI,params,null);
     Assert.assertTrue(api.verificationResult(response));
     return response;
   }

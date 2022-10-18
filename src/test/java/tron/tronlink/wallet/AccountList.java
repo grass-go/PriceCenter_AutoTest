@@ -10,6 +10,8 @@ import tron.common.TronlinkApiList;
 import tron.tronlink.base.TronlinkBase;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 public class AccountList extends TronlinkBase {
@@ -52,7 +54,9 @@ public class AccountList extends TronlinkBase {
 
   @Test(enabled = false)
   public void comparteBalanceStr() throws Exception {
-    response = TronlinkApiList.assetlist(queryAddressTxt41);
+    Map<String, String> paramsInURL = new HashMap<>();
+    paramsInURL.put("address", queryAddressTxt41);
+    response = TronlinkApiList.assetlist(queryAddressTxt41, paramsInURL);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent1 = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject targetContent1 = responseContent1.getJSONObject("data");

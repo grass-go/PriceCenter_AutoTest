@@ -88,7 +88,9 @@ public class delAsset extends TronlinkBase {
         Assert.assertFalse(shortNameArray.contains("SUNOLD"));
 
         //Check assetList V1 page
-        response = TronlinkApiList.assetlist(testDELuser_B58);
+        Map<String, String> paramsInURL = new HashMap<>();
+        paramsInURL.put("address", testDELuser_B58);
+        response = TronlinkApiList.assetlist(testDELuser_B58,paramsInURL);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         Object shortNamesV1 = JSONPath.eval(responseContent, String.join("","$..data.token[*].shortName"));
         JSONArray shortNameArrayV1=(JSONArray)shortNames;
@@ -180,7 +182,9 @@ public class delAsset extends TronlinkBase {
         Assert.assertTrue(shortNameArray.contains("SUNOLD"));
 
         //Check assetList V1 page
-        response = TronlinkApiList.assetlist(testDELuser_B58);
+        Map<String, String> paramsInURL = new HashMap<>();
+        paramsInURL.put("address", testDELuser_B58);
+        response = TronlinkApiList.assetlist(testDELuser_B58,paramsInURL);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         Object shortNamesV1 = JSONPath.eval(responseContent, String.join("","$..data.token[*].shortName"));
         JSONArray shortNameArrayV1=(JSONArray)shortNames;
@@ -296,7 +300,9 @@ public class delAsset extends TronlinkBase {
         Assert.assertFalse(shortNameArray.contains("SUNOLD"));
 
         //Check assetList V1 page
-        response = TronlinkApiList.assetlist(testDELuser_B58);
+        Map<String, String> paramsInURL = new HashMap<>();
+        paramsInURL.put("address", testDELuser_B58);
+        response = TronlinkApiList.assetlist(testDELuser_B58,paramsInURL);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         Object shortNamesV1 = JSONPath.eval(responseContent, String.join("","$..data.token[*].shortName"));
         JSONArray shortNameArrayV1=(JSONArray)shortNames;

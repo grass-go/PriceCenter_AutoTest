@@ -3,6 +3,7 @@ package tron.tronlink.wallet;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSONPath;
 import com.google.gson.JsonObject;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
@@ -10,6 +11,9 @@ import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.common.utils.Configuration;
 import tron.tronlink.base.TronlinkBase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class assetlist extends TronlinkBase {
   private JSONObject responseContent;
@@ -22,10 +26,34 @@ public class assetlist extends TronlinkBase {
       .get(0);
   private JsonObject addressJson = new JsonObject();
 
+  @Test(enabled = true)
+  public void assetlistLowVersionWithNoSig(){
+    response = TronlinkApiList.assetlistNoSig(address721_B58,null);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    JSONObject data = responseContent.getJSONObject("data");
+    JSONArray tokens = data.getJSONArray("token");
+    Assert.assertTrue(tokens.size() > 0);
+  }
+
+  @Test(enabled = true)
+  public void assetlistHighVersionWithNoSig(){
+    HashMap<String,String> header = new HashMap();
+    header.put("System","Android");
+    header.put("Version","4.11.0");
+    response = TronlinkApiList.assetlistNoSig(address721_B58,header);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    org.junit.Assert.assertEquals(20004, responseContent.getIntValue("code"));
+    org.junit.Assert.assertEquals("Error param.", responseContent.getString("message"));
+  }
+
 
   @Test(enabled = true)
   public void assetlist(){
-    response = TronlinkApiList.assetlist(address721_B58);
+    Map<String, String> paramsInURL = new HashMap<>();
+    paramsInURL.put("address", address721_B58);
+    response = TronlinkApiList.assetlist(address721_B58,paramsInURL);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     targetContent = responseContent.getJSONObject("data");
@@ -77,7 +105,9 @@ public class assetlist extends TronlinkBase {
 
   @Test(enabled = false, description = "Api /TronlinkApiList/wallet/assetlist test")
   public void test001Assetlist() throws Exception {
-    response = TronlinkApiList.assetlist("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
+    Map<String, String> paramsInURL = new HashMap<>();
+    paramsInURL.put("address", "TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
+    response = TronlinkApiList.assetlist("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe",paramsInURL);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     targetContent = responseContent.getJSONObject("data");
     TronlinkApiList.printJsonObjectContent(targetContent);
@@ -94,7 +124,9 @@ public class assetlist extends TronlinkBase {
   @Test(enabled = false, description = "Api /TronlinkApiList/wallet/assetlist exception test,v2 is normal")
   public void test002AssetlistException() throws Exception {
     //Base58 decode address can't get right information
-    response = TronlinkApiList.assetlist("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
+    Map<String, String> paramsInURL = new HashMap<>();
+    paramsInURL.put("address", "TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe");
+    response = TronlinkApiList.assetlist("TN2jfdYCX9vvozqjwVvPjMd7vRj8HKyxUe",paramsInURL);
 
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     targetContent = responseContent.getJSONObject("data");
