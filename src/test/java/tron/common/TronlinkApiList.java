@@ -408,11 +408,19 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse accountList(JSONArray body) {
+    public static HttpResponse accountListNoSig(JSONArray body,Map<String, String> header ) {
         String requestUrl = HttpNode + "/api/wallet/account/list";
-        response = createPostConnect(requestUrl,null, body,null);
+        response = createPostConnect(requestUrl,null, body,header);
         return response;
     }
+
+    public static HttpResponse accountList(JSONArray body,Map<String, String> params ) {
+        String curURI = "/api/wallet/account/list";
+        response = createPostConnectWithSignature(curURI,params, null,body);
+        return response;
+    }
+
+
 
     //related case disabled
     public static HttpResponse allasset(String address) {

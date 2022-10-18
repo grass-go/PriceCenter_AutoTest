@@ -140,7 +140,7 @@ public class delAsset extends TronlinkBase {
         Assert.assertTrue(balance.compareTo(fullbalance) == -1);
 
         //check account/list v1 page
-        response = TronlinkApiList.accountList(array);
+        response = TronlinkApiList.accountList(array,params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
@@ -240,7 +240,9 @@ public class delAsset extends TronlinkBase {
         Assert.assertTrue(absgap.compareTo(tolerance) == -1);
 
         //check account/list v1 page
-        response = TronlinkApiList.accountList(array);
+        params.clear();
+        params.put("address",testDELuser_B58 );
+        response = TronlinkApiList.accountList(array, params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
@@ -352,7 +354,9 @@ public class delAsset extends TronlinkBase {
         Assert.assertTrue(balance.compareTo(fullbalance) == -1);
 
         //check account/list v1 page
-        response = TronlinkApiList.accountList(array);
+        params.clear();
+        params.put("address",testDELuser_B58);
+        response = TronlinkApiList.accountList(array, params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 

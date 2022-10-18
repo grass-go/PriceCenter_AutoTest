@@ -21,17 +21,55 @@ public class AccountList extends TronlinkBase {
   private HttpResponse response;
   private JSONArray array = new JSONArray();
 
-
-  @Test(enabled = true)
-  public void accountList(){
-
+  @Test(enabled = true, groups = {"NoSignature"})
+  public void accountListLowVersionWithNoSignature(){
     JSONObject jsonObject = new JSONObject();
     JSONObject jsonObject1 = new JSONObject();
     jsonObject.put(queryAddress58,1);
     array.add(jsonObject);
     jsonObject1.put(queryAddress58,3);
     array.add(jsonObject1);
-    response = TronlinkApiList.accountList(array);
+    response = TronlinkApiList.accountListNoSig(array,null);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    Assert.assertTrue(responseContent.containsKey("code"));
+    Assert.assertTrue(responseContent.containsKey("message"));
+    Assert.assertTrue(responseContent.containsKey("data"));
+  }
+
+  @Test(enabled = true)
+  public void accountListHighVersionWithNoSignature(){
+    Map<String, String> header = new HashMap<String, String>();
+    header.put("System","Chrome");
+    header.put("Version","4.1.0");
+    JSONObject jsonObject = new JSONObject();
+    JSONObject jsonObject1 = new JSONObject();
+    jsonObject.put(queryAddress58,1);
+    array.add(jsonObject);
+    jsonObject1.put(queryAddress58,3);
+    array.add(jsonObject1);
+    response = TronlinkApiList.accountListNoSig(array,header);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    Assert.assertEquals(20004, responseContent.getIntValue("code"));
+    Assert.assertEquals("Error param.", responseContent.getString("message"));
+  }
+
+
+
+
+  @Test(enabled = true)
+  public void accountList(){
+    Map<String, String> params = new HashMap<String, String>();
+    params.put("address",queryAddress58);
+    JSONObject jsonObject = new JSONObject();
+    JSONObject jsonObject1 = new JSONObject();
+    jsonObject.put(queryAddress58,1);
+    array.add(jsonObject);
+    jsonObject1.put(queryAddress58,3);
+    array.add(jsonObject1);
+
+    response = TronlinkApiList.accountList(array,params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertTrue(responseContent.containsKey("code"));
@@ -52,6 +90,10 @@ public class AccountList extends TronlinkBase {
     Assert.assertTrue(sum.subtract(new BigDecimal(dataContent.getLongValue("totalBalance"))).intValue() == 0);
   }
 
+
+
+
+
   @Test(enabled = false)
   public void comparteBalanceStr() throws Exception {
     Map<String, String> paramsInURL = new HashMap<>();
@@ -66,7 +108,7 @@ public class AccountList extends TronlinkBase {
     jsonObject.put(queryAddress58,1);
     array.clear();
     array.add(jsonObject);
-    response = TronlinkApiList.accountList(array);
+    response = TronlinkApiList.accountList(array,paramsInURL);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     dataContent = responseContent.getJSONObject("data");
