@@ -545,32 +545,36 @@ public class TronlinkServerHttpClient {
 
         Map<String, String> params = new HashMap<>();
         Map<String, String> headers = new HashMap<>();
-
-        String requestUrl = HttpNode + curURI;
+        String curSystem = defaultSys;
+        String curVersion = defaultVersion;
+        String curLang = defaultLang;
+        String curPkg = defaultPkg;
         if (caseHeader != null && caseHeader.containsKey("System")){
-            params = getNewSigParams(caseHeader.get("System"));
-            if(caseParams != null){
-                params = AddMap(params, caseParams);
-            }
-            headers = getNewSigHeader(caseHeader.get("System"), defaultVersion, defaultLang, defaultPkg);
-            if(caseHeader != null) {
-                headers = AddMap(headers, caseHeader);
-            }
-        } else {
-            params = getNewSigParams(defaultSys);
-            if(caseParams != null){
-                params = AddMap(params, caseParams);
-            }
-            headers = getNewSigHeader(defaultSys, defaultVersion, defaultLang, defaultPkg);
-            if(caseHeader != null) {
-                headers = AddMap(headers, caseHeader);
-            }
+            curSystem = caseHeader.get("System");
+        }
+        if (caseHeader != null && caseHeader.containsKey("Version")){
+            curVersion = caseHeader.get("Version");
+        }
+        if (caseHeader != null && caseHeader.containsKey("Lang")){
+            curLang = caseHeader.get("Lang");
+        }
+        if (caseHeader != null && caseHeader.containsKey("Package")){
+            curPkg = caseHeader.get("packageName");
+        }
+
+        params = getNewSigParams(curSystem);
+        if(caseParams != null){
+            params = AddMap(params, caseParams);
+        }
+        headers = getNewSigHeader(curSystem, curVersion, curLang, curPkg);
+        if(caseHeader != null) {
+            headers = AddMap(headers, caseHeader);
         }
 
         //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
         String cursig = getNewSignature(curURI,"GET", caseParams.get("address"), params, headers);
         params.put("signature", cursig);
-
+        String requestUrl = HttpNode + curURI;
         response = createGetConnect(requestUrl, params, null, headers);
         return response;
     }
@@ -578,31 +582,35 @@ public class TronlinkServerHttpClient {
     public static HttpResponse createPostConnectWithSignature(String curURI,Map<String, String> caseParams, Map<String, String> caseHeader,JSONObject object ) {
         Map<String, String> params = new HashMap<>();
         Map<String, String> headers = new HashMap<>();
+        String curSystem = defaultSys;
+        String curVersion = defaultVersion;
+        String curLang = defaultLang;
+        String curPkg = defaultPkg;
         if (caseHeader != null && caseHeader.containsKey("System")){
-            params = getNewSigParams(caseHeader.get("System"));
-            if(caseParams != null){
-                params = AddMap(params, caseParams);
-            }
-            headers = getNewSigHeader(caseHeader.get("System"), defaultVersion, defaultLang, defaultPkg);
-            if(caseHeader != null) {
-                headers = AddMap(headers, caseHeader);
-            }
-        } else{
-            params = getNewSigParams(defaultSys);
-            if(caseParams != null){
-                params = AddMap(params, caseParams);
-            }
-            headers = getNewSigHeader(defaultSys, defaultVersion, defaultLang, defaultPkg);
-            if(caseHeader != null) {
-                headers = AddMap(headers, caseHeader);
-            }
+            curSystem = caseHeader.get("System");
+        }
+        if (caseHeader != null && caseHeader.containsKey("Version")){
+            curVersion = caseHeader.get("Version");
+        }
+        if (caseHeader != null && caseHeader.containsKey("Lang")){
+            curLang = caseHeader.get("Lang");
+        }
+        if (caseHeader != null && caseHeader.containsKey("Package")){
+            curPkg = caseHeader.get("packageName");
+        }
 
+        params = getNewSigParams(curSystem);
+        if(caseParams != null){
+            params = AddMap(params, caseParams);
+        }
+        headers = getNewSigHeader(curSystem, curVersion, curLang, curPkg);
+        if(caseHeader != null) {
+            headers = AddMap(headers, caseHeader);
         }
 
         //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
         String cursig = getNewSignature(curURI,"POST", caseParams.get("address"), params, headers);
         params.put("signature", cursig);
-
         String requestUrl = HttpNode + curURI;
         response = createPostConnect(requestUrl, params, object, headers);
         return response;
