@@ -53,8 +53,8 @@ public class versionLog extends TronlinkBase {
     response = api.getVersionLogNoSig(parameter,header);
 
     JSONObject jsonObject = api.parseResponse2JsonObject(response);
-    org.junit.Assert.assertEquals(20004, jsonObject.getIntValue("code"));
-    org.junit.Assert.assertEquals("Error param.", jsonObject.getString("message"));
+    Assert.assertEquals(20004, jsonObject.getIntValue("code"));
+    Assert.assertEquals("Error param.", jsonObject.getString("message"));
   }
 
 

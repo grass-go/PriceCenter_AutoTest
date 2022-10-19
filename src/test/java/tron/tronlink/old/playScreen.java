@@ -21,7 +21,7 @@ public class playScreen extends TronlinkBase {
   Map<String, String> params = new HashMap<>();
   HashMap<String, String> headers = new HashMap<>();
 
-  @Test(enabled = true)
+  @Test(enabled = true,groups = {"NoSignature"})
   public void test01PlayScreenInfoLowVersionWithNoSig(){
 
     response = TronlinkApiList.v1PlayScreenInfoNoSig(null);
@@ -57,33 +57,62 @@ public class playScreen extends TronlinkBase {
     Assert.assertEquals(responseContent.getString("message"),"OK");
   }
 
-
-
-
-
-
-
-
-  @Test(enabled = true)
-  public void test02PlayScreenDeal(){
+  @Test(enabled = true, groups = {"NoSignature"})
+  public void test02PlayScreenDealLowVersionWithNoSig(){
     headers.put("DeviceID","hhkhkjhkj887");
     headers.put("System", "Android");
-    headers.put("playId", String.valueOf("1"));
     headers.put("Lang", "1");
     headers.put("Version", String.valueOf("4.0.1"));
     headers.put("chain","MainChain" );
     headers.put("packageName","com.tronlinkpro.wallet" );
 
     Integer playId = 11;
-    response = TronlinkApiList.v1PlayScreenDeal(String.valueOf(playId),headers);
+    response = TronlinkApiList.v1PlayScreenDealNoSig(String.valueOf(playId),headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     TronlinkApiList.printJsonObjectContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
     Assert.assertEquals(responseContent.getString("message"),"OK");
-    //JSONObject screenInfo = responseContent.getJSONArray("data").getJSONObject(0);
 
-    //Assert.assertTrue(screenInfo.containsKey("playId"));
+  }
+
+  @Test(enabled = true)
+  public void test02PlayScreenDealHighVersionWithNoSig(){
+    headers.put("DeviceID","hhkhkjhkj887");
+    headers.put("System", "Android");
+    headers.put("Lang", "1");
+    headers.put("Version", String.valueOf("4.12.1"));
+    headers.put("chain","MainChain" );
+    headers.put("packageName","com.tronlinkpro.wallet" );
+
+    Integer playId = 11;
+    response = TronlinkApiList.v1PlayScreenDealNoSig(String.valueOf(playId),headers);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    org.testng.Assert.assertEquals(20004, responseContent.getIntValue("code"));
+    org.testng.Assert.assertEquals("Error param.", responseContent.getString("message"));
+
+  }
+
+
+  @Test(enabled = true)
+  public void test02PlayScreenDeal(){
+    headers.put("DeviceID","hhkhkjhkj887");
+    headers.put("System", "Android");
+    headers.put("Lang", "1");
+    headers.put("Version", String.valueOf("4.0.1"));
+    headers.put("chain","MainChain" );
+    headers.put("packageName","com.tronlinkpro.wallet" );
+    params.put("address",quince_B58);
+
+    Integer playId = 11;
+    response = TronlinkApiList.v1PlayScreenDeal(String.valueOf(playId),params,headers);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    TronlinkApiList.printJsonObjectContent(responseContent);
+    Assert.assertTrue(responseContent.getInteger("code") == 0);
+    Assert.assertEquals(responseContent.getString("message"),"OK");
+
   }
 
 

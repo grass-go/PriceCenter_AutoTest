@@ -26,17 +26,43 @@ public class balance extends TronlinkBase {
     private JSONObject object;
     private JSONObject assetListRespContent;
     Map<String, String> params = new HashMap<>();
+    Map<String, String> headers = new HashMap<>();
     public static Map<String,String> trxPriceMap= new HashMap<>();
+
+    @Test(enabled = true, description = "test balance the same with got from allAssetList", groups = {"NoSignature"})
+    public void TestBalanceLowVersionWithNoSig() {
+        String token20s = "TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn,TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t,TMwFHYXLJaRUPeW6421aqXL4ZEzPRFGkGT,TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8,TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR,TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9,TUpMhErZL2fhh4sVNULAbNKLokS4GjC1F4,TKkeiboTkxXKJpbmVFbv4a8ov5rAfRDMf9,TFczxzPhnThNSqr5by8tvxsdCFRRz6cPNq,TSSMHYeV2uE9qYH95DqyoCuNCzEL1NvU3S,TXJgMdjVX5dKiQaUi9QobwNxtSQaFqccvd,TKfjV9RNKJJCqPvBtK8L7Knykh7DNWvnYt,TDQaYrhQynYV9aXTYj63nwLAafRffWSEj6,TL5x9MtSnDy537FXKx53yAaHRRNdg9TkkA,TE2RzoSV3wFK99w6J9UnnZ4vLfXYoxvRwP,TUY54PVeH6WCcYCd6ZXXoBDsHytN9V5PXt,TJMZNqLDPLHDMakYxBKonSvd26VdjWHVhP,TYykbfrB89g1PJRg25HLDpYYesEuXKW4pT,TXGFpNx9DcGpToTmrn3W61XoP1McUUSxE1,TF9SRok9tr1gWrJiPxc7DnVH2Lym1DaoSZ,TRg6MnpsFXc82ymUPgf5qbj59ibxiEDWvv,TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4";
+        params.put("address",quince_B58);
+        params.put("tokens", token20s);
+        response = TronlinkApiList.v1Balance(params,null);
+        //compare balance for each token.
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+        Object balances = JSONPath.eval(responseContent, String.join("", "$..balance"));
+        List<String> balancesList = new ArrayList<>();
+        balancesList = (ArrayList)balances;
+        Assert.assertTrue(balancesList.size()>0);
+    }
+
+    @Test(enabled = true, description = "test balance the same with got from allAssetList")
+    public void TestBalanceHighVersionWithNoSig() {
+        String token20s = "TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn,TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t,TMwFHYXLJaRUPeW6421aqXL4ZEzPRFGkGT,TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8,TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR,TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9,TUpMhErZL2fhh4sVNULAbNKLokS4GjC1F4,TKkeiboTkxXKJpbmVFbv4a8ov5rAfRDMf9,TFczxzPhnThNSqr5by8tvxsdCFRRz6cPNq,TSSMHYeV2uE9qYH95DqyoCuNCzEL1NvU3S,TXJgMdjVX5dKiQaUi9QobwNxtSQaFqccvd,TKfjV9RNKJJCqPvBtK8L7Knykh7DNWvnYt,TDQaYrhQynYV9aXTYj63nwLAafRffWSEj6,TL5x9MtSnDy537FXKx53yAaHRRNdg9TkkA,TE2RzoSV3wFK99w6J9UnnZ4vLfXYoxvRwP,TUY54PVeH6WCcYCd6ZXXoBDsHytN9V5PXt,TJMZNqLDPLHDMakYxBKonSvd26VdjWHVhP,TYykbfrB89g1PJRg25HLDpYYesEuXKW4pT,TXGFpNx9DcGpToTmrn3W61XoP1McUUSxE1,TF9SRok9tr1gWrJiPxc7DnVH2Lym1DaoSZ,TRg6MnpsFXc82ymUPgf5qbj59ibxiEDWvv,TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4";
+        params.put("address",quince_B58);
+        params.put("tokens", token20s);
+
+        headers.put("System", "Android");
+        headers.put("Version", "4.11.0");
+        response = TronlinkApiList.v1BalanceNoSig(params,headers);
+        //compare balance for each token.
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+        Assert.assertEquals(20004, responseContent.getIntValue("code"));
+        Assert.assertEquals("Error param.", responseContent.getString("message"));
+    }
 
     @Test(enabled = true, description = "test balance the same with got from allAssetList")
     public void test001TestBalanceSameWithAllAssestList() {
         // access to allAssetList to get all trc20 token.
         params.clear();
-        params.put("nonce","12345");
-        params.put("secretId","SFSUIOJBFMLKSJIF");
-        params.put("signature","38ljR2%2BTk8YRkub7SJ58qiOolgE%3D");
         params.put("address",quince_B58);
-
         response = TronlinkApiList.V2AllAssetList(params);
         allAssetresponseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
@@ -56,7 +82,10 @@ public class balance extends TronlinkBase {
         //access to balance api to get balance
         params.put("address",quince_B58);
         params.put("tokens", token20s);
-        response = TronlinkApiList.v1Balance(params);
+
+        headers.put("System", "Android");
+        headers.put("Version", "4.11.0");
+        response = TronlinkApiList.v1Balance(params,headers);
         //compare balance for each token.
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         for (String token:tokenIdList) {
