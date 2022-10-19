@@ -530,11 +530,20 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
     }
 
 
-    public static HttpResponse getConfig() {
+    public static HttpResponse getConfigNoSig(HashMap<String,String> header) {
         final String requestUrl = HttpNode + "/api/wallet/get_config";
-        response = createGetConnect(requestUrl, null,null,null);
+        response = createGetConnect(requestUrl, null,null,header);
         return response;
     }
+
+    public static HttpResponse getConfig(HashMap<String,String> params) {
+        final String curURI = "/api/wallet/get_config";
+        response = createGetConnectWithSignature(curURI, params,null);
+        return response;
+    }
+
+
+
 
     public static HttpResponse dappToMainFee() {
         final String requestUrl = HttpNode + "/api/transfer/dappToMainFee";
@@ -771,7 +780,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse v1PlayScreenInfo(Map<String, String> params) {
+    public static HttpResponse v1PlayScreenInfoNoSig(Map<String, String> caseheader) {
         final String requestUrl = HttpNode + "/api/activity/play_screen/info";
         header.clear();
         header.put("Lang", "1");
@@ -782,9 +791,27 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         header.put("System", "Android");
         header.put("Content-type", "application/json; charset=utf-8");
         header.put("Connection", "Keep-Alive");
-        response = createGetConnect(requestUrl, params, null , header);
+        if(caseheader != null){
+            header = AddMap(header,caseheader);
+        }
+        response = createGetConnect(requestUrl, null, null , header);
         return response;
     }
+    public static HttpResponse v1PlayScreenInfo(Map<String, String> params) {
+        final String curURI =  "/api/activity/play_screen/info";
+        header.clear();
+        header.put("Lang", "1");
+        header.put("Version", "3.7.0");
+        header.put("DeviceID", "1111111111");
+        header.put("chain", "MainChain");
+        header.put("packageName", "com.tronlinkpro.wallet");
+        header.put("System", "Android");
+        header.put("Content-type", "application/json; charset=utf-8");
+        header.put("Connection", "Keep-Alive");
+        response = createGetConnectWithSignature(curURI, params, header);
+        return response;
+    }
+
 
     public static HttpResponse v1PlayScreenDeal(String playId, HashMap<String, String> header) {
         final String requestUrl = HttpNode + "/api/activity/play_screen/deal";

@@ -22,15 +22,46 @@ public class playScreen extends TronlinkBase {
   HashMap<String, String> headers = new HashMap<>();
 
   @Test(enabled = true)
-  public void test01PlayScreenInfo(){
+  public void test01PlayScreenInfoLowVersionWithNoSig(){
 
-    response = TronlinkApiList.v1PlayScreenInfo(null);
+    response = TronlinkApiList.v1PlayScreenInfoNoSig(null);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     TronlinkApiList.printJsonObjectContent(responseContent);
     Assert.assertTrue(responseContent.getInteger("code") == 0);
     Assert.assertEquals(responseContent.getString("message"),"OK");
   }
+
+  @Test(enabled = true)
+  public void test01PlayScreenInfoHighVersionWithNoSig(){
+    HashMap<String,String> header = new HashMap();
+    header.put("System","Android");
+    header.put("Version","4.11.0");
+    response = TronlinkApiList.v1PlayScreenInfo(header);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    TronlinkApiList.printJsonObjectContent(responseContent);
+    Assert.assertTrue(responseContent.getInteger("code") == 0);
+    Assert.assertEquals(responseContent.getString("message"),"OK");
+  }
+
+  @Test(enabled = true)
+  public void test01PlayScreenInfo(){
+    HashMap<String,String> params = new HashMap();
+    params.put("address",quince_B58);
+    response = TronlinkApiList.v1PlayScreenInfo(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    TronlinkApiList.printJsonObjectContent(responseContent);
+    Assert.assertTrue(responseContent.getInteger("code") == 0);
+    Assert.assertEquals(responseContent.getString("message"),"OK");
+  }
+
+
+
+
+
+
 
 
   @Test(enabled = true)
