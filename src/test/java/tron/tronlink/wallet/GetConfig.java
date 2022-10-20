@@ -33,7 +33,7 @@ public class GetConfig extends TronlinkBase {
     HashMap<String,String> header = new HashMap();
     header.put("System","Android");
     header.put("Version","4.11.0");
-    response = TronlinkApiList.getConfig(header);
+    response = TronlinkApiList.getConfigNoSig(header);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     org.junit.Assert.assertEquals(20004, responseContent.getIntValue("code"));
