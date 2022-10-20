@@ -80,7 +80,7 @@ public class api extends TronlinkServerHttpClient {
 
   public static HttpResponse getVersionLog(HashMap<String,String> param, HashMap<String,String> header) throws Exception{
     final String curURI = "/api/v1/wallet/version_log";
-    response = createGetConnectWithSignature(curURI,param,header);
+    response = createGetConnectWithSignature(curURI,param,header,null);
     Assert.assertTrue(api.verificationResult(response));
     return response;
   }
@@ -92,15 +92,30 @@ public class api extends TronlinkServerHttpClient {
     return response;
   }
 
-  public static HttpResponse trxPrice(){
+  public static HttpResponse trxPriceNoSig(HashMap<String,String> header){
     final String requesturl = HttpNode + "/api/v1/wallet/trxPrice";
-    response = createGetConnect(requesturl,null,null,null);
+    response = createGetConnect(requesturl,null,null,header);
     Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     return response;
   }
-  public static HttpResponse tronweb(){
+
+  public static HttpResponse trxPrice(HashMap<String,String> param){
+    final String curURI =  "/api/v1/wallet/trxPrice";
+    response = createGetConnectWithSignature(curURI,param,null,null);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
+    return response;
+  }
+
+  public static HttpResponse tronwebNoSig(HashMap<String,String> headers){
     final String requesturl = HttpNode + "/api/web/v1/tronweb";
-    response = createGetConnect(requesturl,null,null,null);
+    response = createGetConnect(requesturl,null,null,headers);
+    Assert.assertEquals(200,response.getStatusLine().getStatusCode());
+    return response;
+  }
+
+  public static HttpResponse tronweb(HashMap<String,String> params){
+    final String curURI =  "/api/web/v1/tronweb";
+    response = createGetConnectWithSignature(curURI,params,null,null);
     Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     return response;
   }
@@ -113,7 +128,7 @@ public class api extends TronlinkServerHttpClient {
   }
   public static HttpResponse getCoinCapTrxPrice(HashMap<String,String> params) {
     final String curURI = "/api/v1/wallet/getCoinCapTrxPrice";
-    response = createGetConnectWithSignature(curURI,params,null);
+    response = createGetConnectWithSignature(curURI,params,null,null);
     Assert.assertTrue(api.verificationResult(response));
     return response;
   }
@@ -127,7 +142,7 @@ public class api extends TronlinkServerHttpClient {
 
   public static HttpResponse getLatestAPK(HashMap<String,String> caseParams) throws Exception{
     final String curURI = "/api/v1/wallet/getLatestAPK";
-    response = createGetConnectWithSignature(curURI,caseParams,null);
+    response = createGetConnectWithSignature(curURI,caseParams,null,null);
     Assert.assertTrue(api.verificationResult(response));
     return response;
   }
@@ -141,7 +156,7 @@ public class api extends TronlinkServerHttpClient {
 
   public static HttpResponse community(HashMap<String,String> params) throws Exception{
     final String curURI = "/api/v1/wallet/community";
-    response = createGetConnectWithSignature(curURI,params,null);
+    response = createGetConnectWithSignature(curURI,params,null,null);
     Assert.assertTrue(api.verificationResult(response));
     return response;
   }
@@ -155,9 +170,15 @@ public class api extends TronlinkServerHttpClient {
     return response;
   }
 
-  public static HttpResponse feedBack(JSONObject param) throws Exception {
+  public static HttpResponse feedBackNoSig(JSONObject mybody,HashMap<String,String> headers ) throws Exception {
     final String requestUrl = HttpNode + "/api/v1/wallet/feedback";
-    response = createGetConnect(requestUrl, null,param,null);
+    response = createPostConnect(requestUrl, null,mybody,headers);
+    return response;
+  }
+
+  public static HttpResponse feedBack(JSONObject mybody, HashMap<String,String> params) throws Exception {
+    final String curURI =  "/api/v1/wallet/feedback";
+    response = createPostConnectWithSignature(curURI, params,null,mybody);
     return response;
   }
 

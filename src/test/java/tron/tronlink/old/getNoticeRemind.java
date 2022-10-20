@@ -131,9 +131,36 @@ public class getNoticeRemind extends TronlinkBase {
 
   }
 
+  @Test(enabled = true,groups = {"NoSignature"})
+  public void test03GetAnnouncementLowVersionWithNoSig(){
+    response = TronlinkApiList.v1GetAnnouncementNoSig(null);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    TronlinkApiList.printJsonObjectContent(responseContent);
+    Assert.assertTrue(responseContent.getInteger("code") == 0);
+    Assert.assertEquals(responseContent.getString("message"),"OK");
+    Assert.assertTrue(responseContent.containsKey("data"));
+    //Assert.assertTrue(responseContent.getJSONArray("data").getJSONObject(0).containsKey("pic_url"));
+
+  }
+
+  @Test(enabled = true)
+  public void test03GetAnnouncementHighVersionWithNoSig(){
+    headers.clear();
+    headers.put("System","Android");
+    headers.put("Version","4.12.0");
+    response = TronlinkApiList.v1GetAnnouncementNoSig(headers);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    Assert.assertEquals(20004, responseContent.getIntValue("code"));
+    Assert.assertEquals("Error param.", responseContent.getString("message"));
+  }
+
   @Test(enabled = true)
   public void test03GetAnnouncement(){
-    response = TronlinkApiList.v1GetAnnouncement();
+    params.clear();
+    params.put("address", quince_B58);
+    response = TronlinkApiList.v1GetAnnouncement(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     TronlinkApiList.printJsonObjectContent(responseContent);

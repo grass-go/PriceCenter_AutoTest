@@ -1,5 +1,6 @@
 package tron.tronlink.old;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
@@ -139,10 +140,51 @@ public class Exchanges extends TronlinkBase {
 
     private HttpResponse response;
 
+    @Test(description = "交易对信息",groups = {"NoSignature"})
+    public void Test_swap_exchanges_01LowVersionWithNoSig() {
+
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("address",quince_B58);
+        params.put("type", "1");
+        response = TronlinkApiList.swapExchangesNoSig(params,null);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        String apStr = TronlinkApiList.parseResponse2String(response);
+        log.info(apStr);
+        SwapExRsp ser = JSONObject.parseObject(apStr, SwapExRsp.class);
+        org.testng.Assert.assertEquals(ser.getCode(), 0);
+        Assert.assertEquals(ser.getMessage().equals("SUCCESS"), true);
+        Assert.assertNotEquals(ser.getData().size(), 0);
+
+        for (Data d :
+                ser.getData()) {
+            Assert.assertEquals(d.getLogo().trim().startsWith("https://"), true);
+            Assert.assertEquals(d.getExchange().equals(""), false);
+
+        }
+    }
+
+    @Test(description = "交易对信息")
+    public void Test_swap_exchanges_01HighVersionWithNoSig() {
+
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("type", "1");
+        Map<String,String> headers = new HashMap<String,String>();
+        headers.put("System","Android");
+        headers.put("Version","4.13.0");
+        response = TronlinkApiList.swapExchanges(params);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        JSONObject responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+        Assert.assertEquals(20004, responseContent.getIntValue("code"));
+        Assert.assertEquals("Error param.", responseContent.getString("message"));
+    }
+
+
+
     @Test(description = "交易对信息")
     public void Test_swap_exchanges_01() {
 
         Map<String,String> params = new HashMap<String,String>();
+        params.put("address",quince_B58);
         params.put("type", "1");
         response = TronlinkApiList.swapExchanges(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);

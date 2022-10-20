@@ -150,7 +150,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse trc20Info(HashMap<String, String> param,HashMap<String, String> header) throws Exception {
         String curURI = "/api/wallet/trc20_info";
-        response = createGetConnectWithSignature(curURI,param,header);
+        response = createGetConnectWithSignature(curURI,param,header,null);
         return response;
     }
 
@@ -162,7 +162,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse apiTransferTrx(HashMap<String, String> param) throws Exception {
         final String curURI = "/api/transfer/trx";
-        response = createGetConnectWithSignature(curURI,param,null);
+        response = createGetConnectWithSignature(curURI,param,null,null);
         return response;
     }
 
@@ -185,7 +185,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
     }
     public static HttpResponse apiTransferToken10(HashMap<String, String> param) {
         final String curURI = "/api/transfer/token10";
-        response = createGetConnectWithSignature(curURI,param,null);
+        response = createGetConnectWithSignature(curURI,param,null,null);
         return response;
     }
 
@@ -203,7 +203,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse apiTransferTrc20(HashMap<String, String> param) {
         final String curURI = "/api/transfer/trc20";
-        response = createGetConnectWithSignature(curURI,param,null);
+        response = createGetConnectWithSignature(curURI,param,null,null);
         return response;
     }
 
@@ -220,7 +220,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
     }
     public static HttpResponse apiTransferTrc20Status(HashMap<String, String> param) throws Exception {
         String curURI = "/api/transfer/trc20_status";
-        response = createGetConnectWithSignature(curURI,param,null);
+        response = createGetConnectWithSignature(curURI,param,null,null);
         return response;
     }
 
@@ -232,7 +232,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse votingWitness(Map<String, String> params) {
         String curUri = "/api/voting/v2/witness";
-        response = createGetConnectWithSignature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null,null);
         return response;
     }
 
@@ -277,7 +277,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse votingV2Search(Map<String, String> params) throws Exception {
         String curUri = "/api/voting/v2/search";
-        response = createGetConnectWithSignature(curUri, params,null);
+        response = createGetConnectWithSignature(curUri, params,null,null);
         return response;
     }
 
@@ -288,7 +288,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
     }
     public static HttpResponse votingV2Self(Map<String, String> params) {
         String curUri = "/api/voting/v2/self";
-        response = createGetConnectWithSignature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null,null);
         return response;
     }
 
@@ -352,15 +352,21 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
 
 
-    public static HttpResponse swapExchanges(Map<String,String> params) {
+    public static HttpResponse swapExchangesNoSig(Map<String,String> params,Map<String,String> header) {
         String requestUrl = HttpNode + "/api/swap/v1/exchanges";
-        response = createGetConnect(requestUrl, params,null,null);
+        response = createGetConnect(requestUrl, params,null,header);
+        return response;
+    }
+
+    public static HttpResponse swapExchanges(Map<String,String> params) {
+        String curURI =  "/api/swap/v1/exchanges";
+        response = createGetConnectWithSignature(curURI, params,null,null);
         return response;
     }
 
     public static HttpResponse transfer1155(Map<String,String> params) {
         String curUri = "/api/transfer/v2/trc1155";
-        response = createGetConnectWithSignature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null,null);
         return response;
     }
 
@@ -473,7 +479,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse hot_tokenV2(HashMap<String, String> params) {
         String curURI = "/api/wallet/v2/hot_token";
-        response = createGetConnectWithSignature(curURI,params,null);
+        response = createGetConnectWithSignature(curURI,params,null,null);
         return response;
     }
 
@@ -544,16 +550,22 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse getConfig(HashMap<String,String> params) {
         final String curURI = "/api/wallet/get_config";
-        response = createGetConnectWithSignature(curURI, params,null);
+        response = createGetConnectWithSignature(curURI, params,null,null);
         return response;
     }
 
 
 
 
-    public static HttpResponse dappToMainFee() {
+    public static HttpResponse dappToMainFeeNoSig(HashMap<String,String> headers) {
         final String requestUrl = HttpNode + "/api/transfer/dappToMainFee";
-        response = createGetConnect(requestUrl, null, null, null);
+        response = createGetConnect(requestUrl, null, null, headers);
+        return response;
+    }
+
+    public static HttpResponse dappToMainFee(HashMap<String,String> params) {
+        final String curURI =  "/api/transfer/dappToMainFee";
+        response = createGetConnectWithSignature(curURI, params, null,null);
         return response;
     }
 
@@ -647,27 +659,27 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse V2UnfollowCollections(Map<String, String> params) {
         String curUri = "/api/wallet/nft/unfollowCollections";
-        response = createGetConnectWithSignature(curUri, params,null);
+        response = createGetConnectWithSignature(curUri, params,null,null);
         return response;
     }
 
     public static HttpResponse V2UnfollowAssetList(Map<String, String> params) {
         String curUri = "/api/wallet/v2/unfollowAssetList";
-        response = createGetConnectWithSignature(curUri, params,null);
+        response = createGetConnectWithSignature(curUri, params,null,null);
         return response;
     }
 
     public static HttpResponse V2AllAssetList(Map<String, String> caseParams) {
 
         String curURI = "/api/wallet/v2/allAssetList";
-        response = createGetConnectWithSignature(curURI, caseParams,null);
+        response = createGetConnectWithSignature(curURI, caseParams,null,null);
         return response;
 
     }
 
     public static HttpResponse v2AssetList(Map<String, String> caseParams)  {
         String curURI = "/api/wallet/v2/assetList";
-        response = createGetConnectWithSignature(curURI, caseParams,null);
+        response = createGetConnectWithSignature(curURI, caseParams,null,null);
         return response;
 
     }
@@ -690,7 +702,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
     public static HttpResponse v2GetAllCollection(Map<String, String> caseParams) {
 
         String curURI = "/api/wallet/nft/getAllCollection";
-        response = createGetConnectWithSignature(curURI, caseParams, null);
+        response = createGetConnectWithSignature(curURI, caseParams, null,null);
         return response;
 
     }
@@ -698,26 +710,26 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
     // 根据token类型查询首页信息
     public static HttpResponse v2GetAllCollectionByType(String url, Map<String, String> params) {
         final String requestUrl = HttpNode +  url ;
-        response = createGetConnectWithSignature(url, params,null);
+        response = createGetConnectWithSignature(url, params,null,null);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         return response;
     }
 
     public static HttpResponse v2AllCollections(Map<String, String> params) {
         final String curUri = "/api/wallet/nft/allCollections";
-        response = createGetConnectWithSignature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null,null);
         return response;
     }
 
     public static HttpResponse v2GetCollectionList(Map<String, String> params) {
         final String curUri = "/api/wallet/nft/getCollectionList";
-        response = createGetConnectWithSignature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null,null);
         return response;
     }
 
     public static HttpResponse v2GetCollectionInfo(Map<String, String> params) {
         final String curUri = "/api/wallet/nft/getCollectionInfo";
-        response = createGetConnectWithSignature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null,null);
         return response;
     }
 
@@ -729,19 +741,19 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse getDelegatedResource(Map<String, String> params) {
         final String curURI = "/api/wallet/v2/getDelegatedResource";
-        response = createGetConnectWithSignature(curURI, params, null);
+        response = createGetConnectWithSignature(curURI, params, null,null);
         return response;
     }
 
     public static HttpResponse v2NewAssetList(Map<String, String> params) {
         final String curURI = "/api/wallet/v2/newAssetList";
-        response = createGetConnectWithSignature(curURI, params, null);
+        response = createGetConnectWithSignature(curURI, params, null,null);
         return response;
     }
 
     public static HttpResponse v2SearchAsset(Map<String, String> params) {
         final String curURI = "/api/wallet/v2/search";
-        response = createGetConnectWithSignature(curURI, params, null);
+        response = createGetConnectWithSignature(curURI, params, null,null);
         return response;
     }
 
@@ -752,7 +764,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
     }
     public static HttpResponse v1GetNoticeRemind(Map<String, String> params) {
         final String curURI =  "/api/v1/wallet/getNoticeRemind";
-        response = createGetConnectWithSignature(curURI, params, null);
+        response = createGetConnectWithSignature(curURI, params, null,null);
         return response;
     }
 
@@ -768,15 +780,26 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse v1GetAnnouncement() {
+    public static HttpResponse v1GetAnnouncementNoSig(Map<String, String> headers) {
         final String requestUrl = HttpNode + "/api/activity/announcement/reveal_v2";
-        response = createGetConnect(requestUrl, null, null, null);
+        response = createGetConnect(requestUrl, null, null, headers);
+        return response;
+    }
+    public static HttpResponse v1GetAnnouncement(Map<String, String> params) {
+        final String curURI =  "/api/activity/announcement/reveal_v2";
+        response = createGetConnectWithSignature(curURI, params, null,null);
+        return response;
+    }
+
+    public static HttpResponse v1GetNodesNoSig(Map<String, String> params, Map<String, String> header) {
+        final String requestUrl = HttpNode + "/api/v1/wallet/nodes";
+        response = createPostConnect(requestUrl, params, (JSONObject) null, header);
         return response;
     }
 
     public static HttpResponse v1GetNodes(Map<String, String> params) {
-        final String requestUrl = HttpNode + "/api/v1/wallet/nodes";
-        response = createPostConnect(requestUrl, params, (JSONObject) null, null);
+        final String curURI =  "/api/v1/wallet/nodes";
+        response = createPostConnectWithSignature(curURI, params,null, (JSONObject) null);
         return response;
     }
 
@@ -788,7 +811,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse v2GetBlacklist(Map<String, String> params,Map<String, String> headers) {
         final String curURI = "/api/activity/website/blacklist";
-        response = createGetConnectWithSignature(curURI, params, headers);
+        response = createGetConnectWithSignature(curURI, params, headers,null);
         return response;
     }
 
@@ -800,7 +823,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse officialToken(Map<String, String> params,Map<String, String> header) {
         final String curURI = "/api/wallet/official_token";
-        response = createGetConnectWithSignature(curURI, params,header);
+        response = createGetConnectWithSignature(curURI, params,header,null);
         return response;
     }
 
@@ -832,7 +855,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         header.put("System", "Android");
         header.put("Content-type", "application/json; charset=utf-8");
         header.put("Connection", "Keep-Alive");
-        response = createGetConnectWithSignature(curURI, params, header);
+        response = createGetConnectWithSignature(curURI, params, header,null);
         return response;
     }
 
@@ -874,7 +897,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         for (String key : headerMap.keySet()) {
             header.put(key, headerMap.get(key));
         }
-        response = createGetConnectWithSignature(curURI, params, header);
+        response = createGetConnectWithSignature(curURI, params, header,null);
         return response;
     }
 
@@ -913,19 +936,19 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse v2Asset(Map<String, String> params) {
         final String curUri = "/api/wallet/v2/asset";
-        response = createGetConnectWithSignature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null,null );
         return response;
     }
 
     public static HttpResponse v2Auth(Map<String, String> params) {
         final String curUri = "/api/wallet/v2/auth";
-        response = createGetConnectWithSignature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null,null);
         return response;
     }
 
     public static HttpResponse v2NftSearch(Map<String, String> params) {
         final String curUri = "/api/wallet/nft/search";
-        response = createGetConnectWithSignature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null,null);
         return response;
     }
 
@@ -961,7 +984,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse v1UpgradeV2(Map<String, String> caseparams, Map<String, String> caseheader) {
         String curURI = "/api/v1/wallet/v2/upgrade";
-        response = createGetConnectWithSignature(curURI, caseparams, caseheader);
+        response = createGetConnectWithSignature(curURI, caseparams, caseheader,null);
         return response;
     }
 
@@ -981,7 +1004,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         header.put("Content-type", "application/json; charset=utf-8");
         header.put("Connection", "Close");
         headers = AddMap(headers, header);
-        response = createGetConnectWithSignature(curURI, caseParam, headers);
+        response = createGetConnectWithSignature(curURI, caseParam, headers,null);
         return response;
     }
 
@@ -1270,7 +1293,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse v2GetRisk(Map<String, String> caseParams) {
         String curUri = "/api/wallet/v2/risk";
-        response = createGetConnectWithSignature(curUri, caseParams, null);
+        response = createGetConnectWithSignature(curUri, caseParams, null,null);
         return response;
     }
 
@@ -1292,7 +1315,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         Map<String, String> header = new HashMap<>();
         header.put("Content-type", "application/json; charset=utf-8");
         header.put("Connection", "Close");
-        response = createGetConnectWithSignature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null,null);
         return response;
     }
     public static HttpResponse v1BalanceNoSig(Map<String, String> params,Map<String, String> headers) {
@@ -1303,18 +1326,18 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse v1Balance(Map<String, String> params,Map<String, String> headers) {
         String curURI = "/api/wallet/balance";
-        response = createGetConnectWithSignature(curURI, params, headers);
+        response = createGetConnectWithSignature(curURI, params, headers,null);
         return response;
     }
 
     public static HttpResponse TransferV2Trc721(Map<String, String> params) {
         final String curUri = "/api/transfer/v2/trc721";
-        response = createGetConnectWithSignature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null,null);
         return response;
     }
     public static HttpResponse TransferTrc721(Map<String, String> params) {
         final String curUri = "/api/transfer/trc721";
-        response = createGetConnectWithSignature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null,null);
         return response;
     }
     public static HttpResponse sdk_verify(String json) {
@@ -1324,19 +1347,19 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
     }
     public static HttpResponse v2GetAllCollection_1155(Map<String, String> params) {
         final String curUri = "/api/wallet/trc1155/getAllCollection";
-        response = createGetConnectWithSignature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null,null);
         return response;
     }
     
     public static HttpResponse v2AllCollections_1155(Map<String, String> params) {
         final String curUri = "/api/wallet/trc1155/allCollections";
-        response = createGetConnectWithSignature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null,null);
         return response;
     }
     
     public static HttpResponse v2GetCollectionList_1155(Map<String, String> params) {
         final String curUri = "/api/wallet/trc1155/getCollectionList";
-        response = createGetConnectWithSignature(curUri, params, null);
+        response = createGetConnectWithSignature(curUri, params, null,null);
         return response;
     }
     public static HttpResponse v2GetCollectionInfos_1155(Map<String, String> params, JSONObject body) {

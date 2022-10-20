@@ -541,7 +541,7 @@ public class TronlinkServerHttpClient {
         return signature;
     }
 
-    public static HttpResponse createGetConnectWithSignature(String curURI, Map<String, String> caseParams,Map<String, String> caseHeader) {
+    public static HttpResponse createGetConnectWithSignature(String curURI, Map<String, String> caseParams,Map<String, String> caseHeader, JSONObject object ) {
 
         Map<String, String> params = new HashMap<>();
         Map<String, String> headers = new HashMap<>();
@@ -575,7 +575,7 @@ public class TronlinkServerHttpClient {
         String cursig = getNewSignature(curURI,"GET", caseParams.get("address"), params, headers);
         params.put("signature", cursig);
         String requestUrl = HttpNode + curURI;
-        response = createGetConnect(requestUrl, params, null, headers);
+        response = createGetConnect(requestUrl, params, object, headers);
         return response;
     }
 
