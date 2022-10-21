@@ -48,10 +48,10 @@ public class Dapp_List extends TronlinkBase {
   @Test(enabled = true)
   public void dapp_isroll(){
     Map<String, String> params = new HashMap<>();
-    params.put("all","0");
-    params.put("is_roll","2");
-    params.put("page_size","10");
-    params.put("classify_id","0");
+    //params.put("all","0");
+    //params.put("is_roll","2");不在支持
+    params.put("page_size","100");
+    params.put("classify_id","-1"); //可取值-1，3，4，7
     params.put("address",quince_B58);
     response = TronlinkApiList.dapp_list(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -69,10 +69,10 @@ public class Dapp_List extends TronlinkBase {
       Assert.assertTrue(jsonObject.containsKey("home_url"));
       Assert.assertTrue(jsonObject.containsKey("slogan"));
       Assert.assertTrue(jsonObject.containsKey("is_roll"));
-      Assert.assertTrue(jsonObject.getInteger("is_roll") == 2);
+      //Assert.assertTrue(jsonObject.getInteger("is_roll") == 2); #is_roll不再支持，4.10.5
     }
     System.out.println(responseArrayContent.size());
-    Assert.assertTrue(responseArrayContent.size() == 4);
+    /*Assert.assertTrue(responseArrayContent.size() == 4);*/
   }
 
 }

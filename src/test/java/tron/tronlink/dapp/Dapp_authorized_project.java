@@ -29,7 +29,7 @@ public class Dapp_authorized_project extends TronlinkBase {
 
         for (Data d:
              auths.getData()) {
-            Assert.assertEquals(d.getIcon().trim().startsWith("https://"), true);
+            //Assert.assertEquals(d.getIcon().trim().startsWith("https://"), true);
             Assert.assertEquals(d.getUrl().trim().startsWith("https://"), true);
         }
     }

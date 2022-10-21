@@ -344,6 +344,18 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
+    public static HttpResponse dappBannerV3(Map<String, String> caseParams,Map<String, String> caseHeader) {
+        String curURI = "/api/dapp/v3/banner";
+        response = createGetConnectWithSignature(curURI, caseParams, caseHeader,null);
+        return response;
+    }
+
+    public static HttpResponse dappClassfyV3(Map<String, String> caseParams,Map<String, String> caseHeader) {
+        String curURI = "/api/dapp/v3/classify";
+        response = createGetConnectWithSignature(curURI, caseParams, caseHeader, null);
+        return response;
+    }
+
     public static HttpResponse dappAuthorizedProject() {
         String requestUrl = HttpNode + "/api/dapp/v2/authorized_project";
         response = createGetConnect(requestUrl, null,null,null);

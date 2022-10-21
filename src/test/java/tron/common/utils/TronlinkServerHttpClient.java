@@ -413,6 +413,9 @@ public class TronlinkServerHttpClient {
     public static String parseResponse2String(HttpResponse response) {
         try {
             String result = EntityUtils.toString(response.getEntity());
+            log.info("===========result============");
+            log.info(result);
+            log.info("===========result============");
             return result;
         } catch (Exception e) {
             e.printStackTrace();
