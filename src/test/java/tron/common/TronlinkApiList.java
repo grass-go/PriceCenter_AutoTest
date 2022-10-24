@@ -406,6 +406,13 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
+
+    public static HttpResponse dappSearchV3(Map<String, String> caseParams,Map<String, String> caseHeader) {
+        String curURI = "/api/dapp/v3/search";
+        response = createGetConnectWithSignature(curURI, caseParams, caseHeader,null);
+        return response;
+    }
+
     public static HttpResponse history(Map<String, String> params) {
         String requestUrl = HttpNode + "/api/dapp/v2/dapp/history";
         header.clear();

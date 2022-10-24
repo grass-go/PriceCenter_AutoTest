@@ -400,8 +400,6 @@ public class TronlinkServerHttpClient {
             log.info("======");
             log.info(result);
             log.info("======");
-            StringEntity entity = new StringEntity(result, Charset.forName("UTF-8"));
-            response.setEntity(entity);
             JSONObject obj = JSONObject.parseObject(result);
             return obj;
         } catch (Exception e) {

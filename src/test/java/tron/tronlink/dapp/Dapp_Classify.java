@@ -3,6 +3,7 @@ package tron.tronlink.dapp;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
@@ -13,6 +14,7 @@ import tron.tronlink.base.TronlinkBase;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class Dapp_Classify extends TronlinkBase {
 
   private JSONObject responseContent;
@@ -50,8 +52,17 @@ public class Dapp_Classify extends TronlinkBase {
     params.put("classify","0");
     response = TronlinkApiList.dappClassfyV3(params,header);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    String response_str = TronlinkApiList.parseResponse2String(response);
-    Assert.assertTrue(response_str.length() > 7000); //21条
+    JSONObject responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    responseArrayContent = responseContent.getJSONArray("data");
+    Assert.assertEquals(21,responseArrayContent.size());
+
+    header.put("Lang","2");
+    response = TronlinkApiList.dappClassfyV3(params,header);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    responseArrayContent = responseContent.getJSONArray("data");
+    Assert.assertEquals(21,responseArrayContent.size());
+
   }
 
   @Test(enabled = true, description = "classify=3")
@@ -62,8 +73,16 @@ public class Dapp_Classify extends TronlinkBase {
     params.put("classify","3");
     response = TronlinkApiList.dappClassfyV3(params,header);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    String response_str = TronlinkApiList.parseResponse2String(response);
-    Assert.assertTrue(response_str.length() > 2400);
+    JSONObject responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    responseArrayContent = responseContent.getJSONArray("data");
+    Assert.assertEquals(5,responseArrayContent.size());
+
+    header.put("Lang","2");
+    response = TronlinkApiList.dappClassfyV3(params,header);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    responseArrayContent = responseContent.getJSONArray("data");
+    Assert.assertEquals(5,responseArrayContent.size());
   }
 
   @Test(enabled = true, description = "classify=4")
@@ -74,8 +93,16 @@ public class Dapp_Classify extends TronlinkBase {
     params.put("classify","4");
     response = TronlinkApiList.dappClassfyV3(params,header);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    String response_str = TronlinkApiList.parseResponse2String(response);
-    Assert.assertTrue(response_str.length() > 1700);//6
+    JSONObject responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    responseArrayContent = responseContent.getJSONArray("data");
+    Assert.assertEquals(6,responseArrayContent.size());
+
+    header.put("Lang","2");
+    response = TronlinkApiList.dappClassfyV3(params,header);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    responseArrayContent = responseContent.getJSONArray("data");
+    Assert.assertEquals(6,responseArrayContent.size());
   }
 
   @Test(enabled = true, description = "classify=7")
@@ -86,8 +113,18 @@ public class Dapp_Classify extends TronlinkBase {
     params.put("classify","7");
     response = TronlinkApiList.dappClassfyV3(params,header);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    String response_str = TronlinkApiList.parseResponse2String(response);
-    Assert.assertTrue(response_str.length() > 2900); //10
+    JSONObject responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    responseArrayContent = responseContent.getJSONArray("data");
+    Assert.assertEquals(10,responseArrayContent.size());
+
+    header.put("Lang","2");
+    response = TronlinkApiList.dappClassfyV3(params,header);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    responseArrayContent = responseContent.getJSONArray("data");
+    Assert.assertEquals(10,responseArrayContent.size());
+
+
   }
 
 }

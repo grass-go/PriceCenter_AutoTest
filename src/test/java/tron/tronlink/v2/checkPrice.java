@@ -93,8 +93,9 @@ public class checkPrice extends TronlinkBase {
     }
 
     @Test(enabled = true, dataProvider = "checkPriceTokens", description = "token without WBTC and WETH")
-    public void test001CompareTokenPriceWithTronscan(String symbol, String address, String tolerance) {
+    public void test001CompareTokenPriceWithTronscan(String symbol, String address, String tolerance) throws InterruptedException {
         log.info("test001CompareTokenPriceWithTronscan:"+symbol,", address", address, ", tolerance:");
+        Thread.sleep(1000);
         Object trxPrice_obj;
         Object usdPrice_obj;
         Object cnyPrice_obj;

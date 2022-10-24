@@ -46,5 +46,44 @@ public class Dapp_Search extends TronlinkBase {
     Assert.assertTrue(responseArrayContent.size() >= 0);
   }
 
+  @Test(enabled = true)
+  public void dapp_searchV3(){
+    Map<String, String> header = new HashMap<>();
+    header.put("System","iOS");
+    header.put("Lang","2");
+    Map<String, String> params = new HashMap<>();
+    params.put("address", quince_B58);
+    params.put("word","JUST");
+
+    response = TronlinkApiList.dappSearchV3(params,header);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    //data object
+    responseArrayContent = responseContent.getJSONArray("data");
+    int lang2_size = responseArrayContent.size();
+    for (Object json:responseArrayContent
+    ) {
+      System.out.println(json);
+      JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
+      Assert.assertTrue(jsonObject.containsKey("classifyId"));
+      Assert.assertTrue(jsonObject.containsKey("name"));
+      Assert.assertTrue(jsonObject.containsKey("imageUrl"));
+      Assert.assertTrue(jsonObject.containsKey("homeUrl"));
+      Assert.assertTrue(jsonObject.containsKey("intro"));
+      Assert.assertTrue(jsonObject.containsKey("anonymous"));
+    }
+    System.out.println(responseArrayContent.size());
+    Assert.assertTrue(responseArrayContent.size() == 2);
+
+    header.put("Lang","1");
+    response = TronlinkApiList.dappSearchV3(params,header);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    //data object
+    responseArrayContent = responseContent.getJSONArray("data");
+    int lang1_size = responseArrayContent.size();
+    Assert.assertEquals(lang1_size,lang2_size);
+  }
+
 
 }

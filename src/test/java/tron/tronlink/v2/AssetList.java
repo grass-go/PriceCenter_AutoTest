@@ -51,6 +51,7 @@ public class AssetList extends TronlinkBase {
     response = TronlinkApiList.v2AssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    response = TronlinkApiList.v2AssetList(params);
     responseString = TronlinkApiList.parseResponse2String(response);
 
     String cmp_result = new CompareJson("data","priceCny,priceUSD").compareJson(responseString, expResponse);
@@ -82,6 +83,7 @@ public class AssetList extends TronlinkBase {
     response = TronlinkApiList.v2AssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    response = TronlinkApiList.v2AssetList(params);
     responseString = TronlinkApiList.parseResponse2String(response);
 
     String cmp_result = new CompareJson("data","priceCny,priceUSD,price").compareJson(responseString, expResponse);

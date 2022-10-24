@@ -57,6 +57,15 @@ public class Dapp_Banner extends TronlinkBase {
             Assert.assertTrue(jsonObject.containsKey("backgroundColor"));
             Assert.assertTrue(jsonObject.containsKey("anonymous"));
         }
+
+        header.put("Lang","2");
+        response = TronlinkApiList.dappBannerV3(params,header);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+        jsonArray = responseContent.getJSONArray("data");
+        Assert.assertTrue(jsonArray.size() ==4 );
+
+
     }
 
     @Test(enabled = true, description = "iOS access banner")
@@ -80,6 +89,13 @@ public class Dapp_Banner extends TronlinkBase {
             Assert.assertTrue(jsonObject.containsKey("backgroundColor"));
             Assert.assertTrue(jsonObject.containsKey("anonymous"));
         }
+
+        header.put("Lang","2");
+        response = TronlinkApiList.dappBannerV3(params,header);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+        jsonArray = responseContent.getJSONArray("data");
+        Assert.assertTrue(jsonArray.size() ==5);
     }
 
 }

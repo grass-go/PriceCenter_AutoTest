@@ -190,7 +190,7 @@ public class AllAssetList extends TronlinkBase {
     }
   }
   @Test(enabled = true, description = "Test each coin level equals to tronscan api")
-  public void allAssetList04(){
+  public void allAssetList04() throws InterruptedException {
     params.clear();
     params.put("address",quince_B58);
 
@@ -241,6 +241,7 @@ public class AllAssetList extends TronlinkBase {
         Object cur_isOfficial = JSONPath.eval(responseContent, String.join("","$..data.token[id='",curId,"'].isOfficial[0]"));
         String requestUrl= TronlinkBase.tronscanApiUrl+"/api/token?id="+curId+"&showAll=1";
         HttpResponse transcanRsp = TronlinkApiList.createGetConnect(requestUrl,null,null,null);
+        Thread.sleep(1000);
         JSONObject transcanRspContent = TronlinkApiList.parseResponse2JsonObject(transcanRsp);
         Object scan_levelObject = JSONPath.eval(transcanRspContent, String.join("","$..data[0].level"));
         if(scan_levelObject.equals("")){
@@ -265,6 +266,7 @@ public class AllAssetList extends TronlinkBase {
         Object cur_isOfficial = JSONPath.eval(responseContent, String.join("","$..data.token[contractAddress='",curAddress,"'].isOfficial[0]"));
         String requestUrl= TronlinkBase.tronscanApiUrl+"/api/token_trc20?contract="+curAddress+"&showAll=1&source=true";
         HttpResponse transcanRsp = TronlinkApiList.createGetConnect(requestUrl,null,null,null);
+        Thread.sleep(1000);
         JSONObject transcanRspContent = TronlinkApiList.parseResponse2JsonObject(transcanRsp);
         Object scan_levelObject = JSONPath.eval(transcanRspContent, String.join("","$..trc20_tokens[0].level"));
         org.testng.Assert.assertNotEquals(scan_levelObject, null, "tronscan 接口的数据为空导致");
