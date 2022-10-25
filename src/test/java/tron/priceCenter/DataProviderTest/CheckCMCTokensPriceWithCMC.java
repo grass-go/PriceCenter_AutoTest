@@ -28,7 +28,7 @@ public class CheckCMCTokensPriceWithCMC extends priceBase {
     @DataProvider(name = "ddt")
     public Object[][] data() throws IOException {
 
-        String datafile = Configuration.getByPath("testng.conf").getString("commonTokens");
+        String datafile = Configuration.getByPath("testng.conf").getString("tokensCompareCMC");
         File directory = new File(".");
         String tokenFile = directory.getCanonicalFile() + datafile;
         List<String> contentLines = PriceCenterApiList.ReadFile(tokenFile);
@@ -57,7 +57,7 @@ public class CheckCMCTokensPriceWithCMC extends priceBase {
     @Test(enabled = true, dataProvider = "ddt")
     public void test001CheckPriceWithCMC(String symbol, String address, String tolerance) throws URISyntaxException, InterruptedException {
         log.info("test001CheckPriceBetweenGetPriceAndGetAllPrice:symbol:"+symbol+", address:"+address + ", tolerance:"+tolerance);
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         //get getallprice response once for all the tokens.
 
         String curSymbol = symbol;

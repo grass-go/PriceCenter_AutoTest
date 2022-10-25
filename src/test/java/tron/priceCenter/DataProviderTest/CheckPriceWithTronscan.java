@@ -74,7 +74,7 @@ public class CheckPriceWithTronscan extends priceBase {
     }
 
     @Test(dataProvider = "allToken")
-    public void test001DiffFormat(String fShortName, String fTokenAddr, String sShortName,String centerPrice) throws URISyntaxException, IOException, InterruptedException {
+    public void test001CheckPriceWithTronscan(String fShortName, String fTokenAddr, String sShortName,String centerPrice) throws URISyntaxException, IOException, InterruptedException {
         log.info("fShortName:"+fShortName+" fTokenAddr:"+fTokenAddr+" sShortName:"+sShortName+" centerPrice:"+ centerPrice);
 
         String scanUrl="";
