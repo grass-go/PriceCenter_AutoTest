@@ -55,8 +55,9 @@ public class CheckCMCTokensPriceWithCMC extends priceBase {
     }
 
     @Test(enabled = true, dataProvider = "ddt")
-    public void test001CheckPriceWithCMC(String symbol, String address, String tolerance) throws URISyntaxException {
+    public void test001CheckPriceWithCMC(String symbol, String address, String tolerance) throws URISyntaxException, InterruptedException {
         log.info("test001CheckPriceBetweenGetPriceAndGetAllPrice:symbol:"+symbol+", address:"+address + ", tolerance:"+tolerance);
+        Thread.sleep(1000);
         //get getallprice response once for all the tokens.
 
         String curSymbol = symbol;
