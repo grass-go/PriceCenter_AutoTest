@@ -20,6 +20,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
 import org.junit.Assert;
+import org.testng.annotations.Test;
 import org.tron.api.GrpcAPI;
 import org.tron.api.WalletGrpc;
 import org.tron.common.crypto.ECKey;
@@ -261,7 +262,7 @@ public class PriceCenterApiList {
         Map<String,String> header = new HashMap<>();
         header.put("User-Agent","Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36");
         header.put("Content-Type","MediaType.MULTIPART_FORM_DATA");
-        header.put("X-CMC_PRO_API_KEY","8cd87197-8386-4bcb-835c-ff7b78d6ba48");
+        header.put("X-CMC_PRO_API_KEY","9ad68072-6c3e-4424-b456-19ecce883c7f");
         header.put("Accept","application/json");
         Map<String,String> params = new HashMap<>();
         params.put("symbol","TRX");
