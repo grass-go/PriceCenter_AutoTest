@@ -53,8 +53,8 @@ public class CheckPriceWithTronscan extends priceBase {
                 continue;
             }
             //exclude some token has the same symbol with others in CMC.
-            if(fTokenAddr.equals("TL5BvThAMg9QBCvbgXu7HwHh8HqGdAq4DD") || fTokenAddr.equals("TUmzcczaosRkmLLqCSAAuUL7Dsq4aGeyoL")
-                    || fTokenAddr.equals("TVgAYofpQku5G4zenXnvxhbZxpzzrk8WVK") || fTokenAddr.equals("TDFRfJLThnLXgtEBBBmA2LGwz3Ex9dAMCE")
+            if(fTokenAddr.equals("TL5BvThAMg9QBCvbgXu7HwHh8HqGdAq4DD") || fTokenAddr.equals("TDFRfJLThnLXgtEBBBmA2LGwz3Ex9dAMCE")
+                    || fTokenAddr.equals("TVgAYofpQku5G4zenXnvxhbZxpzzrk8WVK") || fTokenAddr.equals("TUmzcczaosRkmLLqCSAAuUL7Dsq4aGeyoL")
                     || fTokenAddr.equals("TSSMHYeV2uE9qYH95DqyoCuNCzEL1NvU3S") || fTokenAddr.equals("TSdqRcnAaMUQWRy4zRR8Pd3QuJuBKX9W55")
                     || fTokenAddr.equals("TGB1ZeuHVxyd72hzbmb8m9c9RpHedNA43J") || fTokenAddr.equals("TUKxxRkFi21d6KnqUi7aNsbA2So91xMDFG")
              ) {
