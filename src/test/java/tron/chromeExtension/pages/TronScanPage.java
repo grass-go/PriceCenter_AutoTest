@@ -116,7 +116,9 @@ public class TronScanPage extends AbstractPage {
 
   /* @FindBy(xpath = "/html/body/div[5]/div/div/div/div[2]/div[1]/div/div/div[1]/div")
   public WebElement trc721Token_btn;*/
-  @FindBy(xpath = "/html/body/div[2]/div/div[2]/div/div[2]/div[3]/form/div[4]/div/div[2]/div/div/div/div[2]/div[1]/div/div/div[1]")
+  @FindBy(
+      xpath =
+          "/html/body/div[2]/div/div[2]/div/div[2]/div[3]/form/div[4]/div/div[2]/div/div/div/div[2]/div[1]/div/div/div[1]")
   public WebElement trc721Token_btn;
 
   /*  /html/body/div[5]/div/div/div/div[2]/div[1]/div/div/div[1]*/
@@ -124,9 +126,8 @@ public class TronScanPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div[2]/main/section/aside/div/ul/li[4]/span")
   public WebElement multiSignTransactionTab_btn;
 
-/*    @FindBy(xpath = "//*[@id=\"root\"]/div[2]/main/section/aside/div/ul/li[4]/span/a/span")
-    public WebElement multipleTransaction_btn;*/
-
+  /*    @FindBy(xpath = "//*[@id=\"root\"]/div[2]/main/section/aside/div/ul/li[4]/span/a/span")
+  public WebElement multipleTransaction_btn;*/
 
   @FindBy(
       xpath =

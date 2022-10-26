@@ -26,7 +26,7 @@ public class sendTRC721 extends Base {
   public void test001sendTrc721Test() throws Exception {
 
     String transactionStatus =
-        Helper.transfer(loginAddress, "TVzRKmCZ471QGsKqFJbXc2qeNtJNmcumbR", "1", true);
+        Helper.transfer(false, loginAddress, "TVzRKmCZ471QGsKqFJbXc2qeNtJNmcumbR", "1", true);
     Assert.assertEquals("交易已广播", transactionStatus);
     Assert.assertTrue(onTheHomepageOrNot(testAddress));
   }

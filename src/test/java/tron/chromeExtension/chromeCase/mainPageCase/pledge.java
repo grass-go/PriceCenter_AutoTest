@@ -33,7 +33,7 @@ public class pledge extends Base {
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime();
-    String tips = Helper.pledgeTrxForMyself("width", minorHandle);
+    String tips = Helper.pledgeTrxForMyself("width", false, minorHandle);
     Assert.assertTrue(tips.contains("成功质押"));
   }
 
@@ -50,7 +50,7 @@ public class pledge extends Base {
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime();
-    String tips = Helper.pledgeTrxForMyself("energy", minorHandle);
+    String tips = Helper.pledgeTrxForMyself("energy", false, minorHandle);
     Assert.assertTrue(tips.contains("成功质押"));
   }
 
@@ -68,7 +68,7 @@ public class pledge extends Base {
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime();
-    String tips = Helper.pledgeTrxForOthers("width", minorHandle, testAddress);
+    String tips = Helper.pledgeTrxForOthers("width", false, minorHandle, testAddress);
     Assert.assertTrue(tips.contains("成功质押"));
   }
 
@@ -87,7 +87,7 @@ public class pledge extends Base {
     String minorHandle = DRIVER.getWindowHandle();
     switchWindows(minorHandle);
     waitingTime(5);
-    String tips = Helper.pledgeTrxForOthers("energy", minorHandle, testAddress);
+    String tips = Helper.pledgeTrxForOthers("energy", false, minorHandle, testAddress);
     Assert.assertTrue(tips.contains("成功质押"));
   }
 

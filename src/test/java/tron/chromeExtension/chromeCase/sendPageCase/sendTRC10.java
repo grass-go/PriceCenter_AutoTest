@@ -26,7 +26,7 @@ public class sendTRC10 extends Base {
       alwaysRun = true,
       enabled = true)
   public void test001sendTrc10Test() throws Exception {
-    String transactionStatus = Helper.transfer(loginAddress, "1004910", "1", false);
+    String transactionStatus = Helper.transfer(false,loginAddress, "1004910", "1", false);
     Assert.assertEquals("交易已广播", transactionStatus);
     Assert.assertTrue(onTheHomepageOrNot(testAddress));
   }

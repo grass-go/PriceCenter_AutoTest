@@ -42,6 +42,13 @@ public class MainPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[1]/div[1]/span")
   public WebElement accountName_content;
 
+  //
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div[2]/div[3]/div/div[1]/div[1]/div[2]")
+  public WebElement transferAccount_content;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div[2]/div[3]/div/div[1]/div[3]/div[2]")
+  public WebElement receiveAccount_content;
+
   // Current account TRX amount.
   @FindBy(
       xpath =
@@ -130,6 +137,10 @@ public class MainPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[3]/div[1]/div[2]/span")
   public WebElement receive_btn;
 
+  // Home account address .
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[2]/span[1]")
+  public WebElement address_btn;
+
   // Home page copy button.
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[2]/span[2]")
   public WebElement copy_btn;
@@ -211,6 +222,9 @@ public class MainPage extends AbstractPage {
   // signature btn
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div[6]/button[2]")
   public WebElement signature_btn;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div/div[5]/div/div/div[2]/div[2]")
+  public WebElement resourceReception_btn;
 
   // cancel signature btn
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div[6]/button[1]")

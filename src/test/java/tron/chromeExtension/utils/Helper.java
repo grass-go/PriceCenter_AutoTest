@@ -232,7 +232,7 @@ public class Helper extends Base {
 
   // Transfer.
   public static String transfer(
-      String receiveAddress, String searchContent, String amount, Boolean isTrc721)
+      Boolean flag, String receiveAddress, String searchContent, String amount, Boolean isTrc721)
       throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     SendPage sendPage = new SendPage(DRIVER);
@@ -254,6 +254,13 @@ public class Helper extends Base {
     }
     click(sendPage.transfer_btn);
     waitingTime();
+    if (flag) {
+      String transferAccount = getText(mainPage.transferAccount_content);
+      Assert.assertTrue(!transferAccount.contains("."));
+      String receiveAccount = getText(mainPage.receiveAccount_content);
+      Assert.assertTrue(!receiveAccount.contains("."));
+      return "Address Format True";
+    }
     click(sendPage.signature_btn);
     waitingTime(5);
     String transactionStatus = getText(sendPage.transactionStatus);
@@ -292,7 +299,8 @@ public class Helper extends Base {
   }
 
   // Is pledge for myself or not.
-  public static String pledgeTrxForMyself(String type, String minorHandle) throws Exception {
+  public static String pledgeTrxForMyself(String type, boolean flag, String minorHandle)
+      throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     TronScanPage tronScanPage = new TronScanPage(DRIVER);
     click(tronScanPage.getSources_btn);
@@ -311,6 +319,12 @@ public class Helper extends Base {
     String majorHandle = DRIVER.getWindowHandle();
     switchWindows(majorHandle);
     waitingTime(5);
+    if (flag) {
+      String address = getText(mainPage.resourceReception_btn);
+      if (!address.contains(".")) {
+        return "Address Format True";
+      }
+    }
     click(mainPage.signature_btn);
     waitingTime(5);
     switchWindows(minorHandle);
@@ -321,8 +335,8 @@ public class Helper extends Base {
   }
 
   // is pledge for myself or not.
-  public static String pledgeTrxForOthers(String type, String minorHandle, String address)
-      throws Exception {
+  public static String pledgeTrxForOthers(
+      String type, boolean flag, String minorHandle, String address) throws Exception {
     MainPage mainPage = new MainPage(DRIVER);
     TronScanPage tronScanPage = new TronScanPage(DRIVER);
     click(tronScanPage.getSources_btn);
