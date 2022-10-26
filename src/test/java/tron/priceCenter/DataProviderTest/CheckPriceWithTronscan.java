@@ -99,7 +99,7 @@ public class CheckPriceWithTronscan extends priceBase {
                 log.info("Tronscan has no price!!");
             }else {
                 log.info(" scanPrice:" + scanPrice.toString() + "centerPrice:" + centerPrice);
-                if (fTokenAddr.equals("TBLQs7LqUYAgzYirNtaiX3ixnCKnhrVVCe")){
+                if (fTokenAddr.equals("TBLQs7LqUYAgzYirNtaiX3ixnCKnhrVVCe") || fTokenAddr.equals("TNoUWaZgSNia49qShdzB5VdaNF89it6hxf")){
                     Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(scanPrice.toString(), centerPrice, "0.2"));
                 }else {
                     Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(scanPrice.toString(), centerPrice, "0.1"));
