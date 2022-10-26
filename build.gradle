@@ -10,9 +10,9 @@ sourceCompatibility = 1.8
 repositories {
     mavenCentral()
     maven {
-        url  'https://dl.bintray.com/tronj/tronj'
+        url  'https://jitpack.io'
     }
-    maven { url 'https://jitpack.io' }
+//    maven { url 'https://dl.bintray.com/tronj/tronj' }
 }
 
 dependencies {
@@ -34,8 +34,11 @@ dependencies {
     //implementation 'org.tron.tronj:abi:0.1.1'
 //    implementation 'org.tron.tronj:client:0.1.1'
 //    implementation 'org.tron.tronj:utils:0.1.1'
-    implementation 'com.github.tronprotocol:java-tron:release_4.1.2-SNAPSHOT'
+    compile group: 'com.github.tronprotocol', name:'java-tron', version: 'GreatVoyage-v4.5.2'
+//    implementation 'com.github.tronprotocol:java-tron:release_4.1.2-SNAPSHOT'
     compile group: 'org.java-websocket', name: 'Java-WebSocket', version: '1.5.1'
+// https://mvnrepository.com/artifact/com.madgag.spongycastle/core
+    implementation group: 'com.madgag.spongycastle', name: 'core', version: '1.58.0.0'
 
 
 }
@@ -104,5 +107,20 @@ task tronlinkAPI(type: Test) {
     }
 
 
+
+}
+
+task priceAPI(type: Test) {
+
+    useTestNG {
+        suites(file('src/test/resources/testng_price-centreAPI.xml'))
+        parallel 'tests'
+        threadCount 1
+
+    }
+    testLogging {
+        exceptionFormat = 'full'
+        showStackTraces = "true"
+    }
 
 }
