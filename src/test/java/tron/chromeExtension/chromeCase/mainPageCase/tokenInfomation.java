@@ -29,9 +29,30 @@ public class tokenInfomation extends Base {
     WebElement trxDiv = mainPage.token_list.get(0);
     waitingTime(3);
     Assert.assertTrue(
-        trxDiv.findElement(new By.ByClassName("logo"))
+        trxDiv
+            .findElement(new By.ByClassName("logo"))
             .findElements(By.cssSelector("img[alt]"))
-            .get(1).getAttribute("src").contains("/static/media/icon-verify.d25d69e8.svg"));
+            .get(1)
+            .getAttribute("src")
+            .contains("/static/media/icon-verify.d25d69e8.svg"));
+  }
+
+  @Test(
+      groups = {"P0"},
+      description = "Verify that the TRX icon has a Dominic French Coins flag.",
+      alwaysRun = true,
+      enabled = true)
+  public void test002TRXIconHasADominicFrenchCoinsFlag() throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    waitingTime(3);
+    for (int i = 0; i < mainPage.token_list.size(); i++) {
+      WebElement trxDiv = mainPage.token_list.get(i);
+      waitingTime(3);
+      Assert.assertNotNull(
+          trxDiv
+              .findElement(new By.ByClassName("nameWrap"))
+              .findElements(By.className("nationalFlag")));
+    }
   }
 
   @AfterMethod(enabled = true)
