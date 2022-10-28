@@ -1,11 +1,14 @@
 package tron.tronlink.old;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.alibaba.fastjson.JSONPath;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
@@ -204,4 +207,52 @@ public class Upgrade extends TronlinkBase {
     newVersion = newVersion.replace(".","");
     Assert.assertTrue(Integer.valueOf(newVersion) > 400);
   }
+
+  @Test(enabled = true, description = "Android officical 4.9.0, no need upgrade")
+  public void test05UpgradeFor490_official() throws Exception {
+    Map<String, String> params = new HashMap<>();
+    params.put("address", quince_B58);
+    Map<String, String> header = new HashMap<>();
+    header.put("Version", "4.9.0");
+    header.put("packageName", "com.tronlinkpro.wallet");
+    header.put("System", "Android");
+    header.put("channel", "official");
+    response = TronlinkApiList.v1UpgradeV2(params, header);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    Object upgrade_flag = JSONPath.eval(responseContent,"$..data.upgrade[0]");
+    log.info("upgrade: "+upgrade_flag);
+    Assert.assertEquals("false",upgrade_flag.toString());
+  }
+  @Test(enabled = true, description = "Android samsunggalaxy 4.9.0, no need upgrade")
+  public void test05UpgradeFor490_samsunggalaxy() throws Exception {
+    Map<String, String> params = new HashMap<>();
+    params.put("address", quince_B58);
+    Map<String, String> header = new HashMap<>();
+    header.put("Version", "4.9.0");
+    header.put("packageName", "com.tronlinkpro.wallet");
+    header.put("System", "Android");
+    header.put("channel", "samsunggalaxy");
+    response = TronlinkApiList.v1UpgradeV2(params, header);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    Object upgrade_flag = JSONPath.eval(responseContent,"$..data.upgrade[0]");
+    log.info("upgrade: "+upgrade_flag);
+    Assert.assertEquals("false",upgrade_flag.toString());
+  }
+
+  @Test(enabled = true, description = "Android googleplay 4.9.0, need upgrade")
+  public void test05UpgradeFor490_googleplay() throws Exception {
+    Map<String, String> params = new HashMap<>();
+    params.put("address", quince_B58);
+    Map<String, String> header = new HashMap<>();
+    header.put("Version", "4.9.0");
+    header.put("packageName", "com.tronlinkpro.wallet");
+    header.put("System", "Android");
+    header.put("channel", "googleplay");
+    response = TronlinkApiList.v1UpgradeV2(params, header);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    Object upgrade_flag = JSONPath.eval(responseContent,"$..data.upgrade[0]");
+    log.info("upgrade: "+upgrade_flag);
+    Assert.assertEquals("true",upgrade_flag.toString());
+  }
+
 }
