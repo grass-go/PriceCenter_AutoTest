@@ -42,7 +42,7 @@ public class allAssets extends Base {
     click(mainPage.allAssets_btn);
     Assert.assertEquals("全部资产", getText(allAssetsPage.allAssets_title));
     click(allAssetsPage.tokenList.get(2));
-    Assert.assertEquals("Tether USD", getText(allAssetsPage.specificAsset_title));
+    Assert.assertEquals("USDT", getText(allAssetsPage.specificAsset_title));
     waitingTime(5);
     click(allAssetsPage.details_btn);
     Assert.assertEquals("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",getText(allAssetsPage.contract_address));

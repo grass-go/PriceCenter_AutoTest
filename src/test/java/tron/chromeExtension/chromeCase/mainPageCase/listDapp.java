@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
 import tron.chromeExtension.pages.MainPage;
+import tron.chromeExtension.utils.Helper;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +19,7 @@ public class listDapp extends Base {
   public void before() throws Exception {
     setUpChromeDriver();
     loginAccount(chainNile);
+    Helper.switchAccount(testAccountOneIndex, loginAddress);
   }
 
   @Test(

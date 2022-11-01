@@ -11,6 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import tron.chromeExtension.base.Base;
 import tron.chromeExtension.pages.MainPage;
+import tron.chromeExtension.utils.Helper;
 
 public class copyAccountAddress extends Base {
 
@@ -18,6 +19,7 @@ public class copyAccountAddress extends Base {
   public void before() throws Exception {
     setUpChromeDriver();
     loginAccount(chainNile);
+    Helper.switchAccount(testAccountOneIndex, loginAddress);
   }
 
   @Test(
