@@ -10,6 +10,7 @@ import tron.chromeExtension.pages.LockPage;
 import tron.chromeExtension.pages.LoginPage;
 import tron.chromeExtension.pages.MainPage;
 import tron.chromeExtension.pages.SendPage;
+import tron.chromeExtension.utils.Helper;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +20,7 @@ public class lockScreen extends Base {
   public void before() throws Exception {
     setUpChromeDriver();
     loginAccount(chainNile);
+    Helper.switchAccount(testAccountOneIndex, loginAddress);
   }
 
   @Test(
