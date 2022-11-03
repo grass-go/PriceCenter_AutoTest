@@ -125,6 +125,7 @@ public class Helper extends Base {
     waitingTime(5);
     String majorHandle = DRIVER.getWindowHandle();
     switchWindows(majorHandle);
+    Helper.waitingTime(5);
     if (flag) {
       click(mainPage.signature_btn);
     } else {
