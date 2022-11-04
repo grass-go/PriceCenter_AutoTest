@@ -20,6 +20,7 @@ public class queryToken extends Base {
   public void before() throws Exception {
     setUpChromeDriver();
     loginAccount(chainNile);
+    Helper.switchAccount(testAccountOneIndex, loginAddress);
   }
 
   @Test(
