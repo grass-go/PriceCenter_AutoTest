@@ -130,7 +130,7 @@ public class delAsset extends TronlinkBase {
         array.clear();
         String postStr="{\"TMSsn5sSP9u66dgzf2y63KaTmaLBPgJfj4\":1}";
         array.add(JSONObject.parse(postStr));
-        response = TronlinkApiList.v2accountList(params,array);
+        response = TronlinkApiList.v2accountList(params,array,null);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
@@ -224,7 +224,7 @@ public class delAsset extends TronlinkBase {
         array.clear();
         String postStr="{\"TMSsn5sSP9u66dgzf2y63KaTmaLBPgJfj4\":1}";
         array.add(JSONObject.parse(postStr));
-        response = TronlinkApiList.v2accountList(params,array);
+        response = TronlinkApiList.v2accountList(params,array,null);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
@@ -344,7 +344,7 @@ public class delAsset extends TronlinkBase {
         array.clear();
         String postStr="{\"TMSsn5sSP9u66dgzf2y63KaTmaLBPgJfj4\":1}";
         array.add(JSONObject.parse(postStr));
-        response = TronlinkApiList.v2accountList(params,array);
+        response = TronlinkApiList.v2accountList(params,array,null);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 

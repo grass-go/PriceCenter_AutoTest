@@ -308,6 +308,10 @@ public class GetSign extends TronlinkBase {
         ids.put("Android","0F46CA8D490936A851D688F9BED151200D45G");
         ids.put("iOSTest","RERTNJNVJKNKJGNDKJGJGF33G2G246H4H54H4");
         ids.put("iOS","6C848A38C0BDA1C71A22C9D5F5FD65845F886");
+        ids.put("Firefox","TUJNSHKT2HSRTK4FGS5SFGDF3GGGFLD4KHSHH");
+        ids.put("firefox-test","OIR3GNNAO4DGKAN5GAJKG6NAGNAK2GAKGN4AG");
+
+
         for (Map.Entry<String,String> kv:
                 ids.entrySet()) {
             if (kv.getKey().equalsIgnoreCase(sys.toLowerCase())) {

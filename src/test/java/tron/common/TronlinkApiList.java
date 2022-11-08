@@ -139,13 +139,19 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse multiTrxReword(HashMap<String, String> param) throws Exception {
+    public static HttpResponse multiTrxRewordNoSig(HashMap<String, String> param,HashMap<String, String> header) throws Exception {
         String requestUrl = HttpNode + "/api/wallet/multi/trx_record";
-        header.clear();
-        header.put("Lang", defaultLang);
-        response = createGetConnect(requestUrl,null,null,header);
+        response = createGetConnect(requestUrl,param,null,header);
         return response;
     }
+
+    public static HttpResponse multiTrxReword(HashMap<String, String> param,HashMap<String, String> header) throws Exception {
+        String curURI = "/api/wallet/multi/trx_record";
+        response = createGetConnectWithSignature(curURI,param,header,null);
+        return response;
+    }
+
+
 
     public static HttpResponse trc20InfoNoSig(HashMap<String, String> param, HashMap<String, String> header) throws Exception {
         String requestUrl = HttpNode + "/api/wallet/trc20_info";
@@ -165,9 +171,9 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse apiTransferTrx(HashMap<String, String> param) throws Exception {
+    public static HttpResponse apiTransferTrx(HashMap<String, String> param, HashMap<String, String> header) throws Exception {
         final String curURI = "/api/transfer/trx";
-        response = createGetConnectWithSignature(curURI,param,null,null);
+        response = createGetConnectWithSignature(curURI,param,header,null);
         return response;
     }
 
@@ -631,9 +637,15 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse multiTransaction(JSONObject body) {
+    public static HttpResponse multiTransactionNoSig(JSONObject body, HashMap<String, String> header) {
         String requestUrl = HttpNode + "/api/wallet/multi/transaction";
-        response = createPostConnect(requestUrl, null, body, null);
+        response = createPostConnect(requestUrl, null, body, header);
+        return response;
+    }
+
+    public static HttpResponse multiTransaction(JSONObject body,HashMap<String, String> caseParams, HashMap<String, String> caseHeader ) {
+        String curURI =  "/api/wallet/multi/transaction";
+        response = createPostConnectWithSignature(curURI, caseParams, caseHeader, body);
         return response;
     }
 
@@ -952,9 +964,9 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse v2accountList(Map<String, String> params, JSONArray object) {
+    public static HttpResponse v2accountList(Map<String, String> params, JSONArray object, Map<String, String> headers) {
         String curURI = "/api/wallet/v2/account/list";
-        response = createPostConnectWithSignature(curURI, params, null, object );
+        response = createPostConnectWithSignature(curURI, params, headers, object );
         return response;
     }
 
@@ -1127,6 +1139,39 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
     }
 
     public static Protocol.Transaction addTransactionSignWithPermissionId(Protocol.Transaction transaction,
+                                                                          String priKey, int permissionId, WalletGrpc.WalletBlockingStub blockingStubFull) {
+        Wallet.setAddressPreFixByte(ADD_PRE_FIX_BYTE_MAINNET);
+        ECKey temKey = null;
+        try {
+            BigInteger priK = new BigInteger(priKey, 16);
+            temKey = ECKey.fromPrivate(priK);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        //transaction = setPermissionId(transaction, permissionId);
+        long now = System.currentTimeMillis();
+        //Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder().setExpiration(now+86400000L);
+        Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder().setExpiration(now+120000);
+        //Protocol.Transaction.raw.Builder raw = transaction.getRawData().toBuilder();
+        Protocol.Transaction.Contract.Builder contract = raw.getContract(0).toBuilder()
+                .setPermissionId(permissionId);
+        raw.clearContract();
+        raw.addContract(contract);
+        transaction = transaction.toBuilder().setRawData(raw).build();
+
+        Protocol.Transaction.Builder transactionBuilderSigned = transaction.toBuilder();
+        byte[] hash = Sha256Hash.hash(CommonParameter.getInstance()
+                .isECKeyCryptoEngine(), transaction.getRawData().toByteArray());
+        ECKey ecKey = temKey;
+        ECKey.ECDSASignature signature = ecKey.sign(hash);
+        ByteString bsSign = ByteString.copyFrom(signature.toByteArray());
+        transactionBuilderSigned.addSignature(bsSign);
+        transaction = transactionBuilderSigned.build();
+        return transaction;
+    }
+
+    public static Protocol.Transaction addTransactionSignWithPermissionIdOld(Protocol.Transaction transaction,
             String priKey, int permissionId, WalletGrpc.WalletBlockingStub blockingStubFull) {
         Wallet.setAddressPreFixByte(ADD_PRE_FIX_BYTE_MAINNET);
         ECKey temKey = null;
@@ -1155,6 +1200,13 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         transaction = transactionBuilderSigned.build();
         return transaction;
     }
+    public static String generateRawdataHex(Protocol.Transaction transaction) {
+        String newHex = ByteArray.toHexString(transaction.getRawData().toByteArray());
+        return newHex;
+    }
+
+    //String newHex = ByteArray.toHexString(newTrx.getRawData().toByteArray());
+
 
     public static Protocol.Transaction triggerContract(byte[] contractAddress, String method,
             String argsStr, Boolean isHex, long callValue, long feeLimit, String tokenId, long tokenValue,

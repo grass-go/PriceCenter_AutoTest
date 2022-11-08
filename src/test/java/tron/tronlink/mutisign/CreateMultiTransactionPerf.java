@@ -266,7 +266,7 @@ public class CreateMultiTransactionPerf {
                 object.put("address",wqq158);
                 object.put("netType","main_net");
                 object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
-                res = TronlinkApiList.multiTransaction(object);
+                res = TronlinkApiList.multiTransactionNoSig(object,null);
                 Assert.assertEquals(200, res.getStatusLine().getStatusCode());
                 responseContent = TronlinkApiList.parseResponse2JsonObject(res);
                 Assert.assertEquals(0,responseContent.getIntValue("code"));
@@ -404,7 +404,7 @@ public class CreateMultiTransactionPerf {
         object.put("address",wqq158_2);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
-        res = TronlinkApiList.multiTransaction(object);
+        res = TronlinkApiList.multiTransactionNoSig(object,null);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
@@ -432,7 +432,7 @@ public class CreateMultiTransactionPerf {
         object.put("address",quince58);
         object.put("netType","shasta");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
-        res = TronlinkApiList.multiTransaction(object);
+        res = TronlinkApiList.multiTransactionNoSig(object,null);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
@@ -455,7 +455,7 @@ public class CreateMultiTransactionPerf {
         object.put("address",wqq158_2);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
-        res = TronlinkApiList.multiTransaction(object);
+        res = TronlinkApiList.multiTransactionNoSig(object,null);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
@@ -485,7 +485,7 @@ public class CreateMultiTransactionPerf {
         object.put("address",wqq158);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
-        res = TronlinkApiList.multiTransaction(object);
+        res = TronlinkApiList.multiTransactionNoSig(object,null);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
@@ -513,7 +513,7 @@ public class CreateMultiTransactionPerf {
 
 
 
-        res = TronlinkApiList.multiTransaction(object);
+        res = TronlinkApiList.multiTransactionNoSig(object,null);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));

@@ -113,9 +113,9 @@ public class api extends TronlinkServerHttpClient {
     return response;
   }
 
-  public static HttpResponse tronweb(HashMap<String,String> params){
+  public static HttpResponse tronweb(HashMap<String,String> params, HashMap<String,String> headers){
     final String curURI =  "/api/web/v1/tronweb";
-    response = createGetConnectWithSignature(curURI,params,null,null);
+    response = createGetConnectWithSignature(curURI,params,headers,null);
     Assert.assertEquals(200,response.getStatusLine().getStatusCode());
     return response;
   }
