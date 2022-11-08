@@ -57,6 +57,7 @@ public class CheckPriceWithTronscan extends priceBase {
                     || fTokenAddr.equals("TVgAYofpQku5G4zenXnvxhbZxpzzrk8WVK") || fTokenAddr.equals("TUmzcczaosRkmLLqCSAAuUL7Dsq4aGeyoL")
                     || fTokenAddr.equals("TSSMHYeV2uE9qYH95DqyoCuNCzEL1NvU3S") || fTokenAddr.equals("TSdqRcnAaMUQWRy4zRR8Pd3QuJuBKX9W55")
                     || fTokenAddr.equals("TGB1ZeuHVxyd72hzbmb8m9c9RpHedNA43J") || fTokenAddr.equals("TUKxxRkFi21d6KnqUi7aNsbA2So91xMDFG")
+                    || fTokenAddr.equals("TZ7EvoZdEet2P9E2DKf9CtKf6EAyFwRAS3") || fTokenAddr.equals("TBLQs7LqUYAgzYirNtaiX3ixnCKnhrVVCe")
              ) {
                 continue;
             }
