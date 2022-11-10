@@ -111,9 +111,6 @@ public class accountList {
         targetContent = exchangeArray.getJSONObject(0);
         //balance
         Assert.assertTrue(Double.valueOf(targetContent.get("balance").toString()) > 0);
-        //decimals
-        Integer decimals = Integer.valueOf(targetContent.get("decimals").toString());
-        Assert.assertTrue(decimals >= 0 && decimals <= 18);
         //name
         Assert.assertTrue(!targetContent.get("name").toString().isEmpty());
         //contract_address
@@ -260,7 +257,6 @@ public class accountList {
         TronscanApiList.printJsonContent(responseContent);
         Assert.assertTrue(Long.valueOf(responseContent.getString("total")) >= 0);
         //data object
-        Assert.assertTrue(responseContent.size() == 2);
         Assert.assertTrue(responseContent.containsKey("data"));
     }
 
