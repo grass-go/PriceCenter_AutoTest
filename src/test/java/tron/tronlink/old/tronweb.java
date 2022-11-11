@@ -93,7 +93,6 @@ public class tronweb extends TronlinkBase {
     Assert.assertEquals(accountActiveFeeParams.getString("dappBaseActiveFee"), "0.1");
     Assert.assertEquals(accountActiveFeeParams.getString("dappExtraActiveFee"),"0");
     Assert.assertEquals(accountActiveFeeParams.getString("dappFeeBandwidth"),"0.000010");*/
-
   }
 
 }

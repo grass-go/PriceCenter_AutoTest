@@ -642,6 +642,7 @@ public class TronlinkServerHttpClient {
         params.put("signature", cursig);
 
         String requestUrl = HttpNode + curURI;
+        log.info("requestUrl: "+requestUrl);
         response = createPostConnect(requestUrl, params, object, headers);
         return response;
     }

@@ -69,11 +69,12 @@ public class transferTrx {
   }
   @Test(enabled = true,description = "get only trx transaction")
   public void Test000getTrxTransfer() throws Exception {
-    param.put("address","TH48niZfbwHMyqZwEB8wmHfzcvR8ZzJKC6"); //sophia's address
+    param.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t"); //sophia's address
     param.put("limit","20");
     param.put("start","0");
     param.put("direction","0"); //0：send and accept
     param.put("reverse","true");
+    param.put("filter_small","true");
     HashMap<String, String> header = new HashMap<>();
     header.put("Version","4.14.0");
     header.put("System", "iOS");

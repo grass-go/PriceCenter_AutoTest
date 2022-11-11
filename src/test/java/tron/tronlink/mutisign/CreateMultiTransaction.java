@@ -21,6 +21,7 @@ import org.tron.core.services.http.JsonFormat;
 import org.tron.protos.Protocol;
 import org.tron.protos.contract.*;
 import tron.common.TronlinkApiList;
+import tron.tronlink.base.TronlinkBase;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,7 +31,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class CreateMultiTransaction {
+public class CreateMultiTransaction extends TronlinkBase {
     private org.tron.api.WalletGrpc.WalletBlockingStub blockingStubFull = null;
     private String fullnode = "47.252.19.181:50051";  //线上
     private ManagedChannel channelFull = null;
@@ -72,7 +73,7 @@ public class CreateMultiTransaction {
 
     @Test(enabled = true, description = "send coins to perf users")
     public void sendCoinToPerfUsers() {
-        File file = new File("/Users/wqq/Perf/perf-msg/data/AccountActive.txt");
+        File file = new File("/Users/wqq/Text/test_ts_v4.11.0/accounts_1300.txt");
         String fromAddress = "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t";
         byte[] fromAddress_byte = Commons.decode58Check(fromAddress);
         String fromKey = "b47e686119f2236f38cd0e8a4fe20f8a7fc5cb4284d36131f447c63857e3dac9";
@@ -87,7 +88,7 @@ public class CreateMultiTransaction {
             while ((tempString = reader.readLine()) != null) {
                 // 显示行号
                 System.out.println("line " + line + ": " + tempString);
-                String[] accounts = tempString.split("\t");
+                String[] accounts = tempString.split("\n");
                 String curAddress = accounts[0];
                 byte[] curAddress_byte = Commons.decode58Check(curAddress);
 
@@ -690,15 +691,15 @@ public class CreateMultiTransaction {
     @Test(enabled = true, description = "test /api/wallet/multi/transaction")
     public void TestPostTransactionHighVersionWithNoSig() {
         List<String> testSystems = new ArrayList<>();
-        /*testSystems.add("chrome-extension-test");
+        testSystems.add("chrome-extension-test");
         testSystems.add("chrome-extension");
         testSystems.add("Chrome");
         testSystems.add("Firefox");
-        testSystems.add("firefox-test");*/
-        //testSystems.add("Android");
-        //testSystems.add("AndroidTest");
+        testSystems.add("firefox-test");
+        testSystems.add("Android");
+        testSystems.add("AndroidTest");
         testSystems.add("iOS");
-        //testSystems.add("iOSTest");
+        testSystems.add("iOSTest");
 
         for (String system : testSystems) {
         //for(int i=0; i <100; i++)  {
@@ -707,7 +708,7 @@ public class CreateMultiTransaction {
             log.info("-----raw transaction:  " + JsonFormat.printToString(transaction));
 
             Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                    transaction, wqq1key, 6, blockingStubFull);
+                    transaction, wqq1key, 3, blockingStubFull);
             log.info("-----select active group and add one sign and expired time: \n" + JsonFormat.printToString(transaction1));
 
             Object transaction_json = JSONObject.parse(JsonFormat.printToString(transaction1));
@@ -726,7 +727,7 @@ public class CreateMultiTransaction {
 
             header.put("System", system);
             header.put("Version", "4.11.0");
-            param.put("address","412CBAEBC9F5FAB6D610549F22406FFB8B9A04AE50");
+            param.put("address","TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo");
             res = TronlinkApiList.multiTransaction(object,param, header);
             Assert.assertEquals(200, res.getStatusLine().getStatusCode());
             responseContent = TronlinkApiList.parseResponse2JsonObject(res);

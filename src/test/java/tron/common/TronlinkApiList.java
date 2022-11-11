@@ -649,6 +649,12 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
+    public static HttpResponse multiTransactionNoSig(JSONObject body,HashMap<String, String> caseParams, HashMap<String, String> caseHeader ) {
+        String requestUrl =  HttpNode + "/api/wallet/multi/transaction";
+        response = createPostConnect(requestUrl, caseParams,body,caseHeader);
+        return response;
+    }
+
     public static Boolean verificationResult(HttpResponse response) {
         if (response.getStatusLine().getStatusCode() != 200) {
             return false;
@@ -699,9 +705,9 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse V2UnfollowAssetList(Map<String, String> params) {
+    public static HttpResponse V2UnfollowAssetList(Map<String, String> params,Map<String, String> headers) {
         String curUri = "/api/wallet/v2/unfollowAssetList";
-        response = createGetConnectWithSignature(curUri, params,null,null);
+        response = createGetConnectWithSignature(curUri, params,headers,null);
         return response;
     }
 

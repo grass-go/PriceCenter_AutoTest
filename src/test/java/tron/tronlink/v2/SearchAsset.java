@@ -37,7 +37,7 @@ public class SearchAsset extends TronlinkBase {
   public void searchAssetList01(){
     params.clear();
     params.put("address",addressNewAsset41);
-    params.put("keyWord","TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");
+    params.put("keyWord","j");
     params.put("page","1");
     params.put("count","10");
 
@@ -409,6 +409,24 @@ public class SearchAsset extends TronlinkBase {
       national = JSONPath.eval(responseContent, "$..national[0]");
       Assert.assertEquals("", national);
     }
+  }
+
+
+  @Test(description = "")
+  public void searchManual() {
+      params.clear();
+      params.put("address",addressNewAsset41);
+      params.put("version","v2");
+      params.put("keyWord","j");
+      response = TronlinkApiList.v2SearchAsset(params);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+
+      params.put("version","v3");
+      params.put("keyWord","S-");
+      response = TronlinkApiList.v2SearchAsset(params);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+
+
   }
 
 }

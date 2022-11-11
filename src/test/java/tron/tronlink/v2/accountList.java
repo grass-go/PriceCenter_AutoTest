@@ -20,19 +20,20 @@ public class accountList extends TronlinkBase {
 
     @Test(enabled = true, description = "")
     public void testaccountListV2() throws Exception {
-
         headers.put("System","Android");
         headers.put("Version","4.10.0");
 
         params.put("address",quince_B58);
 
         array.clear();
-        String postStr = "{\"TMSsn5sSP9u66dgzf2y63KaTmaLBPgJfj4\":1}";
-        String postStr2 = "{\"TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t\":1}";
-        String postStr3 = "{\"TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo\":1}";
+        String postStr = "{\"TTZLtS7QUiCG83kcqFA1jw1AVJC8LvszdR\":1}";
+        String postStr2 = "{\"TDGSR64oU4QDpViKfdwawSiqwyqpUB6JUD\":1}";
+        String postStr3 = "{\"TNTPAAYqwunio7G5M1wHUfBB6hPHx16nqY\":1}";
+        String postStr4 = "{\"TPdNRmFGZ9YbNc2PHfpUEqhr3KbpWnBeba\":1}";
         array.add(JSONObject.parse(postStr));
         array.add(JSONObject.parse(postStr2));
         array.add(JSONObject.parse(postStr3));
+        array.add(JSONObject.parse(postStr4));
         response = TronlinkApiList.v2accountList(params, array,null);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);

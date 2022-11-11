@@ -22,7 +22,8 @@ public class multiTrxRecord {
 
   @Test(enabled = true, description = "with must needed parameter: low version no sig")
   public void multiTrxRecord0LowVersionWithNoSig() throws Exception {
-    param.put("address", "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
+    param.put("address", "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo");
+    //param.put("address", "41e7d71e72ea48de9144dc2450e076415af0ea745f");
     param.put("netType", "main_net");
     param.put("start", "0");
     param.put("limit", "20");
@@ -31,21 +32,20 @@ public class multiTrxRecord {
     response = TronlinkApiList.multiTrxRewordNoSig(param,null);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-
   }
+
 
   @Test(enabled = true, description = "with must needed parameter: high version no sig")
   public void multiTrxRecord1HighVersionWithNoSig() throws Exception {
     List<String> testSystems = new ArrayList<>();
-    /*");
     testSystems.add("chrome-extension");
     testSystems.add("Chrome");
     testSystems.add("Firefox");
-    testSystems.add("firefox-test");*/
-    /*testSystems.add("Android");
+    testSystems.add("firefox-test");
+    testSystems.add("Android");
     testSystems.add("AndroidTest");
     testSystems.add("iOS");
-    testSystems.add("iOSTest");*/
+    testSystems.add("iOSTest");
     testSystems.add("chrome-extension-test");
 
     for (String system : testSystems) {
@@ -55,7 +55,7 @@ public class multiTrxRecord {
       param.put("start", "0");
       param.put("limit", "20");
       header.put("System", system);
-      header.put("Version", "4.0.0");
+      header.put("Version", "4.11.0");
       response = TronlinkApiList.multiTrxRewordNoSig(param, header);
       Assert.assertEquals(200, response.getStatusLine().getStatusCode());
       responseContent = TronlinkApiList.parseResponse2JsonObject(response);
@@ -67,20 +67,21 @@ public class multiTrxRecord {
   @Test(enabled = true, description = "with must needed parameter: high version with sig")
   public void multiTrxRecord1() throws Exception {
     List<String> testSystems = new ArrayList<>();
-    /*testSystems.add("chrome-extension-test");
+    testSystems.add("chrome-extension-test");
     testSystems.add("chrome-extension");
     testSystems.add("Chrome");
     testSystems.add("Firefox");
     testSystems.add("firefox-test");
     testSystems.add("Android");
     testSystems.add("AndroidTest");
-    testSystems.add("iOS");*/
+    testSystems.add("iOS");
     testSystems.add("iOSTest");
 
     for (String system : testSystems) {
-      param.put("address", "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
+      //param.put("address", "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
+      param.put("address","TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo");
       param.put("netType", "main_net");
-      param.put("state", "3");
+      param.put("state", "45");
       param.put("isSign", "all");
       param.put("start", "0");
       param.put("limit", "20");

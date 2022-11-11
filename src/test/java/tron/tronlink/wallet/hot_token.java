@@ -75,18 +75,7 @@ public class hot_token extends TronlinkBase {
     response = TronlinkApiList.hot_tokenV2(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-    JSONArray tokenJsonArray = responseContent.getJSONArray("data");
-    for (Object json:tokenJsonArray) {
-      JSONObject curtoken = (JSONObject) JSON.toJSON(json);
-      String shortName = curtoken.getString("shortName");
-      String national = curtoken.getString("national");
-      log.info("curToken:" + curtoken.toString());
-      if (shortName.equals("USDT") || shortName.equals("TUSD") || shortName.equals("USDD") || shortName.equals("JST") || shortName.equals("NFT") || shortName.equals("BTT")){
-        Assert.assertEquals("DM", national);
-      } else{
-        Assert.assertEquals("", national);
-      }
-    }
+
   }
 
 }

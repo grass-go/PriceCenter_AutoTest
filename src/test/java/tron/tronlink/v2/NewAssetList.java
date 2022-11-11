@@ -31,29 +31,15 @@ public class NewAssetList extends TronlinkBase {
   Map<String, String> params = new HashMap<>();
 
   //因为新资产不稳定的bug ONLIVE-318，所以enabled=false
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void newAssetList01(){
     params.clear();
-    params.put("address",addressNewAsset41);
-
+    //params.put("address","TLipJxwgDbn7FaQCnECxiYdxFTBhshLiW3");
+    params.put("address","TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo");
     response = TronlinkApiList.v2NewAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-    Assert.assertTrue(responseContent.containsKey("code"));
-    Assert.assertTrue(responseContent.containsKey("message"));
-    Assert.assertTrue(responseContent.containsKey("data"));
-    dataContent = responseContent.getJSONObject("data");
-    int count =dataContent.getIntValue("count");
-    Assert.assertEquals(1,count);
-    array = dataContent.getJSONArray("token");
-    Assert.assertEquals(1,array.size());
-    object = array.getJSONObject(0);
-    int type=object.getIntValue("type");
-    Assert.assertEquals(1,type);
-    Assert.assertEquals("1002962",object.getString("id"));
-    Assert.assertTrue(object.getLongValue("balance")>0);
-    Assert.assertFalse(object.getBooleanValue("isInAssets"));
-    Assert.assertEquals(0,object.getIntValue("recommandSortId"));
+
 
   }
 

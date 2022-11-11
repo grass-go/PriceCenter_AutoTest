@@ -1,10 +1,6 @@
 package tron.tronlink.v2;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -44,7 +40,7 @@ public class unfollowAssetList extends TronlinkBase {
 
         // 查询
         Map<String, String> params = sig.GenerateParams(followAsset, "/api/wallet/v2/unfollowAssetList", "GET");
-        response = TronlinkApiList.V2UnfollowAssetList(params);
+        response = TronlinkApiList.V2UnfollowAssetList(params,null);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         // 断言
@@ -63,7 +59,7 @@ public class unfollowAssetList extends TronlinkBase {
         org.testng.Assert.assertEquals(true, follow);
 
         Map<String, String> params = sig.GenerateParams(followAsset, "/api/wallet/v2/unfollowAssetList", "GET");
-        response = TronlinkApiList.V2UnfollowAssetList(params);
+        response = TronlinkApiList.V2UnfollowAssetList(params,null);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         assertNotFound(followToken);
@@ -122,7 +118,7 @@ public class unfollowAssetList extends TronlinkBase {
 
         // 查询
         Map<String, String> params = sig.GenerateParams(followAsset, "/api/wallet/v2/unfollowAssetList", "GET");
-        response = TronlinkApiList.V2UnfollowAssetList(params);
+        response = TronlinkApiList.V2UnfollowAssetList(params,null);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         // 断言
@@ -140,7 +136,7 @@ public class unfollowAssetList extends TronlinkBase {
 
         // 查询
         Map<String, String> params = sig.GenerateParams(followAsset, "/api/wallet/v2/unfollowAssetList", "GET");
-        response = TronlinkApiList.V2UnfollowAssetList(params);
+        response = TronlinkApiList.V2UnfollowAssetList(params,null);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         // 断言
@@ -163,7 +159,7 @@ public class unfollowAssetList extends TronlinkBase {
 
         // 查询
         Map<String, String> params = sig.GenerateParams(followAsset, "/api/wallet/v2/unfollowAssetList", "GET");
-        response = TronlinkApiList.V2UnfollowAssetList(params);
+        response = TronlinkApiList.V2UnfollowAssetList(params,null);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         // 断言
@@ -188,7 +184,7 @@ public class unfollowAssetList extends TronlinkBase {
 
         // 查询
         Map<String, String> params = sig.GenerateParams(followAsset, "/api/wallet/v2/unfollowAssetList", "GET");
-        response = TronlinkApiList.V2UnfollowAssetList(params);
+        response = TronlinkApiList.V2UnfollowAssetList(params,null);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         // 断言
@@ -201,7 +197,7 @@ public class unfollowAssetList extends TronlinkBase {
     @Test(enabled = true, description = "排序验证：trxCount > 余额 > 简称忽略大小写排序")
     public void unfollowAssetList05() {
         Map<String, String> params = sig.GenerateParams(followAsset, "/api/wallet/v2/unfollowAssetList", "GET");
-        response = TronlinkApiList.V2UnfollowAssetList(params);
+        response = TronlinkApiList.V2UnfollowAssetList(params,null);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         String rspStr = TronlinkApiList.parseResponse2String(response);
         UnfollowAssertListRsp rsp = JSONObject.parseObject(rspStr, UnfollowAssertListRsp.class);
@@ -278,5 +274,20 @@ public class unfollowAssetList extends TronlinkBase {
         log.info("restore 1002000, result = ", follow);
 
     }
+
+    @Test(enabled = true, description = "有余额有价值的币，取消关注,可以查到")
+    public void unfollowAssetListManual() throws Exception {
+        // 查询
+        Map<String, String> params = new HashMap<>();
+        Map<String, String> headers = new HashMap<>();
+        params.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
+        response = TronlinkApiList.V2UnfollowAssetList(params,headers);
+        Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+        // 断言
+
+    }
+
+
 
 }

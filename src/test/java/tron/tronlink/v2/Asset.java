@@ -26,21 +26,14 @@ public class Asset extends TronlinkBase {
 
 
   @Test(enabled = true)
-  public void asset01(){
+  public void asset01Manual(){
     params.put("address",addressNewAsset41);
-    params.put("tokenAddress","TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");
+    params.put("tokenAddress","TUpMhErZL2fhh4sVNULAbNKLokS4GjC1F4");
     params.put("tokenType","2");
     response = TronlinkApiList.v2Asset(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-    Assert.assertTrue(responseContent.containsKey("code"));
-    Assert.assertTrue(responseContent.containsKey("message"));
-    Assert.assertTrue(responseContent.containsKey("data"));
-    dataContent = responseContent.getJSONObject("data");
-    Assert.assertEquals("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",dataContent.getString("contractAddress"));
-    Assert.assertEquals(2,dataContent.getIntValue("type"));
-    Assert.assertEquals(0,dataContent.getIntValue("top"));
-    Assert.assertEquals(0,dataContent.getIntValue("recommandSortId"));
+
   }
 
   @Test(enabled = true, description = "test token add national field")
