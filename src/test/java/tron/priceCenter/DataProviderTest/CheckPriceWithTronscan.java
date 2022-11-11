@@ -115,11 +115,13 @@ public class CheckPriceWithTronscan extends priceBase {
                         || fTokenAddr.equals("TKRYQndqTdnU4Bg17gY39rooyK6CzM3ush") || fTokenAddr.equals("TA2KuSXWLGkbuiBcj3buCXygY4HctZyLsq")
                         || fTokenAddr.equals("TCt4pND9amuUJ2s4WQHbM5cfsRwJA1GC4i") || fTokenAddr.equals("TFQG8ctrZJdiGokXZ2Jznd9M9Vv9nNhY3N")
                         || fTokenAddr.equals("TAiSZ9wQ49jutDCCovHaAqs7KpExuJyqph") || fTokenAddr.equals("TN7zQd2oCCguSQykZ437tZzLEaGJ7EGyha")
-                        || fTokenAddr.equals("TKRYQndqTdnU4Bg17gY39rooyK6CzM3ush") || fTokenAddr.equals("TFQG8ctrZJdiGokXZ2Jznd9M9Vv9nNhY3N")
+                        || fTokenAddr.equals("TPQB8bnyVWsmY3hYXwBha83mvMe5NdVdWQ")
                 ){
                     Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(scanPrice.toString(), centerPrice, "0.2"));
-                } else if (fTokenAddr.equals("TQX9Kh2tLgBSZQ5cHbYMrPM3yxF9tGprj3")) {
-                    Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(scanPrice.toString(), centerPrice, "0.3"));
+                } else if (fTokenAddr.equals("TQX9Kh2tLgBSZQ5cHbYMrPM3yxF9tGprj3") || fTokenAddr.equals("TKRYQndqTdnU4Bg17gY39rooyK6CzM3ush")
+                        || fTokenAddr.equals("TFQG8ctrZJdiGokXZ2Jznd9M9Vv9nNhY3N")
+                ) {
+                    Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(scanPrice.toString(), centerPrice, "0.35"));
                 }else {
                     Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(scanPrice.toString(), centerPrice, "0.1"));
                 }
