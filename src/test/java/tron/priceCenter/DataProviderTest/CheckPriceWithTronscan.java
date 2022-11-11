@@ -53,11 +53,16 @@ public class CheckPriceWithTronscan extends priceBase {
                 continue;
             }
             //exclude some token has the same symbol with others in CMC.
-            if(fTokenAddr.equals("TL5BvThAMg9QBCvbgXu7HwHh8HqGdAq4DD") || fTokenAddr.equals("TDFRfJLThnLXgtEBBBmA2LGwz3Ex9dAMCE")
-                    || fTokenAddr.equals("TVgAYofpQku5G4zenXnvxhbZxpzzrk8WVK") || fTokenAddr.equals("TUmzcczaosRkmLLqCSAAuUL7Dsq4aGeyoL")
-                    || fTokenAddr.equals("TSSMHYeV2uE9qYH95DqyoCuNCzEL1NvU3S") || fTokenAddr.equals("TSdqRcnAaMUQWRy4zRR8Pd3QuJuBKX9W55")
+            //TTUwzoZAK6rpDjpSh8B2XFTnxGfbMLHJaq， tronscan从CMC获取的价格有延迟。CMC价格有突落，tronscan在半个小时内没有回落。
+            //TSdqRcnAaMUQWRy4zRR8Pd3QuJuBKX9W55 tronscan与CMC本身有差距，price-center与cmc一致。
+            //TGB1ZeuHVxyd72hzbmb8m9c9RpHedNA43J 数值太小，导致tronscan给出约值。0.000000014980115310TRX
+            //TUKxxRkFi21d6KnqUi7aNsbA2So91xMDFG tronscan与CMC本身有差距，price-center与cmc一致。
+            //TLvDJcvKJDi3QuHgFbJC6SeTj3UacmtQU3, tronscan从CMC获取，price-centre从swap获取。
+
+
+            if(fTokenAddr.equals("TTUwzoZAK6rpDjpSh8B2XFTnxGfbMLHJaq") || fTokenAddr.equals("TSdqRcnAaMUQWRy4zRR8Pd3QuJuBKX9W55")
                     || fTokenAddr.equals("TGB1ZeuHVxyd72hzbmb8m9c9RpHedNA43J") || fTokenAddr.equals("TUKxxRkFi21d6KnqUi7aNsbA2So91xMDFG")
-                    || fTokenAddr.equals("TZ7EvoZdEet2P9E2DKf9CtKf6EAyFwRAS3") || fTokenAddr.equals("TBLQs7LqUYAgzYirNtaiX3ixnCKnhrVVCe")
+                    || fTokenAddr.equals("TLvDJcvKJDi3QuHgFbJC6SeTj3UacmtQU3")
              ) {
                 continue;
             }
@@ -99,10 +104,22 @@ public class CheckPriceWithTronscan extends priceBase {
             if (scanPrice==null){
                 log.info("Tronscan has no price!!");
             }else {
+                //TKRYQndqTdnU4Bg17gY39rooyK6CzM3ush 没问题，与cmc一致
+                //TA2KuSXWLGkbuiBcj3buCXygY4HctZyLsq 没问题，与cmc一致
+                // TCt4pND9amuUJ2s4WQHbM5cfsRwJA1GC4i 没问题，与cmc一致
+                // TFQG8ctrZJdiGokXZ2Jznd9M9Vv9nNhY3N 没问题，与cmc一致
+                // TAiSZ9wQ49jutDCCovHaAqs7KpExuJyqph 没问题，与cmc一致
+                // TQX9Kh2tLgBSZQ5cHbYMrPM3yxF9tGprj3 没问题，与cmc一致
                 log.info(" scanPrice:" + scanPrice.toString() + "centerPrice:" + centerPrice);
-                if (fTokenAddr.equals("TBLQs7LqUYAgzYirNtaiX3ixnCKnhrVVCe") || fTokenAddr.equals("TNoUWaZgSNia49qShdzB5VdaNF89it6hxf")
-                        || fTokenAddr.equals("TFQG8ctrZJdiGokXZ2Jznd9M9Vv9nNhY3N")){
+                if (fTokenAddr.equals("TNoUWaZgSNia49qShdzB5VdaNF89it6hxf") || fTokenAddr.equals("TFQG8ctrZJdiGokXZ2Jznd9M9Vv9nNhY3N")
+                        || fTokenAddr.equals("TKRYQndqTdnU4Bg17gY39rooyK6CzM3ush") || fTokenAddr.equals("TA2KuSXWLGkbuiBcj3buCXygY4HctZyLsq")
+                        || fTokenAddr.equals("TCt4pND9amuUJ2s4WQHbM5cfsRwJA1GC4i") || fTokenAddr.equals("TFQG8ctrZJdiGokXZ2Jznd9M9Vv9nNhY3N")
+                        || fTokenAddr.equals("TAiSZ9wQ49jutDCCovHaAqs7KpExuJyqph") || fTokenAddr.equals("TN7zQd2oCCguSQykZ437tZzLEaGJ7EGyha")
+                        || fTokenAddr.equals("TKRYQndqTdnU4Bg17gY39rooyK6CzM3ush") || fTokenAddr.equals("TFQG8ctrZJdiGokXZ2Jznd9M9Vv9nNhY3N")
+                ){
                     Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(scanPrice.toString(), centerPrice, "0.2"));
+                } else if (fTokenAddr.equals("TQX9Kh2tLgBSZQ5cHbYMrPM3yxF9tGprj3")) {
+                    Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(scanPrice.toString(), centerPrice, "0.3"));
                 }else {
                     Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(scanPrice.toString(), centerPrice, "0.1"));
                 }
