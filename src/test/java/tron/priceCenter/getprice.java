@@ -68,7 +68,7 @@ public class getprice {
         Object jtrxPrice = JSONPath.eval(responseContent, "$..data.JTRX.quote.USD.price[0]");
         log.info("Test005CompareTrxPriceWithCMC: expJTRXPrice: "+jtrxPrice.toString());
         String expJTRXPrice = PriceCenterApiList.getZoomInValue(trxPrice,"100");
-        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(expJTRXPrice, jtrxPrice.toString(),"0.02"));
+        Assert.assertTrue(PriceCenterApiList.CompareGapInGivenTolerance(expJTRXPrice, jtrxPrice.toString(),"0.03"));
     }
 
 
