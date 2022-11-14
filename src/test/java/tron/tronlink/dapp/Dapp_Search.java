@@ -46,7 +46,7 @@ public class Dapp_Search extends TronlinkBase {
     Assert.assertTrue(responseArrayContent.size() >= 0);
   }
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void dapp_searchV3(){
     Map<String, String> header = new HashMap<>();
     header.put("System","iOS");
