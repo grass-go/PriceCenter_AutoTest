@@ -349,6 +349,7 @@ public class Base {
     if (address.equals(accountAddress)) {
       return true;
     }
+    log("Actual address is: " + address);
     return false;
   }
 
