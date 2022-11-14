@@ -79,6 +79,7 @@ public class Helper extends Base {
           // click(tronScanPage.token_list.get(nameOrTokenIdOrTokenAddress));
           click(tronScanPage.token_searched);
           click(tronScanPage.collection_box);
+          waitingTime();
           click(tronScanPage.trc721Token_btn);
           break;
         } catch (Exception e) {
