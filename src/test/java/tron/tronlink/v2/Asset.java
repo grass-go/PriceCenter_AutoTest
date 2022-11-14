@@ -64,7 +64,7 @@ public class Asset extends TronlinkBase {
     }
   }
 
-  @Test(enabled = true, description = "test token add national field")
+  @Test(enabled = true, description = "test token add national field and defiType=0")
   public void asset02NonNational(){
     List<String> tokenList = new ArrayList<>();
     tokenList.add("TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR");  //WTRX
@@ -81,6 +81,50 @@ public class Asset extends TronlinkBase {
       responseContent = TronlinkApiList.parseResponse2JsonObject(response);
       Object national = JSONPath.eval(responseContent,"$..national[0]");
       Assert.assertEquals("", national);
+      //v4.11.0
+      /*Object defiType = JSONPath.eval(responseContent,"$..defiType[0]");
+      Assert.assertEquals("0", defiType.toString());*/
+
+    }
+  }
+  //v4.11.0
+  @Test(enabled = false, description = "test jtoken defiType=1")
+  public void asset02jTokenDefiType(){
+    List<String> tokenList = new ArrayList<>();
+    tokenList.add("TE2RzoSV3wFK99w6J9UnnZ4vLfXYoxvRwP");  //jTRX
+    tokenList.add("TFpPyDCKvNFgos3g3WVsAqMrdqhB81JXHE");  //jNFT
+    tokenList.add("TRg6MnpsFXc82ymUPgf5qbj59ibxiEDWvv");  //jWin
+    tokenList.add("TWQhCXaWz4eHK4Kd1ErSDHjMFPoPc9czts");  //jJST
+    tokenList.add("TUY54PVeH6WCcYCd6ZXXoBDsHytN9V5PXt");  //jWBTT
+
+    for (String token:tokenList){
+      params.put("address",addressNewAsset41);
+      params.put("tokenAddress",token);
+      params.put("tokenType","2");
+      response = TronlinkApiList.v2Asset(params);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+      Object defiType = JSONPath.eval(responseContent,"$..defiType[0]");
+      Assert.assertEquals("1", defiType.toString());
+    }
+  }
+  //v4.11.0
+  @Test(enabled = false, description = "test lp token defiType=2")
+  public void asset02LPTokenDefiType(){
+    List<String> tokenList = new ArrayList<>();
+    tokenList.add("TQn9Y2khEsLJW1ChVWFMSMeRDow5KcbLSE");  //S-USDT-TRX
+    tokenList.add("TUEYcyPAqc4hTg1fSuBCPc18vGWcJDECVw");  //S-SUNOLD-TRX
+    tokenList.add("TM8WFPUimbkZuTfV7SL1ZQ9JFUoYPotViW");  //S-POSCHE-TRX
+    tokenList.add("TYN6Wh11maRfzgG7n5B6nM5VW1jfGs9chu");  //S-WIN-TRX
+    tokenList.add("TY69bLD2CWAHGTWKokr1hwWcVJLF9j6g45");  //S-HX-TRX
+
+    for (String token:tokenList){
+      params.put("address",addressNewAsset41);
+      params.put("tokenAddress",token);
+      params.put("tokenType","2");
+      response = TronlinkApiList.v2Asset(params);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+      Object defiType = JSONPath.eval(responseContent,"$..defiType[0]");
+      Assert.assertEquals("2", defiType.toString());
     }
   }
 

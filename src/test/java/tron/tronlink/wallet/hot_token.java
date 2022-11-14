@@ -68,8 +68,8 @@ public class hot_token extends TronlinkBase {
     Assert.assertTrue(jsonObject.containsKey("priceUSD"));
   }
 
-  @Test(enabled = true, description = "hot_token national token with nationa field=DM")
-  public void hot_token_national_file(){
+  @Test(enabled = true, description = "hot_token national token with nationa field=DM and defiType all is 0")
+  public void hot_token_national_defiType_field(){
     HashMap<String, String> params = new HashMap<>();
     params.put("address",quince_B58);
     response = TronlinkApiList.hot_tokenV2(params);
@@ -86,6 +86,9 @@ public class hot_token extends TronlinkBase {
       } else{
         Assert.assertEquals("", national);
       }
+      //v4.11.0
+      /*int defiType = curtoken.getIntValue("defiType");
+      Assert.assertEquals(0, defiType);*/
     }
   }
 

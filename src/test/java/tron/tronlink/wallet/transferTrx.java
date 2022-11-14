@@ -3,6 +3,7 @@ package tron.tronlink.wallet;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
@@ -10,6 +11,7 @@ import tron.common.TronlinkApiList;
 
 import java.util.HashMap;
 
+@Slf4j
 public class transferTrx {
   private JSONObject responseContent;
   private JSONArray responseArrayContent;
@@ -100,4 +102,31 @@ public class transferTrx {
       Assert.assertTrue(jsonObject.containsKey("direction"));
     }
   }
+  //v4.11.0
+  @Test(enabled = false,description = "add filter_small parameter, needs start%limit=0, test account is one prod account with so many small trx transaction.")
+  public void Test000getTrxTransfer_FilterSmall() throws Exception {
+    param.put("address","TBA6CypYJizwA9XdC7Ubgc5F1bxrQ7SqPt"); //sophia's address
+    param.put("limit","20");
+    param.put("start","0");
+    param.put("direction","0"); //0：send and accept
+    param.put("reverse","true");
+    param.put("filter_small","true");
+    response = TronlinkApiList.apiTransferTrx(param);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    org.testng.Assert.assertNotEquals(responseContent, null);
+    responseArrayContent = responseContent.getJSONArray("data");
+    Assert.assertNotEquals( null,responseArrayContent);
+
+    //data object
+    for (Object json:responseArrayContent) {
+      JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
+      Assert.assertTrue(jsonObject.containsKey("amount"));
+      String amount = jsonObject.getString("amount");
+      Long amount_int = Long.parseLong(amount);
+      log.info("amount:"+amount);
+      Assert.assertTrue(amount_int>=100000);
+    }
+  }
+
 }

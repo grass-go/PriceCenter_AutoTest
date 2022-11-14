@@ -99,8 +99,8 @@ public class AssetList extends TronlinkBase {
     Assert.assertTrue(usdtflag > 0);
   }
 
-  //v4.2.1 old user the first token is TRX. Others order by trxCount.
-  @Test(enabled = false)
+  //v4.2.1 old user the first token is TRX. second token is USDD, Others order by trxCount.
+  @Test(enabled = true)
   public void assetList03() {
 
     params.clear();
@@ -121,7 +121,12 @@ public class AssetList extends TronlinkBase {
     Assert.assertEquals(0,tokenArray.getJSONObject(0).getIntValue("top"));
     Assert.assertEquals("",tokenArray.getJSONObject(0).getString ("name"));
 
-    for (int j = 1; j < count-1; j++) {
+    Assert.assertEquals(2,tokenArray.getJSONObject(1).getIntValue("type"));
+    Assert.assertEquals(2,tokenArray.getJSONObject(1).getIntValue("top"));
+    Assert.assertEquals("Decentralized USD",tokenArray.getJSONObject(1).getString ("name"));
+
+
+    for (int j = 2; j < count-1; j++) {
       BigDecimal curTRXCount = tokenArray.getJSONObject(j).getBigDecimal("trxCount");
       BigDecimal nextTRXCount = tokenArray.getJSONObject(j+1).getBigDecimal("trxCount");
       log.info("curTRXCount: "+curTRXCount.toString()+"    nextTRXCount: "+nextTRXCount.toString());
@@ -131,11 +136,28 @@ public class AssetList extends TronlinkBase {
       if (tokenArray.getJSONObject(j).getString("contractAddress").equals("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"))
       {
         Assert.assertEquals(1,tokenArray.getJSONObject(j).getIntValue("recommandSortId"));
+      }else if (tokenArray.getJSONObject(j).getString("id").equals("1002000"))
+      {
+        Assert.assertEquals(0,tokenArray.getJSONObject(j).getIntValue("recommandSortId"));
+      }else if (tokenArray.getJSONObject(j).getString("contractAddress").equals("TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9"))
+      {
+        Assert.assertEquals(2,tokenArray.getJSONObject(j).getIntValue("recommandSortId"));
       }
       else{
         log.info("current contractAddress is:"+tokenArray.getJSONObject(j).getString("contractAddress"));
         Assert.assertEquals(0,tokenArray.getJSONObject(j).getIntValue("recommandSortId"));
       }
+
+      //v4.11.0
+      /*if (tokenArray.getJSONObject(j).getString("defiType").equals("1"))
+      {
+        Assert.assertEquals(0,tokenArray.getJSONObject(j).getString("shortName").indexOf("j"));
+      }
+      if (tokenArray.getJSONObject(j).getString("defiType").equals("2"))
+      {
+        Assert.assertEquals(0,tokenArray.getJSONObject(j).getString("shortName").indexOf("S-"));
+      }*/
+
     }
   }
 

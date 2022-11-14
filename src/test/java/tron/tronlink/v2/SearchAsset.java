@@ -385,7 +385,7 @@ public class SearchAsset extends TronlinkBase {
     }
   }
 
-  @Test(description = "搜索增加national字段")
+  @Test(description = "搜索增加national字段,defiType字段")
   public void searchNonNational() {
     List<String> tokenList = new ArrayList<>();
     tokenList.add("TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR");  //WTRX
@@ -403,11 +403,50 @@ public class SearchAsset extends TronlinkBase {
       responseContent = TronlinkApiList.parseResponse2JsonObject(response);
       Object national = JSONPath.eval(responseContent, "$..national[0]");
       Assert.assertEquals("", national);
+      //v4.11.0
+      /*Object defiType = JSONPath.eval(responseContent, "$..data.token[0].defiType");
+      Assert.assertEquals("0", defiType.toString());*/
       params.put("version","v3");
       response = TronlinkApiList.v2SearchAsset(params);
       responseContent = TronlinkApiList.parseResponse2JsonObject(response);
       national = JSONPath.eval(responseContent, "$..national[0]");
       Assert.assertEquals("", national);
+      //v4.11.0
+      /*defiType = JSONPath.eval(responseContent, "$..data.token[0].defiType");
+      Assert.assertEquals("0", defiType.toString());*/
+    }
+  }
+
+  //v4.11.0
+  @Test(enabled = false , description = "test jtoken has defiType=1")
+  public void searchjToken() {
+    params.clear();
+    params.put("address",addressNewAsset41);
+    params.put("version","v2");
+    params.put("keyWord","justlend");
+    response = TronlinkApiList.v2SearchAsset(params);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    dataContent = responseContent.getJSONObject("data");
+    JSONArray tokens = dataContent.getJSONArray("token");
+    for (int i = 1; i < tokens.size(); i++){
+      int curdefiType = tokens.getJSONObject(i).getIntValue("defiType");
+      Assert.assertEquals(1,curdefiType);
+    }
+  }
+  //v4.11.0
+  @Test(enabled = false , description = "test lp Token has defiType=2")
+  public void searchLPToken() {
+    params.clear();
+    params.put("address",addressNewAsset41);
+    params.put("version","v2");
+    params.put("keyWord","sunswap");
+    response = TronlinkApiList.v2SearchAsset(params);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    dataContent = responseContent.getJSONObject("data");
+    JSONArray tokens = dataContent.getJSONArray("token");
+    for (int i = 1; i < tokens.size(); i++){
+      int curdefiType = tokens.getJSONObject(i).getIntValue("defiType");
+      Assert.assertEquals(2,curdefiType);
     }
   }
 

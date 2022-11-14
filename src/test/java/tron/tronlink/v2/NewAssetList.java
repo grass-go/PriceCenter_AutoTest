@@ -75,7 +75,6 @@ public class NewAssetList extends TronlinkBase {
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
 
-    //check BitTorrent balance
     Object actualBT = JSONPath.eval(responseContent, "$..data.token[name='JUST'].balanceStr");
     JSONArray actualBTArray=(JSONArray)actualBT;
     Assert.assertEquals("1.251755232041081343", actualBTArray.get(0));
@@ -89,6 +88,9 @@ public class NewAssetList extends TronlinkBase {
     Assert.assertEquals(0,actualRSIArray.get(0));
     Object national = JSONPath.eval(responseContent, "$..data.token[name='JUST'].national[0]");
     Assert.assertEquals("DM",national.toString());
+    //v4.11.0
+    /*Object defiType = JSONPath.eval(responseContent, "$..data.token[name='JUST'].defiType[0]");
+    Assert.assertEquals("0",defiType.toString());*/
 
 
     //check BitTorrent balance
@@ -105,6 +107,9 @@ public class NewAssetList extends TronlinkBase {
     Assert.assertEquals(0,actualRSIArray.get(0));
     national = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent'].national[0]");
     Assert.assertEquals("DM",national.toString());
+    //v4.11.0
+    /*defiType = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent'].defiType[0]");
+    Assert.assertEquals("0",defiType.toString());*/
 
 
   }

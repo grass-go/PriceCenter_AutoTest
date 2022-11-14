@@ -279,4 +279,31 @@ public class unfollowAssetList extends TronlinkBase {
 
     }
 
+    //v4.11.0
+    @Test(enabled = false, description = "验证unfollowlist包含字段DefiType")
+    public void testUnfollowWithDefiType(){
+        Map<String, String> params = sig.GenerateParams(queryAddressTH48, "/api/wallet/v2/unfollowAssetList", "GET");
+        response = TronlinkApiList.V2UnfollowAssetList(params);
+        Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+
+        //v4.11.0
+        //check lp token defiType=2
+        Object defiType = JSONPath.eval(responseContent,"$..data.token[contractAddress='TEjpEVwm3Xr5VHfa2CWYLqcyKZEGE9CGUz'].defiType[0]");
+        Assert.assertEquals("2", defiType.toString());
+        defiType = JSONPath.eval(responseContent,"$..data.token[contractAddress='TXX1i3BWKBuTxUmTERCztGyxSSpRagEcjX'].defiType[0]");
+        Assert.assertEquals("2", defiType.toString());
+        //check jtoken defiType=1
+        defiType = JSONPath.eval(responseContent,"$..data.token[contractAddress='TUY54PVeH6WCcYCd6ZXXoBDsHytN9V5PXt'].defiType[0]");
+        Assert.assertEquals("1", defiType.toString());
+        defiType = JSONPath.eval(responseContent,"$..data.token[contractAddress='TFpPyDCKvNFgos3g3WVsAqMrdqhB81JXHE'].defiType[0]");
+        Assert.assertEquals("1", defiType.toString());
+        //check none-lptoken, none-jtoken , defiType=0
+        defiType = JSONPath.eval(responseContent,"$..data.token[id='1004251'].defiType[0]");
+        Assert.assertEquals("0", defiType.toString());
+        defiType = JSONPath.eval(responseContent,"$..data.token[id='1004210'].defiType[0]");
+        Assert.assertEquals("0", defiType.toString());
+    }
+
+
 }

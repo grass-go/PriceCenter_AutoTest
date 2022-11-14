@@ -81,7 +81,7 @@ public class AllAssetList extends TronlinkBase {
   }
 
   @SneakyThrows
-  @Test(enabled = true, description = "check balance add national field")
+  @Test(enabled = true, description = "check balance add national field and defiType field")
   public void allAssetList02(){
     params.clear();
     params.put("address",address721_B58);
@@ -101,6 +101,9 @@ public class AllAssetList extends TronlinkBase {
     Assert.assertTrue(btflag>0);
     Object national = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].national[0]");
     Assert.assertEquals("",national.toString());
+    //v4.11.0
+    /*Object defiType = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].defiType[0]");
+    Assert.assertEquals("0",defiType.toString());*/
 
 
     //check WINkLink balance
@@ -114,7 +117,9 @@ public class AllAssetList extends TronlinkBase {
     Assert.assertTrue(wlflag > 0);
     national = JSONPath.eval(responseContent, "$..data.token[name='WINkLink'].national[0]");
     Assert.assertEquals("",national.toString());
-    //
+    //v4.11.0
+    /*defiType = JSONPath.eval(responseContent, "$..data.token[name='WINkLink'].defiType[0]");
+    Assert.assertEquals("0",defiType.toString());*/
 
     national = JSONPath.eval(responseContent, "$..data.token[0].national[0]");
     Assert.assertEquals("DM",national.toString());
@@ -134,9 +139,31 @@ public class AllAssetList extends TronlinkBase {
     national = JSONPath.eval(responseContent, "$..data.token[name='JUST'].national[0]");
     Assert.assertEquals("DM",national.toString());
 
+    //v4.11.0
+    /*defiType = JSONPath.eval(responseContent, "$..data.token[name='WINkLink'].defiType[0]");
+    Assert.assertEquals("0",defiType.toString());
+
+    defiType = JSONPath.eval(responseContent, "$..data.token[0].defiType[0]");
+    Assert.assertEquals("0",defiType.toString());
+
+    defiType = JSONPath.eval(responseContent, "$..data.token[name='Decentralized USD'].defiType[0]");
+    Assert.assertEquals("0",defiType.toString());
+
+    defiType = JSONPath.eval(responseContent, "$..data.token[name='Tether USD'].defiType[0]");
+    Assert.assertEquals("0",defiType.toString());
+
+    defiType = JSONPath.eval(responseContent, "$..data.token[name='APENFT'].defiType[0]");
+    Assert.assertEquals("0",defiType.toString());
+
+    defiType = JSONPath.eval(responseContent, "$..data.token[name='TrueUSD'].defiType[0]");
+    Assert.assertEquals("0",defiType.toString());
+
+    defiType = JSONPath.eval(responseContent, "$..data.token[name='JUST'].defiType[0]");
+    Assert.assertEquals("0",defiType.toString());*/
+
   }
 
-  @Test(enabled = true, description = "Test jToken price")
+  @Test(enabled = true, description = "Test jToken price and check defiType Field")
   public void allAssetList03(){
     params.clear();
     params.put("address",quince_B58);
@@ -158,6 +185,11 @@ public class AllAssetList extends TronlinkBase {
     for(Map.Entry<String, String> entry : jTokens.entrySet()) {
       String shortName = entry.getKey();
       String contractAddr = entry.getValue();
+      //v4.11.0 , check jToken's defiType=1
+      //Object defiType = JSONPath.eval(responseContent, String.join("", "$..data.token[shortName='", shortName, "'].defiType[0]"));
+      //Assert.assertEquals("1", defiType.toString());
+
+      //origianl test before 4.11.0
       Object Price = JSONPath.eval(responseContent, String.join("", "$..data.token[shortName='", shortName, "'].price"));
       JSONArray priceArray = (JSONArray) Price;
       BigDecimal actualPrice = new BigDecimal(priceArray.get(0).toString());
@@ -283,6 +315,26 @@ public class AllAssetList extends TronlinkBase {
     }
   }
 
+  //v4.11.0
+  @Test(enabled = false, description = "Test defiType=2 token exists")
+  public void allAssetList_defiType2() throws InterruptedException {
+    params.clear();
+    params.put("address",quince_B58);
+    response = TronlinkApiList.V2AllAssetList(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    Object defiType2 = JSONPath.eval(responseContent, String.join("","$..data.token[defiType=2].shortName"));
+    JSONArray SwapTokens = (JSONArray) defiType2;
+    for(int i=0; i<SwapTokens.size(); i++){
+      String curShortName = SwapTokens.getString(i);
+      log.info("curShortName: "+curShortName);
+      int startPos=curShortName.indexOf("S-");
+      Assert.assertEquals(0,startPos);
+
+    }
+
+
+  }
 
 
 
