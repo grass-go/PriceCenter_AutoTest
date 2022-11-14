@@ -14,6 +14,11 @@
         <parameter name="tronlinkUrl" value="http://52.76.86.154:8080"></parameter>
         <parameter name="tronscanApiUrl" value="https://apilist.tronscan.org"></parameter>
         <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>
+        <groups>
+            <run>
+                <exclude name="multiSign"></exclude>
+            </run>
+        </groups>
         <packages>
             <package name="tron.tronlink.*">
                 <exclude name="tron.tronlink.v2.socket"/>
