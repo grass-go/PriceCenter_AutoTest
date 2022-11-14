@@ -151,3 +151,17 @@ task tronlinkAPIExperiment(type: Test) {
         showStackTraces = "true"
     }
 }
+
+// qa环境job
+task tronlinkAPImultiSign(type: Test) {
+    useTestNG {
+        suites(file('src/test/resources/testng_tronlinkAPI_multiSign.xml'))
+        parallel 'tests'
+        threadCount 1
+
+    }
+    testLogging {
+        exceptionFormat = 'full'
+        showStackTraces = "true"
+    }
+}

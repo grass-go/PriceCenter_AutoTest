@@ -138,7 +138,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         String requestUrl = HttpNode + "/api/wallet/multi/trx_record";
         header.clear();
         header.put("Lang", defaultLang);
-        response = createGetConnect(requestUrl,null,null,header);
+        response = createGetConnect(requestUrl,param,null,header);
         return response;
     }
 

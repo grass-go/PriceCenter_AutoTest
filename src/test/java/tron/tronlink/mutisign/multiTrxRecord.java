@@ -9,14 +9,15 @@ import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
+import tron.tronlink.base.TronlinkBase;
 
 @Slf4j
-public class multiTrxRecord {
+public class multiTrxRecord extends TronlinkBase {
   private HttpResponse response;
   private JSONObject responseContent;
   private HashMap<String, String> param = new HashMap<>();
 
-  @Test(enabled = false, description = "Api multiTrxReword test")
+  @Test(enabled = true, description = "Api multiTrxReword test", groups="multiSign")
   public void multiTrxRecord0() throws Exception {
     param.put("address", "TRqgwhHbfscXq3Ym3FJSFwxprpto1S4nSW");
     param.put("start", "0");
@@ -46,7 +47,7 @@ public class multiTrxRecord {
     }
   }
 
-  @Test(enabled = false, description = "Api multiTrxReword test success")
+  @Test(enabled = true, description = "Api multiTrxReword test success", groups="multiSign")
   public void multiTrxRecord1() throws Exception {
     param.put("address", "TRqgwhHbfscXq3Ym3FJSFwxprpto1S4nSW");
     param.put("start", "0");
@@ -89,7 +90,7 @@ public class multiTrxRecord {
 
   }
 
-  @Test(enabled = false, description = "Api multiTrxReword test fail")
+  @Test(enabled = true, description = "Api multiTrxReword test fail", groups="multiSign")
   public void multiTrxRecord2() throws Exception {
     param.put("address", "TRqgwhHbfscXq3Ym3FJSFwxprpto1S4nSW");
     param.put("start", "0");
