@@ -12,7 +12,7 @@ public class SendPage extends AbstractPage {
     this.driver = driver;
   }
 
-  @FindBy(xpath = "//*[@id=\"input\"]")
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[1]/div/textarea")
   public WebElement receiverAddress_input;
 
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/button")
@@ -38,6 +38,7 @@ public class SendPage extends AbstractPage {
 
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/h1/span")
   public WebElement transactionStatus;
+
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/button[1]/span")
   public WebElement complete_btn;
 }

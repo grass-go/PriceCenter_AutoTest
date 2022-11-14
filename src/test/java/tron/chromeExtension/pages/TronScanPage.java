@@ -102,7 +102,7 @@ public class TronScanPage extends AbstractPage {
   @FindBy(className = "suffix-icon")
   public WebElement tokenBox_dropDown;
 
-  @FindBy(xpath = "//*[@id=\"rc_select_1\"]")
+  @FindBy(xpath = "//*[@id=\"rc_select_2\"]")
   public WebElement tokenBox_input;
 
   @FindBy(className = "rc-virtual-list-holder-inner")
@@ -111,7 +111,7 @@ public class TronScanPage extends AbstractPage {
   /* @FindBy(xpath = "/html/body/div[2]/div/div[1]/div/div/div[2]/form/div[7]/div/div/div")
   public WebElement collection_box;*/
 
-  @FindBy(xpath = "//*[@id=\"rc_select_2\"]")
+  @FindBy(xpath = "//*[@id=\"rc_select_3\"]")
   public WebElement collection_box;
 
   /* @FindBy(xpath = "/html/body/div[5]/div/div/div/div[2]/div[1]/div/div/div[1]/div")

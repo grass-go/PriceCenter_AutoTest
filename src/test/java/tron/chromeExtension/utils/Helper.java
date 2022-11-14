@@ -75,9 +75,9 @@ public class Helper extends Base {
         try {
           click(tronScanPage.tokenBox_dropDown);
           sendKeys(tronScanPage.tokenBox_input, nameOrTokenIdOrTokenAddress);
+          waitingTime();
           // click(tronScanPage.token_list.get(nameOrTokenIdOrTokenAddress));
           click(tronScanPage.token_searched);
-          waitingTime();
           click(tronScanPage.collection_box);
           click(tronScanPage.trc721Token_btn);
           break;
