@@ -403,22 +403,22 @@ public class SearchAsset extends TronlinkBase {
       responseContent = TronlinkApiList.parseResponse2JsonObject(response);
       Object national = JSONPath.eval(responseContent, "$..national[0]");
       Assert.assertEquals("", national);
-      //v4.11.0
-      /*Object defiType = JSONPath.eval(responseContent, "$..data.token[0].defiType");
-      Assert.assertEquals("0", defiType.toString());*/
+      //v4.11.0-done
+      Object defiType = JSONPath.eval(responseContent, "$..data.token[0].defiType");
+      Assert.assertEquals("0", defiType.toString());
       params.put("version","v3");
       response = TronlinkApiList.v2SearchAsset(params);
       responseContent = TronlinkApiList.parseResponse2JsonObject(response);
       national = JSONPath.eval(responseContent, "$..national[0]");
       Assert.assertEquals("", national);
-      //v4.11.0
-      /*defiType = JSONPath.eval(responseContent, "$..data.token[0].defiType");
-      Assert.assertEquals("0", defiType.toString());*/
+      //v4.11.0-done
+      defiType = JSONPath.eval(responseContent, "$..data.token[0].defiType");
+      Assert.assertEquals("0", defiType.toString());
     }
   }
 
-  //v4.11.0
-  @Test(enabled = false , description = "test jtoken has defiType=1")
+  //v4.11.0-done
+  @Test(enabled = true , description = "test jtoken has defiType=1")
   public void searchjToken() {
     params.clear();
     params.put("address",addressNewAsset41);
@@ -433,8 +433,8 @@ public class SearchAsset extends TronlinkBase {
       Assert.assertEquals(1,curdefiType);
     }
   }
-  //v4.11.0
-  @Test(enabled = false , description = "test lp Token has defiType=2")
+  //v4.11.0-done
+  @Test(enabled = true , description = "test lp Token has defiType=2")
   public void searchLPToken() {
     params.clear();
     params.put("address",addressNewAsset41);

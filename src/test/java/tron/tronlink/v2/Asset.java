@@ -81,14 +81,14 @@ public class Asset extends TronlinkBase {
       responseContent = TronlinkApiList.parseResponse2JsonObject(response);
       Object national = JSONPath.eval(responseContent,"$..national[0]");
       Assert.assertEquals("", national);
-      //v4.11.0
-      /*Object defiType = JSONPath.eval(responseContent,"$..defiType[0]");
-      Assert.assertEquals("0", defiType.toString());*/
+      //v4.11.0-done
+      Object defiType = JSONPath.eval(responseContent,"$..defiType[0]");
+      Assert.assertEquals("0", defiType.toString());
 
     }
   }
-  //v4.11.0
-  @Test(enabled = false, description = "test jtoken defiType=1")
+  //v4.11.0-done
+  @Test(enabled = true, description = "test jtoken defiType=1")
   public void asset02jTokenDefiType(){
     List<String> tokenList = new ArrayList<>();
     tokenList.add("TE2RzoSV3wFK99w6J9UnnZ4vLfXYoxvRwP");  //jTRX
@@ -107,8 +107,8 @@ public class Asset extends TronlinkBase {
       Assert.assertEquals("1", defiType.toString());
     }
   }
-  //v4.11.0
-  @Test(enabled = false, description = "test lp token defiType=2")
+  //v4.11.0-done
+  @Test(enabled = true, description = "test lp token defiType=2")
   public void asset02LPTokenDefiType(){
     List<String> tokenList = new ArrayList<>();
     tokenList.add("TQn9Y2khEsLJW1ChVWFMSMeRDow5KcbLSE");  //S-USDT-TRX

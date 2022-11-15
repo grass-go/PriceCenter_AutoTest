@@ -279,15 +279,15 @@ public class unfollowAssetList extends TronlinkBase {
 
     }
 
-    //v4.11.0
-    @Test(enabled = false, description = "验证unfollowlist包含字段DefiType")
+    //v4.11.0-done
+    @Test(enabled = true, description = "验证unfollowlist包含字段DefiType")
     public void testUnfollowWithDefiType(){
         Map<String, String> params = sig.GenerateParams(queryAddressTH48, "/api/wallet/v2/unfollowAssetList", "GET");
         response = TronlinkApiList.V2UnfollowAssetList(params);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
-        //v4.11.0
+        //v4.11.0-done
         //check lp token defiType=2
         Object defiType = JSONPath.eval(responseContent,"$..data.token[contractAddress='TEjpEVwm3Xr5VHfa2CWYLqcyKZEGE9CGUz'].defiType[0]");
         Assert.assertEquals("2", defiType.toString());

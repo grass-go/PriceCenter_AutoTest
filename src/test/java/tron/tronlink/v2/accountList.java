@@ -20,8 +20,8 @@ public class accountList extends TronlinkBase {
     Map<String, String> params = new HashMap<>();
     Map<String, String> headers = new HashMap<>();
 
-    //v4.11.0
-    @Test(enabled = false, description = "")
+    //v4.11.0-done
+    @Test(enabled = true, description = "")
     public void testaccountListV2() throws Exception {
         headers.put("System","Android");
         headers.put("Version","4.10.0");
@@ -43,6 +43,5 @@ public class accountList extends TronlinkBase {
         log.info("TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo account Type is : "+ accountT_obj2.toString());
         Assert.assertEquals(1, (int)accountT_obj1);
         Assert.assertEquals(0, (int)accountT_obj2);
-        //"$..data.token[contractAddress='" + token + "'].usdPrice[0]"
     }
 }

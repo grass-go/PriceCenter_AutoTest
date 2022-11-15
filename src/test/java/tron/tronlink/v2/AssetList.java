@@ -148,15 +148,15 @@ public class AssetList extends TronlinkBase {
         Assert.assertEquals(0,tokenArray.getJSONObject(j).getIntValue("recommandSortId"));
       }
 
-      //v4.11.0
-      /*if (tokenArray.getJSONObject(j).getString("defiType").equals("1"))
+      //v4.11.0-done
+      if (tokenArray.getJSONObject(j).getString("defiType").equals("1"))
       {
         Assert.assertEquals(0,tokenArray.getJSONObject(j).getString("shortName").indexOf("j"));
       }
       if (tokenArray.getJSONObject(j).getString("defiType").equals("2"))
       {
         Assert.assertEquals(0,tokenArray.getJSONObject(j).getString("shortName").indexOf("S-"));
-      }*/
+      }
 
     }
   }

@@ -86,9 +86,9 @@ public class hot_token extends TronlinkBase {
       } else{
         Assert.assertEquals("", national);
       }
-      //v4.11.0
-      /*int defiType = curtoken.getIntValue("defiType");
-      Assert.assertEquals(0, defiType);*/
+      //v4.11.0-done
+      int defiType = curtoken.getIntValue("defiType");
+      Assert.assertEquals(0, defiType);
     }
   }
 
