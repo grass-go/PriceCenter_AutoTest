@@ -4,10 +4,18 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import java.util.HashMap;
 
+import com.alibaba.fastjson.JSONPath;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.tron.common.utils.Base58;
+import org.tron.common.utils.Commons;
+import org.tron.core.services.http.JsonFormat;
+import org.tron.protos.Protocol;
 import tron.common.TronlinkApiList;
 import tron.tronlink.base.TronlinkBase;
 
@@ -17,6 +25,16 @@ public class multiTrxRecord extends TronlinkBase {
   private JSONObject responseContent;
   private HashMap<String, String> param = new HashMap<>();
   private HashMap<String, String> header = new HashMap<>();
+  private String fullnode = "47.75.245.225:50051";  //线上
+  private ManagedChannel channelFull = null;
+  private org.tron.api.WalletGrpc.WalletBlockingStub blockingStubFull = null;
+
+  @BeforeClass(enabled = true)
+  public void beforeClass() {
+
+    channelFull = ManagedChannelBuilder.forTarget(fullnode).usePlaintext().build();
+    blockingStubFull = org.tron.api.WalletGrpc.newBlockingStub(channelFull);
+  }
 
   @Test(enabled = true, description = "Api multiTrxReword test", groups="multiSign")
   public void multiTrxRecord0() throws Exception {
@@ -191,6 +209,67 @@ public class multiTrxRecord extends TronlinkBase {
     }
     Assert.assertEquals(7,index);
   }
+
+  //multi-v4.1.0
+  @Test(enabled = false, description = "nulti sign send coin", groups="multiSign")
+  public void testTrxRecord_with_raw_data_hex() throws Exception {
+    //Step1: post one multisign transaction
+    String address158= "TY9touJknFcezjLiaGTjnH1dUHiqriu6L8";
+    byte[] address1 = Commons.decode58Check(address158);
+    String key2 = "7ef4f6b32643ea063297416f2f0112b562a4b3dac2c960ece00a59c357db3720";//线上
+    byte[] address2=TronlinkApiList.getFinalAddress(key2);
+    String address258= Base58.encode(address2);
+    String getAddress258_2=TronlinkApiList.encode58Check(address2);
+
+    Protocol.Transaction transaction = TronlinkApiList
+            .sendcoin(address2, 500_000, address1, blockingStubFull);
+    log.info("-----original transaction: "+ JsonFormat.printToString(transaction));
+
+    Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
+            transaction, key2, 3, blockingStubFull);
+    log.info("-----add one signature: "+JsonFormat.printToString(transaction1));
+
+    //colculate raw_data_hex and add to transaction data.
+    Object transaction_json = JSONObject.parse(JsonFormat.printToString(transaction1));
+    JSONObject transaction_jsonobj = (JSONObject)transaction_json;
+    String rawHex = TronlinkApiList.generateRawdataHex(transaction1);
+    transaction_jsonobj.put("raw_data_hex","abc");
+    Object transaction_commobj = (JSONObject) transaction_jsonobj;
+
+
+    JSONObject object = new JSONObject();
+    object.put("address",getAddress258_2);
+    object.put("netType","main_net");
+    object.put("transaction",transaction_commobj);
+
+    param.put("address",getAddress258_2);
+    header.put("System","Android");
+    header.put("Version","4.11.0");
+    response = TronlinkApiList.multiTransaction(object,param,header);
+    Assert.assertEquals(200, response.getStatusLine().getStatusCode());
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    Assert.assertEquals(0,responseContent.getIntValue("code"));
+
+    //Step2: check trxRecord contains raw_data_hex and value correct.
+    param.clear();
+    param.put("address", "TY9touJknFcezjLiaGTjnH1dUHiqriu6L8");
+    param.put("start", "0");
+    param.put("limit", "10");
+    param.put("state", "4");
+    param.put("netType", "main_net");
+    header.clear();
+    header.put("System","Android");
+    header.put("Version","4.11.0");
+    response = TronlinkApiList.multiTrxReword(param,header);
+    Assert.assertEquals(200, response.getStatusLine().getStatusCode());
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    Assert.assertTrue(responseContent.size() >= 3);
+    Assert.assertTrue(responseContent.getString("message").equals("OK"));
+    Object raw_data_hex_response  = JSONPath.eval(responseContent,"$..data.data[0].currentTransaction.raw_data_hex[0]");
+    log.info("raw_data_hex_response:"+raw_data_hex_response);
+    Assert.assertEquals(rawHex, raw_data_hex_response.toString());
+  }
+
 
 }
 

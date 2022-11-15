@@ -50,6 +50,7 @@ import org.tron.api.WalletGrpc;
 import org.tron.common.crypto.ECKey;
 import org.tron.common.crypto.Hash;
 import org.tron.common.parameter.CommonParameter;
+import org.tron.common.utils.Base58;
 import org.tron.common.utils.ByteArray;
 import org.tron.common.utils.Sha256Hash;
 import org.tron.core.Wallet;
@@ -1397,6 +1398,21 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         final String curUri = "/api/wallet/trc1155/getCollectionInfos";
         response = createPostConnectWithSignature(curUri, params, null, body);
         return response;
+    }
+
+    public static String encode58Check(byte[] input) {
+        byte[] hash0 = Sha256Hash.hash(CommonParameter
+                .getInstance().isECKeyCryptoEngine(), input);
+        byte[] hash1 = Sha256Hash.hash(CommonParameter
+                .getInstance().isECKeyCryptoEngine(), hash0);
+        byte[] inputCheck = new byte[input.length + 4];
+        System.arraycopy(input, 0, inputCheck, 0, input.length);
+        System.arraycopy(hash1, 0, inputCheck, input.length, 4);
+        return Base58.encode(inputCheck);
+    }
+    public static String generateRawdataHex(Protocol.Transaction transaction) {
+        String newHex = ByteArray.toHexString(transaction.getRawData().toByteArray());
+        return newHex;
     }
 
 }

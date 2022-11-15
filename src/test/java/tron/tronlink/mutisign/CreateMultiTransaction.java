@@ -38,7 +38,7 @@ public class CreateMultiTransaction {
     String key2 = "7ef4f6b32643ea063297416f2f0112b562a4b3dac2c960ece00a59c357db3720";//线上
     byte[] address2=TronlinkApiList.getFinalAddress(key2);
     String address258=Base58.encode(address2);
-    String getAddress258_2=encode58Check(address2);
+    String getAddress258_2=TronlinkApiList.encode58Check(address2);
     private HashMap<String, String> param = new HashMap<>();
     private HashMap<String, String> header = new HashMap<>();
 
@@ -170,16 +170,7 @@ public class CreateMultiTransaction {
 
 
     }
-    public static String encode58Check(byte[] input) {
-        byte[] hash0 = Sha256Hash.hash(CommonParameter
-                .getInstance().isECKeyCryptoEngine(), input);
-        byte[] hash1 = Sha256Hash.hash(CommonParameter
-                .getInstance().isECKeyCryptoEngine(), hash0);
-        byte[] inputCheck = new byte[input.length + 4];
-        System.arraycopy(input, 0, inputCheck, 0, input.length);
-        System.arraycopy(hash1, 0, inputCheck, input.length, 4);
-        return Base58.encode(inputCheck);
-    }
+
     /**
      * constructor.
      */
