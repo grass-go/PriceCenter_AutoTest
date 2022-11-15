@@ -14,7 +14,7 @@ import java.net.URI;
 @Slf4j
 public class SocketMultiTrxRecord {
     boolean flag = false;
-    @Test(enabled = true,description = "create socket connection to get multi sign record")
+    @Test(enabled = true,description = "create socket connection to get multi sign record",groups="multiSign")
     public void test00GetNotSignRecord() {
         String host = TronlinkBase.tronlinkUrl.substring(8);
         try {
