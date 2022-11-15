@@ -16,6 +16,7 @@ public class multiTrxRecord extends TronlinkBase {
   private HttpResponse response;
   private JSONObject responseContent;
   private HashMap<String, String> param = new HashMap<>();
+  private HashMap<String, String> header = new HashMap<>();
 
   @Test(enabled = true, description = "Api multiTrxReword test", groups="multiSign")
   public void multiTrxRecord0() throws Exception {
@@ -24,7 +25,9 @@ public class multiTrxRecord extends TronlinkBase {
     param.put("limit", "10");
     param.put("state", "0");
     param.put("netType", "main_net");
-    response = TronlinkApiList.multiTrxReword(param);
+    header.put("System","Android");
+    header.put("Version","4.11.0");
+    response = TronlinkApiList.multiTrxReword(param,header);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     TronlinkApiList.printJsonObjectContent(responseContent);
@@ -54,11 +57,13 @@ public class multiTrxRecord extends TronlinkBase {
     param.put("limit", "10");
     param.put("state", "1");
     param.put("netType", "main_net");
+    header.put("System","Android");
+    header.put("Version","4.11.0");
 
     int index;
     for(index=0; index<5;index++){
       log.info("cur index is " + index);
-      response = TronlinkApiList.multiTrxReword(param);
+      response = TronlinkApiList.multiTrxReword(param,header);
       if(response.getStatusLine().getStatusCode()==200)
       {
         index=6;
@@ -97,11 +102,13 @@ public class multiTrxRecord extends TronlinkBase {
     param.put("limit", "10");
     param.put("state", "2");
     param.put("netType", "main_net");
+    header.put("System","Android");
+    header.put("Version","4.11.0");
 
     int index;
     for (index = 0; index < 5; index++) {
       log.info("cur index is " + index);
-      response = TronlinkApiList.multiTrxReword(param);
+      response = TronlinkApiList.multiTrxReword(param,header);
       if (response.getStatusLine().getStatusCode() == 200) {
         index = 6;
       } else {
@@ -126,6 +133,61 @@ public class multiTrxRecord extends TronlinkBase {
         Assert.assertTrue(!info.getString("state").isEmpty());
         Assert.assertTrue(!info.getString("hash").isEmpty());
       }
+    }
+    Assert.assertEquals(7,index);
+  }
+
+  //multi-v4.1.0-all the below cases
+  @Test(enabled = false, description = "Api multiTrxReword test fail", groups="multiSign")
+  public void multiTrxRecordLowVersionWithNoSig() throws Exception {
+    param.put("address", "TRqgwhHbfscXq3Ym3FJSFwxprpto1S4nSW");
+    param.put("start", "0");
+    param.put("limit", "20");
+    param.put("state", "255");
+    param.put("netType", "main_net");
+
+    int index;
+    for (index = 0; index < 5; index++) {
+      log.info("cur index is " + index);
+      //v4.1.0
+      response = TronlinkApiList.multiTrxRewordNoSig(param,null);
+      if (response.getStatusLine().getStatusCode() == 200) {
+        index = 6;
+      } else {
+        continue;
+      }
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+      TronlinkApiList.printJsonObjectContent(responseContent);
+      Assert.assertTrue(responseContent.size() >= 3);
+      Assert.assertTrue(responseContent.getString("message").equals("OK"));
+    }
+    Assert.assertEquals(7,index);
+  }
+
+  //multi-v4.1.0-all the below cases
+  @Test(enabled = false, description = "Api multiTrxReword test fail", groups="multiSign")
+  public void multiTrxRecordHighVersionWithNoSig() throws Exception {
+    param.put("address", "TRqgwhHbfscXq3Ym3FJSFwxprpto1S4nSW");
+    param.put("netType", "main_net");
+    param.put("state", "255");
+    param.put("start", "0");
+    param.put("limit", "20");
+    header.put("System", "Android");
+    header.put("Version", "4.11.0");
+
+    int index;
+    for (index = 0; index < 5; index++) {
+      log.info("cur index is " + index);
+      response = TronlinkApiList.multiTrxRewordNoSig(param,header);
+      if (response.getStatusLine().getStatusCode() == 200) {
+        index = 6;
+      } else {
+        continue;
+      }
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+      TronlinkApiList.printJsonObjectContent(responseContent);
+      Assert.assertEquals(20004, responseContent.getIntValue("code"));
+      Assert.assertEquals("Error param.", responseContent.getString("message"));
     }
     Assert.assertEquals(7,index);
   }

@@ -20,6 +20,7 @@ import org.tron.protos.contract.AssetIssueContractOuterClass;
 import org.tron.protos.contract.BalanceContract;
 import tron.common.TronlinkApiList;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -38,6 +39,8 @@ public class CreateMultiTransaction {
     byte[] address2=TronlinkApiList.getFinalAddress(key2);
     String address258=Base58.encode(address2);
     String getAddress258_2=encode58Check(address2);
+    private HashMap<String, String> param = new HashMap<>();
+    private HashMap<String, String> header = new HashMap<>();
 
     /**
      * constructor.
@@ -63,7 +66,10 @@ public class CreateMultiTransaction {
         object.put("address",getAddress258_2);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
-        res = TronlinkApiList.multiTransaction(object);
+        param.put("address",getAddress258_2);
+        header.put("System","Android");
+        header.put("Version","4.11.0");
+        res = TronlinkApiList.multiTransaction(object,param,header);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
@@ -85,7 +91,10 @@ public class CreateMultiTransaction {
         object.put("address",getAddress258_2);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
-        res = TronlinkApiList.multiTransaction(object);
+        param.put("address",address258);
+        header.put("System","Android");
+        header.put("Version","4.11.0");
+        res = TronlinkApiList.multiTransaction(object,param,header);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
@@ -114,10 +123,13 @@ public class CreateMultiTransaction {
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
 
+        param.put("address",address258);
+        header.put("System","Android");
+        header.put("Version","4.11.0");
         int index;
         for (index=0; index<5;index++){
             log.info("cur index is " + index);
-            res = TronlinkApiList.multiTransaction(object);
+            res = TronlinkApiList.multiTransaction(object,param,header);
             if(res.getStatusLine().getStatusCode() == 200){
                 index=6;
             }
@@ -148,7 +160,10 @@ public class CreateMultiTransaction {
         object.put("address",address258);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
-        res = TronlinkApiList.multiTransaction(object);
+        param.put("address",address258);
+        header.put("System","Android");
+        header.put("Version","4.11.0");
+        res = TronlinkApiList.multiTransaction(object,param,header);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0,responseContent.getIntValue("code"));
@@ -173,5 +188,49 @@ public class CreateMultiTransaction {
         if (channelFull != null) {
             channelFull.shutdown().awaitTermination(5, TimeUnit.SECONDS);
         }
+    }
+    //v4.1.0
+    @Test(enabled = false, description = "nulti sign send coin", groups="multiSign")
+    public void sendCoinLowVersionWithNoSig() {
+        Protocol.Transaction transaction = TronlinkApiList
+                .sendcoin(address2, 500_000, address1, blockingStubFull);
+        log.info("-----111111  "+ JsonFormat.printToString(transaction));
+
+        Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
+                transaction, key2, 3, blockingStubFull);
+        log.info("-----2222  "+JsonFormat.printToString(transaction1));
+
+        JSONObject object = new JSONObject();
+        object.put("address",getAddress258_2);
+        object.put("netType","main_net");
+        object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
+        res = TronlinkApiList.multiTransactionNoSig(object,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0,responseContent.getIntValue("code"));
+    }
+    //v4.1.0
+    @Test(enabled = false, description = "nulti sign send coin", groups="multiSign")
+    public void sendCoinHighVersionWithNoSig() {
+        Protocol.Transaction transaction = TronlinkApiList
+                .sendcoin(address2, 500_000, address1, blockingStubFull);
+        log.info("-----111111  "+ JsonFormat.printToString(transaction));
+
+        Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
+                transaction, key2, 3, blockingStubFull);
+        log.info("-----2222  "+JsonFormat.printToString(transaction1));
+
+        JSONObject object = new JSONObject();
+        object.put("address",getAddress258_2);
+        object.put("netType","main_net");
+        object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
+        header.put("System","Android");
+        header.put("Version","4.11.0");
+        res = TronlinkApiList.multiTransactionNoSig(object,header);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(20004, responseContent.getIntValue("code"));
+        Assert.assertEquals("Error param.", responseContent.getString("message"));
+
     }
 }

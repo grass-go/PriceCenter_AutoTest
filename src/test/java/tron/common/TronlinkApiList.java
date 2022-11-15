@@ -134,11 +134,16 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse multiTrxReword(HashMap<String, String> param) throws Exception {
+    public static HttpResponse multiTrxRewordNoSig(HashMap<String, String> param,HashMap<String, String> header) throws Exception {
         String requestUrl = HttpNode + "/api/wallet/multi/trx_record";
-        header.clear();
-        header.put("Lang", defaultLang);
         response = createGetConnect(requestUrl,param,null,header);
+        return response;
+    }
+
+
+    public static HttpResponse multiTrxReword(HashMap<String, String> param,HashMap<String, String> header) throws Exception {
+        String curURI = "/api/wallet/multi/trx_record";
+        response = createGetConnectWithSignature(curURI,param,header,null);
         return response;
     }
 
@@ -626,9 +631,16 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse multiTransaction(JSONObject body) {
+
+    public static HttpResponse multiTransaction(JSONObject body,HashMap<String, String> caseParams, HashMap<String, String> caseHeader ) {
+        String curURI =  "/api/wallet/multi/transaction";
+        response = createPostConnectWithSignature(curURI, caseParams, caseHeader, body);
+        return response;
+    }
+
+    public static HttpResponse multiTransactionNoSig(JSONObject body, HashMap<String, String> header) {
         String requestUrl = HttpNode + "/api/wallet/multi/transaction";
-        response = createPostConnect(requestUrl, null, body, null);
+        response = createPostConnect(requestUrl, null, body, header);
         return response;
     }
 
