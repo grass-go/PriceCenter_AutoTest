@@ -20,9 +20,10 @@ public class SocketMultiTrxRecord {
 
     @Test(enabled = true,description = "create socket connection to get multi sign record",groups="multiSign")
     public void test00GetNotSignRecord() {
+        flag=false;
         String host = TronlinkBase.tronlinkUrl.substring(8);
 
-        header.put("System","Android");
+        header.put("System","Chrome");
         header.put("Version","4.11.0");
         header.put("Lang","1");
         header.put("packageName","com.tronlinkpro.wallet");
@@ -71,8 +72,9 @@ public class SocketMultiTrxRecord {
         }
     }
 
-    @Test(enabled = false,description = "create socket connection to get multi sign record",groups="multiSign")
+    @Test(enabled = true,description = "create socket connection to get multi sign record",groups="multiSign")
     public void test00GetNotSignRecordLowVersionWithNoSig() {
+        flag=false;
         String host = TronlinkBase.tronlinkUrl.substring(8);
         header.clear();
         header.put("System","Android");
@@ -113,11 +115,13 @@ public class SocketMultiTrxRecord {
         }
     }
 
-    @Test(enabled = false,description = "create socket connection to get multi sign record",groups="multiSign")
-    public void test00GetNotSignRecordHighVersionWithNoSig() {
+    @Test(enabled = true,description = "create socket connection to get multi sign record",groups="multiSign")
+    public void test00GetNotSignRecordHighVersionWithNoSig() throws InterruptedException {
+        flag=false;
+        Thread.sleep(5000);
         String host = TronlinkBase.tronlinkUrl.substring(8);
         header.clear();
-        header.put("System","Android");
+        header.put("System","Chrome");
         header.put("Version","4.11.0");
         try {
             String url = "wss://" + host +"/api/wallet/multi/socket?address=TY9touJknFcezjLiaGTjnH1dUHiqriu6L8&start=0&limit=20&netType=main_net&state=0";

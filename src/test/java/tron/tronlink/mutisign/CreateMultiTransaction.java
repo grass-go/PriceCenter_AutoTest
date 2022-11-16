@@ -181,7 +181,7 @@ public class CreateMultiTransaction {
         }
     }
     //v4.1.0
-    @Test(enabled = false, description = "nulti sign send coin", groups="multiSign")
+    @Test(enabled = true, description = "nulti sign send coin", groups="multiSign")
     public void sendCoinLowVersionWithNoSig() {
         Protocol.Transaction transaction = TronlinkApiList
                 .sendcoin(address2, 500_000, address1, blockingStubFull);
@@ -201,7 +201,7 @@ public class CreateMultiTransaction {
         Assert.assertEquals(0,responseContent.getIntValue("code"));
     }
     //v4.1.0
-    @Test(enabled = false, description = "nulti sign send coin", groups="multiSign")
+    @Test(enabled = true, description = "nulti sign send coin", groups="multiSign")
     public void sendCoinHighVersionWithNoSig() {
         Protocol.Transaction transaction = TronlinkApiList
                 .sendcoin(address2, 500_000, address1, blockingStubFull);
@@ -215,8 +215,8 @@ public class CreateMultiTransaction {
         object.put("address",getAddress258_2);
         object.put("netType","main_net");
         object.put("transaction",JSONObject.parse(JsonFormat.printToString(transaction1)));
-        header.put("System","Android");
-        header.put("Version","4.11.0");
+        header.put("System","Chrome");
+        header.put("Version","4.0.0");
         res = TronlinkApiList.multiTransactionNoSig(object,header);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);

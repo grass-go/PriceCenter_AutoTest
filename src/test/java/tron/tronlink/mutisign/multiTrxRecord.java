@@ -156,7 +156,7 @@ public class multiTrxRecord extends TronlinkBase {
   }
 
   //multi-v4.1.0-all the below cases
-  @Test(enabled = false, description = "Api multiTrxReword test fail", groups="multiSign")
+  @Test(enabled = true, description = "Api multiTrxReword test fail", groups="multiSign")
   public void multiTrxRecordLowVersionWithNoSig() throws Exception {
     param.put("address", "TRqgwhHbfscXq3Ym3FJSFwxprpto1S4nSW");
     param.put("start", "0");
@@ -183,14 +183,14 @@ public class multiTrxRecord extends TronlinkBase {
   }
 
   //multi-v4.1.0-all the below cases
-  @Test(enabled = false, description = "Api multiTrxReword test fail", groups="multiSign")
+  @Test(enabled = true, description = "Api multiTrxReword test fail", groups="multiSign")
   public void multiTrxRecordHighVersionWithNoSig() throws Exception {
     param.put("address", "TRqgwhHbfscXq3Ym3FJSFwxprpto1S4nSW");
     param.put("netType", "main_net");
     param.put("state", "255");
     param.put("start", "0");
     param.put("limit", "20");
-    header.put("System", "Android");
+    header.put("System", "iOS");
     header.put("Version", "4.11.0");
 
     int index;
@@ -211,7 +211,7 @@ public class multiTrxRecord extends TronlinkBase {
   }
 
   //multi-v4.1.0
-  @Test(enabled = false, description = "nulti sign send coin", groups="multiSign")
+  @Test(enabled = true, description = "nulti sign send coin", groups="multiSign")
   public void testTrxRecord_with_raw_data_hex() throws Exception {
     //Step1: post one multisign transaction
     String address158= "TY9touJknFcezjLiaGTjnH1dUHiqriu6L8";
