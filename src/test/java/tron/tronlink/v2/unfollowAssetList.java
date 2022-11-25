@@ -272,10 +272,10 @@ public class unfollowAssetList extends TronlinkBase {
         follow = addAsset.addAssetByTokenType(20, false, unfollowAsset41, followToken);
         log.info("restore doge coin, result = ", follow);
 
-        // bttold
-        followToken = "1002000";
-        follow = addAsset.addAssetByTokenType(10, true, unfollowAsset41, followToken);
-        log.info("restore 1002000, result = ", follow);
+        // bttold, 由用例2看出，本来应该关注的状态，不应该再次关注。注视掉这几句。
+        //followToken = "1002000";
+        //follow = addAsset.addAssetByTokenType(10, true, unfollowAsset41, followToken);
+        //log.info("restore 1002000, result = ", follow);
 
     }
 
