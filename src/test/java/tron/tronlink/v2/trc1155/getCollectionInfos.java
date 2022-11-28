@@ -27,7 +27,7 @@ public class getCollectionInfos extends TronlinkBase {
 
     @BeforeMethod
     void setUp(){
-        params.put("address",address721_B58);
+        params.put("address",quince_B58);
 
         bodyObject.clear();
         assetIdList.clear();
@@ -36,11 +36,12 @@ public class getCollectionInfos extends TronlinkBase {
 
     @Test
     public void getCollectionInfosTest001() {
-        assetIdList.add("0");
-        assetIdList.add("1");
-        assetIdList.add("2");
+        //assetIdList.add("10000001");
+        //assetIdList.add("10000002");
+        assetIdList.add("4001");
+
         bodyObject.put("assetIdList",assetIdList);
-        bodyObject.put("tokenAddress", expFollowAndHold);
+        bodyObject.put("tokenAddress", "TQhDhNKGadHrEXKrTacSGUwvvJMHxsgKS9");
         response = TronlinkApiList.v2GetCollectionInfos_1155(params, bodyObject);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
@@ -49,19 +50,7 @@ public class getCollectionInfos extends TronlinkBase {
         Assert.assertEquals("OK",responseContent.get("message"));
         dataContent = responseContent.getJSONArray("data");
 
-        for (int n = 0; n<dataContent.size(); n++){
-            JSONObject trc1155Info = (JSONObject)dataContent.get(n);
-            //Assert.assertEquals("TPvGT3tWUNakTg23ARKMx46MGLT386nYWD", trc1155Info.get("tokenAddress"));
-            Assert.assertTrue(trc1155Info.containsKey("tokenAddress"));
-            Assert.assertTrue(trc1155Info.containsKey("assetId"));
-            Assert.assertTrue(trc1155Info.containsKey("name"));
-            Assert.assertTrue(trc1155Info.containsKey("intro"));
-            Assert.assertTrue(trc1155Info.containsKey("imageUrl"));
-            Assert.assertTrue(trc1155Info.containsKey("assetUri"));
-            Assert.assertTrue(trc1155Info.containsKey("decimals"));
-            Assert.assertTrue(trc1155Info.containsKey("totalSupply"));
-            Assert.assertTrue(trc1155Info.containsKey("balance"));
-        }
+
 
     }
 }

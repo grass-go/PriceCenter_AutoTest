@@ -24,36 +24,16 @@ public class getCollectionList  extends TronlinkBase {
 
     @Test
     public void getCollectionListTest001() {
-        params.put("address",address721_B58);
-        params.put("tokenAddress",expFollowAndHold);
-        params.put("pageIndex","0");
+        params.put("address",quince_B58);
+        //params.put("tokenAddress","TQhDhNKGadHrEXKrTacSGUwvvJMHxsgKS9");
+        params.put("tokenAddress","TN6UVR6gny3Uh5uL2FgG5oxdJk2EmiL4gD");
+        params.put("pageIndex","10");
         params.put("pageSize","10");
 
         response = TronlinkApiList.v2GetCollectionList_1155(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
-        Assert.assertEquals(0,(int)responseContent.get("code"));
-        Assert.assertEquals("OK",responseContent.get("message"));
-        dataContent = responseContent.getJSONObject("data");
 
-        //Assert.assertEquals("TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG", dataContent.getString("tokenAddress"));
-        Assert.assertTrue(dataContent.containsKey("tokenAddress"));
-        Assert.assertTrue(dataContent.containsKey("intro"));
-        Assert.assertTrue(dataContent.containsKey("logoUrl"));
-        Assert.assertTrue(dataContent.containsKey("fullName"));
-        Assert.assertTrue(dataContent.containsKey("collectionInfoList"));
-
-        JSONArray collectionInfoList = dataContent.getJSONArray("collectionInfoList");
-        JSONObject firstCollectionInfo = collectionInfoList.getJSONObject(0);
-        Assert.assertTrue(firstCollectionInfo.containsKey("tokenAddress"));
-        Assert.assertTrue(firstCollectionInfo.containsKey("assetId"));
-        Assert.assertTrue(firstCollectionInfo.containsKey("name"));
-        Assert.assertTrue(firstCollectionInfo.containsKey("intro"));
-        Assert.assertTrue(firstCollectionInfo.containsKey("imageUrl"));
-        Assert.assertTrue(firstCollectionInfo.containsKey("assetUri"));
-        Assert.assertTrue(firstCollectionInfo.containsKey("decimals"));
-        Assert.assertTrue(firstCollectionInfo.containsKey("totalSupply"));
-        Assert.assertTrue(firstCollectionInfo.containsKey("balance"));
     }
 }

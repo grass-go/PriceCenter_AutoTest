@@ -23,7 +23,7 @@ public class getCollectionInfos extends TronlinkBase {
 
   @BeforeMethod
   void setUp(){
-    params.put("address",addressNewAsset41);
+    params.put("address",quince_B58);
 
     bodyObject.clear();
     trc10tokenList.clear();
@@ -32,13 +32,15 @@ public class getCollectionInfos extends TronlinkBase {
 
   @Test
   public void getCollectionInfosTest001() {
-    bodyObject.put("address", "TAYzcfLovWdV83g25Apfd7BA67J44D5z5M");
-
-    trc10tokenList.add("1");
-    trc10tokenList.add("133");
-    trc10tokenList.add("134");
+    //trc10tokenList.add("10000001");
+    //trc10tokenList.add("100000");
+    trc10tokenList.add("10000004");
+    //trc10tokenList.add("10000003");
+    //trc10tokenList.add("10000004");
+    //trc10tokenList.add("10000005");
     bodyObject.put("assetIdList",trc10tokenList);
-    bodyObject.put("tokenAddress", "TPvGT3tWUNakTg23ARKMx46MGLT386nYWD");
+    //bodyObject.put("tokenAddress", "TUVGZFjjAhkYitwQmveGoCt7W4yNzbN5dY");
+    bodyObject.put("tokenAddress", "TCaL5uzxWD7unW6NWw8bDGhNsfWbMVXNj2");
     response = TronlinkApiList.v2GetCollectionInfos(params, bodyObject);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
@@ -46,17 +48,6 @@ public class getCollectionInfos extends TronlinkBase {
     Assert.assertEquals(0,(int)responseContent.get("code"));
     Assert.assertEquals("OK",responseContent.get("message"));
     dataContent = responseContent.getJSONArray("data");
-
-    for (int n = 0; n<dataContent.size(); n++){
-      JSONObject nftInfo = (JSONObject)dataContent.get(n);
-      Assert.assertEquals("TPvGT3tWUNakTg23ARKMx46MGLT386nYWD", nftInfo.get("tokenAddress"));
-      Assert.assertTrue(nftInfo.containsKey("assetId"));
-      Assert.assertTrue(nftInfo.containsKey("assetUri"));
-
-      Assert.assertEquals(200, TronlinkApiList.createGetConnect(nftInfo.getString("imageUrl"),null,null,null).getStatusLine().getStatusCode());
-      Assert.assertEquals(200, TronlinkApiList.createGetConnect(nftInfo.getString("logoUrl"),null,null,null).getStatusLine().getStatusCode());
-    }
-
 
   }
 }

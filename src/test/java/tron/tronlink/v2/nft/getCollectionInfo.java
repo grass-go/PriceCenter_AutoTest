@@ -24,37 +24,13 @@ public class getCollectionInfo extends TronlinkBase {
   @Test(enabled = true,retryAnalyzer = RetryListener.class)
   @Parameters({"trc721OwnerAddress","trc721TokenAddress","trc721AssetId"})
   public void getCollectionInfoTest001(String trc721OwnerAddress,String trc721TokenAddress,String trc721AssetId) throws Exception {
-    params.put("address", trc721OwnerAddress);
-    params.put("tokenAddress", trc721TokenAddress);
-    params.put("assetId", trc721AssetId);
+    params.put("address", quince_B58);
+    params.put("tokenAddress", "TU4zZAaKMdNGX4gwDhP3yz1zXZ5Z9UezxL");
+    params.put("assetId", "10000005");
 
     response = TronlinkApiList.v2GetCollectionInfo(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
-    Assert.assertEquals(0, (int) responseContent.get("code"));
-    Assert.assertEquals("OK", responseContent.get("message"));
-    dataContent = responseContent.getJSONObject("data");
-
-    Assert.assertTrue(dataContent.containsKey("assetId"));
-    Assert.assertTrue(dataContent.containsKey("assetUri"));
-    Assert.assertTrue(dataContent.containsKey("name"));
-
-    Assert.assertEquals(params.get("tokenAddress"), dataContent.get("tokenAddress"));
-    int index;
-    for ( index = 0; index < 10; index++) {
-      log.info("cur index is: "+index);
-      try {
-        if (200 == TronlinkApiList.createGetConnect(dataContent.getString("imageUrl"), null, null, null).getStatusLine().getStatusCode() && 200 == TronlinkApiList.createGetConnect(dataContent.getString("logoUrl"),null, null,null).getStatusLine().getStatusCode()){
-          index = 11;
-        }
-      } catch (Exception e) {
-        log.info("Enter Exception, continue");
-        Thread.sleep(1000);
-        continue;
-      }
-    }
-    log.info("At last, index value:" +index);
-    Assert.assertEquals(12,index);
   }
 }

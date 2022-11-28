@@ -18,8 +18,10 @@ public class getCollectionList extends TronlinkBase {
 
   @Test
   public void getCollectionListTest001() {
-    params.put("address",addressNewAsset);
-    params.put("tokenAddress","TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG");
+    params.put("address",quince_B58);
+    //params.put("tokenAddress","TU4zZAaKMdNGX4gwDhP3yz1zXZ5Z9UezxL");
+    //params.put("tokenAddress","TUVGZFjjAhkYitwQmveGoCt7W4yNzbN5dY");
+    params.put("tokenAddress","TCaL5uzxWD7unW6NWw8bDGhNsfWbMVXNj2");
     params.put("pageIndex","0");
     params.put("pageSize","10");
 
@@ -31,14 +33,6 @@ public class getCollectionList extends TronlinkBase {
     Assert.assertEquals("OK",responseContent.get("message"));
     dataContent = responseContent.getJSONObject("data");
 
-    Assert.assertEquals("TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG", dataContent.getString("tokenAddress"));
-    Assert.assertNotEquals("", dataContent.getString("intro"));
-    Assert.assertNotEquals("", dataContent.getString("logoUrl"));
-    Assert.assertNotEquals("", dataContent.getString("fullName"));
-    Assert.assertTrue(dataContent.containsKey("dappUrl"));
-    Assert.assertNotNull(dataContent.containsKey("collectionInfoList"));
-
-    Assert.assertEquals(200, TronlinkApiList.createGetConnect(dataContent.getString("logoUrl"),null,null,null).getStatusLine().getStatusCode());
 
   }
 }
