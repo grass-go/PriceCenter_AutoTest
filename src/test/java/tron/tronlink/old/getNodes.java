@@ -51,7 +51,7 @@ public class getNodes extends TronlinkBase {
 
   @Test(enabled = true)
   public void test01GetNodes(){
-    params.put("address",quince_B58);
+    //params.put("address",quince_B58);
     response = TronlinkApiList.v1GetNodes(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);

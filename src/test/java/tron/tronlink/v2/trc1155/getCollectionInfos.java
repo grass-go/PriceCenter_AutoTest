@@ -37,11 +37,11 @@ public class getCollectionInfos extends TronlinkBase {
     @Test
     public void getCollectionInfosTest001() {
         //assetIdList.add("10000001");
-        //assetIdList.add("10000002");
-        assetIdList.add("4001");
+        //assetIdList.add("2");
+        assetIdList.add("4");
 
         bodyObject.put("assetIdList",assetIdList);
-        bodyObject.put("tokenAddress", "TQhDhNKGadHrEXKrTacSGUwvvJMHxsgKS9");
+        bodyObject.put("tokenAddress", "TE2VpPmPQp9UZpDPcBS4G8Pw3R1BZ4Ea6j");
         response = TronlinkApiList.v2GetCollectionInfos_1155(params, bodyObject);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);

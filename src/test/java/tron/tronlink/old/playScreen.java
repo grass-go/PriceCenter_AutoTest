@@ -103,7 +103,7 @@ public class playScreen extends TronlinkBase {
     headers.put("Version", String.valueOf("4.0.1"));
     headers.put("chain","MainChain" );
     headers.put("packageName","com.tronlinkpro.wallet" );
-    params.put("address",quince_B58);
+    //params.put("address",quince_B58);
 
     Integer playId = 11;
     response = TronlinkApiList.v1PlayScreenDeal(String.valueOf(playId),params,headers);

@@ -22,30 +22,16 @@ public class transferTrc721 extends TronlinkBase {
 
     @Test(enabled = true,description = "check /api/transfer/trc721 api")
     public void Test000TransferTrc721() throws Exception {
-        param.put("address",quince_B58); //sophia's address
-        param.put("trc20Id","TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG");
+        param.put("confirm","0");
+        param.put("relatedAddress","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
+        //param.put("relatedAddress","41E7D71E72EA48DE9144DC2450E076415AF0EA745F");
         param.put("limit","20");
         param.put("start","0");
-        param.put("direction","all");
-        param.put("confirm","0");
+        param.put("contract_address","TCtbigstF5sL6nJLe5y3vDucPB8kveJ8nq");
 
-        int index;
+        //http://123.56.3.74/api/transfer/trc721?confirm=0&relatedAddress=TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t&signature=x8N9g9wShp3=M4un6rQscf1jg28o=&limit=20&start=0&secretId=SFSUIOJBFMLKSJIF&contract_address=TCtbigstF5sL6nJLe5y3vDucPB8kveJ8nq&nonce=12345
 
-        for(index=0; index<5; index++){
-            log.info("Test000TransferTrc721 cur index is " + index);
-            response = TronlinkApiList.TransferTrc721(param);
-            if(response.getStatusLine().getStatusCode() == 200)
-            {
-                index = 6;
-            }
-            else {
-                Thread.sleep(1000);
-                continue;
-            }
-        }
-
-        Assert.assertEquals(7,index);
-
+        response = TronlinkApiList.TransferTrc721(param);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         responseArrayContent = responseContent.getJSONArray("token_transfers");
 

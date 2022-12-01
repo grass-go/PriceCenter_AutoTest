@@ -43,7 +43,7 @@ public class getCoinCapTrxPrice extends TronlinkBase {
   @Test(enabled = true, description = "GetCoinCapTrxPrice test")
   public void test001CoinCapTrxPrice() throws Exception {
     HashMap<String, String> params = new HashMap<>();
-    params.put("address", quince_B58);
+    //params.put("address", quince_B58);
     response = api.getCoinCapTrxPrice(params);
     JSONObject trxData = api.parseResponse2JsonObject(response).getJSONObject("data");
     api.printJsonObjectContent(trxData);

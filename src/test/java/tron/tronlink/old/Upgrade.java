@@ -75,7 +75,7 @@ public class Upgrade extends TronlinkBase {
     header.put("chain","MainChain");
 
     Map<String, String> params = new HashMap<>();
-    params.put("address",quince_B58);
+    //params.put("address",quince_B58);
     response = TronlinkApiList.v1UpgradeV2(params,header);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject upgradeObject = responseContent.getJSONObject("data");

@@ -27,13 +27,13 @@ public class Asset extends TronlinkBase {
 
   @Test(enabled = true)
   public void asset01Manual(){
-    params.put("address",addressNewAsset41);
-    params.put("tokenAddress","TUpMhErZL2fhh4sVNULAbNKLokS4GjC1F4");
+    //params.put("address",quince_B58);
+    params.put("address","");
+    params.put("tokenAddress","TF17BgPaZYbz8oxbjhriubPDsA7ArKoLX3");
     params.put("tokenType","2");
     response = TronlinkApiList.v2Asset(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-
   }
 
   @Test(enabled = true, description = "test token add national field")

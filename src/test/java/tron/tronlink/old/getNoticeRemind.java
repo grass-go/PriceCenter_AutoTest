@@ -72,7 +72,7 @@ public class getNoticeRemind extends TronlinkBase {
             + "    \"dappName\":\"JustSwap\",\n"
             + "    \"dappUrl\":\"https://justswap.network\"\n"
             + "}";
-    params.put("address",quince_B58);
+    //params.put("address",quince_B58);
     headers.put("System","Android");
     headers.put("Version","4.12.0");
     response = TronlinkApiList.v1DappActivityAdd((JSONObject) JSONObject.parse(dataRaw),params,headers);
@@ -159,7 +159,7 @@ public class getNoticeRemind extends TronlinkBase {
   @Test(enabled = true)
   public void test03GetAnnouncement(){
     params.clear();
-    params.put("address", quince_B58);
+    //params.put("address", quince_B58);
     response = TronlinkApiList.v1GetAnnouncement(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);

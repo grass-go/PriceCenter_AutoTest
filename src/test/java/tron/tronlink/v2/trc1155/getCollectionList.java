@@ -26,8 +26,8 @@ public class getCollectionList  extends TronlinkBase {
     public void getCollectionListTest001() {
         params.put("address",quince_B58);
         //params.put("tokenAddress","TQhDhNKGadHrEXKrTacSGUwvvJMHxsgKS9");
-        params.put("tokenAddress","TN6UVR6gny3Uh5uL2FgG5oxdJk2EmiL4gD");
-        params.put("pageIndex","10");
+        params.put("tokenAddress","TE2VpPmPQp9UZpDPcBS4G8Pw3R1BZ4Ea6j");
+        params.put("pageIndex","0");
         params.put("pageSize","10");
 
         response = TronlinkApiList.v2GetCollectionList_1155(params);

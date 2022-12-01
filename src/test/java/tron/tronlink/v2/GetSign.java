@@ -265,7 +265,8 @@ public class GetSign extends TronlinkBase {
         params.put("secretId","SFSUIOJBFMLKSJIF");
         // 计算sig
         HashMap<String,String> sigs = new HashMap<>();
-        sigs.put("address", Address);
+
+        sigs.put("address", "");
         sigs.put("url", url);
         sigs.put("method", method);
         try {

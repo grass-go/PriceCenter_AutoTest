@@ -100,31 +100,16 @@ public class transferTrc20Status extends TronlinkBase {
 
     @Test(enabled = true,description = "test trc20_status api")
     public void Test000getTrc20_Status() throws Exception {
-        param.put("address",quince_B58); //sophia's address
+        //param.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t"); //sophia's address
+        param.put("address","41E7D71E72EA48DE9144DC2450E076415AF0EA745F");
         param.put("db_version","1");
-        param.put("direction","0");
+        param.put("direction","2");
         param.put("limit","20");
         param.put("start","0");
         param.put("reverse","true");
-        param.put("trc20Id","TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
-        int index;
+        param.put("trc20Id","TF17BgPaZYbz8oxbjhriubPDsA7ArKoLX3");
 
-
-        for(index=0; index<5; index++){
-            log.info("Test000getTrc20_Status cur index is " + index);
-            response = TronlinkApiList.apiTransferTrc20Status(param);
-            if(response.getStatusLine().getStatusCode() == 200)
-            {
-                index = 6;
-            }
-            else {
-                Thread.sleep(1000);
-                continue;
-            }
-        }
-
-        Assert.assertEquals(7,index);
-
+        response = TronlinkApiList.apiTransferTrc20Status(param);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertNotEquals( null,responseContent);
         responseArrayContent = responseContent.getJSONArray("data");

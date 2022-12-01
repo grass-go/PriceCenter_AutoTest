@@ -23,30 +23,17 @@ public class transferV2Trc721 extends TronlinkBase {
 
     @Test(enabled = true,description = "check /api/transfer/v2/trc721 api")
     public void Test000TransferV2Trc721() throws Exception {
-        param.put("address",quince_B58); //sophia's address
-        param.put("trc20Id","TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG");
+        //param.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t"); //sophia's address
+        param.put("address","41E7D71E72EA48DE9144DC2450E076415AF0EA745F");
+        param.put("trc20Id","TCtbigstF5sL6nJLe5y3vDucPB8kveJ8nq");
         param.put("limit","20");
         param.put("start","0");
-        param.put("direction","all");
+        param.put("direction","0");
         param.put("confirm","0");
+        param.put("db_version","1");
+        param.put("reverse","true");
 
-        int index;
-
-        for(index=0; index<5; index++){
-            log.info("Test000TransferTrc721 cur index is " + index);
-            response = TronlinkApiList.TransferV2Trc721(param);
-            if(response.getStatusLine().getStatusCode() == 200)
-            {
-                index = 6;
-            }
-            else {
-                Thread.sleep(1000);
-                continue;
-            }
-        }
-
-        Assert.assertEquals(7,index);
-
+        response = TronlinkApiList.TransferV2Trc721(param);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         responseArrayContent = responseContent.getJSONArray("token_transfers");
 

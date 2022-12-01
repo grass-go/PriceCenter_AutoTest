@@ -56,7 +56,7 @@ public class feedBack extends TronlinkBase {
     postbody.put("system","Android");
     postbody.put("depict","test test test test test");
     postbody.put("email","test@test.com");
-    params.put("address",quince_B58);
+    //params.put("address",quince_B58);
     response = api.feedBack(postbody,params);
     org.junit.Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 

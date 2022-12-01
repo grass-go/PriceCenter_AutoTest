@@ -41,7 +41,7 @@ public class trxPrice extends TronlinkBase {
   @Test(enabled = true, description = "Api /api/v1/wallet/trxPrice test")
   public void test001TrxPrice() {
     HashMap<String, String> params = new HashMap<>();
-    params.put("address",quince_B58);
+    //params.put("address",quince_B58);
     response = api.trxPrice(params);
     JSONObject trxData = api.parseResponse2JsonObject(response).getJSONObject("data");
     api.printJsonObjectContent(trxData);

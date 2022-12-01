@@ -184,7 +184,7 @@ public class Exchanges extends TronlinkBase {
     public void Test_swap_exchanges_01() {
 
         Map<String,String> params = new HashMap<String,String>();
-        params.put("address",quince_B58);
+        //params.put("address",quince_B58);
         params.put("type", "1");
         response = TronlinkApiList.swapExchanges(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);

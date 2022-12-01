@@ -53,7 +53,7 @@ public class blacklist extends TronlinkBase {
 
   @Test(enabled = true)
   public void test01GetNodes(){
-    params.put("address",quince_B58);
+    //params.put("address",quince_B58);
     headers.put("System","Android");
     headers.put("Version","4.12.0");
     response = TronlinkApiList.v2GetBlacklist(params,headers);

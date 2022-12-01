@@ -37,7 +37,8 @@ public class allCollections extends TronlinkBase{
     public void Test001allCollections() {
 
         params.clear();
-        params.put("address", address721_Hex);
+        //params.put("address", address721_Hex);
+        params.put("address",quince_B58);
 
         response = TronlinkApiList.v2AllCollections_1155(params);
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
