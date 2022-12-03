@@ -171,7 +171,7 @@ public class Exchanges extends TronlinkBase {
         Map<String,String> headers = new HashMap<String,String>();
         headers.put("System","Android");
         headers.put("Version","4.13.0");
-        response = TronlinkApiList.swapExchanges(params);
+        response = TronlinkApiList.swapExchangesNoSig(params,headers);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         JSONObject responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertEquals(20004, responseContent.getIntValue("code"));
