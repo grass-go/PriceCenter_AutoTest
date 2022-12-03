@@ -45,8 +45,9 @@ public class DappToMainFee extends TronlinkBase {
     for(index=0; index<5; index++){
       log.info("Test000dappToMainFee cur index is " + index);
       HashMap<String, String> headers = new HashMap<>();
+      headers.put("System","Android");
       headers.put("Version","4.12.0");
-      response = TronlinkApiList.dappToMainFee(headers);
+      response = TronlinkApiList.dappToMainFeeNoSig(headers);
       if(response.getStatusLine().getStatusCode() == 200)
       {
         index = 6;
