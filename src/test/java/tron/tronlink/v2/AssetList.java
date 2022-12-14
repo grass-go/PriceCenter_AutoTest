@@ -100,9 +100,8 @@ public class AssetList extends TronlinkBase {
   }
 
   //v4.2.1 old user the first token is TRX. Others order by trxCount.
-  @Test(enabled = false)
-  public void assetList03() {
-
+  @Test(enabled = true)
+  public void assetListGetManual() {
     params.clear();
     params.put("address", quince_B58);
     params.put("version", "v2");
@@ -110,49 +109,23 @@ public class AssetList extends TronlinkBase {
 
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-    Assert.assertTrue(responseContent.containsKey("code"));
-    Assert.assertTrue(responseContent.containsKey("message"));
-    Assert.assertTrue(responseContent.containsKey("data"));
-    dataContent = responseContent.getJSONObject("data");
-    JSONArray tokenArray = new JSONArray();
-    tokenArray = dataContent.getJSONArray("token");
-    int count = tokenArray.size();
-    Assert.assertEquals(0,tokenArray.getJSONObject(0).getIntValue("type"));
-    Assert.assertEquals(0,tokenArray.getJSONObject(0).getIntValue("top"));
-    Assert.assertEquals("",tokenArray.getJSONObject(0).getString ("name"));
 
-    for (int j = 1; j < count-1; j++) {
-      BigDecimal curTRXCount = tokenArray.getJSONObject(j).getBigDecimal("trxCount");
-      BigDecimal nextTRXCount = tokenArray.getJSONObject(j+1).getBigDecimal("trxCount");
-      log.info("curTRXCount: "+curTRXCount.toString()+"    nextTRXCount: "+nextTRXCount.toString());
-      int curBiggerFlag = curTRXCount.compareTo(nextTRXCount);
-      Assert.assertTrue(curBiggerFlag >= 0);
-
-      if (tokenArray.getJSONObject(j).getString("contractAddress").equals("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"))
-      {
-        Assert.assertEquals(1,tokenArray.getJSONObject(j).getIntValue("recommandSortId"));
-      }
-      else{
-        log.info("current contractAddress is:"+tokenArray.getJSONObject(j).getString("contractAddress"));
-        Assert.assertEquals(0,tokenArray.getJSONObject(j).getIntValue("recommandSortId"));
-      }
-    }
   }
 
 
   //Use Post method Test old prepared user have 2 tokens.
   @Test(enabled = true)
-  public void assetList04(){
+  public void assetListManual(){
     params.clear();
     bodyObject.clear();
     trc10tokenList.clear();
     trc20tokenList.clear();
 
-    params.put("address",addressNewAsset41);
+    params.put("address",quince_B58);
 
-    trc10tokenList.add("1002000");
+    trc10tokenList.add("1000323");
     bodyObject.put("trc10s",trc10tokenList);
-    trc20tokenList.add("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");
+    trc20tokenList.add("TX78WgVj6mViwvNuDiHjqCXd24SxYGBgpZ");
     bodyObject.put("trc20s", trc20tokenList);
     bodyObject.put("addressType", "2");
 
@@ -161,48 +134,5 @@ public class AssetList extends TronlinkBase {
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
-    Assert.assertEquals(0,responseContent.getIntValue("code"));
-    Assert.assertEquals("OK",responseContent.get("message"));
-
-    dataContent = responseContent.getJSONObject("data");
-    Assert.assertTrue(dataContent.containsKey("totalTRX"));
-    JSONArray tokenJsonArray = dataContent.getJSONArray("token");
-    JSONObject priceJsonArray = dataContent.getJSONObject("price");
-
-    Assert.assertTrue(priceJsonArray.getFloat("priceUSD") > 0);
-    Assert.assertTrue(priceJsonArray.getFloat("priceCny") > 0);
-
-    for (int n = 0; n< tokenJsonArray.size(); n++){
-      JSONObject tokenInfo = tokenJsonArray.getJSONObject(n);
-      Assert.assertTrue(tokenInfo.containsKey("trxCount"));
-      Assert.assertTrue(tokenInfo.containsKey("balance"));
-      Assert.assertTrue(tokenInfo.containsKey("contractAddress"));
-      Assert.assertTrue(tokenInfo.containsKey("precision"));
-      Assert.assertTrue(tokenInfo.containsKey("totalSupply"));
-      Assert.assertTrue(tokenInfo.containsKey("tokenDesc"));
-      Assert.assertTrue(tokenInfo.containsKey("type"));
-
-      int type = tokenInfo.getIntValue("type");
-      String id = tokenInfo.getString("id");
-      String contractAddress = tokenInfo.getString("contractAddress");
-      switch (type){
-        case 0:
-          Assert.assertEquals("",id);
-          Assert.assertEquals("",contractAddress);
-          break;
-        case 1:
-          Assert.assertEquals("1002000",id);
-          Assert.assertEquals("",contractAddress);
-          break;
-        case 2:
-          Assert.assertEquals("",id);
-          Assert.assertEquals("TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn".equals(contractAddress) ||
-                  "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t".equals(contractAddress) || "THbVQp8kMjStKNnf2iCY6NEzThKMK5aBHg".equals(contractAddress) , true);
-          break;
-        default:
-          break;
-      }
-
-    }
   }
 }

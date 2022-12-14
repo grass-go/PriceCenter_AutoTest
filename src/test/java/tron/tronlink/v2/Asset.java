@@ -27,9 +27,8 @@ public class Asset extends TronlinkBase {
 
   @Test(enabled = true)
   public void asset01Manual(){
-    //params.put("address",quince_B58);
-    params.put("address","");
-    params.put("tokenAddress","TF17BgPaZYbz8oxbjhriubPDsA7ArKoLX3");
+    params.put("address",quince_B58);
+    params.put("tokenAddress","1000323");
     params.put("tokenType","2");
     response = TronlinkApiList.v2Asset(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);

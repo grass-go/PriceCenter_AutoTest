@@ -44,6 +44,7 @@ public class delAsset extends TronlinkBase {
     List<String> tokenDelList = new ArrayList<>();
     List<String> token721DelList = new ArrayList<>();
     Map<String, String> params = new HashMap<>();
+    Map<String, String> header = new HashMap<>();
 
     AssertAllCollection ac = new AssertAllCollection();
     AssertGetAllCollection gac = new AssertGetAllCollection();
@@ -55,17 +56,19 @@ public class delAsset extends TronlinkBase {
     public void delAsset01() {
         //Prepare parameters and post body; Send delAsset request; Check response of delAsset.
         params.clear();
-        params.put("address",testDELuser_B58);
+        params.put("address",quince_B58);
+        header.put("System","Android");
+        header.put("Version","v4.10.1");
+
         tokenDelList.clear();
-        tokenDelList.add("1002000");
-        tokenDelList.add("TKkeiboTkxXKJpbmVFbv4a8ov5rAfRDMf9");
-        token721DelList.clear();
-        token721DelList.add("TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG");
+        tokenDelList.add("TCrPPSESG15RFebEFMY5zmJTs8TquWfqkt");
+        //token721DelList.clear();
+        //token721DelList.add("TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG");
         jsonObject.clear();
-        jsonObject.put("address",testDELuser_B58);
+        jsonObject.put("address",quince_B58);
         jsonObject.put("tokenDel",tokenDelList);
-        jsonObject.put("token721Del",token721DelList);
-        response = TronlinkApiList.v2DelAsset(params,jsonObject);
+        //jsonObject.put("token721Del",token721DelList);
+        response = TronlinkApiList.v2DelAsset(header,params,jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertEquals(0, responseContent.getIntValue("code"));
@@ -74,8 +77,8 @@ public class delAsset extends TronlinkBase {
 
         //Check assetList page.
         params.put("version","v2");
-        params.put("address",testDELuser_B58);
-        params.put("signature","5BSZuynlSpo%2FJAn7zyAsU9d2Hpk%3D");
+        params.put("address",quince_B58);
+
         response = TronlinkApiList.v2AssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
@@ -84,70 +87,46 @@ public class delAsset extends TronlinkBase {
         Assert.assertTrue(responseContent.containsKey("data"));
         Object shortNames = JSONPath.eval(responseContent, String.join("","$..data.token[*].shortName"));
         JSONArray shortNameArray=(JSONArray)shortNames;
-        Assert.assertFalse(shortNameArray.contains("BTT"));
-        Assert.assertFalse(shortNameArray.contains("SUNOLD"));
+        log.info(shortNameArray.toString());
+        //Assert.assertFalse(shortNameArray.contains("BTT"));
+        //Assert.assertFalse(shortNameArray.contains("WQQDF1"));
 
-        //Check assetList V1 page
+        /*//Check assetList V1 page
         Map<String, String> paramsInURL = new HashMap<>();
-        paramsInURL.put("address", testDELuser_B58);
-        response = TronlinkApiList.assetlist(testDELuser_B58,paramsInURL);
+        paramsInURL.put("address", quince_B58);
+        response = TronlinkApiList.assetlist(quince_B58,paramsInURL);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         Object shortNamesV1 = JSONPath.eval(responseContent, String.join("","$..data.token[*].shortName"));
         JSONArray shortNameArrayV1=(JSONArray)shortNames;
-        Assert.assertFalse(shortNameArrayV1.contains("BTT"));
-        Assert.assertFalse(shortNameArrayV1.contains("SUNOLD"));
+        //Assert.assertFalse(shortNameArrayV1.contains("BTT"));
+        Assert.assertFalse(shortNameArrayV1.contains("WQQDF1"));*/
 
         //check allAssetList page
         params.clear();
-        params.put("address",testDELuser_B58);
+        params.put("address",quince_B58);
         response = TronlinkApiList.V2AllAssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         shortNames = JSONPath.eval(responseContent, String.join("","$..data.token[*].shortName"));
         shortNameArray = (JSONArray)shortNames;
-        Assert.assertFalse(shortNameArray.contains("BTT"));
-        Assert.assertFalse(shortNameArray.contains("SUNOLD"));
+        //Assert.assertFalse(shortNameArray.contains("BTT"));
+        //Assert.assertFalse(shortNameArray.contains("WQQDF1"));
 
-        //check getAllCollection page
-        params.put("version","v2");
-        response = TronlinkApiList.v2GetAllCollection(params);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-        shortNames = JSONPath.eval(responseContent, String.join("","$..data[*].contractAddress"));
-        shortNameArray = (JSONArray)shortNames;
-        Assert.assertFalse(shortNameArray.contains("TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG"));
 
-        //check allCollections page
-        params.remove("version");
-        response = TronlinkApiList.v2AllCollections(params);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-        shortNames = JSONPath.eval(responseContent, String.join("","$..data.token[*].contractAddress"));
-        shortNameArray = (JSONArray)shortNames;
-        Assert.assertFalse(shortNameArray.contains("TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG"));
-
-        //check account/list
+        /*//check account/list
         array.clear();
-        String postStr="{\"TMSsn5sSP9u66dgzf2y63KaTmaLBPgJfj4\":1}";
+        String postStr="{\"TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t\":1}";
         array.add(JSONObject.parse(postStr));
         response = TronlinkApiList.v2accountList(params,array,null);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
-        Object balanceObject = JSONPath.eval(responseContent, "$..data.balanceList[0].balance");
-        BigDecimal balance = new BigDecimal(balanceObject.toString());
-        BigDecimal fullbalance = new BigDecimal("6.792603");
-        Assert.assertTrue(balance.compareTo(fullbalance) == -1);
-
         //check account/list v1 page
         response = TronlinkApiList.accountList(array,params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);*/
 
-        balanceObject = JSONPath.eval(responseContent, "$..data.balanceList[0].balance");
-        balance = new BigDecimal(balanceObject.toString());
-        fullbalance = new BigDecimal("6.792603");
-        Assert.assertTrue(balance.compareTo(fullbalance) == -1);
+
 
     }
 
@@ -155,21 +134,27 @@ public class delAsset extends TronlinkBase {
     public void delAsset02() throws Exception {
         //addAsset for these del coin.
         params.clear();
-        params.put("address",testDELuser_B58);
-        token10List.add("1002000");
-        token20List.add("TKkeiboTkxXKJpbmVFbv4a8ov5rAfRDMf9");
-        token721List.add("TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG");
+        //params.put("address","TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo");
+        params.put("address",quince_B58);
+        header.put("System","Chrome");
+        header.put("Version","3.1.0");
+
+
+        //token10List.add("1002000");
+        token20List.add("TCrPPSESG15RFebEFMY5zmJTs8TquWfqkt");
+        //token721List.add("TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG");
         jsonObject.clear();
-        jsonObject.put("address",testDELuser_B58);
-        jsonObject.put("token10", token10List);
+        jsonObject.put("address",quince_B58);
+        //jsonObject.put("token10", token10List);
         jsonObject.put("token20", token20List);
-        jsonObject.put("token721", token721List);
-        response = TronlinkApiList.v2AddAsset(params,jsonObject);
+        //jsonObject.put("token721", token721List);
+        response = TronlinkApiList.v2AddAsset(header,params,jsonObject);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 
         //Check assetList page.
         params.put("version","v2");
-        params.put("address",testDELuser_B58);
+        params.put("address",quince_B58);
         response = TronlinkApiList.v2AssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
@@ -178,18 +163,19 @@ public class delAsset extends TronlinkBase {
         Assert.assertTrue(responseContent.containsKey("data"));
         Object shortNames = JSONPath.eval(responseContent, String.join("","$..data.token[*].shortName"));
         JSONArray shortNameArray=(JSONArray)shortNames;
-        Assert.assertTrue(shortNameArray.contains("BTTOLD"));
-        Assert.assertTrue(shortNameArray.contains("SUNOLD"));
+        //Assert.assertTrue(shortNameArray.contains("BTTOLD"));
+        //Assert.assertFalse(shortNameArray.contains("WQQDF1"));
 
-        //Check assetList V1 page
+        /*//Check assetList V1 page
         Map<String, String> paramsInURL = new HashMap<>();
-        paramsInURL.put("address", testDELuser_B58);
-        response = TronlinkApiList.assetlist(testDELuser_B58,paramsInURL);
+        paramsInURL.put("address", quince_B58);
+        response = TronlinkApiList.assetlist(quince_B58,paramsInURL);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         Object shortNamesV1 = JSONPath.eval(responseContent, String.join("","$..data.token[*].shortName"));
-        JSONArray shortNameArrayV1=(JSONArray)shortNames;
-        Assert.assertTrue(shortNameArrayV1.contains("BTTOLD"));
-        Assert.assertTrue(shortNameArrayV1.contains("SUNOLD"));
+        JSONArray shortNameArrayV1=(JSONArray)shortNamesV1;
+        //Assert.assertTrue(shortNameArrayV1.contains("BTTOLD"));
+        Assert.assertTrue(shortNameArrayV1.contains("WQQDF1"));*/
 
         //check allAssetList page
         params.remove("version");
@@ -198,79 +184,43 @@ public class delAsset extends TronlinkBase {
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         shortNames = JSONPath.eval(responseContent, String.join("","$..data.token[*].shortName"));
         shortNameArray = (JSONArray)shortNames;
-        Assert.assertTrue(shortNameArray.contains("BTTOLD"));
-        Assert.assertTrue(shortNameArray.contains("SUNOLD"));
+        //Assert.assertTrue(shortNameArray.contains("BTTOLD"));
+        //Assert.assertTrue(shortNameArray.contains("WQQDF1"));
 
-        //check getAllCollection page
-        params.put("version","v2");
-        response = TronlinkApiList.v2GetAllCollection(params);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-        shortNames = JSONPath.eval(responseContent, String.join("","$..data[*].contractAddress"));
-        shortNameArray = (JSONArray)shortNames;
-        Assert.assertTrue(shortNameArray.contains("TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG"));
 
-        //check allCollections page
-        params.remove("version");
-        params.put("signature","0SX%2Fzp3x7kE%2FGrfAyj3F9%2BBSrp8%3D");
-        response = TronlinkApiList.v2AllCollections(params);
-        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-        shortNames = JSONPath.eval(responseContent, String.join("","$..data.token[*].contractAddress"));
-        shortNameArray = (JSONArray)shortNames;
-        Assert.assertTrue(shortNameArray.contains("TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG"));
-
-        //check account/list
+        /*//check account/list
         array.clear();
-        String postStr="{\"TMSsn5sSP9u66dgzf2y63KaTmaLBPgJfj4\":1}";
+        String postStr="{\"TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t\":1}";
         array.add(JSONObject.parse(postStr));
         response = TronlinkApiList.v2accountList(params,array,null);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
-        Object balanceObject = JSONPath.eval(responseContent, "$..data.balanceList[0].balance");
-        BigDecimal balance = new BigDecimal(balanceObject.toString());
-        log.info("===============########debug##########============");
-        log.info("balance:"+balance.toString());
-        BigDecimal fullbalance = new BigDecimal("6.792603");
-        //BigDecimal fullbalance = new BigDecimal("5.079483");
-        BigDecimal absgap = fullbalance.subtract(balance).abs();
-        log.info("absgap:"+absgap.toString());
-        BigDecimal tolerance = new BigDecimal("2");
-        Assert.assertTrue(absgap.compareTo(tolerance) == -1);
 
         //check account/list v1 page
         params.clear();
-        params.put("address",testDELuser_B58 );
+        params.put("address",quince_B58 );
         response = TronlinkApiList.accountList(array, params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);*/
 
-        balanceObject = JSONPath.eval(responseContent, "$..data.balanceList[0].balance");
-        balance = new BigDecimal(balanceObject.toString());
-        log.info("===============########debug##########============");
-        log.info("balance:"+balance.toString());
-        fullbalance = new BigDecimal("6.792603");
-        absgap = fullbalance.subtract(balance).abs();
-        log.info("absgap:"+absgap.toString());
-        tolerance = new BigDecimal("1");
-        Assert.assertTrue(absgap.compareTo(fullbalance) == -1);
+
     }
 
     @Test(enabled = true, description = "Del \"cancel focus\" coin, check all apis.")
     public void delAsset03() throws Exception {
         //cancel focus
         params.clear();
-        params.put("address",testDELuser_B58);
+        params.put("address",quince_B58);
         token10CancelList.add("1002000");
         token20CancelList.add("TKkeiboTkxXKJpbmVFbv4a8ov5rAfRDMf9");
         token721CancelList.add("TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG");
         jsonObject.clear();
-        jsonObject.put("address",testDELuser_B58);
+        jsonObject.put("address",quince_B58);
         jsonObject.put("token10Cancel", token10List);
         jsonObject.put("token20Cancel", token20List);
         jsonObject.put("token721Cancel", token721List);
-        response = TronlinkApiList.v2AddAsset(params,jsonObject);
+        response = TronlinkApiList.v2AddAsset(null,params,jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 
         //del prepared token.
@@ -280,16 +230,16 @@ public class delAsset extends TronlinkBase {
         token721DelList.clear();
         token721DelList.add("TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG");
         jsonObject.clear();
-        jsonObject.put("address",testDELuser_B58);
+        jsonObject.put("address",quince_B58);
         jsonObject.put("tokenDel",tokenDelList);
         jsonObject.put("token721Del",token721DelList);
-        response = TronlinkApiList.v2DelAsset(params,jsonObject);
+        response = TronlinkApiList.v2DelAsset(null,params,jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
 
         //check all apis as the first case do.
         //Check assetList page.
         params.put("version","v2");
-        params.put("address",testDELuser_B58);
+        params.put("address",quince_B58);
         response = TronlinkApiList.v2AssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
@@ -303,8 +253,8 @@ public class delAsset extends TronlinkBase {
 
         //Check assetList V1 page
         Map<String, String> paramsInURL = new HashMap<>();
-        paramsInURL.put("address", testDELuser_B58);
-        response = TronlinkApiList.assetlist(testDELuser_B58,paramsInURL);
+        paramsInURL.put("address", quince_B58);
+        response = TronlinkApiList.assetlist(quince_B58,paramsInURL);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         Object shortNamesV1 = JSONPath.eval(responseContent, String.join("","$..data.token[*].shortName"));
         JSONArray shortNameArrayV1=(JSONArray)shortNames;
@@ -313,7 +263,7 @@ public class delAsset extends TronlinkBase {
 
         //check allAssetList page
         params.clear();
-        params.put("address",testDELuser_B58);
+        params.put("address",quince_B58);
         response = TronlinkApiList.V2AllAssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
@@ -355,7 +305,7 @@ public class delAsset extends TronlinkBase {
 
         //check account/list v1 page
         params.clear();
-        params.put("address",testDELuser_B58);
+        params.put("address",quince_B58);
         response = TronlinkApiList.accountList(array, params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
@@ -380,7 +330,7 @@ public class delAsset extends TronlinkBase {
         jsonObject.put(Keys.delToken1155, dels);
 
         params = sig.GenerateParams(user, Constants.delAssetUrl,POST);
-        response = TronlinkApiList.v2DelAsset(params,jsonObject);
+        response = TronlinkApiList.v2DelAsset(null,params,jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         String rspStr = TronlinkApiList.parseResponse2String(response);
         CommonRsp rsp = JSONObject.parseObject(rspStr, CommonRsp.class);
@@ -398,6 +348,9 @@ public class delAsset extends TronlinkBase {
         gac.AssertNotFoundInGAC(user, delToken, true);
 
     }
+
+
+
 
     // 初始化参数
     private void initParams(){

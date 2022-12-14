@@ -129,7 +129,7 @@ public class votingWitness extends TronlinkBase {
     Map<String, String> params = new HashMap<>();
     params.put("sort_type","2");
     params.put("has_all","0");
-    params.put("address", quince_B58);
+    //params.put("address", quince_B58);
     response = TronlinkApiList.votingWitness(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);

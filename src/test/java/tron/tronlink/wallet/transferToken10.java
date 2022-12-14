@@ -71,12 +71,12 @@ public class transferToken10 {
   @Test(enabled = true,description = "get token10 transaction")
   public void Test000getToken10Transfer() throws Exception {
     //param.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t"); //sophia's address
-    param.put("address","41E7D71E72EA48DE9144DC2450E076415AF0EA745F");
+    param.put("address","4199AB9DF0BAB6385C5ECADE8B0F7A7E914502F6FC");
     param.put("limit","20");
     param.put("start","0");
     param.put("direction","2");
     param.put("reverse","true");
-    param.put("trc10Id","1000340");
+    param.put("trc10Id","1002013");
     response = TronlinkApiList.apiTransferToken10(param);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);

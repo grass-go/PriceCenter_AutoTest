@@ -54,7 +54,7 @@ public class addAsset extends TronlinkBase {
         // jsonObject.put("address","41F985738AE54FD87ED6CD07065905EBEA355E66CD");
         jsonObject.put("address", addressNewAsset41);
         jsonObject.put("token10", trc10tokenList);
-        response = TronlinkApiList.v2AddAsset(params, jsonObject);
+        response = TronlinkApiList.v2AddAsset(null,params, jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertTrue(responseContent.containsKey("code"));
@@ -98,7 +98,7 @@ public class addAsset extends TronlinkBase {
         jsonObject.put("address", addressNewAsset41);
         // jsonObject.put("address","41F985738AE54FD87ED6CD07065905EBEA355E66CD");
         jsonObject.put("token10Cancel", trc10tokenList);
-        response = TronlinkApiList.v2AddAsset(params, jsonObject);
+        response = TronlinkApiList.v2AddAsset(null,params, jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertTrue(responseContent.containsKey("code"));
@@ -147,7 +147,7 @@ public class addAsset extends TronlinkBase {
         trc721tokenList.add("TPLVhGLc1BWHCHBMnBYakNsqhXQ7v5xp2h");// TAHIGO KOHINAGI (TAHIGO)
         jsonObject.put("address", address721_Hex);
         jsonObject.put("token721", trc721tokenList);
-        response = TronlinkApiList.v2AddAsset(params, jsonObject);
+        response = TronlinkApiList.v2AddAsset(null,params, jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
@@ -201,7 +201,7 @@ public class addAsset extends TronlinkBase {
 
         jsonObject.put("address", address721_Hex);
         jsonObject.put("token721Cancel", trc721tokenList);
-        response = TronlinkApiList.v2AddAsset(params, jsonObject);
+        response = TronlinkApiList.v2AddAsset(null,params, jsonObject);
 
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
@@ -269,7 +269,7 @@ public class addAsset extends TronlinkBase {
             }
         }
 
-        response = TronlinkApiList.v2AddAsset(params, jsonObject);
+        response = TronlinkApiList.v2AddAsset(null,params, jsonObject);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         String rspStr = TronlinkApiList.parseResponse2String(response);
         CommonRsp rsp = JSONObject.parseObject(rspStr, CommonRsp.class);
@@ -291,7 +291,7 @@ public class addAsset extends TronlinkBase {
         jsonObject.put("address", addressNewAsset41);
         // jsonObject.put("address","41F985738AE54FD87ED6CD07065905EBEA355E66CD");
         jsonObject.put("token10Cancel", trc10tokenList);
-        response = TronlinkApiList.v2AddAsset(params, jsonObject);
+        response = TronlinkApiList.v2AddAsset(null,params, jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertTrue(responseContent.containsKey("code"));

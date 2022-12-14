@@ -994,21 +994,15 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse v2AddAsset(Map<String, String> caseParams, JSONObject object) {
+    public static HttpResponse v2AddAsset(Map<String, String> caseheader,Map<String, String> caseParams, JSONObject object) {
         String curURI = "/api/wallet/v2/addAsset";
-        Map<String, String> caseHeader = new HashMap<>();
-        caseHeader.put("Content-type", "application/json; charset=utf-8");
-        caseHeader.put("Connection", "Close");
-        response = createPostConnectWithSignature(curURI, caseParams, caseHeader, object );
+        response = createPostConnectWithSignature(curURI, caseParams, caseheader, object );
         return response;
     }
 
-    public static HttpResponse v2DelAsset(Map<String, String> caseparams, JSONObject object) {
+    public static HttpResponse v2DelAsset(Map<String, String> caseheader,Map<String, String> caseparams, JSONObject object) {
         String curURI = "/api/wallet/v2/delAsset";
-        Map<String, String> caseHeader= new HashMap<>();
-        caseHeader.put("Content-type", "application/json; charset=utf-8");
-        caseHeader.put("Connection", "Close");
-        response = createPostConnectWithSignature(curURI, caseparams, caseHeader, object);
+        response = createPostConnectWithSignature(curURI, caseparams, caseheader, object);
         return response;
     }
 
@@ -1320,29 +1314,20 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return true;
     }
 
-    public static HttpResponse v2TokenQuery(Map<String, String> params, JSONObject object) {
+    public static HttpResponse v2TokenQuery(Map<String, String> headers, Map<String, String> params, JSONObject object) {
         String curUri = "/api/wallet/v2/token/query";
-        Map<String, String> header = new HashMap<>();
-        header.put("Content-type", "application/json; charset=utf-8");
-        header.put("Connection", "Close");
-        response = createPostConnectWithSignature(curUri, params, header, object);
+        response = createPostConnectWithSignature(curUri, params, headers, object);
         return response;
     }
 
-    public static HttpResponse v2TokenAdd(Map<String, String> params, JSONObject object) {
-        String requestUrl = HttpNode + "/api/wallet/v2/token/add";
-        Map<String, String> header = getV2Header();
-        header.put("Content-type", "application/json; charset=utf-8");
-        header.put("Connection", "Close");
-        response = createPostConnect(requestUrl, params, object, header);
+    public static HttpResponse v2TokenAdd(Map<String, String> header, Map<String, String> params, JSONObject object) {
+        String curUri = "/api/wallet/v2/token/add";
+        response = createPostConnectWithSignature(curUri, params, header,object);
         return response;
     }
 
-    public static HttpResponse v2TokenSync(Map<String, String> params, JSONObject object) {
+    public static HttpResponse v2TokenSync(Map<String, String> header, Map<String, String> params, JSONObject object) {
         String curUri = "/api/wallet/v2/token/sync";
-        Map<String, String> header = new HashMap<>();
-        header.put("Content-type", "application/json; charset=utf-8");
-        header.put("Connection", "Close");
         response = createPostConnectWithSignature(curUri, params, header, object);
         return response;
     }
@@ -1390,6 +1375,12 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         Assert.assertEquals(200, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         return responseContent;
+    }
+
+    public static HttpResponse tokenInfo(Map<String, String> caseparams,Map<String, String> caseheaders) throws Exception {
+        String curUri =  "/api/wallet/v2/tokenInfo";
+        response = createGetConnectWithSignature(curUri, caseparams, caseheaders,null);
+        return response;
     }
 
     public static HttpResponse v2CheckWhite(Map<String, String> params) throws Exception {

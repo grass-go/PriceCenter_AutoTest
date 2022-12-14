@@ -582,7 +582,7 @@ public class TronlinkServerHttpClient {
             headers = AddMap(headers, caseHeader);
         }
         String cursig="";
-        if(caseParams.containsKey("address")) {
+        if(caseParams != null && caseParams.containsKey("address")) {
             //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
             cursig = getNewSignature(curURI, "GET", caseParams.get("address"), params, headers);
         }else{
@@ -625,7 +625,7 @@ public class TronlinkServerHttpClient {
 
         String cursig="";
         //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
-        if(caseParams.containsKey("address")) {
+        if(caseParams != null && caseParams.containsKey("address")) {
             //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
             cursig = getNewSignature(curURI, "POST", caseParams.get("address"), params, headers);
         }else{

@@ -38,6 +38,7 @@ public class getCollectionInfos extends TronlinkBase {
     public void getCollectionInfosTest001() {
         //assetIdList.add("10000001");
         //assetIdList.add("2");
+        params.put("address",quince_B58);
         assetIdList.add("4");
 
         bodyObject.put("assetIdList",assetIdList);
