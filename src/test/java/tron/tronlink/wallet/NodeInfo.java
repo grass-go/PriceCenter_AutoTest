@@ -199,7 +199,7 @@ public class NodeInfo extends TronlinkBase {
 
     @Test(description = "正确性测试：app版本 >= 4.11.0 的时候， 当前接口进行权限校验。")
     public void test003_GetNodeInfo() {
-        for (int i = 0; i < 20; i++) {
+
             JSONArray array = getRequestBody();
 
             Map<String, String> headers = getTest001Headers();
@@ -210,23 +210,18 @@ public class NodeInfo extends TronlinkBase {
             log.info(getNodeInfoStr);
             NodeInfoRsp nodeInfoRsp = JSONObject.parseObject(getNodeInfoStr, NodeInfoRsp.class);
             AssertNodeInfo(nodeInfoRsp);
-        }
+
     }
 
     @Test(description = "异常测试：app版本 < 4.11.0 的时候， 如果不包含System，不返回正确结果。不参加鉴权，不用新版接口", groups={"NoSignature"})
     public void test004_GetNodeInfo() {
-        for (int i = 0; i < 20; i++) {
             JSONArray array = getRequestBody();
-            //Map<String, String> headers = getTest007Headers();
-            //Map<String, String> params = getTestParams();
             response = TronlinkApiList.getNodeInfo(array,"NO");
             Assert.assertEquals(response.getStatusLine().getStatusCode(), 400);
-        }
     }
 
     @Test(description = "正确性测试：chrome版本 >= 4.0.0 的时候， 当前接口进行权限校验。")
     public void test005_GetNodeInfo() {
-        for (int i = 0; i < 20; i++) {
             JSONArray array = getRequestBody();
             Map<String, String> headers = getTest002Headers();
             Map<String, String> params = getTest002Params();
@@ -236,7 +231,7 @@ public class NodeInfo extends TronlinkBase {
             log.info(getNodeInfoStr);
             NodeInfoRsp nodeInfoRsp = JSONObject.parseObject(getNodeInfoStr, NodeInfoRsp.class);
             AssertNodeInfo(nodeInfoRsp);
-        }
+
     }
 
 
