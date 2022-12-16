@@ -213,7 +213,7 @@ public class NodeInfo extends TronlinkBase {
 
     }
 
-    @Test(description = "异常测试：app版本 < 4.11.0 的时候， 如果不包含System，不返回正确结果。不参加鉴权，不用新版接口", groups={"NoSignature"})
+    @Test(enabled = false, description = "异常测试：app版本 < 4.11.0 的时候， 如果不包含System，不返回正确结果。不参加鉴权，不用新版接口", groups={"NoSignature"})
     public void test004_GetNodeInfo() {
             JSONArray array = getRequestBody();
             response = TronlinkApiList.getNodeInfo(array,"NO");
