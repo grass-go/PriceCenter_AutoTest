@@ -12,6 +12,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.tron.api.GrpcAPI;
+import org.tron.common.utils.ByteArray;
 import org.tron.common.utils.Commons;
 import org.tron.core.services.http.JsonFormat;
 import org.tron.protos.Protocol;
@@ -62,6 +63,7 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
 
     @Test(enabled = true, description = "multi sign send coin with serializable")
     public void sendCoin() {
+        // visible: true
         String transactionStr = HttpMethed.sendCoin(httpnode, quince58, wqq158, 9L, "true", 3, wqq1key);
         log.info("-----raw transaction:  " + transactionStr);
 
@@ -71,6 +73,19 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
         object.put("transaction", JSONObject.parse(transactionStr));
         param.put("serializable", "true");
         res = TronlinkApiList.multiTransactionNoSig(object,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+        // visible: false
+        String transactionStr2 = HttpMethed.sendCoin(httpnode, ByteArray.toHexString(quince), ByteArray.toHexString(wqq1), 9L, "false", 3, wqq1key);
+        log.info("-----raw transaction2:  " + transactionStr2);
+
+        JSONObject object2 = new JSONObject();
+        object2.put("address", wqq158);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0, responseContent.getIntValue("code"));
