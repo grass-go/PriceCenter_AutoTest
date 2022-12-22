@@ -91,8 +91,9 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
         Assert.assertEquals(0, responseContent.getIntValue("code"));
     }
 
-    @Test(enabled = true, description = "multi sign freeze balandce with serializable")
-    public void freezeBalance() throws Exception {
+    @Test(enabled = true, description = "multi sign freeze balance with serializable no receiver address")
+    public void freezeBalanceNoReceiver() throws Exception {
+        // visible:true
         String transactionStr = HttpMethed.freezeBalance(httpnode, quince58, 1000000L, 3,0, null,"true", 5, wqq1key);
         log.info("-----raw transaction:  " + transactionStr);
 
@@ -102,6 +103,113 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
         object.put("transaction", JSONObject.parse(transactionStr));
         param.put("serializable", "true");
         res = TronlinkApiList.multiTransactionNoSig(object,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+        // visible:false
+        String transactionStr2 = HttpMethed.freezeBalance(httpnode, ByteArray.toHexString(quince), 1000000L, 3,1, null,"false", 5, wqq1key);
+        log.info("-----raw transaction2:  " + transactionStr2);
+
+        JSONObject object2 = new JSONObject();
+        object2.put("address", wqq158);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+    }
+
+    @Test(enabled = true, description = "multi sign freeze balance with serializable has receiver address")
+    public void freezeBalanceHasReceiver() throws Exception {
+        // visible:true
+        String transactionStr = HttpMethed.freezeBalance(httpnode, quince58, 1000000L, 3,0, wqq158,"true", 5, wqq1key);
+        log.info("-----raw transaction:  " + transactionStr);
+
+        JSONObject object = new JSONObject();
+        object.put("address", wqq158);
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(transactionStr));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+        // visible:false
+        String transactionStr2 = HttpMethed.freezeBalance(httpnode, ByteArray.toHexString(quince), 1000000L, 3,1, ByteArray.toHexString(wqq1),"false", 5, wqq1key);
+        log.info("-----raw transaction2:  " + transactionStr2);
+
+        JSONObject object2 = new JSONObject();
+        object2.put("address", wqq158);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+    }
+
+    @Test(enabled = true, description = "multi sign unfreeze balance with serializable no receiver address")
+    public void unfreezeBalanceNoReceiver() throws Exception {
+        // visible:true
+        String transactionStr = HttpMethed.unFreezeBalance(httpnode, quince58, 0, null,"true", 5, wqq1key);
+        log.info("-----raw transaction:  " + transactionStr);
+
+        JSONObject object = new JSONObject();
+        object.put("address", wqq158);
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(transactionStr));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+        // visible:false
+        String transactionStr2 = HttpMethed.unFreezeBalance(httpnode, ByteArray.toHexString(quince), 1, null,"false", 5, wqq1key);
+        log.info("-----raw transaction2:  " + transactionStr2);
+
+        JSONObject object2 = new JSONObject();
+        object2.put("address", wqq158);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+    }
+
+    @Test(enabled = true, description = "multi sign unfreeze balance with serializable has receiver address")
+    public void unfreezeBalanceHasReceiver() throws Exception {
+        // visible:true
+        String transactionStr = HttpMethed.unFreezeBalance(httpnode, quince58,0, "TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ","true", 5, wqq1key);
+        log.info("-----raw transaction:  " + transactionStr);
+
+        JSONObject object = new JSONObject();
+        object.put("address", wqq158);
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(transactionStr));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+        // visible:false
+        String transactionStr2 = HttpMethed.unFreezeBalance(httpnode, ByteArray.toHexString(quince), 1, "41A2E895D1C362860C605405D289A7C99CB6DA2741","false", 5, wqq1key);
+        log.info("-----raw transaction2:  " + transactionStr2);
+
+        JSONObject object2 = new JSONObject();
+        object2.put("address", wqq158);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0, responseContent.getIntValue("code"));

@@ -275,7 +275,48 @@ public class HttpMethed {
       transactionString = EntityUtils.toString(response.getEntity());
       log.info("transactionString:"+transactionString);
       JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
-      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+120000);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+360000);
+
+      transactionSignString = gettransactionsign(httpNode, transactionObject.toString(), fromKey);
+      log.info("-----------sign information-----------------");
+      log.info(transactionSignString);
+
+      JSONObject jsonObject = HttpMethed.parseStringContent(transactionSignString);
+      jsonObject.remove("visible");
+      jsonObject.remove("txID");
+      jsonObject.remove("raw_data_hex");
+      transactionStr = jsonObject.toString();
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return transactionStr;
+  }
+
+  public static String unFreezeBalance(String httpNode, String ownerAddress, Integer resourceCode,
+                                       String receiverAddress, String visible, Integer permissionId, String fromKey) {
+    try {
+      final String requestUrl = "http://" + httpNode + "/wallet/unfreezebalance";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("owner_address", ownerAddress);
+      if (resourceCode == 0) {
+        userBaseObj2.addProperty("resource", "BANDWIDTH");
+      }
+      if (resourceCode == 1) {
+        userBaseObj2.addProperty("resource", "ENERGY");
+      }
+      if (receiverAddress != null) {
+        userBaseObj2.addProperty("receiver_address", receiverAddress);
+      }
+      userBaseObj2.addProperty("visible", visible);
+      userBaseObj2.addProperty("Permission_id", permissionId);
+      log.info("userBaseObj2:"+userBaseObj2.toString());
+      response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      log.info("transactionString:"+transactionString);
+      JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+360000);
 
       transactionSignString = gettransactionsign(httpNode, transactionObject.toString(), fromKey);
       log.info("-----------sign information-----------------");
@@ -935,44 +976,6 @@ public class HttpMethed {
     responseContent = HttpMethed.parseResponseContent(response);
     //HttpMethed.printJsonContent(responseContent);
     return Boolean.valueOf(responseContent.getString("result")).booleanValue();
-  }
-
-  /**
-   * constructor.
-   */
-  public static HttpResponse unFreezeBalance(String httpNode, byte[] ownerAddress,
-      Integer resourceCode, String fromKey) {
-    return unFreezeBalance(httpNode, ownerAddress, resourceCode, null, fromKey);
-  }
-
-  /**
-   * constructor.
-   */
-  public static HttpResponse unFreezeBalance(String httpNode, byte[] ownerAddress,
-      Integer resourceCode, byte[] receiverAddress, String fromKey) {
-    try {
-      final String requestUrl = "http://" + httpNode + "/wallet/unfreezebalance";
-      JsonObject userBaseObj2 = new JsonObject();
-      userBaseObj2.addProperty("owner_address", ByteArray.toHexString(ownerAddress));
-      if (resourceCode == 0) {
-        userBaseObj2.addProperty("resource", "BANDWIDTH");
-      }
-      if (resourceCode == 1) {
-        userBaseObj2.addProperty("resource", "ENERGY");
-      }
-      if (receiverAddress != null) {
-        userBaseObj2.addProperty("receiver_address", ByteArray.toHexString(receiverAddress));
-      }
-      response = createConnect(requestUrl, userBaseObj2);
-      transactionString = EntityUtils.toString(response.getEntity());
-      transactionSignString = gettransactionsign(httpNode, transactionString, fromKey);
-      response = broadcastTransaction(httpNode, transactionSignString);
-    } catch (Exception e) {
-      e.printStackTrace();
-      httppost.releaseConnection();
-      return null;
-    }
-    return response;
   }
 
   /**
