@@ -1123,6 +1123,24 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     }
 
+    public static Protocol.Transaction accountCreate(byte[] ownerAddress, byte[] newAddress,
+                                                     WalletGrpc.WalletBlockingStub blockingStubFull) {
+        Wallet.setAddressPreFixByte(ADD_PRE_FIX_BYTE_MAINNET);
+        byte[] owner = ownerAddress;
+        AccountContract.AccountCreateContract.Builder builder = AccountContract.AccountCreateContract.newBuilder();
+        builder.setOwnerAddress(ByteString.copyFrom(owner));
+        builder.setAccountAddress(ByteString.copyFrom(newAddress));
+        AccountContract.AccountCreateContract contract = builder.build();
+        Protocol.Transaction transaction = blockingStubFull.createAccount(contract);
+        //transaction = TransactionUtils.setDelaySeconds(transaction, delaySeconds);
+        if (transaction == null || transaction.getRawData().getContractCount() == 0) {
+            log.info("transaction == null");
+            return null;
+        }
+        return transaction;
+    }
+
+
     /**
      * constructor.
      */

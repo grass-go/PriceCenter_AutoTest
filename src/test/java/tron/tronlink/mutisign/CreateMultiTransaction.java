@@ -1,5 +1,6 @@
 package tron.tronlink.mutisign;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.protobuf.ByteString;
 import io.grpc.ManagedChannel;
@@ -12,10 +13,12 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.tron.api.GrpcAPI;
+import org.tron.common.crypto.ECKey;
 import org.tron.common.parameter.CommonParameter;
 import org.tron.common.utils.Base58;
 import org.tron.common.utils.ByteArray;
 import org.tron.common.utils.Commons;
+import org.tron.common.utils.Utils;
 import org.tron.core.exception.CancelException;
 import org.tron.core.services.http.JsonFormat;
 import org.tron.protos.Protocol;
@@ -117,7 +120,7 @@ public class CreateMultiTransaction extends TronlinkBase {
     @Test(enabled = true, description = "multi sign send coin")
     public void sendCoin() {
         Protocol.Transaction transaction = TronlinkApiList
-                .sendcoin(wqq1, 8, quince, blockingStubFull);
+                .sendcoin(wqq1, 3, quince, blockingStubFull);
         log.info("-----raw transaction:  " + JsonFormat.printToString(transaction));
 
         Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
@@ -637,6 +640,11 @@ public class CreateMultiTransaction extends TronlinkBase {
         Assert.assertEquals(0, responseContent.getIntValue("code"));
     }
 
+
+
+
+
+
     /**
      * constructor.
      */
@@ -702,7 +710,7 @@ public class CreateMultiTransaction extends TronlinkBase {
         testSystems.add("iOSTest");
 
         for (String system : testSystems) {
-        //for(int i=0; i <100; i++)  {
+            //for(int i=0; i <100; i++)  {
             Protocol.Transaction transaction = TronlinkApiList
                     .sendcoin(wqq1, 1, quince, blockingStubFull);
             log.info("-----raw transaction:  " + JsonFormat.printToString(transaction));
@@ -712,28 +720,59 @@ public class CreateMultiTransaction extends TronlinkBase {
             log.info("-----select active group and add one sign and expired time: \n" + JsonFormat.printToString(transaction1));
 
             Object transaction_json = JSONObject.parse(JsonFormat.printToString(transaction1));
-            JSONObject transaction_jsonobj = (JSONObject)transaction_json;
+            JSONObject transaction_jsonobj = (JSONObject) transaction_json;
             String rawHex = TronlinkApiList.generateRawdataHex(transaction1);
-            transaction_jsonobj.put("raw_data_hex","abc");
+            transaction_jsonobj.put("raw_data_hex", "abc");
             Object transaction_commobj = (JSONObject) transaction_jsonobj;
 
 
             JSONObject object = new JSONObject();
             //object.put("address", "412CBAEBC9F5FAB6D610549F22406FFB8B9A04AE50");
-            object.put("address",wqq158);
+            object.put("address", wqq158);
             object.put("netType", "main_net");
-            object.put("transaction",transaction_commobj);
+            object.put("transaction", transaction_commobj);
 
 
             header.put("System", system);
             header.put("Version", "4.11.0");
-            param.put("address","TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo");
-            res = TronlinkApiList.multiTransaction(object,param, header);
+            param.put("address", "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo");
+            res = TronlinkApiList.multiTransaction(object, param, header);
             Assert.assertEquals(200, res.getStatusLine().getStatusCode());
             responseContent = TronlinkApiList.parseResponse2JsonObject(res);
 
         }
+    }
 
+    @Test(enabled = true, description = "multi sign")
+    public void AccountCreate() {
+
+        //generate new Address
+        ECKey ecKey = new ECKey(Utils.getRandom());
+        byte[] randomAddress = ecKey.getAddress();
+        String randomAddressStr = Base58.encode(address2);
+        log.info("-----create address: "+randomAddressStr);
+        Protocol.Transaction transaction = TronlinkApiList
+                .accountCreate(quince,randomAddress , blockingStubFull);
+        log.info("-----raw transaction:  " + JsonFormat.printToString(transaction));
+
+        Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
+                transaction, wqq1key, 3, blockingStubFull);
+        log.info("-----select active group and add one sign and expired time: \n" + JsonFormat.printToString(transaction1));
+
+        Object transaction_object = JSONObject.parse(JsonFormat.printToString(transaction1));
+        JSONObject transaction_json = (JSONObject) transaction_object;
+
+
+       /* //String value = transaction_json.get
+
+        JSONObject object = new JSONObject();
+        object.put("address", wqq158);
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(JsonFormat.printToString(transaction1)));
+        res = TronlinkApiList.multiTransactionNoSig(object,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));*/
 
     }
 }
