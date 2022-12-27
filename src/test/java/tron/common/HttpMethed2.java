@@ -437,7 +437,7 @@ public class HttpMethed2 {
       }
       userBaseObj2.addProperty("visible", visible);
       userBaseObj2.addProperty("Permission_id", permissionId);
-      log.info(userBaseObj2.toString());
+      log.info("userBaseObj2：" +userBaseObj2.toString());
       response = createConnect(requestUrl, userBaseObj2);
       transactionString = EntityUtils.toString(response.getEntity());
       log.info(transactionString);
@@ -450,6 +450,9 @@ public class HttpMethed2 {
       jsonObject.remove("visible");
       jsonObject.remove("txID");
       jsonObject.remove("raw_data_hex");
+      JSONObject contractObject = (JSONObject) jsonObject.getJSONObject("raw_data").getJSONArray("contract").get(0);
+      contractObject.put("Permission_id",0);
+
       transactionStr = jsonObject.toString();
     } catch (Exception e) {
       e.printStackTrace();
@@ -495,100 +498,167 @@ public class HttpMethed2 {
   /**
    * constructor.
    */
-  public static HttpResponse exchangeCreate(String httpNode, byte[] ownerAddress,
+  public static String exchangeCreate(String httpNode, String ownerAddress,
       String firstTokenId, Long firstTokenBalance, String secondTokenId, Long secondTokenBalance,
-      String fromKey) {
+                                            String visible, Integer permissionId, String fromKey) {
     try {
       final String requestUrl = "http://" + httpNode + "/wallet/exchangecreate";
       JsonObject userBaseObj2 = new JsonObject();
-      userBaseObj2.addProperty("owner_address", ByteArray.toHexString(ownerAddress));
-      userBaseObj2.addProperty("first_token_id", str2hex(firstTokenId));
+      userBaseObj2.addProperty("owner_address", ownerAddress);
+      if(visible.equals("false")){
+        userBaseObj2.addProperty("first_token_id", str2hex(firstTokenId));
+        userBaseObj2.addProperty("second_token_id", str2hex(secondTokenId));
+      } else if(visible.equals("true")){
+        userBaseObj2.addProperty("first_token_id", firstTokenId);
+        userBaseObj2.addProperty("second_token_id", secondTokenId);
+      }
+
       userBaseObj2.addProperty("first_token_balance", firstTokenBalance);
-      userBaseObj2.addProperty("second_token_id", str2hex(secondTokenId));
       userBaseObj2.addProperty("second_token_balance", secondTokenBalance);
+      userBaseObj2.addProperty("visible", visible);
+      userBaseObj2.addProperty("Permission_id", permissionId);
       response = createConnect(requestUrl, userBaseObj2);
       transactionString = EntityUtils.toString(response.getEntity());
+      log.info("transactionString:"+transactionString);
+      JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+180000);
+
       transactionSignString = gettransactionsign(httpNode, transactionString, fromKey);
-      response = broadcastTransaction(httpNode, transactionSignString);
+      log.info("-----------sign information-----------------");
+      log.info(transactionSignString);
+      JSONObject jsonObject = HttpMethed.parseStringContent(transactionSignString);
+      jsonObject.remove("visible");
+      jsonObject.remove("txID");
+      jsonObject.remove("raw_data_hex");
+      transactionStr = jsonObject.toString();
+
     } catch (Exception e) {
       e.printStackTrace();
       httppost.releaseConnection();
       return null;
     }
-    return response;
+    return transactionStr;
   }
 
   /**
    * constructor.
    */
-  public static HttpResponse exchangeInject(String httpNode, byte[] ownerAddress,
-      Integer exchangeId, String tokenId, Long quant, String fromKey) {
+  public static String exchangeInject(String httpNode, String ownerAddress,
+                                      Integer exchangeId, String tokenId, Long quant,
+                                      String visible, Integer permissionId, String fromKey) {
     try {
       final String requestUrl = "http://" + httpNode + "/wallet/exchangeinject";
       JsonObject userBaseObj2 = new JsonObject();
-      userBaseObj2.addProperty("owner_address", ByteArray.toHexString(ownerAddress));
+      userBaseObj2.addProperty("owner_address", ownerAddress);
       userBaseObj2.addProperty("exchange_id", exchangeId);
-      userBaseObj2.addProperty("token_id", str2hex(tokenId));
+      if(visible.equals("false")) {
+        userBaseObj2.addProperty("token_id", str2hex(tokenId));
+      }else if(visible.equals("true")){
+        userBaseObj2.addProperty("token_id", tokenId);
+      }
       userBaseObj2.addProperty("quant", quant);
+      userBaseObj2.addProperty("visible", visible);
+      userBaseObj2.addProperty("Permission_id", permissionId);
       response = createConnect(requestUrl, userBaseObj2);
       transactionString = EntityUtils.toString(response.getEntity());
+      log.info("transactionString:"+transactionString);
+      JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+120000);
       transactionSignString = gettransactionsign(httpNode, transactionString, fromKey);
-      response = broadcastTransaction(httpNode, transactionSignString);
+      log.info("-----------sign information-----------------");
+      log.info(transactionSignString);
+      JSONObject jsonObject = HttpMethed.parseStringContent(transactionSignString);
+      jsonObject.remove("visible");
+      jsonObject.remove("txID");
+      jsonObject.remove("raw_data_hex");
+      transactionStr = jsonObject.toString();
+
     } catch (Exception e) {
       e.printStackTrace();
       httppost.releaseConnection();
       return null;
     }
-    return response;
+    return transactionStr;
   }
 
   /**
    * constructor.
    */
-  public static HttpResponse exchangeWithdraw(String httpNode, byte[] ownerAddress,
-      Integer exchangeId, String tokenId, Long quant, String fromKey) {
+  public static String exchangeWithdraw(String httpNode, String ownerAddress,
+      Integer exchangeId, String tokenId, Long quant,
+      String visible, Integer permissionId, String fromKey) {
     try {
       final String requestUrl = "http://" + httpNode + "/wallet/exchangewithdraw";
       JsonObject userBaseObj2 = new JsonObject();
-      userBaseObj2.addProperty("owner_address", ByteArray.toHexString(ownerAddress));
+      userBaseObj2.addProperty("owner_address", ownerAddress);
       userBaseObj2.addProperty("exchange_id", exchangeId);
-      userBaseObj2.addProperty("token_id", str2hex(tokenId));
+      if(visible.equals("false")) {
+        userBaseObj2.addProperty("token_id", str2hex(tokenId));
+      }else if(visible.equals("true")){
+        userBaseObj2.addProperty("token_id", tokenId);
+      }
       userBaseObj2.addProperty("quant", quant);
+      userBaseObj2.addProperty("visible", visible);
+      userBaseObj2.addProperty("Permission_id", permissionId);
       response = createConnect(requestUrl, userBaseObj2);
       transactionString = EntityUtils.toString(response.getEntity());
+      log.info("transactionString:"+transactionString);
+      JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+120000);
       transactionSignString = gettransactionsign(httpNode, transactionString, fromKey);
-      response = broadcastTransaction(httpNode, transactionSignString);
+      log.info("-----------sign information-----------------");
+      log.info(transactionSignString);
+      JSONObject jsonObject = HttpMethed.parseStringContent(transactionSignString);
+      jsonObject.remove("visible");
+      jsonObject.remove("txID");
+      jsonObject.remove("raw_data_hex");
+      transactionStr = jsonObject.toString();
     } catch (Exception e) {
       e.printStackTrace();
       httppost.releaseConnection();
       return null;
     }
-    return response;
+    return transactionStr;
   }
 
   /**
    * constructor.
    */
-  public static HttpResponse exchangeTransaction(String httpNode, byte[] ownerAddress,
-      Integer exchangeId, String tokenId, Long quant, Long expected, String fromKey) {
+  public static String exchangeTransaction(String httpNode, String ownerAddress,
+      Integer exchangeId, String tokenId, Long quant, Long expected, String visible, Integer permissionId, String fromKey) {
     try {
       final String requestUrl = "http://" + httpNode + "/wallet/exchangetransaction";
       JsonObject userBaseObj2 = new JsonObject();
-      userBaseObj2.addProperty("owner_address", ByteArray.toHexString(ownerAddress));
+      userBaseObj2.addProperty("owner_address", ownerAddress);
       userBaseObj2.addProperty("exchange_id", exchangeId);
-      userBaseObj2.addProperty("token_id", str2hex(tokenId));
+      if(visible.equals("false")) {
+        userBaseObj2.addProperty("token_id", str2hex(tokenId));
+      }else if(visible.equals("true")){
+        userBaseObj2.addProperty("token_id", tokenId);
+      }
       userBaseObj2.addProperty("quant", quant);
       userBaseObj2.addProperty("expected", expected);
+      userBaseObj2.addProperty("visible", visible);
+      userBaseObj2.addProperty("Permission_id", permissionId);
       response = createConnect(requestUrl, userBaseObj2);
       transactionString = EntityUtils.toString(response.getEntity());
+      log.info("transactionString:"+transactionString);
+      JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+120000);
       transactionSignString = gettransactionsign(httpNode, transactionString, fromKey);
-      response = broadcastTransaction(httpNode, transactionSignString);
+      log.info("-----------sign information-----------------");
+      log.info(transactionSignString);
+      JSONObject jsonObject = HttpMethed.parseStringContent(transactionSignString);
+      jsonObject.remove("visible");
+      jsonObject.remove("txID");
+      jsonObject.remove("raw_data_hex");
+      transactionStr = jsonObject.toString();
     } catch (Exception e) {
       e.printStackTrace();
       httppost.releaseConnection();
       return null;
     }
-    return response;
+    return transactionStr;
   }
 
 
