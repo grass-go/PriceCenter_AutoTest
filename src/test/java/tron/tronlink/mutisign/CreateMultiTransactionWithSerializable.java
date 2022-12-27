@@ -1,6 +1,8 @@
 package tron.tronlink.mutisign;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.protobuf.ByteString;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -14,6 +16,7 @@ import org.testng.annotations.Test;
 import org.tron.api.GrpcAPI;
 import org.tron.common.utils.ByteArray;
 import org.tron.common.utils.Commons;
+import org.tron.core.Wallet;
 import org.tron.core.services.http.JsonFormat;
 import org.tron.protos.Protocol;
 import org.tron.protos.contract.*;
@@ -91,8 +94,9 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
         Assert.assertEquals(0, responseContent.getIntValue("code"));
     }
 
-    @Test(enabled = true, description = "multi sign freeze balandce with serializable")
-    public void freezeBalance() throws Exception {
+    @Test(enabled = true, description = "multi sign freeze balance with serializable no receiver address")
+    public void freezeBalanceNoReceiver() throws Exception {
+        // visible:true
         String transactionStr = HttpMethed.freezeBalance(httpnode, quince58, 1000000L, 3,0, null,"true", 5, wqq1key);
         log.info("-----raw transaction:  " + transactionStr);
 
@@ -105,38 +109,375 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0, responseContent.getIntValue("code"));
-    }
 
-    //modify coin id before go prod
-    //modify permission id before go prod
-    /*@Test(enabled = true, description = "multi sign transfer asset")
-    public void transferTrc10() throws Exception {
-        AssetIssueContractOuterClass.TransferAssetContract.Builder builder = AssetIssueContractOuterClass.TransferAssetContract.newBuilder();
-        ByteString bsTo = ByteString.copyFrom(wqq1);
-        ByteString bsName = ByteString.copyFrom("1000002".getBytes());
-        ByteString bsOwner = ByteString.copyFrom(quince);
-        builder.setToAddress(bsTo);
-        builder.setAssetName(bsName);
-        builder.setOwnerAddress(bsOwner);
-        builder.setAmount(1);
+        // visible:false
+        String transactionStr2 = HttpMethed.freezeBalance(httpnode, ByteArray.toHexString(quince), 1000000L, 3,1, null,"false", 5, wqq1key);
+        log.info("-----raw transaction2:  " + transactionStr2);
 
-        AssetIssueContractOuterClass.TransferAssetContract contract = builder.build();
-        log.info("-----0000  " + JsonFormat.printToString(contract));
-        Protocol.Transaction transaction = blockingStubFull.transferAsset(contract);
-        log.info("-----111111  " + JsonFormat.printToString(transaction));
-        Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, wqq1key, 6, blockingStubFull);
-        log.info("-----2222  " + JsonFormat.printToString(transaction1));
-        JSONObject object = new JSONObject();
-        object.put("address", wqq158);
-        object.put("netType", "main_net");
-        object.put("transaction", JSONObject.parse(JsonFormat.printToString(transaction1)));
-        res = TronlinkApiList.multiTransactionNoSig(object,null);
+        JSONObject object2 = new JSONObject();
+        object2.put("address", wqq158);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0, responseContent.getIntValue("code"));
     }
 
+    @Test(enabled = true, description = "multi sign freeze balance with serializable has receiver address")
+    public void freezeBalanceHasReceiver() throws Exception {
+        // visible:true
+        String transactionStr = HttpMethed.freezeBalance(httpnode, quince58, 1000000L, 3,0, wqq158,"true", 5, wqq1key);
+        log.info("-----raw transaction:  " + transactionStr);
+
+        JSONObject object = new JSONObject();
+        object.put("address", wqq158);
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(transactionStr));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+        // visible:false
+        String transactionStr2 = HttpMethed.freezeBalance(httpnode, ByteArray.toHexString(quince), 1000000L, 3,1, ByteArray.toHexString(wqq1),"false", 5, wqq1key);
+        log.info("-----raw transaction2:  " + transactionStr2);
+
+        JSONObject object2 = new JSONObject();
+        object2.put("address", wqq158);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+    }
+
+    @Test(enabled = true, description = "multi sign unfreeze balance with serializable no receiver address")
+    public void unfreezeBalanceNoReceiver() throws Exception {
+        // visible:true
+        String transactionStr = HttpMethed.unFreezeBalance(httpnode, quince58, 0, null,"true", 5, wqq1key);
+        log.info("-----raw transaction:  " + transactionStr);
+
+        JSONObject object = new JSONObject();
+        object.put("address", wqq158);
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(transactionStr));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+        // visible:false
+        String transactionStr2 = HttpMethed.unFreezeBalance(httpnode, ByteArray.toHexString(quince), 1, null,"false", 5, wqq1key);
+        log.info("-----raw transaction2:  " + transactionStr2);
+
+        JSONObject object2 = new JSONObject();
+        object2.put("address", wqq158);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+    }
+
+    @Test(enabled = true, description = "multi sign unfreeze balance with serializable has receiver address")
+    public void unfreezeBalanceHasReceiver() throws Exception {
+        // visible:true
+        String transactionStr = HttpMethed.unFreezeBalance(httpnode, quince58,0, "TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ","true", 5, wqq1key);
+        log.info("-----raw transaction:  " + transactionStr);
+
+        JSONObject object = new JSONObject();
+        object.put("address", wqq158);
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(transactionStr));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+        // visible:false
+        String transactionStr2 = HttpMethed.unFreezeBalance(httpnode, ByteArray.toHexString(quince), 1, "41A2E895D1C362860C605405D289A7C99CB6DA2741","false", 5, wqq1key);
+        log.info("-----raw transaction2:  " + transactionStr2);
+
+        JSONObject object2 = new JSONObject();
+        object2.put("address", wqq158);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+    }
+
+    @Test(enabled = true, description = "multi sign create asset issue with serializable has all params")
+    public void createAssetIssueHasAllPrarams() throws Exception {
+        long totalSupply = 10000L;
+        // visible:true
+        String transactionStr = HttpMethed.assetIssue(httpnode, "TLShQYjv45P49xwKSYrdQkY3rFA9Z5CDzW", "trc10Test1", "trc10T1", totalSupply,
+                1, 1, System.currentTimeMillis() + 600000, System.currentTimeMillis() + 50000000,
+                2, 3,"This is multi-sign generated Token","www.address1.com",
+                1000L,1000L,11L,1L,"true",2, "aae43bee6d365d08ca09042140970e6b6def7e94d888257eed870da9ad1590c7");
+        log.info("-----raw transaction:  " + transactionStr);
+
+        JSONObject object = new JSONObject();
+        object.put("address", quince58);
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(transactionStr));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+        // visible:false
+        String transactionStr2 = HttpMethed.assetIssue(httpnode, "412AC4526930DE490BDDE77F98A56BD23626E9EA6A", HttpMethed.str2hex("trc10Test2"),
+                HttpMethed.str2hex("trc10T2"), totalSupply, 1, 1, System.currentTimeMillis() + 5000,
+                System.currentTimeMillis() + 600000, 2, 3,
+                HttpMethed.str2hex("This is multi-sign generated Token"),HttpMethed.str2hex("www.address2.com"),
+                1000L,1000L,11L,1L,"false",2, "aae43bee6d365d08ca09042140970e6b6def7e94d888257eed870da9ad1590c7");
+        log.info("-----raw transaction2:  " + transactionStr2);
+
+        JSONObject object2 = new JSONObject();
+        object2.put("address", quince58);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+    }
+
+    @Test(enabled = true, description = "multi sign create asset issue with serializable only required params")
+    public void createAssetIssueOnlyRequiredPrarams() throws Exception {
+        long totalSupply = 10000L;
+        // visible:true
+        String transactionStr = HttpMethed.assetIssue(httpnode, "TLShQYjv45P49xwKSYrdQkY3rFA9Z5CDzW", "trc10Test1", "trc10T1", totalSupply,
+                1, 1, System.currentTimeMillis() + 600000, System.currentTimeMillis() + 50000000,
+                null, null,null,"www.address1.com",
+                null,null,null,null,"true",2, "aae43bee6d365d08ca09042140970e6b6def7e94d888257eed870da9ad1590c7");
+        log.info("-----raw transaction:  " + transactionStr);
+
+        JSONObject object = new JSONObject();
+        object.put("address", quince58);
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(transactionStr));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+        // visible:false
+        String transactionStr2 = HttpMethed.assetIssue(httpnode, "412AC4526930DE490BDDE77F98A56BD23626E9EA6A", HttpMethed.str2hex("trc10Test2"),
+                HttpMethed.str2hex("trc10T2"), totalSupply, 1, 1, System.currentTimeMillis() + 600000,
+                System.currentTimeMillis() + 50000000, null, null,
+                null,HttpMethed.str2hex("www.address2.com"),
+                null,null,null,null,"false",2, "aae43bee6d365d08ca09042140970e6b6def7e94d888257eed870da9ad1590c7");
+        log.info("-----raw transaction2:  " + transactionStr2);
+
+        JSONObject object2 = new JSONObject();
+        object2.put("address", quince58);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+    }
+
+    @Test(enabled = true, description = "multi sign transfer asset")
+    public void transferTrc10() throws Exception {
+        // visible:true
+        String transactionStr = HttpMethed.transferAsset(httpnode, quince58, wqq158, "1000323", 1L,
+                "true",5, wqq1key);
+        log.info("-----raw transaction:  " + transactionStr);
+
+        JSONObject object = new JSONObject();
+        object.put("address", wqq158);
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(transactionStr));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+        // visible:false
+        String transactionStr2 = HttpMethed.transferAsset(httpnode, ByteArray.toHexString(quince), ByteArray.toHexString(wqq1),
+                HttpMethed.str2hex("1000323"), 1L, "false",5, wqq1key);
+        log.info("-----raw transaction2:  " + transactionStr2);
+
+        JSONObject object2 = new JSONObject();
+        object2.put("address", wqq158);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+    }
+
+    @Test(enabled = true, description = "multi sign participate asset issue")
+    public void participateAssetissue() throws Exception {
+        // visible:true
+        String transactionStr = HttpMethed.participateAssetIssue(httpnode, "TRAPa4mZAKxaZqsdcdpXVtV2X3nKQzA1eN",
+                quince58, "1000617", 1L, "true",5, wqq1key);
+        log.info("-----raw transaction:  " + transactionStr);
+
+        JSONObject object = new JSONObject();
+        object.put("address", address258);
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(transactionStr));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+        // visible:false
+        String transactionStr2 = HttpMethed.participateAssetIssue(httpnode, "41A6A748F34723368B00137F1DC9C15A73BE83C2EB",
+                ByteArray.toHexString(quince), HttpMethed.str2hex("1000617"), 1L, "false",5, wqq1key);
+        log.info("-----raw transaction2:  " + transactionStr2);
+
+        JSONObject object2 = new JSONObject();
+        object2.put("address", address258);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+    }
+
+    @Test(enabled = true, description = "multi sign update asset issue")
+    public void updateAssetIssue() throws Exception {
+        // visible:true
+        String transactionStr = HttpMethed.updateAssetIssue(httpnode, quince58, "update desc1",
+                "www.multisignModified1.com", 1000L,2000L, "true", 5, wqq1key);
+        log.info("-----raw transaction:  " + transactionStr);
+
+        JSONObject object = new JSONObject();
+        object.put("address", quince58);
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(transactionStr));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+        // visible:false
+        String transactionStr2 = HttpMethed.updateAssetIssue(httpnode, ByteArray.toHexString(quince), HttpMethed.str2hex("update desc2"),
+                HttpMethed.str2hex("www.multisignModified2.com"), 1000L,2000L, "false", 5, wqq1key);
+        log.info("-----raw transaction2:  " + transactionStr2);
+
+        JSONObject object2 = new JSONObject();
+        object2.put("address", quince58);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+    }
+
+    @Test(enabled = true, description = "multi sign unfreeze asset")
+    public void unfreezeAsset() throws Exception {
+        // visible:true
+        String transactionStr = HttpMethed.unfreezeAsset(httpnode, "TLShQYjv45P49xwKSYrdQkY3rFA9Z5CDzW",  "true", 2, "aae43bee6d365d08ca09042140970e6b6def7e94d888257eed870da9ad1590c7");
+        log.info("-----raw transaction:  " + transactionStr);
+
+        JSONObject object = new JSONObject();
+        object.put("address", "TLShQYjv45P49xwKSYrdQkY3rFA9Z5CDzW");
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(transactionStr));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+        // visible:false
+        String transactionStr2 = HttpMethed.unfreezeAsset(httpnode, ByteArray.toHexString(quince), "false", 5, wqq1key);
+        log.info("-----raw transaction2:  " + transactionStr2);
+
+        JSONObject object2 = new JSONObject();
+        object2.put("address", quince58);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+    }
+
+    @Test(enabled = true, description = "multi sign vote witness")
+    public void voteWitness() throws Exception {
+        // visible:true
+        JsonObject voteElement1 = new JsonObject();
+        JsonObject voteElement2 = new JsonObject();
+        JsonArray voteKeys1 = new JsonArray();
+        voteElement1.addProperty("vote_address", "TBFpyDStSr6SV9u3dirUHTbWDnvuDQydyz");
+        voteElement1.addProperty("vote_count", 11);
+        voteKeys1.add(voteElement1);
+        voteElement2.addProperty("vote_address", "TBJx8cETFLLiw4r2ukgmKoQYCsV46jF14P");
+        voteElement2.addProperty("vote_count", 12);
+        voteKeys1.add(voteElement2);
+        String transactionStr = HttpMethed.voteWitnessAccount(httpnode, quince58,  voteKeys1,"true", 5, wqq1key);
+        log.info("-----raw transaction:  " + transactionStr);
+
+        JSONObject object = new JSONObject();
+        object.put("address", quince58);
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(transactionStr));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+        // visible:false
+        JsonObject voteElement3 = new JsonObject();
+        JsonObject voteElement4 = new JsonObject();
+        JsonArray voteKeys2 = new JsonArray();
+        voteElement3.addProperty("vote_address", "410E1CCE51201B6AEA0CE69B5C7BE762EA9C64F3EB");
+        voteElement3.addProperty("vote_count", 11);
+        voteKeys2.add(voteElement3);
+        voteElement4.addProperty("vote_address", "410EB40844F1C45F1DEAA7A164FC5540491516F62F");
+        voteElement4.addProperty("vote_count", 12);
+        voteKeys2.add(voteElement4);
+        String transactionStr2 = HttpMethed.voteWitnessAccount(httpnode, ByteArray.toHexString(quince), voteKeys2, "false", 5, wqq1key);
+        log.info("-----raw transaction2:  " + transactionStr2);
+
+        JSONObject object2 = new JSONObject();
+        object2.put("address", quince58);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+    }
+
+    //modify coin id before go prod
+    //modify permission id before go prod
+    /*
     @Test(enabled = true, description = "nulti sign transfer trc20")
     public void transferTrc20() throws Exception {
 
@@ -191,210 +532,7 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
 
     }
 
-    @Test(enabled = true, description = "multiSignTest: create Asset Issue")
-    public void createAssetIssue() throws Exception {
-        long now = System.currentTimeMillis();
-        long totalSupply = 10000L;
-        Long start = System.currentTimeMillis() + 300000;
-        Long end = System.currentTimeMillis() + 1000000000;
-        AssetIssueContractOuterClass.AssetIssueContract.Builder builder = AssetIssueContractOuterClass.AssetIssueContract.newBuilder();
-        builder.setOwnerAddress(ByteString.copyFrom(yunli));
-        String token10Name = "testmsg";
-        builder.setName(ByteString.copyFrom(token10Name.getBytes()));
-        builder.setTotalSupply(totalSupply);
-        builder.setTrxNum(1);
-        builder.setNum(1);
-        builder.setStartTime(start);
-        builder.setEndTime(end);
-        builder.setVoteScore(1);
-        String description = "This is multi-sign generated Token";
-        builder.setDescription(ByteString.copyFrom(description.getBytes()));
-        String url = "www.address1.com";
-        builder.setUrl(ByteString.copyFrom(url.getBytes()));
-        builder.setFreeAssetNetLimit(2000L);
-        builder.setPublicFreeAssetNetLimit(2000L);
-        AssetIssueContractOuterClass.AssetIssueContract.FrozenSupply.Builder frozenBuilder = AssetIssueContractOuterClass.AssetIssueContract.FrozenSupply
-                .newBuilder();
-        frozenBuilder.setFrozenAmount(1L);
-        frozenBuilder.setFrozenDays(111L);
-        builder.addFrozenSupply(0, frozenBuilder);
 
-        GrpcAPI.TransactionExtention assetIssue2 = blockingStubFull.createAssetIssue2(builder.build());
-        log.info(assetIssue2.toString());
-        Protocol.Transaction transaction = assetIssue2.getTransaction();
-        if (transaction == null || transaction.getRawData().getContractCount() == 0) {
-            log.info("transaction == null");
-            Assert.assertNotNull(transaction);
-            Assert.assertFalse(transaction.getRawData().getContractCount() == 0);
-        }
-        log.info("-----111111  " + JsonFormat.printToString(transaction));
-        Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, quincekey, 3, blockingStubFull);
-        log.info("-----2222  " + JsonFormat.printToString(transaction1));
-        JSONObject object = new JSONObject();
-        object.put("address", quince58);
-        object.put("netType", "main_net");
-        object.put("transaction", JSONObject.parse(JsonFormat.printToString(transaction1)));
-
-        res = TronlinkApiList.multiTransactionNoSig(object,null);
-        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
-        Assert.assertEquals(0, responseContent.getIntValue("code"));
-        *//*Protocol.Transaction transaction2 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction1, key1, 3, blockingStubFull);
-
-        GrpcAPI.Return response = blockingStubFull.broadcastTransaction(transaction2);
-        log.info(response.toString());*//*
-
-
-    }
-
-    @Test(enabled = true, description = "multiSignTest: create Asset Issue")
-    public void updateAssetIssue() throws Exception {
-        AssetIssueContractOuterClass.UpdateAssetContract.Builder builder = AssetIssueContractOuterClass.UpdateAssetContract.newBuilder();
-        ByteString basAddreess = ByteString.copyFrom(quince);
-        String description = "multi sign";
-        builder.setDescription(ByteString.copyFrom(description.getBytes()));
-        String url = "www.multisignModified.com";
-        builder.setUrl(ByteString.copyFrom(url.getBytes()));
-        //builder.setNewLimit(100L);
-        //builder.setNewPublicLimit(100L);
-        builder.setOwnerAddress(basAddreess);
-
-        AssetIssueContractOuterClass.UpdateAssetContract contract = builder.build();
-        Protocol.Transaction transaction = blockingStubFull.updateAsset(contract);
-        Assert.assertNotNull(transaction);
-        log.info("-----111111  " + JsonFormat.printToString(transaction));
-        Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, wqq1key, 4, blockingStubFull);
-        log.info("-----2222  " + JsonFormat.printToString(transaction1));
-        JSONObject object = new JSONObject();
-        object.put("address", wqq158);
-        object.put("netType", "main_net");
-        object.put("transaction", JSONObject.parse(JsonFormat.printToString(transaction1)));
-
-        res = TronlinkApiList.multiTransactionNoSig(object,null);
-        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
-        Assert.assertEquals(0, responseContent.getIntValue("code"));
-
-    }
-
-    //address1 have multi permission of address2.
-    @Test(enabled = true, description = "multiSignTest: Participate Asset Issue Asset Issue")
-    public void ParticipateAssetissue() throws Exception {
-        AssetIssueContractOuterClass.ParticipateAssetIssueContract.Builder builder = AssetIssueContractOuterClass.ParticipateAssetIssueContract.newBuilder();
-        ByteString bsTo = ByteString.copyFrom(address1);
-        String assertName = "1000418";
-        ByteString bsName = ByteString.copyFrom(assertName.getBytes());
-        ByteString bsOwner = ByteString.copyFrom(address2);
-        builder.setToAddress(bsTo);
-        builder.setAssetName(bsName);
-        builder.setOwnerAddress(bsOwner);
-        builder.setAmount(10L);
-        AssetIssueContractOuterClass.ParticipateAssetIssueContract contract = builder.build();
-        //Protocol.Transaction transaction = blockingStubFull.participateAssetIssue2(contract);
-
-
-        GrpcAPI.TransactionExtention participateAssetIssue2 = blockingStubFull.participateAssetIssue2(builder.build());
-        Protocol.Transaction transaction = participateAssetIssue2.getTransaction();
-        if (transaction == null || transaction.getRawData().getContractCount() == 0) {
-            log.info("transaction == null");
-            Assert.assertNotNull(transaction);
-            Assert.assertFalse(transaction.getRawData().getContractCount() == 0);
-        }
-
-        Assert.assertNotNull(transaction);
-        log.info("-----111111  " + JsonFormat.printToString(transaction));
-        Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, key1, 3, blockingStubFull);
-        log.info("-----2222  " + JsonFormat.printToString(transaction1));
-        JSONObject object = new JSONObject();
-        object.put("address", address258);
-        object.put("netType", "main_net");
-        object.put("transaction", JSONObject.parse(JsonFormat.printToString(transaction1)));
-
-        res = TronlinkApiList.multiTransactionNoSig(object,null);
-        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
-        Assert.assertEquals(0, responseContent.getIntValue("code"));
-    }
-
-    @Test(enabled = true, description = "multiSignTest: Participate Asset Issue Asset Issue")
-    public void createSmartContract() throws Exception {
-
-        String contractName = "QQToken";
-
-        String code = "608060405234801561001057600080fd5b50d3801561001d57600080fd5b50d2801561002a57600080fd5b506040518060400160405280600b81526020016a5175696e63654d756c746960a81b8152506040518060400160405280600b81526020016a5155494e43454d554c544960a81b815250600c826003908051906020019061008b929190610244565b50815161009f906004906020850190610244565b506005805460ff191660ff92909216919091179055506100da9050336100c36100df565b60ff16600a0a6305f5e100026100e960201b60201c565b6102dc565b60055460ff165b90565b6001600160a01b038216610144576040805162461bcd60e51b815260206004820152601f60248201527f45524332303a206d696e7420746f20746865207a65726f206164647265737300604482015290519081900360640190fd5b61015d816002546101e360201b61078c1790919060201c565b6002556001600160a01b0382166000908152602081815260409091205461018d91839061078c6101e3821b17901c565b6001600160a01b0383166000818152602081815260408083209490945583518581529351929391927fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9281900390910190a35050565b60008282018381101561023d576040805162461bcd60e51b815260206004820152601b60248201527f536166654d6174683a206164646974696f6e206f766572666c6f770000000000604482015290519081900360640190fd5b9392505050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061028557805160ff19168380011785556102b2565b828001600101855582156102b2579182015b828111156102b2578251825591602001919060010190610297565b506102be9291506102c2565b5090565b6100e691905b808211156102be57600081556001016102c8565b6108ad806102eb6000396000f3fe608060405234801561001057600080fd5b50d3801561001d57600080fd5b50d2801561002a57600080fd5b50600436106100b35760003560e01c806306fdde03146100b8578063095ea7b31461013557806318160ddd1461017557806323b872dd1461018f578063313ce567146101c557806339509351146101e357806370a082311461020f57806395d89b4114610235578063a457c2d71461023d578063a9059cbb14610269578063dd62ed3e14610295575b600080fd5b6100c06102c3565b6040805160208082528351818301528351919283929083019185019080838360005b838110156100fa5781810151838201526020016100e2565b50505050905090810190601f1680156101275780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b6101616004803603604081101561014b57600080fd5b506001600160a01b038135169060200135610359565b604080519115158252519081900360200190f35b61017d61036f565b60408051918252519081900360200190f35b610161600480360360608110156101a557600080fd5b506001600160a01b03813581169160208101359091169060400135610375565b6101cd6103cc565b6040805160ff9092168252519081900360200190f35b610161600480360360408110156101f957600080fd5b506001600160a01b0381351690602001356103d5565b61017d6004803603602081101561022557600080fd5b50356001600160a01b0316610411565b6100c061042c565b6101616004803603604081101561025357600080fd5b506001600160a01b03813516906020013561048d565b6101616004803603604081101561027f57600080fd5b506001600160a01b0381351690602001356104c9565b61017d600480360360408110156102ab57600080fd5b506001600160a01b03813581169160200135166104d6565b60038054604080516020601f600260001961010060018816150201909516949094049384018190048102820181019092528281526060939092909183018282801561034f5780601f106103245761010080835404028352916020019161034f565b820191906000526020600020905b81548152906001019060200180831161033257829003601f168201915b5050505050905090565b6000610366338484610501565b50600192915050565b60025490565b60006103828484846105ed565b6001600160a01b0384166000908152600160209081526040808320338085529252909120546103c29186916103bd908663ffffffff61072f16565b610501565b5060019392505050565b60055460ff1690565b3360008181526001602090815260408083206001600160a01b038716845290915281205490916103669185906103bd908663ffffffff61078c16565b6001600160a01b031660009081526020819052604090205490565b60048054604080516020601f600260001961010060018816150201909516949094049384018190048102820181019092528281526060939092909183018282801561034f5780601f106103245761010080835404028352916020019161034f565b3360008181526001602090815260408083206001600160a01b038716845290915281205490916103669185906103bd908663ffffffff61072f16565b60006103663384846105ed565b6001600160a01b03918216600090815260016020908152604080832093909416825291909152205490565b6001600160a01b0383166105465760405162461bcd60e51b81526004018080602001828103825260248152602001806108566024913960400191505060405180910390fd5b6001600160a01b03821661058b5760405162461bcd60e51b815260040180806020018281038252602281526020018061080f6022913960400191505060405180910390fd5b6001600160a01b03808416600081815260016020908152604080832094871680845294825291829020859055815185815291517f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b9259281900390910190a3505050565b6001600160a01b0383166106325760405162461bcd60e51b81526004018080602001828103825260258152602001806108316025913960400191505060405180910390fd5b6001600160a01b0382166106775760405162461bcd60e51b81526004018080602001828103825260238152602001806107ec6023913960400191505060405180910390fd5b6001600160a01b0383166000908152602081905260409020546106a0908263ffffffff61072f16565b6001600160a01b0380851660009081526020819052604080822093909355908416815220546106d5908263ffffffff61078c16565b6001600160a01b038084166000818152602081815260409182902094909455805185815290519193928716927fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef92918290030190a3505050565b600082821115610786576040805162461bcd60e51b815260206004820152601e60248201527f536166654d6174683a207375627472616374696f6e206f766572666c6f770000604482015290519081900360640190fd5b50900390565b6000828201838110156107e4576040805162461bcd60e51b815260206004820152601b60248201527a536166654d6174683a206164646974696f6e206f766572666c6f7760281b604482015290519081900360640190fd5b939250505056fe45524332303a207472616e7366657220746f20746865207a65726f206164647265737345524332303a20617070726f766520746f20746865207a65726f206164647265737345524332303a207472616e736665722066726f6d20746865207a65726f206164647265737345524332303a20617070726f76652066726f6d20746865207a65726f2061646472657373a26474726f6e5820eeb9c5f589051bd01dfbf784228961b80c33fe127623fbbddc7c36af12ef2b5564736f6c63430005110031";
-        String abiString = "[{\"stateMutability\":\"Nonpayable\",\"type\":\"Constructor\"},{\"inputs\":[{\"indexed\":true,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"spender\",\"type\":\"address\"},{\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"Event\"},{\"inputs\":[{\"indexed\":true,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"to\",\"type\":\"address\"},{\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"Event\"},{\"outputs\":[{\"type\":\"uint256\"}],\"constant\":true,\"inputs\":[{\"name\":\"owner\",\"type\":\"address\"},{\"name\":\"spender\",\"type\":\"address\"}],\"name\":\"allowance\",\"stateMutability\":\"View\",\"type\":\"Function\"},{\"outputs\":[{\"type\":\"bool\"}],\"inputs\":[{\"name\":\"spender\",\"type\":\"address\"},{\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"approve\",\"stateMutability\":\"Nonpayable\",\"type\":\"Function\"},{\"outputs\":[{\"type\":\"uint256\"}],\"constant\":true,\"inputs\":[{\"name\":\"account\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"stateMutability\":\"View\",\"type\":\"Function\"},{\"outputs\":[{\"type\":\"uint8\"}],\"constant\":true,\"name\":\"decimals\",\"stateMutability\":\"View\",\"type\":\"Function\"},{\"outputs\":[{\"type\":\"bool\"}],\"inputs\":[{\"name\":\"spender\",\"type\":\"address\"},{\"name\":\"subtractedValue\",\"type\":\"uint256\"}],\"name\":\"decreaseAllowance\",\"stateMutability\":\"Nonpayable\",\"type\":\"Function\"},{\"outputs\":[{\"type\":\"bool\"}],\"inputs\":[{\"name\":\"spender\",\"type\":\"address\"},{\"name\":\"addedValue\",\"type\":\"uint256\"}],\"name\":\"increaseAllowance\",\"stateMutability\":\"Nonpayable\",\"type\":\"Function\"},{\"outputs\":[{\"type\":\"string\"}],\"constant\":true,\"name\":\"name\",\"stateMutability\":\"View\",\"type\":\"Function\"},{\"outputs\":[{\"type\":\"string\"}],\"constant\":true,\"name\":\"symbol\",\"stateMutability\":\"View\",\"type\":\"Function\"},{\"outputs\":[{\"type\":\"uint256\"}],\"constant\":true,\"name\":\"totalSupply\",\"stateMutability\":\"View\",\"type\":\"Function\"},{\"outputs\":[{\"type\":\"bool\"}],\"inputs\":[{\"name\":\"recipient\",\"type\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"stateMutability\":\"Nonpayable\",\"type\":\"Function\"},{\"outputs\":[{\"type\":\"bool\"}],\"inputs\":[{\"name\":\"sender\",\"type\":\"address\"},{\"name\":\"recipient\",\"type\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"stateMutability\":\"Nonpayable\",\"type\":\"Function\"}]";
-
-        //don't know how to use now.===========begin=============
-        byte[] owner = quince;
-
-        SmartContractOuterClass.SmartContract.ABI abi = TronlinkApiList.jsonStr2Abi(abiString);
-        if (abi == null) {
-            log.error("abi is null");
-            Assert.assertNotNull(abi);
-        }
-        //byte[] codeBytes = Hex.decode(code);
-        SmartContractOuterClass.SmartContract.Builder builder = SmartContractOuterClass.SmartContract.newBuilder();
-        builder.setName(contractName);
-        builder.setOriginAddress(ByteString.copyFrom(quince));
-        builder.setAbi(abi);
-        builder.setConsumeUserResourcePercent(100);
-        builder.setOriginEnergyLimit(1000L);
-
-        builder.setCallValue(0L);
-
-        byte[] byteCode;
-
-        byteCode = Hex.decode(code);
-
-        builder.setBytecode(ByteString.copyFrom(byteCode));
-
-        SmartContractOuterClass.CreateSmartContract.Builder contractBuilder = SmartContractOuterClass.CreateSmartContract.newBuilder();
-        contractBuilder.setOwnerAddress(ByteString.copyFrom(owner));
-        contractBuilder.setCallTokenValue(0L);
-        contractBuilder.setTokenId(Long.parseLong("0"));
-        SmartContractOuterClass.CreateSmartContract contractDeployContract = contractBuilder.setNewContract(builder.build())
-                .build();
-
-        GrpcAPI.TransactionExtention transactionExtention = blockingStubFull
-                .deployContract(contractDeployContract);
-        if (transactionExtention == null || !transactionExtention.getResult().getResult()) {
-            System.out.println("RPC create trx failed!");
-            if (transactionExtention != null) {
-                System.out.println("Code = " + transactionExtention.getResult().getCode());
-                System.out
-                        .println("Message = " + transactionExtention.getResult().getMessage().toStringUtf8());
-            }
-        }
-        Protocol.Transaction transaction = transactionExtention.getTransaction();
-        log.info("----1111: " + JsonFormat.printToString(transaction));
-
-
-        final GrpcAPI.TransactionExtention.Builder texBuilder = GrpcAPI.TransactionExtention.newBuilder();
-        Protocol.Transaction.Builder transBuilder = Protocol.Transaction.newBuilder();
-        Protocol.Transaction.raw.Builder rawBuilder = transactionExtention.getTransaction().getRawData()
-                .toBuilder();
-        rawBuilder.setFeeLimit(1000000000L);
-        transBuilder.setRawData(rawBuilder);
-
-        transaction = transBuilder.build();
-
-        Protocol.Transaction transaction1 = TronlinkApiList.addTransactionSignWithPermissionId(
-                transaction, wqq1key, 5, blockingStubFull);
-        log.info("-----2222  " + JsonFormat.printToString(transaction1));
-        JSONObject object = new JSONObject();
-        object.put("address", wqq158);
-        object.put("netType", "main_net");
-        object.put("transaction", JSONObject.parse(JsonFormat.printToString(transaction1)));
-
-        res = TronlinkApiList.multiTransactionNoSig(object,null);
-        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
-        Assert.assertEquals(0, responseContent.getIntValue("code"));
-    }
 
     @Test(enabled = true, description = "multiSignTest: Participate Asset Issue Asset Issue")
     public void updateSettingContract() throws Exception {
