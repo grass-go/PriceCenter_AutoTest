@@ -68,24 +68,27 @@ public class multiTrxRecord {
   @Test(enabled = true, description = "with must needed parameter: high version with sig")
   public void multiTrxRecord1() throws Exception {
     List<String> testSystems = new ArrayList<>();
-    testSystems.add("chrome-extension-test");
+    /*testSystems.add("chrome-extension-test");
     testSystems.add("chrome-extension");
     testSystems.add("Chrome");
     testSystems.add("Firefox");
     testSystems.add("firefox-test");
     testSystems.add("Android");
     testSystems.add("AndroidTest");
-    testSystems.add("iOS");
+    testSystems.add("iOS");*/
     testSystems.add("iOSTest");
 
     for (String system : testSystems) {
       //param.put("address", "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
+      //param.put("address","TPSug8WdJHASjjj9sFmFr8LUytfuFGMRyF");
       param.put("address","TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo");
-      param.put("netType", "main_net");
-      param.put("state", "45");
-      param.put("isSign", "all");
       param.put("start", "0");
-      param.put("limit", "20");
+      param.put("limit", "10");
+      param.put("netType", "main_net");
+      param.put("state", "2");
+      param.put("isSign", "all");
+      param.put("serializable","true");
+
       header.put("System", system);
       header.put("Version", "4.12.0");
       response = TronlinkApiList.multiTrxReword(param, header);

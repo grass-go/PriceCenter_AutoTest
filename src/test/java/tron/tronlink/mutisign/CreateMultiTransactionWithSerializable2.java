@@ -41,8 +41,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 @Slf4j
 public class CreateMultiTransactionWithSerializable2 extends TronlinkBase {
-    private String httpnode = "47.252.19.181:8090";
-    //    private String httpnode = "123.56.3.74:8090";
+    //private String httpnode = "http://47.252.19.181:8090";
+    //private String httpnode = "https://api.trongrid.io";
+    private String httpnode = "3.225.171.164:8090";
     private ManagedChannel channelFull = null;
     HttpResponse res;
     private JSONObject responseContent;
@@ -76,36 +77,6 @@ public class CreateMultiTransactionWithSerializable2 extends TronlinkBase {
 
     //byte[] wqq1_byte = Commons.decode58Check(wqq158);
     private HashMap<String, String> param = new HashMap<>();
-
-    @Test(enabled = true, description = "multi sign send coin with serializable")
-    public void sendCoin() {
-        // visible: true
-        String transactionStr = HttpMethed.sendCoin(httpnode, quince58, wqq158, 9L, "true", 3, wqq1key);
-        log.info("-----raw transaction:  " + transactionStr);
-
-        JSONObject object = new JSONObject();
-        object.put("address", wqq158);
-        object.put("netType", "main_net");
-        object.put("transaction", JSONObject.parse(transactionStr));
-        param.put("serializable", "true");
-        res = TronlinkApiList.multiTransactionNoSig(object,param,null);
-        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
-        Assert.assertEquals(0, responseContent.getIntValue("code"));
-
-        // visible: false
-        String transactionStr2 = HttpMethed.sendCoin(httpnode, ByteArray.toHexString(quince), ByteArray.toHexString(wqq1), 9L, "false", 3, wqq1key);
-        log.info("-----raw transaction2:  " + transactionStr2);
-
-        JSONObject object2 = new JSONObject();
-        object2.put("address", wqq158);
-        object2.put("netType", "main_net");
-        object2.put("transaction", JSONObject.parse(transactionStr2));
-        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
-        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
-        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
-        Assert.assertEquals(0, responseContent.getIntValue("code"));
-    }
 
     @Test(enabled = true, description = "multi sign send coin with serializable")
     public void accountCreate() {
@@ -194,7 +165,7 @@ public class CreateMultiTransactionWithSerializable2 extends TronlinkBase {
     //wqq3是witness， wqq4非witness
     @Test(enabled = true, description = "multi sign send coin with serializable")
     public void accountPermissionsUpdate() {
-        String OwnerAddress = wqq358;
+        String OwnerAddress = wqq158;
         JsonObject ownerObject=new JsonObject();
         JsonObject witnessObject=new JsonObject();
 
@@ -204,7 +175,11 @@ public class CreateMultiTransactionWithSerializable2 extends TronlinkBase {
         JsonObject key1 = new JsonObject();
         key1.addProperty("weight",1);
         key1.addProperty("address",OwnerAddress);
+        /*JsonObject key2 = new JsonObject();
+        key2.addProperty("weight",1);
+        key2.addProperty("address",quince58);*/
         keys.add(key1);
+        //keys.add(key2);
         ownerObject.add("keys",keys);     //keys
         //not needed parameter
         //ownerObject.addProperty("operations","7fff1fc0033e0000000000000000000000000000000000000000000000000000");
@@ -243,7 +218,7 @@ public class CreateMultiTransactionWithSerializable2 extends TronlinkBase {
         activesArray.add(activesObject);
 
         JsonObject activesObject2=new JsonObject();
-        activesObject2.addProperty("type","Active");   //type
+        //activesObject2.addProperty("type","Active");   //type
         activesObject2.addProperty("threshold",2);  //threshold
         JsonArray act_keys_2 = new JsonArray();
         JsonObject act_key2_1 = new JsonObject();
@@ -256,12 +231,12 @@ public class CreateMultiTransactionWithSerializable2 extends TronlinkBase {
         act_keys_2.add(act_key2_2);
         activesObject2.add("keys",act_keys_2);     //keys
         activesObject2.addProperty("operations","77ff07c0027e0300000000000000000000000000000000000000000000000000");
-        activesObject2.addProperty("id",4);
+        activesObject2.addProperty("id",5);
         activesArray.add(activesObject2);
 
         log.info("========activesArray==============");
         log.info(activesArray.toString());
-        String transactionStr = HttpMethed2.accountPermissionUpdate(httpnode, OwnerAddress, ownerObject, witnessObject,activesArray,"true",0, quincekey);
+        String transactionStr = HttpMethed2.accountPermissionUpdate(httpnode, OwnerAddress, ownerObject, witnessObject,activesArray,"true",2, quincekey);
 
         JSONObject object = new JSONObject();
         object.put("address", quince58);
@@ -274,6 +249,138 @@ public class CreateMultiTransactionWithSerializable2 extends TronlinkBase {
         Assert.assertEquals(0, responseContent.getIntValue("code"));
 
     }
+
+    @Test(enabled = true, description = "multi sign send coin with serializable")
+    public void accountPermissionsUpdate_NonWitness() {
+        /*String OwnerAddress = wqq458;
+        JsonObject ownerObject=new JsonObject();
+        JsonObject witnessObject=new JsonObject();
+
+        //ownerObject.addProperty("type","Owner");   //type
+        ownerObject.addProperty("threshold",1);  //threshold
+        JsonArray keys = new JsonArray();
+        JsonObject key1 = new JsonObject();
+        key1.addProperty("weight",1);
+        key1.addProperty("address",OwnerAddress);
+        JsonObject key2 = new JsonObject();
+        key2.addProperty("weight",1);
+        key2.addProperty("address",quince58);
+        keys.add(key1);
+        //keys.add(key2);
+        ownerObject.add("keys",keys);     //keys
+        //not needed parameter
+        //ownerObject.addProperty("operations","7fff1fc0033e0000000000000000000000000000000000000000000000000000");
+        ownerObject.addProperty("id",0);        //id
+
+
+        JsonArray activesArray = new JsonArray();
+        JsonObject activesObject=new JsonObject();
+        activesObject.addProperty("type","Active");   //type
+        activesObject.addProperty("threshold",5);  //threshold
+        JsonArray act_keys = new JsonArray();
+        JsonObject act_key1 = new JsonObject();
+        act_key1.addProperty("weight",3);
+        act_key1.addProperty("address",quince58);
+        JsonObject act_key2 = new JsonObject();
+        act_key2.addProperty("weight",2);
+        act_key2.addProperty("address",OwnerAddress);
+        act_keys.add(act_key1);
+        act_keys.add(act_key2);
+        activesObject.add("keys",act_keys);     //keys
+        activesObject.addProperty("operations","77ff07c0027e0300000000000000000000000000000000000000000000000000");
+        //activesObject.addProperty("id",3);
+        activesArray.add(activesObject);
+
+        JsonObject activesObject2=new JsonObject();
+        activesObject2.addProperty("type","Active");   //type
+        activesObject2.addProperty("threshold",10);  //threshold
+        JsonArray act_keys_2 = new JsonArray();
+        JsonObject act_key2_1 = new JsonObject();
+        act_key2_1.addProperty("weight",5);
+        act_key2_1.addProperty("address",quince58);
+        JsonObject act_key2_2 = new JsonObject();
+        act_key2_2.addProperty("weight",5);
+        act_key2_2.addProperty("address",OwnerAddress);
+        act_keys_2.add(act_key2_1);
+        act_keys_2.add(act_key2_2);
+        activesObject2.add("keys",act_keys_2);     //keys
+        activesObject2.addProperty("operations","77ff07c0027e0300000000000000000000000000000000000000000000000000");
+        //activesObject2.addProperty("id",4);
+        activesArray.add(activesObject2);*/
+
+        String OwnerAddress = quince58;
+        JsonObject ownerObject=new JsonObject();
+        JsonObject witnessObject=new JsonObject();
+
+        //ownerObject.addProperty("type","Owner");   //type
+        ownerObject.addProperty("threshold",1);  //threshold
+        JsonArray keys = new JsonArray();
+        JsonObject key1 = new JsonObject();
+        key1.addProperty("weight",1);
+        key1.addProperty("address",ByteArray.toHexString(wqq4));
+        JsonObject key2 = new JsonObject();
+        key2.addProperty("weight",1);
+        key2.addProperty("address",ByteArray.toHexString(quince));
+        //keys.add(key1);
+        keys.add(key2);
+        ownerObject.add("keys",keys);     //keys
+        //not needed parameter
+        //ownerObject.addProperty("operations","7fff1fc0033e0000000000000000000000000000000000000000000000000000");
+        ownerObject.addProperty("id",0);        //id
+
+
+        JsonArray activesArray = new JsonArray();
+        JsonObject activesObject=new JsonObject();
+        activesObject.addProperty("type","Active");   //type
+        activesObject.addProperty("threshold",5);  //threshold
+        JsonArray act_keys = new JsonArray();
+        JsonObject act_key1 = new JsonObject();
+        act_key1.addProperty("weight",3);
+        act_key1.addProperty("address",ByteArray.toHexString(quince));
+        JsonObject act_key2 = new JsonObject();
+        act_key2.addProperty("weight",2);
+        act_key2.addProperty("address",ByteArray.toHexString(wqq4));
+        act_keys.add(act_key1);
+        act_keys.add(act_key2);
+        activesObject.add("keys",act_keys);     //keys
+        activesObject.addProperty("operations","77ff07c0027e0300000000000000000000000000000000000000000000000000");
+        //activesObject.addProperty("id",3);
+        activesArray.add(activesObject);
+
+        JsonObject activesObject2=new JsonObject();
+        activesObject2.addProperty("type","Active");   //type
+        activesObject2.addProperty("threshold",10);  //threshold
+        JsonArray act_keys_2 = new JsonArray();
+        JsonObject act_key2_1 = new JsonObject();
+        act_key2_1.addProperty("weight",5);
+        act_key2_1.addProperty("address",ByteArray.toHexString(quince));
+        JsonObject act_key2_2 = new JsonObject();
+        act_key2_2.addProperty("weight",5);
+        act_key2_2.addProperty("address",ByteArray.toHexString(wqq4));
+        act_keys_2.add(act_key2_1);
+        act_keys_2.add(act_key2_2);
+        activesObject2.add("keys",act_keys_2);     //keys
+        activesObject2.addProperty("operations","77ff07c0027e0300000000000000000000000000000000000000000000000000");
+        //activesObject2.addProperty("id",4);
+        activesArray.add(activesObject2);
+
+        log.info("========activesArray==============");
+        log.info(activesArray.toString());
+        //String transactionStr = HttpMethed2.accountPermissionUpdate(httpnode, OwnerAddress, ownerObject, null,activesArray,"true",2, quincekey);
+        String transactionStr = HttpMethed2.accountPermissionUpdate(httpnode, ByteArray.toHexString(quince), ownerObject, null,activesArray,"false",3, wqq1key);
+
+        JSONObject object = new JSONObject();
+        object.put("address", quince58);
+        object.put("netType", "main_net");
+        object.put("transaction", JSONObject.parse(transactionStr));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+    }
+
 
     @Test(enabled = true, description = "")
     public void accountPermissionsUpdate_Broadcast() {
@@ -330,10 +437,11 @@ public class CreateMultiTransactionWithSerializable2 extends TronlinkBase {
 
     @Test(enabled = true, description = "multi sign send coin with serializable")
     public void smartContractTriggerTrc20Transfer() {
-        String trc20_contract = "TT8vc3zKCmGCUryYWLtFvu5PqAyYoZ3KMh";
-        String trc20_contract_hex = "41BC509C567335468400B3E5FC3522F81A33E42EB1";
+        //qa: String trc20_contract = "TT8vc3zKCmGCUryYWLtFvu5PqAyYoZ3KMh";
+        String trc20_contract = "TKfjV9RNKJJCqPvBtK8L7Knykh7DNWvnYt";
+        String trc20_contract_hex = "416A6337AE47A09AEA0BBD4FAEB23CA94349C7B774";
         //String transactionStr=HttpMethed2.triggerSmartContract(httpnode, quince58, trc20_contract,"transfer(address,uint256)","0000000000000000000000002cbaebc9f5fab6d610549f22406ffb8b9a04ae50000000000000000000000000000000000000000000000000000000000000000a", 2000000000L,"true",3, wqq1key);
-        String transactionStr=HttpMethed2.triggerSmartContract(httpnode, ByteArray.toHexString(quince), trc20_contract_hex,"transfer(address,uint256)","0000000000000000000000002cbaebc9f5fab6d610549f22406ffb8b9a04ae50000000000000000000000000000000000000000000000000000000000000000a", 2000000000L,"false",6, wqq1key);
+        String transactionStr=HttpMethed2.triggerSmartContract(httpnode, ByteArray.toHexString(quince), trc20_contract_hex,"transfer(address,uint256)","0000000000000000000000002cbaebc9f5fab6d610549f22406ffb8b9a04ae50000000000000000000000000000000000000000000000000000000000000000a", 2000000000L,"false",3, wqq1key);
 
         JSONObject object = new JSONObject();
         object.put("address", quince58);
@@ -348,11 +456,11 @@ public class CreateMultiTransactionWithSerializable2 extends TronlinkBase {
 
     @Test(enabled = true, description = "multi sign send coin with serializable")
     public void smartContractTriggerTrc721Transfer() {
-        String trc721_contract = "TTFj6AMthQhUET6hP8TraT7d74RfJC9jGz";
-        String trc721_contract_hex ="41BD99E8EF22380EA3824F8AA3636B32EFECC8EB8A";
-        //String transactionStr=HttpMethed2.triggerSmartContract(httpnode, quince58, trc721_contract,"transfer(address,uint256)","0000000000000000000000002cbaebc9f5fab6d610549f22406ffb8b9a04ae500000000000000000000000000000000000000000000000000000000000000002", 2000000000L,"true",3, wqq1key);
+        String trc721_contract = "TTi4R9NBnkHnvxwMVe4C3Xbjh5NMZqZfJG";
+        String trc721_contract_hex ="41C294DBC7A38E621493E21B5CB33988E5A836CDF8";
+        String transactionStr=HttpMethed2.triggerSmartContract(httpnode, quince58, trc721_contract,"transfer(address,uint256)","0000000000000000000000002cbaebc9f5fab6d610549f22406ffb8b9a04ae500000000000000000000000000000000000000000000000000000000000000002", 2000000000L,"true",3, wqq1key);
 
-        String transactionStr=HttpMethed2.triggerSmartContract(httpnode, ByteArray.toHexString(quince), trc721_contract_hex,"transfer(address,uint256)","0000000000000000000000002cbaebc9f5fab6d610549f22406ffb8b9a04ae500000000000000000000000000000000000000000000000000000000000000003", 2000000000L,"false",3, wqq1key);
+        //String transactionStr=HttpMethed2.triggerSmartContract(httpnode, ByteArray.toHexString(quince), trc721_contract_hex,"transfer(address,uint256)","0000000000000000000000002cbaebc9f5fab6d610549f22406ffb8b9a04ae500000000000000000000000000000000000000000000000000000000000000008", 2000000000L,"false",3, wqq1key);
 
         JSONObject object = new JSONObject();
         object.put("address", quince58);
@@ -367,10 +475,10 @@ public class CreateMultiTransactionWithSerializable2 extends TronlinkBase {
 
     @Test(enabled = true, description = "multi sign send coin with serializable")
     public void smartContractTriggerTrc1155Transfer() {
-        String trc1155_contract = "TAp4M94p4ngPqTJnT85mVT9YJeQtVL2Cgk";
-        String trc1155_contract_hex = "41093D288781A8AB34E2CA59BE062D812A8A8A9DB8";
-        //String transactionStr=HttpMethed2.triggerSmartContract(httpnode, quince58, trc1155_contract,"safeTransferFrom(address,address,uint256,uint256,bytes)","000000000000000000000000e7d71e72ea48de9144dc2450e076415af0ea745f0000000000000000000000002cbaebc9f5fab6d610549f22406ffb8b9a04ae500000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000000", 2000000000L,"true",3, wqq1key);
-        String transactionStr=HttpMethed2.triggerSmartContract(httpnode, ByteArray.toHexString(quince), trc1155_contract_hex,"safeTransferFrom(address,address,uint256,uint256,bytes)","000000000000000000000000e7d71e72ea48de9144dc2450e076415af0ea745f0000000000000000000000002cbaebc9f5fab6d610549f22406ffb8b9a04ae500000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000000", 2000000000L,"false",3, wqq1key);
+        String trc1155_contract = "TE2VpPmPQp9UZpDPcBS4G8Pw3R1BZ4Ea6j";
+        String trc1155_contract_hex = "412C7FC9D4ABD78E769E6945C87DB562FBDE0A6848";
+        String transactionStr=HttpMethed2.triggerSmartContract(httpnode, quince58, trc1155_contract,"safeTransferFrom(address,address,uint256,uint256,bytes)","000000000000000000000000e7d71e72ea48de9144dc2450e076415af0ea745f0000000000000000000000002cbaebc9f5fab6d610549f22406ffb8b9a04ae500000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000000", 2000000000L,"true",3, wqq1key);
+        //String transactionStr=HttpMethed2.triggerSmartContract(httpnode, ByteArray.toHexString(quince), trc1155_contract_hex,"safeTransferFrom(address,address,uint256,uint256,bytes)","000000000000000000000000e7d71e72ea48de9144dc2450e076415af0ea745f0000000000000000000000002cbaebc9f5fab6d610549f22406ffb8b9a04ae500000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000000", 2000000000L,"false",3, wqq1key);
 
         JSONObject object = new JSONObject();
         object.put("address", quince58);
@@ -416,8 +524,9 @@ public class CreateMultiTransactionWithSerializable2 extends TronlinkBase {
         //def deployContract(self,abi,bytecode,params,originEnergyLimit,name,callValue,consumeUserResourcePercent,accountHex,bandwidthLimit):
 
         // visible: true
-        //String transactionStr = HttpMethed2.smartContractCreate(httpnode, abi, bin,"","DummyERC20", quince58,"true",3,wqq1key);
-        String transactionStr = HttpMethed2.smartContractCreate(httpnode, abi, bin,"",HttpMethed2.str2hex("DummyERC20"), ByteArray.toHexString(quince),"false",3,wqq1key);
+        String constructParam = "00000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000c22746573744d756c7469312200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003544d310000000000000000000000000000000000000000000000000000000000";
+        String transactionStr = HttpMethed2.smartContractCreate(httpnode, abi, bin,constructParam,"DummyERC20", quince58,"true",3,wqq1key);
+        //String transactionStr = HttpMethed2.smartContractCreate(httpnode, abi, bin,constructParam,HttpMethed2.str2hex("DummyERC20"), ByteArray.toHexString(quince),"false",3,wqq1key);
 
         JSONObject object = new JSONObject();
         object.put("address", quince58);
@@ -434,11 +543,11 @@ public class CreateMultiTransactionWithSerializable2 extends TronlinkBase {
 
     @Test(enabled = true, description = "multi sign ")
     public void smartContractUpdate() {
-        String contractAddress="TU4zZAaKMdNGX4gwDhP3yz1zXZ5Z9UezxL";
-        String contractAddress_hex = "41C68A5EC02BC77533790A3702F42C05071E004735";
+        String contractAddress="TJMZNqLDPLHDMakYxBKonSvd26VdjWHVhP";
+        String contractAddress_hex = "415BFB2A7DF6303F0D733548507C2922C70438542C";
         // visible: true
-        //String transactionStr = HttpMethed2.updateContractSetting(httpnode, quince58, contractAddress, 38,"true",3,wqq1key);
-        String transactionStr = HttpMethed2.updateContractSetting(httpnode, ByteArray.toHexString(quince), contractAddress_hex, 38,"false",3,wqq1key);
+        String transactionStr = HttpMethed2.updateContractSetting(httpnode, quince58, contractAddress, 38,"true",3,wqq1key);
+        //String transactionStr = HttpMethed2.updateContractSetting(httpnode, ByteArray.toHexString(quince), contractAddress_hex, 38,"false",3,wqq1key);
 
         JSONObject object = new JSONObject();
         object.put("address", wqq158);
@@ -453,11 +562,13 @@ public class CreateMultiTransactionWithSerializable2 extends TronlinkBase {
 
     @Test(enabled = true, description = "multi sign ")
     public void smartContractUpdateEnergyLimit() {
-        String contractAddress="TU4zZAaKMdNGX4gwDhP3yz1zXZ5Z9UezxL";
-        String contractAddress_hex ="41C68A5EC02BC77533790A3702F42C05071E004735";
+        //String contractAddress="TU4zZAaKMdNGX4gwDhP3yz1zXZ5Z9UezxL";
+        //String contractAddress_hex ="41C68A5EC02BC77533790A3702F42C05071E004735";
+        String contractAddress="TJMZNqLDPLHDMakYxBKonSvd26VdjWHVhP";
+        String contractAddress_hex = "415BFB2A7DF6303F0D733548507C2922C70438542C";
         // visible: true
-        //String transactionStr = HttpMethed2.updateEnergyLimit(httpnode, quince58, contractAddress, 2000000,"true",3,wqq1key);
-        String transactionStr = HttpMethed2.updateEnergyLimit(httpnode, ByteArray.toHexString(quince), contractAddress_hex, 3000000,"false",3,wqq1key);
+        String transactionStr = HttpMethed2.updateEnergyLimit(httpnode, quince58, contractAddress, 2000000,"true",3,wqq1key);
+        //String transactionStr = HttpMethed2.updateEnergyLimit(httpnode, ByteArray.toHexString(quince), contractAddress_hex, 3000000,"false",3,wqq1key);
 
         JSONObject object = new JSONObject();
         object.put("address", wqq158);
@@ -473,11 +584,11 @@ public class CreateMultiTransactionWithSerializable2 extends TronlinkBase {
     @Test(enabled = true, description = "multi sign ")
     public void smartContractClearABI() {
         String contractAddress="TYSLxryyvX4LCZo6GvXtG2QUe6UKjfH9dN";
-        String contractAddress1 = "TUVGZFjjAhkYitwQmveGoCt7W4yNzbN5dY";
-        String contractAddress1_hex="41CB21B5EA9C248F519746C55AF97D1D815C4BC7E5";
+        String contractAddress1 = "TJMZNqLDPLHDMakYxBKonSvd26VdjWHVhP";
+        String contractAddress1_hex="415BFB2A7DF6303F0D733548507C2922C70438542C";
         // visible: true
-        //String transactionStr = HttpMethed2.clearABi(httpnode, quince58, contractAddress, "true",3,wqq1key);
-        String transactionStr = HttpMethed2.clearABi(httpnode, ByteArray.toHexString(quince), contractAddress1_hex, "false",3,wqq1key);
+        String transactionStr = HttpMethed2.clearABi(httpnode, quince58, contractAddress1, "true",3,wqq1key);
+        //String transactionStr = HttpMethed2.clearABi(httpnode, ByteArray.toHexString(quince), contractAddress1_hex, "false",3,wqq1key);
 
         JSONObject object = new JSONObject();
         object.put("address", wqq158);
@@ -529,14 +640,16 @@ public class CreateMultiTransactionWithSerializable2 extends TronlinkBase {
     public void bosorExchangeTransaction() {
         // list exchanges: https://nile.trongrid.io/wallet/listexchanges
         // exchangeId = 17
-        String firstId="1000340";
-        String secondId="1000323";
+        //qa: String firstId="1000340";
+        //qa; String secondId="1000323";
+        String firstId="1003394";
+        String secondId="1002922";
         log.info("firstId: "+ HttpMethed2.str2hex(firstId));
         log.info("SecondId: "+ HttpMethed2.str2hex(secondId));
 
         // visible: true
         //String transactionStr = HttpMethed2.exchangeTransaction(httpnode, quince58, 17, firstId, 2000L,1L, "true", 3, wqq1key);
-        String transactionStr = HttpMethed2.exchangeTransaction(httpnode, ByteArray.toHexString(quince), 17, firstId, 2000L,1L, "false", 3, wqq1key);
+        String transactionStr = HttpMethed2.exchangeTransaction(httpnode, ByteArray.toHexString(quince), 184, firstId, 0L,0L, "false", 3, wqq1key);
 
         JSONObject object = new JSONObject();
         object.put("address", wqq158);
@@ -608,6 +721,30 @@ public class CreateMultiTransactionWithSerializable2 extends TronlinkBase {
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0, responseContent.getIntValue("code"));
+    }
+
+    @Test(enabled = true, description = "multi sign ")
+    public void getMarketOrderByAccount() {
+
+        //HttpMethed2.getMarketOrderByAccount(httpnode,quince,"true");
+        //HttpMethed2.getMarketPairList(httpnode,"true");
+        HttpMethed2.marketSellAssetGetTxId(httpnode,quince58,"1000323",1000L, "1000340",5L, quincekey, "true");
+        /*String first_Id="1000323";
+        String second_Id="1000082";
+
+        // visible: true
+        String transactionStr2 = HttpMethed2.exchangeWithdraw(httpnode, quince58, 18, first_Id, 100L,"true", 3, wqq1key);
+        //String transactionStr2 = HttpMethed2.exchangeWithdraw(httpnode, ByteArray.toHexString(quince), 18, first_Id, 100L,"false", 3, wqq1key);
+
+        JSONObject object2 = new JSONObject();
+        object2.put("address", wqq158);
+        object2.put("netType", "main_net");
+        object2.put("transaction", JSONObject.parse(transactionStr2));
+        param.put("serializable", "true");
+        res = TronlinkApiList.multiTransactionNoSig(object2,param,null);
+        Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Assert.assertEquals(0, responseContent.getIntValue("code"));*/
     }
 
 

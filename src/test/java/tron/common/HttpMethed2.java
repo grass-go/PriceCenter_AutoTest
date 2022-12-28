@@ -93,17 +93,19 @@ public class HttpMethed2 {
   /**
    * constructor.
    */
-  public static HttpResponse setAccountId(String httpNode, byte[] setAccountIdAddress,
-      String accountId, Boolean visable, String fromKey) {
+  public static String setAccountId(String httpNode, String setAccountIdAddress,
+      String accountId, String visible, Integer permissionId, String fromKey) {
     try {
       final String requestUrl = "http://" + httpNode + "/wallet/setaccountid";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("account_id", accountId);
-      userBaseObj2.addProperty("owner_address",
-          Base58.encode(TronlinkApiList.getFinalAddress(fromKey)));
-      userBaseObj2.addProperty("visible", visable);
+      userBaseObj2.addProperty("owner_address", setAccountIdAddress);
+      userBaseObj2.addProperty("visible", visible);
+      userBaseObj2.addProperty("Permission_id", permissionId);
       response = createConnect(requestUrl, userBaseObj2);
       transactionString = EntityUtils.toString(response.getEntity());
+      log.info("=========raw transaction==========");
+      log.info(transactionString);
       transactionSignString = gettransactionsign(httpNode, transactionString, fromKey);
       log.info(transactionString);
       log.info(transactionSignString);
@@ -113,7 +115,7 @@ public class HttpMethed2 {
       httppost.releaseConnection();
       return null;
     }
-    return response;
+    return transactionSignString;
   }
 
 
@@ -173,7 +175,7 @@ public class HttpMethed2 {
   public static String createAccount(String httpNode, String ownerAddress,
       String accountAddress, String visible, Integer permissionId, String fromKey) {
     try {
-      final String requestUrl = "http://" + httpNode + "/wallet/createaccount";
+      final String requestUrl = "http://"+httpNode + "/wallet/createaccount";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("account_address", accountAddress);
       userBaseObj2.addProperty("owner_address", ownerAddress);
@@ -444,6 +446,7 @@ public class HttpMethed2 {
       JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
       transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+120000);
       transactionSignString = gettransactionsign(httpNode, transactionObject.toString(), fromKey);
+      log.info("===========signed transaction===========");
       log.info(transactionSignString);
 
       JSONObject jsonObject = HttpMethed.parseStringContent(transactionSignString);
@@ -451,7 +454,7 @@ public class HttpMethed2 {
       jsonObject.remove("txID");
       jsonObject.remove("raw_data_hex");
       JSONObject contractObject = (JSONObject) jsonObject.getJSONObject("raw_data").getJSONArray("contract").get(0);
-      contractObject.put("Permission_id",0);
+      contractObject.put("Permission_id",permissionId);
 
       transactionStr = jsonObject.toString();
     } catch (Exception e) {
@@ -1276,7 +1279,7 @@ public class HttpMethed2 {
   public static String gettransactionsign(String httpNode, String transactionString,
       String privateKey) {
     try {
-      String requestUrl = "http://" + httpNode + "/wallet/gettransactionsign";
+      String requestUrl = "http://"+httpNode + "/wallet/gettransactionsign";
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("transaction", transactionString);
       userBaseObj2.addProperty("privateKey", privateKey);
@@ -3816,7 +3819,7 @@ public class HttpMethed2 {
   /**
    * constructor.
    */
-  public static String marketSellAssetGetTxId(String httpNode, byte[] ownerAddress,
+  public static String marketSellAssetGetTxId(String httpNode, String ownerAddress,
       String sellTokenId,
       Long sellTokenQuantity, String buyTokenId, Long buyTokenQuantity, String fromKey,
       String visible) {
@@ -3824,23 +3827,25 @@ public class HttpMethed2 {
       final String requestUrl = "http://" + httpNode + "/wallet/marketsellasset";
       JsonObject userBaseObj2 = new JsonObject();
       if (visible.equals("true")) {
-        userBaseObj2.addProperty("owner_address", Base58.encode(ownerAddress));
+        userBaseObj2.addProperty("owner_address", ownerAddress);
         userBaseObj2.addProperty("sell_token_id", sellTokenId);
         userBaseObj2.addProperty("buy_token_id", buyTokenId);
       } else {
-        userBaseObj2.addProperty("owner_address", ByteArray.toHexString(ownerAddress));
+        userBaseObj2.addProperty("owner_address", ownerAddress);
         userBaseObj2.addProperty("sell_token_id", str2hex(sellTokenId));
         userBaseObj2.addProperty("buy_token_id", str2hex(buyTokenId));
       }
       userBaseObj2.addProperty("sell_token_quantity", sellTokenQuantity);
       userBaseObj2.addProperty("buy_token_quantity", buyTokenQuantity);
       userBaseObj2.addProperty("visible", visible);
-      response = createConnect(requestUrl, userBaseObj2);
       System.out.println("userBaseObj2: " + userBaseObj2);
+      response = createConnect(requestUrl, userBaseObj2);
       transactionString = EntityUtils.toString(response.getEntity());
       System.out.println("transactionString: " + transactionString);
       transactionSignString = gettransactionsign(httpNode, transactionString, fromKey);
       response = broadcastTransaction(httpNode, transactionSignString);
+      String responsestr = EntityUtils.toString(response.getEntity());
+      log.info("responsestr: "+ responsestr);
     } catch (Exception e) {
       e.printStackTrace();
       httppost.releaseConnection();
@@ -3951,6 +3956,8 @@ public class HttpMethed2 {
       }
       userBaseObj2.addProperty("visible", visible);
       response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      log.info("transactionString:"+transactionString);
     } catch (Exception e) {
       e.printStackTrace();
       httppost.releaseConnection();
@@ -4014,6 +4021,8 @@ public class HttpMethed2 {
       JsonObject userBaseObj2 = new JsonObject();
       userBaseObj2.addProperty("visible", visible);
       response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      log.info("transactionString:"+transactionString);
     } catch (Exception e) {
       e.printStackTrace();
       httppost.releaseConnection();
@@ -4074,6 +4083,8 @@ public class HttpMethed2 {
       }
       userBaseObj2.addProperty("visible", visible);
       response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      log.info("transactionString:"+transactionString);
     } catch (Exception e) {
       e.printStackTrace();
       httppost.releaseConnection();
