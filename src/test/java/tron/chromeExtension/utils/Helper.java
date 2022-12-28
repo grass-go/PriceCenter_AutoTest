@@ -254,9 +254,10 @@ public class Helper extends Base {
       sendKeys(sendPage.amount_input, amount);
       waitingTime();
     }
+    waitingTime(3);
     click(sendPage.transfer_btn);
-    waitingTime();
     if (flag) {
+      waitingTime(5);
       String transferAccount = getText(mainPage.transferAccount_content);
       Assert.assertTrue(!transferAccount.contains("."));
       String receiveAccount = getText(mainPage.receiveAccount_content);

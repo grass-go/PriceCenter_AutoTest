@@ -15,7 +15,7 @@ public class sendTRC721 extends Base {
   public void before() throws Exception {
     setUpChromeDriver();
     loginAccount(chainNile);
-    Helper.switchAccount(testAccountTwoIndex, testAddress);
+    Helper.switchAccount(testAccountOneIndex, loginAddress);
   }
 
   @Test(
@@ -26,9 +26,9 @@ public class sendTRC721 extends Base {
   public void test001sendTrc721Test() throws Exception {
 
     String transactionStatus =
-        Helper.transfer(false, loginAddress, "TVzRKmCZ471QGsKqFJbXc2qeNtJNmcumbR", "1", true);
+        Helper.transfer(false, testAddress, "TVzRKmCZ471QGsKqFJbXc2qeNtJNmcumbR", "1", true);
     Assert.assertEquals("交易已广播", transactionStatus);
-    Assert.assertTrue(onTheHomepageOrNot(testAddress));
+    Assert.assertTrue(onTheHomepageOrNot(loginAddress));
   }
 
   @AfterMethod(enabled = true)

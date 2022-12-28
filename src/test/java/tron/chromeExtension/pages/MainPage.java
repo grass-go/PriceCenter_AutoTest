@@ -234,6 +234,28 @@ public class MainPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[2]/div[2]/div[2]/div")
   public WebElement clickJump_btn;
 
+
+
+    @FindBy(xpath = "//*[@id=\"root\"]/div/div/div/div/div[1]/div/div[2]/div[1]/a[1]")
+    public WebElement plus;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/ul/li[2]/div[2]/p[1]")
+  public WebElement importWallet;
+
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div[2]/div[1]/span/textarea")
+  public WebElement ZhuJiCi_text;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div[2]/div[2]/span")
+  public  WebElement nextStep_btn;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div[2]/div[3]/span")
+  public  WebElement importSiYao;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div[2]/div[2]/span")
+  public  WebElement importConfirm;
+
+
   public SendPage enterSendPage() throws Exception {
     try {
       TimeUnit.SECONDS.sleep(2);

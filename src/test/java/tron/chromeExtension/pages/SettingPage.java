@@ -36,13 +36,13 @@ public class SettingPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div[2]/input")
   public WebElement modifyName_input;
   // Address input box.
-  @FindBy(xpath = "/html/body/div/div/div[1]/div/div[3]/div/textarea")
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[3]/div/input")
   public WebElement address_input;
 
   @FindBy(xpath = "//*[@id=\"root\"]/div/div/div[3]/div/input")
   public WebElement modifyAddress_input;
   // Note input box.
-  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[5]/input")
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/div[4]/input")
   public WebElement remarks_input;
   // Save button.
   // @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div/button[1]")
@@ -172,4 +172,5 @@ public class SettingPage extends AbstractPage {
 
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div[2]")
   public WebElement version;
+
 }

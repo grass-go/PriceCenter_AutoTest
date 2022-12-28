@@ -87,9 +87,9 @@ public class accountAddress extends Base {
       alwaysRun = true,
       enabled = true)
   public void test006SendTrc721AddressFormatTest() throws Exception {
-    Helper.switchAccount(testAccountTwoIndex, testAddress);
+    Helper.switchAccount(testAccountOneIndex, loginAddress);
     String transactionStatus =
-        Helper.transfer(true, loginAddress, "TVzRKmCZ471QGsKqFJbXc2qeNtJNmcumbR", "1", true);
+        Helper.transfer(true, testAddress, "TVzRKmCZ471QGsKqFJbXc2qeNtJNmcumbR", "1", true);
     Assert.assertTrue(transactionStatus.equals("Address Format True"));
   }
 
