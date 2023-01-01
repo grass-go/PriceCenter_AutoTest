@@ -305,7 +305,7 @@ public class AllAssetList extends TronlinkBase {
         Integer scan_level = Integer.valueOf(scan_levelObject.toString());
         log.info("curAddress:"+curAddress+", cur_isOfficial:"+cur_isOfficial.toString()+", transcan level:"+scan_levelObject.toString());
         log.info("======");
-        if (curAddress.equals("TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4") || curAddress.equals("TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn")){
+        if (curAddress.equals("TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4") || curAddress.equals("TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn") || curAddress.equals("TMz2SWatiAtZVVcH2ebpsbVtYwUPT9EdjH")){
           Assert.assertEquals(Math.abs(Integer.parseInt(cur_isOfficial.toString())), 1);
         } else{
           Assert.assertEquals(Math.abs(Integer.parseInt(cur_isOfficial.toString())), scan_level+1);

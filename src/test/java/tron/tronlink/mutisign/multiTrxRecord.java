@@ -22,7 +22,9 @@ import tron.tronlink.base.TronlinkBase;
 @Slf4j
 public class multiTrxRecord extends TronlinkBase {
   private HttpResponse response;
+  private HttpResponse response2;
   private JSONObject responseContent;
+  private JSONObject responseContent2;
   private HashMap<String, String> param = new HashMap<>();
   private HashMap<String, String> header = new HashMap<>();
   private String fullnode = "47.75.245.225:50051";  //线上
@@ -158,7 +160,8 @@ public class multiTrxRecord extends TronlinkBase {
   //multi-v4.1.0-all the below cases
   @Test(enabled = true, description = "Api multiTrxReword test fail", groups="multiSign")
   public void multiTrxRecordLowVersionWithNoSig() throws Exception {
-    param.put("address", "TRqgwhHbfscXq3Ym3FJSFwxprpto1S4nSW");
+    param.clear();
+    param.put("address", "TY9touJknFcezjLiaGTjnH1dUHiqriu6L8");
     param.put("start", "0");
     param.put("limit", "20");
     param.put("state", "255");
@@ -169,15 +172,20 @@ public class multiTrxRecord extends TronlinkBase {
       log.info("cur index is " + index);
       //v4.1.0
       response = TronlinkApiList.multiTrxRewordNoSig(param,null);
-      if (response.getStatusLine().getStatusCode() == 200) {
-        index = 6;
-      } else {
+      param.put("serializable","true");
+      response2 = TronlinkApiList.multiTrxRewordNoSig(param,null);
+      if (response.getStatusLine().getStatusCode() != 200 || response2.getStatusLine().getStatusCode() != 200 ) {
         continue;
+      } else {
+        index = 6;
       }
       responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-      TronlinkApiList.printJsonObjectContent(responseContent);
-      Assert.assertTrue(responseContent.size() >= 3);
-      Assert.assertTrue(responseContent.getString("message").equals("OK"));
+      responseContent2 = TronlinkApiList.parseResponse2JsonObject(response2);
+      Object hashs = JSONPath.eval(responseContent, "$..hash");
+      java.util.ArrayList hashArray=(java.util.ArrayList)hashs;
+      Object hashs2 = JSONPath.eval(responseContent2, "$..hash");
+      java.util.ArrayList hashArray2=(java.util.ArrayList)hashs;
+      Assert.assertTrue(hashs.equals(hashs2));
     }
     Assert.assertEquals(7,index);
   }

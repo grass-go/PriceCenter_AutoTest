@@ -407,6 +407,15 @@ public class TronlinkServerHttpClient {
             return null;
         }
     }
+    public static JSONObject parseString2JsonObject(String mystr) {
+        try {
+            JSONObject obj = JSONObject.parseObject(mystr);
+            return obj;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public static String parseResponse2String(HttpResponse response) {
         try {

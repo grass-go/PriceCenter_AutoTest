@@ -142,7 +142,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
     }
 
 
-    public static HttpResponse multiTrxReword(HashMap<String, String> param,HashMap<String, String> header) throws Exception {
+    public static HttpResponse multiTrxReword(HashMap<String, String> param,HashMap<String, String> header) {
         String curURI = "/api/wallet/multi/trx_record";
         response = createGetConnectWithSignature(curURI,param,header,null);
         return response;
@@ -639,9 +639,9 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse multiTransactionNoSig(JSONObject body, HashMap<String, String> header) {
+    public static HttpResponse multiTransactionNoSig(JSONObject body, HashMap<String, String> header, HashMap<String, String> params) {
         String requestUrl = HttpNode + "/api/wallet/multi/transaction";
-        response = createPostConnect(requestUrl, null, body, header);
+        response = createPostConnect(requestUrl, params, body, header);
         return response;
     }
 
