@@ -27,9 +27,10 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import tron.common.TronGridHttpApi;
 import tron.common.utils.TronlinkServerHttpClient;
+import tron.tronlink.base.TronlinkBase;
 
 @Slf4j
-public class CreateMultiTransaction {
+public class CreateMultiTransaction extends TronlinkBase {
     private org.tron.api.WalletGrpc.WalletBlockingStub blockingStubFull = null;
     private String fullnode = "47.75.245.225:50051";  //线上
     //nile env: private String httpnode = "47.252.19.181:8090";
@@ -41,7 +42,7 @@ public class CreateMultiTransaction {
     //String key1="c21f0c6fdc467f4ae7dc4c1a0b802234a930bff198ce34fde6850b0afd383cf5"; //线上
     //byte[] address1=TronlinkApiList.getFinalAddress(key1);
 
-    String address158= "TY9touJknFcezjLiaGTjnH1dUHiqriu6L8";
+    String address158= multiSignOwnerAddress;
     byte[] address1 = Commons.decode58Check(address158);
     String key2 = "7ef4f6b32643ea063297416f2f0112b562a4b3dac2c960ece00a59c357db3720";//线上
     byte[] address2=TronlinkApiList.getFinalAddress(key2);

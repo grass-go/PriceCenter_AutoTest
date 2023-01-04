@@ -960,9 +960,9 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse v2accountList(Map<String, String> params, JSONArray object) {
+    public static HttpResponse v2accountList(Map<String, String> params,Map<String, String> headers, JSONArray object) {
         String curURI = "/api/wallet/v2/account/list";
-        response = createPostConnectWithSignature(curURI, params, null, object );
+        response = createPostConnectWithSignature(curURI, params, headers, object );
         return response;
     }
 

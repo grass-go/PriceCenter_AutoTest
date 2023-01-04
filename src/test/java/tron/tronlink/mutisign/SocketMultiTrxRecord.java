@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 
 @Slf4j
-public class SocketMultiTrxRecord {
+public class SocketMultiTrxRecord extends TronlinkBase {
     boolean flag = false;
     private HashMap<String, String> header = new HashMap<>();
     private HashMap<String, String> params = new HashMap<>();
@@ -34,10 +34,10 @@ public class SocketMultiTrxRecord {
 
         params.put("nonce","12345");
         params.put("secretId","A4ADE880F46CA8D4");
-        String thisSignature = TronlinkApiList.getNewSignature("/api/wallet/multi/socket", "GET", "TY9touJknFcezjLiaGTjnH1dUHiqriu6L8",params,header);
+        String thisSignature = TronlinkApiList.getNewSignature("/api/wallet/multi/socket", "GET", multiSignOwnerAddress,params,header);
 
         try {
-            String url = "wss://" + host +"/api/wallet/multi/socket?nonce=12345&secretId=A4ADE880F46CA8D4&address=TY9touJknFcezjLiaGTjnH1dUHiqriu6L8&netType=main_net&signature="+thisSignature;
+            String url = "wss://" + host +"/api/wallet/multi/socket?nonce=12345&secretId=A4ADE880F46CA8D4&address="+ multiSignOwnerAddress +"&netType=main_net&signature="+thisSignature;
             System.out.println(url);
             URI uri = new URI(url);
             WebSocketClient mWs = new WebSocketClient(uri){
@@ -80,7 +80,7 @@ public class SocketMultiTrxRecord {
         header.put("System","Android");
         header.put("Version","3.10.0");
         try {
-            String url = "wss://" + host +"/api/wallet/multi/socket?address=TY9touJknFcezjLiaGTjnH1dUHiqriu6L8&start=0&limit=20&netType=main_net&state=0";
+            String url = "wss://" + host +"/api/wallet/multi/socket?address="+multiSignOwnerAddress+"&start=0&limit=20&netType=main_net&state=0";
             System.out.println(url);
             URI uri = new URI(url);
             WebSocketClient mWs = new WebSocketClient(uri,header){
@@ -124,7 +124,7 @@ public class SocketMultiTrxRecord {
         header.put("System","Chrome");
         header.put("Version","4.11.0");
         try {
-            String url = "wss://" + host +"/api/wallet/multi/socket?address=TY9touJknFcezjLiaGTjnH1dUHiqriu6L8&start=0&limit=20&netType=main_net&state=0";
+            String url = "wss://" + host +"/api/wallet/multi/socket?address="+multiSignOwnerAddress+"&start=0&limit=20&netType=main_net&state=0";
             System.out.println(url);
             URI uri = new URI(url);
             WebSocketClient mWs = new WebSocketClient(uri,header){

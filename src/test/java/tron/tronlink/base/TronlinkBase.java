@@ -31,6 +31,8 @@ public class TronlinkBase {
     public static String quince_B58 = Configuration.getByPath("testng.conf").getString("tronlink.quince_B58");
     public String testDELuser_B58 = Configuration.getByPath("testng.conf").getString("tronlink.testDELuser_B58");
     public String price_B58 = Configuration.getByPath("testng.conf").getString("tronlink.priceUser");
+    public String multiSignOwnerAddress = Configuration.getByPath("testng.con").getString("tronlink.multiSignOwnerAddress");
+    public String multiSignAddress = Configuration.getByPath("testng.con").getString("tronlink.multiSignAddress");
     public String Hex_1155_user = Configuration.getByPath(Keys.settingFileName).getString("tronlink.1155User");
     public String B58_1155_user = AddressConvert.hexTo58(Hex_1155_user);
 //    public String Hex_1155_newAssetUser = Configuration.getByPath(Keys.settingFileName).getString("tronlink.1155newAssetUser");
@@ -38,6 +40,7 @@ public class TronlinkBase {
     public String keyWord1155 = Configuration.getByPath(Keys.settingFileName).getString("tronlink.keyWord1155");
     public String followAsset = addressNewAsset;
     public String unfollowAsset41 = addressNewAsset41;
+
     public String nonce = "12345";
     public String secretId = "SFSUIOJBFMLKSJIF";
 

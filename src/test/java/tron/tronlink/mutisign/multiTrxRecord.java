@@ -38,9 +38,9 @@ public class multiTrxRecord extends TronlinkBase {
     blockingStubFull = org.tron.api.WalletGrpc.newBlockingStub(channelFull);
   }
 
-  @Test(enabled = true, description = "Api multiTrxReword test", groups="multiSign")
+  @Test(enabled = true, description = "Api multiTrxReword test, state=0", groups="multiSign")
   public void multiTrxRecord0() throws Exception {
-    param.put("address", "TRqgwhHbfscXq3Ym3FJSFwxprpto1S4nSW");
+    param.put("address", multiSignAddress);
     param.put("start", "0");
     param.put("limit", "10");
     param.put("state", "0");
@@ -70,9 +70,9 @@ public class multiTrxRecord extends TronlinkBase {
     }
   }
 
-  @Test(enabled = true, description = "Api multiTrxReword test success", groups="multiSign")
+  @Test(enabled = true, description = "Api multiTrxReword test success, state=1", groups="multiSign")
   public void multiTrxRecord1() throws Exception {
-    param.put("address", "TRqgwhHbfscXq3Ym3FJSFwxprpto1S4nSW");
+    param.put("address", multiSignAddress);
     param.put("start", "0");
     param.put("limit", "10");
     param.put("state", "1");
@@ -115,9 +115,9 @@ public class multiTrxRecord extends TronlinkBase {
 
   }
 
-  @Test(enabled = true, description = "Api multiTrxReword test fail", groups="multiSign")
+  @Test(enabled = true, description = "Api multiTrxReword test fail, state=2", groups="multiSign")
   public void multiTrxRecord2() throws Exception {
-    param.put("address", "TRqgwhHbfscXq3Ym3FJSFwxprpto1S4nSW");
+    param.put("address", multiSignAddress);
     param.put("start", "0");
     param.put("limit", "10");
     param.put("state", "2");
@@ -158,10 +158,10 @@ public class multiTrxRecord extends TronlinkBase {
   }
 
   //multi-v4.1.0-all the below cases
-  @Test(enabled = true, description = "Api multiTrxReword test fail", groups="multiSign")
+  @Test(enabled = true, description = "Api multiTrxReword test fail, state=all", groups="multiSign")
   public void multiTrxRecordLowVersionWithNoSig() throws Exception {
     param.clear();
-    param.put("address", "TY9touJknFcezjLiaGTjnH1dUHiqriu6L8");
+    param.put("address", multiSignAddress);
     param.put("start", "0");
     param.put("limit", "20");
     param.put("state", "255");
@@ -193,7 +193,7 @@ public class multiTrxRecord extends TronlinkBase {
   //multi-v4.1.0-all the below cases
   @Test(enabled = true, description = "Api multiTrxReword test fail", groups="multiSign")
   public void multiTrxRecordHighVersionWithNoSig() throws Exception {
-    param.put("address", "TRqgwhHbfscXq3Ym3FJSFwxprpto1S4nSW");
+    param.put("address", multiSignAddress);
     param.put("netType", "main_net");
     param.put("state", "255");
     param.put("start", "0");
@@ -222,11 +222,10 @@ public class multiTrxRecord extends TronlinkBase {
   @Test(enabled = true, description = "nulti sign send coin", groups="multiSign")
   public void testTrxRecord_with_raw_data_hex() throws Exception {
     //Step1: post one multisign transaction
-    String address158= "TY9touJknFcezjLiaGTjnH1dUHiqriu6L8";
+    String address158= multiSignOwnerAddress;
     byte[] address1 = Commons.decode58Check(address158);
     String key2 = "7ef4f6b32643ea063297416f2f0112b562a4b3dac2c960ece00a59c357db3720";//线上
     byte[] address2=TronlinkApiList.getFinalAddress(key2);
-    String address258= Base58.encode(address2);
     String getAddress258_2=TronlinkApiList.encode58Check(address2);
 
     Protocol.Transaction transaction = TronlinkApiList
@@ -259,6 +258,7 @@ public class multiTrxRecord extends TronlinkBase {
     Assert.assertEquals(0,responseContent.getIntValue("code"));
 
     //Step2: check trxRecord contains raw_data_hex and value correct.
+    Thread.sleep(10000);
     param.clear();
     param.put("address", "TY9touJknFcezjLiaGTjnH1dUHiqriu6L8");
     param.put("start", "0");
