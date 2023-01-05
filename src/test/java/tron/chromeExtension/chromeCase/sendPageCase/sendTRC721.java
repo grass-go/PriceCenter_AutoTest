@@ -31,6 +31,18 @@ public class sendTRC721 extends Base {
     Assert.assertTrue(onTheHomepageOrNot(loginAddress));
   }
 
+  @Test(
+      groups = {"P0"},
+      description = "Send trc721 with memo.",
+      alwaysRun = true,
+      enabled = true)
+  public void test002sendTrc20WithMemoTest() throws Exception {
+    String transactionStatus =
+        Helper.transferMemo(true, testAddress, "TVzRKmCZ471QGsKqFJbXc2qeNtJNmcumbR", "1", true);
+    Assert.assertEquals("交易已广播", transactionStatus);
+    Assert.assertTrue(onTheHomepageOrNot(loginAddress));
+  }
+
   @AfterMethod(enabled = true)
   public void after() throws Exception {
     logoutAccount();

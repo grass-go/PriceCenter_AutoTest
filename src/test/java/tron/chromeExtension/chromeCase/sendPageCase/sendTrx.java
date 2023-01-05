@@ -29,6 +29,17 @@ public class sendTrx extends Base {
     Assert.assertTrue(onTheHomepageOrNot(loginAddress));
   }
 
+    @Test(
+        groups = {"P0"},
+        description = "Send trx with memo.",
+        alwaysRun = true,
+        enabled = true)
+    public void test002sendTrxWithMemoTest() throws Exception {
+        String transactionStatus = Helper.transferMemo(true, testAddress, "trx", "1", false);
+        Assert.assertEquals("交易已广播", transactionStatus);
+        Assert.assertTrue(onTheHomepageOrNot(loginAddress));
+    }
+
   @AfterMethod(enabled = true)
   public void after() throws Exception {
     logoutAccount();

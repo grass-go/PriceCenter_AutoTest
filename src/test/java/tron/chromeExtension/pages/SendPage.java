@@ -33,7 +33,13 @@ public class SendPage extends AbstractPage {
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/button")
   public WebElement transfer_btn;
 
-  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div[2]/div[4]/button[2]")
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div/div[3]/span")
+  public WebElement memo_btn;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[2]/div/div[3]/div[2]/textarea")
+  public WebElement memo_text;
+
+  @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/div[3]/div[4]/button[2]")
   public WebElement signature_btn;
 
   @FindBy(xpath = "//*[@id=\"root\"]/div/div[1]/h1/span")

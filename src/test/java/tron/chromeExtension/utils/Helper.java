@@ -232,6 +232,46 @@ public class Helper extends Base {
     return onTheHomepageOrNot(switchToAddress);
   }
 
+  // TransferWithMemo.
+  public static String transferMemo(
+      Boolean isMemo, String receiveAddress, String searchContent, String amount, Boolean isTrc721)
+      throws Exception {
+    MainPage mainPage = new MainPage(DRIVER);
+    SendPage sendPage = new SendPage(DRIVER);
+    waitingTime();
+    click(mainPage.transfer_btn);
+    waitingTime();
+    sendKeys(sendPage.receiverAddress_input, receiveAddress);
+    waitingTime();
+    click(sendPage.next_btn);
+    waitingTime();
+    click(sendPage.trx_neirong);
+    sendKeys(sendPage.search_input, searchContent);
+    waitingTime();
+    click(sendPage.search_result);
+    waitingTime();
+    if (!isTrc721) {
+      sendKeys(sendPage.amount_input, amount);
+      waitingTime();
+    }
+    waitingTime(3);
+
+    if (isMemo) {
+      click(sendPage.memo_btn);
+      waitingTime(3);
+      sendKeys(sendPage.memo_text, "memo");
+      waitingTime(3);
+      click(sendPage.transfer_btn);
+    }
+    waitingTime(5);
+    click(sendPage.signature_btn);
+    waitingTime(10);
+    String transactionStatus = getText(sendPage.transactionStatus);
+    click(sendPage.complete_btn);
+
+    return transactionStatus;
+  }
+
   // Transfer.
   public static String transfer(
       Boolean flag, String receiveAddress, String searchContent, String amount, Boolean isTrc721)
@@ -264,6 +304,7 @@ public class Helper extends Base {
       Assert.assertTrue(!receiveAccount.contains("."));
       return "Address Format True";
     }
+    waitingTime(3);
     click(sendPage.signature_btn);
     waitingTime(5);
     String transactionStatus = getText(sendPage.transactionStatus);
