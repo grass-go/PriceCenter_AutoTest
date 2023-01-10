@@ -54,10 +54,10 @@ public class AllAssetList extends TronlinkBase {
     Object trc20Addresses = JSONPath.eval(responseContent, "$..contractAddress");
     log.info("trc10Ids: "+ trc10Ids.toString());
     log.info("trc20Addresses: "+ trc20Addresses);
-    JSONArray trc10Array = (JSONArray) trc10Ids;
+    java.util.ArrayList trc10Array = (java.util.ArrayList) trc10Ids;
     Assert.assertTrue(trc10Array.contains("1002000"));
     Assert.assertTrue(trc10Array.contains("1002962"));
-    JSONArray trc20Array = (JSONArray) trc20Addresses;
+    java.util.ArrayList trc20Array = (java.util.ArrayList) trc20Addresses;
     Assert.assertTrue(trc20Array.contains("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"));
     Assert.assertTrue(trc20Array.contains("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7"));
 
