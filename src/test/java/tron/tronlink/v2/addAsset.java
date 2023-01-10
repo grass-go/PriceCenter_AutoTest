@@ -43,15 +43,15 @@ public class addAsset extends TronlinkBase {
     AssertGetAllCollection gac = new AssertGetAllCollection();
 
 
-    // 关注资产，assetList接口可见，取消关注，assetList不可见
+    // 关注资产，首页assetList接口可见，取消关注，首页assetList不可见
     @Test(enabled = true)
     public void addAsset01() throws InterruptedException {
         params.clear();
         trc10tokenList.clear();
         jsonObject.clear();
         params.put("address",addressNewAsset41);
+
         trc10tokenList.add("1002000");
-        // jsonObject.put("address","41F985738AE54FD87ED6CD07065905EBEA355E66CD");
         jsonObject.put("address", addressNewAsset41);
         jsonObject.put("token10", trc10tokenList);
         response = TronlinkApiList.v2AddAsset(params, jsonObject);
@@ -68,7 +68,6 @@ public class addAsset extends TronlinkBase {
 
         params.clear();
         params.put("address", addressNewAsset41);
-        // params.put("address","41F985738AE54FD87ED6CD07065905EBEA355E66CD");
 
         response = TronlinkApiList.v2AssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -93,10 +92,8 @@ public class addAsset extends TronlinkBase {
         trc10tokenList.clear();
         jsonObject.clear();
         params.put("address",addressNewAsset41);
-        // params.put("signature","7%2B%2F36luYNVcnean87VL9AaY4O1o%3D");
         trc10tokenList.add("1002000");
         jsonObject.put("address", addressNewAsset41);
-        // jsonObject.put("address","41F985738AE54FD87ED6CD07065905EBEA355E66CD");
         jsonObject.put("token10Cancel", trc10tokenList);
         response = TronlinkApiList.v2AddAsset(params, jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -301,6 +298,7 @@ public class addAsset extends TronlinkBase {
         Assert.assertEquals("OK", responseContent.getString("message"));
         Assert.assertEquals(true, responseContent.getBooleanValue("data"));
     }
+
     getCollectionList g = new getCollectionList();
 
     @Test(enabled = false, description = "1155 关注资产，覆盖了取消和关注1155的全部逻辑")

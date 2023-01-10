@@ -50,24 +50,20 @@ public class AllAssetList extends TronlinkBase {
     int count =dataContent.getIntValue("count");
     Assert.assertEquals(7,count);
     array = dataContent.getJSONArray("token");
+    Object trc10Ids = JSONPath.eval(responseContent, "$..id");
+    Object trc20Addresses = JSONPath.eval(responseContent, "$..contractAddress");
+    log.info("trc10Ids: "+ trc10Ids.toString());
+    log.info("trc20Addresses: "+ trc20Addresses);
+    JSONArray trc10Array = (JSONArray) trc10Ids;
+    Assert.assertTrue(trc10Array.contains("1002000"));
+    Assert.assertTrue(trc10Array.contains("1002962"));
+    JSONArray trc20Array = (JSONArray) trc20Addresses;
+    Assert.assertTrue(trc20Array.contains("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"));
+    Assert.assertTrue(trc20Array.contains("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7"));
+
     int type=0;
     for(int j=0;j<count;j++){
       object = array.getJSONObject(j);
-      type=object.getIntValue("type");
-      String id=object.getString("id");
-      if (type==1){
-        if(!(("1002000".equals(id))||("1002962".equals(id)))){
-          log.info("------wrong token id ");
-          Assert.assertFalse(false);
-        }
-
-      }else if (type==2) {
-        if (!((object.getString("contractAddress").equals("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t")) || (object.getString("contractAddress").equals("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7")))) {
-          log.info("------wrong token Address");
-          Assert.assertFalse(false);
-        }
-      }
-
       // 校验系统推荐币
       if(object.getString("contractAddress").equals("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"))
       {
@@ -213,8 +209,7 @@ public class AllAssetList extends TronlinkBase {
           BigDecimal THREE = new BigDecimal("3");
           BigDecimal tolerance = actualPrice.divide(THREE, 6, 1);
           log.info("TranscanPrice:" + expectPrice.toString() + ", TronlinkServer Price:" + actualPrice.toString() + ", Tolerance: " + tolerance.toString() + ", absgap:" + absgap.toString());
-          //decide if absgap less than tolerance. actual's 25%.
-          //Assert.assertTrue(absgap.compareTo(tolerance) == -1);
+          TronlinkApiList.CompareGapInGivenTolerance(expectPrice.toString(), actualPrice.toString(), "0.3");
           index = 6;
         }
       }
