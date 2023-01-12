@@ -59,11 +59,11 @@ public class SearchAsset extends TronlinkBase {
   }
 
   //测试搜索结果中包含预期结果里面的token，预期结果中包括trc10，trc20，trc721的token，并且验证几个主要字段的值正确。
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void searchAssetList02(){
     Map<String, Token> expTokens = new HashMap<>();
     {
-      expTokens.put("TGiRb7cYFmU8FTrUAGw996VHtLc2sDtEZH", new Token("BabyToken", "BABY", 2, -1, 2));
+      expTokens.put("TYiXuAnjAPPVeWTL4aaTVD2BwWF3jCkVbJ", new Token("babys Token", "babys", 2, -2, 2));
       expTokens.put("TSMfJe8Lot3RKanHE2Z6mv5V5FV2cA7XQw", new Token ("BabyTFG", "BTFG", 5, 0, 1));
       expTokens.put("1000784", new Token("BabyLeprechaun","BLEP", 1, -1, 1));
     }
@@ -257,58 +257,38 @@ public class SearchAsset extends TronlinkBase {
     }
   }
 
-  @Test(enabled = false, description = "721 search result with nrOfTokenHolders and transferCount" )
+  @Test(enabled = true, description = "721 search result with nrOfTokenHolders and transferCount" )
   public void searchAssetList05(){
-    //getAllTokenInfo From tronscan.
-    String scanBaseURL = "https://nileapi.tronscan.org/api/tokens/overview?limit=500&order=asc&filter=trc721&verifier=all&sort=createTime&start=";
-    JSONArray allScan721 = new JSONArray();
-    int curPage=0;
-    for (int i=0; i<4; i++)
-    {
-      int start = curPage * 500;
-      String url = scanBaseURL+start;
-      response = TronlinkApiList.createGetConnect(url,null,null,null);
+    List<String> tokenList = new ArrayList<>();
+    tokenList.add("TQoaYD3gTMpGbQe6mne4NqGspdqKJNrRvJ");
+    tokenList.add("TYmccCkjJNjyJH4ZJFwLBpu4Gpp5vKHrns");
+
+    for (String token:tokenList){
+      //access tronscan to obtain nrOfTokenHolders and transferCount
+      String scanURL = "https://apilist.tronscanapi.com/api/token_trc20?showAll=1&contract="+token;
+      response = TronlinkApiList.createGetConnect(scanURL,null,null,null);
       responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-      JSONArray curscantokens = responseContent.getJSONArray("tokens");
-      allScan721.addAll(curscantokens);
-      curPage = curPage + 1;
-    }
-    log.info("allScan721Object: ");
-    String allScan721str = "{\"tokens\":"+ allScan721.toString() +"}";
-    JSONObject allScan721Object = new JSONObject();
-    allScan721Object = JSON.parseObject(allScan721str);
-    log.info(allScan721Object.toString());
+      Object scan_transfer_num_obj = JSONPath.eval(responseContent, "$..transfer_num[0]");
+      Object scan_holders_count_obj = JSONPath.eval(responseContent, "$..holders_count[0]");
+      log.info("scan_transfer_num:"+scan_transfer_num_obj.toString()+", scan_holders_count:"+scan_holders_count_obj.toString());
+      //access tronlink-server search api to obtain nrOfTokenHolders and transferCount
+      params.clear();
+      params.put("nonce","12345");
+      params.put("secretId","SFSUIOJBFMLKSJIF");
+      params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
+      params.put("address",addressNewAsset41);
 
-    params.clear();
-    params.put("nonce","12345");
-    params.put("secretId","SFSUIOJBFMLKSJIF");
-    params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
-    params.put("address",addressNewAsset41);
-
-    //search by id:
-    params.put("keyWord","T");
-    params.put("version","v2");
-    params.put("type","5");
-    response = TronlinkApiList.v2SearchAsset(params);
-    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-    dataContent = responseContent.getJSONObject("data");
-    array = dataContent.getJSONArray("token");
-
-    for (Object json:array) {
-      JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
-      String curContract = jsonObject.getString("contractAddress").toLowerCase();
-      String nrOfTokenHolders = jsonObject.getString("nrOfTokenHolders");
-      String transferCount = jsonObject.getString("transferCount");
-      //int transferCount = jsonObject.getIntValue("transferCount");
-      //Object scanCurTokenHolders =JSONPath.eval(allScan721Object,String.join("","$..tokens[0].nrOfTokenHolders[0]"));
-      Object scanCurTokenHolders =JSONPath.eval(allScan721Object,String.join("","$.tokens[contractAddressLower='",curContract,"'].nrOfTokenHolders[0]"));
-      Object scanCurTokenCount = JSONPath.eval(allScan721Object,String.join("","$..tokens[contractAddressLower='",curContract,"'].transferCount[0]"));
-      log.info("curToken: "+curContract);
-      log.info("Tronlink-Server nrOfTokenHolders:"+nrOfTokenHolders+", transferCount:"+transferCount);
-      log.info("TronScan nrOfTokenHolders:"+scanCurTokenHolders+", transferCount:"+scanCurTokenCount);
-      Assert.assertEquals(nrOfTokenHolders,scanCurTokenHolders.toString());
-      Assert.assertEquals(transferCount,scanCurTokenCount.toString());
+      //search by id:
+      params.put("keyWord",token);
+      params.put("version","v2");
+      params.put("type","5");
+      response = TronlinkApiList.v2SearchAsset(params);
+      responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+      Object ts_transfer_num_obj = JSONPath.eval(responseContent, "$..transferCount[0]");
+      Object ts_holders_count_obj = JSONPath.eval(responseContent, "$..nrOfTokenHolders[0]");
+      log.info("scan_transfer_num:"+ts_transfer_num_obj.toString()+", scan_holders_count:"+ts_holders_count_obj.toString());
+      Assert.assertEquals(scan_transfer_num_obj.toString(), ts_transfer_num_obj.toString());
+      Assert.assertEquals(scan_holders_count_obj.toString(), ts_holders_count_obj.toString());
     }
   }
 
