@@ -40,9 +40,9 @@ public class RiskTokens extends TronlinkBase {
 
     public HttpResponse GetAllRiskTokensRsp(){
         Map<String,String> params = new HashMap<>();
-        params.put("address",queryAddress58);
+        params.put("address",addressNewAsset);
         JSONObject body = new JSONObject();
-        body.put(Keys.Address, queryAddress58);
+        body.put(Keys.Address, addressNewAsset);
         HttpResponse response = TronlinkApiList.v2RiskTokens(params,body);
         Assert.assertNotEquals(response, null);
         return response;

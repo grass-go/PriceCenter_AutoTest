@@ -141,9 +141,9 @@ public class NodeInfo extends TronlinkBase {
     public void test001GetNodeInfo() {
         JSONArray array = new JSONArray();
         JSONObject ob1 = new JSONObject();
-        ob1.put(queryAddress58, 2);
+        ob1.put(addressNewAsset, 2);
         JSONObject ob2 = new JSONObject();
-        ob2.put(queryAddressTH48, 2);
+        ob2.put(Hex_1155_user, 2);
         array.add(ob1);
         array.add(ob2);
         log.info(array.toJSONString());
@@ -303,19 +303,19 @@ public class NodeInfo extends TronlinkBase {
 
 
     private Map<String, String> getTest001Params() {
-        return g.GenerateParamsForNodeInfo(queryAddress58, "/api/wallet/node_info", "POST");
+        return g.GenerateParamsForNodeInfo(addressNewAsset, "/api/wallet/node_info", "POST");
     }
 
     private Map<String, String> getTest002Params() {
-        return g.GenerateParamsForNodeInfo(queryAddress58, "/api/wallet/node_info", "POST");
+        return g.GenerateParamsForNodeInfo(addressNewAsset, "/api/wallet/node_info", "POST");
     }
 
     private Map<String, String> getTest003Params() {
-        return g.GenerateParamsForNodeInfo(queryAddress58, "/api/wallet/node_info", "POST");
+        return g.GenerateParamsForNodeInfo(addressNewAsset, "/api/wallet/node_info", "POST");
     }
 
     private Map<String, String> getTestParams() {
-        return g.GenerateParamsForNodeInfo(queryAddress58, "/api/wallet/node_info", "POST");
+        return g.GenerateParamsForNodeInfo(addressNewAsset, "/api/wallet/node_info", "POST");
     }
 
     GetSign g = new GetSign();
@@ -554,9 +554,9 @@ public class NodeInfo extends TronlinkBase {
         JSONArray array = new JSONArray();
         JSONObject ob1 = new JSONObject();
         int[] accountTypes = new int[]{1,2,3,8,9,11};
-        ob1.put(queryAddress58, accountTypes[r.nextInt(accountTypes.length)]);
+        ob1.put(addressNewAsset, accountTypes[r.nextInt(accountTypes.length)]);
         JSONObject ob2 = new JSONObject();
-        ob2.put(queryAddressTH48, accountTypes[r.nextInt(accountTypes.length)]);
+        ob2.put(Hex_1155_user, accountTypes[r.nextInt(accountTypes.length)]);
         array.add(ob1);
         array.add(ob2);
         log.info(array.toJSONString());

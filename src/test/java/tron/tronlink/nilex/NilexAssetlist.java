@@ -10,13 +10,12 @@ import tron.tronlink.base.TronlinkBase;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
 public class NilexAssetlist extends TronlinkBase {
   private JSONObject responseContent;
   private JSONObject targetContent;
   private HttpResponse response;
   private Map<String,String> header = new HashMap<>();
-
-
 
   @Test(enabled = false, description= "Get Assetlist From MainChain")
   public void test000GetAssetlistFromMainChain(){
@@ -54,3 +53,4 @@ public class NilexAssetlist extends TronlinkBase {
 
   
 }
+*/

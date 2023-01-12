@@ -15,10 +15,12 @@ import tron.common.utils.Keys;
 public class TronlinkBase {
     public static  volatile String tronlinkUrl;
     public static  volatile String tronscanApiUrl;
-    public String queryAddress = Configuration.getByPath("testng.conf").getString("tronlink.queryAddress41");
+    //no used 3 users, but if delete them, unfollowAssetList will can't run.
     public String queryAddress58 = Configuration.getByPath("testng.conf").getString("tronlink.queryAddress");
+    public String queryAddress = Configuration.getByPath("testng.conf").getString("tronlink.queryAddress41");
     public  String queryAddressTxt41 = Configuration.getByPath("testng.conf").getString("tronlink.queryAddressTxt41");
-    public  String queryAddressTH48 = Configuration.getByPath("testng.conf").getString("tronlink.queryAddressTH48");
+
+    public  String unfollowAPIUser = Configuration.getByPath("testng.conf").getString("tronlink.unfollowAPIUser");
     public  String addressNewAsset = Configuration.getByPath("testng.conf").getString("tronlink.addressNewAsset");
     public  String addressNewAsset41 = Configuration.getByPath("testng.conf").getString("tronlink.addressNewAsset41");
     public  String addressNewAsset2 = Configuration.getByPath("testng.conf").getString("tronlink.addressNewAsset2");
@@ -35,7 +37,7 @@ public class TronlinkBase {
     public String multiSignAddress = Configuration.getByPath("testng.con").getString("tronlink.multiSignAddress");
     public String Hex_1155_user = Configuration.getByPath(Keys.settingFileName).getString("tronlink.1155User");
     public String B58_1155_user = AddressConvert.hexTo58(Hex_1155_user);
-//    public String Hex_1155_newAssetUser = Configuration.getByPath(Keys.settingFileName).getString("tronlink.1155newAssetUser");
+    public String Hex_1155_newAssetUser = Configuration.getByPath(Keys.settingFileName).getString("tronlink.1155newAssetUser");
     public String SearchToken = Configuration.getByPath(Keys.settingFileName).getString("tronlink.search_token");
     public String keyWord1155 = Configuration.getByPath(Keys.settingFileName).getString("tronlink.keyWord1155");
     public String followAsset = addressNewAsset;

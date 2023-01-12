@@ -25,9 +25,9 @@ public class AccountList extends TronlinkBase {
   public void accountListLowVersionWithNoSignature(){
     JSONObject jsonObject = new JSONObject();
     JSONObject jsonObject1 = new JSONObject();
-    jsonObject.put(queryAddress58,1);
+    jsonObject.put(addressNewAsset,1);
     array.add(jsonObject);
-    jsonObject1.put(queryAddress58,3);
+    jsonObject1.put(addressNewAsset,3);
     array.add(jsonObject1);
     response = TronlinkApiList.accountListNoSig(array,null);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -44,9 +44,9 @@ public class AccountList extends TronlinkBase {
     header.put("Version","4.1.0");
     JSONObject jsonObject = new JSONObject();
     JSONObject jsonObject1 = new JSONObject();
-    jsonObject.put(queryAddress58,1);
+    jsonObject.put(addressNewAsset,1);
     array.add(jsonObject);
-    jsonObject1.put(queryAddress58,3);
+    jsonObject1.put(addressNewAsset,3);
     array.add(jsonObject1);
     response = TronlinkApiList.accountListNoSig(array,header);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -61,12 +61,12 @@ public class AccountList extends TronlinkBase {
   @Test(enabled = true)
   public void accountList(){
     Map<String, String> params = new HashMap<String, String>();
-    params.put("address",queryAddress58);
+    params.put("address",addressNewAsset);
     JSONObject jsonObject = new JSONObject();
     JSONObject jsonObject1 = new JSONObject();
-    jsonObject.put(queryAddress58,1);
+    jsonObject.put(addressNewAsset,1);
     array.add(jsonObject);
-    jsonObject1.put(queryAddress58,3);
+    jsonObject1.put(addressNewAsset,3);
     array.add(jsonObject1);
 
     response = TronlinkApiList.accountList(array,params);
@@ -97,15 +97,15 @@ public class AccountList extends TronlinkBase {
   @Test(enabled = false)
   public void comparteBalanceStr() throws Exception {
     Map<String, String> paramsInURL = new HashMap<>();
-    paramsInURL.put("address", queryAddressTxt41);
-    response = TronlinkApiList.assetlist(queryAddressTxt41, paramsInURL);
+    paramsInURL.put("address", addressNewAsset41);
+    response = TronlinkApiList.assetlist(addressNewAsset41, paramsInURL);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent1 = TronlinkApiList.parseResponse2JsonObject(response);
     JSONObject targetContent1 = responseContent1.getJSONObject("data");
     String assetBalance = targetContent1.getString("totalTRX");
 
     JSONObject jsonObject = new JSONObject();
-    jsonObject.put(queryAddress58,1);
+    jsonObject.put(addressNewAsset,1);
     array.clear();
     array.add(jsonObject);
     response = TronlinkApiList.accountList(array,paramsInURL);

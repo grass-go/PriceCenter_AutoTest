@@ -30,49 +30,35 @@ public class NewAssetList extends TronlinkBase {
   private JSONArray array = new JSONArray();
   Map<String, String> params = new HashMap<>();
 
-  //因为新资产不稳定的bug ONLIVE-318，所以enabled=false
-  @Test(enabled = false)
-  public void newAssetList01(){
-    params.clear();
-    params.put("address",addressNewAsset41);
 
-    response = TronlinkApiList.v2NewAssetList(params);
-    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-    Assert.assertTrue(responseContent.containsKey("code"));
-    Assert.assertTrue(responseContent.containsKey("message"));
-    Assert.assertTrue(responseContent.containsKey("data"));
-    dataContent = responseContent.getJSONObject("data");
-    int count =dataContent.getIntValue("count");
-    Assert.assertEquals(1,count);
-    array = dataContent.getJSONArray("token");
-    Assert.assertEquals(1,array.size());
-    object = array.getJSONObject(0);
-    int type=object.getIntValue("type");
-    Assert.assertEquals(1,type);
-    Assert.assertEquals("1002962",object.getString("id"));
-    Assert.assertTrue(object.getLongValue("balance")>0);
-    Assert.assertFalse(object.getBooleanValue("isInAssets"));
-    Assert.assertEquals(0,object.getIntValue("recommandSortId"));
-
-  }
-
-  //用address721账户测试新资产，使用全文对比，资产排序包含其中。
   //add v4.2.1 recommandSortId=0
   @SneakyThrows
   @Test(enabled = true)
-  public void newAssetList02(){
-    //read expected json
-    char cbuf[] = new char[5000];
-    InputStreamReader input =new InputStreamReader(new FileInputStream(new File("src/test/resources/TestData/newAssertList_exp.json")),"UTF-8");
-    int len =input.read(cbuf);
-    String expResponse =new String(cbuf,0,len);
-
+  public void newAssetList01(){
     params.put("address",addressNewAsset2);
 
     response = TronlinkApiList.v2NewAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    JSONObject dataContent = responseContent.getJSONObject("data");
+    int count =dataContent.getIntValue("count");
+    Assert.assertEquals(3,count);
+    array = dataContent.getJSONArray("token");
+    Assert.assertEquals(3,array.size());
+
+    Object actualBttOld = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].balanceStr[0]");
+    Assert.assertEquals("1", actualBttOld.toString());
+    Object actualBttoldPrice = JSONPath.eval(responseContent, "$..data.token[name='JUST'].price[0]");
+    BigDecimal bttoldPrice = (BigDecimal) actualBttoldPrice;
+    int bttoldflag = bttoldPrice.compareTo(BigDecimal.ZERO);
+    Assert.assertTrue(bttoldflag>0);
+    Object actualRSIPrice = JSONPath.eval(responseContent, "$..data.token[name='JUST'].recommandSortId[0]");
+    Assert.assertEquals("0",actualRSIPrice.toString());
+    Object national = JSONPath.eval(responseContent, "$..data.token[name='JUST'].national[0]");
+    Assert.assertEquals("DM",national.toString());
+    //v4.11.0-done
+    Object defiType = JSONPath.eval(responseContent, "$..data.token[name='JUST'].defiType[0]");
+    Assert.assertEquals("0",defiType.toString());
 
 
     Object actualBT = JSONPath.eval(responseContent, "$..data.token[name='JUST'].balanceStr");
@@ -83,14 +69,13 @@ public class NewAssetList extends TronlinkBase {
     BigDecimal btPrice = (BigDecimal) actualBTPriceArray.get(0);
     int btflag = btPrice.compareTo(BigDecimal.ZERO);
     Assert.assertTrue(btflag>0);
-    Object actualRSIPrice = JSONPath.eval(responseContent, "$..data.token[name='JUST'].recommandSortId");
-    JSONArray actualRSIArray=(JSONArray)actualRSIPrice;
-    Assert.assertEquals(0,actualRSIArray.get(0));
-    Object national = JSONPath.eval(responseContent, "$..data.token[name='JUST'].national[0]");
-    Assert.assertEquals("DM",national.toString());
+    Object justRSI = JSONPath.eval(responseContent, "$..data.token[name='JUST'].recommandSortId[0]");
+    Assert.assertEquals("0",justRSI.toString());
+    Object justNational = JSONPath.eval(responseContent, "$..data.token[name='JUST'].national[0]");
+    Assert.assertEquals("DM",justNational.toString());
     //v4.11.0-done
-    Object defiType = JSONPath.eval(responseContent, "$..data.token[name='JUST'].defiType[0]");
-    Assert.assertEquals("0",defiType.toString());
+    Object justDefiType = JSONPath.eval(responseContent, "$..data.token[name='JUST'].defiType[0]");
+    Assert.assertEquals("0",justDefiType.toString());
 
 
     //check BitTorrent balance
@@ -102,9 +87,8 @@ public class NewAssetList extends TronlinkBase {
     BigDecimal wlPrice = (BigDecimal) actualWLPriceArray.get(0);
     int wlflag = wlPrice.compareTo(BigDecimal.ZERO);
     Assert.assertTrue(wlflag > 0);
-    actualRSIPrice = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent'].recommandSortId");
-    actualRSIArray=(JSONArray)actualRSIPrice;
-    Assert.assertEquals(0,actualRSIArray.get(0));
+    Object bttRSI = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent'].recommandSortId[0]");
+    Assert.assertEquals("0",bttRSI.toString());
     national = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent'].national[0]");
     Assert.assertEquals("DM",national.toString());
     //v4.11.0-done
@@ -113,9 +97,9 @@ public class NewAssetList extends TronlinkBase {
 
 
   }
-  @Test(enabled = false, description = "check 1155 can be in new Asset API")
-  public void newAssetList03_1155(){
-    params.put("address",address721_B58);
+  @Test(enabled = true, description = "check 1155 can be in new Asset API")
+  public void newAssetList02_1155(){
+    params.put("address",addressNewAsset2);
 
     response = TronlinkApiList.v2NewAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -132,19 +116,19 @@ public class NewAssetList extends TronlinkBase {
     String shortName = trc1155token.getString("shortName");
     Assert.assertEquals("bill1155_001",shortName);
     String contractAddress = trc1155token.getString("contractAddress");
-    Assert.assertEquals("TBgckQzPTLcyvVG7fuGwSowzfhmykA7V4L",contractAddress);
+    Assert.assertEquals("TE2VpPmPQp9UZpDPcBS4G8Pw3R1BZ4Ea6j",contractAddress);
     int count = trc1155token.getIntValue("count");
     Assert.assertEquals(1,count);
     String logoUrl = trc1155token.getString("logoUrl");
-    Assert.assertEquals("https://image.tronlink.org/pictures/nft_contract_default_logo.png",logoUrl);
+    Assert.assertEquals("https://static.tronscan.org/production/upload/logo/new/TE2VpPmPQp9UZpDPcBS4G8Pw3R1BZ4Ea6j.png?t=1661309193530",logoUrl);
     boolean inMainChain = trc1155token.getBooleanValue("inMainChain");
     Assert.assertTrue(inMainChain);
     boolean inSideChain = trc1155token.getBooleanValue("inSideChain");
     Assert.assertFalse(inSideChain);
     String issueTime = trc1155token.getString("issueTime");
-    Assert.assertEquals("2022-08-05 10:29:06",issueTime);
+    Assert.assertEquals("2022-08-05 07:57:12",issueTime);
     String issueAddress = trc1155token.getString("issueAddress");
-    Assert.assertEquals("TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t",issueAddress);
+    Assert.assertEquals("TXFmkVZkpkv8ghNCKwpeVdVvRVqTedSCAK",issueAddress);
   }
 
     //read expected json

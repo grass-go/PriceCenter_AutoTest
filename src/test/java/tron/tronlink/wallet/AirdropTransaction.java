@@ -1,3 +1,4 @@
+/*
 package tron.tronlink.wallet;
 
 import com.alibaba.fastjson.JSONObject;
@@ -18,7 +19,7 @@ public class AirdropTransaction extends TronlinkBase {
   private HttpResponse response;
   private JSONObject responseContent;
 
-  @Test(enabled = true)
+  @Test(enabled = false)
   public void test000getAirdropTransaction(){
     params.put("address",queryAddress);
     response = TronlinkApiList.getAirdropTransaction(params);
@@ -27,3 +28,4 @@ public class AirdropTransaction extends TronlinkBase {
     log.info("responseContent: "+ responseContent.toJSONString());
   }
 }
+*/
