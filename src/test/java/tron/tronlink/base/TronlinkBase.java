@@ -16,13 +16,16 @@ public class TronlinkBase {
     public static  volatile String tronlinkUrl;
     public static  volatile String tronscanApiUrl;
     //no used 3 users, but if delete them, unfollowAssetList will can't run.
-    public String queryAddress58 = Configuration.getByPath("testng.conf").getString("tronlink.queryAddress");
-    public String queryAddress = Configuration.getByPath("testng.conf").getString("tronlink.queryAddress41");
-    public  String queryAddressTxt41 = Configuration.getByPath("testng.conf").getString("tronlink.queryAddressTxt41");
+    //public String queryAddress58 = Configuration.getByPath("testng.conf").getString("tronlink.queryAddress");
+    //public String queryAddress = Configuration.getByPath("testng.conf").getString("tronlink.queryAddress41");
+    //public  String queryAddressTxt41 = Configuration.getByPath("testng.conf").getString("tronlink.queryAddressTxt41");
 
+    public  String commonUser = Configuration.getByPath("testng.conf").getString("tronlink.commonUser");
+    public  String commonUser41 = Configuration.getByPath("testng.conf").getString("tronlink.commonUser41");
+    public String followAsset = commonUser;
+    public String unfollowAsset41 = commonUser41;
     public  String unfollowAPIUser = Configuration.getByPath("testng.conf").getString("tronlink.unfollowAPIUser");
-    public  String addressNewAsset = Configuration.getByPath("testng.conf").getString("tronlink.addressNewAsset");
-    public  String addressNewAsset41 = Configuration.getByPath("testng.conf").getString("tronlink.addressNewAsset41");
+
     public  String addressNewAsset2 = Configuration.getByPath("testng.conf").getString("tronlink.addressNewAsset2");
     public  String addressNewAsset2_41 = Configuration.getByPath("testng.conf").getString("tronlink.addressNewAsset2_41");
     public String address721_B58 = Configuration.getByPath("testng.conf").getString("tronlink.address721_B58");
@@ -40,8 +43,7 @@ public class TronlinkBase {
     public String Hex_1155_newAssetUser = Configuration.getByPath(Keys.settingFileName).getString("tronlink.1155newAssetUser");
     public String SearchToken = Configuration.getByPath(Keys.settingFileName).getString("tronlink.search_token");
     public String keyWord1155 = Configuration.getByPath(Keys.settingFileName).getString("tronlink.keyWord1155");
-    public String followAsset = addressNewAsset;
-    public String unfollowAsset41 = addressNewAsset41;
+
 
     public String nonce = "12345";
     public String secretId = "SFSUIOJBFMLKSJIF";

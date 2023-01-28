@@ -86,7 +86,7 @@ public class Risk extends TronlinkBase {
         final String method = "GET";
 
         Map<String,String> params =new HashMap<>();
-        params.put("address",addressNewAsset);
+        params.put("address",commonUser);
         params.put("tokenAddress", token);
         HttpResponse response = TronlinkApiList.v2GetRisk(params);
         Assert.assertNotEquals(response, null);

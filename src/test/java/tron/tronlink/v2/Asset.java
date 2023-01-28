@@ -27,7 +27,7 @@ public class Asset extends TronlinkBase {
 
   @Test(enabled = true)
   public void asset01(){
-    params.put("address",addressNewAsset41);
+    params.put("address",commonUser41);
     params.put("tokenAddress","TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");
     params.put("tokenType","2");
     response = TronlinkApiList.v2Asset(params);
@@ -54,7 +54,7 @@ public class Asset extends TronlinkBase {
     nationalList.add("TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4");  //BTT
 
     for (String token:nationalList){
-      params.put("address",addressNewAsset41);
+      params.put("address",commonUser41);
       params.put("tokenAddress",token);
       params.put("tokenType","2");
       response = TronlinkApiList.v2Asset(params);
@@ -74,7 +74,7 @@ public class Asset extends TronlinkBase {
     tokenList.add("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");  //WIN
 
     for (String token:tokenList){
-      params.put("address",addressNewAsset41);
+      params.put("address",commonUser41);
       params.put("tokenAddress",token);
       params.put("tokenType","2");
       response = TronlinkApiList.v2Asset(params);
@@ -98,7 +98,7 @@ public class Asset extends TronlinkBase {
     tokenList.add("TUY54PVeH6WCcYCd6ZXXoBDsHytN9V5PXt");  //jWBTT
 
     for (String token:tokenList){
-      params.put("address",addressNewAsset41);
+      params.put("address",commonUser41);
       params.put("tokenAddress",token);
       params.put("tokenType","2");
       response = TronlinkApiList.v2Asset(params);
@@ -118,7 +118,7 @@ public class Asset extends TronlinkBase {
     tokenList.add("TY69bLD2CWAHGTWKokr1hwWcVJLF9j6g45");  //S-HX-TRX
 
     for (String token:tokenList){
-      params.put("address",addressNewAsset41);
+      params.put("address",commonUser41);
       params.put("tokenAddress",token);
       params.put("tokenType","2");
       response = TronlinkApiList.v2Asset(params);

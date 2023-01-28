@@ -36,7 +36,7 @@ public class SearchAsset extends TronlinkBase {
   @Test(enabled = true)
   public void searchAssetList01(){
     params.clear();
-    params.put("address",addressNewAsset41);
+    params.put("address",commonUser41);
     params.put("keyWord","TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");
     params.put("page","1");
     params.put("count","10");
@@ -68,7 +68,7 @@ public class SearchAsset extends TronlinkBase {
       expTokens.put("1000784", new Token("BabyLeprechaun","BLEP", 1, -1, 1));
     }
     params.clear();
-    params.put("address",addressNewAsset41);
+    params.put("address",commonUser41);
     params.put("keyWord","Baby");
     params.put("page","1");
     params.put("count","50");
@@ -161,7 +161,7 @@ public class SearchAsset extends TronlinkBase {
     //blackTokens.put("1004092", new Token("NAPCoin", "NAP", 1, -5, 1));
 
     params.clear();
-    params.put("address",addressNewAsset41);
+    params.put("address",commonUser41);
     params.put("page","1");
     params.put("count","10");
 
@@ -203,7 +203,7 @@ public class SearchAsset extends TronlinkBase {
     params.put("nonce","12345");
     params.put("secretId","SFSUIOJBFMLKSJIF");
     params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
-    params.put("address",addressNewAsset41);
+    params.put("address",commonUser41);
     params.put("page","1");
     params.put("count","10");
 
@@ -276,7 +276,7 @@ public class SearchAsset extends TronlinkBase {
       params.put("nonce","12345");
       params.put("secretId","SFSUIOJBFMLKSJIF");
       params.put("signature","EZz0xn2HLH7S6qro9jXDjKN34zg%3D");
-      params.put("address",addressNewAsset41);
+      params.put("address",commonUser41);
 
       //search by id:
       params.put("keyWord",token);
@@ -350,7 +350,7 @@ public class SearchAsset extends TronlinkBase {
 
     for (String token:nationalList){
       params.clear();
-      params.put("address",addressNewAsset41);
+      params.put("address",commonUser41);
       params.put("version","v2");
       params.put("keyWord",token);
       response = TronlinkApiList.v2SearchAsset(params);
@@ -376,7 +376,7 @@ public class SearchAsset extends TronlinkBase {
 
     for (String token:tokenList){
       params.clear();
-      params.put("address",addressNewAsset41);
+      params.put("address",commonUser41);
       params.put("version","v2");
       params.put("keyWord",token);
       response = TronlinkApiList.v2SearchAsset(params);
@@ -401,7 +401,7 @@ public class SearchAsset extends TronlinkBase {
   @Test(enabled = true , description = "test jtoken has defiType=1")
   public void searchjToken() {
     params.clear();
-    params.put("address",addressNewAsset41);
+    params.put("address",commonUser41);
     params.put("version","v2");
     params.put("keyWord","justlend");
     response = TronlinkApiList.v2SearchAsset(params);
@@ -424,7 +424,7 @@ public class SearchAsset extends TronlinkBase {
   @Test(enabled = true , description = "test lp Token has defiType=2")
   public void searchLPToken() {
     params.clear();
-    params.put("address",addressNewAsset41);
+    params.put("address",commonUser41);
     params.put("version","v2");
     params.put("keyWord","sunswap");
     response = TronlinkApiList.v2SearchAsset(params);

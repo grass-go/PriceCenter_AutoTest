@@ -37,7 +37,7 @@ public class AllAssetList extends TronlinkBase {
   // 暂时关闭，等有结论了打开
   @Test(enabled = true)
   public void allAssetList01(){
-    params.put("address",addressNewAsset41);
+    params.put("address",commonUser41);
     // v2版本 推荐币的 recommandSortId = 1
     params.put("version", "v2");
     response = TronlinkApiList.V2AllAssetList(params);

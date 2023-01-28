@@ -30,10 +30,10 @@ public class TronlinkDefineToken extends TronlinkBase {
     public void Case001SearchBeforeAdd(){
         //sync,like delete self token
         params.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
 
         jsonObject.clear();
-        jsonObject.put("address",addressNewAsset41);
+        jsonObject.put("address",commonUser41);
         jsonObject.put("tokenAddress",deployedContract);
 
         log.info("Case003Add-sync");
@@ -42,7 +42,7 @@ public class TronlinkDefineToken extends TronlinkBase {
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         //begin to test search
         params.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
         params.put("keyWord",deployedContract);
         params.put("page","1");
         params.put("count","10");
@@ -60,10 +60,10 @@ public class TronlinkDefineToken extends TronlinkBase {
     public void Case002QueryBeforeAdd(){
         //sync at first
         params.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
 
         jsonObject.clear();
-        jsonObject.put("address",addressNewAsset41);
+        jsonObject.put("address",commonUser41);
         jsonObject.put("tokenAddress",deployedContract);
 
         log.info("Case003Add-sync");
@@ -72,10 +72,10 @@ public class TronlinkDefineToken extends TronlinkBase {
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         //begin to query
         params.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
 
         jsonObject.clear();
-        jsonObject.put("address",addressNewAsset41);
+        jsonObject.put("address",commonUser41);
         jsonObject.put("tokenAddress",deployedContract);
 
         log.info("Case002QueryBeforeAdd");
@@ -103,10 +103,10 @@ public class TronlinkDefineToken extends TronlinkBase {
     public void Case003Add(){
         //sync
         params.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
 
         jsonObject.clear();
-        jsonObject.put("address",addressNewAsset41);
+        jsonObject.put("address",commonUser41);
         jsonObject.put("tokenAddress",deployedContract);
 
         log.info("Case003Add-sync");
@@ -116,10 +116,10 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         //add
         params.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
 
         jsonObject.clear();
-        jsonObject.put("address",addressNewAsset41);
+        jsonObject.put("address",commonUser41);
         jsonObject.put("tokenAddress",deployedContract);
         jsonObject.put("decimal",9);
         jsonObject.put("name","TronlinkServerToken");
@@ -139,10 +139,10 @@ public class TronlinkDefineToken extends TronlinkBase {
         //first add, no matter add before or not.
         //add
         params.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
 
         jsonObject.clear();
-        jsonObject.put("address",addressNewAsset41);
+        jsonObject.put("address",commonUser41);
         jsonObject.put("tokenAddress",deployedContract);
         jsonObject.put("decimal",9);
         jsonObject.put("name","TronlinkServerToken");
@@ -156,10 +156,10 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         //Query
         params.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
 
         jsonObject.clear();
-        jsonObject.put("address",addressNewAsset41);
+        jsonObject.put("address",commonUser41);
         jsonObject.put("tokenAddress",deployedContract);
 
         log.info("Case002QueryBeforeAdd");
@@ -188,7 +188,7 @@ public class TronlinkDefineToken extends TronlinkBase {
     public void Case005SearchAfterAdd(){
         //query contract address can get result.
         params.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
         params.put("keyWord",deployedContract);
         params.put("page","1");
         params.put("count","10");
@@ -215,7 +215,7 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         //query by name can't get result.
         params.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
         params.put("keyWord","TronlinkServerToken");
         params.put("page","1");
         params.put("count","10");
@@ -230,7 +230,7 @@ public class TronlinkDefineToken extends TronlinkBase {
     @Test(enabled = false)
     public void Case006assetListAfterAdd(){
         params.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
         params.put("version","v2");
 
         response = TronlinkApiList.v2AssetList(params);
@@ -249,7 +249,7 @@ public class TronlinkDefineToken extends TronlinkBase {
     @Test(enabled = false)
     public void Case007allAssetAfterAdd(){
         params.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
 
         response = TronlinkApiList.V2AllAssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -272,11 +272,11 @@ public class TronlinkDefineToken extends TronlinkBase {
         tokenDelList.clear();
         tokenDelList.add(deployedContract);
         jsonObject.clear();
-        jsonObject.put("address",addressNewAsset41);
+        jsonObject.put("address",commonUser41);
         jsonObject.put("tokenDel",tokenDelList);
 
         params.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
 
         response = TronlinkApiList.v2DelAsset(params,jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -286,7 +286,7 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         //query assetlist page
         params.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
         params.put("version","v2");
 
         response = TronlinkApiList.v2AssetList(params);
@@ -297,7 +297,7 @@ public class TronlinkDefineToken extends TronlinkBase {
 
         //query AllAssetList
         params.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
 
         response = TronlinkApiList.V2AllAssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);

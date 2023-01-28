@@ -23,7 +23,7 @@ public class getCollectionInfos extends TronlinkBase {
 
   @BeforeMethod
   void setUp(){
-    params.put("address",addressNewAsset41);
+    params.put("address",commonUser41);
 
     bodyObject.clear();
     trc10tokenList.clear();

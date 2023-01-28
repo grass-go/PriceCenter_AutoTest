@@ -49,10 +49,10 @@ public class addAsset extends TronlinkBase {
         params.clear();
         trc10tokenList.clear();
         jsonObject.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
 
         trc10tokenList.add("1002000");
-        jsonObject.put("address", addressNewAsset41);
+        jsonObject.put("address", commonUser41);
         jsonObject.put("token10", trc10tokenList);
         response = TronlinkApiList.v2AddAsset(params, jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -67,7 +67,7 @@ public class addAsset extends TronlinkBase {
         Thread.sleep(500);
 
         params.clear();
-        params.put("address", addressNewAsset41);
+        params.put("address", commonUser41);
 
         response = TronlinkApiList.v2AssetList(params);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -91,9 +91,9 @@ public class addAsset extends TronlinkBase {
         params.clear();
         trc10tokenList.clear();
         jsonObject.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
         trc10tokenList.add("1002000");
-        jsonObject.put("address", addressNewAsset41);
+        jsonObject.put("address", commonUser41);
         jsonObject.put("token10Cancel", trc10tokenList);
         response = TronlinkApiList.v2AddAsset(params, jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -108,7 +108,7 @@ public class addAsset extends TronlinkBase {
         Thread.sleep(500);
 
         params.clear();
-        params.put("address", addressNewAsset41);
+        params.put("address", commonUser41);
         // params.put("address","41F985738AE54FD87ED6CD07065905EBEA355E66CD");
 
         response = TronlinkApiList.v2AssetList(params);
@@ -282,10 +282,10 @@ public class addAsset extends TronlinkBase {
         params.clear();
         trc10tokenList.clear();
         jsonObject.clear();
-        params.put("address",addressNewAsset41);
+        params.put("address",commonUser41);
         // params.put("signature","7%2B%2F36luYNVcnean87VL9AaY4O1o%3D");
         trc10tokenList.add("1002000");
-        jsonObject.put("address", addressNewAsset41);
+        jsonObject.put("address", commonUser41);
         // jsonObject.put("address","41F985738AE54FD87ED6CD07065905EBEA355E66CD");
         jsonObject.put("token10Cancel", trc10tokenList);
         response = TronlinkApiList.v2AddAsset(params, jsonObject);

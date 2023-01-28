@@ -18,7 +18,7 @@ public class getCollectionList extends TronlinkBase {
 
   @Test
   public void getCollectionListTest001() {
-    params.put("address",addressNewAsset);
+    params.put("address",commonUser);
     params.put("tokenAddress","TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG");
     params.put("pageIndex","0");
     params.put("pageSize","10");

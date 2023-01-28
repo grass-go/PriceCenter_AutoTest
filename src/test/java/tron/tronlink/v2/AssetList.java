@@ -170,7 +170,7 @@ public class AssetList extends TronlinkBase {
     trc10tokenList.clear();
     trc20tokenList.clear();
 
-    params.put("address",addressNewAsset41);
+    params.put("address",commonUser41);
 
     trc10tokenList.add("1002000");
     bodyObject.put("trc10s",trc10tokenList);

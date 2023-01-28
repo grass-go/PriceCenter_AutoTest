@@ -48,16 +48,16 @@ public class NewAssetList extends TronlinkBase {
 
     Object actualBttOld = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].balanceStr[0]");
     Assert.assertEquals("1", actualBttOld.toString());
-    Object actualBttoldPrice = JSONPath.eval(responseContent, "$..data.token[name='JUST'].price[0]");
+    Object actualBttoldPrice = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].price[0]");
     BigDecimal bttoldPrice = (BigDecimal) actualBttoldPrice;
     int bttoldflag = bttoldPrice.compareTo(BigDecimal.ZERO);
     Assert.assertTrue(bttoldflag>0);
-    Object actualRSIPrice = JSONPath.eval(responseContent, "$..data.token[name='JUST'].recommandSortId[0]");
+    Object actualRSIPrice = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].recommandSortId[0]");
     Assert.assertEquals("0",actualRSIPrice.toString());
-    Object national = JSONPath.eval(responseContent, "$..data.token[name='JUST'].national[0]");
-    Assert.assertEquals("DM",national.toString());
+    Object national = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].national[0]");
+    Assert.assertEquals("",national.toString());
     //v4.11.0-done
-    Object defiType = JSONPath.eval(responseContent, "$..data.token[name='JUST'].defiType[0]");
+    Object defiType = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].defiType[0]");
     Assert.assertEquals("0",defiType.toString());
 
 
