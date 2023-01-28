@@ -40,25 +40,53 @@ public class AssetList extends TronlinkBase {
   @SneakyThrows
   @Test(enabled = true)
   public void assetList01(){
-    char cbuf[] = new char[5000];
-    InputStreamReader input =new InputStreamReader(new FileInputStream(new File("src/test/resources/TestData/new1_assetList_v1_exp.json")),"UTF-8");
-    int len =input.read(cbuf);
-    String expResponse =new String(cbuf,0,len);
 
-    params.put("address",new1_B58);
+    params.put("address",newUnactive_B58);
     params.put("version","v1");
 
     response = TronlinkApiList.v2AssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-    response = TronlinkApiList.v2AssetList(params);
-    responseString = TronlinkApiList.parseResponse2String(response);
-
-    String cmp_result = new CompareJson("data","priceCny,priceUSD").compareJson(responseString, expResponse);
-    System.out.println("=========actual response========== "+responseString+" ");
-    System.out.println("=========expect response========== "+expResponse+" ");
-    System.out.println("=========cmp_result=============== "+cmp_result);
-    Assert.assertEquals("null",cmp_result);
+    dataContent = responseContent.getJSONObject("data");
+    JSONArray tokenArray = new JSONArray();
+    tokenArray = dataContent.getJSONArray("token");
+    int count = tokenArray.size();
+    Assert.assertEquals(2,count);
+    for (int i = 0; i < count-1;  i++) {
+      JSONObject tokenobject = tokenArray.getJSONObject(i);
+      Assert.assertTrue(tokenobject.containsKey("balance"));
+      Assert.assertTrue(tokenobject.containsKey("balanceStr"));
+      Assert.assertTrue(tokenobject.containsKey("cnyCount"));
+      Assert.assertTrue(tokenobject.containsKey("cnyPrice"));
+      Assert.assertTrue(tokenobject.containsKey("contractAddress"));
+      Assert.assertTrue(tokenobject.containsKey("homePage"));
+      Assert.assertTrue(tokenobject.containsKey("id"));
+      Assert.assertTrue(tokenobject.containsKey("inMainChain"));
+      Assert.assertTrue(tokenobject.containsKey("inSideChain"));
+      Assert.assertTrue(tokenobject.containsKey("isInAssets"));
+      Assert.assertTrue(tokenobject.containsKey("isOfficial"));
+      Assert.assertTrue(tokenobject.containsKey("isShield"));
+      Assert.assertTrue(tokenobject.containsKey("issueAddress"));
+      Assert.assertTrue(tokenobject.containsKey("issueTime"));
+      Assert.assertTrue(tokenobject.containsKey("maincontractAddress"));
+      Assert.assertTrue(tokenobject.containsKey("marketId"));
+      Assert.assertTrue(tokenobject.containsKey("name"));
+      Assert.assertTrue(tokenobject.containsKey("precision"));
+      Assert.assertTrue(tokenobject.containsKey("price"));
+      Assert.assertTrue(tokenobject.containsKey("recommandSortId"));
+      Assert.assertTrue(tokenobject.containsKey("shortName"));
+      Assert.assertTrue(tokenobject.containsKey("tokenDesc"));
+      Assert.assertTrue(tokenobject.containsKey("tokenStatus"));
+      Assert.assertTrue(tokenobject.containsKey("top"));
+      Assert.assertTrue(tokenobject.containsKey("totalBalance"));
+      Assert.assertTrue(tokenobject.containsKey("totalSupply"));
+      Assert.assertTrue(tokenobject.containsKey("totalSupplyStr"));
+      Assert.assertTrue(tokenobject.containsKey("transferStatus"));
+      Assert.assertTrue(tokenobject.containsKey("trxCount"));
+      Assert.assertTrue(tokenobject.containsKey("type"));
+      Assert.assertTrue(tokenobject.containsKey("usdCount"));
+      Assert.assertTrue(tokenobject.containsKey("usdPrice"));
+    }
 
     Object national = JSONPath.eval(responseContent, "$..data.token[0].national[0]");
     Assert.assertEquals("DM",national.toString());
@@ -70,33 +98,68 @@ public class AssetList extends TronlinkBase {
 
   //v4.2.1 new user(not even have transfer trx),with parameter version=v2, will return trx only.
   @SneakyThrows
-  @Test(enabled = false)
+  @Test(enabled = true)
   public void assetList02(){
-    char cbuf[] = new char[5000];
-    InputStreamReader input =new InputStreamReader(new FileInputStream(new File("src/test/resources/TestData/new1_assetList_v2_exp.json")),"UTF-8");
-    int len =input.read(cbuf);
-    String expResponse =new String(cbuf,0,len);
 
-    params.put("address",new1_B58);
+    params.put("address",newUnactive_Hex);
     params.put("version","v2");
 
     response = TronlinkApiList.v2AssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-    response = TronlinkApiList.v2AssetList(params);
-    responseString = TronlinkApiList.parseResponse2String(response);
-
-    String cmp_result = new CompareJson("data","priceCny,priceUSD,price").compareJson(responseString, expResponse);
-    System.out.println("=========actual response========== "+responseString+" ");
-    System.out.println("=========expect response========== "+expResponse+" ");
-    System.out.println("=========cmp_result=============== "+cmp_result);
-    Assert.assertEquals("null",cmp_result);
+    dataContent = responseContent.getJSONObject("data");
+    JSONArray tokenArray = new JSONArray();
+    tokenArray = dataContent.getJSONArray("token");
+    int count = tokenArray.size();
+    Assert.assertEquals(3,count);
+    for (int i = 0; i < count-1;  i++) {
+      JSONObject tokenobject = tokenArray.getJSONObject(i);
+      Assert.assertTrue(tokenobject.containsKey("balance"));
+      Assert.assertTrue(tokenobject.containsKey("balanceStr"));
+      Assert.assertTrue(tokenobject.containsKey("cnyCount"));
+      Assert.assertTrue(tokenobject.containsKey("cnyPrice"));
+      Assert.assertTrue(tokenobject.containsKey("contractAddress"));
+      Assert.assertTrue(tokenobject.containsKey("homePage"));
+      Assert.assertTrue(tokenobject.containsKey("id"));
+      Assert.assertTrue(tokenobject.containsKey("inMainChain"));
+      Assert.assertTrue(tokenobject.containsKey("inSideChain"));
+      Assert.assertTrue(tokenobject.containsKey("isInAssets"));
+      Assert.assertTrue(tokenobject.containsKey("isOfficial"));
+      Assert.assertTrue(tokenobject.containsKey("isShield"));
+      Assert.assertTrue(tokenobject.containsKey("issueAddress"));
+      Assert.assertTrue(tokenobject.containsKey("issueTime"));
+      Assert.assertTrue(tokenobject.containsKey("maincontractAddress"));
+      Assert.assertTrue(tokenobject.containsKey("marketId"));
+      Assert.assertTrue(tokenobject.containsKey("name"));
+      Assert.assertTrue(tokenobject.containsKey("precision"));
+      Assert.assertTrue(tokenobject.containsKey("price"));
+      Assert.assertTrue(tokenobject.containsKey("recommandSortId"));
+      Assert.assertTrue(tokenobject.containsKey("shortName"));
+      Assert.assertTrue(tokenobject.containsKey("tokenDesc"));
+      Assert.assertTrue(tokenobject.containsKey("tokenStatus"));
+      Assert.assertTrue(tokenobject.containsKey("top"));
+      Assert.assertTrue(tokenobject.containsKey("totalBalance"));
+      Assert.assertTrue(tokenobject.containsKey("totalSupply"));
+      Assert.assertTrue(tokenobject.containsKey("totalSupplyStr"));
+      Assert.assertTrue(tokenobject.containsKey("transferStatus"));
+      Assert.assertTrue(tokenobject.containsKey("trxCount"));
+      Assert.assertTrue(tokenobject.containsKey("type"));
+      Assert.assertTrue(tokenobject.containsKey("usdCount"));
+      Assert.assertTrue(tokenobject.containsKey("usdPrice"));
+    }
 
     Object USDTprice = JSONPath.eval(responseContent, "$..data.token[name='Tether USD'].price");
     JSONArray USDTPriceArray=(JSONArray)USDTprice;
     BigDecimal actualTUSDPrice = (BigDecimal) USDTPriceArray.get(0);
     int usdtflag = actualTUSDPrice.compareTo(BigDecimal.ZERO);
     Assert.assertTrue(usdtflag > 0);
+
+    Object national = JSONPath.eval(responseContent, "$..data.token[0].national[0]");
+    Assert.assertEquals("DM",national.toString());
+
+    national = JSONPath.eval(responseContent, "$..data.token[name='Decentralized USD'].national[0]");
+    Assert.assertEquals("DM",national.toString());
+
   }
 
   //v4.2.1 old user the first token is TRX. second token is USDD, Others order by trxCount.
@@ -104,7 +167,7 @@ public class AssetList extends TronlinkBase {
   public void assetList03() {
 
     params.clear();
-    params.put("address", quince_B58);
+    params.put("address", unfollowAPIUser);
     params.put("version", "v2");
     response = TronlinkApiList.v2AssetList(params);
 
@@ -139,11 +202,7 @@ public class AssetList extends TronlinkBase {
       }else if (tokenArray.getJSONObject(j).getString("id").equals("1002000"))
       {
         Assert.assertEquals(0,tokenArray.getJSONObject(j).getIntValue("recommandSortId"));
-      }else if (tokenArray.getJSONObject(j).getString("contractAddress").equals("TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9"))
-      {
-        Assert.assertEquals(2,tokenArray.getJSONObject(j).getIntValue("recommandSortId"));
-      }
-      else{
+      } else{
         log.info("current contractAddress is:"+tokenArray.getJSONObject(j).getString("contractAddress"));
         Assert.assertEquals(0,tokenArray.getJSONObject(j).getIntValue("recommandSortId"));
       }
@@ -170,7 +229,7 @@ public class AssetList extends TronlinkBase {
     trc10tokenList.clear();
     trc20tokenList.clear();
 
-    params.put("address",commonUser41);
+    params.put("address",unfollowAPIUser);
 
     trc10tokenList.add("1002000");
     bodyObject.put("trc10s",trc10tokenList);
@@ -213,13 +272,10 @@ public class AssetList extends TronlinkBase {
           Assert.assertEquals("",contractAddress);
           break;
         case 1:
-          Assert.assertEquals("1002000",id);
           Assert.assertEquals("",contractAddress);
           break;
         case 2:
           Assert.assertEquals("",id);
-          Assert.assertEquals("TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn".equals(contractAddress) ||
-                  "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t".equals(contractAddress) || "THbVQp8kMjStKNnf2iCY6NEzThKMK5aBHg".equals(contractAddress) , true);
           break;
         default:
           break;

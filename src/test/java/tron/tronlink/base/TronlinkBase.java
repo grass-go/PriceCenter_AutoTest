@@ -22,17 +22,17 @@ public class TronlinkBase {
 
     public  String commonUser = Configuration.getByPath("testng.conf").getString("tronlink.commonUser");
     public  String commonUser41 = Configuration.getByPath("testng.conf").getString("tronlink.commonUser41");
-    public String followAsset = commonUser;
-    public String unfollowAsset41 = commonUser41;
     public  String unfollowAPIUser = Configuration.getByPath("testng.conf").getString("tronlink.unfollowAPIUser");
+    public  String unfollowAPIUser41 = Configuration.getByPath("testng.conf").getString("tronlink.unfollowAPIUser41");
+    public String newUnactive_B58 = Configuration.getByPath("testng.conf").getString("tronlink.newUnactive_B58");
+    public String newUnactive_Hex = Configuration.getByPath("testng.conf").getString("tronlink.newUnactive_Hex");
 
     public  String addressNewAsset2 = Configuration.getByPath("testng.conf").getString("tronlink.addressNewAsset2");
     public  String addressNewAsset2_41 = Configuration.getByPath("testng.conf").getString("tronlink.addressNewAsset2_41");
     public String address721_B58 = Configuration.getByPath("testng.conf").getString("tronlink.address721_B58");
     public String address721_Hex = Configuration.getByPath("testng.conf").getString("tronlink.address721_Hex");
 
-    public String new1_B58 = Configuration.getByPath("testng.conf").getString("tronlink.new1_B58");
-    public String new1_Hex = Configuration.getByPath("testng.conf").getString("tronlink.new1_Hex");
+
     public static String quince_B58 = Configuration.getByPath("testng.conf").getString("tronlink.quince_B58");
     public String testDELuser_B58 = Configuration.getByPath("testng.conf").getString("tronlink.testDELuser_B58");
     public String price_B58 = Configuration.getByPath("testng.conf").getString("tronlink.priceUser");

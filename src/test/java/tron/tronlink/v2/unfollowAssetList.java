@@ -36,14 +36,14 @@ public class unfollowAssetList extends TronlinkBase {
         // bttold 有余额的一个官方币
         String followToken = "1002000";
         // 先关注一个10币
-        boolean follow = addAsset.addAssetByTokenType(10, true, unfollowAsset41, followToken);
+        boolean follow = addAsset.addAssetByTokenType(10, true, unfollowAPIUser41, followToken);
 
         // 取消关注一个10币
-        follow = addAsset.addAssetByTokenType(10, false, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(10, false, unfollowAPIUser41, followToken);
         org.testng.Assert.assertEquals(true, follow);
 
         // 查询
-        Map<String, String> params = sig.GenerateParams(followAsset, "/api/wallet/v2/unfollowAssetList", "GET");
+        Map<String, String> params = sig.GenerateParams(unfollowAPIUser, "/api/wallet/v2/unfollowAssetList", "GET");
         response = TronlinkApiList.V2UnfollowAssetList(params);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
@@ -59,16 +59,16 @@ public class unfollowAssetList extends TronlinkBase {
     public void unfollowAssetList02() throws Exception {
         String followToken = "1002000";
         // 先关注一个10币
-        boolean follow = addAsset.addAssetByTokenType(10, true, unfollowAsset41, followToken);
+        boolean follow = addAsset.addAssetByTokenType(10, true, unfollowAPIUser41, followToken);
         org.testng.Assert.assertEquals(true, follow);
 
-        Map<String, String> params = sig.GenerateParams(followAsset, "/api/wallet/v2/unfollowAssetList", "GET");
+        Map<String, String> params = sig.GenerateParams(unfollowAPIUser, "/api/wallet/v2/unfollowAssetList", "GET");
         response = TronlinkApiList.V2UnfollowAssetList(params);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         assertNotFound(followToken);
         // 恢复现场
-        follow = addAsset.addAssetByTokenType(10, false, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(10, false, unfollowAPIUser41, followToken);
         log.info("restore unfollowAssetList02, result = " + follow);
     }
 
@@ -114,14 +114,14 @@ public class unfollowAssetList extends TronlinkBase {
         // 无余额的一个 doge coin
         String followToken = "THbVQp8kMjStKNnf2iCY6NEzThKMK5aBHg";
         // 关注
-        boolean follow = addAsset.addAssetByTokenType(20, true, unfollowAsset41, followToken);
+        boolean follow = addAsset.addAssetByTokenType(20, true, unfollowAPIUser41, followToken);
 
         // 取消关注一个币
-        follow = addAsset.addAssetByTokenType(20, false, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(20, false, unfollowAPIUser41, followToken);
         org.testng.Assert.assertEquals(true, follow);
 
         // 查询
-        Map<String, String> params = sig.GenerateParams(followAsset, "/api/wallet/v2/unfollowAssetList", "GET");
+        Map<String, String> params = sig.GenerateParams(unfollowAPIUser, "/api/wallet/v2/unfollowAssetList", "GET");
         response = TronlinkApiList.V2UnfollowAssetList(params);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
@@ -135,17 +135,17 @@ public class unfollowAssetList extends TronlinkBase {
         // 无余额的一个官方币 eth
         String followToken = "THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF";
         // 先关注一个币
-        boolean follow = addAsset.addAssetByTokenType(20, true, unfollowAsset41, followToken);
+        boolean follow = addAsset.addAssetByTokenType(20, true, unfollowAPIUser41, followToken);
         org.testng.Assert.assertEquals(true, follow);
 
         // 查询
-        Map<String, String> params = sig.GenerateParams(followAsset, "/api/wallet/v2/unfollowAssetList", "GET");
+        Map<String, String> params = sig.GenerateParams(unfollowAPIUser, "/api/wallet/v2/unfollowAssetList", "GET");
         response = TronlinkApiList.V2UnfollowAssetList(params);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         // 断言
         assertNotFound(followToken);
-        follow = addAsset.addAssetByTokenType(20, false, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(20, false, unfollowAPIUser41, followToken);
         log.info("unfollowAssetList03_1 unfollow eth, result = " + follow);
 
     }
@@ -155,14 +155,14 @@ public class unfollowAssetList extends TronlinkBase {
         // 无余额的一个推荐币 usdt
         String followToken = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
         // 先关注
-        boolean follow = addAsset.addAssetByTokenType(20, true, unfollowAsset41, followToken);
+        boolean follow = addAsset.addAssetByTokenType(20, true, unfollowAPIUser41, followToken);
 
         // 取消关注一个币
-        follow = addAsset.addAssetByTokenType(20, false, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(20, false, unfollowAPIUser41, followToken);
         org.testng.Assert.assertEquals(true, follow);
 
         // 查询
-        Map<String, String> params = sig.GenerateParams(followAsset, "/api/wallet/v2/unfollowAssetList", "GET");
+        Map<String, String> params = sig.GenerateParams(unfollowAPIUser, "/api/wallet/v2/unfollowAssetList", "GET");
         response = TronlinkApiList.V2UnfollowAssetList(params);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
@@ -172,7 +172,7 @@ public class unfollowAssetList extends TronlinkBase {
         Object usdtNational = JSONPath.eval(responseContent, "$..data.token[name='Tether USD'].national[0]");
         Assert.assertEquals("DM", usdtNational.toString());
 
-        follow = addAsset.addAssetByTokenType(20, true, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(20, true, unfollowAPIUser41, followToken);
         log.info("restore follow usdt, result = " + follow);
 
 
@@ -183,24 +183,26 @@ public class unfollowAssetList extends TronlinkBase {
         // 无余额的一个推荐币
         String followToken = "THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF";
         // 先关注一个币
-        boolean follow = addAsset.addAssetByTokenType(20, true, unfollowAsset41, followToken);
+        boolean follow = addAsset.addAssetByTokenType(20, true, unfollowAPIUser41, followToken);
         org.testng.Assert.assertEquals(follow, true);
 
         // 查询
-        Map<String, String> params = sig.GenerateParams(followAsset, "/api/wallet/v2/unfollowAssetList", "GET");
+        Map<String, String> params = sig.GenerateParams(unfollowAPIUser, "/api/wallet/v2/unfollowAssetList", "GET");
         response = TronlinkApiList.V2UnfollowAssetList(params);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         // 断言
         assertNotFound(followToken);
-        follow = addAsset.addAssetByTokenType(20, false, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(20, false, unfollowAPIUser41, followToken);
         log.info("restore unfollowAssetList04_1, result = ", follow);
 
     }
 
     @Test(enabled = true, description = "排序验证：trxCount > 余额 > 简称忽略大小写排序")
     public void unfollowAssetList05() {
-        Map<String, String> params = sig.GenerateParams(followAsset, "/api/wallet/v2/unfollowAssetList", "GET");
+        Map<String, String> params = sig.GenerateParams(commonUser, "/api/wallet/v2/unfollowAssetList", "GET");
+        //Map<String, String> params = sig.GenerateParams(followAsset, "/api/wallet/v2/unfollowAssetList", "GET");
+
         response = TronlinkApiList.V2UnfollowAssetList(params);
         Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
         String rspStr = TronlinkApiList.parseResponse2String(response);
@@ -264,12 +266,12 @@ public class unfollowAssetList extends TronlinkBase {
     public void restore() throws Exception {
         // usdt
         String followToken = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
-        boolean follow = addAsset.addAssetByTokenType(20, true, unfollowAsset41, followToken);
+        boolean follow = addAsset.addAssetByTokenType(20, true, unfollowAPIUser41, followToken);
         log.info("restore usdt, result = ", follow);
 
         // doge coin
         followToken = "THbVQp8kMjStKNnf2iCY6NEzThKMK5aBHg";
-        follow = addAsset.addAssetByTokenType(20, false, unfollowAsset41, followToken);
+        follow = addAsset.addAssetByTokenType(20, false, unfollowAPIUser, followToken);
         log.info("restore doge coin, result = ", follow);
 
         // bttold, 由用例2看出，本来应该关注的状态，不应该再次关注。注视掉这几句。
