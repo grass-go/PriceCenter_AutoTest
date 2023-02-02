@@ -38,7 +38,7 @@ public class AssetList extends TronlinkBase {
 
   //v4.2.1 new user(not even have transfer trx),with parameter version=v1, will return trx only.
   @SneakyThrows
-  @Test(enabled = true)
+  @Test(enabled = true, description= "check version v1 fields")
   public void assetList01(){
 
     params.put("address",newUnactive_B58);
@@ -98,7 +98,7 @@ public class AssetList extends TronlinkBase {
 
   //v4.2.1 new user(not even have transfer trx),with parameter version=v2, will return trx only.
   @SneakyThrows
-  @Test(enabled = true)
+  @Test(enabled = true,description= "check version v2 fields")
   public void assetList02(){
 
     params.put("address",newUnactive_Hex);
@@ -163,7 +163,7 @@ public class AssetList extends TronlinkBase {
   }
 
   //v4.2.1 old user the first token is TRX. second token is USDD, Others order by trxCount.
-  @Test(enabled = true)
+  @Test(enabled = true,description= "check order")
   public void assetList03() {
 
     params.clear();
@@ -222,7 +222,7 @@ public class AssetList extends TronlinkBase {
 
 
   //Use Post method Test old prepared user have 2 tokens.
-  @Test(enabled = true)
+  @Test(enabled = true,description= "check post method access assetList")
   public void assetList04(){
     params.clear();
     bodyObject.clear();

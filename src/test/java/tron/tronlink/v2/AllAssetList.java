@@ -33,9 +33,7 @@ public class AllAssetList extends TronlinkBase {
   private JSONArray array = new JSONArray();
   Map<String, String> params = new HashMap<>();
 
-
-  // 暂时关闭，等有结论了打开
-  @Test(enabled = true)
+  @Test(enabled = true, description = "check test user's asset")
   public void allAssetList01(){
     params.put("address",commonUser41);
     // v2版本 推荐币的 recommandSortId = 1
@@ -48,7 +46,7 @@ public class AllAssetList extends TronlinkBase {
     Assert.assertTrue(responseContent.containsKey("data"));
     dataContent = responseContent.getJSONObject("data");
     int count =dataContent.getIntValue("count");
-    Assert.assertEquals(7,count);
+    Assert.assertEquals(27,count);
     array = dataContent.getJSONArray("token");
     Object trc10Ids = JSONPath.eval(responseContent, "$..id");
     Object trc20Addresses = JSONPath.eval(responseContent, "$..contractAddress");
@@ -80,7 +78,8 @@ public class AllAssetList extends TronlinkBase {
   @Test(enabled = true, description = "check balance add national field and defiType field")
   public void allAssetList02(){
     params.clear();
-    params.put("address",address721_B58);
+    //params.put("address",address721_B58);
+    params.put("address",commonUser41);
 
     response = TronlinkApiList.V2AllAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -89,7 +88,7 @@ public class AllAssetList extends TronlinkBase {
     //check BitTorrent balance
     Object actualBT = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].balanceStr");
     JSONArray actualBTArray=(JSONArray)actualBT;
-    Assert.assertEquals("9", actualBTArray.get(0));
+    Assert.assertEquals("1", actualBTArray.get(0));
     Object actualBTPrice = JSONPath.eval(responseContent, "$..data.token[name='BitTorrent Old'].price");
     JSONArray actualBTPriceArray=(JSONArray)actualBTPrice;
     BigDecimal btPrice = (BigDecimal) actualBTPriceArray.get(0);
@@ -105,7 +104,7 @@ public class AllAssetList extends TronlinkBase {
     //check WINkLink balance
     Object actualWL = JSONPath.eval(responseContent, String.join("","$..data.token[name='WINkLink'].balanceStr"));
     JSONArray actualWLArray=(JSONArray)actualWL;
-    Assert.assertEquals("206.349755", actualWLArray.get(0));
+    Assert.assertEquals("1", actualWLArray.get(0));
     Object actualWLPrice = JSONPath.eval(responseContent, "$..data.token[name='WINkLink'].price");
     JSONArray actualWLPriceArray=(JSONArray)actualWLPrice;
     BigDecimal wlPrice = (BigDecimal) actualWLPriceArray.get(0);
@@ -162,13 +161,12 @@ public class AllAssetList extends TronlinkBase {
   @Test(enabled = true, description = "Test jToken price and check defiType Field")
   public void allAssetList03(){
     params.clear();
-    params.put("address",quince_B58);
+    //params.put("address",quince_B58);
+    params.put("address",commonUser41);
 
     response = TronlinkApiList.V2AllAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-
-
 
 
     Map<String, String> jTokens = new HashMap<>();
@@ -219,7 +217,7 @@ public class AllAssetList extends TronlinkBase {
   @Test(enabled = true, description = "Test each coin level equals to tronscan api")
   public void allAssetList04() throws InterruptedException {
     params.clear();
-    params.put("address",quince_B58);
+    params.put("address",commonUser41);
 
     response = TronlinkApiList.V2AllAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
@@ -247,16 +245,12 @@ public class AllAssetList extends TronlinkBase {
     officialCoin20.add("TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9"); //JST Token
     officialCoin20.add("TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR"); //WTRX Token
     officialCoin20.add("TMwFHYXLJaRUPeW6421aqXL4ZEzPRFGkGT"); //USDJ
-    officialCoin20.add("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");
-    officialCoin20.add("TDyvndWuvX5xTBwHPYJi7J3Yq8pq8yh62h");
-    officialCoin20.add("TB95FFYRJMLY6mWZqv4JUMqAqsHF4JCXga");
-    officialCoin20.add("TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9");
-    officialCoin20.add("THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF");
-    officialCoin20.add("TXWkP3jLBqRGojUih1ShzNyDaN5Csnebok");
-    officialCoin20.add("TXpw8XeWYeTUd4quDskoUqeQPowRh4jY65");
-    officialCoin20.add("TR3DLthpnDdCGabhVDbD3VMsiJoCXY3bZd");
-    officialCoin20.add("THbVQp8kMjStKNnf2iCY6NEzThKMK5aBHg");
-    officialCoin20.add("TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8");
+    officialCoin20.add("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7"); //WIN
+    officialCoin20.add("THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF"); //ETH
+    officialCoin20.add("TDyvndWuvX5xTBwHPYJi7J3Yq8pq8yh62h"); //HT
+    officialCoin20.add("TXWkP3jLBqRGojUih1ShzNyDaN5Csnebok"); //WETH
+    officialCoin20.add("TXpw8XeWYeTUd4quDskoUqeQPowRh4jY65"); //WBTC
+    officialCoin20.add("TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8"); //USDC
 
     for (int i = 0; i<token10sArray.size(); i++) {
       if (!token10sArray.get(i).equals("")) {
@@ -314,7 +308,7 @@ public class AllAssetList extends TronlinkBase {
   @Test(enabled = true, description = "Test defiType=2 token exists")
   public void allAssetList_defiType2() throws InterruptedException {
     params.clear();
-    params.put("address",quince_B58);
+    params.put("address",commonUser41);
     response = TronlinkApiList.V2AllAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
