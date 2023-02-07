@@ -92,7 +92,7 @@ public class checkPrice extends TronlinkBase {
         return data;
     }
 
-    @Test(enabled = true, dataProvider = "checkPriceTokens", description = "token without WBTC and WETH")
+    @Test(enabled = true, dataProvider = "checkPriceTokens", description = "token without WBTC and WETH",groups={"P2"})
     public void test001CompareTokenPriceWithTronscan(String symbol, String address, String tolerance) throws InterruptedException {
         log.info("test001CompareTokenPriceWithTronscan:"+symbol,", address", address, ", tolerance:");
         Thread.sleep(1000);

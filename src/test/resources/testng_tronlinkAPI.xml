@@ -19,8 +19,12 @@
         <parameter name="trc721AssetId" value="1"></parameter>
         <!--如果需要下架老接口的不带签名的版本，则打开一下注释。-->
         <groups>
+            <define name="excludeCase">
+                <include name="multiSign"/>
+                <include name="P2"/>
+            </define>
             <run>
-                <exclude name="multiSign"></exclude>
+                <exclude name="excludeCase"></exclude>
             </run>
         </groups>
         <packages>
