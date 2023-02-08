@@ -38,7 +38,7 @@ public class getStartup extends TronlinkBase {
     Assert.assertFalse(responseContent.getJSONObject("data").getString("url").isEmpty());
   }
 
-  @Test(enabled = true, groups = {"NoSignature"})
+  @Test(enabled = true, groups = {"NoSignature","P2"})
   public void test01GetStartupForAndroidHighVersionWithNoSig(){
     params.put("height","1440");
     params.put("width","1440");

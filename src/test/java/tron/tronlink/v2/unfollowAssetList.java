@@ -31,7 +31,7 @@ public class unfollowAssetList extends TronlinkBase {
     private addAsset addAsset = new addAsset();
     private GetSign sig = new GetSign();
 
-    @Test(enabled = true, description = "有余额有价值的币，取消关注,可以查到")
+    @Test(enabled = true, description = "有余额有价值的币，取消关注,可以查到", groups={"P2"})
     public void unfollowAssetList01() throws Exception {
         // bttold 有余额的一个官方币
         String followToken = "1002000";
@@ -130,7 +130,7 @@ public class unfollowAssetList extends TronlinkBase {
 
     }
 
-    @Test(enabled = true, description = "验证余额balance=0的普通币，加关注，也不在unfollow接口")
+    @Test(enabled = true, description = "验证余额balance=0的普通币，加关注，也不在unfollow接口",groups={"P2"} )
     public void unfollowAssetList03_1() throws Exception {
         // 无余额的一个官方币 eth
         String followToken = "THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF";
@@ -150,7 +150,7 @@ public class unfollowAssetList extends TronlinkBase {
 
     }
 
-    @Test(enabled = true, description = "系统推荐币（线上：USDT）没有余额,balance=0， 取消关注，在unfollow接口。")
+    @Test(enabled = true, description = "系统推荐币（线上：USDT）没有余额,balance=0， 取消关注，在unfollow接口。",groups={"P2"})
     public void unfollowAssetList04() throws Exception {
         // 无余额的一个推荐币 usdt
         String followToken = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
@@ -178,7 +178,7 @@ public class unfollowAssetList extends TronlinkBase {
 
     }
 
-    @Test(enabled = true, description = "系统推荐币（线上：USDT）没有余额balance=0， 关注，不在unfollow接口。")
+    @Test(enabled = true, description = "系统推荐币（线上：USDT）没有余额balance=0， 关注，不在unfollow接口。", groups={"P2"})
     public void unfollowAssetList04_1() throws Exception {
         // 无余额的一个推荐币
         String followToken = "THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF";

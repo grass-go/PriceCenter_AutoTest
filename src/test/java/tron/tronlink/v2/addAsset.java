@@ -133,7 +133,7 @@ public class addAsset extends TronlinkBase {
 
     // 关注trc721资产，getAllCollections接口可见，取消关注，getAllCollections不可见
 
-    @Test(enabled = true)
+    @Test(enabled = true, groups={"P2"})
     public void addAsset02() throws Exception {
         params.clear();
         trc721tokenList.clear();
