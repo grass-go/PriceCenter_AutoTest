@@ -51,7 +51,7 @@ public class delAsset extends TronlinkBase {
     addAsset addAsset = new addAsset();
 
 
-    @Test(enabled = true, description = "del focus coin, related api should not see.")
+    @Test(enabled = true, description = "del focus coin, related api should not see.", groups={"P2"})
     public void delAsset01() {
         //Prepare parameters and post body; Send delAsset request; Check response of delAsset.
         params.clear();

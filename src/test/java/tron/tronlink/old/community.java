@@ -13,7 +13,7 @@ import java.util.Map;
 public class community extends TronlinkBase {
   private HttpResponse response;
 
-  @Test(enabled = true, description = "Api GET /api/v1/wallet/community test", groups = {"NoSignature"})
+  @Test(enabled = true, description = "Api GET /api/v1/wallet/community test", groups = {"NoSignature","P2"})
   public void CommunityLowVersionWithNoSig() throws Exception {
     response = api.communityNoSig(null);
     JSONObject jsonObject = api.parseResponse2JsonObject(response);
