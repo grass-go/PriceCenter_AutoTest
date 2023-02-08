@@ -28,7 +28,7 @@ public class multiTrxRecord {
     param.put("start", "0");
     param.put("limit", "20");
     param.put("state", "455");
-    param.put("serializable","true");
+    //param.put("serializable","true");
     //param.put("isSign", "false");
     response = TronlinkApiList.multiTrxRewordNoSig(param,null);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());

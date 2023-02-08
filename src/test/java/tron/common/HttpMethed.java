@@ -65,7 +65,7 @@ public class HttpMethed {
       response = createConnect(requestUrl, userBaseObj2);
       transactionString = EntityUtils.toString(response.getEntity());
       JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
-      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+120000);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+86400000);
 
       transactionSignString = gettransactionsign(httpNode, transactionObject.toString(), fromKey);
       log.info("-----------sign information-----------------");
@@ -109,7 +109,7 @@ public class HttpMethed {
       transactionString = EntityUtils.toString(response.getEntity());
       log.info("transactionString:"+transactionString);
       JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
-      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+360000);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+86400000);
 
       transactionSignString = gettransactionsign(httpNode, transactionObject.toString(), fromKey);
       log.info("-----------sign information-----------------");
@@ -251,7 +251,7 @@ public class HttpMethed {
       transactionString = EntityUtils.toString(response.getEntity());
       log.info("transactionString:"+transactionString);
       JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
-      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+360000);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+86400000);
 
       transactionSignString = gettransactionsign(httpNode, transactionObject.toString(), fromKey);
       log.info("-----------sign information-----------------");

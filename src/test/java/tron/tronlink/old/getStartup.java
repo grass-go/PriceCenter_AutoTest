@@ -38,7 +38,7 @@ public class getStartup extends TronlinkBase {
     Assert.assertFalse(responseContent.getJSONObject("data").getString("url").isEmpty());
   }
 
-  @Test(enabled = true, groups = {"NoSignature"})
+  @Test(enabled = true, groups = {"NoSignature","P2"})
   public void test01GetStartupForAndroidHighVersionWithNoSig(){
     params.put("height","1440");
     params.put("width","1440");
@@ -74,7 +74,7 @@ public class getStartup extends TronlinkBase {
   }
 
 
-  @Test(enabled = true)
+  @Test(enabled = true, groups={"P2"})
   public void test02GetStartupForIos(){
     headers.put("System","iOS");
     headers.put("Version","3.7.5");
@@ -158,7 +158,5 @@ public class getStartup extends TronlinkBase {
     Assert.assertFalse(responseContent.getJSONObject("data").getString("picType").isEmpty());
     Assert.assertFalse(responseContent.getJSONObject("data").getString("url").isEmpty());
   }
-
-
 
 }

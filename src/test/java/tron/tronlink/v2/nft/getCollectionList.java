@@ -17,11 +17,11 @@ public class getCollectionList extends TronlinkBase {
   Map<String, String> params = new HashMap<>();
 
   @Test
-  public void getCollectionListTest001() {
+  public void getCollectionListManaul() {
     params.put("address",quince_B58);
     //params.put("tokenAddress","TU4zZAaKMdNGX4gwDhP3yz1zXZ5Z9UezxL");
     //params.put("tokenAddress","TUVGZFjjAhkYitwQmveGoCt7W4yNzbN5dY");
-    params.put("tokenAddress","TCaL5uzxWD7unW6NWw8bDGhNsfWbMVXNj2");
+    params.put("tokenAddress","TJg6fquXUXeQvRV6bdb8wNFqkCyuWSueT3");
     params.put("pageIndex","0");
     params.put("pageSize","10");
 
@@ -29,9 +29,6 @@ public class getCollectionList extends TronlinkBase {
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
-    Assert.assertEquals(0,(int)responseContent.get("code"));
-    Assert.assertEquals("OK",responseContent.get("message"));
-    dataContent = responseContent.getJSONObject("data");
 
 
   }

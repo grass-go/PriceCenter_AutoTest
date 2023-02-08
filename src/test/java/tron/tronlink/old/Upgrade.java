@@ -29,7 +29,7 @@ public class Upgrade extends TronlinkBase {
   List<String> trc10tokenList = new ArrayList<>();
   Map<String, String> params = new HashMap<>();
 
-  @Test(enabled = true, groups={"NoSignature"})
+  @Test(enabled = true, groups={"NoSignature", "P2"})
   public void UpgradeForAndroidByV2LowVersionWithNoSig() throws Exception {
     Map<String, String> params = new HashMap<>();
     params.put("System","Android");
@@ -62,7 +62,7 @@ public class Upgrade extends TronlinkBase {
     Assert.assertEquals("Error param.", responseContent.getString("message"));
   }
 
-  @Test(enabled = true)
+  @Test(enabled = true, groups={"P2"})
   public void test01UpgradeForAndroidByV2() throws Exception {
     Map<String, String> header = new HashMap<>();
     header.put("System","Android");
@@ -239,7 +239,7 @@ public class Upgrade extends TronlinkBase {
     Assert.assertEquals("false",upgrade_flag.toString());
   }
 
-  @Test(enabled = true, description = "Android googleplay 4.9.0, need upgrade")
+  @Test(enabled = true, description = "Android googleplay 4.9.0, need upgrade",groups={"P2"})
   public void test05UpgradeFor490_googleplay() throws Exception {
     Map<String, String> params = new HashMap<>();
     params.put("address", quince_B58);

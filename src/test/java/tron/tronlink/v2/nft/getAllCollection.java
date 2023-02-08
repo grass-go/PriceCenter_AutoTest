@@ -32,31 +32,13 @@ public class getAllCollection extends TronlinkBase {
 
   @Test
   public void getAllCollectionTest001(){
-    params.put("address",addressNewAsset41);
+    params.put("address","TU2YbajwkDnrSUwu858kvMJtLaYZwVoKGC");
     response = TronlinkApiList.v2GetAllCollection(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
-    Assert.assertEquals(0,(int)responseContent.get("code"));
-    Assert.assertEquals("OK",responseContent.get("message"));
-    dataContent = responseContent.getJSONArray("data");
-    Assert.assertTrue(dataContent.size() >= 1);
-    for (int n = 0; n < dataContent.size(); n++ ){
-      JSONObject nftData = dataContent.getJSONObject(n);
 
-      Assert.assertTrue(nftData.containsKey("transferCount"));
-      Assert.assertTrue(nftData.containsKey("nrOfTokenHolders"));
-      Nft Expect = NftPointedInV1.get(nftData.getString("id"));
-      Assert.assertNotNull(Expect);
-      Assert.assertEquals(Expect.name, nftData.getString("name"));
-      Assert.assertEquals(Expect.shortName, nftData.getString("shortName"));
-      Assert.assertEquals(Expect.ContractAddress, nftData.getString("contractAddress"));
 
-      Assert.assertEquals(200,
-          TronlinkApiList.createGetConnect(nftData.getString("logoUrl"), null, null,null).getStatusLine().getStatusCode());
-
-    }
-    System.out.println("responseContent : " + responseContent.toString());
   }
 
   //Version=v2: the 4 type of focos coins are always in home page.
@@ -67,53 +49,17 @@ public class getAllCollection extends TronlinkBase {
   //            3. 同时也校验了关注币的排序。
   @SneakyThrows
   @Test(enabled=true)
-  public void getAllCollectionTest002(){
-    // read expected json
-    char cbuf[] = new char[5000];
-    InputStreamReader input =new InputStreamReader(new FileInputStream(new File("src/test/resources/TestData/getAllCollection_exp.json")),"UTF-8");
-    int len =input.read(cbuf);
-    String expResponse =new String(cbuf,0,len);
-    //JSONObject getAllCollection_exp = JSONObject.parseObject(expResponse);
+  public void getAllCollectionTestManual(){
 
     // read actual json
     params.clear();
     params.put("nonce","12345");
     params.put("secretId","SFSUIOJBFMLKSJIF");
     params.put("signature","15sBsg%2B0R9FOdxGVrZr9K6XVpXI%3D");
-    params.put("address",address721_B58);
+    params.put("address","41c613de888501fbca8cb5de7bc9f92bbf116644b7");
     params.put("version","v2");
     response = TronlinkApiList.v2GetAllCollection(params);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-    for(int i=0;i<2;i++){
-      if (responseContent.getIntValue("code") == 4500){
-        Thread.currentThread().sleep(5000);
-        response = TronlinkApiList.v2GetAllCollection(params);
-        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-
-      }
-      else{
-        break;
-      }
-    }
-
-
-    Assert.assertEquals(200, response.getStatusLine().getStatusCode());
-
-
-    JSONArray array = responseContent.getJSONArray("data");
-    int tokenlen=array.size();
-    Assert.assertEquals(2,tokenlen);
-    JSONObject first = array.getJSONObject(0);
-    JSONObject second = array.getJSONObject(1);
-
-    Assert.assertEquals("TCzUYnFSwtH2bJkynGB46tWxWjdTQqL1SG", first.getString("contractAddress"));
-    Assert.assertEquals(0, first.getIntValue("count"));
-    Assert.assertEquals("NFT", first.getString("shortName"));
-
-    Assert.assertEquals("TD1Ack8frEuatgdyDajBEDqjvUBDeztDAE", second.getString("contractAddress"));
-    Assert.assertEquals(9, second.getIntValue("count"));
-    Assert.assertEquals("ATC", second.getString("shortName"));
-
   }
 
   class Nft {

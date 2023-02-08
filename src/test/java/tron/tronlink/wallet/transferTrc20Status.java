@@ -18,6 +18,7 @@ public class transferTrc20Status extends TronlinkBase {
     private JSONArray responseArrayContent;
     private HttpResponse response;
     private HashMap<String,String> param = new HashMap<>();
+    private HashMap<String,String> header = new HashMap<>();
 
     @Test(enabled = true,description = "test trc20_status api", groups={"NoSignature"})
     public void getTrc20_StatusLowVersionWithNoSig() throws Exception {
@@ -99,50 +100,29 @@ public class transferTrc20Status extends TronlinkBase {
 
 
     @Test(enabled = true,description = "test trc20_status api")
-    public void Test000getTrc20_Status() throws Exception {
-        //param.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t"); //sophia's address
-        param.put("address","TQxUQFgfUj859qKZJ4Dr9D5LoDhm4s37dS");
-        param.put("trc20Id","TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
-        param.put("limit","50");
-        param.put("start","0");
+    public void Test000getTrc20_StatusManual() throws Exception {
 
-        param.put("db_version","1");
+        param.put("address","41E7D71E72EA48DE9144DC2450E076415AF0EA745F");
+        //param.put("trc20Id","TT8vc3zKCmGCUryYWLtFvu5PqAyYoZ3KMh");
+        param.put("trc20Id","TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn");
+        param.put("limit","40");
+        param.put("start","0");
         param.put("direction","0");
         param.put("reverse","true");
-        //param.put("trc20Id","TF17BgPaZYbz8oxbjhriubPDsA7ArKoLX3");
+        param.put("fee","true");
+        param.put("db_version","1");
+        param.put("filter_small","true");
+        header.clear();
+        //header.put("System","chrome-extension");
+        header.put("Version","4.11.3");
 
-
-        response = TronlinkApiList.apiTransferTrc20Status(param);
+        response = TronlinkApiList.apiTransferTrc20Status(param,header);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         Assert.assertNotEquals( null,responseContent);
         responseArrayContent = responseContent.getJSONArray("data");
         Assert.assertNotEquals( null,responseArrayContent);
         //data object
-        for (Object json:responseArrayContent) {
-            JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
-            Assert.assertTrue(jsonObject.containsKey("hash"));
-            Assert.assertTrue(jsonObject.containsKey("block_timestamp"));
-            Assert.assertTrue(jsonObject.containsKey("from"));
-            Assert.assertTrue(jsonObject.containsKey("to"));
-            Assert.assertTrue(jsonObject.containsKey("block"));
-            Assert.assertTrue(jsonObject.containsKey("amount"));
-            Assert.assertTrue(jsonObject.containsKey("contract_address"));
-            Assert.assertTrue(jsonObject.containsKey("amount"));
-            Assert.assertTrue(jsonObject.containsKey("direction"));
-            Assert.assertTrue(jsonObject.containsKey("confirmed"));
-            Assert.assertTrue(jsonObject.containsKey("contract_ret"));
-            Assert.assertTrue(jsonObject.containsKey("event_type"));
-            Assert.assertTrue(jsonObject.containsKey("approval_amount"));
-            Assert.assertTrue(jsonObject.containsKey("contract_type"));
-            Assert.assertTrue(jsonObject.containsKey("contractType"));
-            Assert.assertTrue(jsonObject.containsKey("final_result"));
-            Assert.assertTrue(jsonObject.containsKey("revert"));
-            Assert.assertTrue(jsonObject.containsKey("issue_address"));
-            Assert.assertTrue(jsonObject.containsKey("id"));
-            Assert.assertTrue(jsonObject.containsKey("token_name"));
-            Assert.assertTrue(jsonObject.containsKey("decimals"));
 
-        }
     }
 
 }

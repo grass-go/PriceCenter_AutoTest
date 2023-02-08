@@ -1,0 +1,41 @@
+public static String exchangeCreate(String httpNode, String ownerAddress,
+      String firstTokenId, Long firstTokenBalance, String secondTokenId, Long secondTokenBalance,
+                                            String visible, Integer permissionId, String fromKey) {
+    try {
+      final String requestUrl = "http://" + httpNode + "/wallet/exchangecreate";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("owner_address", ownerAddress);
+      if(visible.equals("false")){
+        userBaseObj2.addProperty("first_token_id", str2hex(firstTokenId));
+        userBaseObj2.addProperty("second_token_id", str2hex(secondTokenId));
+      } else if(visible.equals("true")){
+        userBaseObj2.addProperty("first_token_id", firstTokenId);
+        userBaseObj2.addProperty("second_token_id", secondTokenId);
+      }
+
+      userBaseObj2.addProperty("first_token_balance", firstTokenBalance);
+      userBaseObj2.addProperty("second_token_balance", secondTokenBalance);
+      userBaseObj2.addProperty("visible", visible);
+      userBaseObj2.addProperty("Permission_id", permissionId);
+      response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      log.info("transactionString:"+transactionString);
+      JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+120000);
+
+      transactionSignString = gettransactionsign(httpNode, transactionString, fromKey);
+      log.info("-----------sign information-----------------");
+      log.info(transactionSignString);
+      JSONObject jsonObject = HttpMethed.parseStringContent(transactionSignString);
+      jsonObject.remove("visible");
+      jsonObject.remove("txID");
+      jsonObject.remove("raw_data_hex");
+      transactionStr = jsonObject.toString();
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return transactionStr;
+  }

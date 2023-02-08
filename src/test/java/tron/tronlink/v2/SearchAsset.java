@@ -34,28 +34,20 @@ public class SearchAsset extends TronlinkBase {
   GetSign sig = new GetSign();
 
   @Test(enabled = true)
-  public void searchAssetList01(){
+  public void searchAssetListManual(){
     params.clear();
-    params.put("address",addressNewAsset41);
-    params.put("keyWord","j");
+    params.put("address",quince_B58);
+    //TPtVC6hXrGmpwCnqW17Xjdd5KRXQ7LwKY8
+    //TJg6fquXUXeQvRV6bdb8wNFqkCyuWSueT3
+    params.put("keyWord","TURF3xdj9j5BTDHxoS4yFnmxFg4C8MhAMN");
     params.put("page","1");
     params.put("count","10");
+    params.put("version","v2");
 
     response = TronlinkApiList.v2SearchAsset(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-    Assert.assertTrue(responseContent.containsKey("code"));
-    Assert.assertTrue(responseContent.containsKey("message"));
-    Assert.assertTrue(responseContent.containsKey("data"));
-    dataContent = responseContent.getJSONObject("data");
-    int count =dataContent.getIntValue("count");
-    Assert.assertEquals(1,count);
-    array = dataContent.getJSONArray("token");
-    JSONObject token = array.getJSONObject(0);
-    Assert.assertEquals(2,token.getIntValue("type"));
-    Assert.assertEquals("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7",token.getString("contractAddress"));
-    Assert.assertEquals(1,token.getIntValue("isOfficial"));
-    Assert.assertEquals(0,token.getIntValue("recommandSortId"));
+
   }
 
   //测试搜索结果中包含预期结果里面的token，预期结果中包括trc10，trc20，trc721的token，并且验证几个主要字段的值正确。

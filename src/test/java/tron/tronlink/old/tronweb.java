@@ -79,7 +79,7 @@ public class tronweb extends TronlinkBase {
     headers.put("Version","4.14.0");
     response = api.tronweb(params,headers);
     JSONObject tronwebData = api.parseResponse2JsonObject(response).getJSONObject("data");
-    api.printJsonObjectContent(tronwebData);
+    //api.printJsonObjectContent(tronwebData);
     /*JSONObject balanceLimit = tronwebData.getJSONObject("balanceLimit");
     Assert.assertEquals(balanceLimit.getIntValue("assetValueLimit"),1);
     Assert.assertEquals(balanceLimit.getIntValue("assetThousandthLimit"), 1);

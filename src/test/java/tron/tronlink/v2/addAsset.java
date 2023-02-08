@@ -42,8 +42,29 @@ public class addAsset extends TronlinkBase {
 
     AssertGetAllCollection gac = new AssertGetAllCollection();
 
+    @Test(enabled = true)
+    public void addAssetManual() throws InterruptedException {
+        params.clear();
+        trc10tokenList.clear();
+        jsonObject.clear();
+        params.put("address", quince_B58);
+        trc721tokenList.clear();
+        trc721tokenList.add("TURF3xdj9j5BTDHxoS4yFnmxFg4C8MhAMN");
+        trc721tokenList.add("TKHaR7R3x4FkmCEd1oNxmBig6AB4zEofmU");
 
-    // 关注资产，assetList接口可见，取消关注，assetList不可见
+        //trc10tokenList.add("1002000");
+        // jsonObject.put("address","41F985738AE54FD87ED6CD07065905EBEA355E66CD");
+        jsonObject.put("address", quince_B58);
+        //jsonObject.put("token10", trc10tokenList);
+        jsonObject.put("token721", trc721tokenList);
+        response = TronlinkApiList.v2AddAsset(null, params, jsonObject);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    }
+
+
+
+        // 关注资产，assetList接口可见，取消关注，assetList不可见
     @Test(enabled = true)
     public void addAsset01() throws InterruptedException {
         params.clear();
@@ -136,7 +157,7 @@ public class addAsset extends TronlinkBase {
 
     // 关注trc721资产，getAllCollections接口可见，取消关注，getAllCollections不可见
 
-    @Test(enabled = true)
+    @Test(enabled = true, groups={"P2"})
     public void addAsset02() throws Exception {
         params.clear();
         trc721tokenList.clear();

@@ -34,7 +34,7 @@ public class getCollectionInfos extends TronlinkBase {
     }
 
 
-    @Test
+    @Test(enabled = true, groups={"P2"})
     public void getCollectionInfosTest001() {
         //assetIdList.add("10000001");
         //assetIdList.add("2");

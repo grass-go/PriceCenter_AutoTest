@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class CreateMultiTransactionWithSerializable extends TronlinkBase {
-    private String httpnode = "47.252.19.181:8090";
+    private String httpnode = "3.225.171.164:8090";
 //    private Stsring httpnode = "123.56.3.74:8090";
     private ManagedChannel channelFull = null;
     HttpResponse res;
@@ -98,7 +98,7 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
     @Test(enabled = true, description = "multi sign freeze balance with serializable no receiver address")
     public void freezeBalanceNoReceiver() throws Exception {
         // visible:true
-        String transactionStr = HttpMethed.freezeBalance(httpnode, quince58, 1000000L, 3,0, null,"true", 5, wqq1key);
+        String transactionStr = HttpMethed.freezeBalance(httpnode, quince58, 1000000L, 3,0, null,"true", 3, wqq1key);
         log.info("-----raw transaction:  " + transactionStr);
 
         JSONObject object = new JSONObject();
@@ -112,7 +112,7 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
         Assert.assertEquals(0, responseContent.getIntValue("code"));
 
         // visible:false
-        String transactionStr2 = HttpMethed.freezeBalance(httpnode, ByteArray.toHexString(quince), 1000000L, 3,1, null,"false", 5, wqq1key);
+        String transactionStr2 = HttpMethed.freezeBalance(httpnode, ByteArray.toHexString(quince), 1000000L, 3,1, null,"false", 3, wqq1key);
         log.info("-----raw transaction2:  " + transactionStr2);
 
         JSONObject object2 = new JSONObject();
@@ -300,8 +300,8 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
     @Test(enabled = true, description = "multi sign transfer asset")
     public void transferTrc10() throws Exception {
         // visible:true
-        String transactionStr = HttpMethed.transferAsset(httpnode, quince58, wqq158, "1000323", 1L,
-                "true",5, wqq1key);
+        String transactionStr = HttpMethed.transferAsset(httpnode, quince58, wqq158, "1002000", 1L,
+                "true",3, wqq1key);
         log.info("-----raw transaction:  " + transactionStr);
 
         JSONObject object = new JSONObject();
@@ -316,7 +316,7 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
 
         // visible:false
         String transactionStr2 = HttpMethed.transferAsset(httpnode, ByteArray.toHexString(quince), ByteArray.toHexString(wqq1),
-                HttpMethed.str2hex("1000323"), 1L, "false",5, wqq1key);
+                HttpMethed.str2hex("1002000"), 1L, "false",3, wqq1key);
         log.info("-----raw transaction2:  " + transactionStr2);
 
         JSONObject object2 = new JSONObject();

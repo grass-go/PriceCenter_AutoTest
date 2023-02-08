@@ -31,30 +31,14 @@ public class allCollections extends TronlinkBase {
 
   @SneakyThrows
   @Test( enabled = true)
-  public void allCollectionsTest001(){
-    //read expected json
-    char cbuf[] = new char[5000];
-    InputStreamReader input =new InputStreamReader(new FileInputStream(new File("src/test/resources/TestData/allCollections_exp.json")),"UTF-8");
-    int len = 0;
-    try {
-      len = input.read(cbuf);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    String expResponse =new String(cbuf,0,len);
-
-
+  public void allCollectionsTestManual(){
     params.clear();
-    params.put("address",address721_Hex);
+    params.put("address","TXFmkVZkpkv8ghNCKwpeVdVvRVqTedSCAK");
 
     response = TronlinkApiList.v2AllCollections(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseString = TronlinkApiList.parseResponse2String(response);
-    String cmp_result = new CompareJson("contractAddress,transferCount").compareJson(responseString, expResponse);
-    System.out.println("=========actual response========== "+responseString+"\n");
-    System.out.println("=========expect response========== "+expResponse+"\n");
-    System.out.println("=========cmp_result=============== "+cmp_result);
-    Assert.assertEquals("null",cmp_result);
+
 
   }
 

@@ -531,6 +531,18 @@ public class TronlinkServerHttpClient {
         GetSign getSign = new GetSign();
         String signature = "";
         try {
+            log.info(headers.get("channel"));
+            log.info(headers.get("chain"));
+            log.info(headers.get("Lang"));
+            log.info(address);
+            log.info(params.get("nonce"));
+            log.info(params.get("secretId"));
+            log.info(headers.get("System"));
+            log.info(headers.get("DeviceID"));
+            log.info(headers.get("ts"));
+            log.info(headers.get("Version"));
+            log.info(curUri);
+            log.info(httpMethod);
             signature = URLEncoder.encode(getSign.getSignature(
                     headers.get("channel"),
                     headers.get("chain"),
@@ -581,6 +593,8 @@ public class TronlinkServerHttpClient {
         if(caseHeader != null) {
             headers = AddMap(headers, caseHeader);
         }
+        log.info("createGetConnectWithSignature:params:"+params.toString());
+        log.info("createGetConnectWithSignature:headers:"+headers.toString());
         String cursig="";
         if(caseParams != null && caseParams.containsKey("address")) {
             //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg

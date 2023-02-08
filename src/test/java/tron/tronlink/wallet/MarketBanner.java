@@ -24,7 +24,7 @@ public class MarketBanner {
 
 
 
-  @Test(enabled = true)
+  @Test(enabled = true, groups={"P2"} )
   public void Test000getMarketBanner() throws Exception {
     Map<String, String> params = new HashMap<>();
     params.put("sort_type","1");

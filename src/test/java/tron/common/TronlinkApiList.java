@@ -194,9 +194,9 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         response = createGetConnect(requestUrl, params, null, null);
         return response;
     }
-    public static HttpResponse apiTransferToken10(HashMap<String, String> param) {
+    public static HttpResponse apiTransferToken10(HashMap<String, String> param,HashMap<String, String> header) {
         final String curURI = "/api/transfer/token10";
-        response = createGetConnectWithSignature(curURI,param,null,null);
+        response = createGetConnectWithSignature(curURI,param,header,null);
         return response;
     }
 
@@ -212,9 +212,9 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse apiTransferTrc20(HashMap<String, String> param) {
+    public static HttpResponse apiTransferTrc20(HashMap<String, String> param, HashMap<String, String> header) {
         final String curURI = "/api/transfer/trc20";
-        response = createGetConnectWithSignature(curURI,param,null,null);
+        response = createGetConnectWithSignature(curURI,param,header,null);
         return response;
     }
 
@@ -229,11 +229,18 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         response = createGetConnect(requestUrl,param,null,header);
         return response;
     }
-    public static HttpResponse apiTransferTrc20Status(HashMap<String, String> param) throws Exception {
+    public static HttpResponse apiTransferTrc20Status(HashMap<String, String> param,HashMap<String, String> header) throws Exception {
         String curURI = "/api/transfer/trc20_status";
-        response = createGetConnectWithSignature(curURI,param,null,null);
+        response = createGetConnectWithSignature(curURI,param,header,null);
         return response;
     }
+
+    public static HttpResponse transferAccount(HashMap<String, String> params, HashMap<String, String> headers) throws Exception {
+        String curURI = "/api/transfer/account";
+        response = createGetConnectWithSignature(curURI,params,headers,null);
+        return response;
+    }
+
 
     public static HttpResponse votingWitnessNoSig(Map<String, String> params, Map<String, String> header) {
         String requestUrl = HttpNode + "/api/voting/v2/witness";
@@ -1820,4 +1827,45 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         }
         return permissionBuilder.build();
     }
+
+    public static HttpResponse totalAssets(JSONObject postdata, HashMap<String, String> params,HashMap<String, String> headers) {
+        final String curURI = "/api/financial/totalAssets";
+        response = createPostConnectWithSignature(curURI,params, headers,postdata);
+        return response;
+    }
+    public static HttpResponse tokenFinancialList(JSONObject postdata, HashMap<String, String> params,HashMap<String, String> headers) {
+        final String curURI = "/api/financial/tokenFinancialList";
+        response = createPostConnectWithSignature(curURI,params, headers,postdata);
+        return response;
+    }
+    public static HttpResponse v2assets(JSONObject postdata, HashMap<String, String> params,HashMap<String, String> headers) {
+        final String curURI = "/api/wallet/v2/assets";
+        response = createPostConnectWithSignature(curURI,params, headers,postdata);
+        return response;
+    }
+
+    public static HttpResponse myFinancialTokenList(JSONObject postdata, HashMap<String, String> params,HashMap<String, String> headers) {
+        final String curURI = "/api/financial/myFinancialTokenList";
+        response = createPostConnectWithSignature(curURI,params, headers,postdata);
+        return response;
+    }
+
+    public static HttpResponse myFinancialProjectList(JSONObject postdata, HashMap<String, String> params,HashMap<String, String> headers) {
+        final String curURI = "/api/financial/myFinancialProjectList";
+        response = createPostConnectWithSignature(curURI,params, headers,postdata);
+        return response;
+    }
+
+    public static HttpResponse justLendDetail( HashMap<String, String> params,HashMap<String, String> headers) {
+        final String curURI = "/api/financial/justLendDetail";
+        response = createGetConnectWithSignature(curURI,params, headers,null);
+        return response;
+    }
+
+    public static HttpResponse justLendOperate( HashMap<String, String> params,HashMap<String, String> headers) {
+        final String curURI = "/api/financial/justLendOperate";
+        response = createGetConnectWithSignature(curURI,params, headers,null);
+        return response;
+    }
+
 }

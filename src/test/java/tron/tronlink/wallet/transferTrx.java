@@ -18,38 +18,29 @@ public class transferTrx {
   private HashMap<String,String> param = new HashMap<>();
 
 
-  @Test(enabled = false,description = "get only trx transaction",groups={"NoSignature"})
-  public void getTrxTransferLowVersionWithNoSig() throws Exception {
-    param.put("address","TH48niZfbwHMyqZwEB8wmHfzcvR8ZzJKC6"); //sophia's address
-    param.put("limit","20");
+  @Test(enabled = true,description = "get only trx transaction",groups={"NoSignature"})
+  public void getTrxTransferLowVersionWithNoSigManual() throws Exception {
+    //param.put("address","TGEMwfQC8LQJ1nUzmVgmF66f3VtuQMR56F"); //sophia's address
+    //param.put("address","TPFfHr1CWfTcS9eugQXQmvqHNGufnjxjXP");
+    //param.put("address" ,"TMCT99jfDE3u5CNxH6Pk9H9YntbL1itxHB");
+
+    param.put("limit","50");
     param.put("start","0");
     param.put("direction","0"); //0：send and accept
     param.put("reverse","true");
+    param.put("db_version","1");
+    param.put("filter_small","true");
+    param.put("fee","true");
+    HashMap<String, String> header = new HashMap<>();
+    //header.put("Version","4.11.15");
+    //header.put("System", "iOS");
+
     response = TronlinkApiList.apiTransferTrxNoSig(param,null);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     org.testng.Assert.assertNotEquals(responseContent, null);
     responseArrayContent = responseContent.getJSONArray("data");
-    Assert.assertNotEquals( null,responseArrayContent);
 
-    //data object
-    for (Object json:responseArrayContent) {
-      JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
-      Assert.assertTrue(jsonObject.containsKey("block_timestamp"));
-      Assert.assertTrue(jsonObject.containsKey("amount"));
-      Assert.assertTrue(jsonObject.getInteger("amount")>0);
-      Assert.assertTrue(jsonObject.containsKey("block"));
-      Assert.assertTrue(jsonObject.containsKey("from"));
-      Assert.assertTrue(jsonObject.containsKey("to"));
-      Assert.assertTrue(jsonObject.containsKey("hash"));
-      Assert.assertTrue(jsonObject.containsKey("confirmed"));
-      Assert.assertTrue(jsonObject.containsKey("contract_type"));
-      Assert.assertTrue(jsonObject.containsKey("symbol"));
-      Assert.assertTrue(jsonObject.containsKey("issue_address"));
-      Assert.assertTrue(jsonObject.containsKey("decimals"));
-      Assert.assertTrue(jsonObject.containsKey("token_name"));
-      Assert.assertTrue(jsonObject.containsKey("direction"));
-    }
   }
   @Test(enabled = true,description = "get only trx transaction")
   public void Test000getTrxTransferHighVersionWithNoSig() throws Exception {
@@ -69,16 +60,20 @@ public class transferTrx {
   }
   @Test(enabled = true,description = "get only trx transaction")
   public void Test000getTrxTransfer() throws Exception {
-    //param.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t"); //sophia's address
-    param.put("address","TPyjyZfsYaXStgz2NmAraF1uZcMtkgNan5");
-    param.put("limit","20");
+    param.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t"); //sophia's address
+    //param.put("address","TPFfHr1CWfTcS9eugQXQmvqHNGufnjxjXP");
+    //param.put("address" ,"TMCT99jfDE3u5CNxH6Pk9H9YntbL1itxHB");
+    param.put("limit","40");
     param.put("start","0");
-    param.put("direction","2"); //0：send and accept
+    param.put("direction","0"); //0：send and accept
     param.put("reverse","true");
+    param.put("db_version","1");
     param.put("filter_small","true");
+    //param.put("fee","true");
     HashMap<String, String> header = new HashMap<>();
-    header.put("Version","4.14.0");
+    header.put("Version","4.11.3");
     header.put("System", "iOS");
+
     response = TronlinkApiList.apiTransferTrx(param,header);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);

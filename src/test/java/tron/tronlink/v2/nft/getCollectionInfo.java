@@ -25,8 +25,8 @@ public class getCollectionInfo extends TronlinkBase {
   @Parameters({"trc721OwnerAddress","trc721TokenAddress","trc721AssetId"})
   public void getCollectionInfoTest001(String trc721OwnerAddress,String trc721TokenAddress,String trc721AssetId) throws Exception {
     params.put("address", quince_B58);
-    params.put("tokenAddress", "TU4zZAaKMdNGX4gwDhP3yz1zXZ5Z9UezxL");
-    params.put("assetId", "10000005");
+    params.put("tokenAddress", "TJg6fquXUXeQvRV6bdb8wNFqkCyuWSueT3");
+    params.put("assetId", "1");
 
     response = TronlinkApiList.v2GetCollectionInfo(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());

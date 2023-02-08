@@ -72,7 +72,7 @@ public class TronlinkDefineToken extends TronlinkBase {
     //低版本必须带，高版本可带可不带。
     @Test(enabled = true)
     public void Case002QueryBeforeAdd(){
-        String deployedContract = "TCrPPSESG15RFebEFMY5zmJTs8TquWfqkt";
+        String deployedContract = "TJg6fquXUXeQvRV6bdb8wNFqkCyuWSueT3";
         //begin to query
         params.clear();
         //params.put("address",quince_B58);
@@ -150,11 +150,11 @@ public class TronlinkDefineToken extends TronlinkBase {
         jsonObject.clear();
         //jsonObject.put("address","TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo");
         jsonObject.put("address",quince_B58);
-        jsonObject.put("tokenAddress","TCrPPSESG15RFebEFMY5zmJTs8TquWfqkt");
-        jsonObject.put("decimal",18);
-        jsonObject.put("name","Iswap LP Token");
-        jsonObject.put("symbol","Iswap LP");
-        jsonObject.put("type",2);
+        jsonObject.put("tokenAddress","TJg6fquXUXeQvRV6bdb8wNFqkCyuWSueT3");
+        jsonObject.put("decimal",0);
+        jsonObject.put("name","tron721");
+        jsonObject.put("symbol","tron721");
+        jsonObject.put("type",5);
 
         log.info("Case003Add-add");
         response = TronlinkApiList.v2TokenAdd(header,params,jsonObject);

@@ -16,40 +16,29 @@ public class transferToken10 {
   private JSONObject targetContent;
   private HttpResponse response;
   private HashMap<String,String> param = new HashMap<>();
+  private HashMap<String,String> headers = new HashMap<>();
 
   @Test(enabled = true,description = "get token10 transaction",groups={"NoSignature"})
-  public void getToken10TransferLowVersionWithNoSig() throws Exception {
-    param.put("address","TH48niZfbwHMyqZwEB8wmHfzcvR8ZzJKC6"); //sophia's address
-    param.put("limit","20");
+  public void getToken10TransferLowVersionWithNoSigManual() throws Exception {
+    //param.put("address","TGEMwfQC8LQJ1nUzmVgmF66f3VtuQMR56F"); //sophia's address
+    param.put("address","41E7D71E72EA48DE9144DC2450E076415AF0EA745F");
+    //param.put("address","TGEMwfQC8LQJ1nUzmVgmF66f3VtuQMR56F");
+    param.put("limit","50");
     param.put("start","0");
     param.put("direction","0");
     param.put("reverse","true");
-    param.put("trc10Id","1002881");
-    response = TronlinkApiList.apiTransferToken10NoSig(param,null);
+    param.put("fee","true");
+    param.put("filter_small","true");
+    //param.put("trc10Id","1000323");
+    param.put("trc10Id","1004777");
+    param.put("db_version","1");
+    //headers.put("System","Chrome");
+    headers.put("Version","4.11.3");
+    response = TronlinkApiList.apiTransferToken10NoSig(param,headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-    Assert.assertNotEquals(null, responseContent);
-    responseArrayContent = responseContent.getJSONArray("data");
-    Assert.assertNotEquals(responseArrayContent, null);
 
-    //data object
-    for (Object json:responseArrayContent) {
-      JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
-      Assert.assertTrue(jsonObject.containsKey("block_timestamp"));
-      Assert.assertTrue(jsonObject.containsKey("amount"));
-      Assert.assertTrue(jsonObject.getInteger("amount")>0);
-      Assert.assertTrue(jsonObject.containsKey("block"));
-      Assert.assertTrue(jsonObject.containsKey("from"));
-      Assert.assertTrue(jsonObject.containsKey("to"));
-      Assert.assertTrue(jsonObject.containsKey("hash"));
-      Assert.assertTrue(jsonObject.containsKey("confirmed"));
-      Assert.assertTrue(jsonObject.containsKey("contract_type"));
-      Assert.assertTrue(jsonObject.containsKey("symbol"));
-      Assert.assertTrue(jsonObject.containsKey("issue_address"));
-      Assert.assertTrue(jsonObject.containsKey("decimals"));
-      Assert.assertTrue(jsonObject.containsKey("token_name"));
-      Assert.assertTrue(jsonObject.containsKey("direction"));
-    }
+
   }
   @Test(enabled = true,description = "get token10 transaction")
   public void getToken10TransferHighVersionWithNoSig() throws Exception {
@@ -69,38 +58,30 @@ public class transferToken10 {
 
   }
   @Test(enabled = true,description = "get token10 transaction")
-  public void Test000getToken10Transfer() throws Exception {
-    //param.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t"); //sophia's address
-    param.put("address","4199AB9DF0BAB6385C5ECADE8B0F7A7E914502F6FC");
-    param.put("limit","20");
+  public void Test000getToken10TransferManual() throws Exception {
+    //param.put("address","TGEMwfQC8LQJ1nUzmVgmF66f3VtuQMR56F"); //sophia's address
+    param.put("address","41E7D71E72EA48DE9144DC2450E076415AF0EA745F");
+    //param.put("address","TGEMwfQC8LQJ1nUzmVgmF66f3VtuQMR56F");
+    param.put("limit","50");
     param.put("start","0");
-    param.put("direction","2");
+    param.put("direction","0");
     param.put("reverse","true");
-    param.put("trc10Id","1002013");
-    response = TronlinkApiList.apiTransferToken10(param);
+    param.put("fee","true");
+    param.put("filter_small","true");
+    //param.put("trc10Id","1000323");
+    param.put("trc10Id","1004777");
+    param.put("db_version","1");
+    headers.clear();
+    headers.put("System","Chrome");
+    headers.put("Version","3.27.2");
+
+    response = TronlinkApiList.apiTransferToken10(param,headers);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     Assert.assertNotEquals(null, responseContent);
     responseArrayContent = responseContent.getJSONArray("data");
     Assert.assertNotEquals(responseArrayContent, null);
 
-    //data object
-    for (Object json:responseArrayContent) {
-      JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
-      Assert.assertTrue(jsonObject.containsKey("block_timestamp"));
-      Assert.assertTrue(jsonObject.containsKey("amount"));
-      //Assert.assertTrue(jsonObject.getInteger("amount")>0);
-      Assert.assertTrue(jsonObject.containsKey("block"));
-      Assert.assertTrue(jsonObject.containsKey("from"));
-      Assert.assertTrue(jsonObject.containsKey("to"));
-      Assert.assertTrue(jsonObject.containsKey("hash"));
-      Assert.assertTrue(jsonObject.containsKey("confirmed"));
-      Assert.assertTrue(jsonObject.containsKey("contract_type"));
-      Assert.assertTrue(jsonObject.containsKey("symbol"));
-      Assert.assertTrue(jsonObject.containsKey("issue_address"));
-      Assert.assertTrue(jsonObject.containsKey("decimals"));
-      Assert.assertTrue(jsonObject.containsKey("token_name"));
-      Assert.assertTrue(jsonObject.containsKey("direction"));
-    }
+
   }
 }

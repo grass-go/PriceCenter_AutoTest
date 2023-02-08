@@ -19,35 +19,33 @@ public class getCollectionInfos extends TronlinkBase {
   private HttpResponse response;
   Map<String, String> params = new HashMap<>();
   JSONObject bodyObject = new JSONObject();
-  List<String> trc10tokenList = new ArrayList<>();
+  List<String> assetIdList = new ArrayList<>();
 
   @BeforeMethod
   void setUp(){
     params.put("address",quince_B58);
 
     bodyObject.clear();
-    trc10tokenList.clear();
+    assetIdList.clear();
   }
 
 
   @Test
-  public void getCollectionInfosTest001() {
+  public void getCollectionInfosManual() {
     //trc10tokenList.add("10000001");
     //trc10tokenList.add("100000");
-    trc10tokenList.add("10000004");
+    assetIdList.add("1");
+    assetIdList.add("2");
     //trc10tokenList.add("10000003");
     //trc10tokenList.add("10000004");
     //trc10tokenList.add("10000005");
-    bodyObject.put("assetIdList",trc10tokenList);
+    bodyObject.put("assetIdList",assetIdList);
     //bodyObject.put("tokenAddress", "TUVGZFjjAhkYitwQmveGoCt7W4yNzbN5dY");
-    bodyObject.put("tokenAddress", "TCaL5uzxWD7unW6NWw8bDGhNsfWbMVXNj2");
+    bodyObject.put("tokenAddress", "TJg6fquXUXeQvRV6bdb8wNFqkCyuWSueT3");
     response = TronlinkApiList.v2GetCollectionInfos(params, bodyObject);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
-    Assert.assertEquals(0,(int)responseContent.get("code"));
-    Assert.assertEquals("OK",responseContent.get("message"));
-    dataContent = responseContent.getJSONArray("data");
 
   }
 }

@@ -36,12 +36,14 @@ public class NewAssetList extends TronlinkBase {
     params.clear();
     //params.put("address","TLipJxwgDbn7FaQCnECxiYdxFTBhshLiW3");
     params.put("address","TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo");
+    //params.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
     response = TronlinkApiList.v2NewAssetList(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
 
   }
+
 
   //用address721账户测试新资产，使用全文对比，资产排序包含其中。
   //add v4.2.1 recommandSortId=0
