@@ -257,7 +257,7 @@ public class delAsset extends TronlinkBase {
         Assert.assertTrue(absgap.compareTo(fullbalance) == -1);
     }
 
-    @Test(enabled = true, description = "Del \"cancel focus\" coin, check all apis.")
+    @Test(enabled = true, description = "Del \"cancel focus\" coin, check all apis.", groups={"P2"})
     public void delAsset03() throws Exception {
         //cancel focus
         params.clear();
@@ -369,7 +369,7 @@ public class delAsset extends TronlinkBase {
 
     private GetSign sig = new GetSign();
     getCollectionList g = new getCollectionList();
-    @Test(description = "删除1155资产")
+    @Test(description = "删除1155资产", groups={"P2"})
     public void delAsset_1155() throws Exception {
         initParams();
         String delToken = g.expFollowAndHold;

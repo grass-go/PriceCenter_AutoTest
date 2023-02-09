@@ -208,7 +208,7 @@ public class Upgrade extends TronlinkBase {
     Assert.assertTrue(Integer.valueOf(newVersion) > 400);
   }
 
-  @Test(enabled = true, description = "Android officical 4.9.0, no need upgrade")
+  @Test(enabled = true, description = "Android officical 4.9.0, no need upgrade", groups={"P2"})
   public void test05UpgradeFor490_official() throws Exception {
     Map<String, String> params = new HashMap<>();
     params.put("address", quince_B58);

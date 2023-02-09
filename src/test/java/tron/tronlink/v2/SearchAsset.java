@@ -257,7 +257,7 @@ public class SearchAsset extends TronlinkBase {
     }
   }
 
-  @Test(enabled = true, description = "721 search result with nrOfTokenHolders and transferCount" )
+  @Test(enabled = true, description = "721 search result with nrOfTokenHolders and transferCount",  groups={"P2"})
   public void searchAssetList05(){
     List<String> tokenList = new ArrayList<>();
     tokenList.add("TQoaYD3gTMpGbQe6mne4NqGspdqKJNrRvJ");

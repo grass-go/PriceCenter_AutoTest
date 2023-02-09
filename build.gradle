@@ -166,3 +166,16 @@ task tronlinkAPImultiSign(type: Test) {
         showStackTraces = "true"
     }
 }
+
+task tronlinkAPIP2(type: Test) {
+    useTestNG {
+        suites(file('src/test/resources/testng_tronlinkAPI_P2.xml'))
+        parallel 'tests'
+        threadCount 1
+
+    }
+    testLogging {
+        exceptionFormat = 'full'
+        showStackTraces = "true"
+    }
+}

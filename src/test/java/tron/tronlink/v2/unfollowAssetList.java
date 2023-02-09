@@ -109,7 +109,7 @@ public class unfollowAssetList extends TronlinkBase {
         org.testng.Assert.assertEquals(found, true);
     }
 
-    @Test(enabled = true, description = "验证余额balance=0的普通币，取消关注，不在unfollow接口")
+    @Test(enabled = true, description = "验证余额balance=0的普通币，取消关注，不在unfollow接口", groups={"P2"})
     public void unfollowAssetList03() throws Exception {
         // 无余额的一个 doge coin
         String followToken = "THbVQp8kMjStKNnf2iCY6NEzThKMK5aBHg";

@@ -44,7 +44,7 @@ public class addAsset extends TronlinkBase {
 
 
     // 关注资产，首页assetList接口可见，取消关注，首页assetList不可见
-    @Test(enabled = true)
+    @Test(enabled = true, groups={"P2"})
     public void addAsset01() throws InterruptedException {
         params.clear();
         trc10tokenList.clear();

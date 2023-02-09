@@ -21,7 +21,7 @@ public class getStartup extends TronlinkBase {
   Map<String, String> params = new HashMap<>();
   Map<String, String> headers = new HashMap<>();
 
-  @Test(enabled = true, groups = {"NoSignature"})
+  @Test(enabled = true, groups = {"NoSignature","P2"})
   public void test01GetStartupForAndroidLowerVersionWithNoSig(){
     params.put("height","1440");
     params.put("width","1440");
@@ -74,7 +74,7 @@ public class getStartup extends TronlinkBase {
   }
 
 
-  @Test(enabled = true)
+  @Test(enabled = true, groups={"P2"})
   public void test02GetStartupForIos(){
     headers.put("System","iOS");
     headers.put("Version","3.7.5");

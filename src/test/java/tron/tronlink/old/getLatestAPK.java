@@ -51,7 +51,7 @@ public class getLatestAPK extends TronlinkBase {
     Assert.assertEquals(12,index);
   }
 
-  @Test(enabled = true, description = "Api /api/v1/wallet/getLatestAPK  test")
+  @Test(enabled = true, description = "Api /api/v1/wallet/getLatestAPK  test", groups={"P2"})
   public void LatestAPKHighVersionWithNoSig() throws Exception {
     HashMap<String, String> header = new HashMap<>();
     header.put("Version",TronlinkApiList.androidUpdateVersion);

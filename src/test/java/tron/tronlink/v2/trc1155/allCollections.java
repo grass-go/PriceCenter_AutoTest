@@ -33,7 +33,7 @@ public class allCollections extends TronlinkBase{
     // 3. 一定包含关注持有的token
     // 4. 所有token的排序问题，全文对比可覆盖
 
-    @Test( enabled = true)
+    @Test( enabled = true, groups={"P2"})
     public void Test001allCollections() {
 
         params.clear();

@@ -34,7 +34,7 @@ public class getNoticeRemind extends TronlinkBase {
     Assert.assertTrue(responseContent.getString("data").isEmpty());
   }
 
-  @Test(enabled = true)
+  @Test(enabled = true, groups={"P2"})
   public void GetNoticeRemindHighVerisonWithNoSig(){
     HashMap<String, String> header = new HashMap<>();
     header.put("Version",TronlinkApiList.androidUpdateVersion);
