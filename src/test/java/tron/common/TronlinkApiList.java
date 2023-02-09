@@ -259,6 +259,12 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return true;
     }
 
+    public static HttpResponse getWitnessFromTronscan() {
+        String requestUrl = TronlinkBase.tronscanApiUrl + "/api/vote/witness";
+        response = createGetConnect(requestUrl,null,null,null);
+        return response;
+    }
+
     public static boolean getVoteSelfFromTronscan(Map<String, String> params) {
         String requestUrl = TronlinkBase.tronscanApiUrl + "/api/vote";
         response = createGetConnect(requestUrl, params,null,null);

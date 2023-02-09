@@ -2,11 +2,14 @@ package tron.tronlink.voting;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.api.Http;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import tron.common.TronlinkApiList;
 import tron.tronlink.base.TronlinkBase;
+import com.alibaba.fastjson.JSONPath;
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -334,4 +337,42 @@ public class votingWitness extends TronlinkBase {
       Assert.assertTrue(responseArrayContent.getJSONObject(i).getDoubleValue(k)>=responseArrayContent.getJSONObject(i+1).getDoubleValue(k));
     }
   }
+  @Test(enabled = true,description = "get 20 witnesses order by realTimeVotes desc")
+  public void CompareWitnessesInfoWithTronscan() throws Exception {
+    Map<String, String> params = new HashMap<>();
+    params.put("sort_type","3");
+    params.put("has_all","0");
+    params.put("address", quince_B58);
+    response = TronlinkApiList.votingWitness(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    responseArrayContent = responseContent.getJSONArray("data");
+    Assert.assertEquals(20,responseArrayContent.size());
+
+    HttpResponse tronscanResp = TronlinkApiList.getWitnessFromTronscan();
+    JSONObject tronscanRespContent = TronlinkApiList.parseResponse2JsonObject(tronscanResp);
+
+
+    for(int i=0;i<responseArrayContent.size();i++){
+      if(i+1==responseArrayContent.size()){
+        break;
+      }
+      JSONObject jsonObject = responseArrayContent.getJSONObject(i);
+      String witnessAddress = jsonObject.getString("address");
+      Long lastCycleVotes = jsonObject.getLongValue("lastCycleVotes");
+      Integer brokerage = jsonObject.getIntValue("brokerage");
+      Long producedTotal = jsonObject.getLongValue("producedTotal");
+
+      Object scan_lastCycleVotes_obj = JSONPath.eval(tronscanRespContent,"$..data[address='"+witnessAddress+"'].lastCycleVotes[0]");
+      Assert.assertEquals(lastCycleVotes, Long.valueOf(scan_lastCycleVotes_obj.toString()));
+
+      Object scan_brokerage_obj = JSONPath.eval(tronscanRespContent,"$..data[address='"+witnessAddress+"'].brokerage[0]");
+      Assert.assertEquals(brokerage, Integer.valueOf(scan_brokerage_obj.toString()));
+
+      Object scan_producedTotal_obj = JSONPath.eval(tronscanRespContent, "$..data[address='"+witnessAddress+"'].producedTotal[0]");
+      Assert.assertEquals(producedTotal, Long.valueOf(scan_producedTotal_obj.toString()));
+
+      }
+  }
+
 }
