@@ -337,7 +337,7 @@ public class votingWitness extends TronlinkBase {
       Assert.assertTrue(responseArrayContent.getJSONObject(i).getDoubleValue(k)>=responseArrayContent.getJSONObject(i+1).getDoubleValue(k));
     }
   }
-  @Test(enabled = true,description = "get 20 witnesses order by realTimeVotes desc")
+  @Test(enabled = true,description = "get 20 witnesses order by realTimeVotes desc", groups={"P2"})
   public void CompareWitnessesInfoWithTronscan() throws Exception {
     Map<String, String> params = new HashMap<>();
     params.put("sort_type","3");
