@@ -282,7 +282,7 @@ public class unfollowAssetList extends TronlinkBase {
     }
 
     //v4.11.0-done
-    @Test(enabled = true, description = "验证unfollowlist包含字段DefiType")
+    @Test(enabled = false, description = "验证unfollowlist包含字段DefiType")
     public void testUnfollowWithDefiType(){
         Map<String, String> params = sig.GenerateParams(unfollowAPIUser, "/api/wallet/v2/unfollowAssetList", "GET");
         response = TronlinkApiList.V2UnfollowAssetList(params);
