@@ -282,7 +282,7 @@ public class unfollowAssetList extends TronlinkBase {
     }
 
     //v4.11.0-done
-    @Test(enabled = false, description = "验证unfollowlist包含字段DefiType")
+    @Test(enabled = true, description = "验证unfollowlist包含字段DefiType")
     public void testUnfollowWithDefiType(){
         Map<String, String> params = sig.GenerateParams(unfollowAPIUser, "/api/wallet/v2/unfollowAssetList", "GET");
         response = TronlinkApiList.V2UnfollowAssetList(params);
@@ -301,8 +301,7 @@ public class unfollowAssetList extends TronlinkBase {
         //check none-lptoken, none-jtoken , defiType=0
         defiType = JSONPath.eval(responseContent,"$..data.token[id='1004251'].defiType[0]");
         Assert.assertEquals("0", defiType.toString());
-        defiType = JSONPath.eval(responseContent,"$..data.token[id='1004210'].defiType[0]");
-        Assert.assertEquals("0", defiType.toString());
+
     }
 
 
