@@ -7,7 +7,7 @@
         <listener class-name="tron.common.utils.RetryListener"/>
     </listeners>
     <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>
-    <test name="multiSign">
+    <test name="P2Test">
         <parameter name="tronscanApiUrl" value="https://apilist.tronscan.org"></parameter>
         <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>
         <!--<parameter name="tronlinkUrl" value="http://52.76.86.154:8080"></parameter>-->
