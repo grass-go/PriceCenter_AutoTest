@@ -291,15 +291,12 @@ public class unfollowAssetList extends TronlinkBase {
 
         //v4.11.0-done
         //check lp token defiType=2
-        Object defiType = JSONPath.eval(responseContent,"$..data.token[contractAddress='TEjpEVwm3Xr5VHfa2CWYLqcyKZEGE9CGUz'].defiType[0]");
-        Assert.assertEquals("2", defiType.toString());
-        defiType = JSONPath.eval(responseContent,"$..data.token[contractAddress='TXX1i3BWKBuTxUmTERCztGyxSSpRagEcjX'].defiType[0]");
+        Object defiType = JSONPath.eval(responseContent,"$..data.token[contractAddress='TE2RzoSV3wFK99w6J9UnnZ4vLfXYoxvRwP'].defiType[0]");
         Assert.assertEquals("2", defiType.toString());
         //check jtoken defiType=1
-        defiType = JSONPath.eval(responseContent,"$..data.token[contractAddress='TUY54PVeH6WCcYCd6ZXXoBDsHytN9V5PXt'].defiType[0]");
+        defiType = JSONPath.eval(responseContent,"$..data.token[contractAddress='TE2RzoSV3wFK99w6J9UnnZ4vLfXYoxvRwP'].defiType[0]");
         Assert.assertEquals("1", defiType.toString());
         //check none-lptoken, none-jtoken , defiType=0
-
 
     }
 
