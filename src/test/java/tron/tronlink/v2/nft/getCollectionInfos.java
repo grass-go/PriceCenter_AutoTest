@@ -21,7 +21,7 @@ public class getCollectionInfos extends TronlinkBase {
   JSONObject bodyObject = new JSONObject();
   List<String> trc10tokenList = new ArrayList<>();
 
-  @BeforeMethod
+  @BeforeMethod(alwaysRun = true)
   void setUp(){
     params.put("address",commonUser41);
 

@@ -29,7 +29,7 @@ public class checkPrice extends TronlinkBase {
     Map<String, String> params = new HashMap<>();
     public static Map<String,String> trxPriceMap= new HashMap<>();
 
-    @BeforeClass(enabled = true,description = "get user's assetlist before test")
+    @BeforeClass(enabled = true, alwaysRun = true, description = "get user's assetlist before test")
     public void assetList_request() {
         params.put("address",price_B58);
         params.put("version","v2");

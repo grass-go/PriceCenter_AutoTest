@@ -25,7 +25,7 @@ public class getCollectionInfos extends TronlinkBase {
 
     public String expFollowAndHold = Configuration.getByPath("testng.conf").getString("tronlink.trc1155FollowAndHold");
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     void setUp(){
         params.put("address",address721_B58);
 
