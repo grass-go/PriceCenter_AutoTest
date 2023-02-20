@@ -262,24 +262,7 @@ public class unfollowAssetList extends TronlinkBase {
         return ids;
     }
 
-    @AfterClass(enabled = true)
-    public void restore() throws Exception {
-        // usdt
-        String followToken = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t";
-        boolean follow = addAsset.addAssetByTokenType(20, true, unfollowAPIUser41, followToken);
-        log.info("restore usdt, result = ", follow);
 
-        // doge coin
-        followToken = "THbVQp8kMjStKNnf2iCY6NEzThKMK5aBHg";
-        follow = addAsset.addAssetByTokenType(20, false, unfollowAPIUser, followToken);
-        log.info("restore doge coin, result = ", follow);
-
-        // bttold, 由用例2看出，本来应该关注的状态，不应该再次关注。注视掉这几句。
-        //followToken = "1002000";
-        //follow = addAsset.addAssetByTokenType(10, true, unfollowAsset41, followToken);
-        //log.info("restore 1002000, result = ", follow);
-
-    }
 
     //v4.11.0-done
     @Test(enabled = true, description = "验证unfollowlist包含字段DefiType")
@@ -292,10 +275,10 @@ public class unfollowAssetList extends TronlinkBase {
         //v4.11.0-done
         //check lp token defiType=2
         Object defiType = JSONPath.eval(responseContent,"$..data.token[contractAddress='TE2RzoSV3wFK99w6J9UnnZ4vLfXYoxvRwP'].defiType[0]");
-        Assert.assertEquals("2", defiType.toString());
-        //check jtoken defiType=1
-        defiType = JSONPath.eval(responseContent,"$..data.token[contractAddress='TE2RzoSV3wFK99w6J9UnnZ4vLfXYoxvRwP'].defiType[0]");
         Assert.assertEquals("1", defiType.toString());
+        //check jtoken defiType=1
+        defiType = JSONPath.eval(responseContent,"$..data.token[contractAddress='TKAtLoCB529zusLfLVkGvLNis6okwjB7jf'].defiType[0]");
+        Assert.assertEquals("2", defiType.toString());
         //check none-lptoken, none-jtoken , defiType=0
 
     }
