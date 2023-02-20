@@ -49,7 +49,7 @@ public class TronlinkBase {
     public String secretId = "SFSUIOJBFMLKSJIF";
 
     @Parameters({"tronlinkUrl","tronscanApiUrl"})
-    @BeforeTest
+    @BeforeTest(alwaysRun = true)
     public void  getMonitorUrl(String tronlinkUrl, String tronscanApiUrl) {
         log.info("begin load xml config----");
         this.tronlinkUrl = tronlinkUrl;

@@ -167,9 +167,9 @@ task tronlinkAPImultiSign(type: Test) {
     }
 }
 
-task tronlinkAPIP2(type: Test) {
+task tronlinkAPISecondP(type: Test) {
     useTestNG {
-        suites(file('src/test/resources/testng_tronlinkAPI_P2.xml'))
+        suites(file('src/test/resources/testng_tronlinkAPISecondP.xml'))
         parallel 'tests'
         threadCount 1
 

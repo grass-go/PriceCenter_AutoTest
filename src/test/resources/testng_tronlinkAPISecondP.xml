@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="multiSign" parallel="tests" thread-count="0">
+<suite name="tronlinkAPISecondP" parallel="tests" thread-count="0">
     <listeners>
         <listener class-name="tron.common.utils.SqlTronlinkAPI"/>
 <!--   调试的时候注释掉重试     -->
         <listener class-name="tron.common.utils.RetryListener"/>
     </listeners>
     <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>
-    <test name="P2Test">
+    <test name="tronlinkAPISecondP">
         <parameter name="tronscanApiUrl" value="https://apilist.tronscan.org"></parameter>
         <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>
         <!--<parameter name="tronlinkUrl" value="http://52.76.86.154:8080"></parameter>-->
@@ -18,7 +18,7 @@
         <parameter name="trc721AssetId" value="1"></parameter>
         <groups>
             <run>
-                <include name="P2"/>
+                <include name="P2"></include>
             </run>
         </groups>
         <packages>
