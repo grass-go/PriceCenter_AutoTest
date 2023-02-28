@@ -581,8 +581,14 @@ public class TronlinkServerHttpClient {
             headers = AddMap(headers, caseHeader);
         }
 
-        //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
-        String cursig = getNewSignature(curURI,"GET", caseParams.get("address"), params, headers);
+        String cursig;
+        if(caseParams != null && caseParams.containsKey("address")) {
+            //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
+            cursig = getNewSignature(curURI, "GET", caseParams.get("address"), params, headers);
+        }else{
+            cursig = getNewSignature(curURI, "GET", "", params, headers);
+        }
+
         params.put("signature", cursig);
         String requestUrl = HttpNode + curURI;
         response = createGetConnect(requestUrl, params, object, headers);
