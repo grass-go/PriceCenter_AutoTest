@@ -37,6 +37,7 @@ public class addAsset extends TronlinkBase {
     private JSONArray array = new JSONArray();
     JSONObject jsonObject = new JSONObject();
     List<String> trc10tokenList = new ArrayList<>();
+    List<String> trc20tokenList = new ArrayList<>();
     List<String> trc721tokenList = new ArrayList<>();
     Map<String, String> params = new HashMap<>();
 
@@ -49,19 +50,51 @@ public class addAsset extends TronlinkBase {
         jsonObject.clear();
         params.put("address", quince_B58);
         trc721tokenList.clear();
-        trc721tokenList.add("TURF3xdj9j5BTDHxoS4yFnmxFg4C8MhAMN");
-        trc721tokenList.add("TKHaR7R3x4FkmCEd1oNxmBig6AB4zEofmU");
-
+        //trc721tokenList.add("TURF3xdj9j5BTDHxoS4yFnmxFg4C8MhAMN");
+        //trc721tokenList.add("TKHaR7R3x4FkmCEd1oNxmBig6AB4zEofmU");
+        trc721tokenList.add("TU4zZAaKMdNGX4gwDhP3yz1zXZ5Z9UezxL"); //qa
         //trc10tokenList.add("1002000");
         // jsonObject.put("address","41F985738AE54FD87ED6CD07065905EBEA355E66CD");
         jsonObject.put("address", quince_B58);
         //jsonObject.put("token10", trc10tokenList);
         jsonObject.put("token721", trc721tokenList);
+        log.info("wqq debug:" + jsonObject.toString());
         response = TronlinkApiList.v2AddAsset(null, params, jsonObject);
         Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     }
 
+    @Test(enabled = true)
+    public void addAsset20Manual() throws InterruptedException {
+        params.clear();
+        trc20tokenList.clear();
+        jsonObject.clear();
+        //params.put("address", quince_B58);
+        //params.put("address","TKGRE6oiU3rEzasue4MsB6sCXXSTx9BAe3" );
+
+        trc20tokenList.add("TKM7w4qFmkXQLEF2MgrQroBYpd5TY7i1pq");
+        trc20tokenList.add("TRM3faiTDB9D4Vq4mwezUeo5rQLzCDqGSE");
+        trc20tokenList.add("TT6Qk1qrBM4MgyskYZx5pjeJjvv3fdL2ih");
+        trc20tokenList.add("TYf16sZLR9uXpm63bXsRCNQMQFvqqvXQ2t");
+        trc20tokenList.add("TPovsintcLMh9udvXgt45jvb1RYQ86imnL");
+        trc20tokenList.add("TMBRbGrkx2d3m8nAZWezFzSyJG6KrEGjj1");
+
+        trc20tokenList.add("THfS8gUDH5Cx1FnwvdQ2QfBdCHyeNDaKzs");
+        trc20tokenList.add("TPYwAC9Y4uUcT2QH3WPPjqxzJSJWymMoMS");
+        trc20tokenList.add("TESJCkrX1rrNgJNb69b4vUJzSNBn1B8iZC");
+        trc20tokenList.add("TBagxx57zx73VJJ61o12VfxzQ2EG3KHYJp");
+        trc20tokenList.add("TWZ7nrMxQiGQ499D1BXpB42S7EtRa926nN");
+
+
+        //trc10tokenList.add("1002000");
+        // jsonObject.put("address","41F985738AE54FD87ED6CD07065905EBEA355E66CD");
+        jsonObject.put("address", quince_B58);
+        //jsonObject.put("address", "TKGRE6oiU3rEzasue4MsB6sCXXSTx9BAe3");
+        jsonObject.put("token20", trc20tokenList);
+        response = TronlinkApiList.v2AddAsset(null, params, jsonObject);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    }
 
 
         // 关注资产，assetList接口可见，取消关注，assetList不可见

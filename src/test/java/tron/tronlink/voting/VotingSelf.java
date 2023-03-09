@@ -23,7 +23,8 @@ public class VotingSelf extends TronlinkBase {
   @Test(enabled = true,description = "get self voting witness", groups={"NoSignature"})
   public void getVotingSelfLowVersionWithNoSig() throws Exception {
     Map<String, String> params = new HashMap<>();
-    params.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t"); //sophia's address
+    params.put("address","TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ");
+    //params.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t"); //sophia's address
     response = TronlinkApiList.votingV2SelfNoSig(params,null);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);

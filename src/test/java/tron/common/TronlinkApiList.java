@@ -77,12 +77,18 @@ import tron.tronlink.base.TronlinkBase;
 import tron.common.utils.TronlinkServerHttpClient;
 import tron.common.utils.HttpDeleteWithBody;
 
+
+
 @Slf4j
 public class TronlinkApiList extends TronlinkServerHttpClient {
     public static String HttpTronDataNode = TrondataBase.trondataUrl;
     static JSONObject responseContent;
     public static Map<String, String> header = new HashMap<>();
     static byte ADD_PRE_FIX_BYTE_MAINNET = (byte) 0x41;
+    public static String JustlendNode = "https://labc.ablesdxd.link";   //prod
+    //public static String JustlendNode = "http://47.252.29.162:10091";   //nile
+    public static String nileFullnode = "47.252.19.181";
+    public static String prodfullnode = "3.225.171.164";
 
     //if request version is larger than fixedVersion ,return false.
     //while request version is smaller than fixed Version return true.
@@ -657,7 +663,7 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
     }
 
     public static HttpResponse multiTransactionNoSig(JSONObject body,HashMap<String, String> caseParams, HashMap<String, String> caseHeader ) {
-        String requestUrl =  HttpNode + "/api/wallet/multi/transaction";
+        String requestUrl = HttpNode  + "/api/wallet/multi/transaction";
         response = createPostConnect(requestUrl, caseParams,body,caseHeader);
         return response;
     }
@@ -1083,6 +1089,15 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         Boolean InTolerance = (absgap.compareTo(tolerance_bd) == -1 || absgap.compareTo(tolerance_bd) == 0);
         return InTolerance;
     }
+    public static boolean CompareGapInGivenToleranceInDecimalFormat(BigDecimal expected, BigDecimal actual, String toleranceRate) {
+        BigDecimal toleranceRate_bd = new BigDecimal(toleranceRate);
+        BigDecimal tolerance_bd = expected.multiply(toleranceRate_bd);
+        BigDecimal absgap = actual.subtract(expected).abs();
+        log.info("expected:" + expected.toString() + ", actual:" + actual.toString() + ", GAP:" + absgap + ", tolerance:"
+                + tolerance_bd.toString());
+        Boolean InTolerance = (absgap.compareTo(tolerance_bd) == -1 || absgap.compareTo(tolerance_bd) == 0);
+        return InTolerance;
+    }
 
     public static Map<String, String> getV2Header() {
         Map<String, String> header = new HashMap<>();
@@ -1195,6 +1210,29 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         transaction = transactionBuilderSigned.build();
         return transaction;
     }
+
+    public static Protocol.Transaction addTransactionSignOnly(Protocol.Transaction transaction,
+                                                                          String priKey) {
+        Wallet.setAddressPreFixByte(ADD_PRE_FIX_BYTE_MAINNET);
+        ECKey temKey = null;
+        try {
+            BigInteger priK = new BigInteger(priKey, 16);
+            temKey = ECKey.fromPrivate(priK);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        Protocol.Transaction.Builder transactionBuilderSigned = transaction.toBuilder();
+        byte[] hash = Sha256Hash.hash(CommonParameter.getInstance()
+                .isECKeyCryptoEngine(), transaction.getRawData().toByteArray());
+        ECKey ecKey = temKey;
+        ECKey.ECDSASignature signature = ecKey.sign(hash);
+        ByteString bsSign = ByteString.copyFrom(signature.toByteArray());
+        transactionBuilderSigned.addSignature(bsSign);
+        transaction = transactionBuilderSigned.build();
+        return transaction;
+    }
+
 
     public static Protocol.Transaction addTransactionSignWithPermissionIdOld(Protocol.Transaction transaction,
             String priKey, int permissionId, WalletGrpc.WalletBlockingStub blockingStubFull) {
@@ -1868,4 +1906,164 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
+    public static HttpResponse queryAbi( HashMap<String, String> params,HashMap<String, String> headers) {
+        final String curURI = "/api/wallet/v2/queryAbi";
+        response = createGetConnectWithSignature(curURI,params, headers,null);
+        return response;
+    }
+
+    public static HttpResponse statAction(JSONObject postdata, HashMap<String, String> params,HashMap<String, String> headers) {
+        final String curURI = "/api/stat/action";
+        response = createPostConnectWithSignature(curURI,params, headers,postdata);
+        return response;
+    }
+
+    public static HttpResponse totalAssetsNoSig(JSONObject postdata, HashMap<String, String> params,HashMap<String, String> headers) {
+        final String requestUrl =HttpNode + "/api/financial/totalAssets";
+        response = createPostConnect(requestUrl,params, postdata,headers);
+        return response;
+    }
+    public static HttpResponse tokenFinancialListNoSig(JSONObject postdata, HashMap<String, String> params,HashMap<String, String> headers) {
+        final String requestUrl = HttpNode + "/api/financial/tokenFinancialList";
+        response = createPostConnect(requestUrl,params, postdata, headers);
+        return response;
+    }
+
+    public static HttpResponse v2assetsNoSig(JSONObject postdata, HashMap<String, String> params,HashMap<String, String> headers) {
+        final String requestUrl = HttpNode + "/api/wallet/v2/assets";
+        response = createPostConnect(requestUrl,params,postdata,headers);
+        return response;
+    }
+
+    public static HttpResponse myFinancialTokenListNoSig(JSONObject postdata, HashMap<String, String> params,HashMap<String, String> headers) {
+        final String requestUrl = HttpNode + "/api/financial/myFinancialTokenList";
+        response = createPostConnect(requestUrl,params,postdata, headers);
+        return response;
+    }
+
+    public static HttpResponse myFinancialProjectListNoSig(JSONObject postdata, HashMap<String, String> params,HashMap<String, String> headers) {
+        final String requestUrl =HttpNode + "/api/financial/myFinancialProjectList";
+        response = createPostConnect(requestUrl,params,postdata, headers);
+        return response;
+    }
+
+    public static HttpResponse justLendDetailNoSig( HashMap<String, String> params,HashMap<String, String> headers) {
+        final String requestUrl = HttpNode + "/api/financial/justLendDetail";
+        response = createGetConnect(requestUrl,params,null,headers);
+        return response;
+    }
+
+    public static HttpResponse justLendOperateNoSig( HashMap<String, String> params,HashMap<String, String> headers) {
+        final String requestUrl =HttpNode + "/api/financial/justLendOperate";
+        response = createGetConnect(requestUrl,params,null, headers);
+        return response;
+    }
+
+    public static HttpResponse queryAbiNoSig( HashMap<String, String> params,HashMap<String, String> headers) {
+        final String requestUrl =HttpNode +  "/api/wallet/v2/queryAbi";
+        response = createGetConnect(requestUrl,params,null,header);
+        return response;
+    }
+
+    public static HttpResponse statActionNoSig(JSONObject postdata, HashMap<String, String> params,HashMap<String, String> headers) {
+        final String requestUrl =HttpNode + "/api/stat/action";
+        response = createPostConnect(requestUrl,params,postdata, headers);
+        return response;
+    }
+
+    public static HttpResponse getJustlendDepositeAPY(){
+        final String requestUrl =JustlendNode + "/justlend/markets";
+        response = createGetConnect(requestUrl,null, null,null);
+        return response;
+    }
+    public static HttpResponse getJustlendMiningAPY(){
+        final String requestUrl =JustlendNode + "/third/mining/apy";
+        response = createGetConnect(requestUrl,null,null, null);
+        return response;
+    }
+    public static HttpResponse getBttcAPY(){
+        final String requestUrl ="https://api.newbt.io/bttc/chain/info";
+        response = createGetConnect(requestUrl,null,null, null);
+        return response;
+    }
+    public static HttpResponse getScanWitnessAPY(){
+        final String requestUrl ="https://apilist.tronscanapi.com/api/pagewitness";
+        response = createGetConnect(requestUrl,null,null, null);
+        return response;
+    }
+    public static HttpResponse getJustlandUserDeposite(String account) {
+        String requestUrl = JustlendNode + "/justlend/account?ver=v2&addr="+account;
+        response = createGetConnect(requestUrl,null,null, null);
+        return response;
+    }
+    public static HttpResponse getJTokenDetailInJustlend(String jToken){
+        String requestUrl = JustlendNode + "/justlend/markets/jtokenDetails?jtokenAddr="+jToken;
+        response = createGetConnect(requestUrl,null,null, null);
+        return response;
+    }
+    public static HttpResponse getTokenPrice(String Symbol, String Convert){
+        String requestUrl = "https://c.tronlink.org/v1/cryptocurrency/getprice?symbol="+Symbol+"&convert="+Convert;
+        response = createGetConnect(requestUrl,null,null, null);
+        return response;
+    }
+    public static HttpResponse getBttInBttcProject(String address){
+        String requestUrl = "https://api.bt.io/bttc/account/info?address="+address;
+        response = createGetConnect(requestUrl,null,null, null);
+        return response;
+    }
+
+    public static HttpResponse getJustlendMiningReward(String address){
+        String requestUrl = JustlendNode + "/third/mining/reward?address="+address;
+        response = createGetConnect(requestUrl,null,null, null);
+        return response;
+    }
+    public static HttpResponse getFullNodeTrxReward(String address){
+        String requestUrl = "https://api.trongrid.io/wallet/getReward?address="+address;
+        response = createGetConnect(requestUrl,null,null, null);
+        return response;
+    }
+
+
+    public static HttpResponse reward( HashMap<String, String> params,HashMap<String, String> headers) {
+        final String curURI = "/api/financial/reward";
+        response = createGetConnectWithSignature(curURI,params, headers,null);
+        return response;
+    }
+    public static HttpResponse rewardNoSig( HashMap<String, String> params,HashMap<String, String> headers) {
+        final String requestUrl = HttpNode + "/api/financial/reward";
+        response = createGetConnect(requestUrl, params, null,headers);
+        return response;
+    }
+
+    public static HttpResponse totalAddress(String userAccount) {
+        final String curURI = "/api/stake/total/"+ userAccount;
+        response = createGetConnectWithSignature(curURI, null, null,null);
+        return response;
+    }
+
+    public static HttpResponse scanGetAccount(String userAccount) {
+        final String requestUrl = TronlinkBase.tronscanApiUrl  + "/api/accountv2?address="+userAccount;
+        response = createGetConnect(requestUrl, null, null,null);
+        return response;
+    }
+
+    public static HttpResponse fromAddress(String userAccount, HashMap<String, String> caseParams) {
+        final String curURI = "/api/stake/from/"+ userAccount;
+        response = createGetConnectWithSignature(curURI, caseParams, null,null);
+        return response;
+    }
+
+
+    public static HttpResponse delegateAddress(String userAccount, HashMap<String, String> caseParams) {
+        final String curURI = "/api/stake/delegate/"+ userAccount;
+        response = createGetConnectWithSignature(curURI, caseParams, null,null);
+        return response;
+    }
+
+    public static HttpResponse nodeGetResource(String userAccount) {
+        //http://47.252.19.181:8090/wallet/getaccountresource?address=41E7D71E72EA48DE9144DC2450E076415AF0EA745F
+        final String requestUrl = "http://" + nileFullnode +":8090"+ "/wallet/getaccountresource?address="+userAccount;
+        response = createGetConnect(requestUrl, null, null,null);
+        return response;
+    }
 }

@@ -1,6 +1,7 @@
 package tron.tronlink.mutisign;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.api.Http;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.protobuf.ByteString;
@@ -37,7 +38,8 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class CreateMultiTransactionWithSerializable extends TronlinkBase {
-    private String httpnode = "3.225.171.164:8090";
+    //private String httpnode = "3.225.171.164:8090";
+    private String httpnode = "47.252.19.181:8090";
 //    private Stsring httpnode = "123.56.3.74:8090";
     private ManagedChannel channelFull = null;
     HttpResponse res;
@@ -58,12 +60,27 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
     byte[] yunli = Commons.decode58Check(yunli58);
     String yunlikey = "cafcc392b9b5518324728a9c43c7d857d6d2766669177ea7515e92f8918ab106";
     String wqq1key = "8d5c18030466b6ab0e5367154d15c4f6cb46d2fb56a0b552e017d183abd8c255";
+    byte[] wqq1 = TronlinkApiList.getFinalAddress(wqq1key);
+    String wqq158 = Base58.encode58Check(wqq1);
     String wqq2key = "ee16960c312bb08f691fe011ec81530eb613aa1408aca57d7cf736d82f4383de";
     byte[] wqq2 = TronlinkApiList.getFinalAddress(wqq2key);
     String wqq258 = "TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ";
-    byte[] wqq1 = TronlinkApiList.getFinalAddress(wqq1key);
-    String wqq158 = Base58.encode58Check(wqq1);
+    String wqq3key = "119b1042c75e7b797f8d90f3bdffa829171024e2d9f9539e89531b0fbe93833e";
+    byte[] wqq3 = TronlinkApiList.getFinalAddress(wqq3key);
+    String wqq358 = "TPmQw8dDLdrH8bTN3u9H1A2XCanbqyE533";
+    String v421key = "0ae54d7f31c29aa4162ad37e269d59cefafe81310f7461c4d4c33cbdde4da788";
+    byte[] v421 = TronlinkApiList.getFinalAddress(v421key);
+    String v42158 = "TPbpoVgFDzkE7Sio9mZWKEC4rv3xWRL22C";
+    String liqi58 = "TQUsaH7DzTAPQEVsUvQsVyzvwqwT2p7WEm";
+    byte[] liqi = Commons.decode58Check(liqi58);
+
+
     private HashMap<String, String> param = new HashMap<>();
+
+
+
+
+
 
     @Test(enabled = true, description = "multi sign send coin with serializable")
     public void sendCoin() {
@@ -80,6 +97,7 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
         Assert.assertEquals(200, res.getStatusLine().getStatusCode());
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
         Assert.assertEquals(0, responseContent.getIntValue("code"));
+
 
         // visible: false
         String transactionStr2 = HttpMethed.sendCoin(httpnode, ByteArray.toHexString(quince), ByteArray.toHexString(wqq1), 9L, "false", 3, wqq1key);
@@ -823,4 +841,413 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
             channelFull.shutdown().awaitTermination(5, TimeUnit.SECONDS);
         }
     }
+
+    @Test(enabled = true, description = "multi sign freeze balance with serializable no receiver address")
+    public void freezeBalanceV2() throws Exception {
+        List<String> transactionsList = new ArrayList<>();
+        // visible:true
+        String bandwidth_visibleT_tx = HttpMethed.freezeBalanceV2(httpnode, quince58, 1000000L,0, "true", 9, wqq1key);
+        transactionsList.add(bandwidth_visibleT_tx);
+        String bandwidth_visibleF_tx = HttpMethed.freezeBalanceV2(httpnode, ByteArray.toHexString(quince), 1000000L,0, "false", 9, wqq1key);
+        transactionsList.add(bandwidth_visibleF_tx);
+        String energy_visibleT_tx = HttpMethed.freezeBalanceV2(httpnode, quince58, 1000000L,1, "true", 9, wqq1key);
+        transactionsList.add(energy_visibleT_tx);
+        String energy_visibleF_tx = HttpMethed.freezeBalanceV2(httpnode, ByteArray.toHexString(quince), 1000000L,1, "false", 9, wqq1key);
+        transactionsList.add(energy_visibleF_tx);
+
+        for(String transactionStr:transactionsList) {
+            log.info("DelegateResource: cur tx: " + transactionStr);
+            JSONObject object = new JSONObject();
+            object.put("address", wqq158);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionStr));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+            String transactionSign2 = HttpMethed.addtransactionsignHTTP(httpnode, transactionStr, quincekey);
+            //log.info("transactionSign2:" + transactionSign2);
+            object = new JSONObject();
+            object.put("address", quince_B58);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign2));
+            param.put("serializable", "true");
+
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+
+            String transactionSign3 = HttpMethed.addtransactionsignHTTP(httpnode, transactionSign2, wqq2key);
+            //log.info("transactionSign3:" + transactionSign3);
+            object = new JSONObject();
+            object.put("address", wqq258);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign3));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+            String transactionSign4 = HttpMethed.addtransactionsignHTTP(httpnode, transactionSign3, wqq3key);
+            //log.info("transactionSign4:" + transactionSign4);
+            object = new JSONObject();
+            object.put("address", wqq358);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign4));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransaction(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+            String transactionSign5 = HttpMethed.addtransactionsignHTTP(httpnode, transactionSign4, v421key);
+            log.info("transactionSign5:\n");
+            log.info(transactionSign5);
+            object = new JSONObject();
+            object.put("address", v42158);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign5));
+            param.put("serializable", "true");
+            Thread.sleep(3000);
+            res = TronlinkApiList.multiTransaction(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+        }
+
+    }
+
+    @Test(enabled = true, description = "multi sign freeze balance with serializable no receiver address")
+    public void UnfreezeBalanceV2() throws Exception {
+        // visible:true
+        List<String> transactionsList = new ArrayList<>();
+        String bandwidth_visibleT_tx = HttpMethed.unfreezeBalanceV2(httpnode, quince58, 1000000L,0, "true", 9, wqq1key);
+        log.info("-----raw transaction:  " + bandwidth_visibleT_tx);
+        transactionsList.add(bandwidth_visibleT_tx);
+        String bandwidth_visibleF_tx = HttpMethed.unfreezeBalanceV2(httpnode, ByteArray.toHexString(quince), 1000000L,0, "false", 9, wqq1key);
+        transactionsList.add(bandwidth_visibleF_tx);
+        String energy_visibleT_tx = HttpMethed.unfreezeBalanceV2(httpnode, quince58, 1000000L,1, "true", 9, wqq1key);
+        transactionsList.add(energy_visibleT_tx);
+        String energy_visibleF_tx = HttpMethed.unfreezeBalanceV2(httpnode, ByteArray.toHexString(quince), 1000000L,1, "false", 9, wqq1key);
+        transactionsList.add(energy_visibleF_tx);
+
+        for(String transactionStr:transactionsList) {
+            log.info("DelegateResource: cur tx: "+transactionStr);
+            JSONObject object = new JSONObject();
+            object.put("address", wqq158);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionStr));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+            String transactionSign2 = HttpMethed.addtransactionsignHTTP(httpnode, transactionStr, quincekey);
+            //log.info("transactionSign2:" + transactionSign2);
+            object = new JSONObject();
+            object.put("address", quince_B58);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign2));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+
+            String transactionSign3 = HttpMethed.addtransactionsignHTTP(httpnode, transactionSign2, wqq2key);
+            //log.info("transactionSign3:" + transactionSign3);
+            object = new JSONObject();
+            object.put("address", wqq258);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign3));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+
+            String transactionSign4 = HttpMethed.addtransactionsignHTTP(httpnode, transactionSign3, wqq3key);
+            //log.info("transactionSign4:" + transactionSign4);
+            object = new JSONObject();
+            object.put("address", wqq358);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign4));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+
+            String transactionSign5 = HttpMethed.addtransactionsignHTTP(httpnode, transactionSign4, v421key);
+            log.info("transactionSign5:\n");
+            log.info(transactionSign5);
+
+            object = new JSONObject();
+            object.put("address", v42158);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign5));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+        }
+
+    }
+
+    @Test(enabled = true, description = "multi sign freeze balance with serializable no receiver address")
+    public void WithdrawExpireUnfreeze() throws Exception {
+        // visible:true
+        List<String> transactionsList = new ArrayList<>();
+        /*String visibleT_tx = HttpMethed.WithdrawExpireUnfreeze(httpnode, liqi58, "true", 4, wqq1key);
+        transactionsList.add(visibleT_tx);*/
+
+        String visibleF_tx = HttpMethed.WithdrawExpireUnfreeze(httpnode, ByteArray.toHexString(liqi), "false", 4, wqq1key);
+        transactionsList.add(visibleF_tx);
+
+        for(String transactionStr:transactionsList) {
+            log.info("DelegateResource: cur tx: "+transactionStr);
+            JSONObject object = new JSONObject();
+            object.put("address", quince58);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionStr));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+            String transactionSign2 = HttpMethed.addtransactionsignHTTP(httpnode, transactionStr, quincekey);
+            //log.info("transactionSign2:" + transactionSign2);
+            object = new JSONObject();
+            object.put("address", wqq258);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign2));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+
+            String transactionSign3 = HttpMethed.addtransactionsignHTTP(httpnode, transactionSign2, wqq2key);
+            //log.info("transactionSign3:" + transactionSign3);
+            object = new JSONObject();
+            object.put("address", wqq258);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign3));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+
+            String transactionSign4 = HttpMethed.addtransactionsignHTTP(httpnode, transactionSign3, wqq3key);
+            //log.info("transactionSign4:" + transactionSign4);
+            object = new JSONObject();
+            object.put("address", wqq358);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign4));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+
+            /*String transactionSign5 = HttpMethed.addtransactionsignHTTP(httpnode, transactionSign4, v421key);
+            log.info("transactionSign5:\n");
+            log.info(transactionSign5);
+
+            object = new JSONObject();
+            object.put("address", v42158);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign5));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));*/
+        }
+
+    }
+
+    @Test(enabled = true, description = "multi sign freeze balance with serializable no receiver address")
+    public void DelegateResource() throws Exception {
+        // visible:true
+        List<String> transactionsList = new ArrayList<>();
+
+        String bandwdth_visibleT_tx = HttpMethed.DelegateResource(httpnode, quince58,wqq158, 1000000L,0, true, "true", 9, wqq1key);
+        log.info("-----raw transaction:  " + bandwdth_visibleT_tx);
+        transactionsList.add(bandwdth_visibleT_tx);
+        String bandwdth_visibleF_tx = HttpMethed.DelegateResource(httpnode, ByteArray.toHexString(quince), ByteArray.toHexString(wqq1),  1000000L,0, true, "false", 9, wqq1key);
+        transactionsList.add(bandwdth_visibleF_tx);
+        String energy_visibleT_tx = HttpMethed.DelegateResource(httpnode, quince58,wqq158, 1000000L,1, true, "true", 9, wqq1key);
+        transactionsList.add(energy_visibleT_tx);
+        String energy_visibleF_tx = HttpMethed.DelegateResource(httpnode, ByteArray.toHexString(quince), ByteArray.toHexString(wqq1), 1000000L,1, true, "false", 9, wqq1key);
+        transactionsList.add(energy_visibleF_tx);
+
+        for(String transactionStr:transactionsList) {
+            log.info("DelegateResource: cur tx: "+transactionStr);
+            JSONObject object = new JSONObject();
+            object.put("address", wqq158);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionStr));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+            String transactionSign2 = HttpMethed.addtransactionsignHTTP(httpnode, transactionStr, quincekey);
+            //log.info("transactionSign2:" + transactionSign2);
+            object = new JSONObject();
+            object.put("address", quince_B58);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign2));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+
+            String transactionSign3 = HttpMethed.addtransactionsignHTTP(httpnode, transactionSign2, wqq2key);
+            //log.info("transactionSign3:" + transactionSign3);
+            object = new JSONObject();
+            object.put("address", wqq258);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign3));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+
+            String transactionSign4 = HttpMethed.addtransactionsignHTTP(httpnode, transactionSign3, wqq3key);
+            //log.info("transactionSign4:" + transactionSign4);
+            object = new JSONObject();
+            object.put("address", wqq358);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign4));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+
+            String transactionSign5 = HttpMethed.addtransactionsignHTTP(httpnode, transactionSign4, v421key);
+            log.info("transactionSign5:\n");
+            log.info(transactionSign5);
+
+            object = new JSONObject();
+            object.put("address", v42158);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign5));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+        }
+    }
+
+    @Test(enabled = true, description = "multi sign freeze balance with serializable no receiver address")
+    public void UnDelegateResource() throws Exception {
+        List<String> transactionsList = new ArrayList<>();
+        // visible:true
+        String bandwdth_visibleT_tx = HttpMethed.UnDelegateResource(httpnode, quince58,wqq158, 1000000L,0, "true", 9, wqq1key);
+        //log.info("-----raw transaction:  " + bandwdth_true_tx);
+        transactionsList.add(bandwdth_visibleT_tx);
+        String bandwdth_visibleF_tx = HttpMethed.UnDelegateResource(httpnode, ByteArray.toHexString(quince),ByteArray.toHexString(wqq1), 1000000L,0, "false", 9, wqq1key);
+        transactionsList.add(bandwdth_visibleF_tx);
+        String energy_visibleT_tx = HttpMethed.UnDelegateResource(httpnode, quince58,wqq158, 1000000L,1, "true", 9, wqq1key);
+        transactionsList.add(energy_visibleT_tx);
+        String energy_visibleF_tx = HttpMethed.UnDelegateResource(httpnode, ByteArray.toHexString(quince),ByteArray.toHexString(wqq1), 1000000L,1, "false", 9, wqq1key);
+        transactionsList.add(energy_visibleF_tx);
+
+        for(String transactionStr:transactionsList) {
+            log.info("UnDelegateResource: cur tx: "+transactionStr);
+            JSONObject object = new JSONObject();
+            object.put("address", wqq158);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionStr));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+            String transactionSign2 = HttpMethed.addtransactionsignHTTP(httpnode, transactionStr, quincekey);
+            //log.info("transactionSign2:" + transactionSign2);
+            object = new JSONObject();
+            object.put("address", quince_B58);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign2));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+
+            String transactionSign3 = HttpMethed.addtransactionsignHTTP(httpnode, transactionSign2, wqq2key);
+            //log.info("transactionSign3:" + transactionSign3);
+            object = new JSONObject();
+            object.put("address", wqq258);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign3));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+
+            String transactionSign4 = HttpMethed.addtransactionsignHTTP(httpnode, transactionSign3, wqq3key);
+            //log.info("transactionSign4:" + transactionSign4);
+            object = new JSONObject();
+            object.put("address", wqq358);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign4));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+
+            String transactionSign5 = HttpMethed.addtransactionsignHTTP(httpnode, transactionSign4, v421key);
+            log.info("transactionSign5: "+transactionSign5);
+            object = new JSONObject();
+            object.put("address", v42158);
+            object.put("netType", "main_net");
+            object.put("transaction", JSONObject.parse(transactionSign5));
+            param.put("serializable", "true");
+            res = TronlinkApiList.multiTransactionNoSig(object, param, null);
+            Assert.assertEquals(200, res.getStatusLine().getStatusCode());
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            Assert.assertEquals(0, responseContent.getIntValue("code"));
+        }
+    }
+
+
+
+
+
+
+
+
+
 }

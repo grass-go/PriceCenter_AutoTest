@@ -38,6 +38,10 @@ public class AllAssetList extends TronlinkBase {
   @Test(enabled = true)
   public void allAssetList01(){
     params.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
+    //params.put("address","TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ");
+    //params.put("address","TLipJxwgDbn7FaQCnECxiYdxFTBhshLiW3");
+    //params.put("address","TKGRE6oiU3rEzasue4MsB6sCXXSTx9BAe3");
+    //params.put("address","TZFQt962hcvBJ6jRdctkUNu7fJeVTvkn9K");
     // v2版本 推荐币的 recommandSortId = 1
     params.put("version", "v2");
     response = TronlinkApiList.V2AllAssetList(params);

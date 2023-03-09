@@ -8,8 +8,9 @@
     </listeners>
     <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>
     <test name="tronlinkAPI">
-        <parameter name="tronscanApiUrl" value="https://apilist.tronscan.org"></parameter>
-        <parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>
+        <!--<parameter name="tronscanApiUrl" value="https://apilist.tronscan.org"></parameter>-->
+        <!--<parameter name="trondataUrl" value="http://apilist.tronscan.org"></parameter>-->
+        <parameter name="tronscanApiUrl" value="https://nileapi.tronscan.org/"></parameter>
         <!--<parameter name="tronlinkUrl" value="http://52.76.86.154:8080"></parameter>-->
         <!--<parameter name="tronlinkUrl" value="https://list.tronlink.org"></parameter>-->
         <!--<parameter name="tronlinkUrl" value="https://testpre.tronlink.org"></parameter>-->

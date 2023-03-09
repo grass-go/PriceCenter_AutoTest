@@ -138,7 +138,7 @@ public class CreateMultiTransaction extends TronlinkBase {
 
 
        /* //others sign again
-        Protocol.Transaction transaction2 = TronlinkApiList.addTransactionSignWithPermissionIdOnly(
+        Protocol.Transaction transaction2 = TronlinkApiList.addTransactionSignOnly(
                 transaction1, quincekey, 6, blockingStubFull);
         log.info("-----333  "+JsonFormat.printToString(transaction2));
         object.clear();

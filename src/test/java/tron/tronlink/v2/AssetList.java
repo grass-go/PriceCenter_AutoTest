@@ -121,7 +121,8 @@ public class AssetList extends TronlinkBase {
     trc10tokenList.clear();
     trc20tokenList.clear();
 
-    params.put("address",quince_B58);
+    params.put("address","");
+    //params.put("address","TQUsaH7DzTAPQEVsUvQsVyzvwqwT2p7WEm");
 
     trc10tokenList.add("1000323");
     bodyObject.put("trc10s",trc10tokenList);

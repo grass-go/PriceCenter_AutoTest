@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import tron.common.TronlinkApiList;
 import tron.common.utils.AddressConvert;
@@ -42,7 +43,7 @@ public class TronlinkBase {
     public String secretId = "SFSUIOJBFMLKSJIF";
 
     @Parameters({"tronlinkUrl","tronscanApiUrl"})
-    @BeforeTest
+    @BeforeTest(alwaysRun = true)
     public void  getMonitorUrl(String tronlinkUrl, String tronscanApiUrl) {
         log.info("begin load xml config----");
         this.tronlinkUrl = tronlinkUrl;

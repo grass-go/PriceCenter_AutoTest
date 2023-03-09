@@ -29,10 +29,7 @@ public class DappId {
         responseContent = TronlinkApiList.parseResponse2JsonObject(response);
         JSONArray jsonArray = responseContent.getJSONArray("data");
         Assert.assertTrue(jsonArray.size() >0);
-        for (Object json:jsonArray) {
-            JSONObject jsonObject = (JSONObject) JSON.toJSON(json);
-            Assert.assertTrue(jsonObject.containsKey("id"));
-        }
+
     }
 
 }

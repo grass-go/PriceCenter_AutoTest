@@ -27,8 +27,13 @@ public class Asset extends TronlinkBase {
 
   @Test(enabled = true)
   public void asset01Manual(){
-    params.put("address",quince_B58);
-    params.put("tokenAddress","1000323");
+    //params.put("address","TKGRE6oiU3rEzasue4MsB6sCXXSTx9BAe3");
+    params.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
+    //params.put("address","TSbfmgnSs3KgW9yPJB33QKZ6DKJLPVpR7L");
+    //.put("tokenAddress","TGjgvdTWWrybVLaVeFqSyVqJQWjxqRYbaK");
+    params.put("tokenAddress","TU4zZAaKMdNGX4gwDhP3yz1zXZ5Z9UezxL"); //nile
+    //params.put("tokenAddress","TKD31dvCMiKkqYSagVGMgiw9FaDME2WZkV"); //trc721 prod
+    //params.put("tokenAddress","TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"); //trc20
     params.put("tokenType","2");
     response = TronlinkApiList.v2Asset(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);

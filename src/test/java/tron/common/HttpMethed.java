@@ -1,7 +1,9 @@
 package tron.common;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.api.Http;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -17,16 +19,26 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
+import org.bouncycastle.crypto.digests.SM3Digest;
 import org.junit.Assert;
 import org.testng.collections.Lists;
 import org.tron.api.GrpcAPI;
+import org.tron.api.WalletGrpc;
+import org.tron.common.crypto.ECKey;
+import org.tron.common.parameter.CommonParameter;
 import org.tron.common.utils.Base58;
 import org.tron.common.utils.ByteArray;
 import org.tron.common.utils.ByteUtil;
+import org.tron.core.Wallet;
 import org.tron.core.zen.address.DiversifierT;
+import org.tron.protos.Protocol;
 
+import java.math.BigInteger;
 import java.nio.charset.Charset;
+import java.security.MessageDigest;
 import java.util.*;
+import tron.common.utils.CommonConstant;
+import org.tron.common.utils.Sha256Hash;
 
 @Slf4j
 public class HttpMethed {
@@ -84,6 +96,31 @@ public class HttpMethed {
     return transactionStr;
   }
 
+  public static HttpResponse sendCoinBroadCast(String httpNode, String fromAddress, String toAddress,
+                                Long amount, String visible, String fromKey) {
+    try {
+      final String requestUrl = "http://" + httpNode + "/wallet/createtransaction";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("to_address", toAddress);
+      userBaseObj2.addProperty("owner_address", fromAddress);
+      userBaseObj2.addProperty("amount", amount);
+      userBaseObj2.addProperty("visible", visible);
+      log.info("userBaseObj2:"+userBaseObj2.toString());
+      response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      transactionSignString = gettransactionsign(httpNode, transactionString, fromKey);
+      log.info("-----------sign information-----------------");
+      log.info(transactionSignString);
+      response = broadcastTransaction(httpNode, transactionSignString);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+
   public static String freezeBalance(String httpNode, String ownerAddress, Long frozenBalance,
                                            Integer frozenDuration, Integer resourceCode, String receiverAddress,
                                            String visible, Integer permissionId, String fromKey) {
@@ -127,6 +164,364 @@ public class HttpMethed {
     }
     return transactionStr;
   }
+
+  public static String freezeBalanceV2(String httpNode, String ownerAddress, Long frozenBalance,
+                                     Integer resourceCode,
+                                     String visible, Integer permissionId, String fromKey) {
+    try {
+      final String requestUrl = "http://" + httpNode + "/wallet/freezebalancev2";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("owner_address", ownerAddress);
+      userBaseObj2.addProperty("frozen_balance", frozenBalance);
+      if (resourceCode == 0) {
+        userBaseObj2.addProperty("resource", "BANDWIDTH");
+      }
+      if (resourceCode == 1) {
+        userBaseObj2.addProperty("resource", "ENERGY");
+      }
+      userBaseObj2.addProperty("visible", visible);
+
+      userBaseObj2.addProperty("Permission_id", permissionId);
+      log.info("userBaseObj2:"+userBaseObj2.toString());
+      response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      log.info("transactionString:"+transactionString);
+      JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+3600000);
+      //log.info("wqq debug000000:"+transactionObject.toString());
+
+      transactionSignString = gettransactionsign(httpNode, transactionObject.toString(), fromKey);
+      log.info("-----------sign information-----------------");
+      log.info(transactionSignString);
+
+      JSONObject jsonObject = HttpMethed.parseStringContent(transactionSignString);
+      jsonObject.remove("visible");
+      jsonObject.remove("txID");
+      jsonObject.remove("raw_data_hex");
+      transactionStr = jsonObject.toString();
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return transactionSignString;
+  }
+
+
+  public static String unfreezeBalanceV2(String httpNode, String ownerAddress, Long unfrozenBalance,
+                                       Integer resourceCode,
+                                       String visible, Integer permissionId, String fromKey) {
+    try {
+      final String requestUrl = "http://" + httpNode + "/wallet/unfreezebalancev2";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("owner_address", ownerAddress);
+      userBaseObj2.addProperty("unfreeze_balance", unfrozenBalance);
+      if (resourceCode == 0) {
+        userBaseObj2.addProperty("resource", "BANDWIDTH");
+      }
+      if (resourceCode == 1) {
+        userBaseObj2.addProperty("resource", "ENERGY");
+      }
+      userBaseObj2.addProperty("visible", visible);
+      userBaseObj2.addProperty("Permission_id", permissionId);
+      log.info("userBaseObj2:"+userBaseObj2.toString());
+      //send post request
+      response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      log.info("transactionString:"+transactionString);
+      //add expire time
+      JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+3600000);
+      //get one signature for transaction
+      transactionSignString = gettransactionsign(httpNode, transactionObject.toString(), fromKey);
+      log.info("-----------sign information-----------------");
+      log.info(transactionSignString);
+      //delete unused field
+      JSONObject jsonObject = HttpMethed.parseStringContent(transactionSignString);
+      jsonObject.remove("visible");
+      jsonObject.remove("txID");
+      jsonObject.remove("raw_data_hex");
+      transactionStr = jsonObject.toString();
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return transactionSignString;
+  }
+
+  public static String WithdrawExpireUnfreeze(String httpNode, String ownerAddress,
+                                         String visible, Integer permissionId, String fromKey) {
+    try {
+      final String requestUrl = "http://" + httpNode + "/wallet/withdrawexpireunfreeze";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("owner_address", ownerAddress);
+      userBaseObj2.addProperty("visible", visible);
+      userBaseObj2.addProperty("Permission_id", permissionId);
+      log.info("userBaseObj2:"+userBaseObj2.toString());
+      //send post request
+      response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      log.info("transactionString:"+transactionString);
+      //add expire time
+      JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+3600000);
+      //get one signature for transaction
+      transactionSignString = gettransactionsign(httpNode, transactionObject.toString(), fromKey);
+      log.info("-----------sign information-----------------");
+      log.info(transactionSignString);
+      //delete unused field
+      JSONObject jsonObject = HttpMethed.parseStringContent(transactionSignString);
+      jsonObject.remove("visible");
+      jsonObject.remove("txID");
+      jsonObject.remove("raw_data_hex");
+      transactionStr = jsonObject.toString();
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return transactionSignString;
+  }
+
+  public static String DelegateResource(String httpNode, String ownerAddress, String receiverAddress, Long balance,
+                                         Integer resourceCode, Boolean lock,
+                                         String visible, Integer permissionId, String fromKey) {
+    try {
+      final String requestUrl = "http://" + httpNode + "/wallet/delegateresource";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("owner_address", ownerAddress);
+      userBaseObj2.addProperty("receiver_address", receiverAddress);
+      userBaseObj2.addProperty("balance",balance);
+      if (resourceCode == 0) {
+        userBaseObj2.addProperty("resource", "BANDWIDTH");
+      }
+      if (resourceCode == 1) {
+        userBaseObj2.addProperty("resource", "ENERGY");
+      }
+      userBaseObj2.addProperty("lock",lock);
+      userBaseObj2.addProperty("visible", visible);
+      userBaseObj2.addProperty("Permission_id", permissionId);
+      log.info("userBaseObj2:"+userBaseObj2.toString());
+      //send post request
+      response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      log.info("transactionString:"+transactionString);
+      //add expire time
+      JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+3600000);
+      //get one signature for transaction
+      transactionSignString = gettransactionsign(httpNode, transactionObject.toString(), fromKey);
+      log.info("-----------sign information-----------------");
+      log.info(transactionSignString);
+      //delete unused field
+      JSONObject jsonObject = HttpMethed.parseStringContent(transactionSignString);
+      jsonObject.remove("visible");
+      jsonObject.remove("txID");
+      jsonObject.remove("raw_data_hex");
+      transactionStr = jsonObject.toString();
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return transactionSignString;
+  }
+
+  public static String UnDelegateResource(String httpNode, String ownerAddress, String receiverAddress, Long balance,
+                                        Integer resourceCode,
+                                        String visible, Integer permissionId, String fromKey) {
+    try {
+      final String requestUrl = "http://" + httpNode + "/wallet/undelegateresource";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("owner_address", ownerAddress);
+      userBaseObj2.addProperty("receiver_address", receiverAddress);
+      userBaseObj2.addProperty("balance",balance);
+      if (resourceCode == 0) {
+        userBaseObj2.addProperty("resource", "BANDWIDTH");
+      }
+      if (resourceCode == 1) {
+        userBaseObj2.addProperty("resource", "ENERGY");
+      }
+      userBaseObj2.addProperty("visible", visible);
+      userBaseObj2.addProperty("Permission_id", permissionId);
+      log.info("userBaseObj2:"+userBaseObj2.toString());
+      //send post request
+      response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      log.info("transactionString:"+transactionString);
+      //add expire time
+      JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+3600000);
+      //get one signature for transaction
+      transactionSignString = gettransactionsign(httpNode, transactionObject.toString(), fromKey);
+      log.info("-----------sign information-----------------");
+      log.info(transactionSignString);
+      //delete unused field
+      JSONObject jsonObject = HttpMethed.parseStringContent(transactionSignString);
+      jsonObject.remove("visible");
+      jsonObject.remove("txID");
+      jsonObject.remove("raw_data_hex");
+      transactionStr = jsonObject.toString();
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return transactionSignString;
+  }
+
+
+
+  public static HttpResponse freezeBalanceV2BroadCast(String httpNode, String ownerAddress, Long frozenBalance,
+                                       Integer resourceCode,
+                                       String visible, String fromKey) {
+    try {
+      final String requestUrl = "http://" + httpNode + "/wallet/freezebalancev2";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("owner_address", ownerAddress);
+      userBaseObj2.addProperty("frozen_balance", frozenBalance);
+      if (resourceCode == 0) {
+        userBaseObj2.addProperty("resource", "BANDWIDTH");
+      }
+      if (resourceCode == 1) {
+        userBaseObj2.addProperty("resource", "ENERGY");
+      }
+      userBaseObj2.addProperty("visible", visible);
+      log.info("userBaseObj2:"+userBaseObj2.toString());
+      response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      log.info("create tx:"+transactionString);
+      transactionSignString = gettransactionsign(httpNode, transactionString, fromKey);
+      log.info("sign tx:"+transactionSignString);
+      response = broadcastTransaction(httpNode, transactionSignString);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  public static HttpResponse unfreezeBalanceV2BroadCast(String httpNode, String ownerAddress, Long unfrozenBalance,
+                                                Integer resourceCode,
+                                                String visible, String fromKey) {
+    try {
+      final String requestUrl = "http://" + httpNode + "/wallet/unfreezebalancev2";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("owner_address", ownerAddress);
+      userBaseObj2.addProperty("unfreeze_balance", unfrozenBalance);
+      if (resourceCode == 0) {
+        userBaseObj2.addProperty("resource", "BANDWIDTH");
+      }
+      if (resourceCode == 1) {
+        userBaseObj2.addProperty("resource", "ENERGY");
+      }
+      userBaseObj2.addProperty("visible", visible);
+      log.info("userBaseObj2:"+userBaseObj2.toString());
+      //send post request
+      response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      log.info("creat tx:"+transactionString);
+      transactionSignString = gettransactionsign(httpNode, transactionString, fromKey);
+      log.info("sign tx:"+transactionSignString);
+      response = broadcastTransaction(httpNode, transactionSignString);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  public static HttpResponse WithdrawExpireUnfreezeBroadcast(String httpNode, String ownerAddress,
+                                              String visible,  String fromKey) {
+    try {
+      final String requestUrl = "http://" + httpNode + "/wallet/withdrawexpireunfreeze";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("owner_address", ownerAddress);
+      userBaseObj2.addProperty("visible", visible);
+      log.info("userBaseObj2:"+userBaseObj2.toString());
+      //send post request
+      response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      log.info("creat tx:"+transactionString);
+      transactionSignString = gettransactionsign(httpNode, transactionString, fromKey);
+      log.info("sign tx:"+transactionSignString);
+      response = broadcastTransaction(httpNode, transactionSignString);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  public static HttpResponse DelegateResourceBroadcast(String httpNode, String ownerAddress, String receiverAddress, Long balance,
+                                        Integer resourceCode, Boolean lock,
+                                        String visible, String fromKey) {
+    try {
+      final String requestUrl = "http://" + httpNode + "/wallet/delegateresource";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("owner_address", ownerAddress);
+      userBaseObj2.addProperty("receiver_address", receiverAddress);
+      userBaseObj2.addProperty("balance",balance);
+      if (resourceCode == 0) {
+        userBaseObj2.addProperty("resource", "BANDWIDTH");
+      }
+      if (resourceCode == 1) {
+        userBaseObj2.addProperty("resource", "ENERGY");
+      }
+      userBaseObj2.addProperty("lock",lock);
+      userBaseObj2.addProperty("visible", visible);
+      log.info("userBaseObj2:"+userBaseObj2.toString());
+      //send post request
+      response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      log.info("creat tx:"+transactionString);
+      transactionSignString = gettransactionsign(httpNode, transactionString, fromKey);
+      log.info("sign tx:"+transactionSignString);
+      response = broadcastTransaction(httpNode, transactionSignString);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
+  public static HttpResponse UnDelegateResourceBroadcast(String httpNode, String ownerAddress, String receiverAddress, Long balance,
+                                          Integer resourceCode,
+                                          String visible, String fromKey) {
+    try {
+      final String requestUrl = "http://" + httpNode + "/wallet/undelegateresource";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("owner_address", ownerAddress);
+      userBaseObj2.addProperty("receiver_address", receiverAddress);
+      userBaseObj2.addProperty("balance",balance);
+      if (resourceCode == 0) {
+        userBaseObj2.addProperty("resource", "BANDWIDTH");
+      }
+      if (resourceCode == 1) {
+        userBaseObj2.addProperty("resource", "ENERGY");
+      }
+      userBaseObj2.addProperty("visible", visible);
+      log.info("userBaseObj2:"+userBaseObj2.toString());
+      //send post request
+      response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      log.info("creat tx:"+transactionString);
+      transactionSignString = gettransactionsign(httpNode, transactionString, fromKey);
+      log.info("sign tx:"+transactionSignString);
+      response = broadcastTransaction(httpNode, transactionSignString);
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return response;
+  }
+
 
   public static String unFreezeBalance(String httpNode, String ownerAddress, Integer resourceCode,
                                        String receiverAddress, String visible, Integer permissionId, String fromKey) {
@@ -251,7 +646,7 @@ public class HttpMethed {
       transactionString = EntityUtils.toString(response.getEntity());
       log.info("transactionString:"+transactionString);
       JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
-      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+86400000);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+3600000);
 
       transactionSignString = gettransactionsign(httpNode, transactionObject.toString(), fromKey);
       log.info("-----------sign information-----------------");
@@ -761,6 +1156,39 @@ public class HttpMethed {
     return transactionSignString;
   }
 
+  public static String addtransactionsignHTTP(String httpNode, String transactinString,
+                                          String privateKey) {
+    try {
+      String requestUrl = "http://" + httpNode + "/wallet/addtransactionsign";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("transaction", transactinString);
+      userBaseObj2.addProperty("privateKey", privateKey);
+      response = createConnect(requestUrl, userBaseObj2);
+      transactionSignString = EntityUtils.toString(response.getEntity());
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return transactionSignString;
+  }
+
+
+  public static String getApprovedListHTTP(String httpNode, String transactinString) {
+    try {
+      String requestUrl = "http://" + httpNode + "/wallet/getapprovedlist";
+      JsonObject userBaseObj2 = new JsonParser().parse(transactinString).getAsJsonObject();
+      response = createConnect(requestUrl, userBaseObj2);
+      transactionSignString = EntityUtils.toString(response.getEntity());
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return transactionSignString;
+  }
+
+
   public static HttpResponse broadcastTransaction(String httpNode, String transactionSignString) {
     try {
       String requestUrl = "http://" + httpNode + "/wallet/broadcasttransaction";
@@ -807,11 +1235,15 @@ public class HttpMethed {
     return response;
   }
 
+
+
+
   public static HttpResponse createConnect(String url) {
     return createConnect(url, null);
   }
 
   public static HttpResponse createConnect(String url, JsonObject requestBody) {
+    //log.info("wqq debug 22222:"+requestBody.toString());
     try {
       httpClient.getParams()
               .setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT, connectionTimeout);

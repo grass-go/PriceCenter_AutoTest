@@ -3530,7 +3530,7 @@ public class HttpMethed2 {
       transactionString = EntityUtils.toString(response.getEntity());
       log.info("transactionString: "+ transactionString);
       JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
-      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+120000);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+600000);
 
       transactionSignString = gettransactionsign(httpNode, transactionString, fromKey);
       log.info("---------signed transaction------------");

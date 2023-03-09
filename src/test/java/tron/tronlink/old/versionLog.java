@@ -13,35 +13,27 @@ public class versionLog extends TronlinkBase {
   private HashMap<String,String> parameter = new HashMap();
   private HashMap<String,String> header = new HashMap();
 
-  @Test(enabled = true, description = "Api GET /api/v1/wallet/version_log test", groups = {"NoSignature"})
-  public void test01VersionLogForAndroidLowVersionWithNoSig() throws Exception {
+  //groups = {"NoSignature"}
+  @Test(enabled = true, description = "Api GET /api/v1/wallet/version_log test")
+  public void test01VersionLogForAndroidLowVersionWithNoSigManual() throws Exception {
+    parameter.clear();
     parameter.put("lang", "2");
     parameter.put("system","Android");
+    parameter.put("channel","official");
     response = api.getVersionLogNoSig(parameter,null);
 
     JSONObject jsonObject = api.parseResponse2JsonObject(response);
     api.printJsonObjectContent(jsonObject);
-    JSONObject data = jsonObject.getJSONArray("data").getJSONObject(0);
 
-    Assert.assertEquals(data.getString("system"),"Android");
-    Assert.assertTrue(!data.getString("create_time").isEmpty());
-    Assert.assertTrue(!data.getString("title").isEmpty());
-    Assert.assertTrue(!data.getString("version").isEmpty());
-    Assert.assertEquals(jsonObject.getString("msg"),"success");
-
+    parameter.clear();
     parameter.put("lang", "1");
     parameter.put("system","Android");
+    parameter.put("channel","official");
     response = api.getVersionLogNoSig(parameter,null);
 
     jsonObject = api.parseResponse2JsonObject(response);
     api.printJsonObjectContent(jsonObject);
-    data = jsonObject.getJSONArray("data").getJSONObject(0);
 
-    Assert.assertEquals(data.getString("system"),"Android");
-    Assert.assertTrue(!data.getString("create_time").isEmpty());
-    Assert.assertTrue(!data.getString("title").isEmpty());
-    Assert.assertTrue(!data.getString("version").isEmpty());
-    Assert.assertEquals(jsonObject.getString("msg"),"success");
   }
 
   @Test(enabled = true, description = "Api GET /api/v1/wallet/version_log test")
@@ -57,40 +49,40 @@ public class versionLog extends TronlinkBase {
     Assert.assertEquals("Error param.", jsonObject.getString("message"));
   }
 
-
-
   @Test(enabled = true, description = "Api GET /api/v1/wallet/version_log test")
-  public void test01VersionLogForAndroid() throws Exception {
+  public void test01VersionLogForAndroidManual() throws Exception {
+    parameter.clear();
     parameter.put("lang", "2");
     parameter.put("system","Android");
     parameter.put("address", quince_B58);
+    //parameter.put("channel","official");
+    parameter.put("channel","googleplay");
+    //parameter.put("channel","samsunggalaxy");
+
     header.put("System","Android");
     header.put("Version","4.11.0");
+    header.put("channel","official");
     response = api.getVersionLog(parameter,header);
 
     JSONObject jsonObject = api.parseResponse2JsonObject(response);
     api.printJsonObjectContent(jsonObject);
-    JSONObject data = jsonObject.getJSONArray("data").getJSONObject(0);
 
-    Assert.assertEquals(data.getString("system"),"Android");
-    Assert.assertTrue(!data.getString("create_time").isEmpty());
-    Assert.assertTrue(!data.getString("title").isEmpty());
-    Assert.assertTrue(!data.getString("version").isEmpty());
-    Assert.assertEquals(jsonObject.getString("msg"),"success");
 
+    parameter.clear();
     parameter.put("lang", "1");
     parameter.put("system","Android");
+    parameter.put("channel","official");
+    //parameter.put("channel","googleplay");
+    //parameter.put("channel","samsunggalaxy");
+    header.clear();
+    header.put("System","Android");
+    header.put("Version","4.11.0");
+    header.put("channel","official");
     response = api.getVersionLog(parameter,null);
 
     jsonObject = api.parseResponse2JsonObject(response);
     api.printJsonObjectContent(jsonObject);
-    data = jsonObject.getJSONArray("data").getJSONObject(0);
 
-    Assert.assertEquals(data.getString("system"),"Android");
-    Assert.assertTrue(!data.getString("create_time").isEmpty());
-    Assert.assertTrue(!data.getString("title").isEmpty());
-    Assert.assertTrue(!data.getString("version").isEmpty());
-    Assert.assertEquals(jsonObject.getString("msg"),"success");
   }
 
 

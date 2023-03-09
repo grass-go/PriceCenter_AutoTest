@@ -33,7 +33,7 @@ public class allCollections extends TronlinkBase {
   @Test( enabled = true)
   public void allCollectionsTestManual(){
     params.clear();
-    params.put("address","TXFmkVZkpkv8ghNCKwpeVdVvRVqTedSCAK");
+    params.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
 
     response = TronlinkApiList.v2AllCollections(params);
     Assert.assertEquals(200, response.getStatusLine().getStatusCode());
