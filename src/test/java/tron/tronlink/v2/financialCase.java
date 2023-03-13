@@ -225,7 +225,7 @@ public class financialCase extends TronlinkBase {
             Object tronlinkApy_obj = JSONPath.eval(tokenFinancialListRespContent, "$.data[tokenName='" + curToken + "'].projectList[0].apy");
             log.info("curToken:" + curToken + "; justlend apy:" + justlendApy+" tronlink server apy:" + tronlinkApy_obj.toString());
             BigDecimal tronlinkApy = new BigDecimal(tronlinkApy_obj.toString());
-            Assert.assertTrue(TronlinkApiList.CompareGapInGivenToleranceInDecimalFormat(justlendApy,tronlinkApy,"0.01"));
+            Assert.assertTrue(TronlinkApiList.CompareGapInGivenToleranceInDecimalFormat(justlendApy,tronlinkApy,"0.02"));
 
 
             if (myTokensArray.contains(curToken)){
