@@ -122,7 +122,7 @@ public class Dapp_Classify extends TronlinkBase {
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     responseArrayContent = responseContent.getJSONArray("data");
-    Assert.assertEquals(5,responseArrayContent.size());
+    Assert.assertEquals(6,responseArrayContent.size());
 
 
   }
