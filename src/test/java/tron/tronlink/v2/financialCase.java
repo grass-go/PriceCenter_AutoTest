@@ -567,7 +567,8 @@ public class financialCase extends TronlinkBase {
         }
     }
 
-    @Test(enabled = true,groups={"P2"})
+    //关闭用例是因为每个justlend token的往期收益在justlend中是不可查的。trolnink-server自己累加的总收益。此用例适用于没有往期收益的token。
+    @Test(enabled = false,groups={"P2"})
     public void checkAllJustlendIncome(){
         //String testuser = "TXTNcgJHD9GPfpiTbSG2VGtfdfii9VcpEr";
         List<String> users = new ArrayList<>();
