@@ -47,7 +47,7 @@ public class financialCase extends TronlinkBase {
     public static HashMap<String, String> justlendTokens = new HashMap<>();
     public static HashMap<String, String> Tokens = new HashMap<>();
     private List<String> expTokenNames = java.util.Arrays.asList("TRX","USDD","USDT","SUN","BTT","NFT",
-            "JST","WIN","USDJ","USDC","TUSD","BTC","ETH","WBTT","BUSD");
+            "JST","WIN","USDJ","USDC","TUSD","BTC","ETH","WBTT");
     public static HashMap<String,String> jTokenTokenMap = new HashMap<>();
 
     static {
@@ -65,7 +65,7 @@ public class financialCase extends TronlinkBase {
         justlendTokens.put("BTC","TLeEu311Cbw63BcmMHDgDLu7fnk9fqGcqT");
         justlendTokens.put("ETH","TR7BUFRQeq1w5jAZf1FKx85SHuX6PfMqsV");
         justlendTokens.put("WBTT","TUY54PVeH6WCcYCd6ZXXoBDsHytN9V5PXt");
-        justlendTokens.put("BUSD","TLHASseQymmpGQdfAyNjkMXFTJh8nzR2x2");
+        //justlendTokens.put("BUSD","TLHASseQymmpGQdfAyNjkMXFTJh8nzR2x2");
         Tokens.put("TRX","_");
         Tokens.put("USDD","TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn");
         Tokens.put("USDT","TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
@@ -80,7 +80,7 @@ public class financialCase extends TronlinkBase {
         Tokens.put("BTC","TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9");
         Tokens.put("ETH","THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF");
         Tokens.put("WBTT","TKfjV9RNKJJCqPvBtK8L7Knykh7DNWvnYt");
-        Tokens.put("BUSD","TMz2SWatiAtZVVcH2ebpsbVtYwUPT9EdjH");
+        //Tokens.put("BUSD","TMz2SWatiAtZVVcH2ebpsbVtYwUPT9EdjH");
 
         jTokenTokenMap.put("TE2RzoSV3wFK99w6J9UnnZ4vLfXYoxvRwP","_");  //trx
         jTokenTokenMap.put("TX7kybeP6UwTBRHLNPYmswFESHfyjm9bAS","TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn");  //usdd
@@ -96,7 +96,7 @@ public class financialCase extends TronlinkBase {
         jTokenTokenMap.put("TLeEu311Cbw63BcmMHDgDLu7fnk9fqGcqT","TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9");  //btc
         jTokenTokenMap.put("TR7BUFRQeq1w5jAZf1FKx85SHuX6PfMqsV","THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF");  //eth
         jTokenTokenMap.put("TUY54PVeH6WCcYCd6ZXXoBDsHytN9V5PXt","TKfjV9RNKJJCqPvBtK8L7Knykh7DNWvnYt");   //wbtt
-        jTokenTokenMap.put("TLHASseQymmpGQdfAyNjkMXFTJh8nzR2x2","TMz2SWatiAtZVVcH2ebpsbVtYwUPT9EdjH");  //busd*/
+        //jTokenTokenMap.put("TLHASseQymmpGQdfAyNjkMXFTJh8nzR2x2","TMz2SWatiAtZVVcH2ebpsbVtYwUPT9EdjH");  //busd*/
     }
 
     //v4.2.1 new user(not even have transfer trx),with parameter version=v1, will return trx only.
@@ -767,7 +767,7 @@ public class financialCase extends TronlinkBase {
                 params.put("walletAddress", MaxJTrxHolder);
                 params.put("tokenId",Tokens.get(curToken));
                 response = TronlinkApiList.justLendDetail(params,null);
-                Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+                Assert.assertEquals(200, response.getStatusLine().getStatusCode());
                 responseContent = TronlinkApiList.parseResponse2JsonObject(response);
                 Object balanceInJstDetail_obj = JSONPath.eval(responseContent,"$.data.balance[0]");
                 Object precisionInJstDetail_obj = JSONPath.eval(responseContent,"$.data.precision[0]");
