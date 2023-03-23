@@ -1520,6 +1520,13 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
+    public static HttpResponse getJustlendAllUnClaimedAirDrop(String address){
+        String requestUrl = JustlendNode + "/sunProject/getAllUnClaimedAirDrop?addr="+address;
+        response = createGetConnect(requestUrl,null,null, null);
+        return response;
+    }
+
+
     public static HttpResponse getJTokenDetailInJustlend(String jToken){
         String requestUrl = JustlendNode + "/justlend/markets/jtokenDetails?jtokenAddr="+jToken;
         response = createGetConnect(requestUrl,null,null, null);

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.math.stat.descriptive.rank.Max;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
+import org.aspectj.org.eclipse.jdt.core.IJavaElement;
 import org.junit.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.math.BigInteger;
 
 @Slf4j
 public class financialCase extends TronlinkBase {
@@ -494,7 +496,7 @@ public class financialCase extends TronlinkBase {
         Assert.assertTrue(bttcStake.equals(new BigDecimal(myprojectBalance_obj.toString())));
     }
 
-    @Test(enabled = false, description = "当用户没有往期收益时适用，即仅检查tronlink-server接口为当期收益时适用。",groups={"P2"})
+    @Test(enabled = false, description = "当用户没有往期收益时适用，即仅检查tronlink-server接口为当期收益时适用。保留用例用来手工测试",groups={"P2"})
     public void checkUnsettleJustlendIncome() {
 
         //justlend deposit api 包括所有市场。
@@ -664,6 +666,81 @@ public class financialCase extends TronlinkBase {
                 log.info("Justlend Income Compare: check gap myTokenList curReward calculated by self VS justlend curReward:"+gap_curReward.toString());
                 Assert.assertTrue(TronlinkApiList.CompareGapInGivenToleranceInDecimalFormat(totalGap,gap_curReward,"0.0001"));
             }
+        }
+    }
+
+    @Test(enabled = true,description = "检查justlend整个项目的收益，不区分token", groups={"P2"})
+    public void checkJustlendProjectIncome(){
+        List<String> users = new ArrayList<>();
+        users.add("TPyjyZfsYaXStgz2NmAraF1uZcMtkgNan5");  //btc, usdc,usdj, usdt, usdd, trx, btt,tusd
+        users.add("TLipJxwgDbn7FaQCnECxiYdxFTBhshLiW3");
+
+        for (String curUser:users) {
+            //从justlend接口计算所有收益：airdrop接口是往期收益，minReward接口是当前收益。
+            response = TronlinkApiList.getJustlendAllUnClaimedAirDrop(curUser);
+            JSONObject responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+            Object amount_obj = JSONPath.eval(responseContent,"..amount");
+            java.util.ArrayList amount_list = (java.util.ArrayList)amount_obj;
+            BigInteger justlend_preIncome = BigInteger.ZERO;
+            for(int i=0; i<amount_list.size();i++){
+                String value16 = (String)amount_list.get(i);
+                BigInteger amount = new BigInteger(value16.substring(2), 16);
+                justlend_preIncome = justlend_preIncome.add(amount);
+            }
+            log.info("justlend_preIncome:"+justlend_preIncome.toString());
+            //计算当期收益
+            HttpResponse minRewardResp = TronlinkApiList.getJustlendMiningReward(curUser);
+            JSONObject minRewardContent = TronlinkApiList.parseResponse2JsonObject(minRewardResp);
+            Object curReward_obj = JSONPath.eval(minRewardContent,"$..currReward");
+            java.util.ArrayList curRewardList = (java.util.ArrayList)curReward_obj;
+            BigDecimal justlend_curReward_bd = BigDecimal.ZERO;
+            for(int i=0; i<curRewardList.size();i++){
+                justlend_curReward_bd = justlend_curReward_bd.add(new BigDecimal((String)curRewardList.get(i)));
+            }
+            log.info("justlend_curReward_bd:"+justlend_curReward_bd.toString());
+            BigInteger justlend_curReward = justlend_curReward_bd.multiply(new BigDecimal("1000000000000000000")).toBigInteger();
+            BigInteger justlend_reward = justlend_preIncome.add(justlend_curReward);
+            log.info("justlend_reward:"+justlend_reward.toString());
+
+            //计算tokenlist中justlend项目的所有收益
+            walletAddressList.clear();
+            walletAddressList.add(curUser);   //wqq2
+            bodyObject.put("walletAddress", walletAddressList);
+
+            response = TronlinkApiList.myFinancialTokenList(bodyObject, null, null);
+            JSONObject myFTokenContent = TronlinkApiList.parseResponse2JsonObject(response);
+            JSONObject dataContent = myFTokenContent.getJSONObject("data");
+            JSONArray tokenlistContent = dataContent.getJSONArray("tokenList");
+            BigInteger tronlink_TListIncome = BigInteger.ZERO;
+            for (Object curObject:tokenlistContent){
+                JSONObject curJsonObject = (JSONObject) curObject;
+                Object incomeValue = JSONPath.eval(curJsonObject,"$.projectList[projectId='534ed914-babc-4910-b6cf-0ebf4b59348b'].financialIncomeValue[0]");
+                log.info("incomeValue:"+incomeValue.toString());
+                tronlink_TListIncome = tronlink_TListIncome.add(new BigInteger(incomeValue.toString()));
+            }
+            log.info("tronlink_TListIncome:"+tronlink_TListIncome.toString());
+
+            //计算projectlsit中justlend项目的所有收益
+            response = TronlinkApiList.myFinancialProjectList(bodyObject, null, null);
+            JSONObject myprojectListContent = TronlinkApiList.parseResponse2JsonObject(response);
+            dataContent = myprojectListContent.getJSONObject("data");
+            JSONArray myProjects = dataContent.getJSONArray("projectList");
+            JSONObject justlendProject = myProjects.getJSONObject(0);
+            Object justlendIncomeValues = JSONPath.eval(justlendProject,"$..financialIncomeValue");
+            log.info("justlendIncomeValues:"+justlendIncomeValues.toString());
+            java.util.ArrayList justlendIncomeValueL = (java.util.ArrayList)justlendIncomeValues;
+            BigInteger tronlink_ProjectIncome = BigInteger.ZERO;
+            for(int i=0; i<justlendIncomeValueL.size();i++){
+                tronlink_ProjectIncome = tronlink_ProjectIncome.add(new BigInteger((String) justlendIncomeValueL.get(i)));
+            }
+
+
+            log.info("justlend_reward:"+justlend_reward.toString());
+            log.info("tronlink_TListIncome:"+tronlink_TListIncome.toString());
+            log.info("tronlink_ProjectIncome:"+tronlink_ProjectIncome.toString());
+            Assert.assertTrue(TronlinkApiList.CompareGapInGivenTolerance(justlend_reward.toString(),tronlink_ProjectIncome.toString(),"0.004"));
+            Assert.assertTrue(TronlinkApiList.CompareGapInGivenTolerance(tronlink_TListIncome.toString(),tronlink_ProjectIncome.toString(),"0"));
+
         }
     }
 
