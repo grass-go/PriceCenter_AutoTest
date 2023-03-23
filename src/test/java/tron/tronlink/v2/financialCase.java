@@ -494,7 +494,7 @@ public class financialCase extends TronlinkBase {
         Assert.assertTrue(bttcStake.equals(new BigDecimal(myprojectBalance_obj.toString())));
     }
 
-    @Test(enabled = false, description = "check justlend financialIncome in justlend project",groups={"P2"})
+    @Test(enabled = false, description = "当用户没有往期收益时适用，即仅检查tronlink-server接口为当期收益时适用。",groups={"P2"})
     public void checkUnsettleJustlendIncome() {
 
         //justlend deposit api 包括所有市场。
@@ -567,7 +567,7 @@ public class financialCase extends TronlinkBase {
         }
     }
 
-    //关闭用例是因为每个justlend token的往期收益在justlend中是不可查的。trolnink-server自己累加的总收益。此用例适用于没有往期收益的token。
+    //关闭用例是因为每个justlend token的往期收益对每个币是不可查的。trolnink-server对每个币的收益是自己累加的总收益。此用例适用于仅有当前期和上一期的情况。
     @Test(enabled = false,groups={"P2"})
     public void checkAllJustlendIncome(){
         //String testuser = "TXTNcgJHD9GPfpiTbSG2VGtfdfii9VcpEr";
