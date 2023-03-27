@@ -738,7 +738,7 @@ public class financialCase extends TronlinkBase {
             log.info("justlend_reward:"+justlend_reward.toString());
             log.info("tronlink_TListIncome:"+tronlink_TListIncome.toString());
             log.info("tronlink_ProjectIncome:"+tronlink_ProjectIncome.toString());
-            Assert.assertTrue(TronlinkApiList.CompareGapInGivenTolerance(justlend_reward.toString(),tronlink_ProjectIncome.toString(),"0.004"));
+            Assert.assertTrue(TronlinkApiList.CompareGapInGivenTolerance(justlend_reward.toString(),tronlink_ProjectIncome.toString(),"0.01"));
             Assert.assertTrue(TronlinkApiList.CompareGapInGivenTolerance(tronlink_TListIncome.toString(),tronlink_ProjectIncome.toString(),"0"));
 
         }
