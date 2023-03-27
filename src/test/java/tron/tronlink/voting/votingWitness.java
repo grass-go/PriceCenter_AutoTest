@@ -3,6 +3,7 @@ package tron.tronlink.voting;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.api.Http;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.junit.Assert;
 import org.testng.annotations.Test;
@@ -14,7 +15,7 @@ import com.alibaba.fastjson.JSONPath;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@Slf4j
 public class votingWitness extends TronlinkBase {
   private JSONObject responseContent;
   private JSONArray responseArrayContent;
@@ -357,6 +358,7 @@ public class votingWitness extends TronlinkBase {
       if(i+1==responseArrayContent.size()){
         break;
       }
+      log.info("curWitness:"+i);
       JSONObject jsonObject = responseArrayContent.getJSONObject(i);
       String witnessAddress = jsonObject.getString("address");
       Long lastCycleVotes = jsonObject.getLongValue("lastCycleVotes");
