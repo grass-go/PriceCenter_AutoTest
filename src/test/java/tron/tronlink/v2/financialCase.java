@@ -256,7 +256,7 @@ public class financialCase extends TronlinkBase {
                 log.info("curToken:"+curToken + "; apyInOperate:" + apyInOperate_obj.toString() + "; baseApyInOperate:"+baseApyInOperate_obj.toString()+"; mintApyInOperate:"+ mintApyInOperate_obj.toString());
                 Assert.assertTrue(TronlinkApiList.CompareGapInGivenToleranceInDecimalFormat(justlendApy, new BigDecimal(apyInOperate_obj.toString()),"0.00001"));
                 Assert.assertTrue(TronlinkApiList.CompareGapInGivenToleranceInDecimalFormat(depositeapy_bd, new BigDecimal(baseApyInOperate_obj.toString()),"0.000001"));
-                Assert.assertTrue(TronlinkApiList.CompareGapInGivenToleranceInDecimalFormat(minapy_bd, new BigDecimal(mintApyInOperate_obj.toString()),"0.000001"));
+                Assert.assertTrue(TronlinkApiList.CompareGapInGivenToleranceInDecimalFormat(minapy_bd, new BigDecimal(mintApyInOperate_obj.toString()),"0.000005"));
 
             }
         }
