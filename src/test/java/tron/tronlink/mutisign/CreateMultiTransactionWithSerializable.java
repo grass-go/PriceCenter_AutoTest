@@ -854,7 +854,6 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
         transactionsList.add(energy_visibleT_tx);
         String energy_visibleF_tx = HttpMethed.freezeBalanceV2(httpnode, ByteArray.toHexString(quince), 1000000L,1, "false", 9, wqq1key);
         transactionsList.add(energy_visibleF_tx);
-
         for(String transactionStr:transactionsList) {
             log.info("DelegateResource: cur tx: " + transactionStr);
             JSONObject object = new JSONObject();
@@ -935,7 +934,6 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
         transactionsList.add(energy_visibleT_tx);
         String energy_visibleF_tx = HttpMethed.unfreezeBalanceV2(httpnode, ByteArray.toHexString(quince), 1000000L,1, "false", 9, wqq1key);
         transactionsList.add(energy_visibleF_tx);
-
         for(String transactionStr:transactionsList) {
             log.info("DelegateResource: cur tx: "+transactionStr);
             JSONObject object = new JSONObject();
@@ -1008,8 +1006,8 @@ public class CreateMultiTransactionWithSerializable extends TronlinkBase {
     public void WithdrawExpireUnfreeze() throws Exception {
         // visible:true
         List<String> transactionsList = new ArrayList<>();
-        /*String visibleT_tx = HttpMethed.WithdrawExpireUnfreeze(httpnode, liqi58, "true", 4, wqq1key);
-        transactionsList.add(visibleT_tx);*/
+        String visibleT_tx = HttpMethed.WithdrawExpireUnfreeze(httpnode, liqi58, "true", 4, wqq1key);
+        transactionsList.add(visibleT_tx);
 
         String visibleF_tx = HttpMethed.WithdrawExpireUnfreeze(httpnode, ByteArray.toHexString(liqi), "false", 4, wqq1key);
         transactionsList.add(visibleF_tx);

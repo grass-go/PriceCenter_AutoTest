@@ -103,8 +103,9 @@ public class AssetList extends TronlinkBase {
   @Test(enabled = true)
   public void assetListGetManual() {
     params.clear();
-    params.put("address", quince_B58);
-    params.put("version", "v2");
+    //params.put("address", "TSNcHHwKgfiMqJQQTJGBf91EJHtB67mdTW");
+    params.put("address",quince_B58);
+    params.put("version", "v1");
     response = TronlinkApiList.v2AssetList(params);
 
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);

@@ -112,7 +112,8 @@ public class financialCaseManual {
 
     @Test(enabled = true)
     public void totalAssets01() {
-        walletAddressList.add("TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
+        walletAddressList.add("TRWNvb15NmfNKNLhQpxefFz7cNjrYjEw7x");
+        //walletAddressList.add("TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
         //walletAddressList.add("TKGRE6oiU3rEzasue4MsB6sCXXSTx9BAe3");
         //walletAddressList.add("TSbfmgnSs3KgW9yPJB33QKZ6DKJLPVpR7L");//未激活
         //walletAddressList.add("TZFQt962hcvBJ6jRdctkUNu7fJeVTvkn9K");
@@ -141,7 +142,7 @@ public class financialCaseManual {
         //walletAddressList.add("TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ");
         //walletAddressList.add("TQ9gXwoLcLi6W5gV5RjRykVuLVYTDY54nK");
         bodyObject.put("walletAddress",walletAddressList);
-        bodyObject.put("sort",1);
+        bodyObject.put("sort",4);
         //params.put("address","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
         response = TronlinkApiList.tokenFinancialList(bodyObject, null,null);
 
@@ -249,44 +250,43 @@ public class financialCaseManual {
 
     // bug: projectId参数多余
 
-    /*@Test(enabled = true)
+    @Test(enabled = true)
     public void justLendDetail() {
         List<String> tokenIds = new ArrayList<>();
-        tokenIds.add("TBEzkiB2JUevVNLUnnD8NtCYnnaE9XeviM");
-        //tokenIds.add("TTynJcuXkXUMBBU6ReC437eG4qafq9qU98");
-        //tokenIds.add("TSkW3KiyHNbS9ozn99PHZz6rz1V2DMBFVa");
-        //tokenIds.add("TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9");   //JST
-        //tokenIds.add("TKfjV9RNKJJCqPvBtK8L7Knykh7DNWvnYt");
-        *//*tokenIds.add("TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn");
-        tokenIds.add("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
-        tokenIds.add("TSSMHYeV2uE9qYH95DqyoCuNCzEL1NvU3S");
-        tokenIds.add("TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4");
-        tokenIds.add("TFczxzPhnThNSqr5by8tvxsdCFRRz6cPNq");
-        tokenIds.add("TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9");
-        tokenIds.add("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");
-        tokenIds.add("TMwFHYXLJaRUPeW6421aqXL4ZEzPRFGkGT");
-        tokenIds.add("TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8");
-        tokenIds.add("TUpMhErZL2fhh4sVNULAbNKLokS4GjC1F4");
-        tokenIds.add("TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9");
-        tokenIds.add("THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF");
-        tokenIds.add("TKfjV9RNKJJCqPvBtK8L7Knykh7DNWvnYt");
-        tokenIds.add("TMz2SWatiAtZVVcH2ebpsbVtYwUPT9EdjH");*//*
+        //jTokenTokenMapNile.put("TPovsintcLMh9udvXgt45jvb1RYQ86imnL","TBagxx57zx73VJJ61o12VfxzQ2EG3KHYJp");  //btt
+
+        //tokenIds.add("TBagxx57zx73VJJ61o12VfxzQ2EG3KHYJp");
+        tokenIds.add("THfS8gUDH5Cx1FnwvdQ2QfBdCHyeNDaKzs");  //no bttc 投资
+
+        String testUser = "TSNcHHwKgfiMqJQQTJGBf91EJHtB67mdTW";
+        //String testUser = "TKGRE6oiU3rEzasue4MsB6sCXXSTx9BAe3";
 
         for(String tokenId:tokenIds){
             params.clear();
-            //params.put("walletAddress","TZFQt962hcvBJ6jRdctkUNu7fJeVTvkn9K");
-            //params.put("walletAddress","TSbfmgnSs3KgW9yPJB33QKZ6DKJLPVpR7L");//未激活
-
-            params.put("walletAddress","TKGRE6oiU3rEzasue4MsB6sCXXSTx9BAe3");
-            //params.put("walletAddress","TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ");
-            //params.put("walletAddress","TNPU5Efa4MnhdE3dnsHHe8XJbXjtWHEb4t");  //liuyue
-            //params.put("walletAddress","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
-            //params.put("walletAddress","TM4dm6EjYbpFpgJJujihUfPQSzuvA62RDj");
+            params.put("walletAddress",testUser);
             params.put("tokenId",tokenId);
-            //response = TronlinkApiList.justLendDetailNoSig(params,null);
+            params.put("projectId","6b37b8ff-59d1-4086-8645-cef782d217c3");
             response = TronlinkApiList.justLendDetail(params,null);
             Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
             responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+
+
+            params.clear();
+            params.put("walletAddress",testUser);
+            params.put("tokenId",tokenId);
+            params.put("projectId","534ed914-babc-4910-b6cf-0ebf4b59348b");
+            response = TronlinkApiList.justLendDetail(params,null);
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+            responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+
+            params.clear();
+            params.put("walletAddress",testUser);
+            params.put("tokenId",tokenId);
+            params.put("projectId","2f38665c-7c74-4e63-bbdf-c69d6a623892");
+            response = TronlinkApiList.justLendDetail(params,null);
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+            responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+
 
         }
 
@@ -294,52 +294,106 @@ public class financialCaseManual {
 
     @Test(enabled = true)
     public void justLendOperate() {
+        String testUser = "TSNcHHwKgfiMqJQQTJGBf91EJHtB67mdTW";
+        //String testUser = "TKGRE6oiU3rEzasue4MsB6sCXXSTx9BAe3";
         List<String> tokenIds = new ArrayList<>();
-        tokenIds.add("TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn");
-        *//*;   //TRX
-        tokenIds.add("TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9");   //JST
-        tokenIds.add("TKfjV9RNKJJCqPvBtK8L7Knykh7DNWvnYt");
-        tokenIds.add("TPYmHEhy5n8TCEfYGqW2rPxsghSfzghPDn");
-        tokenIds.add("TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t");
-        tokenIds.add("TSSMHYeV2uE9qYH95DqyoCuNCzEL1NvU3S");
-        tokenIds.add("TAFjULxiVgT4qWk6UZwjqwZXTSaGaqnVp4");
-        tokenIds.add("TFczxzPhnThNSqr5by8tvxsdCFRRz6cPNq");
-        tokenIds.add("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");
-        tokenIds.add("TMwFHYXLJaRUPeW6421aqXL4ZEzPRFGkGT");
-        tokenIds.add("TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8");
-        tokenIds.add("TUpMhErZL2fhh4sVNULAbNKLokS4GjC1F4");
-        tokenIds.add("TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9");
-        tokenIds.add("THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF");
-        tokenIds.add("TMz2SWatiAtZVVcH2ebpsbVtYwUPT9EdjH");
-        tokenIds.add("TJqk3ChKSjmpoNm3gaqSEatNsueD37NGDK");*//*
-        //tokenIds.add("TTynJcuXkXUMBBU6ReC437eG4qafq9qU98");
+        tokenIds.add("TBagxx57zx73VJJ61o12VfxzQ2EG3KHYJp");
+        //tokenIds.add("TSNcHHwKgfiMqJQQTJGBf91EJHtB67mdTW");
 
-        tokenIds.add("_");
-        //tokenIds.add("TBagxx57zx73VJJ61o12VfxzQ2EG3KHYJp");
-        //tokenIds.add("TCFLL5dx5ZJdKnWuesXxi1VPwjLVmWZZy9");
-
-        //tokenIds.add("THfS8gUDH5Cx1FnwvdQ2QfBdCHyeNDaKzs");
-        *//*List<String> projectIds = new ArrayList<>();
+        /*List<String> projectIds = new ArrayList<>();
         projectIds.add("2f38665c-7c74-4e63-bbdf-c69d6a623892");
         projectIds.add("534ed914-babc-4910-b6cf-0ebf4b59348b");
-        projectIds.add("6b37b8ff-59d1-4086-8645-cef782d217c3");*//*
+        projectIds.add("6b37b8ff-59d1-4086-8645-cef782d217c3");*/
+
         for(String tokenId:tokenIds) {
-                params.clear();
-                params.put("walletAddress","TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t");
-                //params.put("walletAddress","TPyjyZfsYaXStgz2NmAraF1uZcMtkgNan5");
-                //params.put("walletAddress","TKGRE6oiU3rEzasue4MsB6sCXXSTx9BAe3");
-                //params.put("walletAddress", "TZFQt962hcvBJ6jRdctkUNu7fJeVTvkn9K");
-                //params.put("walletAddress","TSbfmgnSs3KgW9yPJB33QKZ6DKJLPVpR7L");
-                //params.put("walletAddress","TFDP1vFeSYPT6FUznL7zUjhg5X7p2AA8vw");
-                params.put("tokenId", tokenId);
-                //params.put("projectId", projectId);
-                //response = TronlinkApiList.justLendOperateNoSig(params, null);
-                response = TronlinkApiList.justLendOperate(params, null);
-                Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
-                responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+            params.clear();
+            params.put("walletAddress",testUser);
+            params.put("tokenId", tokenId);
+            params.put("projectId", "6b37b8ff-59d1-4086-8645-cef782d217c3");
+            response = TronlinkApiList.justLendOperate(params, null);
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+            responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+
+
+            params.clear();
+            params.put("walletAddress",testUser);
+            params.put("tokenId", tokenId);
+            params.put("projectId", "534ed914-babc-4910-b6cf-0ebf4b59348b");
+            response = TronlinkApiList.justLendOperate(params, null);
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+            responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+
+            params.clear();
+            params.put("walletAddress",testUser);
+            params.put("tokenId", tokenId);
+            params.put("projectId", "2f38665c-7c74-4e63-bbdf-c69d6a623892");
+            response = TronlinkApiList.justLendOperate(params, null);
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+            responseContent = TronlinkApiList.parseResponse2JsonObject(response);
 
         }
     }
+    @Test(enabled = true)
+    public void justLendDetailOperate() throws InterruptedException {
+        String testUser = "TSNcHHwKgfiMqJQQTJGBf91EJHtB67mdTW";
+        //String testUser = "TKGRE6oiU3rEzasue4MsB6sCXXSTx9BAe3";
+
+        String tokenId = "TBagxx57zx73VJJ61o12VfxzQ2EG3KHYJp";
+
+
+        /*params.clear();
+        params.put("walletAddress",testUser);
+        params.put("tokenId",tokenId);
+        params.put("projectId","6b37b8ff-59d1-4086-8645-cef782d217c3");
+        response = TronlinkApiList.justLendDetail(params,null);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);*/
+        for(int i=0; i<50; i++){
+            params.clear();
+            params.put("walletAddress",testUser);
+            params.put("tokenId", tokenId);
+            params.put("projectId", "6b37b8ff-59d1-4086-8645-cef782d217c3");
+            response = TronlinkApiList.justLendOperate(params, null);
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+            responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+
+
+            response = TronlinkApiList.createGetConnect("https://newtestapi.bt.io/bttc/chain/info",null, null,null);
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+            responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+            Thread.sleep(20000);
+
+        }
+
+    }
+
+    @Test(enabled = true)
+    public void apyList() throws InterruptedException {
+        String testUser = "TSNcHHwKgfiMqJQQTJGBf91EJHtB67mdTW";
+        //String testUser = "TKGRE6oiU3rEzasue4MsB6sCXXSTx9BAe3";
+        String tokenId = "TBagxx57zx73VJJ61o12VfxzQ2EG3KHYJp";
+
+        for(Map.Entry<String, String> entry : jTokenTokenMapNile.entrySet()){
+            String jTokenAddress = entry.getKey();
+            String TokenAddress = entry.getValue();
+            params.clear();
+            params.put("tokenId", TokenAddress);
+            //2f38665c-7c74-4e63-bbdf-c69d6a623892
+            //6b37b8ff-59d1-4086-8645-cef782d217c3
+            //534ed914-babc-4910-b6cf-0ebf4b59348b
+            params.put("projectId", "534ed914-babc-4910-b6cf-0ebf4b59348b");
+            headers.put("System","Android");
+            headers.put("Version","4.10.0");
+            response = TronlinkApiList.apyList(params, headers);
+            Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+            responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+
+
+        }
+
+    }
+
+
 
     @Test(enabled = true)
     public void reward() {
@@ -462,10 +516,10 @@ public class financialCaseManual {
     @Test(enabled = true)
     public void myProjectList_moreUsers(){
         List<String> users = new ArrayList<>();
-        *//*users.add("TXTNcgJHD9GPfpiTbSG2VGtfdfii9VcpEr");  //jtrx compare
+        users.add("TXTNcgJHD9GPfpiTbSG2VGtfdfii9VcpEr");  //jtrx compare
         users.add("TM4dm6EjYbpFpgJJujihUfPQSzuvA62RDj"); //trx, usdd, sun, btt, jst, tusd, usdt
         users.add("TFDP1vFeSYPT6FUznL7zUjhg5X7p2AA8vw");  //nft, busd
-        users.add("TKGRE6oiU3rEzasue4MsB6sCXXSTx9BAe3");*//*
+        users.add("TKGRE6oiU3rEzasue4MsB6sCXXSTx9BAe3");
         users.add("TQ48z1p3kdQeZrf5Dc62U88bsbhvRJJQFn");
 
         for (String curUser:users) {
@@ -565,9 +619,11 @@ public class financialCaseManual {
 
     @Test(enabled = true)
     public void compare_reward_projectList(){
-        //String testUser = "TQ48z1p3kdQeZrf5Dc62U88bsbhvRJJQFn";
+        //String testUser = "TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ";
+        String testUser = "TLipJxwgDbn7FaQCnECxiYdxFTBhshLiW3";
+        //String testUser = "TRWNvb15NmfNKNLhQpxefFz7cNjrYjEw7x";
         //String testUser = "TATA96pE3YR1oe3o6VGY768WDLjkXMYN64";
-        String testUser = "TXFmkVZkpkv8ghNCKwpeVdVvRVqTedSCAK";
+        //String testUser = "TXFmkVZkpkv8ghNCKwpeVdVvRVqTedSCAK";
         params.clear();
         params.put("walletAddress",testUser);
         //params.put("walletAddress","TKGRE6oiU3rEzasue4MsB6sCXXSTx9BAe3");
@@ -575,12 +631,18 @@ public class financialCaseManual {
         JSONObject rewardConntent = TronlinkApiList.parseResponse2JsonObject(response);
 
 
-        *//*bodyObject.clear();
+        bodyObject.clear();
         walletAddressList.add(testUser);
         bodyObject.put("walletAddress",walletAddressList);
         response = TronlinkApiList.myFinancialProjectList(bodyObject, null, null);
-        JSONObject myProjectContent = TronlinkApiList.parseResponse2JsonObject(response);*//*
-    }*/
+        JSONObject myProjectContent = TronlinkApiList.parseResponse2JsonObject(response);
+
+        response = TronlinkApiList.myFinancialTokenList(bodyObject, null, null);
+        JSONObject myFTokenContent = TronlinkApiList.parseResponse2JsonObject(response);
+        //log.info("curUser:"+curUser+"myFTokenContent:\n");
+        //log.info(myFTokenContent.toString());
+
+    }
 
 }
 

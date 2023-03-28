@@ -231,7 +231,7 @@ public class HttpMethed {
       log.info("transactionString:"+transactionString);
       //add expire time
       JSONObject transactionObject = HttpMethed.parseStringContent(transactionString);
-      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+3600000);
+      transactionObject.getJSONObject("raw_data").replace("expiration",transactionObject.getJSONObject("raw_data").getLongValue("expiration")+86340000);
       //get one signature for transaction
       transactionSignString = gettransactionsign(httpNode, transactionObject.toString(), fromKey);
       log.info("-----------sign information-----------------");
@@ -488,6 +488,38 @@ public class HttpMethed {
       return null;
     }
     return response;
+  }
+  public static String MakeDelegateResourceTX(String httpNode, String ownerAddress, String receiverAddress, Long balance,
+                                                       Integer resourceCode, Boolean lock,
+                                                       String visible, String fromKey) {
+    try {
+      final String requestUrl = "http://" + httpNode + "/wallet/delegateresource";
+      JsonObject userBaseObj2 = new JsonObject();
+      userBaseObj2.addProperty("owner_address", ownerAddress);
+      userBaseObj2.addProperty("receiver_address", receiverAddress);
+      userBaseObj2.addProperty("balance",balance);
+      if (resourceCode == 0) {
+        userBaseObj2.addProperty("resource", "BANDWIDTH");
+      }
+      if (resourceCode == 1) {
+        userBaseObj2.addProperty("resource", "ENERGY");
+      }
+      userBaseObj2.addProperty("lock",lock);
+      userBaseObj2.addProperty("visible", visible);
+      //log.info("userBaseObj2:"+userBaseObj2.toString());
+      //send post request
+      response = createConnect(requestUrl, userBaseObj2);
+      transactionString = EntityUtils.toString(response.getEntity());
+      //log.info("creat tx:"+transactionString);
+      transactionSignString = gettransactionsign(httpNode, transactionString, fromKey);
+      //log.info("sign tx:"+transactionSignString);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      httppost.releaseConnection();
+      return null;
+    }
+    return transactionSignString;
   }
 
   public static HttpResponse UnDelegateResourceBroadcast(String httpNode, String ownerAddress, String receiverAddress, Long balance,

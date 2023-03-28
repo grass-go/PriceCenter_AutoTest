@@ -64,14 +64,16 @@ public class Asset extends TronlinkBase {
   @Test(enabled = true, description = "test token add national field")
   public void asset02NonNational(){
     List<String> tokenList = new ArrayList<>();
-    tokenList.add("TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR");  //WTRX
+/*    tokenList.add("TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR");  //WTRX
     tokenList.add("TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9");  //BTC
     tokenList.add("THb4CqiFdwNHsWsQCs4JhzwjMWys4aqCbF");  //TUSD
     tokenList.add("TEkxiTehnzSmSe2XqrBj4w32RUN966rdz8");  //USDC
-    tokenList.add("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");  //WIN
+    tokenList.add("TLa2f6VPqDgRE67v1736s7bJ8Ray5wYjU7");  //WIN*/
+
+    tokenList.add("_");
 
     for (String token:tokenList){
-      params.put("address",addressNewAsset41);
+      params.put("address",quince_B58);
       params.put("tokenAddress",token);
       params.put("tokenType","2");
       response = TronlinkApiList.v2Asset(params);

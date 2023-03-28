@@ -884,32 +884,12 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
 
     public static HttpResponse v1PlayScreenInfoNoSig(Map<String, String> caseheader) {
         final String requestUrl = HttpNode + "/api/activity/play_screen/info";
-        header.clear();
-        header.put("Lang", "1");
-        header.put("Version", "3.7.0");
-        header.put("DeviceID", "1111111111");
-        header.put("chain", "MainChain");
-        header.put("packageName", "com.tronlinkpro.wallet");
-        header.put("System", "Android");
-        header.put("Content-type", "application/json; charset=utf-8");
-        header.put("Connection", "Keep-Alive");
-        if(caseheader != null){
-            header = AddMap(header,caseheader);
-        }
-        response = createGetConnect(requestUrl, null, null , header);
+        response = createGetConnect(requestUrl, null, null , caseheader);
         return response;
     }
-    public static HttpResponse v1PlayScreenInfo(Map<String, String> params) {
+    public static HttpResponse v1PlayScreenInfo(Map<String, String> header, Map<String, String> params) {
         final String curURI =  "/api/activity/play_screen/info";
-        header.clear();
-        header.put("Lang", "1");
-        header.put("Version", "3.7.0");
-        header.put("DeviceID", "1111111111");
-        header.put("chain", "MainChain");
-        header.put("packageName", "com.tronlinkpro.wallet");
-        header.put("System", "Android");
-        header.put("Content-type", "application/json; charset=utf-8");
-        header.put("Connection", "Keep-Alive");
+
         response = createGetConnectWithSignature(curURI, params, header,null);
         return response;
     }
@@ -1906,6 +1886,19 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
+
+    public static HttpResponse apyList( HashMap<String, String> params,HashMap<String, String> headers) {
+        final String curURI = "/api/financial/apyList";
+        response = createGetConnectWithSignature(curURI,params, headers,null);
+        return response;
+    }
+
+    public static HttpResponse apyListNoSig( HashMap<String, String> params,HashMap<String, String> headers) {
+        final String requestUrl =HttpNode + "/api/financial/apyList";
+        response = createGetConnect(requestUrl,params, null,headers);
+        return response;
+    }
+
     public static HttpResponse queryAbi( HashMap<String, String> params,HashMap<String, String> headers) {
         final String curURI = "/api/wallet/v2/queryAbi";
         response = createGetConnectWithSignature(curURI,params, headers,null);
@@ -2060,9 +2053,9 @@ public class TronlinkApiList extends TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse nodeGetResource(String userAccount) {
+    public static HttpResponse nodeGetResource(String httpnode, String userAccount) {
         //http://47.252.19.181:8090/wallet/getaccountresource?address=41E7D71E72EA48DE9144DC2450E076415AF0EA745F
-        final String requestUrl = "http://" + nileFullnode +":8090"+ "/wallet/getaccountresource?address="+userAccount;
+        final String requestUrl = "http://" + httpnode + "/wallet/getaccountresource?address="+userAccount;
         response = createGetConnect(requestUrl, null, null,null);
         return response;
     }
