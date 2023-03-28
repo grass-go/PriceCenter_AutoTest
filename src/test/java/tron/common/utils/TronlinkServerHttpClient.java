@@ -64,9 +64,9 @@ public class TronlinkServerHttpClient {
 
 
     public static Integer connectionTimeout = Configuration.getByPath("testng.conf")
-            .getInt("defaultParameter.httpConnectionTimeout");
+        .getInt("defaultParameter.httpConnectionTimeout");
     public static Integer soTimeout = Configuration.getByPath("testng.conf")
-            .getInt("defaultParameter.httpSoTimeout");
+        .getInt("defaultParameter.httpSoTimeout");
 
     static {
         PoolingClientConnectionManager pccm = new PoolingClientConnectionManager();
@@ -81,11 +81,11 @@ public class TronlinkServerHttpClient {
         TrustStrategy acceptingTrustStrategy = new TrustSelfSignedStrategy();
         try {
             SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom()
-                    .loadTrustMaterial(null, acceptingTrustStrategy)
-                    .build();
+                .loadTrustMaterial(null, acceptingTrustStrategy)
+                .build();
             SSLConnectionSocketFactory scsf = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
             httpClient2 = HttpClients.custom().setSSLSocketFactory(scsf).setConnectionTimeToLive(10, TimeUnit.SECONDS)
-                    .build();
+                .build();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (KeyManagementException e) {
@@ -96,10 +96,10 @@ public class TronlinkServerHttpClient {
     }
 
     public static HttpResponse createGetConnect(String url, Map<String, String> params,
-                                                          JSONObject requestBody, Map<String, String> header) {
+                                                JSONObject requestBody, Map<String, String> header) {
         try {
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
+                connectionTimeout);
             httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
             if (params != null) {
                 //此处有两种方式获取url，第一种是用URI来构建。第二种是string buffer拼接。此处用第二种。
@@ -119,6 +119,7 @@ public class TronlinkServerHttpClient {
                 }
                 stringBuffer.deleteCharAt(stringBuffer.length() - 1);
                 url = stringBuffer.toString();
+                log.info("url:" + url);
             }
             httpget = new HttpGet(url);
             if (header != null) {
@@ -146,11 +147,11 @@ public class TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse createPostConnect(String url, Map<String,String> params,
-                                                           String requestBody, Map<String, String> header) {
+    public static HttpResponse createPostConnect(String url, Map<String, String> params,
+                                                 String requestBody, Map<String, String> header) {
         try {
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
+                connectionTimeout);
             httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
             if (params != null) {
                 StringBuffer stringBuffer = new StringBuffer(url);
@@ -187,10 +188,10 @@ public class TronlinkServerHttpClient {
     }
 
     public static HttpResponse createPostConnect(String url, Map<String, String> params,
-                                                           JSONArray requestBody, Map<String, String> header) {
+                                                 JSONArray requestBody, Map<String, String> header) {
         try {
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
+                connectionTimeout);
             httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
             if (params != null) {
                 StringBuffer stringBuffer = new StringBuffer(url);
@@ -228,10 +229,10 @@ public class TronlinkServerHttpClient {
     }
 
     public static HttpResponse createPostConnect(String url, Map<String, String> params,
-                                                           JSONObject requestBody, Map<String, String> header) {
+                                                 JSONObject requestBody, Map<String, String> header) {
         try {
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
+                connectionTimeout);
             httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
             if (params != null) {
                 StringBuffer stringBuffer = new StringBuffer(url);
@@ -271,7 +272,7 @@ public class TronlinkServerHttpClient {
         try {
             // if ssl issue occur, use httpClient.custome().setxxx to set timeout.
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
+                connectionTimeout);
             httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
 
             httpput = new HttpPut(url);
@@ -296,7 +297,7 @@ public class TronlinkServerHttpClient {
                 stringBuffer.deleteCharAt(stringBuffer.length() - 1);
                 url = stringBuffer.toString();
             }
-            log.info("Put: "+url);
+            log.info("Put: " + url);
 
             if (requestBody != null) {
                 StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
@@ -322,7 +323,7 @@ public class TronlinkServerHttpClient {
             httpdelete = new HttpDeleteWithBody(url);
             // if ssl issue occur, use httpClient.custome().setxxx to set timeout.
             httpClient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,
-                    connectionTimeout);
+                connectionTimeout);
             httpClient.getParams().setParameter(CoreConnectionPNames.SO_TIMEOUT, soTimeout);
 
             httpdelete.setHeader("Content-type", "application/json; charset=utf-8");
@@ -346,7 +347,7 @@ public class TronlinkServerHttpClient {
                 stringBuffer.deleteCharAt(stringBuffer.length() - 1);
                 url = stringBuffer.toString();
             }
-            log.info("Delete: "+url);
+            log.info("Delete: " + url);
 
             if (requestBody != null) {
                 StringEntity entity = new StringEntity(requestBody.toString(), Charset.forName("UTF-8"));
@@ -398,7 +399,7 @@ public class TronlinkServerHttpClient {
         try {
             String result = EntityUtils.toString(response.getEntity());
             log.info("======");
-            log.info(result);
+            log.info("result:" + result);
             log.info("======");
             JSONObject obj = JSONObject.parseObject(result);
             return obj;
@@ -450,9 +451,9 @@ public class TronlinkServerHttpClient {
     }
 
     //below are signature related
-    public static Map<String, String> AddMap(Map<String, String> map1, Map<String, String> map2){
+    public static Map<String, String> AddMap(Map<String, String> map1, Map<String, String> map2) {
         Set myKeys = map2.keySet();
-        for (Object o : myKeys){
+        for (Object o : myKeys) {
             map1.put((String) o, map2.get(o));
         }
         return map1;
@@ -460,30 +461,30 @@ public class TronlinkServerHttpClient {
 
     public static Map<String, String> getNewSigHeader(String needSys, String testVersion, String testLang, String testPkg) {
         Map<String, String> header = new HashMap<>();
-        if (needSys.equals("chrome-extension-test")){
-            header.put("System","chrome-extension-test");
-        } else if(needSys.equals("chrome-extension")){
-            header.put("System","chrome-extension");
-        } else if(needSys.equals("Chrome")){
-            header.put("System","Chrome");
-        } else if(needSys.equals("AndroidTest")){
-            header.put("System","AndroidTest");
-        } else if(needSys.equals("Android")){
-            header.put("System","Android");
-        } else if(needSys.equals("iOSTest")){
-            header.put("System","iOSTest");
-        } else if(needSys.equals("iOS")){
-            header.put("System","iOS");
-        } else if(needSys.equals("Firefox")){
-            header.put("System","Firefox");
-        } else if(needSys.equals("firefox-test")){
-            header.put("System","firefox-test");
+        if (needSys.equals("chrome-extension-test")) {
+            header.put("System", "chrome-extension-test");
+        } else if (needSys.equals("chrome-extension")) {
+            header.put("System", "chrome-extension");
+        } else if (needSys.equals("Chrome")) {
+            header.put("System", "Chrome");
+        } else if (needSys.equals("AndroidTest")) {
+            header.put("System", "AndroidTest");
+        } else if (needSys.equals("Android")) {
+            header.put("System", "Android");
+        } else if (needSys.equals("iOSTest")) {
+            header.put("System", "iOSTest");
+        } else if (needSys.equals("iOS")) {
+            header.put("System", "iOS");
+        } else if (needSys.equals("Firefox")) {
+            header.put("System", "Firefox");
+        } else if (needSys.equals("firefox-test")) {
+            header.put("System", "firefox-test");
         }
-        header.put("Lang",testLang);
-        header.put("Version",testVersion);
-        header.put("DeviceID","fca5a022-5526-45f5-a7e7");
-        header.put("chain","MainChain");
-        header.put("channel","official");
+        header.put("Lang", testLang);
+        header.put("Version", testVersion);
+        header.put("DeviceID", "fca5a022-5526-45f5-a7e7");
+        header.put("chain", "MainChain");
+        header.put("channel", "official");
 
         header.put("ts", java.lang.String.valueOf(System.currentTimeMillis()));
         //header.put("ts","1609302220000");
@@ -493,39 +494,40 @@ public class TronlinkServerHttpClient {
         header.put("Content-type", "application/json; charset=utf-8");
         header.put("Connection", "Keep-Alive");
 
-        header.put("deviceName","wqqtest");
-        header.put("osVersion","10.0.0");
+        header.put("deviceName", "wqqtest");
+        header.put("osVersion", "10.0.0");
 
         return header;
     }
+
     public static Map<String, String> getNewSigParams(String needSys) {
         Map<String, String> params = new HashMap<>();
 
-        if (needSys.equals("chrome-extension-test")){
-            params.put("secretId","8JKSO2PM4M2K45EL");
-        } else if(needSys.equals("chrome-extension")){
-            params.put("secretId","AE68A487AA919CAE");
-        } else if(needSys.equals("Chrome")){
-            params.put("secretId","AE68A487AA919CAE");
-        } else if(needSys.equals("AndroidTest")){
-            params.put("secretId","SFSUIOJBFMLKSJIF");
-        } else if(needSys.equals("Android")){
-            params.put("secretId","A4ADE880F46CA8D4");
-        } else if(needSys.equals("iOSTest")){
-            params.put("secretId","JSKLJKFJDFDSFER3");
-        } else if(needSys.equals("iOS")){
-            params.put("secretId","ED151200DD0B3B52");
-        } else if(needSys.equals("Firefox")){
-            params.put("secretId","UEABGANGI530ROIE");
-        } else if(needSys.equals("firefox-test")){
-            params.put("secretId","HRFLANGJNGIE8757");
+        if (needSys.equals("chrome-extension-test")) {
+            params.put("secretId", "8JKSO2PM4M2K45EL");
+        } else if (needSys.equals("chrome-extension")) {
+            params.put("secretId", "AE68A487AA919CAE");
+        } else if (needSys.equals("Chrome")) {
+            params.put("secretId", "AE68A487AA919CAE");
+        } else if (needSys.equals("AndroidTest")) {
+            params.put("secretId", "SFSUIOJBFMLKSJIF");
+        } else if (needSys.equals("Android")) {
+            params.put("secretId", "A4ADE880F46CA8D4");
+        } else if (needSys.equals("iOSTest")) {
+            params.put("secretId", "JSKLJKFJDFDSFER3");
+        } else if (needSys.equals("iOS")) {
+            params.put("secretId", "ED151200DD0B3B52");
+        } else if (needSys.equals("Firefox")) {
+            params.put("secretId", "UEABGANGI530ROIE");
+        } else if (needSys.equals("firefox-test")) {
+            params.put("secretId", "HRFLANGJNGIE8757");
         }
 
-        params.put("nonce","12345");
+        params.put("nonce", "12345");
         return params;
     }
 
-    public static String getNewSignature(String curUri,String httpMethod, String address, Map<String, String> params, Map<String, String> headers) {
+    public static String getNewSignature(String curUri, String httpMethod, String address, Map<String, String> params, Map<String, String> headers) {
         //Map<String, String> params = getNewSigParams(needSys);
         //Map<String, String> headers = getNewSigHeader(needSys, testVersion, testLang, testPkg);
         GetSign getSign = new GetSign();
@@ -544,27 +546,27 @@ public class TronlinkServerHttpClient {
             log.info(curUri);
             log.info(httpMethod);
             signature = URLEncoder.encode(getSign.getSignature(
-                    headers.get("channel"),
-                    headers.get("chain"),
-                    headers.get("Lang"),
-                    address,
-                    params.get("nonce"),
-                    params.get("secretId"),
-                    headers.get("System"),
-                    headers.get("DeviceID"),
-                    headers.get("ts"),
-                    headers.get("Version"),
-                    curUri,
-                    httpMethod));
-        }catch (Exception e) {
+                headers.get("channel"),
+                headers.get("chain"),
+                headers.get("Lang"),
+                address,
+                params.get("nonce"),
+                params.get("secretId"),
+                headers.get("System"),
+                headers.get("DeviceID"),
+                headers.get("ts"),
+                headers.get("Version"),
+                curUri,
+                httpMethod));
+        } catch (Exception e) {
             log.info("getNewSignature Error!");
-            log.info("",e);
+            log.info("", e);
             return null;
         }
         return signature;
     }
 
-    public static HttpResponse createGetConnectWithSignature(String curURI, Map<String, String> caseParams,Map<String, String> caseHeader, JSONObject object ) {
+    public static HttpResponse createGetConnectWithSignature(String curURI, Map<String, String> caseParams, Map<String, String> caseHeader, JSONObject object) {
 
         Map<String, String> params = new HashMap<>();
         Map<String, String> headers = new HashMap<>();
@@ -572,34 +574,34 @@ public class TronlinkServerHttpClient {
         String curVersion = defaultVersion;
         String curLang = defaultLang;
         String curPkg = defaultPkg;
-        if (caseHeader != null && caseHeader.containsKey("System")){
+        if (caseHeader != null && caseHeader.containsKey("System")) {
             curSystem = caseHeader.get("System");
         }
-        if (caseHeader != null && caseHeader.containsKey("Version")){
+        if (caseHeader != null && caseHeader.containsKey("Version")) {
             curVersion = caseHeader.get("Version");
         }
-        if (caseHeader != null && caseHeader.containsKey("Lang")){
+        if (caseHeader != null && caseHeader.containsKey("Lang")) {
             curLang = caseHeader.get("Lang");
         }
-        if (caseHeader != null && caseHeader.containsKey("Package")){
+        if (caseHeader != null && caseHeader.containsKey("Package")) {
             curPkg = caseHeader.get("packageName");
         }
 
         params = getNewSigParams(curSystem);
-        if(caseParams != null){
+        if (caseParams != null) {
             params = AddMap(params, caseParams);
         }
         headers = getNewSigHeader(curSystem, curVersion, curLang, curPkg);
-        if(caseHeader != null) {
+        if (caseHeader != null) {
             headers = AddMap(headers, caseHeader);
         }
-        log.info("createGetConnectWithSignature:params:"+params.toString());
-        log.info("createGetConnectWithSignature:headers:"+headers.toString());
-        String cursig="";
-        if(caseParams != null && caseParams.containsKey("address")) {
+        log.info("createGetConnectWithSignature:params:" + params.toString());
+        log.info("createGetConnectWithSignature:headers:" + headers.toString());
+        String cursig = "";
+        if (caseParams != null && caseParams.containsKey("address")) {
             //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
             cursig = getNewSignature(curURI, "GET", caseParams.get("address"), params, headers);
-        }else{
+        } else {
             cursig = getNewSignature(curURI, "GET", "", params, headers);
         }
         params.put("signature", cursig);
@@ -608,41 +610,41 @@ public class TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse createPostConnectWithSignature(String curURI,Map<String, String> caseParams, Map<String, String> caseHeader,JSONObject object ) {
+    public static HttpResponse createPostConnectWithSignature(String curURI, Map<String, String> caseParams, Map<String, String> caseHeader, JSONObject object) {
         Map<String, String> params = new HashMap<>();
         Map<String, String> headers = new HashMap<>();
         String curSystem = defaultSys;
         String curVersion = defaultVersion;
         String curLang = defaultLang;
         String curPkg = defaultPkg;
-        if (caseHeader != null && caseHeader.containsKey("System")){
+        if (caseHeader != null && caseHeader.containsKey("System")) {
             curSystem = caseHeader.get("System");
         }
-        if (caseHeader != null && caseHeader.containsKey("Version")){
+        if (caseHeader != null && caseHeader.containsKey("Version")) {
             curVersion = caseHeader.get("Version");
         }
-        if (caseHeader != null && caseHeader.containsKey("Lang")){
+        if (caseHeader != null && caseHeader.containsKey("Lang")) {
             curLang = caseHeader.get("Lang");
         }
-        if (caseHeader != null && caseHeader.containsKey("Package")){
+        if (caseHeader != null && caseHeader.containsKey("Package")) {
             curPkg = caseHeader.get("packageName");
         }
 
         params = getNewSigParams(curSystem);
-        if(caseParams != null){
+        if (caseParams != null) {
             params = AddMap(params, caseParams);
         }
         headers = getNewSigHeader(curSystem, curVersion, curLang, curPkg);
-        if(caseHeader != null) {
+        if (caseHeader != null) {
             headers = AddMap(headers, caseHeader);
         }
 
-        String cursig="";
+        String cursig = "";
         //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
-        if(caseParams != null && caseParams.containsKey("address")) {
+        if (caseParams != null && caseParams.containsKey("address")) {
             //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
             cursig = getNewSignature(curURI, "POST", caseParams.get("address"), params, headers);
-        }else{
+        } else {
             cursig = getNewSignature(curURI, "POST", "", params, headers);
         }
 
@@ -652,22 +654,22 @@ public class TronlinkServerHttpClient {
         return response;
     }
 
-    public static HttpResponse createPostConnectWithSignature(String curURI,Map<String, String> caseParams, Map<String, String> caseHeader,JSONArray object ) {
+    public static HttpResponse createPostConnectWithSignature(String curURI, Map<String, String> caseParams, Map<String, String> caseHeader, JSONArray object) {
         Map<String, String> params = getNewSigParams(defaultSys);
-        if(caseParams != null){
+        if (caseParams != null) {
             params = AddMap(params, caseParams);
         }
 
         Map<String, String> headers = getNewSigHeader(defaultSys, defaultVersion, defaultLang, defaultPkg);
-        if(caseHeader != null) {
+        if (caseHeader != null) {
             headers = AddMap(headers, caseHeader);
         }
         //String curUri,String httpMethod, String address, String needSys, String testVersion, String testLang, String testPkg
-        String cursig = getNewSignature(curURI,"POST", caseParams.get("address"), params, headers);
+        String cursig = getNewSignature(curURI, "POST", caseParams.get("address"), params, headers);
         params.put("signature", cursig);
 
         String requestUrl = HttpNode + curURI;
-        log.info("requestUrl: "+requestUrl);
+        log.info("requestUrl: " + requestUrl);
         response = createPostConnect(requestUrl, params, object, headers);
         return response;
     }
