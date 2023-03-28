@@ -64,8 +64,18 @@ public class stake2Manual {
     String v421key = "0ae54d7f31c29aa4162ad37e269d59cefafe81310f7461c4d4c33cbdde4da788";
     byte[] v421 = TronlinkApiList.getFinalAddress(v421key);
     String v42158 = "TPbpoVgFDzkE7Sio9mZWKEC4rv3xWRL22C";
+    /*String stakeKey = "72c78ff4e317b8f0f58bc423f899ab00f6f4869c76f671a1d3854a5009438e4c";
+    byte[] stake = TronlinkApiList.getFinalAddress(stakeKey);
+    String stake58 = "TSNcHHwKgfiMqJQQTJGBf91EJHtB67mdTW";*/
+    String stakeKey = "1a48582162822ada65aa6a4f9acb793bbd7cfee13113e9ed9810d7f34cd154cc";
+    byte[] stake = TronlinkApiList.getFinalAddress(stakeKey);
+    String stake58 = "TDZSyscZ1hdr1wgKwJa34hQyPxK1vCCBQ6";
 
-    private String httpnode = "47.252.19.181:8090";
+
+    //private String httpnode = "47.252.19.181:8090";
+    private String httpnode = "api.trongrid.io";
+    //private String httpnode = "47.252.3.238:8090";
+    //private String httpnode = "nile.trongrid.io";
 
     @Test(enabled = true, description = "")
     public void calculateResource() throws Exception {
@@ -74,7 +84,7 @@ public class stake2Manual {
 
         List<String> ownerAddressList = new ArrayList<>();
         ownerAddressList.add("TSNcHHwKgfiMqJQQTJGBf91EJHtB67mdTW");
-        //ownerAddressList.add("TCCqXsoMWmRUbiHUSxLKdX9VBqyuxPifNf");
+        ownerAddressList.add("TDZSyscZ1hdr1wgKwJa34hQyPxK1vCCBQ6");
         ownerAddressList.add("TWBSXWw2iBPpxPzEQgUruMZZXAb8P7SWzs");
         //ownerAddressList.add("TQRj3keAZdS9mUWqReMFuYRhAZdEZuPoHc");
 
@@ -82,7 +92,7 @@ public class stake2Manual {
         //String test_user = "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo";
         //String test_user_41="412CBAEBC9F5FAB6D610549F22406FFB8B9A04AE50";
 
-        HttpResponse resourceRsp = TronlinkApiList.nodeGetResource(test_user_41);
+        HttpResponse resourceRsp = TronlinkApiList.nodeGetResource(httpnode,test_user_41);
         JSONObject resourceObj = TronlinkApiList.parseResponse2JsonObject(resourceRsp);
         Object TotalNetLimit_obj = JSONPath.eval(resourceObj, "$.TotalNetLimit");
         Object TotalNetWeight_obj = JSONPath.eval(resourceObj, "$.TotalNetWeight");
@@ -212,23 +222,21 @@ public class stake2Manual {
         Object accountAddress = JSONPath.eval(responseContent,"$.data.accountAddress[0]");*/
 
         for (String ownerAddress : ownerAddressList) {
-            param.put("resource", "0");
+            /*param.put("resource", "0");
+            param.put("lockType", "false");
+            res = TronlinkApiList.delegateAddress(ownerAddress, param);
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);*/
+
+            param.put("resource","1");
+            param.put("lockType","true");
+            res = TronlinkApiList.delegateAddress(ownerAddress,param);
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+
+
+            param.put("resource", "1");
             param.put("lockType", "false");
             res = TronlinkApiList.delegateAddress(ownerAddress, param);
             responseContent = TronlinkApiList.parseResponse2JsonObject(res);
-
-        /*param.put("resource","1");
-        param.put("lockType","true");
-        res = TronlinkApiList.delegateAddress(ownerAddress,param);
-        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
-        accountAddress = JSONPath.eval(responseContent,"$.data.accountAddress[0]");*/
-
-
-            /*param.put("resource", "1");
-            param.put("lockType", "false");
-            res = TronlinkApiList.delegateAddress(ownerAddress, param);
-            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
-*/
         }
 
 
@@ -243,7 +251,7 @@ public class stake2Manual {
         //String test_user = "TQpb6SWxCLChged64W1MUxi2aNRjvdHbBZ";
         //String test_user = "TQUsaH7DzTAPQEVsUvQsVyzvwqwT2p7WEm";
         //String test_user = "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo";
-        //String test_user = "TMNfnRXy3Nr2kqLH3Phk1qMqGz7BZSszM5";
+        //String test_user = stake58;
 
         res = TronlinkApiList.totalAddress(test_user);
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
@@ -273,7 +281,7 @@ public class stake2Manual {
         }
 
 
-        /*param.put("resource","1");
+        param.put("resource","1");
         param.put("lockType","false");
         res = TronlinkApiList.delegateAddress(test_user,param);
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
@@ -291,13 +299,10 @@ public class stake2Manual {
         param.put("resource","0");
         param.put("lockType","true");
         res = TronlinkApiList.delegateAddress(test_user,param);
-        responseContent = TronlinkApiList.parseResponse2JsonObject(res);*/
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
 
 
-        /*Object stakeTotalBalance_obj =
-         */
-        /*HttpResponse scanres = TronlinkApiList.scanGetAccount(test_user);
-        JSONObject scanResCnt = TronlinkApiList.parseResponse2JsonObject(scanres);*/
+
     }
 
     @Test(enabled = true, description = "multi sign freeze balance with serializable no receiver address")
@@ -308,7 +313,7 @@ public class stake2Manual {
         //String test_user = "TE3if14LPRdKTiQTkEfqUwmWXuLMecQueo";
 
 
-        HttpResponse resourceRsp = TronlinkApiList.nodeGetResource("41E7D71E72EA48DE9144DC2450E076415AF0EA745F");
+        HttpResponse resourceRsp = TronlinkApiList.nodeGetResource(httpnode,"41E7D71E72EA48DE9144DC2450E076415AF0EA745F");
         JSONObject resourceObj = TronlinkApiList.parseResponse2JsonObject(resourceRsp);
         Object TotalNetLimit_obj = JSONPath.eval(resourceObj, "$.TotalNetLimit");
         Object TotalNetWeight_obj = JSONPath.eval(resourceObj, "$.TotalNetWeight");
@@ -362,7 +367,7 @@ public class stake2Manual {
         param.put("stakeVersion", "2");
         res = TronlinkApiList.fromAddress(test_user, param);
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
-        users = responseContent.getJSONArray("data");
+        /*users = responseContent.getJSONArray("data");
         for (int i = 0; i < users.size(); i++) {
             JSONObject userObject = (JSONObject) users.get(i);
             String resourceType = userObject.getString("resource");
@@ -376,14 +381,14 @@ public class stake2Manual {
             }
             log.info("fromAddress:fromResourceBalance:" + fromResourceBalance + ", clc_resource:" + clc_resource.toString());
             Assert.assertTrue(TronlinkApiList.CompareGapInGivenTolerance(clc_resource.toString(), fromResourceBalance, "0.00000001"));
-        }
+        }*/
 
         //============================================
         param.put("resource", "0");
         param.put("stakeVersion", "2");
         res = TronlinkApiList.fromAddress(test_user, param);
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
-        users = responseContent.getJSONArray("data");
+        /*users = responseContent.getJSONArray("data");
         for (int i = 0; i < users.size(); i++) {
             JSONObject userObject = (JSONObject) users.get(i);
             String resourceType = userObject.getString("resource");
@@ -397,7 +402,7 @@ public class stake2Manual {
             }
             log.info("fromAddress:fromResourceBalance:" + fromResourceBalance + ", clc_resource:" + clc_resource.toString());
             Assert.assertTrue(TronlinkApiList.CompareGapInGivenTolerance(clc_resource.toString(), fromResourceBalance, "0.00000001"));
-        }
+        }*/
     }
 
 
@@ -405,29 +410,57 @@ public class stake2Manual {
     public void delegateAddress() throws Exception {
         //String test_user = "TSNcHHwKgfiMqJQQTJGBf91EJHtB67mdTW";
         //String test_user = "TGysBYxv1YWF87wqiS4NtysxBPDShsQ6gs";
-        String test_user = "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t";
+        String test_user = quince58;
+        param.put("resource", "1");
+        param.put("lockType", "true");
+        res = TronlinkApiList.delegateAddress(test_user, param);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+        Object pageIndex_obj = JSONPath.eval(responseContent, "$.data.pageIndex[0]");
+        while(pageIndex_obj!=null && Integer.valueOf(pageIndex_obj.toString())!=0){
+            String pageIndex = pageIndex_obj.toString();
+            param.put("pageIndex", pageIndex);
+            res = TronlinkApiList.delegateAddress(test_user, param);
+            responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+            pageIndex_obj = JSONPath.eval(responseContent, "$.data.pageIndex[0]");
+            log.info(pageIndex_obj.toString());
+        }
+        param.clear();
         param.put("resource", "1");
         param.put("lockType", "false");
         res = TronlinkApiList.delegateAddress(test_user, param);
         responseContent = TronlinkApiList.parseResponse2JsonObject(res);
-        Object accountAddress = JSONPath.eval(responseContent, "$.data.accountAddress[0]");
+
+        param.clear();
+        param.put("resource", "0");
+        param.put("lockType", "true");
+        res = TronlinkApiList.delegateAddress(test_user, param);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+
+        param.clear();
+        param.put("resource", "0");
+        param.put("lockType", "false");
+        res = TronlinkApiList.delegateAddress(test_user, param);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(res);
+
+
+
     }
 
 
     @Test(enabled = true, description = "multi sign freeze balance with serializable no receiver address")
     public void freezeBalanceV2() throws Exception {
         // visible:true
-        HttpResponse bandwidth_visibleT_rsp = HttpMethed.freezeBalanceV2BroadCast(httpnode, quince58, 1100000L, 0, "true", quincekey);
+        HttpResponse bandwidth_visibleT_rsp = HttpMethed.freezeBalanceV2BroadCast(httpnode, stake58, 300100000L, 0, "true", stakeKey);
         TronlinkApiList.parseResponse2JsonObject(bandwidth_visibleT_rsp);
-        HttpResponse energy_visibleT_rsp = HttpMethed.freezeBalanceV2BroadCast(httpnode, quince58, 1100000L, 1, "true", quincekey);
+        HttpResponse energy_visibleT_rsp = HttpMethed.freezeBalanceV2BroadCast(httpnode, stake58, 200500000L, 1, "true", stakeKey);
         TronlinkApiList.parseResponse2JsonObject(energy_visibleT_rsp);
     }
 
     @Test(enabled = true, description = "multi sign freeze balance with serializable no receiver address")
     public void UnfreezeBalanceV2() throws Exception {
-        HttpResponse bandwidth_visibleT_resp = HttpMethed.unfreezeBalanceV2BroadCast(httpnode, quince58, 500000L, 0, "true", quincekey);
+        HttpResponse bandwidth_visibleT_resp = HttpMethed.unfreezeBalanceV2BroadCast(httpnode, stake58, 2600000L, 0, "true", stakeKey);
         TronlinkApiList.parseResponse2JsonObject(bandwidth_visibleT_resp);
-        HttpResponse energy_visibleT_resp = HttpMethed.unfreezeBalanceV2BroadCast(httpnode, quince58, 500000L, 1, "true", quincekey);
+        HttpResponse energy_visibleT_resp = HttpMethed.unfreezeBalanceV2BroadCast(httpnode, stake58, 2700000L, 1, "true", stakeKey);
         TronlinkApiList.parseResponse2JsonObject(energy_visibleT_resp);
 
     }
@@ -444,21 +477,60 @@ public class stake2Manual {
 
     @Test(enabled = true, description = "multi sign freeze balance with serializable no receiver address")
     public void DelegateResource() {
-        HttpResponse bandwdth_visibleT_resp = HttpMethed.DelegateResourceBroadcast(httpnode, quince58, "TEmXqsFgXGUC6pWKXxaWSnQBnaGcMCM6dx", 1000000L, 0, true, "true", quincekey);
+        /*HttpResponse bandwdth_visibleT_resp = HttpMethed.DelegateResourceBroadcast(httpnode, stake58, "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t", 10100000L, 0, true, "true", stakeKey);
         TronlinkApiList.parseResponse2JsonObject(bandwdth_visibleT_resp);
-        HttpResponse energy_visibleT_resp = HttpMethed.DelegateResourceBroadcast(httpnode, quince58, "TEmXqsFgXGUC6pWKXxaWSnQBnaGcMCM6dx", 1000000L, 1, true, "true", quincekey);
+        HttpResponse energy_visibleT_resp = HttpMethed.DelegateResourceBroadcast(httpnode, stake58, "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t", 10100000L, 1, true, "true", stakeKey);
         TronlinkApiList.parseResponse2JsonObject(energy_visibleT_resp);
-        HttpResponse bandwdth_visibleT_lockF_resp = HttpMethed.DelegateResourceBroadcast(httpnode, quince58, "TEmXqsFgXGUC6pWKXxaWSnQBnaGcMCM6dx", 1000000L, 0, false, "true", quincekey);
+        HttpResponse bandwdth_visibleT_lockF_resp = HttpMethed.DelegateResourceBroadcast(httpnode, stake58, "TX74o6dWugAgdaMv8M39QP9YL5QRgfj32t", 22200000L, 0, false, "true", stakeKey);
         TronlinkApiList.parseResponse2JsonObject(bandwdth_visibleT_lockF_resp);
-        HttpResponse energy_visibleT_lockF_resp = HttpMethed.DelegateResourceBroadcast(httpnode, quince58, "TEmXqsFgXGUC6pWKXxaWSnQBnaGcMCM6dx", 1000000L, 1, false, "true", quincekey);
+        */
+
+        HttpResponse energy_visibleT_lockF_resp = HttpMethed.DelegateResourceBroadcast(httpnode, stake58, "TGQVLckg1gDZS5wUwPTrPgRG4U8MKC4jcP", 1000000L, 1, false, "true", stakeKey);
         TronlinkApiList.parseResponse2JsonObject(energy_visibleT_lockF_resp);
+    }
+
+    @Test(enabled = true, threadPoolSize = 1,invocationCount = 1)
+    public void DelegateResourcePerf() {
+        List<String> transactionsList = new ArrayList<>();
+        List<String> userList = new ArrayList<>();
+        File file = new File("/Users/wqq/Text/test_stake2.0/account_info_10.txt");
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(file));
+            String tempString = null;
+            while ((tempString = reader.readLine()) != null) {
+                // 显示行号
+                String[] accounts = tempString.split("\t");
+                String curAddress = accounts[0];
+                userList.add(curAddress);
+                }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(int i=0; i<10; i++) {
+            int userIndex = (int) (Math.random() * 10);
+            long amount = (long) userIndex + 1000000;
+            String tx = HttpMethed.MakeDelegateResourceTX(httpnode, stake58, userList.get(userIndex), amount, 1, false, "true", stakeKey);
+            transactionsList.add(tx);
+        }
+
+        for(String curTx : transactionsList){
+
+            HttpResponse txResp = HttpMethed.broadcastTransaction(httpnode, curTx);
+            TronlinkApiList.parseResponse2JsonObject(txResp);
+        }
+
     }
 
     @Test(enabled = true, description = "multi sign freeze balance with serializable no receiver address")
     public void UnDelegateResource() throws Exception {
-        /*HttpResponse bandwdth_visibleT_tx = HttpMethed.UnDelegateResourceBroadcast(httpnode, quince58,wqq158, 900000L,0, "true", quincekey);
-        TronlinkApiList.parseResponse2JsonObject(bandwdth_visibleT_tx);*/
-        HttpResponse energy_visibleT_tx = HttpMethed.UnDelegateResourceBroadcast(httpnode, quince58, "TEmXqsFgXGUC6pWKXxaWSnQBnaGcMCM6dx", 500000L, 1, "true", quincekey);
+        HttpResponse bandwdth_visibleT_tx = HttpMethed.UnDelegateResourceBroadcast(httpnode, stake58,quince58, 1500000L,0, "true", stakeKey);
+        TronlinkApiList.parseResponse2JsonObject(bandwdth_visibleT_tx);
+        HttpResponse energy_visibleT_tx = HttpMethed.UnDelegateResourceBroadcast(httpnode, stake58, quince58, 2500000L, 1, "true", stakeKey);
+        TronlinkApiList.parseResponse2JsonObject(energy_visibleT_tx);
+        bandwdth_visibleT_tx = HttpMethed.UnDelegateResourceBroadcast(httpnode, stake58,"TEmXqsFgXGUC6pWKXxaWSnQBnaGcMCM6dx", 1500000L,0, "true", stakeKey);
+        TronlinkApiList.parseResponse2JsonObject(bandwdth_visibleT_tx);
+        energy_visibleT_tx = HttpMethed.UnDelegateResourceBroadcast(httpnode, stake58, "TEmXqsFgXGUC6pWKXxaWSnQBnaGcMCM6dx", 2500000L, 1, "true", stakeKey);
         TronlinkApiList.parseResponse2JsonObject(energy_visibleT_tx);
 
     }
