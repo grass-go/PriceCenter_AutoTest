@@ -177,4 +177,19 @@ public class FProjectTokenInfoDao {
         return fp;
     }
 
+    public List<FProjectTokenInfoDao> queryTRX() throws Exception {
+        Connection con = DBUtil.getConnection();
+        Statement stmt = con.createStatement();
+        String sql = "select contract_address,deposited_usd from f_project_token_info where token_id = 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb' and project_id = '2f38665c-7c74-4e63-bbdf-c69d6a623892'";
+        ResultSet rs = stmt.executeQuery(sql);
+        List<FProjectTokenInfoDao> fp = new ArrayList<FProjectTokenInfoDao>();
+        FProjectTokenInfoDao f = null;
+        while (rs.next()) {//如果对象中有数据，就会循环打印出来
+            f = new FProjectTokenInfoDao();
+            f.setDepositedUsd(rs.getString("deposited_usd"));
+            fp.add(f);
+        }
+        return fp;
+    }
+
 }
