@@ -22,14 +22,15 @@ public class hot_token extends TronlinkBase {
   private JSONObject targetContent;
   private JSONObject jsonObject;
   private HttpResponse response;
-  private String node = Configuration.getByPath("testng.conf")
-      .getStringList("tronlink.ip.list")
-      .get(0);
+  private String node =
+      Configuration.getByPath("testng.conf").getStringList("tronlink.ip.list").get(0);
 
-
-  @Test(enabled = true, description = "hot_token test lower version with no sig", groups = {"NoSignature"})
-  public void hot_tokenV1LowVersionWithNoSig(){
-    response = TronlinkApiList.hot_tokenV1NoSig(quince_B58,null);
+  @Test(
+      enabled = true,
+      description = "hot_token test lower version with no sig",
+      groups = {"NoSignature"})
+  public void hot_tokenV1LowVersionWithNoSig() {
+    response = TronlinkApiList.hot_tokenV1NoSig(quince_B58, null);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
     targetContent = responseContent.getJSONObject("data");
@@ -41,9 +42,9 @@ public class hot_token extends TronlinkBase {
   }
 
   @Test(enabled = true, description = "hot_token test high version with no sig")
-  public void hot_tokenV1HighVersionWithNoSig(){
+  public void hot_tokenV1HighVersionWithNoSig() {
     HashMap<String, String> header = new HashMap<>();
-    header.put("Version",TronlinkApiList.androidUpdateVersion);
+    header.put("Version", TronlinkApiList.androidUpdateVersion);
     header.put("System", TronlinkApiList.defaultSys);
 
     response = TronlinkApiList.hot_tokenV1NoSig(quince_B58, header);
@@ -54,9 +55,9 @@ public class hot_token extends TronlinkBase {
   }
 
   @Test(enabled = true, description = "hot_token test high version with sig")
-  public void hot_tokenV1HighVersionWithSig(){
+  public void hot_tokenV1HighVersionWithSig() {
     HashMap<String, String> params = new HashMap<>();
-    params.put("address",quince_B58);
+    params.put("address", quince_B58);
     response = TronlinkApiList.hot_tokenV1(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
@@ -69,13 +70,30 @@ public class hot_token extends TronlinkBase {
   }
 
   @Test(enabled = true, description = "hot_token national token with nationa field=DM")
-  public void hot_token_national_file(){
+  public void hot_token_national_file() {
     HashMap<String, String> params = new HashMap<>();
-    params.put("address",quince_B58);
+    params.put("address", quince_B58);
     response = TronlinkApiList.hot_tokenV2(params);
     Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
     responseContent = TronlinkApiList.parseResponse2JsonObject(response);
-
   }
 
+  @Test(enabled = true, description = "hot_token national ")
+  public void hot_token_test_totalBalanceStr() {
+    HashMap<String, String> params = new HashMap<>();
+    params.put("address", quince_B58);
+    response = TronlinkApiList.hot_tokenV2(params);
+    Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+    responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+    JSONArray jSONArray = responseContent.getJSONArray("data");
+    boolean flag = true;
+    for (int i = 0; i < jSONArray.size(); i++) {
+      JSONObject jSONObject = jSONArray.getJSONObject(i);
+      if (!jSONObject.getString("totalBalanceStr").equals(jSONObject.getString("totalBalance"))) {
+        log.info("jSONObject:" + i + jSONObject);
+        flag = false;
+      }
+    }
+    Assert.assertTrue(flag);
+  }
 }

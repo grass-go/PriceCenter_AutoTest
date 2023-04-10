@@ -421,4 +421,24 @@ public class SearchAsset extends TronlinkBase {
 
   }
 
+    @Test(enabled = true)
+    public void searchAssetListTestTotalBalanceStr(){
+        Map<String, Token> expTokens = new HashMap<>();
+        {
+            expTokens.put("TGiRb7cYFmU8FTrUAGw996VHtLc2sDtEZH", new Token("BabyToken", "BABY", 2, -1, 2));
+            expTokens.put("TSMfJe8Lot3RKanHE2Z6mv5V5FV2cA7XQw", new Token ("BabyTFG", "BTFG", 5, 0, 1));
+            expTokens.put("1000784", new Token("BabyLeprechaun","BLEP", 1, -1, 1));
+        }
+        params.clear();
+        params.put("address",addressNewAsset41);
+        params.put("keyWord","Baby");
+        params.put("page","1");
+        params.put("count","50");
+        params.put("version","v2");
+        response = TronlinkApiList.v2SearchAsset(params);
+        Assert.assertEquals(response.getStatusLine().getStatusCode(), 200);
+        responseContent = TronlinkApiList.parseResponse2JsonObject(response);
+
+  }
+
 }
